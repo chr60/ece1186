@@ -5,7 +5,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Unit test for simple App.
+ * Tests the printing of hello world
  */
 public class HelloWorldTest 
     extends TestCase
@@ -29,7 +29,7 @@ public class HelloWorldTest
     }
 
     /**
-     * Rigourous Test :-)
+     * high quality coding.
      */
     public void testApp()
     {
