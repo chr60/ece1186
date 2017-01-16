@@ -1,0 +1,16 @@
+Track Controller / Wayside Controller / Vital PLC
+
+INPUTS:
+•	Receive Speed & Authority suggestion (from CTC)
+
+
+
+OUTPUTS:
+•	Mutate state of track (report back to PLC):
+  o	Track Switching (change track) – TRUE/FALSE
+  o	Railway Crossings – OPEN/CLOSE
+    	Lights – ON/OFF
+    	Crossbar – UP/DOWN
+    o	Signals/Lights – ON/OFF
+    o	Trains – LOCATION UPDATE/MANAGE via DC Track Circuit
+•	Run PLC program written by USER

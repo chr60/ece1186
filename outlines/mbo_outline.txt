@@ -1,0 +1,16 @@
+#    -*- mode: org -*-
+* Inputs
+** Train info
+*** Number of
+*** Size of
+*** Physics? // Mayber, not sure how in depth he wants it
+**** Max Speed
+**** Stopping Speed
+** Train GPS
+** Closed Tracks
+** Number of people working
+** Station locations/distances/times
+* Outputs
+** Speed/Authority
+** Train Schedule
+** Personnel Schedule
