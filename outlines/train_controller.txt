@@ -1,0 +1,41 @@
+
+Andrew Lendacky
+TrainController Frame: 
+
+
+Main Frame: 
+	- Output: 
+		- If in Manual or Automatic mode. (Signal to all modules that require Manual or Auto)
+		- If Emergency Button is pressed. (Signal to train model)
+	- Input: 
+		- Trains dispatched. 
+- Utility Panel
+	- Outputs:
+		- State of A/C, Lights, Heat (ON, OFF, FAIL) for a given train. (Sends signal to train)
+		- State of Left and Right Doors (OPEN, CLOSED, FAIL). (Sends signal to train)
+	- Inputs:
+		- State of A/C, Lights, Heat (ON, OFF, FAIL) for a given train. (Gets signal from train)
+		- State of Left and Right Doors (OPEN, CLOSED, FAIL). (Gets signal from train)
+
+- Block Info Panel: 
+	- Inputs: 
+		- Block speed for block selected train is in. (Gets signal from train?) 	
+	- Outputs:
+		- NONE
+
+- Train Info Panel: 
+	- Outputs:
+		- NONE
+	- Inputs: 
+		- Train speed of selected train. (Gets signal from train?)
+		- Train power of selected train. (Gets signal from train?)
+		- Location of train (Gets signal from train?)
+		- Next station and stop of selected train
+- Set Speed Panel: 
+	- Outputs: 
+		- the new speed of the train. (Sends to train)
+	- Inputs: 
+		- the max block speed for current block. (Gets signal from block?)
+		- the authority (Gets signal from office?)
+
+	
