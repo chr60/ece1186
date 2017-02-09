@@ -1,0 +1,2064 @@
+% Created 2017-02-02 Thu 14:07
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\renewcommand{\maketitle}{}
+\setlength\parindent{24pt}
+\usepackage[margin=1.25in]{geometry}
+\usepackage{indentfirst}
+\usepackage{fancyhdr} \pagestyle{fancyplain}
+\lhead{North Shore Rail Extension}
+\author{zach}
+\date{\today}
+\title{srs}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs 24.5.1 (Org mode 8.2.10)}}
+\begin{document}
+
+\maketitle
+
+
+\begin{titlepage}
+    \begin{center}
+        \vspace*{1cm}
+        
+        \Huge
+        \textbf{North Shore Rail Extension}
+
+        \vspace{2.5cm}
+        \textbf{Software Requirements Specification \\}
+        \vspace{2.5cm}
+        \textbf{Low-Comotivation}
+        \vspace{2.5cm}
+
+    \end{center}
+
+    \begin{flushright}        
+        \Large
+        Prepared By: Zach Scheider \\\ Demetri Khoury \\
+        Christen Reinbeck \\ Max Reno \\ Andrew Lendacky
+        \\ Michael Ghaben
+    \end{flushright}        
+
+        \vfill
+    \begin{center}        
+        
+        \vspace{0.8cm}        
+
+        \Large
+        COE1186 – Software Engineering\\
+        Instructor: Joseph A Profeta III, Ph.D.\\
+        Spring 2017
+        
+    \end{center}
+\end{titlepage}
+
+\setcounter{tocdepth}{3}
+\tableofcontents
+\cleardoublepage
+
+\section{Introduction}
+\label{sec-1}
+\subsection{Purpose}
+\label{sec-1-1}
+The purpose of this systems requirement specifications document is to provide a detailed description of the requirements for the "North Shore Rail Extension" software. It will declare the requirements and system constraints for the development of the system. It will describe the interface and the communications and interactions between the modules. This document will explain the development intentions to the customer and provide a reference for the team to refer to while building the project.
+
+\subsection{Scope}
+\label{sec-1-2}
+
+The "North Shore Rail Extension" software designed here is to control a rail system in Pittsburgh. It will run on a Windows machine as a .jar file. 
+
+With this software, users are able to interact with the  system as a whole as well as with individual modules for testing purposes.
+
+Testing consoles are built in to each module in order to see how each works on its own.
+
+In order to accurately test that all pieces are working correctly, and without actual implementation, virtual models for both the track and train are simulated.
+\subsection{Definitions}
+\label{sec-1-3}
+\begin{center}
+\begin{tabular}{ll}
+Term & Definition\\
+\hline
+User & Person(s) that interact with the system\\
+Module & Self-contained piece of the larger program\\
+Train Model & Train represented through software\\
+Track Model & Software representation of the track\\
+Train Controller & Allows interfacing with train controls\\
+Wayside Controller & Vital programmable logic controller for the track\\
+CTC Office & Central Train Control Office (CTC Office)\\
+ & Central office that monitors and routes trains\\
+MBO & Moving Block Overlay (MBO)\\
+ & Generates train and driver schedules, and allows for\\
+ & trains to operate in moving block overlay mode\\
+Vital & A safety critical component\\
+Segment & A piece of the track consisting of one or more blocks\\
+Block & A piece of a segment\\
+\end{tabular}
+\end{center}
+
+\subsection{References}
+\label{sec-1-4}
+
+\noindent
+\href{https://google.github.io/styleguide/javaguide.html}{Google Java Style Guide} \\
+
+\noindent
+Documents provided on COE1186 Courseweb page \\
+
+\noindent
+IEEE. IEEE Std 830-1998 IEEE Recommended Practice for Software Requirements Specifications. IEEE Computer Society, 1998. \\
+
+\noindent
+\href{https://github.com/michaelghaben/ece1186}{Lo-Comotivation Git Repository}
+
+\subsection{Overview}
+\label{sec-1-5}
+The next section provides an overall description of the system, its functionality, constraints, and interaction with other systems. This will be broken down into subsections, one for each module. 
+
+The third section provides specific requirements for each module. This will show the products functionality.
+
+\section{Overall description}
+\label{sec-2}
+\subsection{Perspective}
+\label{sec-2-1}
+This self-contained product consists of the following six modules: the CTC Office, Scheduler/MBO, the Wayside Controller/Track Controller, Track Model, Train Model, and the Train Controller. These six modules are designed to run together in order to simulate the function of a fully-developed train control system. However, the Track Model and Train Model are strictly for testing purposes. They will be switched for an actual track and train when this is to be implemented. 
+
+\subsection{Functions}
+\label{sec-2-2}
+The "North Shore Rail Extension" has the overall function of operating a transit system distributed among six modules. The CTC office acts as the control center for the system. It has the ability to dispatch trains and alter switches on the track while in manual mode. The MBO creates schedules for the drivers and the trains. It also is the responsible for moving block overlay mode, which replaces the fixed block operating mode. The Track Controller determines the positions of the switches and crossings, and is where the PLC is programmed. The Track Model simulates the track. It determines if a block is occupied or not. The Train Controller is responsible for operating the speed of the train, the air conditioning, doors and lights. The Train Model simulates a train on the track. It attempts to approximate the physics of an actual train which is reflected in the speed.
+
+The program will be able to simulate several different types of failures such as; track failures, engine failures, and the antennae failure.
+
+\subsection{User Characteristics}
+\label{sec-2-3}
+The dispatch communicates with the rest of the system through the CTC Office. This user must be able to operate the CTC Office, dispatch trains, interpret the track schedule, and handle failure states. 
+
+The wayside engineer operates the track from the Wayside Controller. They must know how to write PLC code to dictate the functionality of track blocks. They must also know how to act to handle failure states. 
+
+The transit operator uses the Train Controller to navigate the route according to the schedule. This user should have a good working knowledge of the train controls and the train schedule and know the correct procedures of operation for what to do in an emergency.
+
+The passenger is able to operate the emergency brake, which is located on each train.
+
+A test user will be able to test the functionality of all six modules. They will be able to test certain scenarios specific to an individual module.  
+
+\subsection{Constraints}
+\label{sec-2-4}
+\begin{enumerate}
+\item The system shall be submitted as an executable.
+\item The executable should be able to run on Windows 10.
+\item Each module will have a Graphical User Interface (GUI) for ease of use.
+\item The system must be adaptable for different track layouts.
+\item The system is a safety critical application.
+\end{enumerate}
+
+\subsection{Assumptions and Dependencies}
+\label{sec-2-5}
+The program is assumed to be running on a Windows machine with JDK 8 installed.
+
+The modules are only able to communicate with certain other modules. They must follow the specified communication path.
+\subsection{Apportioning of Requirements}
+\label{sec-2-6}
+
+The requirements will be implemented in the order of more critical components will be implemented first.
+
+For more information, see the work schedule document.
+\section{Specific Requirements}
+\label{sec-3}
+\subsection{Functional Requirements}
+\label{sec-3-1}
+\subsubsection{Central Train Control Office}
+\label{sec-3-1-1}
+\begin{enumerate}
+\item Trains
+\label{sec-3-1-1-1}
+\begin{enumerate}
+\item Routing
+\label{sec-3-1-1-1-1}
+
+A dispatcher should be able to create a route of a train.
+\begin{enumerate}
+\item Exact sequence of operations
+\label{sec-3-1-1-1-1-1}
+
+A dispatcher will press the button "Dispatch Train" and it will propagate a pop up window where he/she can select a line, speed and authority.
+
+This will then dispatch a train from the yard.
+\item Communication facilities
+\label{sec-3-1-1-1-1-2}
+
+Need info from wayside about blocks in order to maintain a fixed block type of schedule.
+\item Error handling and recovery
+\label{sec-3-1-1-1-1-3}
+
+Deny a train from being dispatched if block it is entering is not free.
+\item Relationship of output to input
+\label{sec-3-1-1-1-1-4}
+
+A dispatcher inputs line, speed and authority for a train to then leave the yard.
+\end{enumerate}
+\item Scheduling
+\label{sec-3-1-1-1-2}
+
+A dispatcher should be able to choose the type of schedule, automatic and manual, MBO and fixed block. 
+\begin{enumerate}
+\item Exact sequence of operations
+\label{sec-3-1-1-1-2-1}
+
+A dispatcher will choose will either choose Automatic or Manual mode for the schedule.
+
+If Automatic is chosen, then dispatcher can choose between MBO and Fixed Block modes.
+
+If Manual is chosen, then dispatcher is responsible for manually dispatching trains from the yard.
+\item Responses to abnormal situations
+\label{sec-3-1-1-1-2-2}
+
+If communication between MBO and CTC is severed, then the dispatcher will then be notified to dispatch trains via manual mode.
+\item Communication facilitates
+\label{sec-3-1-1-1-2-3}
+
+The actual schedule is received from the MBO.
+\item Relationship of output to inputs
+\label{sec-3-1-1-1-2-4}
+
+Depending on the mode of schedule input by the dispatcher, it will affect how trains are being directed around the track.
+\end{enumerate}
+\item Monitoring
+\label{sec-3-1-1-1-3}
+
+The office should monitor current block statuses as well as the speed and authority of any train on the track.
+\begin{enumerate}
+\item Exact sequence of operations
+\label{sec-3-1-1-1-3-1}
+
+There are two separate sections which will display either information about a chosen block or a chosen train per the dispatchers choices in the interface.
+\item Responses to abnormal situations
+\label{sec-3-1-1-1-3-2}
+
+If communication between the CTC and wayside controller is severed, trains may operate as usual as they can still obtain a schedule or operate in manual mode on their own. However, the CTC will not be able to see any info about the blocks/trains.
+\item Communication facilities
+\label{sec-3-1-1-1-3-3}
+
+All track/block information as well as the speed/authority/GPS location of trains comes from the wayside controller.
+\item Relationship of output to inputs
+\label{sec-3-1-1-1-3-4}
+
+A dispatcher will enter either a specific line/segment/block or train and then receive information corresponding to that piece.
+\end{enumerate}
+\end{enumerate}
+\item Track Segment
+\label{sec-3-1-1-2}
+\begin{enumerate}
+\item Open/Close Tracks
+\label{sec-3-1-1-2-1}
+
+The dispatcher should be able to close a block for maintenance, as well as dispatch maintenance to a certain block.
+\begin{enumerate}
+\item Exact sequence of operations
+\label{sec-3-1-1-2-1-1}
+
+The dispatcher will be alerted to a failure via the far left color-changing block. In the track section of the interface, a dispatcher can select a line/segment/block. Then he/she can select the "Close Track" button followed by the "Send Maintenance" button. Sending maintenance will fix the block and automatically reopen the block.
+\item Responses to abnormal situations
+\label{sec-3-1-1-2-1-2}
+
+Should a failure occur, the dispatcher will close and repair a block.
+\item Communication facilities
+\label{sec-3-1-1-2-1-3}
+
+The wayside controller will be communicating track failures to the CTC.
+\item Relationship of output to inputs
+\label{sec-3-1-1-2-1-4}
+
+When a dispatcher sends out maintenance/closes a block, then trains will not be allowed to enter this block until it is fixed.
+\end{enumerate}
+\end{enumerate}
+\item Authority/Speed
+\label{sec-3-1-1-3}
+
+The office can determine each train's authority/speed.
+\begin{enumerate}
+\item Exact sequence of operations
+\label{sec-3-1-1-3-1}
+
+In the train portion of the interface, a dispatcher can select the "Authority" button or "Speed" button which will propagate a pop up window. In this window, a dispatcher can input the authority in feet, as well as check which train they are assigning this authority to.
+\item Communication facilities
+\label{sec-3-1-1-3-2}
+
+The authority is sent from the CTC to the wayside controller.
+\item Relationship of output to inputs
+\label{sec-3-1-1-3-3}
+
+This indirectly effects the trains speed/authority. The CTC communicates with the wayside who in turn communicates with other members of the communication path.
+\end{enumerate}
+\item System Display
+\label{sec-3-1-1-4}
+
+The office should display information about the entire transit system. Including: train speed/authority, track block status, throughput, switch direction, railway crossing status, light status, track/train failures.
+\begin{enumerate}
+\item Exact sequence of operations
+\label{sec-3-1-1-4-1}
+
+Upon selecting a certain block or train, information from the wayside controller will be displayed.
+\item Communication facilities
+\label{sec-3-1-1-4-2}
+
+The wayside controller provides the CTC with this information.
+\end{enumerate}
+\item Communication
+\label{sec-3-1-1-5}
+\begin{enumerate}
+\item Inputs
+\label{sec-3-1-1-5-1}
+\begin{enumerate}
+\item Schedule
+\label{sec-3-1-1-5-1-1}
+\begin{enumerate}
+\item From where?
+\label{sec-3-1-1-5-1-1-1}
+
+MBO
+\item Used for?
+\label{sec-3-1-1-5-1-1-2}
+
+Displaying to dispatcher.
+\end{enumerate}
+\item Track Information/failures
+\label{sec-3-1-1-5-1-2}
+\begin{enumerate}
+\item From where?
+\label{sec-3-1-1-5-1-2-1}
+
+Wayside controller
+\item Used for?
+\label{sec-3-1-1-5-1-2-2}
+
+Displaying to dispatcher.
+\end{enumerate}
+\item Train Information/failures
+\label{sec-3-1-1-5-1-3}
+\begin{enumerate}
+\item From where?
+\label{sec-3-1-1-5-1-3-1}
+
+Wayside controller/MBO
+\item Used for?
+\label{sec-3-1-1-5-1-3-2}
+
+Displaying Speed/Authority to dispatcher.
+\end{enumerate}
+\end{enumerate}
+\item Outputs
+\label{sec-3-1-1-5-2}
+\begin{enumerate}
+\item Automatic versus Manual Mode (also MBO versus fixed if automatic is chosen)
+\label{sec-3-1-1-5-2-1}
+\begin{enumerate}
+\item To where?
+\label{sec-3-1-1-5-2-1-1}
+
+Wayside controller/MBO
+\item Used for?
+\label{sec-3-1-1-5-2-1-2}
+
+Given to wayside controller to then communicate to trains. 
+
+Given to MBO to decide which kind of schedule is being run.
+\end{enumerate}
+\item Close Track/Send Maintenance
+\label{sec-3-1-1-5-2-2}
+\begin{enumerate}
+\item To where?
+\label{sec-3-1-1-5-2-2-1}
+
+Wayside controller
+\item Used for?
+\label{sec-3-1-1-5-2-2-2}
+
+Shutting down a block of track so that trains cannot travel on it.
+\end{enumerate}
+\item Speed/Authority
+\label{sec-3-1-1-5-2-3}
+\begin{enumerate}
+\item To where?
+\label{sec-3-1-1-5-2-3-1}
+
+Wayside Controller
+\item Used for?
+\label{sec-3-1-1-5-2-3-2}
+
+Giving a suggestion of speed and authority to wayside to communicate to trains.
+\end{enumerate}
+\item Dispatch Train (when in manual)
+\label{sec-3-1-1-5-2-4}
+\begin{enumerate}
+\item To where?
+\label{sec-3-1-1-5-2-4-1}
+
+Wayside Controller
+\item Used for?
+\label{sec-3-1-1-5-2-4-2}
+
+When in manual mode, and acting outside of a schedule, the dispatcher can dispatch trains from the yard.
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+\subsubsection{Wayside Controller}
+\label{sec-3-1-2}
+\begin{enumerate}
+\item Display
+\label{sec-3-1-2-1}
+\begin{enumerate}
+\item CTC Display
+\label{sec-3-1-2-1-1}
+
+A list of trains and their speed and authorities from the CTC will be displayed.
+\begin{enumerate}
+\item Exact sequence of operations
+\label{sec-3-1-2-1-1-1}
+
+Values communicated to wayside unit, displayed on console.
+\item Communication facilities
+\label{sec-3-1-2-1-1-2}
+
+CTC
+\item Formulas for input to output conversion
+\label{sec-3-1-2-1-1-3}
+
+Units shown will be calculated in metric as given/supplied and converted to imperial for display.
+\end{enumerate}
+\item Track Model Display
+\label{sec-3-1-2-1-2}
+
+A list of blocks, select-able by line and segment, will be display with relevant information.
+\begin{enumerate}
+\item Communication facilities
+\label{sec-3-1-2-1-2-1}
+
+Track Model
+\item Formulas for input to output conversion
+\label{sec-3-1-2-1-2-2}
+
+Units shown will be calculated in metric as given/supplied and converted to imperial for display.
+\end{enumerate}
+\item Message Board
+\label{sec-3-1-2-1-3}
+
+Relevant information that doesn't apply to other two displays will appear here, such as debugging statuses, failure notices, syntax errors in PLC code.
+\begin{enumerate}
+\item Formulas for input to output conversion
+\label{sec-3-1-2-1-3-1}
+
+Units shown will be calculated in metric as given/supplied and converted to imperial for display.
+\end{enumerate}
+\end{enumerate}
+\item Control
+\label{sec-3-1-2-2}
+\begin{enumerate}
+\item PLC
+\label{sec-3-1-2-2-1}
+
+The user will be able to load in a PLC program, supplying a file path or browsing for the file.
+\begin{enumerate}
+\item Validity checks on inputs
+\label{sec-3-1-2-2-1-1}
+
+File not found or does not exist.
+
+PLC file contains errors or is not valid.
+\item Exact sequence of operations
+\label{sec-3-1-2-2-1-2}
+
+User loads in file, and once loaded, PLC unit controls state of track using Boolean logic to determine signals to send to track model components.
+\item Relationship of output to inputs
+\label{sec-3-1-2-2-1-3}
+
+Outputs will vary on inputs from the CTC and Track Model.
+\item Input/Output sequences
+\label{sec-3-1-2-2-1-4}
+
+PLC unit will take in speed/authority suggestions from CTC, as well as block occupancy and associated block information (lights, crossings, etc) from track model.
+\end{enumerate}
+\item Testing
+\label{sec-3-1-2-2-2}
+
+A test console will be available for the user to simulate (for testing/debugging purposes) inputs coming into the wayside unit to observe its behavior.
+\begin{enumerate}
+\item Exact sequence of operations
+\label{sec-3-1-2-2-2-1}
+
+User opens test console, fixes desired track \& train info, and clicks "OK" to give wayside specified information.
+\end{enumerate}
+\end{enumerate}
+\item Communication
+\label{sec-3-1-2-3}
+\begin{enumerate}
+\item Inputs
+\label{sec-3-1-2-3-1}
+\begin{enumerate}
+\item Speed/Authority Suggestion
+\label{sec-3-1-2-3-1-1}
+\begin{enumerate}
+\item From where?
+\label{sec-3-1-2-3-1-1-1}
+
+CTC
+\item Checks to do
+\label{sec-3-1-2-3-1-1-2}
+
+Make sure it is a valid suggestion.
+\item Used for?
+\label{sec-3-1-2-3-1-1-3}
+
+Setting speed/authority of desired train.
+\end{enumerate}
+\item Block Occupancy
+\label{sec-3-1-2-3-1-2}
+\begin{enumerate}
+\item From where?
+\label{sec-3-1-2-3-1-2-1}
+
+Track Model
+\item Used for?
+\label{sec-3-1-2-3-1-2-2}
+
+Determining occupied/unoccupied sections of track.
+\end{enumerate}
+\item Railroad Crossing Status
+\label{sec-3-1-2-3-1-3}
+\begin{enumerate}
+\item From where?
+\label{sec-3-1-2-3-1-3-1}
+
+Track Model
+\item Used for?
+\label{sec-3-1-2-3-1-3-2}
+
+Determining active/inactive railroad crossings.
+\end{enumerate}
+\item Switch Status
+\label{sec-3-1-2-3-1-4}
+\begin{enumerate}
+\item From where?
+\label{sec-3-1-2-3-1-4-1}
+
+Track Model
+\item Used for?
+\label{sec-3-1-2-3-1-4-2}
+
+Determining position of a switch.
+\end{enumerate}
+\item Lights Status
+\label{sec-3-1-2-3-1-5}
+\begin{enumerate}
+\item From where?
+\label{sec-3-1-2-3-1-5-1}
+
+Track Model
+\item Used for?
+\label{sec-3-1-2-3-1-5-2}
+
+Determining active/inactive lights.
+\end{enumerate}
+\item Track Heater Status
+\label{sec-3-1-2-3-1-6}
+\begin{enumerate}
+\item From where?
+\label{sec-3-1-2-3-1-6-1}
+
+Track Model
+\item Used for?
+\label{sec-3-1-2-3-1-6-2}
+
+Determining on/off status of track heaters.
+\end{enumerate}
+\end{enumerate}
+\item Outputs
+\label{sec-3-1-2-3-2}
+\begin{enumerate}
+\item Track State
+\label{sec-3-1-2-3-2-1}
+\begin{enumerate}
+\item To where?
+\label{sec-3-1-2-3-2-1-1}
+
+CTC
+\item Used for?
+\label{sec-3-1-2-3-2-1-2}
+
+Displaying light status, switch status, railroad crossing status, block occupancy, and other information about block to the Dispatcher.
+\end{enumerate}
+\item Track State Manipulations
+\label{sec-3-1-2-3-2-2}
+\begin{enumerate}
+\item To where?
+\label{sec-3-1-2-3-2-2-1}
+
+Track Model
+\item Checks to do
+\label{sec-3-1-2-3-2-2-2}
+
+PLC code will determine outputs to change state of track.
+\item Used for?
+\label{sec-3-1-2-3-2-2-3}
+
+Sending signals to track model in order to change the direction of a switch, turn on or off a light, activate/deactivate a railroad crossing, set speed/authority for a train.
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+\subsubsection{Track Model}
+\label{sec-3-1-3}
+\begin{enumerate}
+\item Grade and Elevation
+\label{sec-3-1-3-1}
+
+The track model should consider grade and elevation that is contained in the excel file provided by the user.
+\begin{enumerate}
+\item Exact sequence of operations
+\label{sec-3-1-3-1-1}
+
+The track model initializes. The track model then receives signal
+\item Communication facilities
+\label{sec-3-1-3-1-2}
+
+The track model will provide accessors and mutators to the rest of the modules for communication. 
+
+It will provide scripts to read the excel files. 
+
+It will assume responsible behavior by the connected modules (e.g. modules that should not access data will not)
+\item Effect of parameters
+\label{sec-3-1-3-1-3}
+
+Different train inputs will result in different outputs.
+\item Input/Output sequences
+\label{sec-3-1-3-1-4}
+
+The input to the track model is an excel file.
+\item Formulas for input to output conversion
+\label{sec-3-1-3-1-5}
+
+Convert km to miles.
+\end{enumerate}
+\item Model Configuration
+\label{sec-3-1-3-2}
+
+The track model should be able to be configured through user input.
+\item Track Configuration
+\label{sec-3-1-3-3}
+
+The track track layout should be able to configured through user input.
+\begin{enumerate}
+\item Validity checks on inputs
+\label{sec-3-1-3-3-1}
+
+There are no validity checks on the input. It is assumed that the track results in a complete loop.
+\item Exact sequence of operations
+\label{sec-3-1-3-3-2}
+
+The track initializes a Python script that reads the excel file into a serializable format such as JSON or protobuf. It then reads the serialized data into the Java run-time environment and plots the map. Additionally, it will parse the relevant data and store them in a structure for mutability by other components.
+\item Communication facilities
+\label{sec-3-1-3-3-3}
+
+Will provide accessors and constructors to communicate with other parts.
+\item Error handling and recovery
+\label{sec-3-1-3-3-4}
+
+It is assumed that the inputs to the track model are valid and will not be checked. This is due to the track model being dropped out at the end of the project for a physical model.
+\item Relationship of output to inputs
+\label{sec-3-1-3-3-5}
+
+The various parameters imputed by the excel file (grade, length, etc.) will results in different tracks being rendered and loaded into the program.
+\item Input/Output sequences
+\label{sec-3-1-3-3-6}
+
+Takes in excel file. Outputs track models.
+\item Formulas for input to output conversion
+\label{sec-3-1-3-3-7}
+
+1m = 3.3 ft
+\end{enumerate}
+\item Block Configuration
+\label{sec-3-1-3-4}
+
+The tracks block size should be able to edited.
+\item Signals and Switches
+\label{sec-3-1-3-5}
+
+The track model should have visible signals and switch machines. These will be shown in the visual region.
+\item Presence Detection
+\label{sec-3-1-3-6}
+
+The track model should detect whether or not a train is currently on the block.
+\begin{enumerate}
+\item Exact sequence of operations
+\label{sec-3-1-3-6-1}
+
+Presence detection will be done via the signals sent from the track circuit.
+\item Communication facilities
+\label{sec-3-1-3-6-2}
+
+The track model will contain the ability to determine the occupancy of a specific grouping of blocks when called by an external program.
+\item Relationship of output to inputs
+\label{sec-3-1-3-6-3}
+
+The track model will receive a signal from the track circuit on the occupancy of a specific block. The track model will output the occupancy of the block for use by the wayside controller.
+\end{enumerate}
+\item Railway Crossings
+\label{sec-3-1-3-7}
+
+The Track Model should take railway crossings into account.
+\begin{enumerate}
+\item Exact sequence of operations
+\label{sec-3-1-3-7-1}
+
+The track model receives a setting of either "up" or "down" for railway crossings and adjusts model parameters accordingly.
+\item Communication facilities
+\label{sec-3-1-3-7-2}
+
+Has an input for the wayside controller to toggle the railway crossings.
+\item Effect of parameters
+\label{sec-3-1-3-7-3}
+
+A 1 signifies that the railway crossing is up
+
+A 0 signifies that the railway crossing is down.
+\item Relationship of output to inputs
+\label{sec-3-1-3-7-4}
+
+The track model sets the railway crossing to up or down.
+\end{enumerate}
+\item Loading/Unloading People
+\label{sec-3-1-3-8}
+
+The track model should populate stations with the number of people loading onto the train and ensure that the passengers on a train doesn't exceed the maximum.
+The number of people leaving each train should be sent to the track model from the train model.
+\begin{enumerate}
+\item Exact sequence of operations
+\label{sec-3-1-3-8-1}
+
+Receives input to load people onto train.
+
+Draws a random number taking time into account  and loads returns the passengers on to the train.
+\item Communication facilities
+\label{sec-3-1-3-8-2}
+
+Sends a message to the train model to add people to the train.
+\item Effect of parameters
+\label{sec-3-1-3-8-3}
+
+Adds people to the train.
+\end{enumerate}
+\item Track Heaters
+\label{sec-3-1-3-9}
+
+The track model should have heaters located at each station.
+\begin{enumerate}
+\item Exact sequence of operations
+\label{sec-3-1-3-9-1}
+
+Turns track heaters on if the temperature (in F) is less than 32. Turns them off otherwise.
+\item Relationship of output to inputs
+\label{sec-3-1-3-9-2}
+
+If the temperature is below a threshold, the track heaters are turned on. Else, they are turned off
+\end{enumerate}
+\item Failure Modes
+\label{sec-3-1-3-10}
+\begin{enumerate}
+\item Broken Rail
+\label{sec-3-1-3-10-1}
+\begin{enumerate}
+\item What does it mean?
+\label{sec-3-1-3-10-1-1}
+
+That a rail has been broken or damaged in a way to throw an error.
+\item When does it occur?
+\label{sec-3-1-3-10-1-2}
+
+When something breaks. This will be simulated randomly.
+\item Which modules are affected?
+\label{sec-3-1-3-10-1-3}
+
+All of the modules, either directly or indirectly.
+\item How do you recover?
+\label{sec-3-1-3-10-1-4}
+
+CTC sends a repair crew to fix the broken rail.
+\end{enumerate}
+\item Track Circuit Failure
+\label{sec-3-1-3-10-2}
+\begin{enumerate}
+\item What does it mean?
+\label{sec-3-1-3-10-2-1}
+
+The track circuit has been broken.
+\item When does it occur?
+\label{sec-3-1-3-10-2-2}
+
+When the track circuit connections are disconnected at a physical level. This can occur in situations such as vandalism.
+\item Which modules are affected?
+\label{sec-3-1-3-10-2-3}
+
+All modules, either directly or indirectly. The track must function.
+\item How do you recover?
+\label{sec-3-1-3-10-2-4}
+
+CTC sends a repair crew to fix the track circuit failure.
+\end{enumerate}
+\item Power Failure
+\label{sec-3-1-3-10-3}
+\begin{enumerate}
+\item What does it mean?
+\label{sec-3-1-3-10-3-1}
+
+The track loses power.
+\item When does it occur?
+\label{sec-3-1-3-10-3-2}
+
+When the track power supply fails.
+\item Which modules are affected?
+\label{sec-3-1-3-10-3-3}
+
+All modules that require the track to be functioning are affected.
+\item How do you recover?
+\label{sec-3-1-3-10-3-4}
+
+CTC sends a repair crew to fix the track power failure.
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+\subsubsection{Train Model}
+\label{sec-3-1-4}
+\begin{enumerate}
+\item Calculate Physics
+\label{sec-3-1-4-1}
+\begin{enumerate}
+\item Power Command
+\label{sec-3-1-4-1-1}
+
+Calculate the correct amount of power to supply in order to achieve the correct speed.
+\begin{enumerate}
+\item Validity checks on inputs
+\label{sec-3-1-4-1-1-1}
+
+The power command obtained as input from the train controller, will be verified to be greater than or equal to 0. 
+
+The trains cannot operate in reverse therefore the set speed assigned by the train controller must either be setting the train to a positive speed or telling the train to stop (power command of 0).
+\item Exact sequence of operations
+\label{sec-3-1-4-1-1-2}
+
+The train controller will set a speed for the train to follow. This speed will either be set by the driver (in manual mode) or the wayside (in automatic mode).
+This set speed will then be converted into a power command based on the current velocity of the train and the speed desired by the controller. 
+
+The corresponding power command will be sent to the train controller and using internal calculations of the train model the set speed for the train will be met.
+\item Responses to abnormal situations
+\label{sec-3-1-4-1-1-3}
+
+If there is any sort of failure in the system that effects the train model, the power command will be overridden and set to 0. This will cause the service brakes to activate to slow down the train whenever possible.
+\item Communication facilitates
+\label{sec-3-1-4-1-1-4}
+
+The current velocity will be obtained from the train model and passed on to the train controller.
+
+The power command based on current velocity will be communicated back from the train controller to the train model.
+\item Error handling and recovery
+\label{sec-3-1-4-1-1-5}
+
+Any sort of error or failure will result in the activation of the service or emergency brakes in order to bring the train to a complete stop. 
+
+The recovery process will require the CTC to send maintenance to recover the train and resolve the error.
+\item Effect of parameters
+\label{sec-3-1-4-1-1-6}
+
+The parameters that will be used for this calculation include current velocity, power command, mass, and acceleration/deceleration rates.
+
+The only parameter that will change in this scenario is the current velocity of the train model.
+\item Relationship of output to inputs
+\label{sec-3-1-4-1-1-7}
+
+The output of the train controller will be a power command to meet the set speed assigned in the module and this will translate into an input to the train model.
+
+The output of the train model will be the current velocity derived from this calculation and will translate into an input passed back to the train controller.
+\item Input/Output sequences
+\label{sec-3-1-4-1-1-8}
+
+If the power command results in a larger speed than the current velocity, the train will accelerate to meet the set speed by the train controller.
+
+If the power command results in a speed lower than the current velocity, the train will decelerate to meet the set speed by the train controller.
+
+If the power command results in a speed of zero the service brakes will be applied until the train comes to a full stop.
+\end{enumerate}
+\item Current Velocity
+\label{sec-3-1-4-1-2}
+
+Calculate the current velocity of the train in observation.
+\begin{enumerate}
+\item Validity checks on inputs
+\label{sec-3-1-4-1-2-1}
+
+The current velocity of the train must be a positive value as the trains in this system can not operate in reverse.
+
+The input to calculate the current velocity will be the power command setting the set-point speed for the train and this value will be verified as detailed above.
+\item Exact sequence of operations
+\label{sec-3-1-4-1-2-2}
+
+The Power command input from the train controller will be taken into the train model computation sequence.
+
+The current velocity will be computed based on the error between the new set speed and the current speed.
+
+This velocity will be based on mass, acceleration, and friction on the track.
+\item Responses to abnormal situations
+\label{sec-3-1-4-1-2-3}
+
+If there is any sort of failure in the system that effects the train model, the current velocity will be decreased to 0 as the train comes to a full stop.
+\item Communication facilitates
+\label{sec-3-1-4-1-2-4}
+
+The current velocity will be computed in the train model and passed on to the train controller.
+
+The train controller will use the current velocity to compute the required power command to send back to the train model to meet the set speed of the train.
+\item Error handling and recovery
+\label{sec-3-1-4-1-2-5}
+
+Any sort of error or failure will result in the activation of the service or emergency brakes in order to bring the train to a complete stop. 
+
+The recovery process will require the CTC to send maintenance to recover the train and resolve the error.
+\item Effect of parameters
+\label{sec-3-1-4-1-2-6}
+
+The parameters that will be used for this calculation include power command, mass, and acceleration/deceleration rates.
+
+The only parameter that will change in this scenario is the current velocity of the train model.
+\item Relationship of output to inputs
+\label{sec-3-1-4-1-2-7}
+
+The output of the train controller will be a power command to meet the set speed assigned in the module and this will translate into an input to the train model.
+
+The output of the train model will be the current velocity derived from this calculation and will translate into an input passed back to the train controller.
+\item Input/Output sequences
+\label{sec-3-1-4-1-2-8}
+
+If the power command is larger than the current speed the current velocity will increase to match the set speed for the train.
+
+If the power command is smaller than the current speed the current velocity will decrease to match the set speed for the train.
+
+If the power command calls for a stop the current velocity will be decreased to bring the train to a complete stop before continuing.
+\end{enumerate}
+
+\item Safe Braking Distance
+\label{sec-3-1-4-1-3}
+
+Calculate the safe braking distance for the train (Service and emergency). 
+\begin{enumerate}
+\item Validity checks on inputs
+\label{sec-3-1-4-1-3-1}
+
+If the trains Authority obtained from the track model is smaller than or equal to the safe braking distance of the train, the train will apply the service brakes to bring the train to a full stop until a new authority is passed to the train model.
+\item Exact sequence of operations
+\label{sec-3-1-4-1-3-2}
+
+The train model will take in the number of passengers on-board and compute the total mass of the train including passenger weight. 
+
+The maximum deceleration for each type of brake will be used to compute the safe braking distance based on the current speed and weight of the train.
+
+The safe braking distance will then be compared to the current authority and if it exceeds the authority of the train it will cause the service brakes to engage. 
+\item Responses to abnormal situations
+\label{sec-3-1-4-1-3-3}
+
+There are some abnormal situations that may arise that would effect the safe braking distance, such as a system failure, or a sudden change in authority. 
+
+The response to any abnormal situation will always be to engage the service or emergency brakes and stop the train as soon as possible. 
+\item Communication facilities
+\label{sec-3-1-4-1-3-4}
+
+The safe braking distance will be calculated using data stored in the train model and will be compared to the authority sent from the track model.
+\item Error handling and recovery
+\label{sec-3-1-4-1-3-5}
+
+Any sort of error or failure will result in the activation of the service or emergency brakes in order to bring the train to a complete stop. 
+
+The recovery process will require the CTC to send maintenance to recover the train and resolve the error.
+\item Effect of parameters
+\label{sec-3-1-4-1-3-6}
+
+The parameters that will be used for this calculation include total mass, Authority, and maximum deceleration. 
+
+The only parameter that will change in this scenario is the safe braking distance of the train model.
+\item Relationship of output to inputs
+\label{sec-3-1-4-1-3-7}
+
+The output of this calculation will be used as a test case for authority within the train model, before increasing or decreasing speed to satisfy a power command.
+\item Input/Output sequences
+\label{sec-3-1-4-1-3-8}
+
+The Authority will be input to the train model via the track model and this input will be passed into the safe braking distance calculation. 
+
+Based on the mass and current speed the safe braking distance will be computed by the train model and compared to the authority.
+
+An output verifying that the authority is larger than the safe braking distance will be passed out through the system to the further part of the calculation.
+\end{enumerate}
+\end{enumerate}
+\item Communication
+\label{sec-3-1-4-2}
+
+A major role of the train model is to display train data and statuses based on inputs and outputs required to be displayed on to the user. 
+\begin{enumerate}
+\item Inputs
+\label{sec-3-1-4-2-1}
+
+Various inputs will be passed into the train model and will be used for calculations or as status displays for the user.
+\begin{enumerate}
+\item Power Command
+\label{sec-3-1-4-2-1-1}
+\begin{enumerate}
+\item Used for?
+\label{sec-3-1-4-2-1-1-1}
+
+The power command will be used to determine what speed to increase or decrease the train to. This power command will be computed in the train controller based on the set speed and the current velocity of the train.
+\item Checks to do
+\label{sec-3-1-4-2-1-1-2}
+
+The train model will check that the power command is a positive value which either increases or decreases the current velocity of the train. If the value is less than the current velocity, the train will decelerate to the set speed. 
+If the power command is greater than the current velocity, the train will accelerate to the set speed.
+\item From where?
+\label{sec-3-1-4-2-1-1-3}
+
+The power command input will be sent to the train model from the train controller module.
+\end{enumerate}
+\item Authority
+\label{sec-3-1-4-2-1-2}
+\begin{enumerate}
+\item Used for?
+\label{sec-3-1-4-2-1-2-1}
+
+The authority of the train will be passed to the train model to display to the user how fair the train can travel before its required to stop. 
+
+This value will be used as a to verify the safe braking distance of the train model.
+\item Checks to do
+\label{sec-3-1-4-2-1-2-2}
+
+The authority will be checked to verify that the distance is greater than the safe braking distance of the train to ensure there will not be a problem with continuing at the current speed.
+\item From where?
+\label{sec-3-1-4-2-1-2-3}
+
+The authority will be assigned by the track controller and passed to the train model via the train controller
+\end{enumerate}
+\item Right/Left Door Status
+\label{sec-3-1-4-2-1-3}
+\begin{enumerate}
+\item Used for?
+\label{sec-3-1-4-2-1-3-1}
+
+The status of the left and right doors will be displayed as part of the train model interface. 
+
+This input will be set to open, closed , or failure based on the state of each set of doors. 
+
+The doors will be opened at each station to allow passengers to embark and closed while train is in operation.
+\item Checks to do
+\label{sec-3-1-4-2-1-3-2}
+
+The status of the doors will be checked to be open or closed and this value will be displayed to the console. 
+
+A status change can be passed onto the train model and this will be changed to match on the display.
+
+The door status will be checked for a failure status and this will also be displayed on the console in place of open or closed.
+\item From where?
+\label{sec-3-1-4-2-1-3-3}
+
+In manual mode the driver will operate the closing and opening of doors and the input will be received from the train controller.
+
+In automatic mode the train controller will automatically open and close doors at arrival and departure at each station.
+\end{enumerate}
+\item Interior Light Status
+\label{sec-3-1-4-2-1-4}
+\begin{enumerate}
+\item Used for?
+\label{sec-3-1-4-2-1-4-1}
+
+The status of the interior lights will be displayed as part of the train model interface. 
+
+This input will be set to on,off, or failure based on the state of the lights. 
+\item Checks to do
+\label{sec-3-1-4-2-1-4-2}
+
+The status of the lights will be checked to be on or off and this value will be displayed to the console. 
+
+A status change can be passed onto the train model and this will be changed to match on the display.
+
+The interior light status will be checked for a failure status and this will also be displayed on the console in place of on or off.
+\item From where?
+\label{sec-3-1-4-2-1-4-3}
+
+The interior lights will be controlled by the train controller and the input changing the status will be sent to the train model.
+\end{enumerate}
+\item Temperature/Thermostat Status
+\label{sec-3-1-4-2-1-5}
+\begin{enumerate}
+\item Used for?
+\label{sec-3-1-4-2-1-5-1}
+
+The current temperature of the train will be monitored by the train and this value will be set by the internal testing system.
+
+The thermostat setting will also be displayed on the train model to meet the needs of the train. 
+
+The thermostat will be used to increase or decrease on-board temperature based on the current temp.
+\item Checks to do
+\label{sec-3-1-4-2-1-5-2}
+
+The thermostat setting will be checked to be a valid positive value.
+
+If the thermostat setting is larger than the current temperature the temperature will be increased to match.
+
+If the thermostat setting is larger than the current temperature, the temperature will be decreased to match.
+\item From where?
+\label{sec-3-1-4-2-1-5-3}
+
+The thermostat input will be send via the train controller to the train model.
+
+In manual mode the driver will  set the thermostat setting using the train controller interface.
+
+In automatic mode the train controller will automatically adjust the thermostat to keep the train at the ideal temperature programmed by the system.
+\end{enumerate}
+\item Service/Emergency Brakes
+\label{sec-3-1-4-2-1-6}
+\begin{enumerate}
+\item Used for?
+\label{sec-3-1-4-2-1-6-1}
+
+The service and emergency brakes will be used to decelerate the train of bring the train to a full stop.
+
+The service brake will be used in typical scenarios where the speed is needed to decrease to be below a speed limit or to come to a halt at the station.
+
+The emergency brake will be used in abnormal situations such as failures or sudden change in authority or drastic drop in speed which will not be met with the deceleration rate of the service brakes.
+\item Checks to do
+\label{sec-3-1-4-2-1-6-2}
+
+The Service brakes will be checked to be on, off, or in a state of failure. 
+
+If the service brakes are on the train will decelerate as needed to meet the speed set-point of the train.
+
+If the service brakes are in a state of failure the emergency brakes will be used in this scenario.
+\item From where?
+\label{sec-3-1-4-2-1-6-3}
+
+The service brake status will be sent via the train controller.
+
+In manual mode the driver will engage the service brakes to bring the train to halt. 
+
+In automatic mode the service brakes will engage and disengage automatically to decrease speed or bring the train to a halt at the stations.
+
+The emergency brake input will be sent via the train controller.
+
+The Emergency brake can be engaged either manually by the driver or by any passenger on board.
+\end{enumerate}
+\end{enumerate}
+
+\item Outputs
+\label{sec-3-1-4-2-2}
+
+Various outputs will be recorded and passed out of the train model and will be used internally as well as in other models
+\begin{enumerate}
+\item Current Velocity
+\label{sec-3-1-4-2-2-1}
+\begin{enumerate}
+\item Used for?
+\label{sec-3-1-4-2-2-1-1}
+
+The primary output of the train model is the current velocity of the train. 
+
+This value will be used to compute the power command based on the difference between the current speed and the set-point speed.
+\item Checks to do
+\label{sec-3-1-4-2-2-1-2}
+
+The model will check that the current velocity is positive and that the power command will either increase or decrease the speed to match the set-point.
+\item To where?
+\label{sec-3-1-4-2-2-1-3}
+
+The current velocity will be output to the train controller which will use the difference between the current velocity and the set-point speed to determine the power command required.
+\end{enumerate}
+\item Height/Width
+\label{sec-3-1-4-2-2-2}
+\begin{enumerate}
+\item Used for?
+\label{sec-3-1-4-2-2-2-1}
+
+The height and width of the train will be maintained and displayed as part of the train model console.
+
+These values are constant and will be used as reminders for height and width clearance for the train primarily when entering stations or tunnels.
+\item Checks to do
+\label{sec-3-1-4-2-2-2-2}
+
+These values will never change so the only checks that will be performed is to verify the height of the train will fit below any infrastructure along the track.
+\item To where?
+\label{sec-3-1-4-2-2-2-3}
+
+This output will be displayed to the train model console and will not be passed to any other system.
+\end{enumerate}
+\item Length/ number of cars
+\label{sec-3-1-4-2-2-3}
+\begin{enumerate}
+\item Used for?
+\label{sec-3-1-4-2-2-3-1}
+
+The length of the train and the number of attached cars will be recorded and monitored by the train model.
+
+These values will be used to track the maximum passenger count allowed as well as how much space the train is taking up on the track.
+\item Checks to do
+\label{sec-3-1-4-2-2-3-2}
+
+The length of the train will be used primarily in MBO mode when some train may overlap in the same block. This length will be used along with the safe braking distance to minimize failures and train collisions in the system.
+\item To where?
+\label{sec-3-1-4-2-2-3-3}
+
+The length of the train will be sent to the MBO for tracking train locations and occupancy on the track.
+\end{enumerate}
+\item Passenger/Crew Count
+\label{sec-3-1-4-2-2-4}
+\begin{enumerate}
+\item Used for?
+\label{sec-3-1-4-2-2-4-1}
+
+The number of passengers and crew members on board will be tracked by the train model. This number will be stored by the model and added to as passengers embark on a station and subtracted from as they disembark.
+
+This value will also be used to track the throughput of the train system which will be displayed as part of the CTC module.
+\item Checks to do
+\label{sec-3-1-4-2-2-4-2}
+
+The output will be checked to verify that the total number of passengers and crew do not exceed the maximum capacity of the train.
+
+Also the check will be made to verify that the number of passengers disembarking does not exceed the number of passengers on board.
+\item To where?
+\label{sec-3-1-4-2-2-4-3}
+
+The number of passengers on board will be stored and displayed to the train model.
+
+The number will also be output to the CTC to calculate the throughput of the system.
+\end{enumerate}
+\item Mass
+\label{sec-3-1-4-2-2-5}
+\begin{enumerate}
+\item Used for?
+\label{sec-3-1-4-2-2-5-1}
+
+The mass for the train will be recorded and used for all physics calculations within the train model.
+
+This value will be updated based on the train weight and the weight of all passengers on board.
+\item Checks to do
+\label{sec-3-1-4-2-2-5-2}
+
+The system will check that as passengers embark and disembark the mass will fluctuate accordingly. 
+\item To where?
+\label{sec-3-1-4-2-2-5-3}
+
+This output will be displayed to the train model console and will not be passed to any other module.
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+\item Failure Modes
+\label{sec-3-1-4-3}
+
+\begin{enumerate}
+\item Engine Failure
+\label{sec-3-1-4-3-1}
+\begin{enumerate}
+\item What does it mean?
+\label{sec-3-1-4-3-1-1}
+
+An engine failure means there is a loss of power in train engine and as a result is unable to increase speed as requested.
+\item When does it occur?
+\label{sec-3-1-4-3-1-2}
+
+This occurs when Murphy engages the failure command to activate an engine failure on board the system
+\item Which modules are affected?
+\label{sec-3-1-4-3-1-3}
+
+The engine failure will directly effect the train model and train controller as this occurs on board the train.
+
+This will also indirectly affect the track model, track controller and CTC as the current block will need to be shut down until restored.
+\item How do you recover?
+\label{sec-3-1-4-3-1-4}
+
+The train will recover from this failure mode with two steps.
+
+First, the train will come to a full stop as soon as physically possible. This will be performed by the service brakes if possible otherwise the emergency brakes will need to be used.
+
+Next, the CTC is required to send maintenance to the blocked off track to repair the train engine.
+\end{enumerate}
+\item Brake Failure
+\label{sec-3-1-4-3-2}
+\begin{enumerate}
+\item What does it mean?
+\label{sec-3-1-4-3-2-1}
+
+A brake failure means there is a failure state in the service brakes on board the train. 
+\item When does it occur?
+\label{sec-3-1-4-3-2-2}
+
+This occurs when there is a problem with the braking system. This will be another component controlled by Murphy.
+\item Which modules are affected?
+\label{sec-3-1-4-3-2-3}
+
+The brake failure will directly effect the train model and train controller as this occurs on board the train.
+
+This will also indirectly affect the track model, track controller and CTC as the current block will need to be shut down until restored.
+\item How do you recover?
+\label{sec-3-1-4-3-2-4}
+
+The train will recover from this failure mode with two steps.
+
+First, the train will come to a full stop as soon as physically possible. This will be performed by the emergency brakes since the service brakes are out of operation.
+
+Next, the CTC is required to send maintenance to the blocked off track to repair the train.
+\end{enumerate}
+\item Signal Failure
+\label{sec-3-1-4-3-3}
+\begin{enumerate}
+\item What does it mean?
+\label{sec-3-1-4-3-3-1}
+
+The signal failure means there is a failure in the antenna on-board the train and there is loss of communication between the train and the external modules.
+\item When does it occur?
+\label{sec-3-1-4-3-3-2}
+
+This occurs as a result of Murphy activating the signal failure button to cause this error on board the train.
+\item Which modules are affected?
+\label{sec-3-1-4-3-3-3}
+
+The signal failure will directly effect the train model and train controller as this blocks any communication between the two modules.
+
+This will also indirectly affect the track model, track controller and CTC as the current block will need to be shut down until restored.
+\item How do you recover?
+\label{sec-3-1-4-3-3-4}
+
+The train will recover from this failure mode with two steps.
+
+First, the train will come to a full stop as soon as physically possible. This will be performed by the service brakes if possible otherwise the emergency brakes will need to be used.
+
+Next, the CTC is required to send maintenance to the blocked off track to repair the train.
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+\subsubsection{Train Controller}
+\label{sec-3-1-5}
+\begin{enumerate}
+\item Decode Track Signal
+\label{sec-3-1-5-1}
+
+The signal from the track circuit should be decoded into a speed limit and authority.
+\item Safety
+\label{sec-3-1-5-2}
+\begin{enumerate}
+\item Speed Limit
+\label{sec-3-1-5-2-1}
+
+The train should be stopped from exceeding the speed limit.
+\begin{enumerate}
+\item Validity checks on inputs
+\label{sec-3-1-5-2-1-1}
+
+If the train is over the accepted speed limit of the block or the suggested speed set by the CTC, the train's service brakes will be applied to slow down the train to the correct speed. 
+\item Exact sequence of operations
+\label{sec-3-1-5-2-1-2}
+
+When the user selects the train from the list of dispatched trains, the system will check to make sure the speed of the train is less than that of the suggested speed (automatic mode), or the speed of the train is less than the block speed (manual mode).
+
+This will be done by comparing the speed of the train to the suggested speed and block speed found under the Speed Controller and Block Info sections of the Train Controller. 
+\item Responses to abnormal situations
+\label{sec-3-1-5-2-1-3}
+
+If the service brakes are down on the train, and cannot be applied to slow the train down, the train will use their emergency brakes to come to a complete stop until the service brakes are able to be repaired.  
+\item Communication facilities
+\label{sec-3-1-5-2-1-4}
+
+Determining the speed of the train comes from the tachometer on the train.
+
+Determining the block speed and the suggested speed comes from the wayside controller and the CTC, respectively. 
+\item Relationship of output to inputs
+\label{sec-3-1-5-2-1-5}
+
+When the train is selected, the trains speed will be displayed to the Train Controller. If the speed is determined to be faster than required, the brakes on the train will be signaled from the Train Controller to initiate the brakes on the train. 
+\item Input/Output sequences
+\label{sec-3-1-5-2-1-6}
+
+The speed of the train is determined from the train. If the speed is faster than the desired speed, the brakes are applied until the train's speed meets the speed limit. 
+\item Formulas for input to output conversion
+\label{sec-3-1-5-2-1-7}
+
+The speed is retrieved as KPH, but needs to be converted to MPH. 1 KPH is equal to 0.621371 MPH.
+\end{enumerate}
+\item Authority
+\label{sec-3-1-5-2-2}
+
+The train should be stopped from exceeding the authority limit.
+\begin{enumerate}
+\item Validity checks on inputs
+\label{sec-3-1-5-2-2-1}
+
+The authority will be checked to make sure that it contains digits (0-9), and does not contain any alphanumeric (A-Z, a-z), and special (\&,*,!,@, etc..) characters.  
+\item Exact sequence of operations
+\label{sec-3-1-5-2-2-2}
+
+When the authority for the train is received, begin calculating the distance traveled. Once the train reaches the maximum distance, it must then change it's speed to the appropriate speed for the new authority of the block. 
+\item Communication facilities
+\label{sec-3-1-5-2-2-3}
+
+The authority is decoded by the track and picked up by the train model. 
+\item Relationship of output to inputs
+\label{sec-3-1-5-2-2-4}
+
+The selected train gives the Train Controller its authority to display. 
+\item Formulas for input to output conversion
+\label{sec-3-1-5-2-2-5}
+
+Computes the fraction of the distance traveled to the total authority distance, and signals when the fraction equals 1. 
+
+The authority is retrieved in meters, but needs to be converted to miles (mi). 1 m is equal to 0.000621371 mi.
+\end{enumerate}
+\end{enumerate}
+\item Door Operation
+\label{sec-3-1-5-3}
+
+The appropriate doors should open upon arriving at a station and close before leaving the station.
+\begin{enumerate}
+\item Validity checks on inputs
+\label{sec-3-1-5-3-1}
+
+In automatic mode, the doors are controlled automatically by the train when arriving to the station. 
+
+In manual mode, the doors are controlled by the driver, and it is their responsibility to open/close the doors when arriving and leaving a station. In this mode, the user cannot open or close the doors unless the train's speed is 0 MPH. 
+\item Exact sequence of operations
+\label{sec-3-1-5-3-2}
+
+When in manual mode, the driver can open/close the left and right doors of the train. When the driver chooses to open/close the doors, the train's speed must be 0 MPH. To prevent any injuries, the doors will not open if the speed of the train is greater than 0 MPH. 
+\item Responses to abnormal situations
+\label{sec-3-1-5-3-3}
+
+If the doors are in the failure state, the driver cannot change the state of the doors, and must wait until the doors are fixed. 
+\item Communication facilities
+\label{sec-3-1-5-3-4}
+
+The train model determines the state that the left and right doors are in. Whenever the state is changed it is sent to the train model.
+\item Relationship of output to inputs
+\label{sec-3-1-5-3-5}
+
+When a door is changed from open to close, or vice versa, the new state is sent to the train and changes the state of the door to follow the new state. 
+
+When a door is changed from open to close, or vice versa, the new state is updated on the Train Controller to display the state of the door.  
+\item Input/Output sequences
+\label{sec-3-1-5-3-6}
+
+In manual mode, when a train is selected, the Train Controller will the display the states of the left and right doors based on the state determined from the train.
+
+When the driver changes the state from the Train Controller, the new state is sent to the train, and the corresponding door is changed to the new state. 
+
+In automatic mode, when a train is selected the Train Controller will display the states of the left and right doors based on the state determined from the train. 
+
+In this mode, the doors are controlled by the train when arriving and leaving a station. Then the states are changed on the train, the state of the doors will be reflected on the Train Controller.
+\end{enumerate}
+\item Announcement System
+\label{sec-3-1-5-4}
+
+The upcoming station should be announced shortly before arriving at the station.
+\begin{enumerate}
+\item Validity checks on inputs
+\label{sec-3-1-5-4-1}
+
+In manual mode, the announcement must be picked from the list of available announcements, and cannot be empty when clicking the "Make Announcement" button. 
+\item Exact sequence of operations
+\label{sec-3-1-5-4-2}
+
+In manual mode, the driver must choose the announcement from the Train Controller, and hit the "Make Announcement" button in order to send the message over the train's speaker system.
+
+If no valid announcement is selected when the "Make Announcement" button is pressed, a window will appear stating that an error has occurred.  
+
+In automatic mode, the train automatically makes announcements based on the next station and when arriving at the current station. 
+\item Communication facilities
+\label{sec-3-1-5-4-3}
+
+The announcement made from the Train Controller must be sent through the train via the speaker system on the train. 
+\item Relationship of output to inputs
+\label{sec-3-1-5-4-4}
+
+When the user chooses to make an announcement, the message is selected via the drop-down menu, and sent to the train. 
+\item Input/Output sequences
+\label{sec-3-1-5-4-5}
+
+When the driver chooses the announcement from the drop-down and clicks the "Make Announcement" button, the message is sent to the train. The train should the broadcast the message via its speaker system. In automatic mode, the train automatically makes announcements through the speaker system.
+\end{enumerate}
+\item Operating Lights
+\label{sec-3-1-5-5}
+
+The interior lights should be turned on at night and when in a tunnel.
+
+They should be turned off at sunrise and when exiting a tunnel.
+\begin{enumerate}
+\item Validity checks on inputs
+\label{sec-3-1-5-5-1}
+
+The time should be checked to make sure its in a valid format.
+\item Exact sequence of operations
+\label{sec-3-1-5-5-2}
+
+In manual mode, when the user changes the states of the lights from on to off, or vice versa, the new state of the light is sent to the train, which changes the state of the light to what was selected. 
+
+When a train is selected, the states of the lights will be displayed to the Train Controller.
+\item Responses to abnormal situations
+\label{sec-3-1-5-5-3}
+
+If the user tries to change the state of the lights when they are in a failure state, a window will appear stating that the lights must first be fixed. 
+\item Communication facilities
+\label{sec-3-1-5-5-4}
+
+The states of the lights comes from the train. When the state of the lights are changed from the Train Controller, it is sent to the train. 
+
+When the state of the lights on the train are changed, it is updated to the Train Controller as well. 
+\item Error handling and recovery
+\label{sec-3-1-5-5-5}
+
+If the lights are in a failure mode, they must first be fixed before they can be changed. Trying to change the lights while in a failure mode will not work, and will result in a error message. 
+\item Relationship of output to inputs
+\label{sec-3-1-5-5-6}
+
+The state of the lights are determined by the state of the lights on the train. 
+
+When any state is changed from the Train Controller, it is sent to the train. 
+
+When the state of the lights are changed on the train, the states are updated on the Train Controller to reflect the new state. 
+\item Input/Output sequences
+\label{sec-3-1-5-5-7}
+
+When a train is selected, the states of its lights will be reflected on the Train Controller GUI. When any changes are made by the train the new state is picked up by the Train Controller. 
+
+When any changes are made by the Train Controller, the new state is sent to the train.
+\end{enumerate}
+\item Air Conditioning
+\label{sec-3-1-5-6}
+
+The air conditioning should be turned on when the thermometer reaches a certain temperature, and off when the thermometer drops below a certain temperature.
+\begin{enumerate}
+\item Validity checks on inputs
+\label{sec-3-1-5-6-1}
+
+In automatic mode, the air conditioning unit is controlled automatically by the train depending on the thermometer on the train. 
+
+In manual mode, the set temperature can't be lower than AC will allow. If it is set lower it will default to the lowest allowed temperature.
+
+The temperature is not able to be changed if you are in a failure mode.
+\item Exact sequence of operations
+\label{sec-3-1-5-6-2}
+
+In automatic mode, the air conditioning unit is turned on and off automatically depending on the temperature determined by the train's thermometer. The state of the air conditioning unit is sent and displayed by the Train Controller.  
+
+In manual mode, the air conditioning unit is turned on and off by driver regardless of the temperature determined by the thermometer. When the user changes the state of the air conditioning unit, the new state is sent to the train.  
+\item Responses to abnormal situations
+\label{sec-3-1-5-6-3}
+
+If the air conditioning unit is in failure mode, the state cannot be changed until it is fixed. 
+\item Communication facilities
+\label{sec-3-1-5-6-4}
+
+Changing the state of the air conditioning unit sends the new state to the train. The temperature from the thermometer is sent to the Train Controller to control the air conditioning unit when in automatic mode. 
+\item Error handling and recovery
+\label{sec-3-1-5-6-5}
+
+If the air conditioning unit is in failure mode, it must be fixed before the states can be changed. 
+\item Relationship of output to inputs
+\label{sec-3-1-5-6-6}
+
+In manual mode, when the driver changes the state of the air conditioning unit, the state is sent to the train to control the state of the air conditioning unit. 
+
+In automatic mode, the temperature from the train's thermometer is sent to the Train Controller, and based on its value, changes the state of the air conditioning unit. 
+\item Input/Output sequences
+\label{sec-3-1-5-6-7}
+
+In manual mode, the state of the selected train's air conditioning unit is displayed to the Train Controller. When the user changes the state of the air conditioning unit, the new state is sent to the train's air conditioning unit and is updated to mimic the new state. 
+
+In automatic mode, the state of the selected train's air conditioning unit is displayed to the Train Controller. Using the thermometer on the train, the temperature is sent to the Train Controller. Based on the value of the temperature, the Train Controller will change the state of the air conditioning unit. The new state will then be sent to the train to update the air conditioning unit with the new state. 
+\item Formulas for input to output conversion
+\label{sec-3-1-5-6-8}
+
+The temperature is retrieved in Celsius, and must be converted to Fahrenheit. The equation is: F = (C)*1.8 + 32.
+\end{enumerate}
+\item Heating
+\label{sec-3-1-5-7}
+
+The heating unit should be turned on when the thermometer drops below a certain temperature, and off when the thermometer reaches a certain temperature.
+\begin{enumerate}
+\item Validity checks on inputs
+\label{sec-3-1-5-7-1}
+
+In automatic mode, the heating unit is controlled automatically based on the temperature read by the train's thermometer.
+
+In manual mode, the set temperature can't be higher than heater will allow. If it is set higher, then it will default to the highest allowed temperature.
+
+The temperature is not able to be changed if you are in a failure mode.
+\item Exact sequence of operations
+\label{sec-3-1-5-7-2}
+
+In automatic mode, the heating unit is turned on and off automatically depending on the temperature determined by the train's thermometer. The state of the heating unit is sent and displayed by the Train Controller.  
+
+In manual mode, the heating unit is turned on and off by the driver regardless of the temperature determined by the thermometer. When the user changes the state of the heating unit, the new state is sent to the train.  
+\item Responses to abnormal situations
+\label{sec-3-1-5-7-3}
+
+If the heating unit is in failure mode, the state cannot be changed until it is fixed. 
+\item Communication facilities
+\label{sec-3-1-5-7-4}
+
+Changing the state of the heating unit sends the new state to the train. The temperature from the thermometer is sent to the Train Controller to control the heating unit when in automatic mode. 
+\item Error handling and recovery
+\label{sec-3-1-5-7-5}
+
+If the heating unit is in failure mode, it must be fixed before the states can be changed. 
+\item Relationship of output to inputs
+\label{sec-3-1-5-7-6}
+
+In manual mode, when the driver changes the state of the heating unit, the state is sent to the train to control the state of the heating unit.
+
+In automatic mode, the temperature from the train's thermometer is sent to the Train Controller, and based on its value, changes the state of the heating unit. 
+\item Input/Output sequences
+\label{sec-3-1-5-7-7}
+
+In manual mode, the state of the selected train's heating unit is displayed to the Train Controller. When the user changes the state of the heating unit, the new state is sent to the train's heating unit.
+
+In automatic mode, the state of the selected train's heating unit is displayed to the Train Controller. Using the thermometer on the train, the temperature is sent to the Train Controller. Based on the value of the temperature, the Train Controller will change the state of the heating unit. The new state will then be sent to the train to update the heating unit with the new state.
+\item Formulas for input to output conversion
+\label{sec-3-1-5-7-8}
+
+The temperature is retrieved in Celsius, and must be converted to Fahrenheit. The equation is: F = (C)*1.8 + 32.
+\end{enumerate}
+
+\item Communication
+\label{sec-3-1-5-8}
+\begin{enumerate}
+\item Inputs
+\label{sec-3-1-5-8-1}
+\begin{enumerate}
+\item Suggested Speed
+\label{sec-3-1-5-8-1-1}
+\begin{enumerate}
+\item Used for?
+\label{sec-3-1-5-8-1-1-1}
+
+Suggested speed is used to determine the speed of the train. If in manual mode, the train cannot go faster than the suggested speed. 
+\item Checks to do
+\label{sec-3-1-5-8-1-1-2}
+
+Checks to make sure that the suggested speed is not higher than the block speed. If it is, then the suggested speed is ignored. 
+\item From where?
+\label{sec-3-1-5-8-1-1-3}
+
+The suggested speed is determined from the train model, who gets the suggested speed from the track model. The suggested speed is set by the CTC.
+\end{enumerate}
+\item Block Speed
+\label{sec-3-1-5-8-1-2}
+\begin{enumerate}
+\item Used for?
+\label{sec-3-1-5-8-1-2-1}
+
+In manual mode, block speed is used to determine the max speed the driver can set the speed of the train to.
+\item Checks to do
+\label{sec-3-1-5-8-1-2-2}
+
+Checks to make sure that the speed of the train and/or the set speed is not greater than the block speed. 
+\item From where?
+\label{sec-3-1-5-8-1-2-3}
+
+The block speed is determined by the current block the train is in. This is determined by the GPS on board the train.
+\end{enumerate}
+\item Authority
+\label{sec-3-1-5-8-1-3}
+\begin{enumerate}
+\item Used for?
+\label{sec-3-1-5-8-1-3-1}
+
+Authority is used to determine how far (in distance) the train is permitted to travel.
+\item Checks to do
+\label{sec-3-1-5-8-1-3-2}
+
+Check to make sure that the authority does not contain any alphanumeric (A-Z, a-z) or special characters (\%, !, *, etc..).
+\item From where?
+\label{sec-3-1-5-8-1-3-3}
+
+Authority is picked up by the train model from the track. The authority is initially set by the dispatcher.
+\end{enumerate}
+\item Kp
+\label{sec-3-1-5-8-1-4}
+\begin{enumerate}
+\item Used for?
+\label{sec-3-1-5-8-1-4-1}
+
+Used to determine the power the train must produce to reach the set speed. 
+\item From where?
+\label{sec-3-1-5-8-1-4-2}
+
+Kp is set by the engineers, and can be configured from the train controller GUI.
+\end{enumerate}
+\item Ki
+\label{sec-3-1-5-8-1-5}
+\begin{enumerate}
+\item Used for?
+\label{sec-3-1-5-8-1-5-1}
+
+Used to determine the power the train must produced to reach the set speed.  
+\item From where?
+\label{sec-3-1-5-8-1-5-2}
+
+Ki is set by the engineers, and can be configured from the train controller GUI.
+\end{enumerate}
+\end{enumerate}
+\item Outputs
+\label{sec-3-1-5-8-2}
+\begin{enumerate}
+\item Train's Set Speed
+\label{sec-3-1-5-8-2-1}
+\begin{enumerate}
+\item Used for?
+\label{sec-3-1-5-8-2-1-1}
+
+Used to set a new speed for the selected train.
+\end{enumerate}
+\item Initiate Emergency Brake
+\label{sec-3-1-5-8-2-2}
+\begin{enumerate}
+\item Used for?
+\label{sec-3-1-5-8-2-2-1}
+
+Used to initiate the emergency brake of the selected train.
+\item To where?
+\label{sec-3-1-5-8-2-2-2}
+
+Sends a signal to the train's brake control unit to initiate the emergency brakes on the train.
+\end{enumerate}
+\item Initiate Service Brake
+\label{sec-3-1-5-8-2-3}
+\begin{enumerate}
+\item Used for?
+\label{sec-3-1-5-8-2-3-1}
+
+Used to initiate the service brakes of the selected train.
+\item To where?
+\label{sec-3-1-5-8-2-3-2}
+
+Sends a signal to the train's brake control unit to initiate the service brakes on the train.
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+\item Failure Modes
+\label{sec-3-1-5-9}
+
+The Train Controller relays the failures of the selected train to the user. If in manual mode, the driver can send a request to fix the failure. If in automatic mode, the train will automatically dispatch a request to fix the failures when they occur. 
+\begin{enumerate}
+\item Antenna Failure:
+\label{sec-3-1-5-9-1}
+\begin{enumerate}
+\item What does it mean?
+\label{sec-3-1-5-9-1-1}
+
+An antenna failure means that the antenna on the train is not working properly or communication between the antenna is broken.  
+\item When does it occur?
+\label{sec-3-1-5-9-1-2}
+
+An antenna failure occurs when the antenna no longer sends a signal.
+\item Which modules are affected?
+\label{sec-3-1-5-9-1-3}
+
+The train model, and MBO and Scheduler are affected by the failure since there is no longer a way to get information to and from the train. 
+\item How do you recover?
+\label{sec-3-1-5-9-1-4}
+
+The CTC must dispatch a repair crew to go out to the train and fix the train.
+Once the repair is made, the signal from the antenna will be picked up again, and will be reflected to the Train Controller.
+
+In manual mode, the user must manually send a request to fix the antenna. 
+
+In automatic mode, when the failure is detected, the Train Controller will automatically send a request to the CTC.
+\end{enumerate}
+
+\item Brake Failure:
+\label{sec-3-1-5-9-2}
+\begin{enumerate}
+\item What does it mean?
+\label{sec-3-1-5-9-2-1}
+
+Brake failure indicates that the brakes on the train no longer are operational. 
+\item Which modules are affected?
+\label{sec-3-1-5-9-2-2}
+
+The train model is affected by the failure since there is no longer a way to stop the train.
+\item How do you recover?
+\label{sec-3-1-5-9-2-3}
+
+The CTC must dispatch a repair crew to go out to the train and fix the train. 
+
+In manual mode, the driver must manually send a request to fix the antenna. 
+
+In automatic mode, the Train Controller will automatically send a request to the CTC to send a repair crew when the failure is detected.
+\end{enumerate}
+
+\item Power Failure:
+\label{sec-3-1-5-9-3}
+\begin{enumerate}
+\item What does it mean?
+\label{sec-3-1-5-9-3-1}
+
+Power failure means that the utilities on the train (A/C, Heat, Lights, and Doors) are no longer operational. These utilities will be displayed in the failure state on the Train Controller. 
+\item Which modules are affected?
+\label{sec-3-1-5-9-3-2}
+
+The train model is affected by this failure since there is no way to control the train's utilities. 
+\item How do you recover?
+\label{sec-3-1-5-9-3-3}
+
+The CTC must dispatch a repair crew to go out to the train and fix the train. 
+Once the repair is made, the signal from the utilities will be picked up again, and will be reflected to the Train Controller.
+
+In manual mode, the driver must manually send a request to fix the utilities. 
+
+In automatic mode, the Train Controller will automatically send a request to the CTC to send a repair crew when the failure is detected.
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+\subsubsection{Scheduler/MBO}
+\label{sec-3-1-6}
+\begin{enumerate}
+\item Schedules
+\label{sec-3-1-6-1}
+\begin{enumerate}
+\item Create Driver Schedule
+\label{sec-3-1-6-1-1}
+
+A schedule for the train drivers should be created from the given input.
+
+The user can provide an expected throughput and the minimum number of drivers should be returned.
+
+The user can enter in a number of drivers and the MBO should notify the user whether or not that is sufficient to handle the throughput.
+\begin{enumerate}
+\item Validity checks on inputs
+\label{sec-3-1-6-1-1-1}
+
+The throughput will be checked to make sure that it contains digits (0-9), and does not contain any alphanumeric (A-Z), or special (\&,*,!,@, etc..) characters.  
+
+If the number of drivers is not sufficient to support the throughput, the user should be notified.
+
+The user should be notified if the throughput they entered was negative or too high for the system to handle.
+\item Exact sequence of operations
+\label{sec-3-1-6-1-1-2}
+
+The user should first request a throughput. A train schedule will be generated based upon the track information. The driver' schedules will be created based upon the train schedule.
+\item Communication facilities
+\label{sec-3-1-6-1-1-3}
+
+Gets the throughput from the user.
+\end{enumerate}
+\item Create Train Schedule
+\label{sec-3-1-6-1-2}
+
+A schedule for the trains should be created from the given input taken from the excel file, taking into account increased demand at rush hours.
+\begin{enumerate}
+\item Validity checks on inputs
+\label{sec-3-1-6-1-2-1}
+
+The input should be checked to make sure that each train completes its route in a cycle.
+\item Exact sequence of operations
+\label{sec-3-1-6-1-2-2}
+
+Route times should be checked to find the minimum number of trains necessary to make the schedule.
+
+Trains should be checked to make sure they are within safe braking distance.
+A schedule for the trains should be created from the given input taken from the excel file, taking into account increased demand at rush hours.
+\item Responses to abnormal situations
+\label{sec-3-1-6-1-2-3}
+
+Trains should return to the yard at to add cars before rush hour, and remove cars after rush hour.
+\item Communication facilities
+\label{sec-3-1-6-1-2-4}
+
+The user will load an excel file of the train routes before the program starts.
+\end{enumerate}
+\item Display Driver Schedule
+\label{sec-3-1-6-1-3}
+
+The driver's schedules that was created should be displayed and view-able through the office. Key should be included to help interpret.
+\begin{enumerate}
+\item Exact sequence of operations
+\label{sec-3-1-6-1-3-1}
+
+The data should be read in from how it was stored. It should be interpreted and loaded into the GUI for display.
+\end{enumerate}
+\item Display Train Schedule
+\label{sec-3-1-6-1-4}
+
+The trains' schedules that was created should be displayed and view-able through the office. Key should be included to help interpret.
+\begin{enumerate}
+\item Exact sequence of operations
+\label{sec-3-1-6-1-4-1}
+
+The data should be read in from how it was stored. It should be interpreted and loaded into the GUI for display.
+\end{enumerate}
+\end{enumerate}
+\item Monitor Trains
+\label{sec-3-1-6-2}
+
+All trains and their variance should be displayed.
+\begin{enumerate}
+\item Exact sequence of operations
+\label{sec-3-1-6-2-0-1}
+
+The GPS data of the trains should be displayed.
+
+The variance between this GPS data and their scheduled data should be displayed.
+\item Communication facilities
+\label{sec-3-1-6-2-0-2}
+
+All track/block information as well as the speed/authority/GPS location of trains comes from the wayside controller.
+\end{enumerate}
+\item Switch Mode
+\label{sec-3-1-6-3}
+
+The MBO will have to handle setting things up when the mode is changed by the CTC.
+\begin{enumerate}
+\item Exact sequence of operations
+\label{sec-3-1-6-3-1}
+
+When switching from MBO mode to fixed block overlay mode the track is checked to see whether two or more trains are in the same block. If they are not, the mode is switched to MBO mode. If they are, a "shutdown" procedure will have to occur before the mode can be switched. In order to make the switch over no two trains can be in the same block. The speeds and authorities of the trains should be adjusted so that the trains are spread out to no more than one per block. Once this is done, control is transferred to fix block mode.
+
+When switching from fixed block overlay mode to MBO mode, control can be transferred immediately.
+\item Communication facilities
+\label{sec-3-1-6-3-2}
+
+The CTC will have to provide the MBO with the locations of the trains.
+\end{enumerate}
+\item Communication
+\label{sec-3-1-6-4}
+\begin{enumerate}
+\item Inputs
+\label{sec-3-1-6-4-1}
+\begin{enumerate}
+\item Mode
+\label{sec-3-1-6-4-1-1}
+\begin{enumerate}
+\item From where?
+\label{sec-3-1-6-4-1-1-1}
+
+CTC
+\item Used for?
+\label{sec-3-1-6-4-1-1-2}
+
+Determine whether schedule is in MBO mode.
+\end{enumerate}
+\item Train Information
+\label{sec-3-1-6-4-1-2}
+\begin{enumerate}
+\item From where?
+\label{sec-3-1-6-4-1-2-1}
+
+Trains
+\item Used for?
+\label{sec-3-1-6-4-1-2-2}
+
+Monitoring/Displaying trains
+\end{enumerate}
+\end{enumerate}
+\item Outputs
+\label{sec-3-1-6-4-2}
+\begin{enumerate}
+\item Schedule
+\label{sec-3-1-6-4-2-1}
+\begin{enumerate}
+\item Used for?
+\label{sec-3-1-6-4-2-1-1}
+
+Displaying to dispatcher. 
+\item To where?
+\label{sec-3-1-6-4-2-1-2}
+
+CTC
+\end{enumerate}
+\item Speed/Authority
+\label{sec-3-1-6-4-2-2}
+\begin{enumerate}
+\item To where?
+\label{sec-3-1-6-4-2-2-1}
+
+CTC
+\item Used for?
+\label{sec-3-1-6-4-2-2-2}
+
+Giving a suggestion of speed and authority to wayside to communicate to trains.
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+\subsection{Non-functional Requirements}
+\label{sec-3-2}
+\subsubsection{Performance}
+\label{sec-3-2-1}
+\begin{enumerate}
+\item The system should be capable of running at wall-clock time.
+\item The system should be capable of running at 10 times speed.
+\item The system should have an automatic mode with scenarios in order to demo the system.
+\end{enumerate}
+\subsubsection{Reliability}
+\label{sec-3-2-2}
+\begin{enumerate}
+\item The system must be safety critical.
+\end{enumerate}
+\subsubsection{Availability}
+\label{sec-3-2-3}
+\begin{enumerate}
+\item The program must be able to run on Windows 10 with Java 8 installed.
+\item The program can be run from it's executable JAR file.
+\end{enumerate}
+\subsubsection{Security}
+\label{sec-3-2-4}
+The computer that this program will be running on is expected to have its own security. No special protection was built into this application.
+
+\subsubsection{Maintainability}
+\label{sec-3-2-5}
+The system shall be maintained until April 27, 2016.
+
+Each module should be capable of functioning on its own.
+\subsubsection{Portability}
+\label{sec-3-2-6}
+The program will be able to run on Windows 10 with Java 8 installed.
+\subsection{Logical Database Requirements}
+\label{sec-3-3}
+The data for the track model shall be input in to the system through an excel document. We will have a python script parse this file and insert it into a database. This database should then provide the necessary information to the appropriate modules.
+\subsection{Design Constraints}
+\label{sec-3-4}
+
+\begin{enumerate}
+\item The system shall be submitted as an executable.
+\item The executable should be able to run on Windows 10.
+\item The system is to be coded primarily in Java, with Python to help with scripting.
+\item Each module will have a Graphical User Interface (GUI) for ease of use.
+\item Its user interface was created using Eclipse's WindowBuilder plug-in.
+\item The system must be adaptable for different track layouts.
+\item The system is a safety critical application.
+\end{enumerate}
+
+\section{Appendices}
+\label{sec-4}
+\subsection{User Interface Diagrams}
+\label{sec-4-1}
+
+See the user manual for detailed user interface diagrams.
+% Emacs 24.5.1 (Org mode 8.2.10)
+\end{document}

@@ -1,0 +1,144 @@
+*** Wayside Controller
+
+**** Display
+***** CTC Display
+A list of trains and their speed and authorities from the CTC will be displayed.
+****** Validity checks on inputs
+****** Exact sequence of operations
+Values communicated to wayside unit, displayed on console.
+****** Responses to abnormal situations
+****** Overflow
+****** Communication facilities
+CTC
+****** Error handling and recovery
+****** Effect of parameters
+****** Relationship of output to inputs
+****** Input/Output sequences
+****** Formulas for input to output conversion
+Units shown will be calculated in metric as given/supplied and converted to imperial for display.
+
+***** Track Model Display
+A list of blocks, selectable by line and segment, will be display with relevant information.
+****** Validity checks on inputs
+****** Exact sequence of operations
+****** Responses to abnormal situations
+****** Overflow
+****** Communication facilities
+Track Model
+****** Error handling and recovery
+****** Effect of parameters
+****** Relationship of output to inputs
+****** Input/Output sequences
+****** Formulas for input to output conversion
+Units shown will be calculated in metric as given/supplied and converted to imperial for display.
+
+***** Message Board
+Relevant information that doesn't apply to other two displays will appear here, such as debugging statuses, failure notices, syntax errors in PLC code.
+****** Validity checks on inputs
+****** Exact sequence of operations
+****** Responses to abnormal situations
+****** Overflow
+****** Communication facilities
+****** Error handling and recovery
+****** Effect of parameters
+****** Relationship of output to inputs
+****** Input/Output sequences
+****** Formulas for input to output conversion
+Units shown will be calculated in metric as given/supplied and converted to imperial for display.
+
+**** Control
+***** PLC
+The user will be able to load in a PLC program, supplying a file path or browsing for the file.
+****** Validity checks on inputs
+File not found or does not exist.
+PLC file contains errors or is not valid.
+****** Exact sequence of operations
+User loads in file, and once loaded, PLC unit controls state of track using boolean logic to determine signals to send to track model components.
+****** Responses to abnormal situations
+****** Overflow
+****** Communication facilities
+****** Error handling and recovery
+****** Effect of parameters
+****** Relationship of output to inputs
+Outputs will vary on inputs from the CTC and Track Model.
+****** Input/Output sequences
+PLC unit will take in speed/authority suggestions from CTC, as well as block occupancy and associated block information (lights, crossings, etc) from track model.
+****** Formulas for input to output conversion
+Units shown will be calculated in metric as given/supplied and converted to imperial for display.
+
+***** Testing
+A test console will be available for the user to simulate (for testing/debugging purposes) inputs coming into the wayside unit to observe its behavior.
+****** Validity checks on inputs
+****** Exact sequence of operations
+User opens test console, fixes desired track & train info, and clicks "OK" to give wayside specified information.
+****** Responses to abnormal situations
+****** Overflow
+****** Communication facilities
+****** Error handling and recovery
+****** Effect of parameters
+****** Relationship of output to inputs
+****** Input/Output sequences
+
+**** Communication
+
+***** Inputs
+
+****** Speed/Authority Suggestion
+******* From where?
+CTC
+******* Checks to do
+Make sure it is a valid suggestion.
+******* Used for?
+Setting speed/authority of desired train.
+
+****** Block Occupancy
+******* From where?
+Track Model
+******* Checks to do
+******* Used for?
+Determining occupied/unoccupied sections of track.
+
+****** Railroad Crossing Status
+******* From where?
+Track Model
+******* Checks to do
+******* Used for?
+Determining active/inactive railroad crossings.
+
+****** Switch Status
+******* From where?
+Track Model
+******* Checks to do
+******* Used for?
+Determining position of a switch.
+
+****** Lights Status
+******* From where?
+Track Model
+******* Checks to do
+******* Used for?
+Determining active/inactive lights.
+
+****** Track Heater Status
+******* From where?
+Track Model
+******* Checks to do
+******* Used for?
+Determining on/off status of track heaters.
+
+***** Outputs
+
+****** Track State
+******* To where?
+CTC
+******* Checks to do
+******* Used for?
+Displaying light status, switch status, railroad crossing status, block occupancy, and other information about block to the Dispatcher.
+
+****** Track State Manipulations
+******* To where?
+Track Model
+******* Checks to do
+PLC code will determine outputs to change state of track.
+******* Used for?
+Sending signals to track model in order to change the direction of a switch, turn on or off a light, activate/deactivate a railroad crossing, set speed/authority for a train.

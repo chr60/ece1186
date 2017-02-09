@@ -1,0 +1,253 @@
+*** Train Model
+
+**** Calculate Physics
+
+***** Power Command
+Calculate the correct amount of power to supply in order to achieve the correct speed.
+****** Validity checks on inputs
+The power command obtained as input from the train controller, will be verified to be greater than or equal to 0. 
+The trains cannot operate in reverse therefore the set speed assigned by the train controller must either be setting the train to a positive speed or telling the train to stop (power command of 0).
+****** Exact sequence of operations
+The train controller will set a speed for the train to follow. This speed will either be set by the driver (in manual mode) or the wayside (in automatic mode).
+This set speed will then be converted into a power command based on the current velocity of the train and the speed desired by the controller. 
+The corresponding power command will be sent to the train controller and using internal calculations of the train model the set speed for the train will be met.
+****** Responses to abnormal situations
+If there is any sort of failure in the system that effects the train model, the power command will be overridden and set to 0. This will cause the service brakes to activate to slow down the train whenever possible.
+****** Communication facilitates
+The current velocity will be obtained from the train model and passed on to the train controller.
+The power command based on current velocity will be communicated back from the train controller to the train model.
+****** Error handling and recovery
+Any sort of error or failure will result in the activation of the service or emergency brakes in order to bring the train to a complete stop. 
+The recovery process will require the CTC to send maintence to recover the train and resolve the error.
+****** Effect of parameters
+The parameters that will be used for this calculation include current velocity, power command, mass, and acceleration/decceleration rates.
+The only parameter that will change in this senario is the current velocity of the train model.
+****** Relationship of output to inputs
+The output of the train controller will be a power command to meet the set speed assigned in the module and this will translate into an input to the train model.
+The output of the train model will be the current velocity derived from this calculation and will translate into an input passed back to the train controller.
+****** Input/Output sequences
+If the power command results in a larger speed than the current velocity, the train will accelerate to meet the set speed by the train controller.
+If the power command results in a speed lower than the current velocity, the train will decelerate to meet the set speed by the train controller.
+If the power command results in a speed of zero the service brakes will be applied until the train comes to a full stop.
+
+***** Current Velocity 
+Calculate the current velocity of the train in observation.
+****** Validity checks on inputs
+The current velocity of the train must be a positive value as the trains in this system can not operate in reverse.
+The input to calculate the current velocity will be the power command setting the setpoint speed for the train and this value will be verified as detailed above.
+****** Exact sequence of operations
+The Power command input from the train controller will be taken into the train model computation sequence.
+The current velocity will be computed based on the error between the new set speed and the current speed.
+This velocity will be based on mass, acceleration, and friction on the track.
+****** Responses to abnormal situations
+If there is any sort of failure in the system that effects the train model, the current velocity will be decreased to 0 as the train comes to a full stop.
+****** Communication facilitates
+The current velocity will be computed in the train model and passed on to the train controller.
+The train controller will use the current velocity to compute the required power command to send back to the train model to meet the set speed of the train.
+****** Error handling and recovery
+Any sort of error or failure will result in the activation of the service or emergency brakes in order to bring the train to a complete stop. 
+The recovery process will require the CTC to send maintence to recover the train and resolve the error.
+****** Effect of parameters
+The parameters that will be used for this calculation include power command, mass, and acceleration/decceleration rates.
+The only parameter that will change in this senario is the current velocity of the train model.
+****** Relationship of output to inputs
+The output of the train controller will be a power command to meet the set speed assigned in the module and this will translate into an input to the train model.
+The output of the train model will be the current velocity derived from this calculation and will translate into an input passed back to the train controller.
+****** Input/Output sequences
+If the power command is larger than the current speed the current velocity will increase to match the set speed for the train.
+If the power command is smaller than the current speed the current velocity will decrease to match the set speed for the train.
+If the power command calls for a stop the current velocity will be decreased to bring the train to a complete stop before continuing.
+
+***** Safe Braking Distance
+Calculate the safe braking distance for the train (Service and emergency). 
+****** Validity checks on inputs
+If the trains Authority obtained from the track model is smaller than or equal to the safe braking distance of the train, the train will apply the service brakes to bring the train to a full stop until a new authority is passed to the train model.
+****** Exact sequence of operations
+The train model will take in the number of passengers onboard and compute the total mass of the train including passenger weight. 
+The maximum decceleration for each type of brake will be used to compute the safe braking distance based on the current speed and weight of the train.
+The safe braking distance will then be compared to the current authority and if it exceeds the authority of the train it will cause the service brakes to engage. 
+****** Responses to abnormal situations
+There are some abnormal situations that may arise that would effect the safe braking distance, such as a system failure, or a sudden change in authority. The response to any abnormal situation will always be to engage the service or emergency brakes and stop the train as soon as possible. 
+****** Communication facilities
+The safe braking distance will be calculated using data stored in the train model and will be compared to the authority sent from the track model.
+****** Error handling and recovery
+Any sort of error or failure will result in the activation of the service or emergency brakes in order to bring the train to a complete stop. 
+The recovery process will require the CTC to send maintence to recover the train and resolve the error.
+****** Effect of parameters
+The parameters that will be used for this calculation include total mass, Authority, and maximum decceleration. 
+The only parameter that will change in this senario is the safe braking distance of the train model.
+****** Relationship of output to inputs
+The output of this calculation will be used as a test case for authority within the train model, before increasing or decreasing speed to satisfy a power command.
+****** Input/Output sequences
+The Authority will be input to the train model via the track model and this input will be passed into the safe braking distance calculation. 
+Based on the mass and current speed the safe braking distance will be computed by the train model and compared to the authority.
+An output verifying that the authority is larger than the safe braking distance will be passed out through the system to the further part of the calculation. 
+
+
+
+**** Communication
+A major role of the train model is to display train data and statuses based on inputs and outputs required to be displayed on to the user. 
+***** Inputs
+Various inputs will be passed into the train model and will be used for calculations or as status displays for the user.
+****** Power Command
+******* Used for?
+The power command will be used to determine what speed to increase or decrease the train to. This power command will be computed in the train controller based on the set speed and the current velocity of the train
+******* Checks to do
+The train model will check that the power command is a positive value which either increases or decreases the current velocity of the train. If the value is less than the current velocity, the train will decelerate to the set speed. If the power command is greater than the current velocity, the train will accelerate to the set speed.
+******* From where?
+The power command input will be sent to the train model from the train controller module.
+
+****** Authority
+******* Used for?
+The authority of the train will be passed to the train model to display to the user how fair the train can travel before its required to stop. 
+This value will be used as a to verify the safe braking distance of the train model.
+******* Checks to do
+The authority will be checked to verify that the distance is greater than the safe braking distance of the train to ensure there will not be a problem with continuing at the current speed.
+******* From where?
+The authority will be assigned by the track controller and passed to the train model via the train controller 
+
+****** Right/Left Door Status
+******* Used for?
+The status of the left and right doors will be displayed as part of the train model interface. 
+This input will be set to open, closed , or failure based on the state of each set of doors. 
+The doors will be opened at each station to allow passengers to embark and closed while train is in operation.
+******* Checks to do
+The status of the doors will be checked to be open or closed and this value will be displayed to the console. 
+A status change can be passed onto the train model and this will be changed to match on the display.
+The door status will be checked for a failure status and this will also be displayed on the console in place of open or closed.
+******* From where?
+In manual mode the driver will operate the closing and opening of doors and the input will be recieved from the train controller.
+In automatic mode the train controller will automatically open and close doors at arrival and departure at each station.
+
+****** Interior Light Status
+******* Used for?
+The status of the interior lights will be displayed as part of the train model interface. 
+This input will be set to on,off, or failure based on the state of the lights. 
+******* Checks to do
+The status of the lights will be checked to be on or off and this value will be displayed to the console. 
+A status change can be passed onto the train model and this will be changed to match on the display.
+The interior light status will be checked for a failure status and this will also be displayed on the console in place of on or off.
+******* From where?
+The interior lights will be controlled by the train controller and the input changing the status will be sent to the train model.
+
+****** Temperature/Thermostat Status
+******* Used for?
+The current temperature of the train will be monitored by the train and this value will be set by the internal testing system.
+The thermostat setting will also be displayed on the train model to meet the needs of the train. 
+The thermostat will be used to increase or decrease onboard temperature based on the current temp.
+******* Checks to do
+The thermostat setting will be checked to be a valid positive value.
+If the thermostat setting is larger than the current temperature the temperature will be increased to match.
+If the thermostat setting is larger than the current temperature, the temperature will be decreased to match.
+******* From where?
+The thermostat input will be send via the train controller to the train model.
+In manual mode the driver will  set the thermostat setting using the train controller interface.
+In automatic mode the train controller will automatically adjust the thermostat to keep the train at the ideal temperature programmed by the system.
+
+
+****** Service/Emergency Brakes
+******* Used for?
+The service and emergency brakes will be used to deccerate the train of bring the train to a full stop.
+The service brake will be used in typical senarios where the speed is needed to decrease to be below a speed limit or to come to a halt at the station.
+The emergency brake will be used in abnormal situations such as failures or sudden change in authority or drastic drop in speed which will not be met with the decceration rate of the service brakes.
+******* Checks to do
+The Service brakes will be checked to be on, off, or in a state of failure. 
+If the service brakes are on the train will deccerate as needed to meet the speed setpoint of the train.
+If the service brakes are in a state of failure the emergency brakes will be used in this scenario.
+******* From where?
+The service brake status will be sent via the train controller.
+In manual mode the driver will engage the service brakes to bring the train to halt. 
+In automatic mode the service brakes will engage and disegage automatically to decrease speed or bring the train to a halt at the stations.
+The emergency brake input will be sent via the train controller.
+The Emergency brake can be engaged either manually by the driver or by any passenger on board.
+
+***** Outputs 
+Various outputs will be recorded and passed out of the train model and will be used internally as well as in other models
+
+****** Current Velocity
+******* Used for?
+The primary output of the train model is the current velocity of the train. This value will be used to compute the power command based on the difference between the current speed and the setpoint speed.
+******* Checks to do
+The model will check that the current velocity is positive and that the power command will either increase or decrease the speed to match the setpoint.
+******* To where?
+The current velocity will be output to the train controller which will use the difference between the current velocity and the setpoint speed to determine the power command required.
+
+****** Height/Width
+******* Used for?
+The height and width of the train will be maintained and displayed as part of the train model console.
+These values are constant and will be used as reminders for height and width clearance for the train primarily when entering stations or tunnels.
+******* Checks to do
+These values will never change so the only checks that will be performed is to verify the height of the train will fit below any infrastructure along the track.
+******* To where?
+This output will be displayed to the train model console and will not be passed to any other system.
+
+****** Length/ number of cars
+******* Used for?
+The length of the train and the number of attached cars will be recorded and monitored by the train model.
+These values will be used to track the maximum passenger count allowed as well as how much space the train is taking up on the track.
+******* Checks to do
+The length of the train will be used primarily in MBO mode when some train may overlap in the same block. This length will be used along with the safe braking distance to minimize failures and train collisions in the system.
+******* To where?
+The length of the train will be sent to the MBO for tracking train locations and occupancy on the track.
+
+****** Passenger/Crew Count
+******* Used for?
+The number of passengers and crew members on board will be tracked by the train model. This number will be stored by the model and added to as passengers embark on a station and subtracted from as they disembark.
+This value will also be used to track the throughput of the train system which will be displayed as part of the CTC module.
+******* Checks to do
+The output will be checked to verify that the total number of passengers and crew do not exceed the maximum capacity of the train.
+Also the check will be made to verify that the number of passengers disembarking does not exceed the number of passengers on board.
+******* To where?
+The number of passengers on board will be stored and displayed to the train model.
+The number will also be output to the CTC to calculate the throughput of the system.
+
+****** Mass
+******* Used for?
+The mass for the train will be recorded and used for all physics calculations within the train model.
+This value will be updated based on the train weight and the weight of all passengers on board.
+******* Checks to do
+The system will check that as passengers embark and disembark the mass will flucuate accordingly. 
+******* To where?
+This output will be displayed to the train model console and will not be passed to any other module.
+
+**** Failure Modes
+
+***** Engine Failure
+****** What does it mean?
+An engine failure means there is a loss of power in train engine and as a result is unable to increase speed as requested.
+****** When does it occur?
+This occurs when Murphy engages the failure command to activate an engine failure on board the system
+****** Which modules are affected?
+The engine failure will directly effect the train model and train controller as this occurs on board the train.
+This will also indirectly affect the track model, track controller and CTC as the current block will need to be shut down until restored.
+****** How do you recover?
+The train will recover from this failure mode with two steps.
+First, the train will come to a full stop as soon as physically possible. This will be performed by the service brakes if possible otherwise the emergency brakes will need to be used.
+Next, the CTC is required to send maintenence to the blocked off track to repair the train engine.
+
+
+***** Brake Failure 
+****** What does it mean?
+A brake failure means there is a failure state in the service brakes on board the train. 
+****** When does it occur?
+This occurs when there is a problem with the braking system. This will be another component controlled by Murphy.
+****** Which modules are affected?
+The brake failure will directly effect the train model and train controller as this occurs on board the train.
+This will also indirectly affect the track model, track controller and CTC as the current block will need to be shut down until restored.
+****** How do you recover?
+The train will recover from this failure mode with two steps.
+First, the train will come to a full stop as soon as physically possible. This will be performed by the emergency brakes since the service brakes are out of operation.
+Next, the CTC is required to send maintenence to the blocked off track to repair the train.
+
+***** Signal Failure
+****** What does it mean?
+The signal failure means there is a failure in the antenna onboard the train and there is loss of communication between the train and the external modules.
+****** When does it occur?
+This occurs as a result of Murphy activating the signal failure button to cause this error on board the train.
+****** Which modules are affected?
+The signal failure will directly effect the train model and train controller as this blocks any communication between the two modules.
+This will also indirectly affect the track model, track controller and CTC as the current block will need to be shut down until restored.
+****** How do you recover?
+The train will recover from this failure mode with two steps.
+First, the train will come to a full stop as soon as physically possible. This will be performed by the service brakes if possible otherwise the emergency brakes will need to be used.
+Next, the CTC is required to send maintenence to the blocked off track to repair the train.

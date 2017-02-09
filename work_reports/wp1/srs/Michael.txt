@@ -1,0 +1,144 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf760
+{\fonttbl\f0\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\margl1440\margr1440\vieww25400\viewh13760\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs26 \cf0 \expnd0\expndtw0\kerning0
+*** Track Model\
+\
+**** Grade and Elevation\
+The track model should consider grade and elevation that is contained in the excel file provided by the user.\
+***** Exact sequence of operations\
+The track model initializes. The track model then recieves signal\
+***** Communication facilities\
+The track model will provide accessors and mutators to the rest of the modules for communication. It will provide scripts to read the excel files. It will assume responsible behavior by the connected modules (e.g. modules that should not access data will not)\
+***** Effect of parameters\
+Different train inputs will result in different outputs.\
+***** Input/Output sequences\
+The input to the track model is an excel file.\
+***** Formulas for input to output conversion\
+Convert km to miles.\
+\
+**** Model Configuration\
+The track model should be able to be configured through user input.\
+***** Validity checks on inputs\
+***** Exact sequence of operations\
+***** Responses to abnormal situations\
+***** Overflow\
+***** Communication facilities\
+***** Error handling and recovery\
+***** Effect of parameters\
+***** Relationship of output to inputs\
+***** Input/Output sequences\
+***** Formulas for input to output conversion\
+\
+\
+**** Track Configuration\
+The track track layout should be able to configured through user input.\
+***** Validity checks on inputs\
+There are no validity checks on the input. It is assumed that the track results in a complete loop.\
+***** Exact sequence of operations\
+The track initializes a Python script that reads the excel file into a serializable format such as JSON or protobuf. It then reads the serialized data into the Java runtime environment and plots the map. Additionally, it will parse the relevant data and store them in a structure for mutability by other components.\
+***** Communication facilities\
+Will provide accessors and constructors to communicate with other parts.\
+***** Error handling and recovery\
+It is assumed that the inputs to the track model are valid and will not be checked. This is due to the track model being \'93dropped out\'94 at the end of the project for a physical model.\
+***** Relationship of output to inputs\
+\pard\pardeftab720\partightenfactor0
+\cf0 The various parameters imputed by the excel file (grade, length, etc.) will results in different tracks being rendered and loaded into the program.\
+***** Input/Output sequences\
+Takes in excel file. Outputs track models.\
+***** Formulas for input to output conversion\
+1m = 3.2 Freedoms\
+\
+**** Block Configuration\
+The tracks block size should be able to edited.\
+***** Validity checks on inputs\
+There will be no validity checks on the input from the excel file. It is assumed that the track is a complete model.\
+\
+**** Signals and Switches\
+The track model should have visible signals and switch machines. These will be shown the visual region.\
+\
+**** Presence Detection\
+The track model should detect whether or not a train is currently on the block.\
+***** Exact sequence of operations\
+Presence detection will be done via the signals sent from the wayside controller.\
+***** Communication facilities\
+The track model will contain the ability to determine the occupancy of a specific grouping of blocks when called by an external program.\
+***** Relationship of output to inputs\
+The track model will receive a signal from the wayside controller on the occupancy of a specific block. The track model will output the occupancy of the block for use by the wayside controller.\
+***** Input/Output sequences\
+***** Formulas for input to output conversion\
+\
+\
+**** Railway Crossings\
+The Track Model should take railway crossings into account.\
+***** Exact sequence of operations\
+The track model receives a setting of either \'93up\'94 or \'93down\'94 for railway crossings and adjusts model parameters accordingly.\
+***** Communication facilities\
+Has an input for the wayside controller to toggle the railway crossings.\
+***** Effect of parameters\
+1 is railway crossing is up, 0 is railway crossing is down.\
+***** Relationship of output to inputs\
+It sets the railway crossing to up or down.\
+***** Input/Output sequences\
+Sets the railway crossing from up or down.\
+\
+**** Loading/Unloading People\
+The track model should populate stations with the number of people loading onto the train and ensure that the passengers on a train doesn't exceed the maximum.\
+The number of people leaving each train should be sent to the track model from the train model.\
+***** Validity checks on inputs\
+Receives input to load people onto train.\
+***** Exact sequence of operations\
+Draws a random number from 1-100 and loads returns it to the train.\
+***** Communication facilities\
+Sends a message to the train model to add people to the train.\
+***** Effect of parameters\
+Adds people to the train.\
+\
+**** Track Heaters\
+The track model should have heaters located at each station.\
+***** Validity checks on inputs\
+Has no input.\
+***** Exact sequence of operations\
+Turns track heaters on if the temperature (in F) is less than 32. Turns them off otherwise.\
+***** Relationship of output to inputs\
+If the temperature is below a threshold, the track heaters are turned on. Else, they are turned off\
+\
+**** Failure Modes\
+\
+***** Broken Rail\
+****** What does it mean?\
+That a rail has been broken or damaged in a way to throw an error.\
+****** When does it occur?\
+When something breaks. This will be simulated randomly.\
+****** Which modules are affected?\
+All of the modules, either directly or indirectly.\
+****** How do you recover?\
+CTC sends a repair crew to fix the broken rail.\
+\
+\
+***** Track Circuit Failure\
+****** What does it mean?\
+The track circuit has been broken.\
+****** When does it occur?\
+When the track circuit connections are disconnected at a physical level. This can occur in situations such as vandalism.\
+****** Which modules are affected?\
+All modules, either directly or indirectly. The track must function.\
+****** How do you recover?\
+CTC sends a repair crew to fix the track circuit failure.\
+\
+\
+***** Power Failure\
+****** What does it mean?\
+The track loses power\
+****** When does it occur?\
+When the track power supply fails.\
+****** Which modules are affected?\
+All modules that require the track to be functioning are affected.\
+****** How do you recover?\
+CTC sends a repair crew to fix the track power failure.\
+}

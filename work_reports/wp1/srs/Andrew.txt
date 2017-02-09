@@ -1,0 +1,296 @@
+#    -*- mode: org -*-
+*** Train Controller
+
+
+**** Decode Track Signal
+The signal from the track circuit should be decoded into a speed limit and authority.
+***** Validity checks on inputs
+***** Exact sequence of operations
+***** Responses to abnormal situations
+***** Overflow
+***** Communication facilities
+***** Error handling and recovery
+***** Effect of parameters
+***** Relationship of output to inputs
+***** Input/Output sequences
+***** Formulas for input to output conversion
+
+
+**** Safety
+***** Speed Limit
+The train should be stopped from exceeding the speed limit.
+****** Validity checks on inputs
+If the train is over the accepted speed limit of the block or the suggested speed set by the CTC, the train's service brakes will be applied to slow down the train to the correct speed. 
+****** Exact sequence of operations
+When the user selects the train from the list of dispatched trains, the system will check to make sure the speed of the train is less than that of the suggested speed (automatic mode), or the speed of the train is less than the block speed (manual mode).
+This will be done by comparing the speed of te train to the suggested speed and block speed found under the Speed Controller and Block Info sections of the Train Controller. 
+****** Responses to abnormal situations
+If either the service brakes or the emergency brakes are down on the train, and cannot be applied to slow the train down, the train will continue at the speed it is going until the train slows down naturally.  
+****** Overflow
+****** Communication facilities
+Determining the speed of the train comes from the tachometer on the train.
+Determining the block speed and the suggested speed comes from the wayside controller and the CTC, respectively. 
+****** Error handling and recovery
+****** Effect of parameters
+****** Relationship of output to inputs
+When the train is selected, the trains speed will be displayed to the Train Controller. If the speed is determined to be faster than required, the brakes on the train will be signaled from the Train Controller to inititate the brakes on the train. 
+****** Input/Output sequences
+The speed of the train is determined from the train. If the speed is faster than the desired speed, the brakes are applied until the train's speed meets the speed limit. 
+****** Formulas for input to output conversion
+The speed is retreived as KPH, but needs to be converted to MPH. 1 KPH is equal to 0.621371 MPH.
+
+***** Authority
+The train should be stopped from exceeding the authority limit.
+****** Validity checks on inputs
+The authority will be checked to make sure that it contains digits (0-9), and does not contain any alphaneumartic (A-Z), and special (&,*,!,@, etc..) characters.  
+****** Exact sequence of operations
+When the authority for the train is received, begin calculating the distance traveled. Once the train reaches the maximum distance, it must then change it's speed to the appropriate speed for the new authority of the block. 
+****** Responses to abnormal situations
+****** Overflow
+****** Communication facilities
+The athority is decoded by the track and picked up by the train model. 
+****** Error handling and recovery
+****** Effect of parameters
+****** Relationship of output to inputs
+The selected train gives the Train Controller its authority to display. 
+****** Input/Output sequences
+****** Formulas for input to output conversion
+Computes the fraction of the distance traveled to the total authority distance, and signals when the fraction equals 1. 
+The authority is retrived in meters, but needs to be converted to miles (mi). 1 m is equal to 0.000621371 mi.   
+
+**** Door Operation
+The appropriate doors should open upon arriving at a station and close before leaving the station.
+***** Validity checks on inputs
+In automatic mode, the doors are controlled automatically by the train when arriving to the station. 
+In manual mode, the doors are controlled by the driver, and it is he responsibility to open/close the doors when arriving and leaving a station. In this mode, the user cannot open or close the doors unless the train's speed is 0 MPH. 
+***** Exact sequence of operations
+When in manual mode, the driver can open/close the left and right doors of the train. When the driver chooses to open/close the doors, the train's speed must be 0 MPH. To prevent any injuries, the doors will not open if the speed of the train is geater than 0 MPH. 
+***** Responses to abnormal situations
+If the doors are in the failure state, the driver cannot change the state of the doors, and must wait until the doors are fixed first. 
+***** Overflow
+***** Communication facilities
+The state that the left and right doors are currently in is determined by train model, and changing the state of the doors is sent to the train model. 
+***** Error handling and recovery
+***** Effect of parameters
+***** Relationship of output to inputs
+When a door is changed from open to close, or vice versa, the new state is sent to the train and changes the state of the door to follow the new state. 
+When a door is changed from open to close, or vice versa, the new state is updated on the Train Controller to display the state of the door.  
+***** Input/Output sequences
+In manual mode, when a train is selected, the Train Controller will the display the states of the left and right doors based on the state determined from the train.
+When the driver changes the state from the Train Controller, the new state is sent to the train, and the correpsonding door is changed to the new state. 
+In automatic mode, when a train is selected the Train Controller will display the states of the left and right doors based on the state determined from the train. 
+In this mode, the doors are controlled by the train when arriving and leaving a station. Then the states are changed on the train, the state of the doors will be reflected on the Train Controller. 
+***** Formulas for input to output conversion
+
+
+**** Announcement System
+The upcoming station should be announced shortly before arriving at the station.
+***** Validity checks on inputs
+In manual mode, the announcement must be picked from the list of available announcements, and cannot be empty when clicking the "Make Announcement" button. 
+***** Exact sequence of operations
+In manual mode, the driver must choose the announcement from the Train Controller, and hit the "Make Announcement" button in order to send the message over the train's speaker system.
+If no valid annoucement is selected when the "Make Annoucnement" button is pressed, a window will appear stating that an error has occured.  
+In automatic mode, the train automatically makes announcements based on the next station and when arriving at the current station. 
+***** Responses to abnormal situations
+***** Overflow
+***** Communication facilities
+The announcement made from the Train Controller must be sent through the train via the speaker system on the train. 
+***** Error handling and recovery
+***** Effect of parameters
+***** Relationship of output to inputs
+When the user chooses to make an annoucement, the message is selected via the dropdown menu, and sent to the train. 
+***** Input/Output sequences
+When the driver chooses the announcement from the dropdown and clicks "Make Announcement" button, the message is sent to the train. The train should the broadcast the message via its speaker system.  
+***** Formulas for input to output conversion
+
+
+**** Operating Lights
+The interior lights should be turned on at night and when in a tunnel.
+They should be turned off at sunrise and when exiting a tunnel.
+***** Validity checks on inputs
+In manual mode, the driver can control the states of the lights using the Train Controller. 
+In automatic mode, the train controls the states of the lights based on the sensors in the train.
+***** Exact sequence of operations
+In manual mode, when the user changes the states of the lights from on to off, or vice versa, the new state of the light is sent to the train, which changes the state of the light to what was selected. 
+When a train is selected, the states of the lights will be displayed to the Train Controller.
+***** Responses to abnormal situations
+If the user tries to change the state of the lights when they are in a failure state, a window will appear stating that the lights must first be fixed. 
+***** Overflow
+***** Communication facilities
+The states of the lights comes from the train. When the state of the lights are changed from the Train Controller, it is sent to the train. 
+When the state of the lights on the train are changed, it is updated to the Train Controller as well. 
+***** Error handling and recovery
+If the lights are in a failure mode, they must first be fixed before they can be chnaged. Trying to chnage the lights while in a failure mode will not work, and will result in a error message. 
+***** Effect of parameters
+***** Relationship of output to inputs
+The state of the lights are determiend by the state of the lights on the train. When any state is chnaged from the Train Controller, it is sent to the train. 
+When the state of the lights are changed on the train, the states are updated on the Train Controller to reflect the new state. 
+***** Input/Output sequences
+When a train is selected, the states of its lights will be reflected on the Train Controller GUI. When any changes are made by the train the new state is picked up by the Train Controller. 
+When any changes are made by the Train Controller, the new state is sent to the train. 
+***** Formulas for input to output conversion
+
+
+**** Air Conditioning
+The air conditioning should be turned on when the thermometer reaches a certain temperature, and off when the thermometer drops below a certain temperature.
+***** Validity checks on inputs
+In automatic mode, the air conditoniing unit is controlled automatically by the train depending on the thermometer on the train. 
+In manual mode, the air conditioning unit is controlled by the user. 
+***** Exact sequence of operations
+In automatic mode, the air conditioning unit is turned on and off automatically depending on the temperature determined by the train's thermometer. The state of the air conditoning unit is sent and displayed by the Train Controller.  
+In manual mode, the air conditioning unit is turned on and off by driver regardless of the temperature determined by the thermometer. When the user changes the state of the air conditioning unit, the new state is sent to the train.  
+***** Responses to abnormal situations
+If the air conditioning unit is in failure mode, the state cannot be changed until it is fixed. 
+***** Overflow
+***** Communication facilities
+Changing the state of the air conditioning unit sends the new state to the train. The temperature from the thermometer is sent to the Train Controller to control the air conditioning unit when in automatic mode. 
+***** Error handling and recovery
+If the air conditioning unit is in failure mode, it must be fixed before the states can be changed. 
+***** Effect of parameters
+***** Relationship of output to inputs
+In manual mode, when the driver chnages the state of the air conditioning unit, the state is sent to the train to control the state of the air conditioning unit. 
+In automatic mode, the temperature from the train's thermometer is sent to the Train Controller, and based on its value, changes the state of the air conditioning unit. 
+***** Input/Output sequences
+In manual mode, the state of the selected train's air conditioning unit is displayed to the Train Controller. When the user changes the state of the air conditioning unit, the new state is sent to the train's air conditioning unit and is updated to mimic the new state. 
+In automatic mode, the state of the selected train's air conditioninh unit is displayed to the Train Controller. Using the thermometer on the train, the temperature is sent to the Train Controller. Based on the value of the temperature, the Train Controller will change the state of the air conditioning unit. The new state will then be sent to the train to update the air conditioning unit with the new state. 
+***** Formulas for input to output conversion
+The temperature is retreived in Celsius, and must be converted to Fahrenheit. The equation is: F = (C)*1.8 + 32; 
+ 
+**** Heating
+The heating unit should be turned on when the thermometer drops below a certain temperature, and off when the thermometer reaches a certain temperature.
+***** Validity checks on inputs
+In automatic mode, the heating unit is controlled automatically based on the temperature read by the train's thermometer.
+In manual mode, the heating unit is controlled by the user. 
+***** Exact sequence of operations
+In automatic mode, the heating unit is turned on and off automatically depending on the temperature determined by the train's thermoeter. The state of the heating unit is sent and displayed by the Train Controller.  
+In manual mode, the heating unit is turned on and off by the driver regardless of the temperature determined by the therometer. When the user changes the state of the heating unit, the new state is sent to the train.  
+***** Responses to abnormal situations
+If the heating unit is in failure mode, the state cannot be changed until it is fixed. 
+***** Overflow
+***** Communication facilities
+Changing the state of the heating unit sends the new state to the train. The temperature from the thermometer is sent to the Train Controller to control the heating unit when in automatic mode. 
+***** Error handling and recovery
+If the heating unit is in failure mode, it must be fixed before the states can be changed. 
+***** Effect of parameters
+***** Relationship of output to inputs
+In manual mode, when the driver changes the state of the heating unit, the state is sent to the train to control the state of the heating unit.
+In automatic mode, the temperature from the train's thermometer is sent to the Train Controller, and based on its value, changes the state of the heating unit. 
+***** Input/Output sequences
+In manual mode, the state of the selected train's heating unit is displayed to the Train Controller. When the user changes the state of the heating unit, the new state is sent to the train's heating unit$
+In automatic mode, the state of the selected train's heating unit is displayed to the Train Controller. Using the thermometer on the train, the temperature is sent to the Train Controller.$ $ Based on the value of the temperature, the Train Controller will change the state of the heating unit. The new state will then be sent to the train to update the heating unit with the new state.
+***** Formulas for input to output conversion
+The temperature is retreived in Celsius, and must be converted to Fahrenheit. The equation is: F = (C)*1.8 + 32;
+
+**** Route Information
+The train should display its route information.
+***** Validity checks on inputs
+***** Exact sequence of operations
+***** Responses to abnormal situations
+***** Overflow
+***** Communication facilities
+***** Error handling and recovery
+***** Effect of parameters
+***** Relationship of output to inputs
+***** Input/Output sequences
+***** Formulas for input to output conversion
+
+
+**** Communication
+***** Inputs 
+****** Suggested Speed
+******* Used for?
+Suggested speed is used to determine the speed of the train. If in manual mode, the train cannot go faster than the suggested speed. 
+******* Checks to do
+Checks to make sure that the suggested speed is not higher than the block speed. If it is, then the suggested speed is ignored. 
+******* From where?
+The suggested speed is determined from the train model, who gets the suggested speed from the track model. The suggested speed is set by the CTC. 
+ 
+****** Block Speed
+******* Used for?
+In manual mode, block speed is used to determine the max speed the driver can set the speed of the train to.
+******* Checks to do
+Checks to make sure that the speed of the train and/or the set speed is not greater than the block speed. 
+******* From where?
+The block speed is determined by the current block the train is in. This is determined by the GPS on board the train. 
+
+****** Authority
+******* Used for?
+Authority is used to determine how far (in distance) the train is permitted to travel.
+******* Checks to do
+Check to make sure that the authority does not contain any alphaneumartic (A-Z, a-z) or special characters (%, !, *, etc..).
+******* From where?
+Authority is picked up by the train model from the track. The authority is initally set by the dispatcher.  
+
+****** Kp
+******* Used for?
+Used to determine the power the train must produce to reach the set speed. 
+******* Checks to do
+******* From where?
+Kp is set by the engineers, and can be configured from the train controller GUI. 
+
+****** Ki
+******* Used for?
+Used to determine the power the train must produced to reach the set speed.  
+******* Checks to do
+******* From where?
+Ki is set by the engineers, and can be configured from the train controller GUI. 
+
+***** Outputs 
+****** Train's Set Speed
+******* Used for?
+Used to set a new speed for the selected train.
+******* Checks to do
+******* To where?
+
+****** Initiate Emergency Brake
+******* Used for?
+Used to initiate the emergency brake of the selected train.
+******* Checks to do
+******* To where?
+Sends a signal to the train's brake control unit to initiate the emergency brakes on the train. 
+
+****** Initiate Service Brake
+******* Used for?
+Used to initiate the service brakes of the selected train.
+******* Checks to do
+******* To where?
+Sends a signal to the train's brake control unit to initiate the service brakes on the train. 
+
+**** Failure Modes
+The Train Controller relays the failures of the selected train to the user. If in manual mode, the driver can send a request to fix the failure. If in automatic mode, the train will automatically dispatch a request to fix the failures when they occur. 
+***** Antenna Failure: 
+****** What does it mean?
+An antenna failure means that the antenna on the train is not working properly or communication between the antenna is broken.  
+****** When does it occur?
+An antenna failure occurs when the antenna no longer sends a signal.
+****** Which modules are affected?
+The train model, and MBO and Schduler are affected by the failure since there is no longer a way to get information to and from the train. 
+****** How do you recover?
+The CTC must dispatch a repair crew to go out to the train and fix the train.
+Once the repair is made, the signal from the antenna will be picked up again, and will be reflected to the Train Controller.
+In manual mode, the user must manually send a request to fix the antenna. 
+In automatic mode, when the failure is detected, the Train Controller will automatically send a request to the CTC.  
+
+***** Brake Failure: 
+****** What does it mean?
+Brake failure indicates that the brakes on the train no longer are operational. 
+****** When does it occur? 
+****** Which modules are affected?
+The train model is affected by the failure since there is no longer a way to stop the train.
+****** How do you recover?
+The CTC must dispatch a repair crew to go out to the train and fix the train. 
+In manual mode, the driver must manually send a request to fix the antenna. 
+In automatic mode, the Train Controller will automatically send a request to the CTC to send a repair crew when the failure is detected. 
+
+***** Power Failure:
+****** What does it mean?
+Power failure means that the utilities on the train (A/C, Heat, Lights, and Doors) are no longer operational. These utilities will be displayed in the failure state on the Train Controller. 
+****** When does it occur?
+****** Which modules are affected?
+The train model is affected by this failure since there is no way to control the train's utilities. 
+****** How do you recover?
+The CTC must dispatch a repair crew to go out to the train and fix the train. 
+Once the repair is made, the signal from the utilities will be picked up again, and will be reflected to the Train Controller.
+In manual mode, the driver must manually send a request to fix the utilities. 
+In automatic mode, the Train Controller will automatically send a request to the CTC to send a repair crew when the failure is detected. 
+

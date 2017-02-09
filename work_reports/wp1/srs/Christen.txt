@@ -1,0 +1,164 @@
+*** Central Train Control Office
+
+
+**** Trains
+***** Routing
+A dispatcher should be able to create a route of a train.
+****** Validity checks on inputs
+****** Exact sequence of operations
+A dispatcher will press the button "Dispatch Train" and it will propagate a pop up window where he/she can select a line, speed and authority.
+This will then dispatch a train from the yard.
+****** Responses to abnormal situations
+****** Overflow
+****** Communication facilities
+Need info from wayside about blocks in order to maintain a fixed block type of schedule.
+****** Error handling and recovery
+Deny a train from being dispatched if block it is entering is not free.
+****** Effect of parameters
+****** Relationship of output to input
+A dispatcher inputs line, speed and authority for a train to then leave the yard.
+****** Input/Output sequences
+****** Formulas for input to output conversion
+
+
+***** Scheduling
+ A dispatcher should be able to choose the type of schedule, automatic and manual, MBO and fixed block. 
+****** Validity checks on inputs
+****** Exact sequence of operations
+A dispatcher will choose will either choose Automatic or Manual mode for the schedule.
+If Automatic is chosen, then dispatcher can choose between MBO and Fixed Block modes. 
+If Manual is chosen, then dispatcher is responsible for manually dispatching trains from the yard.
+****** Responses to abnormal situations
+If communication between MBO and CTC is severed, then the dispatcher will then be notified to dispatch trains via manual mode.
+****** Overflow
+****** Communication facilitates
+The actual schedule is received from the MBO.
+****** Error handling and recovery
+****** Effect of parameters
+****** Relationship of output to inputs
+Depending on the mode of schedule input by the dispatcher, it will affect how trains are being directed around the track.
+****** Input/Output sequences
+****** Formulas for input to output conversion
+
+
+***** Monitoring
+The office should monitor current block statuses as well as the speed and authority of any train on the track.
+****** Validity checks on inputs
+****** Exact sequence of operations
+There are two separate sections which will display either information about a chosen block or a chosen train per the dispatchers choices in the interface.
+****** Responses to abnormal situations
+If communication between the CTC and wayside controller is severed, trains may operate as usual as they can still obtain a schedule or operate in manual mode on their own. However, the CTC will not be able to see any info about the blocks/trains.
+****** Overflow
+****** Communication facilities
+All track/block information as well as the speed/authority/GPS location of trains comes from the wayside controller.
+****** Error handling and recovery
+****** Effect of parameters
+****** Relationship of output to inputs
+A dispatcher will enter either a specific line/segment/block or train and then receive information corresponding to that piece.
+****** Input/Output sequences
+****** Formulas for input to output conversion
+
+
+**** Track Segment
+***** Open/Close Tracks
+The dispatcher should be able to close a block for maintenance, as well as dispatch maintenance to a certain block.
+****** Validity checks on inputs
+****** Exact sequence of operations
+The dispatcher will be alerted to a failure via the far left color-changing block. In the track section of the interface, a dispatcher can select a line/segment/block. Then he/she can select the "Close Track" button followed by the "Send Maintenance" button. Sending maintenance will fix the block and automatically reopen the block.
+****** Responses to abnormal situations
+Should a failure occur, the dispatcher will close and repair a block.
+****** Overflow
+****** Communication facilities
+The wayside controller will be communicating track failures to the CTC.
+****** Error handling and recovery
+****** Effect of parameters
+****** Relationship of output to inputs
+When a dispatcher sends out maintenance/closes a block, then trains will not be allowed to enter this block until it is fixed. 
+****** Input/Output sequences
+****** Formulas for input to output conversion
+
+
+**** Authority/Speed
+The office can determine each train's authority/speed.
+***** Validity checks on inputs
+***** Exact sequence of operations
+In the train portion of the interface, a dispatcher can select the "Authority" button or "Speed" button which will propagate a pop up window. In this window, a dispatcher can input the authority in feet, as well as check which train they are assigning this authority to.
+***** Responses to abnormal situations
+***** Overflow
+***** Communication facilities
+The authority is sent from the CTC to the wayside controller.
+***** Error handling and recovery
+***** Effect of parameters
+***** Relationship of output to inputs
+This indirectly effects the trains speed/authority. The CTC communicates with the wayside who in turn communicates with other members of the communication path.
+***** Input/Output sequences
+***** Formulas for input to output conversion
+
+
+**** System Display
+The office should display information about the entire transit system. Including: train speed/authority, track block status, throughput, switch direction, railway crossing status, light status, track/train failures.
+***** Validity checks on inputs
+***** Exact sequence of operations
+Upon selecting a certain block or train, information from the wayside controller will be displayed.
+***** Responses to abnormal situations
+***** Overflow
+***** Communication facilities
+The wayside controller provides the CTC with this information.
+***** Error handling and recovery
+***** Effect of parameters
+***** Relationship of output to inputs
+***** Input/Output sequences
+***** Formulas for input to output conversion
+
+
+**** Communication
+***** Inputs 
+****** Schedule
+******* From where?
+MBO
+******* Checks to do
+******* Used for?
+Displaying to dispatcher. 
+
+****** Track Information/failures
+******* From where?
+Wayside controller
+******* Checks to do
+******* Used for?
+Displaying to dispatcher.
+
+****** Train Information/failures
+******* From where?
+Wayside controller/MBO
+******* Checks to do
+******* Used for?
+Displaying Speed/Authority to dispatcher.
+
+***** Outputs 
+****** Automatic verus Manual Mode (also MBO versus fixed if automatic is chosen)
+******* To where?
+Wayside controller/MBO
+******* Checks to do
+******* Used for?
+Given to wayside controller to then communicate to trains. Given to MBO to decide which kind of schedule is being run.
+
+****** Close Track/Send Maintenance
+******* To where?
+Wayside controller
+******* Checks to do
+******* Used for?
+Shutting down a block of track so that trains cannot travel on it.
+
+****** Speed/Authority
+******* To where?
+Wayside Controller
+******* Checks to do
+******* Used for?
+Giving a suggestion of speed and authority to wayside to communicate to trains.
+
+****** Dispatch Train (when in manual)
+******* To where?
+Wayside Controller
+******* Checks to do
+******* Used for?
+When in manual mode, and acting outside of a schedule, the dispatcher can dispatch trains from the yard.
