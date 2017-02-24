@@ -56,7 +56,7 @@ public class TrackModel {
 					Double speedLimit = Double.valueOf(str[5]);
 
 					Block myblock = new Block(defaultOccupied, blockLen, blockGrade, elevation, speedLimit, str[6]);
-					TrackModel.addBlock(blockLine, blockSection, blockNum, myblock );
+					trackModel.addBlock(blockLine, blockSection, blockNum, myblock );
 					
 					/*
 					System.out.println(myblock.getOccupied());
