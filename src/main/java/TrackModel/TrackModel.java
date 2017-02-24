@@ -1,3 +1,5 @@
+
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,6 +12,7 @@ import java.io.FileReader;
 /* Class model and some associated utility functions for storing the TrackModel
 */	
 public class TrackModel {
+
 	private static TrackModel trackModel = new TrackModel();
 	public TrackModel(){}
 
@@ -56,7 +59,7 @@ public class TrackModel {
 					Double speedLimit = Double.valueOf(str[5]);
 
 					Block myblock = new Block(defaultOccupied, blockLen, blockGrade, elevation, speedLimit, str[6]);
-					trackModel.addBlock(blockLine, blockSection, blockNum, myblock );
+					TrackModel.addBlock(blockLine, blockSection, blockNum, myblock );
 					
 					/*
 					System.out.println(myblock.getOccupied());
