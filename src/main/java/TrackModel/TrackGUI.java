@@ -1,3 +1,5 @@
+package TrackModel;
+
 
 import java.awt.*;
 import java.awt.event.*;
@@ -15,6 +17,7 @@ import javax.swing.JSeparator;
 import java.awt.Color;
 import java.util.Set;
 import java.util.Arrays;
+import java.util.Properties;
 
 public class TrackGUI {
 
@@ -33,6 +36,7 @@ public class TrackGUI {
 	private JLabel lblSpeedUnit;
 	private JLabel lblOccupied;
 	private JLabel lblCrossingsActive;
+	private JLabel lblIsUnderground;
 	private JToggleButton toggleSignals;
 	private JLabel lblStation;
 	private JTextField txtname;
@@ -42,7 +46,10 @@ public class TrackGUI {
 	private JToggleButton toggleCircuitFailure;
 	private JLabel lblCircuitFailure;
 	private JLabel lblPowerFailure;
+	private JLabel lblToggleUpdate;
 	private JToggleButton togglePowerFailure;
+	private JToggleButton toggleIsUnderground;
+	private JToggleButton toggleUpdate;
 
 	/**
 	 * Launch the application.
@@ -72,36 +79,35 @@ public class TrackGUI {
 	 */
 	private void initialize() {
 
-
+		String[] fNames = {"info/redline.csv", "info/greenline.csv"};
 		//Load up the track model
 		TrackModel track = new TrackModel();
-		track.readCSV();
+		track.readCSV(fNames);
 
-		Set<Integer> blockInts = track.trackList.keySet();
-		String[] blockStrings = new String[blockInts.size()];
+		Set<Integer> blockInts = track.trackList.get("Red").get("A").keySet();
 
 		Integer[] intArr = blockInts.toArray(new Integer[blockInts.size()]);
 
-		for(int i=0;i<blockInts.size();i++){
-			blockStrings[i] = Integer.toString(intArr[i]);
-		}
+		Set<String> lineSet = track.trackList.keySet();
+		String[] lineStrings = lineSet.toArray(new String[lineSet.size()]);
 
 		frame = new JFrame();
 		frame.setBounds(100, 100, 604, 471);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		String[] lineStrings = { "Red Line"};
+
 		JComboBox dropdownLine = new JComboBox(lineStrings);
 		dropdownLine.setBounds(337, 22, 86, 23);
 		frame.getContentPane().add(dropdownLine);
 
 
-		String[] segmentStrings = {"Dummy", "Values"};
+		String[] segmentStrings = {};
 		JComboBox dropdownSegment = new JComboBox(segmentStrings);
 		dropdownSegment.setBounds(420, 22, 86, 23);
 		frame.getContentPane().add(dropdownSegment);
 
+		String[] blockStrings = {};
 		JComboBox dropdownBlock = new JComboBox(blockStrings);
 		dropdownBlock.setBounds(504, 22, 86, 23);
 		frame.getContentPane().add(dropdownBlock);
@@ -117,7 +123,7 @@ public class TrackGUI {
 		//Grade
 		gradeField = new JTextField();
 		gradeField.setHorizontalAlignment(SwingConstants.CENTER);
-		gradeField.setText("FIELD 1");
+		gradeField.setText("#");
 		gradeField.setColumns(10);
 		gradeField.setBounds(450, 81, 86, 23);
 		frame.getContentPane().add(gradeField);
@@ -205,7 +211,7 @@ public class TrackGUI {
 		lblHeaters.setBounds(367, 211, 79, 23);
 		frame.getContentPane().add(lblHeaters);
 
-		JToggleButton toggleHeatersOn = new JToggleButton("N/A");
+		JToggleButton toggleHeatersOn = new JToggleButton("N");
 		toggleHeatersOn.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		toggleHeatersOn.setBounds(450, 211, 45, 23);
 		frame.getContentPane().add(toggleHeatersOn);
@@ -227,16 +233,32 @@ public class TrackGUI {
 		toggleCrossings.setBounds(450, 235, 45, 23);
 		frame.getContentPane().add(toggleCrossings);
 
+		JToggleButton toggleUpdate = new JToggleButton("Update");
+		toggleUpdate.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		toggleUpdate.setBounds(250, 22, 80, 23);
+		frame.getContentPane().add(toggleUpdate);
+
 		lblCrossingsActive = new JLabel("Signals ON?");
 		lblCrossingsActive.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCrossingsActive.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblCrossingsActive.setBounds(347, 259, 99, 23);
 		frame.getContentPane().add(lblCrossingsActive);
 
+		lblIsUnderground = new JLabel("Underground");
+		lblIsUnderground.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblIsUnderground.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblIsUnderground.setBounds(347, 285, 99, 23);
+		frame.getContentPane().add(lblIsUnderground);
+
 		toggleSignals = new JToggleButton("N/A");
 		toggleSignals.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		toggleSignals.setBounds(450, 259, 45, 23);
 		frame.getContentPane().add(toggleSignals);
+
+		toggleIsUnderground = new JToggleButton("N");
+		toggleIsUnderground.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		toggleIsUnderground.setBounds(450,285,45,23);
+		frame.getContentPane().add(toggleIsUnderground);
 
 		lblStation = new JLabel("Station");
 		lblStation.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -297,36 +319,76 @@ public class TrackGUI {
 		dropdownLine.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e){
-				String s = (String) dropdownLine.getSelectedItem();
-				toggleOccupied.setSelected(false);
-				toggleOccupied.setText("N");
+				String l = (String) dropdownLine.getSelectedItem();
+
+				Set<String> segmentStrings = track.trackList.get(l).keySet();
+
+				dropdownBlock.removeAllItems();
+
+				for (String item : segmentStrings){
+					dropdownSegment.addItem(item);
+				}
 			}
 		});
 
-		/*
+
 		dropdownSegment.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e){
+				String l = (String) dropdownLine.getSelectedItem();
 				String s = (String) dropdownSegment.getSelectedItem();
-				System.out.println(s);
+
+				Set<Integer> blockSet = track.trackList.get(l).get(s).keySet();
+				System.out.println(blockSet);
+
+				dropdownBlock.removeAllItems();
+				for (Integer item : blockSet){
+					dropdownBlock.addItem(Integer.toString(item));
+				}
+
+				System.out.println(dropdownBlock.getItemCount());
 			}
 		});
-		*/
+
 		dropdownBlock.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e){
-				String s = (String) dropdownBlock.getSelectedItem();
+				System.out.println(dropdownBlock.getItemCount());
 
-				lengthField.setText(String.valueOf(track.trackList.get(Integer.valueOf(s)).getLen()));
-				elevationField.setText(String.valueOf(track.trackList.get(Integer.valueOf(s)).getElevation()));
-				speedField.setText(String.valueOf(track.trackList.get(Integer.valueOf(s)).getSpeedLimit()));
-				gradeField.setText(String.valueOf(track.trackList.get(Integer.valueOf(s)).getGrade()));
-				txtname.setText(track.trackList.get(Integer.valueOf(s)).getInfrastructure());
+				String block = (String) dropdownBlock.getSelectedItem();
+				String section = (String) dropdownSegment.getSelectedItem();
+				String line = (String) dropdownLine.getSelectedItem();
 
-				Boolean isOccupied = track.trackList.get(Integer.valueOf(s)).getOccupied();
-				Boolean isBroken = track.trackList.get(Integer.valueOf(s)).getBroken();
-				Boolean isCircuitFailure = track.trackList.get(Integer.valueOf(s)).getCircuitFailure();
-				Boolean isPowerFailure = track.trackList.get(Integer.valueOf(s)).getPowerFailure();
+
+			}
+		});
+
+		/* Update button action listeners. Updates the display fields based upon the dropdown
+		* buttons selected.
+		*/
+		toggleUpdate.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e){
+
+				String block = (String) dropdownBlock.getSelectedItem();
+				String section = (String) dropdownSegment.getSelectedItem();
+				String line = (String) dropdownLine.getSelectedItem();
+
+
+				lengthField.setText(String.valueOf(track.trackList.get(line).get(section).get(Integer.valueOf(block)).getLen()));
+				elevationField.setText(String.valueOf(track.trackList.get(line).get(section).get(Integer.valueOf(block)).getElevation()));
+				speedField.setText(String.valueOf(track.trackList.get(line).get(section).get(Integer.valueOf(block)).getSpeedLimit()));
+				gradeField.setText(String.valueOf(track.trackList.get(line).get(section).get(Integer.valueOf(block)).getGrade()));
+				txtname.setText(track.trackList.get(line).get(section).get(Integer.valueOf(block)).getStationName());
+
+				//Probably a better way to template this.
+				Boolean isOccupied = track.trackList.get(line).get(section).get(Integer.valueOf(block)).getOccupied();
+				Boolean isBroken = track.trackList.get(line).get(section).get(Integer.valueOf(block)).getBroken();
+				Boolean isCircuitFailure = track.trackList.get(line).get(section).get(Integer.valueOf(block)).getCircuitFailure();
+				Boolean isPowerFailure = track.trackList.get(line).get(section).get(Integer.valueOf(block)).getPowerFailure();
+				Boolean isUnderground = track.trackList.get(line).get(section).get(Integer.valueOf(block)).getUnderground();
+				Boolean trackHeaters = track.trackList.get(line).get(section).get(Integer.valueOf(block)).getTrackHeaters();
 
 				toggleOccupied.setSelected(isOccupied);
 				toggleBroken.setSelected(isBroken);
@@ -367,14 +429,44 @@ public class TrackGUI {
 					togglePowerFailure.setText("N");
 					togglePowerFailure.setSelected(false);
 				}
+
+				if(isUnderground){
+					toggleIsUnderground.setText("Y");
+					toggleIsUnderground.setSelected(true);
+				}
+				else{
+					toggleIsUnderground.setText("N");
+					toggleIsUnderground.setSelected(false);
+				}
+
+				if(trackHeaters){
+					toggleHeatersOn.setText("Y");
+					toggleHeatersOn.setSelected(true);
+				}
+				else{
+					toggleHeatersOn.setText("N");
+					toggleHeatersOn.setSelected(false);
+				}
+
 			}
 		});
 
 	}
-	/** Listens to the combo box. */
+
+	/** Listens to the combo box and updates the GUI based upon the inputs.
+	*/
 	public void actionPerformed(ActionEvent e) {
+		/** @bug The segment and block descriptors need to be cleared when selecting a dropdown from line.
+		*	In its current configuration, it will not reset to empty fields, allowing the user to select
+		* 	blocks that do not exist. This condition applies to selecting a new line while holding segment
+		* 	and block constant.
+		*
+		*	@bug It is possible for a user to select default vaules in the dropdown menu. When selecting the default
+		* 	values, it results in an unhandled exception, rendering the program unusable.
+		*/
 		JComboBox cb = (JComboBox) e.getSource();
 		String name = (String)cb.getSelectedItem();
 	}
+
 
 }

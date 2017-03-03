@@ -1,3 +1,4 @@
+package TrackModel;
 
 /**
  * Class for the block object. Contains attributes of a block associated with a train track block
@@ -15,15 +16,17 @@ public class Block{
 	public Boolean circuitFailure;
 	public Boolean powerFailure;
 	public Boolean trackHeaters;
-	public String infrastructure;
+	public String stationName;
+	public Boolean isUnderground;
 
-	public Block(Boolean occupied, Double blockLen, Double blockGrade, Double elevation, Double speedLimit,
-				String infrastructure){
+	public Block(Boolean occupied, Boolean isUnderground, Double blockLen, Double blockGrade, Double elevation, Double speedLimit,
+				String stationName){
 		this.blockLen = blockLen;
 		this.blockGrade = blockGrade;
 		this.blockElevation = elevation;
 		this.speedLimit = speedLimit;
-		this.infrastructure = infrastructure;
+		this.stationName = stationName;
+		this.isUnderground = isUnderground;
 
 		this.occupied = false;
 		this.trackHeaters = false;
@@ -32,6 +35,7 @@ public class Block{
 		this.brokenRail = false;
 		this.circuitFailure = false;
 		this.powerFailure = false;
+
 	}
 
 	public Double getLen(){
@@ -74,7 +78,15 @@ public class Block{
 		return this.powerFailure;
 	}
 
-	public String getInfrastructure(){
-		return this.infrastructure;
+	public Boolean getUnderground(){
+		return this.isUnderground;
+	}
+
+	public String getStationName(){
+		return this.stationName;
+	}
+
+	public Boolean getTrackHeaters(){
+		return this.trackHeaters;
 	}
 }
