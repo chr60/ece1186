@@ -57,11 +57,11 @@ public class Block{
 	public Double getSpeedLimit(){
 		return this.speedLimit;
 	}
-	
+
 	public Double getElevation(){
 		return this.blockElevation;
 	}
-	
+
 	public Double getGrade(){
 		return this.blockGrade;
 	}

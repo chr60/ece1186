@@ -1,4 +1,4 @@
-package proj1;
+package WaysideController;
 
 import java.io.*;
 import javax.swing.*;
@@ -7,7 +7,6 @@ import javax.swing.*;
 public class TextAreaOutputStream extends OutputStream {
     private JTextArea textControl;
 
-   
     public TextAreaOutputStream( JTextArea control ) {
         textControl = control;
     }
@@ -15,5 +14,5 @@ public class TextAreaOutputStream extends OutputStream {
     public void write( int b ) throws IOException {
         // append the data as characters to the JTextArea control
         textControl.append( String.valueOf( ( char )b ) );
-    }  
+    }
 }

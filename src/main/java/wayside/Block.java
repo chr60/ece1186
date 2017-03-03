@@ -1,8 +1,7 @@
-package proj1;
+package WaysideController;
 
 public class Block {
-	
-	  	
+
 	  	private String Line;
 	  	private String Segment;
 	  	private int blockNum;
@@ -12,7 +11,7 @@ public class Block {
 	    private Block nextBlock;
 	    private Block prevBlock;
 	    private Block upcomingBlock;
-	    
+
 	  public Block(int bnum){
 		  setBlockNum(bnum);
 	  }
@@ -79,7 +78,4 @@ public class Block {
 	public void setClosed(boolean closed) {
 		Closed = closed;
 	}
-	  
-	 
-	  
 }

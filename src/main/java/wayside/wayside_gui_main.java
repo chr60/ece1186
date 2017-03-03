@@ -1,4 +1,5 @@
-package proj1;
+package WaysideController;
+
 
 import javax.script.ScriptException;
 import javax.swing.*;
@@ -21,33 +22,34 @@ public class wayside_gui_main {
 	private Wayside_PLC WaysidePLC;
 	private Block [] samples;
 	private WS ws;
-	
+
 	ArrayList<WS> Waysides = new ArrayList<WS>();
 	/**
 	 * Launch the application.
-	 * @throws UnsupportedLookAndFeelException 
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
-	 * @throws ClassNotFoundException 
+	 * @throws UnsupportedLookAndFeelException
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 * @throws ClassNotFoundException
 	 */
-	
+
 	/**
 	 * Create the application.
-	 * @throws UnsupportedLookAndFeelException 
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
-	 * @throws ClassNotFoundException 
-	 * @throws IOException 
+	 * @throws UnsupportedLookAndFeelException
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+
 	 */
 	public wayside_gui_main() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException {
 		initialize();
 	}
 	public void show() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException{
-		
-		for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) { 
+		for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 			if ("Windows".equals(info.getName()))
 				{javax.swing.UIManager.setLookAndFeel(info.getClassName());
-				break;} 
+				break;}
+
 			}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -62,28 +64,30 @@ public class wayside_gui_main {
 	}
 	/**
 	 * Initialize the contents of the frame.
-	 * @throws UnsupportedLookAndFeelException 
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
-	 * @throws ClassNotFoundException 
-	 * @throws IOException 
+	 * @throws UnsupportedLookAndFeelException
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 * @throws ClassNotFoundException
+	 * @throws IOException
 	 */
 	private void initialize() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException {
-		for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) { 
+		for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 			if ("Windows".equals(info.getName()))
 				{javax.swing.UIManager.setLookAndFeel(info.getClassName());
-				break;} 
+				break;}
 			}
-		
+
+
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1050, 587);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(10, 11, 1000, 433);
 		frame.getContentPane().add(tabbedPane);
-		
+
+
 		samples = makeSampleBlocks();
 
 		WS Red1 = new WS("Red1", null, samples);
@@ -95,30 +99,30 @@ public class wayside_gui_main {
 		Waysides.add(Green1);
 		Waysides.add(Green2);
 		this.ws = Red1;
-		
-		
+
+
 		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.addTab("Green - WS 1", null, Green1, null);
-		
+
 		JTabbedPane tabbedPane_2 = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.addTab("Green - WS 2", null, Green2, null);
-		
+
 		JTabbedPane tabbedPane_3 = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.addTab("Red - WS 1", null, Red1, null);
-		
+
 		JTabbedPane tabbedPane_4 = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.addTab("Red - WS 2", null, Red2, null);
-		
+
 		JLabel lblMurphy = new JLabel("Murphy");
 		lblMurphy.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblMurphy.setBounds(10, 455, 69, 18);
 		frame.getContentPane().add(lblMurphy);
-		
+
 		JComboBox<String> murphyBox = new JComboBox<String>();
 		murphyBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Select", "Comm Failure with CTC", "Comm Failure with Track"}));
 		murphyBox.setBounds(10, 484, 143, 20);
 		frame.getContentPane().add(murphyBox);
-		
+
 		JButton btnFail = new JButton("Fail");
 		btnFail.setBounds(163, 483, 60, 23);
 		btnFail.addActionListener(new ActionListener(){
@@ -128,13 +132,13 @@ public class wayside_gui_main {
 			}
 		});
 		frame.getContentPane().add(btnFail);
-		
+
 		txtEnterPlcFile = new JTextField();
 		txtEnterPlcFile.setText("Enter PLC file path here...");
 		txtEnterPlcFile.setBounds(264, 484, 220, 20);
 		frame.getContentPane().add(txtEnterPlcFile);
 		txtEnterPlcFile.setColumns(10);
-		
+
 		JButton btnLoadBtn = new JButton("Load");
 		btnLoadBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -149,20 +153,20 @@ public class wayside_gui_main {
 		this.loadBtn = btnLoadBtn;
 		btnLoadBtn.setBounds(494, 483, 69, 23);
 		frame.getContentPane().add(btnLoadBtn);
-		
+
 		JLabel label = new JLabel("Load PLC File");
 		label.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		label.setBounds(264, 455, 115, 18);
 		frame.getContentPane().add(label);
-		
+
 		Component verticalStrut = Box.createVerticalStrut(20);
 		verticalStrut.setBounds(233, 455, 12, 73);
 		frame.getContentPane().add(verticalStrut);
-		
+
 		Component verticalStrut_1 = Box.createVerticalStrut(20);
 		verticalStrut_1.setBounds(642, 455, 12, 73);
 		frame.getContentPane().add(verticalStrut_1);
-		
+
 		JButton button = new JButton("Browse");
 		button.setBounds(563, 483, 79, 23);
 		frame.getContentPane().add(button);
@@ -176,19 +180,19 @@ public class wayside_gui_main {
 					txtEnterPlcFile.setText(PLCChoose.getSelectedFile().getAbsolutePath());
 					setPLCFilePath(txtEnterPlcFile.getSelectedText());
 				} else {
-					
 				}
 			}
 		});
 		frame.setVisible(true);
 	    }
-	
+
 	/**
 	 * Tries to open give PLC file and checks for existence
 	 * @param filename - user entered filename/path of PLC Code File
-	 * @throws IOException 
-	 * @throws ScriptException 
+	 * @throws IOException
+	 * @throws ScriptException
 	 */
+  
 	public void tryPLCFile(String filename) throws IOException, ScriptException{
 		File PLCFile= new File(filename);
 		if(PLCFile.exists()){
@@ -198,8 +202,9 @@ public class wayside_gui_main {
 			ws.setPlc(WaysidePLC.getPLC());
 		}
 		else
-			JOptionPane.showMessageDialog(new Frame(),"Specified file was not found", "Invalid Filename", JOptionPane.WARNING_MESSAGE);			
+			JOptionPane.showMessageDialog(new Frame(),"Specified file was not found", "Invalid Filename", JOptionPane.WARNING_MESSAGE);
 	}
+  
 	public void printToAllWayside(String toPrint){
 		for(WS ws : Waysides)
 			try {
@@ -209,6 +214,7 @@ public class wayside_gui_main {
 				e.printStackTrace();
 			}
 	}
+  
 	public String getPLCFilePath() {
 		return PLCFilePath;
 	}
@@ -222,7 +228,7 @@ public class wayside_gui_main {
 		this.loadBtn = loadBtn;
 	}
 	public Block[] makeSampleBlocks(){
-		
+
 		Block Block1 = new Block("Red", "A", 1, true);
 		Block Block2 = new Block("Red", "A", 2, false);
 		Block Block3 = new Block("Red", "A", 3, false);

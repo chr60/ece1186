@@ -1,5 +1,4 @@
 
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,15 +9,16 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 /* Class model and some associated utility functions for storing the TrackModel
-*/	
+*/
+
 public class TrackModel {
 
 	private static TrackModel trackModel = new TrackModel();
 	public TrackModel(){}
 
-	public static HashMap<Integer, Block> trackList = 
+	public static HashMap<Integer, Block> trackList =
 		new HashMap<Integer, Block>();
-	
+
 	/*
 	* Adds a selected block to the TrackModel. Expects a valid Block object.
 	*
@@ -26,7 +26,7 @@ public class TrackModel {
 	*
 	* @param blockLine String. Name of the line being added
 	* @param blockSection String. Name of the section the block belongs to
-	* @param blockNum Int. Number of the block within a line 
+	* @param blockNum Int. Number of the block within a line
 	* @param Block. The block to be added.
 	*/
 	public static void addBlock(String blockLine,String blockSection, Integer blockNum, Block block){
@@ -60,14 +60,14 @@ public class TrackModel {
 
 					Block myblock = new Block(defaultOccupied, blockLen, blockGrade, elevation, speedLimit, str[6]);
 					TrackModel.addBlock(blockLine, blockSection, blockNum, myblock );
-					
+
 					/*
 					System.out.println(myblock.getOccupied());
 					System.out.println(blockNum);
 					*/
 				}
 				initLine = false;
-			} 
+			}
 		}catch(IOException|ArrayIndexOutOfBoundsException e){
 				System.out.println("Finished Reading");
 			}

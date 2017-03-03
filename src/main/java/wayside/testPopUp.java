@@ -1,4 +1,4 @@
-package proj1;
+package WaysideController;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -31,7 +31,7 @@ public class testPopUp {
 			}
 		});
 	}
-	
+
 	/**
 	 * Create the application.
 	 */

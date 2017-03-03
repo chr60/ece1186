@@ -1,4 +1,5 @@
-package proj1;
+package WaysideController;
+
 
 
 import javax.swing.*;
