@@ -1,6 +1,8 @@
 package TrackModel;
 
-
+/** Class model and some associated utility functions for storing the TrackModel
+* @author Michael
+*/
 import java.lang.NumberFormatException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,64 +12,180 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.Collections;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-/* Class model and some associated utility functions for storing the TrackModel
-*/
 public class TrackModel {
 
-	private static TrackModel trackModel = new TrackModel();
-	public TrackModel(){}
-
-	public static HashMap<String,HashMap<String, HashMap<Integer, Block>>> trackList =
+	public  HashMap<String,HashMap<String, HashMap<Integer, Block>>> trackList =
 		new HashMap<String,HashMap<String, HashMap<Integer, Block>>>();
 
-	/*
-	*	Utility for testing the TrackModel from main. not intended for more than dev testing
-	*/
-	public static void main(String[] args){
-		TrackModel track = new TrackModel();
-		String[] fNames = {"redline.csv", "greenline.csv"};
-		track.readCSV(fNames);
+	public HashMap<String, Block> rootMap = new HashMap<String, Block>();
+	public HashMap<String, ArrayList<Block>> leafMap = new HashMap<String, ArrayList<Block>>();
 
-	}
-
-	/*
+	/**
 	* Adds a selected block to the TrackModel. Expects a valid Block object.
 	*
-	* Parameters
-	*
-	* @param blockLine String. Name of the line being added
-	* @param blockSection String. Name of the section the block belongs to
-	* @param blockNum Int. Number of the block within a line
-	* @param Block. The block to be added.
+	* @param blockLine Name of the line being added
+	* @param blockSection Name of the section the block belongs to
+	* @param blockNum Number of the block within a line
+	* @param Block The block to be added.
 	*/
-	public static void addBlock(String blockLine,String blockSection, Integer blockNum, Block block){
-		if (!trackList.containsKey(blockLine)){
-			trackList.put(blockLine, new HashMap<String,HashMap<Integer,Block>>());
+	private void addBlock(String blockLine,String blockSection, Integer blockNum, Block block){
+		if (!this.trackList.containsKey(blockLine)){
+			this.trackList.put(blockLine, new HashMap<String,HashMap<Integer,Block>>());
 		}
-		if (!trackList.get(blockLine).containsKey(blockSection)){
-			trackList.get(blockLine).put(blockSection, new HashMap<Integer, Block>());
+		if (!this.trackList.get(blockLine).containsKey(blockSection)){
+			this.trackList.get(blockLine).put(blockSection, new HashMap<Integer, Block>());
 		}
-		trackList.get(blockLine).get(blockSection).put(blockNum, block);
+		this.trackList.get(blockLine).get(blockSection).put(blockNum, block);
+	}
+	
+	/**
+	* Adds a switch to the root list of the switches present on a given line.
+	*
+	* @param rootBlockString  String of the added switch to be added to as the "root" switch
+	* @param rootBlock The block where that will point between two blocks depending on the current state
+	* of the switch
+	*/
+	private void addSwitchRoot(String rootBlockString, Block rootBlock){
+		if (!this.rootMap.containsKey(rootBlockString)){
+			this.rootMap.put(rootBlockString, rootBlock);
+		}
 	}
 
-	/*
-	*Helper function for reading the information from the excel-dumped CSV
+	private void addSwitchLeaf(String leafBlockString, Block leafBlock){
+		if (!this.leafMap.containsKey(leafBlockString)){
+			this.leafMap.put(leafBlockString, new ArrayList<Block>());
+		}
+		this.leafMap.get(leafBlockString).add(leafBlock);	
+	}
+
+	/**
+	* A small function to view the next and previous blocks of a track model.
 	*/
-	public static void readCSV(String[] fNames){
+	private void examineNext(){
+		for (String lineKey : this.trackList.keySet()){
+			System.out.print("Examining Line: ");
+			System.out.println(lineKey);
+			//lineKey = "Red";
+			for (String sectionKey : this.trackList.get(lineKey).keySet()){
+				System.out.print("On section: ");
+				System.out.println(sectionKey);
+
+				Set<Integer> blockSet = this.trackList.get(lineKey).get(sectionKey).keySet();
+				
+				for (Integer blockNum : blockSet){
+					System.out.println(this.trackList.get(lineKey).get(sectionKey).get(blockNum).nextBlockForward().blockNum);
+				}
+			}
+		}
+	}
+
+	/**
+	* Infers the format of the current TrackModel and associated arrow directions to add
+	* the nextBlock states to blocks where it may be inferred
+	* \todo Refactor to improve efficiency with peakable iterators. 
+	*/
+	private void inferNextBlock(){
+		Block store = null;
+		for (String lineKey : this.trackList.keySet()){
+			store = null;
+			System.out.print("Inferring Line: ");
+			System.out.println(lineKey);
+
+			for (String sectionKey : this.trackList.get(lineKey).keySet()){	
+				//Reference max and min
+				Set<Integer> set = this.trackList.get(lineKey).get(sectionKey).keySet();
+				Integer max = Collections.max(set);
+				Integer min = Collections.min(set);
+
+				Block minBlock = this.trackList.get(lineKey).get(sectionKey).get(min);
+				Block maxBlock = this.trackList.get(lineKey).get(sectionKey).get(max);
+
+				if(store != null){
+					store.setNextBlockForward(minBlock);
+					minBlock.setNextBlockBackward(store);
+				}
+				store = maxBlock;
+
+				if (maxBlock.arrowDirection.equals("Head") && minBlock.arrowDirection.equals("Head")){
+					Set<Integer> mySet = new TreeSet<Integer>(this.trackList.get(lineKey).get(sectionKey).keySet());
+					for(Integer myBlock : mySet){
+						Block curBlock = this.trackList.get(lineKey).get(sectionKey).get(myBlock);
+						if (minBlock.equals(curBlock)){
+							curBlock.setNextBlockForward(this.trackList.get(lineKey).get(sectionKey).get(myBlock+1));
+							curBlock.setNextBlockBackward(curBlock);
+						}
+
+						else if(maxBlock.equals(curBlock)){
+							curBlock.setNextBlockForward(curBlock);
+							curBlock.setNextBlockBackward(this.trackList.get(lineKey).get(sectionKey).get(myBlock-1));							
+						}
+
+						else{
+							curBlock.setNextBlockForward(this.trackList.get(lineKey).get(sectionKey).get(myBlock+1));
+							curBlock.setNextBlockBackward(this.trackList.get(lineKey).get(sectionKey).get(myBlock-1));
+						}
+					}
+				}
+
+				else if (maxBlock.arrowDirection.equals("Head") && minBlock.arrowDirection.equals("Tail")){
+					Set<Integer> mySet = new TreeSet<Integer>(this.trackList.get(lineKey).get(sectionKey).keySet());
+
+					for (Integer myBlock : mySet){
+						Block curBlock = this.trackList.get(lineKey).get(sectionKey).get(myBlock);
+						if (minBlock.equals(curBlock)){
+							curBlock.setNextBlockForward();
+						}
+					}
+				}
+				else if (maxBlock.arrowDirection.equals("Head/Head")){
+					maxBlock.setNextBlockForward(maxBlock);
+				}
+			}
+		}
+		this.handleSwitches();
+	}
+
+	/** Helper function to link nextBlock for switches
+	*/
+	private void handleSwitches(){
+		for (String s : this.rootMap.keySet()){
+			this.rootMap.get(s).setNextBlockForward(this.leafMap.get(s).get(0), this.leafMap.get(s).get(1));
+			System.out.println(s);
+			System.out.println(this.rootMap.get(s).nextBlockForward().blockNum);
+
+			/*
+			System.out.print("Root: ");
+			System.out.println(this.rootMap.get(s).blockNum);
+			System.out.print("Leaf 1: ");
+			System.out.println(this.leafMap.get(s).get(0).blockNum);
+			System.out.print("Leaf 2: ");
+			System.out.println(this.leafMap.get(s).get(1).blockNum);
+			*/
+		}
+	}
+
+	/**
+	* Helper function for reading the information from the excel-dumped CSV
+	* @param String[] fNames: filenames of the csv's of to read in
+	* @param TrackModel track: track to have the given fNames to be added to
+	*/
+	public void readCSV(String[] fNames, TrackModel track){
 
 		String line = "";
 		String delimiter = ",";
 		Boolean defaultOccupied = false;
 
 		for (String s : fNames){
-
 			Boolean initLine = true; //Allows for graceful failure of reading multiple csv's without exiting
-
 			try (BufferedReader reader = new BufferedReader(new FileReader(s))) {
 				while ((line = reader.readLine()) != null){
 					String[] str = line.split(delimiter,-1);
-					//System.out.println(s);
 
 					//For safety when parsing headers
 					if (initLine.equals(false)){
@@ -80,23 +198,30 @@ public class TrackModel {
 						Double speedLimit = Double.valueOf(str[5]);
 						String infrastructure = str[6];
 						Double elevation = Double.valueOf(str[7]);
-
+						String switchBlock = str[9];
+						String arrowDirection = str[10];
 						String stationName = str[11];
 
 						//Parse infrastructure string to underground + switch
 						Boolean isUnderground = infrastructure.contains("UNDERGROUND");
-						infrastructure = infrastructure.replace("UNDERGROUND","");
-
-						//System.out.println(infrastructure);
-
+						Boolean hasSwitch = infrastructure.contains("SWITCH");
+						
+						
 						//Initialize and add block
-						Block myblock = new Block(defaultOccupied, isUnderground, blockLen, blockGrade, elevation, speedLimit, stationName);
-						TrackModel.addBlock(blockLine, blockSection, blockNum, myblock );
+						Block myBlock = new Block(defaultOccupied, isUnderground, blockLen, blockGrade, 
+										elevation, speedLimit, stationName, arrowDirection, blockLine, 
+										blockSection, blockNum, hasSwitch, switchBlock);
 
-						/*
-						System.out.println(myblock.getOccupied());
-						System.out.println(blockNum);
-						*/
+						this.addBlock(blockLine, blockSection, blockNum, myBlock );
+
+						if(hasSwitch){
+							this.addSwitchRoot(switchBlock, myBlock);
+						}
+
+						if(!hasSwitch && !switchBlock.equals("")){
+							//System.out.println(switchBlock);
+							this.addSwitchLeaf(switchBlock, myBlock);
+						}
 					}
 					initLine = false;
 				}
@@ -104,6 +229,7 @@ public class TrackModel {
 					System.out.println("Finished Reading");
 				}
 			}
+			this.inferNextBlock();
+			this.examineNext();
 		}
-
 }

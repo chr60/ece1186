@@ -1,5 +1,7 @@
+/**	GUI associated with the track module.
+*  \author Michael
+*/
 package TrackModel;
-
 
 import java.awt.*;
 import java.awt.event.*;
@@ -18,6 +20,9 @@ import java.awt.Color;
 import java.util.Set;
 import java.util.Arrays;
 import java.util.Properties;
+import java.io.FileInputStream;
+import java.nio.charset.Charset;
+import java.io.InputStreamReader;
 
 public class TrackGUI {
 
@@ -79,15 +84,13 @@ public class TrackGUI {
 	 */
 	private void initialize() {
 
-		String[] fNames = {"info/redline.csv", "info/greenline.csv"};
+		String[] fNames = {"info/redline.csv", };
 		//Load up the track model
 		TrackModel track = new TrackModel();
-		track.readCSV(fNames);
+		track.readCSV(fNames, track);
 
 		Set<Integer> blockInts = track.trackList.get("Red").get("A").keySet();
-
 		Integer[] intArr = blockInts.toArray(new Integer[blockInts.size()]);
-
 		Set<String> lineSet = track.trackList.keySet();
 		String[] lineStrings = lineSet.toArray(new String[lineSet.size()]);
 
@@ -355,16 +358,13 @@ public class TrackGUI {
 			@Override
 			public void actionPerformed(ActionEvent e){
 				System.out.println(dropdownBlock.getItemCount());
-
 				String block = (String) dropdownBlock.getSelectedItem();
 				String section = (String) dropdownSegment.getSelectedItem();
 				String line = (String) dropdownLine.getSelectedItem();
-
-
 			}
 		});
 
-		/* Update button action listeners. Updates the display fields based upon the dropdown
+		/** Update button action listeners. Updates the display fields based upon the dropdown
 		* buttons selected.
 		*/
 		toggleUpdate.addActionListener(new ActionListener() {
@@ -467,6 +467,4 @@ public class TrackGUI {
 		JComboBox cb = (JComboBox) e.getSource();
 		String name = (String)cb.getSelectedItem();
 	}
-
-
 }
