@@ -23,7 +23,6 @@ public class TrackModel {
 	public  HashMap<String,HashMap<String, HashMap<Integer, Block>>> trackList =
 		new HashMap<String,HashMap<String, HashMap<Integer, Block>>>();
 
-	public HashMap<String, Block> switchMap = new HashMap<String, Block>();
 	public HashMap<String, Block> rootMap = new HashMap<String, Block>();
 	public HashMap<String, ArrayList<Block>> leafMap = new HashMap<String, ArrayList<Block>>();
 	public TreeSet<String> stationList = new TreeSet<String>();
@@ -122,6 +121,7 @@ public class TrackModel {
 					store.setNextBlockForward(minBlock);
 					minBlock.setNextBlockBackward(store);
 				}
+				
 				store = maxBlock;
 
 				if (maxBlock.arrowDirection.equals("Head") && minBlock.arrowDirection.equals("Head")){
@@ -176,6 +176,7 @@ public class TrackModel {
 		for (String s : this.leafMap.keySet()){
 			this.leafMap.get(s).get(0).setRootBlock(this.rootMap.get(s));
 			this.leafMap.get(s).get(1).setRootBlock(this.rootMap.get(s));
+			//System.out.println(this.leafMap.get(s).get(0).rootBlock);
 			/*
 			System.out.println(s);
 			System.out.println("Root " + this.rootMap.get(s).blockNum);
@@ -240,6 +241,7 @@ public class TrackModel {
 						if(!hasSwitch && !switchBlock.equals("")){
 							this.addSwitchLeaf(switchBlock, myBlock);
 						}
+
 					}
 					initLine = false;
 				}

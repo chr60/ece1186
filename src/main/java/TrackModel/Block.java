@@ -22,7 +22,6 @@ public class Block implements Comparable<Block>{
 	public Boolean trackHeaters;
 	public String stationName;
 	public Boolean isUnderground;
-	public Block nextBlock;
 	public String arrowDirection;
 	public Integer blockNum;
 	public Boolean switchState;
@@ -178,17 +177,35 @@ public class Block implements Comparable<Block>{
 
 	public Block nextBlockBackward(){
 		if(this.rootBlock != null){
-			if (this.rootBlock.nextBlock.equals(this)){
-				System.out.println("NEXT BOYS");
+			if (this.rootBlock.nextBlockForward().equals(this)){
 				return this.rootBlock;
 			}
-			else{
+			else{				
 				return this;
 			}
 		}
 		else{
 			return this.nextBlockBackward;
 		}
+	}
+
+	/**
+	* Setter for the Wayside Controller module to set a switch state based upon an Integer
+	* Maps 1 to true, 0 to false based upon the track internal convention.
+	* @param setInt integer for the switch state to be set to
+	* @todo Add strict value assertions that setInt is either 0 or 1 
+	*/
+	public Boolean setSwitchState(Integer setInt){
+		//condition check for having a switch
+		assert(this.switchState != null);
+
+		if(setInt.equals(1)){
+			this.switchState = true;
+		}
+		else if(setInt.equals(0)){
+			this.switchState = false;
+		}
+		return this.switchState;
 	}
 
 	/** Implements the comparable interface for blocks via the associalted blockNum of a given block.
