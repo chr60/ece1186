@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JTextArea;
 import java.io.*;
 import java.awt.Color;
+import java.util.Set;
 import TrackModel.*;
 
 public class WS extends JPanel {
@@ -38,53 +39,72 @@ public class WS extends JPanel {
 	 */
 
 
-	public WS(String name, PLC plcinit, Block [] blocks) throws IOException {
+	public WS(String name, PLC plcinit, TrackModel track) throws IOException {
+
+
+		Set<Integer> blockInts = track.trackList.get("Red").get("A").keySet();
+		Integer[] intArr = blockInts.toArray(new Integer[blockInts.size()]);
+		Set<String> lineSet = track.trackList.keySet();
+		String[] lineStrings = lineSet.toArray(new String[lineSet.size()]);
+
+
 		setLayout(null);
 		this.name = name;
-		JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Select Line", "Green", "Red"}));
-		comboBox.setToolTipText("");
-		comboBox.setBounds(10, 11, 137, 20);
-		add(comboBox);
+		JComboBox<String> lineDropdown = new JComboBox<String>();
+		lineDropdown.setModel(new DefaultComboBoxModel<String>(lineStrings));
+		lineDropdown.setToolTipText("");
+		lineDropdown.setBounds(10, 11, 137, 20);
+		add(lineDropdown);
 
-		JComboBox<String> comboBox_1 = new JComboBox<String>();
-		comboBox_1.setModel(new DefaultComboBoxModel<String>(new String[] {"Select Segment", "A", "B", "C"}));
-		comboBox_1.setBounds(145, 11, 137, 20);
-		add(comboBox_1);
+		String[] segmentStrings = {};
+		JComboBox<String> segmentDropdown = new JComboBox<String>();
+		segmentDropdown.setModel(new DefaultComboBoxModel<String>(segmentStrings));
+		segmentDropdown.setBounds(145, 11, 137, 20);
+		add(segmentDropdown);
 
-		JComboBox<String> comboBox_2 = new JComboBox<String>();
-		comboBox_2.setModel(new DefaultComboBoxModel<String>(new String[] {"Select Block", "1", "2", "3", "4", "5", "6", "7", "8"}));
-		comboBox_2.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				for(int i=0; i<blocks.length; i++){
-
-					if(comboBox.getSelectedItem().equals(blocks[i].getBlockLine()) && comboBox_1.getSelectedItem().equals(blocks[i].getBlockSection()) && comboBox_2.getSelectedItem().equals(new Integer(blocks[i].getBlockNum()).toString())){
-						try {
-							blockConsole.setText(null);
-							blockStream.write(new String("\n" + blocks[i].getBlockLine()+ " - " + blocks[i].getBlockSection() + " - " + new Integer(blocks[i].getBlockNum()).toString()).getBytes());
-							blockStream.write(new String("\nOccupied: " + new Boolean(blocks[i].getOccupied()).toString()).getBytes());
-							blockStream.write(new String("\nNext Block Occupied: " + new Boolean(blocks[i].nextBlockForward().getOccupied()).toString()).getBytes());
-							blockStream.write(new String("\nUpcoming Block Occupied: " + new Boolean(blocks[i].nextBlockForward().nextBlockForward().getOccupied()).toString()).getBytes());
-							boolean status = plc.proceedEval(blocks[i]);
-							if(status == true)
-								blockStream.write(new String("\nTrain on block " + (i+1) + " is safe to proceed to block " + (i+2)).getBytes());
-							else
-								blockStream.write(new String("\nTrain on block " + (i+1) + " is NOT safe to proceed to block " + (i+2)).getBytes());
-						} catch (IOException | ScriptException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-					}
-				}
-				try {
-					blockStream.write("\n\n".getBytes());
-				} catch (IOException e1) {
-					e1.printStackTrace();
+		String[] blockStrings = {};
+		JComboBox<String> blockDropdown = new JComboBox<String>();
+		blockDropdown.setModel(new DefaultComboBoxModel<String>(blockStrings));
+    blockDropdown.setBounds(281, 11, 130, 20);
+		add(blockDropdown);
+    
+		lineDropdown.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e){
+				String l = (String) lineDropdown.getSelectedItem();
+				Set<String> segmentStrings = track.trackList.get(l).keySet();
+				blockDropdown.removeAllItems();
+				for (String item : segmentStrings){
+					segmentDropdown.addItem(item);
 				}
 			}
 		});
-		comboBox_2.setBounds(281, 11, 130, 20);
-		add(comboBox_2);
+
+
+		segmentDropdown.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e){
+				String l = (String) lineDropdown.getSelectedItem();
+				String s = (String) segmentDropdown.getSelectedItem();
+				Set<Integer> blockSet = track.trackList.get(l).get(s).keySet();
+				System.out.println(blockSet);
+				blockDropdown.removeAllItems();
+				for (Integer item : blockSet)
+					blockDropdown.addItem(Integer.toString(item));
+
+				System.out.println(blockDropdown.getItemCount());
+			}
+		});
+
+		blockDropdown.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e){
+				System.out.println(blockDropdown.getItemCount());
+				String block = (String) blockDropdown.getSelectedItem();
+				String section = (String) segmentDropdown.getSelectedItem();
+				String line = (String) lineDropdown.getSelectedItem();
+			}
+		});
 
 		//BLOCK CONSOLE
 		blockConsole = new JTextArea();

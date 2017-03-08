@@ -11,7 +11,7 @@ import java.util.TreeSet;
 /**
  * Tests the printing of hello world
  */
-public class TrackModelTest 
+public class TrackModelTest
 	extends TestCase
 {
 	/**

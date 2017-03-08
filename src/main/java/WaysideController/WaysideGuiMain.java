@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import TrackModel.*;
 
-public class wayside_gui_main {
+public class WaysideGuiMain {
 
 	private JFrame frame;
 	private JTextField txtEnterPlcFile;
@@ -41,10 +41,10 @@ public class wayside_gui_main {
 	 * @throws IOException
 
 	 */
-	public wayside_gui_main() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException {
-		initialize();
+	public WaysideGuiMain(TrackModel track) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException {
+		initialize(track);
 	}
-	public void show() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException{
+	/*public void show() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException{
 		for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 			if ("Windows".equals(info.getName()))
 				{javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -61,7 +61,8 @@ public class wayside_gui_main {
 				}
 			}
 		});
-	}
+	}*/
+
 	/**
 	 * Initialize the contents of the frame.
 	 * @throws UnsupportedLookAndFeelException
@@ -70,7 +71,7 @@ public class wayside_gui_main {
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
-	private void initialize() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException {
+	private void initialize(TrackModel track) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException {
 		for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 			if ("Windows".equals(info.getName()))
 				{javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -89,10 +90,11 @@ public class wayside_gui_main {
 
 
 
-		WS Red1 = new WS("Red1", null, samples);
-		WS Red2 = new WS("Red2", null, samples);
-		WS Green1 = new WS("Green1", null, samples);
-		WS Green2 = new WS("Green2",null, samples);
+		WS Red1 = new WS("Red1", null, track);
+		WS Red2 = new WS("Red2", null, track);
+		WS Green1 = new WS("Green1", null, track);
+		WS Green2 = new WS("Green2",null, track);
+
 		Waysides.add(Red1);
 		Waysides.add(Red2);
 		Waysides.add(Green1);
