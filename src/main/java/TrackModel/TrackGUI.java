@@ -84,10 +84,10 @@ public class TrackGUI {
 	 */
 	private void initialize() {
 
-		String[] fNames = {"info/redline.csv", };
+		String[] fNames = {"resources/redline.csv", };
 		//Load up the track model
 		TrackModel track = new TrackModel();
-		track.readCSV(fNames, track);
+		track.readCSV(fNames);
 
 		Set<Integer> blockInts = track.trackList.get("Red").get("A").keySet();
 		Integer[] intArr = blockInts.toArray(new Integer[blockInts.size()]);

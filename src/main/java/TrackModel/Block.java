@@ -33,10 +33,11 @@ public class Block implements Comparable<Block>{
 	public Block nextBlockForward;
 	public Block switchNextBlockForward;
 	public Block nextBlockBackward;
+	public Block rootBlock;
 
 	public Block(Boolean occupied, Boolean isUnderground, Double blockLen, Double blockGrade, Double elevation, Double speedLimit,
 				String stationName, String arrowDirection, String blockLine, String blockSection, Integer blockNum, Boolean hasSwitch, String switchBlock){
-		
+
 		this.blockLen = blockLen;
 		this.blockGrade = blockGrade;
 		this.blockElevation = elevation;
@@ -47,7 +48,7 @@ public class Block implements Comparable<Block>{
 		this.blockNum = blockNum;
 		this.switchBlock = switchBlock;
 		this.hasSwitch = hasSwitch;
-		this.blockLine = blockLine; 
+		this.blockLine = blockLine;
 		this.blockSection = blockSection;
 
 		this.occupied = false;
@@ -59,7 +60,7 @@ public class Block implements Comparable<Block>{
 		this.powerFailure = false;
 
 	}
-	
+
 	public Double getLen(){
 		return this.blockLen;
 	}
@@ -120,6 +121,18 @@ public class Block implements Comparable<Block>{
 		this.nextBlockForward = setBlock;
 	}
 
+	public Integer getBlockNum(){
+		return this.blockNum;
+	}
+	
+	public String getBlockSection(){
+		return this.blockSection;
+	}
+
+	public String getBlockLine(){
+		return this.blockLine;
+	}
+
 	/** Setter for the next block forward in the condition for a switch is present.
 	*	By default, initializes the switch to the lower block (as determined by blockNum)
 	* 	to be destination when the this.switchState = true
@@ -130,12 +143,25 @@ public class Block implements Comparable<Block>{
 		this.switchState = true;
 	}
 
-	/** Sets the next block in the "reverse" direction. 
-	*/	
+	/** 
+	* Sets the next block in the "reverse" direction. Does not handle switch conditions
+	* @param setBlock the block to set the default backwards block to
+	*/
 	public void setNextBlockBackward(Block setBlock){
 		this.nextBlockBackward = setBlock;
 	}
 
+	/** 
+	* Sets the root block in the "reverse" direction to deal with switch conditions
+	* @param rootBlock the root block backwards of a switch block
+	*/
+	public void setRootBlock(Block rootBlock){
+		this.rootBlock = rootBlock;
+	}
+
+	/** Gets the next block forward along based upon the current switch state. If there is no
+	* switch, it returns the next block
+	*/
 	public Block nextBlockForward(){
 		if(this.switchState != null){
 			if (this.switchState.equals(true)){
@@ -151,7 +177,18 @@ public class Block implements Comparable<Block>{
 	}
 
 	public Block nextBlockBackward(){
-		return this.nextBlockBackward;
+		if(this.rootBlock != null){
+			if (this.rootBlock.nextBlock.equals(this)){
+				System.out.println("NEXT BOYS");
+				return this.rootBlock;
+			}
+			else{
+				return this;
+			}
+		}
+		else{
+			return this.nextBlockBackward;
+		}
 	}
 
 	/** Implements the comparable interface for blocks via the associalted blockNum of a given block.

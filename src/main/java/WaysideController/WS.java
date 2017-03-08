@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JTextArea;
 import java.io.*;
 import java.awt.Color;
+import TrackModel.*;
 
 public class WS extends JPanel {
 	//GUI ELEMENTS
@@ -40,7 +41,6 @@ public class WS extends JPanel {
 	public WS(String name, PLC plcinit, Block [] blocks) throws IOException {
 		setLayout(null);
 		this.name = name;
-
 		JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Select Line", "Green", "Red"}));
 		comboBox.setToolTipText("");
@@ -58,13 +58,13 @@ public class WS extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				for(int i=0; i<blocks.length; i++){
 
-					if(comboBox.getSelectedItem().equals(blocks[i].getLine()) && comboBox_1.getSelectedItem().equals(blocks[i].getSegment()) && comboBox_2.getSelectedItem().equals(new Integer(blocks[i].getBlockNum()).toString())){
+					if(comboBox.getSelectedItem().equals(blocks[i].getBlockLine()) && comboBox_1.getSelectedItem().equals(blocks[i].getBlockSection()) && comboBox_2.getSelectedItem().equals(new Integer(blocks[i].getBlockNum()).toString())){
 						try {
 							blockConsole.setText(null);
-							blockStream.write(new String("\n" + blocks[i].getLine()+ " - " + blocks[i].getSegment() + " - " + new Integer(blocks[i].getBlockNum()).toString()).getBytes());
-							blockStream.write(new String("\nOccupied: " + new Boolean(blocks[i].isOccupied()).toString()).getBytes());
-							blockStream.write(new String("\nNext Block Occupied: " + new Boolean(blocks[i].getNextBlock().isOccupied()).toString()).getBytes());
-							blockStream.write(new String("\nUpcoming Block Occupied: " + new Boolean(blocks[i].getUpcomingBlock().isOccupied()).toString()).getBytes());
+							blockStream.write(new String("\n" + blocks[i].getBlockLine()+ " - " + blocks[i].getBlockSection() + " - " + new Integer(blocks[i].getBlockNum()).toString()).getBytes());
+							blockStream.write(new String("\nOccupied: " + new Boolean(blocks[i].getOccupied()).toString()).getBytes());
+							blockStream.write(new String("\nNext Block Occupied: " + new Boolean(blocks[i].nextBlockForward().getOccupied()).toString()).getBytes());
+							blockStream.write(new String("\nUpcoming Block Occupied: " + new Boolean(blocks[i].nextBlockForward().nextBlockForward().getOccupied()).toString()).getBytes());
 							boolean status = plc.proceedEval(blocks[i]);
 							if(status == true)
 								blockStream.write(new String("\nTrain on block " + (i+1) + " is safe to proceed to block " + (i+2)).getBytes());

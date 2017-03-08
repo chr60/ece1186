@@ -23,8 +23,20 @@ public class TrackModel {
 	public  HashMap<String,HashMap<String, HashMap<Integer, Block>>> trackList =
 		new HashMap<String,HashMap<String, HashMap<Integer, Block>>>();
 
+	public HashMap<String, Block> switchMap = new HashMap<String, Block>();
 	public HashMap<String, Block> rootMap = new HashMap<String, Block>();
 	public HashMap<String, ArrayList<Block>> leafMap = new HashMap<String, ArrayList<Block>>();
+	public TreeSet<String> stationList = new TreeSet<String>();
+
+	/**
+	* Simplicity wrapper to return a block on the track given the parameters
+	* @param line Line of the block to be looked up
+	* @param section Section of the block to be looked up
+	* @param blockNum Number of the block to be looked up
+	*/
+	public Block getBlock(String line, String section, Integer blockNum){
+		return trackList.get(line).get(section).get(blockNum);
+	}
 
 	/**
 	* Adds a selected block to the TrackModel. Expects a valid Block object.
@@ -155,17 +167,20 @@ public class TrackModel {
 	*/
 	private void handleSwitches(){
 		for (String s : this.rootMap.keySet()){
+			//forward case
 			this.rootMap.get(s).setNextBlockForward(this.leafMap.get(s).get(0), this.leafMap.get(s).get(1));
-			System.out.println(s);
-			System.out.println(this.rootMap.get(s).nextBlockForward().blockNum);
+			//System.out.println(s);
+			//System.out.println(this.rootMap.get(s).nextBlockForward().blockNum);
+		}
 
+		for (String s : this.leafMap.keySet()){
+			this.leafMap.get(s).get(0).setRootBlock(this.rootMap.get(s));
+			this.leafMap.get(s).get(1).setRootBlock(this.rootMap.get(s));
 			/*
-			System.out.print("Root: ");
-			System.out.println(this.rootMap.get(s).blockNum);
-			System.out.print("Leaf 1: ");
-			System.out.println(this.leafMap.get(s).get(0).blockNum);
-			System.out.print("Leaf 2: ");
-			System.out.println(this.leafMap.get(s).get(1).blockNum);
+			System.out.println(s);
+			System.out.println("Root " + this.rootMap.get(s).blockNum);
+			System.out.println("Leaf 1 " + this.leafMap.get(s).get(0).blockNum);
+			System.out.println("Leaf 2 " + this.leafMap.get(s).get(1).blockNum);
 			*/
 		}
 	}
@@ -175,7 +190,7 @@ public class TrackModel {
 	* @param String[] fNames: filenames of the csv's of to read in
 	* @param TrackModel track: track to have the given fNames to be added to
 	*/
-	public void readCSV(String[] fNames, TrackModel track){
+	public void readCSV(String[] fNames){
 
 		String line = "";
 		String delimiter = ",";
@@ -214,12 +229,15 @@ public class TrackModel {
 
 						this.addBlock(blockLine, blockSection, blockNum, myBlock );
 
+						if (!stationName.equals("")){
+							this.stationList.add(stationName);
+						}
+
 						if(hasSwitch){
 							this.addSwitchRoot(switchBlock, myBlock);
 						}
 
 						if(!hasSwitch && !switchBlock.equals("")){
-							//System.out.println(switchBlock);
 							this.addSwitchLeaf(switchBlock, myBlock);
 						}
 					}
@@ -230,6 +248,6 @@ public class TrackModel {
 				}
 			}
 			this.inferNextBlock();
-			this.examineNext();
+			//this.examineNext();
 		}
 }

@@ -10,7 +10,7 @@ import java.util.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+import TrackModel.*;
 
 public class wayside_gui_main {
 
@@ -88,7 +88,6 @@ public class wayside_gui_main {
 		frame.getContentPane().add(tabbedPane);
 
 
-		samples = makeSampleBlocks();
 
 		WS Red1 = new WS("Red1", null, samples);
 		WS Red2 = new WS("Red2", null, samples);
@@ -192,7 +191,7 @@ public class wayside_gui_main {
 	 * @throws IOException
 	 * @throws ScriptException
 	 */
-  
+
 	public void tryPLCFile(String filename) throws IOException, ScriptException{
 		File PLCFile= new File(filename);
 		if(PLCFile.exists()){
@@ -204,7 +203,7 @@ public class wayside_gui_main {
 		else
 			JOptionPane.showMessageDialog(new Frame(),"Specified file was not found", "Invalid Filename", JOptionPane.WARNING_MESSAGE);
 	}
-  
+
 	public void printToAllWayside(String toPrint){
 		for(WS ws : Waysides)
 			try {
@@ -214,7 +213,7 @@ public class wayside_gui_main {
 				e.printStackTrace();
 			}
 	}
-  
+
 	public String getPLCFilePath() {
 		return PLCFilePath;
 	}
@@ -227,18 +226,5 @@ public class wayside_gui_main {
 	public void setLoadBtn(JButton loadBtn) {
 		this.loadBtn = loadBtn;
 	}
-	public Block[] makeSampleBlocks(){
 
-		Block Block1 = new Block("Red", "A", 1, true);
-		Block Block2 = new Block("Red", "A", 2, false);
-		Block Block3 = new Block("Red", "A", 3, false);
-		Block Block4 = new Block("Red", "B", 4, false);
-		Block1.setNextBlock(Block2);
-		Block1.setUpcomingBlock(Block3);
-		Block2.setNextBlock(Block3);
-		Block2.setUpcomingBlock(Block4);
-		Block3.setNextBlock(Block4);
-		Block [] samples = {Block1, Block2, Block3, Block4};
-		return samples;
-	}
 }

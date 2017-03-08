@@ -3,6 +3,7 @@ package WaysideController;
 
 import java.util.*;
 import javax.script.*;
+import TrackModel.*;
 
 public class PLC {
 
@@ -24,32 +25,31 @@ public class PLC {
 
 		}
 
-
 		public boolean proceedEval(Block b) throws ScriptException{
 			StringBuilder SB = new StringBuilder(proceedExpression);
 			int loc = SB.indexOf("nextBlockOccupied");
 			if(loc > 0)
-				SB.replace(loc, loc+"nextBlockOccupied".length(), new Boolean(b.getNextBlock().isOccupied()).toString());
+				SB.replace(loc, loc+"nextBlockOccupied".length(), new Boolean(b.nextBlockForward().getOccupied()).toString());
 
 			loc = SB.indexOf("nextBlockBroken");
 			if(loc > 0)
-				SB.replace(loc, loc+"nextBlockBroken".length(), new Boolean(b.getNextBlock().isBroken()).toString());
+				SB.replace(loc, loc+"nextBlockBroken".length(), new Boolean(b.nextBlockForward().getBroken()).toString());
 
 			loc = SB.indexOf("nextBlockClosed");
 			if(loc > 0)
-				SB.replace(loc, loc+"nextBlockClosed".length(), new Boolean(b.getNextBlock().isClosed()).toString());
+				SB.replace(loc, loc+"nextBlockClosed".length(), new Boolean(b.nextBlockForward().getBroken()).toString());
 
 			loc = SB.indexOf("upcomingBlockOccupied");
 			if(loc > 0)
-				SB.replace(loc, loc+"upcomingBlockOccupied".length(), new Boolean(b.getUpcomingBlock().isOccupied()).toString());
+				SB.replace(loc, loc+"upcomingBlockOccupied".length(), new Boolean(b.nextBlockForward().nextBlockForward().getOccupied()).toString());
 
 			loc = SB.indexOf("upcomingBlockClosed");
 			if(loc > 0)
-				SB.replace(loc, loc+"upcomingBlockClosed".length(), new Boolean(b.getUpcomingBlock().isBroken()).toString());
+				SB.replace(loc, loc+"upcomingBlockClosed".length(), new Boolean(b.nextBlockForward().nextBlockForward().getBroken()).toString());
 
 			loc = SB.indexOf("upcomingBlockBroken");
 			if(loc > 0)
-				SB.replace(loc, loc+"upcomingBlockBroken".length(), new Boolean(b.getUpcomingBlock().isClosed()).toString());
+				SB.replace(loc, loc+"upcomingBlockBroken".length(), new Boolean(b.nextBlockForward().nextBlockForward().getBroken()).toString());
 
 
 			ScriptEngineManager manager = new ScriptEngineManager();

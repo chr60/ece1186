@@ -2,6 +2,7 @@ package WaysideController;
 
 import java.util.*;
 import java.io.*;
+import TrackModel.*;
 
 public class Wayside_PLC {
 	private File PLCFile;
