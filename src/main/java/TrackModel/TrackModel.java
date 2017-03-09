@@ -25,7 +25,7 @@ public class TrackModel {
 
 	public HashMap<String, Block> rootMap = new HashMap<String, Block>();
 	public HashMap<String, ArrayList<Block>> leafMap = new HashMap<String, ArrayList<Block>>();
-	public TreeSet<String> stationList = new TreeSet<String>();
+	public HashMap<String, ArrayList<Block>> stationList = new HashMap<String, ArrayList<Block>>();
 
 	/**
 	* Simplicity wrapper to return a block on the track given the parameters
@@ -55,6 +55,18 @@ public class TrackModel {
 		this.trackList.get(blockLine).get(blockSection).put(blockNum, block);
 	}
 	
+	/**
+	* Adds a station-block pair to the stationList. 
+	* @param stationName station to be added to the stationList
+	* @param stationLocation the block location of an point where the station interacts with the block
+	*/
+	private void addStation(String stationName, Block stationLocation){
+		if (!this.stationList.containsKey(stationName)){
+			this.stationList.put(stationName, new ArrayList<Block>());
+		}
+		this.stationList.get(stationName).add(stationLocation);
+	}
+
 	/**
 	* Adds a switch to the root list of the switches present on a given line.
 	*
@@ -231,7 +243,7 @@ public class TrackModel {
 						this.addBlock(blockLine, blockSection, blockNum, myBlock );
 
 						if (!stationName.equals("")){
-							this.stationList.add(stationName);
+							this.addStation(stationName, myBlock);
 						}
 
 						if(hasSwitch){

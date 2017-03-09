@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Test;
 	private static String[] stationNames={"YARD","SHADYSIDE","HERRON AVE","SWISSVILLE","PENN STATION",
 								"STEEL PLAZA","FIRST AVE","STATION SQUARE","SOUTH HILLS JUNCTION"};
 	private static Integer[] rootBlocksNum={16,27,33,38,44,52,9};
+
+	//Move to a Set based interface for easy comparables
 	private static TreeSet<Integer> testBlocksRoot = new TreeSet<>(Arrays.asList(rootBlocksNum));
 	private static TreeSet<String> testNamesSet = new TreeSet<>(Arrays.asList(stationNames));
 	private static TrackModel track;
@@ -29,8 +31,7 @@ import org.junit.jupiter.api.Test;
 
  	@Test
  	void testReading(){
- 		//test proper reading of names
- 		assertEquals(track.stationList, testNamesSet);
+ 		assertEquals(track.stationList.keySet(), testNamesSet);
  	}
 
  	@Test
