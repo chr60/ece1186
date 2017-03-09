@@ -26,6 +26,7 @@ public class TrackModel {
 	public HashMap<String, Block> rootMap = new HashMap<String, Block>();
 	public HashMap<String, ArrayList<Block>> leafMap = new HashMap<String, ArrayList<Block>>();
 	public HashMap<String, ArrayList<Block>> stationList = new HashMap<String, ArrayList<Block>>();
+	public HashMap<String, Station> stationHostList = new HashMap<String, Station>();
 
 	/**
 	* Simplicity wrapper to return a block on the track given the parameters
@@ -111,7 +112,8 @@ public class TrackModel {
 	/**
 	* Infers the format of the current TrackModel and associated arrow directions to add
 	* the nextBlock states to blocks where it may be inferred
-	* \todo Refactor to improve efficiency with peakable iterators. 
+	* \todo Refactor to improve efficiency with peakable iterators as well as remove the
+	* necessity of the extra functions
 	*/
 	private void inferNextBlock(){
 		Block store = null;
@@ -173,28 +175,29 @@ public class TrackModel {
 			}
 		}
 		this.handleSwitches();
+		this.buildStationHostList();
+	}
+
+	/** 
+	*Build the listing of the host station list for external consumption
+	*/
+	private void buildStationHostList(){
+		for (String stationName : this.stationList.keySet()){
+			Station myStation = new Station(stationName, this.stationList.get(stationName));
+			this.stationHostList.put(stationName, myStation);
+		}
 	}
 
 	/** Helper function to link nextBlock for switches
 	*/
 	private void handleSwitches(){
 		for (String s : this.rootMap.keySet()){
-			//forward case
 			this.rootMap.get(s).setNextBlockForward(this.leafMap.get(s).get(0), this.leafMap.get(s).get(1));
-			//System.out.println(s);
-			//System.out.println(this.rootMap.get(s).nextBlockForward().blockNum);
 		}
 
 		for (String s : this.leafMap.keySet()){
 			this.leafMap.get(s).get(0).setRootBlock(this.rootMap.get(s));
 			this.leafMap.get(s).get(1).setRootBlock(this.rootMap.get(s));
-			//System.out.println(this.leafMap.get(s).get(0).rootBlock);
-			/*
-			System.out.println(s);
-			System.out.println("Root " + this.rootMap.get(s).blockNum);
-			System.out.println("Leaf 1 " + this.leafMap.get(s).get(0).blockNum);
-			System.out.println("Leaf 2 " + this.leafMap.get(s).get(1).blockNum);
-			*/
 		}
 	}
 

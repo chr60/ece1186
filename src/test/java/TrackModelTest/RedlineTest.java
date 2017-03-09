@@ -30,6 +30,9 @@ import org.junit.jupiter.api.Test;
  	}
 
  	@Test
+ 	/**
+ 	* Test for proper station names reading
+ 	*/
  	void testReading(){
  		assertEquals(track.stationList.keySet(), testNamesSet);
  	}
@@ -101,5 +104,5 @@ import org.junit.jupiter.api.Test;
  			assertTrue(track.leafMap.get(s).get(0).nextBlockBackward().equals(track.leafMap.get(s).get(0)));
  			assertTrue(track.leafMap.get(s).get(1).nextBlockBackward().equals(track.rootMap.get(s))); 			
  		}
- 	}
+ 	}	
  }
