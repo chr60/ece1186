@@ -21,21 +21,48 @@ import javax.swing.text.StyleContext;
  */
 
 /**
- *
- * @author Andrew
+ * This class is responsible for display the states of the 3 failures that can occur on the train, as well as 
+ * sending a signal to the CTC to repair the broken systems. 
+ * The three failures are: antenna, power, and brake.  
+ * 
+ * This class collaborates with the Train Controller and Train class.
+ * 
+ * @author Andrew Lendacky
  */
 public class TCFailures extends javax.swing.JFrame {
 
-    private TestTrain selectedTrain;
-    private LinkedList<String> logbook; 
-    private JTextPane errorLogs; 
     /**
-     * Creates new form TCFailures
+     * The train in which to display the failures from. 
+     */
+    private TestTrain selectedTrain;
+    
+    /**
+     * A list to store up messages to print to the error log. 
+     */
+    private LinkedList<String> logbook; 
+    
+    /**
+     * Area to print the error logs to. 
+     * This comes from the errorLogs from the Train Controller class. 
+     */
+    private JTextPane errorLogs; 
+    
+    /**
+     * Constructor for creating a TCFailure object with no selected train, logbook, or error log. 
+     * These must be passed in from the Train Controller before being used. 
+     * 
      */
     public TCFailures() {
         initComponents();
+        // set up logbook
+        this.logbook = new LinkedList<String>(); 
     }
     
+    /**
+     * Constructor for creating a TCFailures object with a given train. 
+     * 
+     * @param train the selected train from the Train Controller 
+     */
     public TCFailures(TestTrain train) {
         
         initComponents();
@@ -44,46 +71,85 @@ public class TCFailures extends javax.swing.JFrame {
         this.refreshUI();  
     }
     
+    /**
+     * @Bug This method is not called from anywhere else, so the window does not 
+     * refresh itself when a train has been fixed. Therefore, it will continue to 
+     * show the old states of the failures until the user closes the window and 
+     * reopens it. 
+     * 
+     * 
+     * 
+     */
+    
+    /**
+     * Refreshes the UI to update the radio buttons based on the status of the train.
+     * 
+     */
     private void refreshUI(){
     
-        this.trainID_Label.setText(this.selectedTrain.id);
+        this.trainId.setText(this.selectedTrain.id);
         
-        // update the radio buttons based on the train
+        // update the radio buttons based on the train    
+        if (this.isPowerFailure()){ this.powerFailureRadioButton.setSelected(true); }
+        else{ this.powerWorkingRadioButton.setSelected(true); }
+
+              
+        //FIX ME: For, testing, we will assume they begin working.
+        this.antennaWorkingRadioButton.setSelected(true);
+        this.brakesWorkingRadioButton.setSelected(true);     
+    }
         
-        //FIX ME: For, testing, we will assume they begin working
-        
-        this.antennaWorking_RB.setSelected(true);
-        this.brakesWorking_RB.setSelected(true);
-        this.powerWorking_RB.setSelected(true);      
+    /**
+     * Checks if at least one of the utilities on the train is in a failure state, i.e., a power failure. 
+     * 
+     * @return returns true if there is at least one utility broken, false if all the utilities are working.
+     */
+    private boolean isPowerFailure(){
+    
+        // checks for a power failure
+        if (this.selectedTrain.ac == -1 || this.selectedTrain.heat == -1 
+                || this.selectedTrain.lights == -1 || this.selectedTrain.leftDoors == -1 
+                || this.selectedTrain.rightDoors == -1){ return true; }
+        else{ return false; }
     }
     
     /**
-     * Determine what the state of the radio buttons are in based on the 
-     * train model. Not currently implemented
-     *
+     * Sets the error log that is to be printed to
+     * 
+     * @param errLogs a textpane representing the error log
      */
-    private void initRadioButtons(){
+    public void setErrorLogs(JTextPane errLog){
     
-        
+        this.errorLogs = errLog;
     }
     
-    public void setErrorLogs(JTextPane errLogs){
-    
-        this.errorLogs = errLogs;
-    }
-    
+    /**
+     * Prints the stored up logs from the logbook to the error log, and then clears the logbook. 
+     * 
+     */
     private void printLogBook(){
     
         this.errorLogs.setEditable(true);
-        for (String log : this.logbook){
         
-            // print the log to the error logs
-            appendToPane(this.errorLogs, log + "\n", Color.RED); 
+        if (this.logbook.isEmpty() == false){
+            for (String log : this.logbook){
+        
+                // print the log to the error logs
+                appendToPane(this.errorLogs, log + "\n", Color.RED); 
+            }
         }
         
+        this.logbook.clear();
         this.errorLogs.setEditable(false);
     }
     
+    /**
+     * Add to a given log a given message in a given color.  
+     * 
+     * @param tp the text pane to display the message in.
+     * @param msg the message to display.
+     * @param c the color to display the message in. 
+     */
     private void appendToPane(JTextPane tp, String msg, Color c){
         StyleContext sc = StyleContext.getDefaultStyleContext();
         AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, c);
@@ -109,80 +175,65 @@ public class TCFailures extends javax.swing.JFrame {
         antennaGroup = new javax.swing.ButtonGroup();
         powerGroup = new javax.swing.ButtonGroup();
         brakeGroup = new javax.swing.ButtonGroup();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        antennaWorking_RB = new javax.swing.JRadioButton();
-        antennaFailure_RB = new javax.swing.JRadioButton();
-        powerFailure_RB = new javax.swing.JRadioButton();
-        powerWorking_RB = new javax.swing.JRadioButton();
-        brakesFailure_RB = new javax.swing.JRadioButton();
-        brakesWorking_RB = new javax.swing.JRadioButton();
-        jLabel4 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        requestFix = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        trainID_Label = new javax.swing.JLabel();
+        antennaLabel = new javax.swing.JLabel();
+        powerLabel = new javax.swing.JLabel();
+        brakesLabel = new javax.swing.JLabel();
+        antennaWorkingRadioButton = new javax.swing.JRadioButton();
+        antennaFailureRadioButton = new javax.swing.JRadioButton();
+        powerFailureRadioButton = new javax.swing.JRadioButton();
+        powerWorkingRadioButton = new javax.swing.JRadioButton();
+        brakesFailureRadioButton = new javax.swing.JRadioButton();
+        brakesWorkingRadioButton = new javax.swing.JRadioButton();
+        titleLabel = new javax.swing.JLabel();
+        uiSeparatorOne = new javax.swing.JSeparator();
+        requestFixButton = new javax.swing.JButton();
+        trainIdLabel = new javax.swing.JLabel();
+        trainId = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jLabel1.setText("Antenna:");
+        antennaLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        antennaLabel.setText("Antenna:");
 
-        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jLabel2.setText("Power:");
+        powerLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        powerLabel.setText("Power:");
 
-        jLabel3.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jLabel3.setText("Brakes:");
+        brakesLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        brakesLabel.setText("Brakes:");
 
-        antennaGroup.add(antennaWorking_RB);
-        antennaWorking_RB.setText("Working");
-        antennaWorking_RB.addActionListener(new java.awt.event.ActionListener() {
+        antennaGroup.add(antennaWorkingRadioButton);
+        antennaWorkingRadioButton.setText("Working");
+
+        antennaGroup.add(antennaFailureRadioButton);
+        antennaFailureRadioButton.setText("Failure");
+
+        powerGroup.add(powerFailureRadioButton);
+        powerFailureRadioButton.setText("Failure");
+
+        powerGroup.add(powerWorkingRadioButton);
+        powerWorkingRadioButton.setText("Working");
+
+        brakeGroup.add(brakesFailureRadioButton);
+        brakesFailureRadioButton.setText("Failure");
+
+        brakeGroup.add(brakesWorkingRadioButton);
+        brakesWorkingRadioButton.setText("Working");
+
+        titleLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleLabel.setText("Communications and Vitals");
+
+        requestFixButton.setText("Request Fix");
+        requestFixButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                antennaWorking_RBActionPerformed(evt);
+                requestFixButton(evt);
             }
         });
 
-        antennaGroup.add(antennaFailure_RB);
-        antennaFailure_RB.setText("Failure");
+        trainIdLabel.setText("Train ID:");
 
-        powerGroup.add(powerFailure_RB);
-        powerFailure_RB.setText("Failure");
-
-        powerGroup.add(powerWorking_RB);
-        powerWorking_RB.setText("Working");
-        powerWorking_RB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                powerWorking_RBActionPerformed(evt);
-            }
-        });
-
-        brakeGroup.add(brakesFailure_RB);
-        brakesFailure_RB.setText("Failure");
-
-        brakeGroup.add(brakesWorking_RB);
-        brakesWorking_RB.setText("Working");
-        brakesWorking_RB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                brakesWorking_RBActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Communications and Vitals");
-
-        requestFix.setText("Request Fix");
-        requestFix.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                requestFix(evt);
-            }
-        });
-
-        jLabel5.setText("Train ID:");
-
-        trainID_Label.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        trainID_Label.setText("(train ID)");
+        trainId.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        trainId.setText("(train ID)");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -191,32 +242,32 @@ public class TCFailures extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
+                    .addComponent(antennaLabel)
+                    .addComponent(powerLabel)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(1, 1, 1)
-                        .addComponent(jLabel3)))
+                        .addComponent(brakesLabel)))
                 .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(powerWorking_RB)
-                    .addComponent(brakesWorking_RB)
-                    .addComponent(antennaWorking_RB))
+                    .addComponent(powerWorkingRadioButton)
+                    .addComponent(brakesWorkingRadioButton)
+                    .addComponent(antennaWorkingRadioButton))
                 .addGap(59, 59, 59)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(antennaFailure_RB)
-                    .addComponent(powerFailure_RB)
-                    .addComponent(brakesFailure_RB))
+                    .addComponent(antennaFailureRadioButton)
+                    .addComponent(powerFailureRadioButton)
+                    .addComponent(brakesFailureRadioButton))
                 .addGap(31, 31, 31))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(requestFix, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(requestFixButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(uiSeparatorOne, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addComponent(trainIdLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(trainID_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(trainId, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -224,77 +275,87 @@ public class TCFailures extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel4)
+                .addComponent(titleLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(trainID_Label))
+                    .addComponent(trainIdLabel)
+                    .addComponent(trainId))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(uiSeparatorOne, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(antennaWorking_RB)
-                    .addComponent(antennaFailure_RB))
+                    .addComponent(antennaLabel)
+                    .addComponent(antennaWorkingRadioButton)
+                    .addComponent(antennaFailureRadioButton))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(powerWorking_RB)
-                    .addComponent(powerFailure_RB))
+                    .addComponent(powerLabel)
+                    .addComponent(powerWorkingRadioButton)
+                    .addComponent(powerFailureRadioButton))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(brakesWorking_RB)
-                    .addComponent(brakesFailure_RB))
+                    .addComponent(brakesLabel)
+                    .addComponent(brakesWorkingRadioButton)
+                    .addComponent(brakesFailureRadioButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(requestFix, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(requestFixButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void brakesWorking_RBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brakesWorking_RBActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_brakesWorking_RBActionPerformed
-
-    private void powerWorking_RBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_powerWorking_RBActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_powerWorking_RBActionPerformed
-
-    private void antennaWorking_RBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_antennaWorking_RBActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_antennaWorking_RBActionPerformed
-
-    private void requestFix(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestFix
+    /**
+     * Requests a fix to the CTC if there is an Antenna, Power, or Brake Failure, and 
+     * records it to the error log. 
+     * 
+     * @param evt the sender of the event, i.e., the 'Request Fix' button.
+     */
+    private void requestFixButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestFixButton
         
         // reset all the problem back to normal 
         String log; 
         String time = this.getTime();
         
-        if (this.antennaFailure_RB.isSelected()){
+        if (this.antennaFailureRadioButton.isSelected()){
         
             log = "**Request to fix Antenna system - " + time;
             this.logbook.add(log);
-            this.antennaWorking_RB.setSelected(true);
+           
+            this.antennaWorkingRadioButton.setSelected(true);
         }
         
-        if (this.powerFailure_RB.isSelected()){
+        if (this.powerFailureRadioButton.isSelected()){
             log = "**Request to fix Power system - " + time;
             this.logbook.add(log);
-            this.powerWorking_RB.setSelected(true);
+            
+            // send request to ctc to request fix
+            
+            // For testing, it will be automatically fixed
+            if (this.selectedTrain.ac == -1){ this.selectedTrain.ac = 0; }
+            if (this.selectedTrain.heat == -1){ this.selectedTrain.heat = 0; }
+            if (this.selectedTrain.lights == -1){ this.selectedTrain.lights = 0; }
+            if (this.selectedTrain.leftDoors == -1){ this.selectedTrain.leftDoors = 0; }
+            if (this.selectedTrain.rightDoors == -1){ this.selectedTrain.rightDoors = 0; }
+
+            this.powerWorkingRadioButton.setSelected(true);
         }
         
-        if(this.brakesFailure_RB.isSelected()){
+        if(this.brakesFailureRadioButton.isSelected()){
             log = "**Request to fix Brake system - " + time;
             this.logbook.add(log);
-            this.brakesWorking_RB.setSelected(true);
+            this.brakesWorkingRadioButton.setSelected(true);
         }
           
         this.printLogBook();
         this.logbook.clear();
-    }//GEN-LAST:event_requestFix
+    }//GEN-LAST:event_requestFixButton
 
+    /**
+     * Gets the time from the Operating System as a String.
+     * 
+     * @return returns the time of the system. 
+     */
     private String getTime(){
     
         DateFormat dateandtime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -344,22 +405,22 @@ public class TCFailures extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JRadioButton antennaFailure_RB;
+    private javax.swing.JRadioButton antennaFailureRadioButton;
     private javax.swing.ButtonGroup antennaGroup;
-    private javax.swing.JRadioButton antennaWorking_RB;
+    private javax.swing.JLabel antennaLabel;
+    private javax.swing.JRadioButton antennaWorkingRadioButton;
     private javax.swing.ButtonGroup brakeGroup;
-    private javax.swing.JRadioButton brakesFailure_RB;
-    private javax.swing.JRadioButton brakesWorking_RB;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JRadioButton powerFailure_RB;
+    private javax.swing.JRadioButton brakesFailureRadioButton;
+    private javax.swing.JLabel brakesLabel;
+    private javax.swing.JRadioButton brakesWorkingRadioButton;
+    private javax.swing.JRadioButton powerFailureRadioButton;
     private javax.swing.ButtonGroup powerGroup;
-    private javax.swing.JRadioButton powerWorking_RB;
-    private javax.swing.JButton requestFix;
-    private javax.swing.JLabel trainID_Label;
+    private javax.swing.JLabel powerLabel;
+    private javax.swing.JRadioButton powerWorkingRadioButton;
+    public javax.swing.JButton requestFixButton;
+    private javax.swing.JLabel titleLabel;
+    private javax.swing.JLabel trainId;
+    private javax.swing.JLabel trainIdLabel;
+    private javax.swing.JSeparator uiSeparatorOne;
     // End of variables declaration//GEN-END:variables
 }

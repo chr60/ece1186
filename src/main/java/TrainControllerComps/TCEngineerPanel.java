@@ -1,5 +1,7 @@
 package TrainControllerComps;
 
+import CommonUIElements.ConfirmationWindow;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -7,48 +9,72 @@ package TrainControllerComps;
  */
 
 /**
- *
- * @author Andrew
+ * This class is responsible to set the Kp and Ki constants of a given train. 
+ * 
+ * This class collaborates with the Train Controller and the Train class. 
+ * 
+ * @author Andrew Lendacky
  */
 public class TCEngineerPanel extends javax.swing.JFrame {
 
+    /**
+     * The selected train whose power constants are being set. 
+     * This train corresponds to the train that is being controlled by the Train Controller. 
+     */
     private TestTrain selectedTrain; 
     
     /**
-     * Creates new form TCEngineerPanel
+     * Constructor for creating a TCEngineerPanel object without any selected train. 
+     * The selected train must be passed in by the Train Controller before being used.
+     * 
      */
     public TCEngineerPanel() {
         initComponents();
     }
     
     /**
-     * Constructor that creates an Engineer Panel with a give train. 
+     * Constructor for creating a TCEngineerPanel object with a given train. 
      * 
-     * @param train the train whose Kp and Ki you want to change
+     * @param train the train controlled by the Train Controller. 
      */
     public TCEngineerPanel(TestTrain train){
             
         this.initComponents();
         
+        // set the train and refresh the UI
         this.selectedTrain = train;
         this.refreshUI();
     }
     
+    /**
+     * Refreshes the UI for the panel when a train is selected.
+     * If a train already has a set Kp and Ki, it is displayed in the text fields
+     * If not the train has no set Kp and Ki, the text fields are set to 0.0. 
+     * 
+     */
     private void refreshUI(){
     
+        // set the label for the train's id
         this.trainId.setText(this.selectedTrain.id); 
         
+        // check if the train has a kp and ki already
         if (this.selectedTrain.kp != null && this.selectedTrain.ki != null){
         
-            this.Kp_TextField.setText(Double.toString(this.selectedTrain.kp));
-            this.Ki_TextField.setText(Double.toString(this.selectedTrain.ki));
+            this.KpTextField.setText(Double.toString(this.selectedTrain.kp));
+            this.KiTextField.setText(Double.toString(this.selectedTrain.ki));
         }else{
         
-            this.Kp_TextField.setText("0.0");
-            this.Ki_TextField.setText("0.0");
+            // set it to 0.0 if the train doesnt have a kp and ki
+            this.KpTextField.setText("0.0");
+            this.KiTextField.setText("0.0");
         }
     }
     
+    /**
+     * Sets the train that the user wants to set the Kp and Ki for. 
+     * 
+     * @param train the train to control
+     */
     public void setTrain(TestTrain train){
         
         this.selectedTrain = train;
@@ -63,32 +89,27 @@ public class TCEngineerPanel extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        Ki_TextField = new javax.swing.JTextField();
-        Kp_TextField = new javax.swing.JTextField();
+        KpLabel = new javax.swing.JLabel();
+        KiLabel = new javax.swing.JLabel();
+        KiTextField = new javax.swing.JTextField();
+        KpTextField = new javax.swing.JTextField();
         setConstants = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        trainIdLabel = new javax.swing.JLabel();
         trainId = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel1.setText("Kp: ");
+        KpLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        KpLabel.setText("Kp: ");
 
-        jLabel3.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel3.setText("Ki: ");
+        KiLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        KiLabel.setText("Ki: ");
 
-        Ki_TextField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        Ki_TextField.setText("0.0");
+        KiTextField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        KiTextField.setText("0.0");
 
-        Kp_TextField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        Kp_TextField.setText("0.0");
-        Kp_TextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Kp_TextFieldActionPerformed(evt);
-            }
-        });
+        KpTextField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        KpTextField.setText("0.0");
 
         setConstants.setText("Set");
         setConstants.addActionListener(new java.awt.event.ActionListener() {
@@ -97,7 +118,7 @@ public class TCEngineerPanel extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText(" Train ID:");
+        trainIdLabel.setText(" Train ID:");
 
         trainId.setText("(id_here)");
 
@@ -113,16 +134,16 @@ public class TCEngineerPanel extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(KiLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(KpLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(52, 52, 52)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Ki_TextField)
-                            .addComponent(Kp_TextField, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(KiTextField)
+                            .addComponent(KpTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
+                        .addComponent(trainIdLabel)
                         .addGap(18, 18, 18)
                         .addComponent(trainId, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -132,16 +153,16 @@ public class TCEngineerPanel extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                    .addComponent(trainIdLabel)
                     .addComponent(trainId))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(Kp_TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(KpLabel)
+                    .addComponent(KpTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(Ki_TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(KiLabel)
+                    .addComponent(KiTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(setConstants)
                 .addGap(18, 18, 18))
@@ -150,22 +171,30 @@ public class TCEngineerPanel extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Gives the train the specified Kp and Ki that are in the text field. 
+     * If the entries in the text field are not doubles, then an exception will be thrown, and the Kp and Ki will not be set. 
+     * 
+     * @param evt the sender of the event, i.e., the "Set" button. 
+     */
     private void setConstants(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setConstants
                
+        // makes sure the train is not null
         if (this.selectedTrain != null){
             
-            System.out.println("Kp_TextField: " + this.Kp_TextField.getText());             
-            System.out.println("Ki_TextField: " + this.Ki_TextField.getText());
+            System.out.println("Kp_TextField: " + this.KpTextField.getText());             
+            System.out.println("Ki_TextField: " + this.KiTextField.getText());
             
             // give the train the set Kp and Ki
-            this.selectedTrain.kp = Double.parseDouble(this.Kp_TextField.getText());
-            this.selectedTrain.ki = Double.parseDouble(this.Ki_TextField.getText());
+            this.selectedTrain.kp = Double.parseDouble(this.KpTextField.getText());
+            this.selectedTrain.ki = Double.parseDouble(this.KiTextField.getText());
             
             System.out.println("Kp: " + this.selectedTrain.kp);             
             System.out.println("Ki: " + this.selectedTrain.ki); 
             
-            this.dispose();
-            
+            // display a confirmation window for 1 second
+            ConfirmationWindow confirmWindow = new ConfirmationWindow("Kp and Ki Set", "Kp and Ki were successfully set.", 1); 
+            this.dispose();   
         }else{
             System.out.println("No Train Selected"); 
         }
@@ -173,10 +202,6 @@ public class TCEngineerPanel extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_setConstants
-
-    private void Kp_TextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Kp_TextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Kp_TextFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -214,12 +239,12 @@ public class TCEngineerPanel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField Ki_TextField;
-    private javax.swing.JTextField Kp_TextField;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel KiLabel;
+    private javax.swing.JTextField KiTextField;
+    private javax.swing.JLabel KpLabel;
+    private javax.swing.JTextField KpTextField;
     private javax.swing.JButton setConstants;
     private javax.swing.JLabel trainId;
+    private javax.swing.JLabel trainIdLabel;
     // End of variables declaration//GEN-END:variables
 }

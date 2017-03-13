@@ -7,16 +7,42 @@ package TrainControllerComps;
  */
 
 /**
- *
- * @author Andrew
+ * This class is responsible for allowing the passengers on the train to initiate the 
+ * emergency brake on a selected train. 
+ * 
+ * This class collaborates with the Train Controller and Train class. 
+ * 
+ * @author Andrew Lendacky
  */
 public class TCPassengerGUI extends javax.swing.JFrame {
 
     /**
-     * Creates new form TCPassengerGUI
+     * The train being controlled by the Train Controller.
+     */
+    private TestTrain selectedTrain; 
+    
+    /**
+     * Constructor for creating a TCPassengerGUI object with no selected train. 
+     * The selected train must be set by the Train Controller before being used. 
+     * 
      */
     public TCPassengerGUI() {
         initComponents();
+    }
+    
+    /**
+     * Constructor for creating a TCPassengerGUI object with a selected train. 
+     * 
+     * @param train the train controlled by the Train Controller class. 
+     */
+    public TCPassengerGUI(TestTrain train){
+    
+        this.selectedTrain = train; 
+    }
+    
+    public void setSelectedTrain(TestTrain train){
+        
+        this.selectedTrain = train; 
     }
 
     /**
@@ -28,20 +54,26 @@ public class TCPassengerGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
+        emergencyBrake = new javax.swing.JButton();
+        trainIdLabel = new javax.swing.JLabel();
+        trainId = new javax.swing.JLabel();
+        uiSeparatorOne = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Emergency Brake");
+        emergencyBrake.setText("Emergency Brake");
+        emergencyBrake.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                initiateEmgBrake(evt);
+            }
+        });
 
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel1.setText("Train ID: ");
+        trainIdLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        trainIdLabel.setText("Train ID: ");
 
-        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel2.setText("#");
+        trainId.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        trainId.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        trainId.setText("#");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -50,13 +82,12 @@ public class TCPassengerGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+                    .addComponent(uiSeparatorOne)
+                    .addComponent(emergencyBrake, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(trainIdLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(trainId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -64,17 +95,27 @@ public class TCPassengerGUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(22, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addComponent(trainIdLabel)
+                    .addComponent(trainId))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(uiSeparatorOne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(emergencyBrake, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    /**
+     * Initiates the emergency brake on the selected train.
+     * 
+     * @param evt the sender of the event, i.e., the 'Emergency Brake' button
+     */
+    private void initiateEmgBrake(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_initiateEmgBrake
+        
+        // not implemented yet
+    }//GEN-LAST:event_initiateEmgBrake
 
     /**
      * @param args the command line arguments
@@ -112,9 +153,9 @@ public class TCPassengerGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JButton emergencyBrake;
+    private javax.swing.JLabel trainId;
+    private javax.swing.JLabel trainIdLabel;
+    private javax.swing.JSeparator uiSeparatorOne;
     // End of variables declaration//GEN-END:variables
 }

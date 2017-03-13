@@ -12,22 +12,40 @@ import javax.swing.ListModel;
  */
 
 /**
- *
- * @author Andrew
+ * This class is responsible for displaying all the dispatched trains to the user, 
+ * and allow them to open multiple Train Controllers for selected trains. 
+ * 
+ * This class collaborates with the Train Controller class. 
+ * 
+ * @author Andrew Lendacky
  */
 public class TCDispatchedTrainFrame extends javax.swing.JFrame {
 
+    /**
+     * HashMap used to store the dispatched trains by its unique ID.
+     */
     private HashMap<String, TestTrain> dispatchedTrains;
     
-    LinkedList<String> selectedTrains; 
     /**
-     * Creates new form TCDispatchedTrainFrame
+     * A list of trains that the user selected to open a Train Controller for. 
+     */
+    LinkedList<String> selectedTrains; 
+    
+    /**
+     * Constructor for creating a TCDispatchedFrame object. 
+     * This constructor does not set the dispatchedTrains or the selectedTrains fields. 
+     * 
      */
     public TCDispatchedTrainFrame() {
-        initComponents();
-        
+        initComponents();     
     }
     
+    /**
+     * Constructor for creating a TCDispatchedFrame object with a specific HashMap. 
+     * This HashMap should be passed from the Train Controller class.
+     * 
+     * @param dispatchedTrains HashMap corresponding to the dispatched trains.
+     */
     public TCDispatchedTrainFrame(HashMap<String, TestTrain> dispatchedTrains) {
         initComponents();
         
@@ -36,17 +54,23 @@ public class TCDispatchedTrainFrame extends javax.swing.JFrame {
         this.refreshUI();
     }
     
+    /**
+     * Refreshes the UI by adding the dispatched trains from the HashMap to the JList object embedded in 
+     * the panel. 
+     * 
+     */
     private void refreshUI(){
     
         String[] keys = new String[this.dispatchedTrains.keySet().size()];
         int counter = 0; 
+        // loop through each key in the hashmap
         for (String key : this.dispatchedTrains.keySet()){
         
-            keys[counter] = key; 
+            keys[counter] = key; // add it to an array
             counter++; 
         }
         
-        this.dispatchedTrains_List.setListData(keys);
+        this.dispatchedTrainsList.setListData(keys); // add the names of the train to the JList
     }
 
     /**
@@ -58,43 +82,43 @@ public class TCDispatchedTrainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
-        dispatchedTrains_List = new javax.swing.JList<>();
-        jLabel1 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        selectAll_Btn = new javax.swing.JButton();
-        deselectAll_Btn = new javax.swing.JButton();
-        openSelected_Btn = new javax.swing.JButton();
+        dispatchedTrainsPanel = new javax.swing.JScrollPane();
+        dispatchedTrainsList = new javax.swing.JList<>();
+        titleLabel = new javax.swing.JLabel();
+        uiSeparatorOne = new javax.swing.JSeparator();
+        selectAllButton = new javax.swing.JButton();
+        deselectAllButton = new javax.swing.JButton();
+        openSelectedButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        dispatchedTrains_List.setModel(new javax.swing.AbstractListModel<String>() {
+        dispatchedTrainsList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Train 1", "Train 2", "Train 3", "Train 4", "Train 5", "Train 6", "Train 7", "Train 8", "Train 9", "Train 10" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        dispatchedTrains_List.setToolTipText("List of dispatched trains.");
-        jScrollPane2.setViewportView(dispatchedTrains_List);
+        dispatchedTrainsList.setToolTipText("List of dispatched trains.");
+        dispatchedTrainsPanel.setViewportView(dispatchedTrainsList);
 
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jLabel1.setText("Dispatched Trains");
+        titleLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        titleLabel.setText("Dispatched Trains");
 
-        selectAll_Btn.setText("Select All");
-        selectAll_Btn.addActionListener(new java.awt.event.ActionListener() {
+        selectAllButton.setText("Select All");
+        selectAllButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selectAll_BtnActionPerformed(evt);
+                selectAllButtonActionPerformed(evt);
             }
         });
 
-        deselectAll_Btn.setText("Deselect All");
-        deselectAll_Btn.addActionListener(new java.awt.event.ActionListener() {
+        deselectAllButton.setText("Deselect All");
+        deselectAllButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deselectAll_BtnActionPerformed(evt);
+                deselectAllButtonActionPerformed(evt);
             }
         });
 
-        openSelected_Btn.setText("Open Selected");
-        openSelected_Btn.addActionListener(new java.awt.event.ActionListener() {
+        openSelectedButton.setText("Open Selected");
+        openSelectedButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 openSelectedTrains(evt);
             }
@@ -106,63 +130,76 @@ public class TCDispatchedTrainFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addComponent(titleLabel)
                 .addGap(89, 89, 89))
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
-                        .addComponent(jSeparator1))
+                        .addComponent(dispatchedTrainsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+                        .addComponent(uiSeparatorOne))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(selectAll_Btn)
+                        .addComponent(selectAllButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(deselectAll_Btn)
+                        .addComponent(deselectAllButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(openSelected_Btn)))
+                        .addComponent(openSelectedButton)))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jLabel1)
+                .addComponent(titleLabel)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(dispatchedTrainsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(uiSeparatorOne, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(selectAll_Btn)
-                    .addComponent(deselectAll_Btn)
-                    .addComponent(openSelected_Btn))
+                    .addComponent(selectAllButton)
+                    .addComponent(deselectAllButton)
+                    .addComponent(openSelectedButton))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void selectAll_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectAll_BtnActionPerformed
+    /**
+     * Selects all the dispatched trains from the dispatchedTrainsList. 
+     * 
+     * @param evt the sender of the event, i.e., the 'Select All' button.
+     */
+    private void selectAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectAllButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_selectAll_BtnActionPerformed
+    }//GEN-LAST:event_selectAllButtonActionPerformed
 
-    private void deselectAll_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deselectAll_BtnActionPerformed
+    /**
+     * Deselects all the trains that are selected in the dispatchedTrainsList. 
+     * 
+     * @param evt the sender of the event, i.e., the 'Deselect All' button
+     */
+    private void deselectAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deselectAllButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_deselectAll_BtnActionPerformed
+    }//GEN-LAST:event_deselectAllButtonActionPerformed
 
+    /**
+     * Creates a Train Controller object for each of the trains that were selected by the user. 
+     * 
+     * @param evt the sender of the event, i.e., the 'Open Selected' button.
+     */
     private void openSelectedTrains(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openSelectedTrains
-        // TODO add your handling code here:
         
         TestTrain train; 
-        //this.selectedTrains = (LinkedList<String>) this.dispatchedTrains_List.getSelectedValuesList();
-        for (String trainId : this.dispatchedTrains_List.getSelectedValuesList()){
+        // get each of the trains that were selected
+        for (String trainId : this.dispatchedTrainsList.getSelectedValuesList()){
         
-            train = this.dispatchedTrains.get(trainId);
-            TrainController newTC = new TrainController(train);
+            train = this.dispatchedTrains.get(trainId); // get train from hash
+            TrainController newTC = new TrainController(train); // open the train controller
             newTC.setVisible(true);
             newTC.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        }
-       
+        }   
     }//GEN-LAST:event_openSelectedTrains
 
     /**
@@ -201,12 +238,12 @@ public class TCDispatchedTrainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton deselectAll_Btn;
-    private javax.swing.JList<String> dispatchedTrains_List;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JButton openSelected_Btn;
-    private javax.swing.JButton selectAll_Btn;
+    private javax.swing.JButton deselectAllButton;
+    private javax.swing.JList<String> dispatchedTrainsList;
+    private javax.swing.JScrollPane dispatchedTrainsPanel;
+    private javax.swing.JButton openSelectedButton;
+    private javax.swing.JButton selectAllButton;
+    private javax.swing.JLabel titleLabel;
+    private javax.swing.JSeparator uiSeparatorOne;
     // End of variables declaration//GEN-END:variables
 }

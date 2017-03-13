@@ -20,6 +20,11 @@ public class TestTrain {
     Double kp, ki; 
     double currentBlockSpeed; 
     double currentSuggestedSpeed; 
+    int lights; 
+    int leftDoors;  
+    int rightDoors;
+    int ac; 
+    int heat; 
 
     public TestTrain (String id){
     
@@ -30,6 +35,12 @@ public class TestTrain {
         this.power = 0.0; 
         this.currentBlockSpeed = 0.0; 
         this.currentSuggestedSpeed = 0.0; 
+        
+        this.ac = 0; 
+        this.lights = 0; 
+        this.leftDoors = 0; 
+        this.rightDoors = 0; 
+        this.heat = 0;     
     }
     
     public boolean powerConstantsSet(){

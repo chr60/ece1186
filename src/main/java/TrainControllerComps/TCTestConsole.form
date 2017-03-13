@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.ButtonGroup" name="acButtonGroupMurphy">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="heatButtonGroupMurphy">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="lightsButtonGroupMurphy">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="leftDoorsButtonGroupMurphy">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="rightDoorsButtonGroupMurphy">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="acButtonGroup">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="heatButtonGroup">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="lightsButtonGroup">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="leftDoorsButtonGroup">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="rightDoorsButtonGroups">
+    </Component>
+  </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
@@ -79,7 +101,6 @@
                               <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="suggSpeedSlider" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -197,14 +218,14 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                  <Component id="trainPowerLabel" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
                                   <Component id="trainPower" min="-2" pref="45" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="trainSpeedLabel" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="trainSpeed" min="-2" pref="45" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -239,12 +260,12 @@
                                       <Group type="102" alignment="1" attributes="0">
                                           <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                          <Component id="jRadioButton7" min="-2" max="-2" attributes="0"/>
+                                          <Component id="breakLeftDoorsMurphy" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="1" attributes="0">
                                           <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jRadioButton9" min="-2" max="-2" attributes="0"/>
+                                          <Component id="breakRightDoorsMurphy" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="1" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
@@ -254,20 +275,20 @@
                                           </Group>
                                           <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jRadioButton3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jRadioButton1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jRadioButton5" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="breakHeatMurphy" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="breakACMurphy" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="breakLightsMurphy" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="jRadioButton8" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jRadioButton10" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="fixLeftDoorsMurphy" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="fixRightDoorsMurphy" alignment="1" min="-2" max="-2" attributes="0"/>
                                       <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                          <Component id="jRadioButton4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jRadioButton2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jRadioButton6" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="fixHeatMurphy" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="fixACMurphy" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="fixLightsMurphy" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -280,7 +301,7 @@
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Group type="102" attributes="0">
-                                          <Component id="jLabel25" min="-2" max="-2" attributes="0"/>
+                                          <Component id="rightDoorsLabel" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Component id="jRadioButton19" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
@@ -288,10 +309,10 @@
                                       </Group>
                                       <Group type="102" attributes="0">
                                           <Group type="103" groupAlignment="1" attributes="0">
-                                              <Component id="jLabel26" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jLabel18" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jLabel19" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jLabel24" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="leftDoorsLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="acLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="heatLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="lightsLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="32767" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
@@ -324,13 +345,13 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="jLabel1" min="-2" pref="55" max="-2" attributes="0"/>
+                                  <Component id="logsLabel" min="-2" pref="55" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <Component id="jButton1" max="32767" attributes="0"/>
+                                  <Component id="dispatchTrainsLabel" max="32767" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="numDispatchedTrains" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="jScrollPane1" max="32767" attributes="0"/>
                           </Group>
@@ -351,7 +372,7 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabel7" alignment="1" min="-2" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="trainSpeedLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="trainSpeed" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -366,7 +387,7 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                              <Component id="trainPowerLabel" min="-2" max="-2" attributes="0"/>
                               <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                   <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel34" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -403,39 +424,39 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jRadioButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="breakACMurphy" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jRadioButton3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="breakHeatMurphy" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jRadioButton5" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="breakLightsMurphy" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jRadioButton7" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="breakLeftDoorsMurphy" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jRadioButton9" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="breakRightDoorsMurphy" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jRadioButton2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="fixACMurphy" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jRadioButton4" min="-2" max="-2" attributes="0"/>
+                                  <Component id="fixHeatMurphy" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jRadioButton6" min="-2" max="-2" attributes="0"/>
+                                  <Component id="fixLightsMurphy" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jRadioButton8" min="-2" max="-2" attributes="0"/>
+                                  <Component id="fixLeftDoorsMurphy" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jRadioButton10" min="-2" max="-2" attributes="0"/>
+                                  <Component id="fixRightDoorsMurphy" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="jSeparator3" alignment="1" min="-2" pref="139" max="-2" attributes="0"/>
                           </Group>
@@ -445,28 +466,28 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="acLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jRadioButton11" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jLabel19" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="heatLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jRadioButton14" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jLabel24" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lightsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jRadioButton15" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jLabel26" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="leftDoorsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jRadioButton17" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jRadioButton18" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jLabel25" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="rightDoorsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jRadioButton19" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jRadioButton20" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -484,11 +505,11 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="dispatchTrainsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="numDispatchedTrains" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                          <Component id="logsLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                           <Component id="jScrollPane1" min="-2" pref="261" max="-2" attributes="0"/>
                       </Group>
@@ -499,12 +520,12 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabel2">
+        <Component class="javax.swing.JLabel" name="trainSpeedLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="Speed:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel4">
+        <Component class="javax.swing.JLabel" name="trainPowerLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="Power:"/>
           </Properties>
@@ -584,55 +605,115 @@
             <Property name="text" type="java.lang.String" value="Right Door:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="jRadioButton1">
+        <Component class="javax.swing.JRadioButton" name="breakACMurphy">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="acButtonGroupMurphy"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Break"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="breakAC"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="jRadioButton2">
+        <Component class="javax.swing.JRadioButton" name="fixACMurphy">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="acButtonGroupMurphy"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Unbreak"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fixAC"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="jRadioButton3">
+        <Component class="javax.swing.JRadioButton" name="breakHeatMurphy">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="heatButtonGroupMurphy"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Break"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="breakHeat"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="jRadioButton4">
+        <Component class="javax.swing.JRadioButton" name="fixHeatMurphy">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="heatButtonGroupMurphy"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Unbreak"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fixHeat"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="jRadioButton5">
+        <Component class="javax.swing.JRadioButton" name="breakLightsMurphy">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="lightsButtonGroupMurphy"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Break"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="breakLightsMurphy"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="jRadioButton6">
+        <Component class="javax.swing.JRadioButton" name="fixLightsMurphy">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="lightsButtonGroupMurphy"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Unbreak"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fixLights"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="jRadioButton7">
+        <Component class="javax.swing.JRadioButton" name="breakLeftDoorsMurphy">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="leftDoorsButtonGroupMurphy"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Break"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="breakLeftDoors"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="jRadioButton8">
+        <Component class="javax.swing.JRadioButton" name="fixLeftDoorsMurphy">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="leftDoorsButtonGroupMurphy"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Unbreak"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fixLeftDoors"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="jRadioButton9">
+        <Component class="javax.swing.JRadioButton" name="breakRightDoorsMurphy">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="rightDoorsButtonGroupMurphy"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Break"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="breakRightDoors"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="jRadioButton10">
+        <Component class="javax.swing.JRadioButton" name="fixRightDoorsMurphy">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="rightDoorsButtonGroupMurphy"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Unbreak"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fixRightDoors"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator3">
           <Properties>
@@ -641,80 +722,140 @@
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator4">
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel18">
+        <Component class="javax.swing.JLabel" name="acLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="AC:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel19">
+        <Component class="javax.swing.JLabel" name="heatLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="Heat:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel24">
+        <Component class="javax.swing.JLabel" name="lightsLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="Lights:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel25">
+        <Component class="javax.swing.JLabel" name="rightDoorsLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="Right Door:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel26">
+        <Component class="javax.swing.JLabel" name="leftDoorsLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="Left Door:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioButton11">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="acButtonGroup"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="ON"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="turnOnAC"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioButton12">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="acButtonGroup"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="OFF"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="turnOffAC"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioButton13">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="heatButtonGroup"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="OFF"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="turnOffHeat"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioButton14">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="heatButtonGroup"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="ON"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="turnOnHeat"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioButton15">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="lightsButtonGroup"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="ON"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="turnOnLights"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioButton16">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="lightsButtonGroup"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="OFF"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="turnOffLights"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioButton17">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="leftDoorsButtonGroup"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="OPEN"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="openLeftDoors"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioButton18">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="leftDoorsButtonGroup"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="CLOSE"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="closeLeftDoors"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioButton19">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="rightDoorsButtonGroups"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="OPEN"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="openRightDoors"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioButton20">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="rightDoorsButtonGroups"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="CLOSE"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="closeRightDoors"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator5">
           <Properties>
@@ -728,7 +869,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextPane" name="jTextPane1">
+            <Component class="javax.swing.JTextPane" name="logs">
             </Component>
           </SubComponents>
         </Container>
@@ -756,12 +897,12 @@
             <Property name="text" type="java.lang.String" value="0"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="dispatchTrainsLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="Dispatch &apos;x&apos; Trains"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox1">
+        <Component class="javax.swing.JComboBox" name="numDispatchedTrains">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="10">
@@ -782,7 +923,7 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel1">
+        <Component class="javax.swing.JLabel" name="logsLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="Logs:"/>
           </Properties>

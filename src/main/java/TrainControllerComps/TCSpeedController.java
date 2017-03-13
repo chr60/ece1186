@@ -17,21 +17,25 @@ import javax.swing.event.ChangeListener;
  */
 
 /**
- *
- * @author Andrew
+ * This class is responsible for allowing the user to set the speed of the selected train if in Manual mode, 
+ * or controls the speed automatically if in Automatic mode. 
+ * 
+ * This class collaborates with the Train and Train Controller class.
+ *  
+ * @author Andrew Lendacky
  */
+
 public class TCSpeedController extends javax.swing.JPanel {
     
     // MARK: - Variables/Properties
     
     /**
-     * The train that is being controlled. This is sent to the Speed Controller 
-     * by the Train Controller. 
+     * The train that is being controlled by the Train Controller. 
      */
     private TestTrain selectedTrain; 
     
     /**
-     * The area where the logs are printed to.
+     * Area the logs are printed to.
      */
     private JTextArea operatingLogs; 
     
@@ -66,7 +70,18 @@ public class TCSpeedController extends javax.swing.JPanel {
     private int timeElapsed;
     
     /**
-     * Timer used to perform the power law calculations with the train every second. 
+     * A boolean value indicating if the Speed Controller is operating in Manual or Automatic mode. 
+     * This value is set from the Train Controller class. 
+     */
+    private boolean inManualMode; 
+    
+    /**
+     * Brake panel used to control the brakes on the train if needed to slow down. 
+     */
+    private TCBrakePanel brakePanel; 
+    
+    /**
+     * Timer used to perform the power law calculations with the train 1 second. 
      */
     private Timer beginPowerControl = new Timer(1000, new ActionListener(){
         Random rand = new Random(); 
@@ -86,11 +101,7 @@ public class TCSpeedController extends javax.swing.JPanel {
                 System.out.println(powerCommand_Out);   
                 if (powerCommand_Out < 0){
                     
-                    logBook.add("Engage the service brake");             
-                    // slow the train down by 1 MPH
-                    // FOR TESTING PURPOSES, THIS IS 1 MPH
-                    selectedTrain.speed--; 
-                    
+                    brakePanel.getServiceBrake().doClick();
                 }else if (powerCommand_Out > 0){
                     logBook.add("Full steam ahead!");
                     // speed up train by 1 MPH 
@@ -107,7 +118,9 @@ public class TCSpeedController extends javax.swing.JPanel {
     // MARK: - Constructors
     
     /**
-     * Creates new form TCSpeedController
+     * Constructor for creating a new TCSpeedController object with no selected train.
+     * The selected train must be set by the Train Controller before being used. 
+     * 
      */
     public TCSpeedController() {
                        
@@ -119,21 +132,38 @@ public class TCSpeedController extends javax.swing.JPanel {
          
         // add action listensers
         this.speedSlider.addChangeListener(new ChangeListener() {
-         public void stateChanged(ChangeEvent e) {
+        public void stateChanged(ChangeEvent e) {
              
         String sliderValue = Integer.toString(speedSlider.getValue());
         //System.out.println("Speed: " + sliderValue);
          
-        setSpeed_Label.setText(sliderValue);
+        currentSliderSpeedLabel.setText(sliderValue);
         
         }
        
     });
     }
     
+    /**
+     * Sets which Operating Logs the Speed Controller should print to. 
+     * The operating log should be set from the Train Controller. 
+     * 
+     * @param opLogs the text field that the Speed Controller will print to. 
+     */
     public void setOperatingLogs(JTextArea opLogs){
     
         this.operatingLogs = opLogs; 
+    }
+    
+    /**
+     * Sets the brake panel. 
+     * This method is called from the Train Controller class. 
+     * 
+     * @param brakePanel the brake panel from the Train Controller.
+     */
+    public void setBrakePanel(TCBrakePanel brakePanel){
+    
+        this.brakePanel = brakePanel; 
     }
     
     /**
@@ -159,7 +189,7 @@ public class TCSpeedController extends javax.swing.JPanel {
         this.maxSpeed = maxSpeed;         
        
         // update ui
-        this.maxSpeed_Slider.setText(Double.toString(this.maxSpeed));
+        this.maxSpeedSlider.setText(Double.toString(this.maxSpeed));
         this.speedSlider.setMaximum((int) this.maxSpeed);   
     }
     
@@ -171,10 +201,31 @@ public class TCSpeedController extends javax.swing.JPanel {
      */
     public void refreshUI(){
        
-        this.maxSpeed_Slider.setText(Double.toString(this.maxSpeed));
+        this.maxSpeedSlider.setText(Double.toString(this.maxSpeed));
         this.speedSlider.setMaximum((int) this.maxSpeed);
+        
+        if (this.inManualMode){ // manual mode
+            this.setSpeedButton.setEnabled(true);
+            this.speedSlider.setEnabled(true);
+            
+        }else if (this.inManualMode == false){ // automatic mode
+            this.setSpeedButton.setEnabled(false);
+            this.speedSlider.setEnabled(false);
+            
+            
+            // get suggested speed
+            
+            // set slider value to suggested speed
+            
+            // set speed
+        }     
     }
     
+    /**
+     * Retrieves the set speed the user wants the train to go, which is determined by the speed slider.  
+     * 
+     * @return returns the value of the speed slider. 
+     */
     public int getSetSpeed(){
         
         return this.speedSlider.getValue();
@@ -186,7 +237,19 @@ public class TCSpeedController extends javax.swing.JPanel {
      */
     public void setSpeedLabel(){
     
-        this.setSpeed_Label.setText(Integer.toString(this.speedSlider.getValue()));
+        this.currentSliderSpeedLabel.setText(Integer.toString(this.speedSlider.getValue()));
+    }
+    
+    /**
+     * Sets if the Speed Controller should run in Manual or Automatic mode. 
+     * This value is set from the Train Controller class depending on the states 
+     * of the radio buttons, "Automatic" and "Manual".
+     * 
+     * @param b true if in manual mode, false if in automatic mode. 
+     */
+    public void setManualMode(Boolean b){
+        
+        this.inManualMode = b; 
     }
     
     /**
@@ -198,7 +261,7 @@ public class TCSpeedController extends javax.swing.JPanel {
     public void setSliderMax(int max){
     
         this.speedSlider.setMaximum(max);
-        this.maxSpeed_Slider.setText(Integer.toString(this.speedSlider.getMaximum()));
+        this.maxSpeedSlider.setText(Integer.toString(this.speedSlider.getMaximum()));
     }
 
     /**
@@ -211,37 +274,37 @@ public class TCSpeedController extends javax.swing.JPanel {
     private void initComponents() {
 
         speedSlider = new javax.swing.JSlider();
-        jLabel3 = new javax.swing.JLabel();
-        setSpeed_Label = new javax.swing.JLabel();
-        minSpeed_Slider = new javax.swing.JLabel();
-        maxSpeed_Slider = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        setSpeedLabel = new javax.swing.JLabel();
+        currentSliderSpeedLabel = new javax.swing.JLabel();
+        minSpeedSlider = new javax.swing.JLabel();
+        maxSpeedSlider = new javax.swing.JLabel();
+        mphLabel = new javax.swing.JLabel();
+        maxMPHLabel = new javax.swing.JLabel();
+        minMPHLabel = new javax.swing.JLabel();
         setSpeedButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
         speedSlider.setPaintTicks(true);
 
-        jLabel3.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel3.setText("Set Speed:");
+        setSpeedLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        setSpeedLabel.setText("Set Speed:");
 
-        setSpeed_Label.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        setSpeed_Label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        setSpeed_Label.setText("0");
+        currentSliderSpeedLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        currentSliderSpeedLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        currentSliderSpeedLabel.setText("0");
 
-        minSpeed_Slider.setText("0");
+        minSpeedSlider.setText("0");
 
-        maxSpeed_Slider.setText("100");
+        maxSpeedSlider.setText("100");
 
-        jLabel5.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("MPH");
+        mphLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        mphLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mphLabel.setText("MPH");
 
-        jLabel7.setText("MPH");
+        maxMPHLabel.setText("MPH");
 
-        jLabel2.setText("MPH");
+        minMPHLabel.setText("MPH");
 
         setSpeedButton.setText("Set Speed");
         setSpeedButton.addActionListener(new java.awt.event.ActionListener() {
@@ -263,21 +326,21 @@ public class TCSpeedController extends javax.swing.JPanel {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(maxSpeed_Slider)
+                                .addComponent(maxSpeedSlider)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel7))
+                                .addComponent(maxMPHLabel))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(setSpeed_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(currentSliderSpeedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(mphLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(12, 12, 12))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
+                            .addComponent(setSpeedLabel)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(minSpeed_Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(minSpeedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel2)))
+                                .addComponent(minMPHLabel)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -285,19 +348,19 @@ public class TCSpeedController extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(setSpeedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(setSpeed_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                    .addComponent(currentSliderSpeedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mphLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(maxSpeed_Slider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel7))
+                        .addComponent(maxSpeedSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(maxMPHLabel))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(minSpeed_Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(minSpeedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(minMPHLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(speedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -311,7 +374,15 @@ public class TCSpeedController extends javax.swing.JPanel {
      * 
      * FIX ME: This isn't complete yet! 
      * 
-     * @param evt the "Set Speed" button that triggers this event. 
+     * @param evt the sender of the action, i.e., the "Set Speed" button.
+     */
+    
+    /**
+     * @Bug If the train is accelerating, and the selected train is switched, the previous train will 
+     * stop changing speeds. 
+     * 
+     * This should be looked into, and perhaps making switching trains unavailable while the current one
+     * is changing speeds. 
      */
     private void setSpeed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setSpeed
            
@@ -326,6 +397,7 @@ public class TCSpeedController extends javax.swing.JPanel {
 
     /**
      * Determines if the the train's speed is equal to the speed the user set. 
+     * The system will continue to run the Power Control until this function returns true. 
      * 
      * @return returns true if the train's speed is equal to the set speed, false otherwise. 
      */
@@ -342,33 +414,30 @@ public class TCSpeedController extends javax.swing.JPanel {
     }
     
     /**
-     * Prints the stored logs to the Operating Log text pane, then clears the logbook. 
-     * The JTextPane must be set from the TrainController class.
+     * Prints the stored logs to the operating log, then clears the logbook. 
+     * The JTextPane must be set from the TrainController class before being used. 
      */
     public void printLogs(){
-    
-        
-        if (this.operatingLogs != null){
+         
+        if (this.operatingLogs != null && this.logBook.isEmpty() == false){
             for (String log : this.logBook){
-        
+    
                 this.operatingLogs.setText(this.operatingLogs.getText() + log + "\n");
             }
-        }else{
-            
         }
-        
+      
         this.logBook.clear();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel maxSpeed_Slider;
-    private javax.swing.JLabel minSpeed_Slider;
+    private javax.swing.JLabel currentSliderSpeedLabel;
+    private javax.swing.JLabel maxMPHLabel;
+    private javax.swing.JLabel maxSpeedSlider;
+    private javax.swing.JLabel minMPHLabel;
+    private javax.swing.JLabel minSpeedSlider;
+    private javax.swing.JLabel mphLabel;
     private javax.swing.JButton setSpeedButton;
-    private javax.swing.JLabel setSpeed_Label;
+    private javax.swing.JLabel setSpeedLabel;
     private javax.swing.JSlider speedSlider;
     // End of variables declaration//GEN-END:variables
 }

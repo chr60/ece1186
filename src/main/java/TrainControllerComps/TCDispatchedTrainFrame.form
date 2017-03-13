@@ -25,22 +25,22 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
-              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <Component id="titleLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jScrollPane2" pref="362" max="32767" attributes="0"/>
-                      <Component id="jSeparator1" max="32767" attributes="0"/>
+                      <Component id="dispatchedTrainsPanel" pref="362" max="32767" attributes="0"/>
+                      <Component id="uiSeparatorOne" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
-                      <Component id="selectAll_Btn" min="-2" max="-2" attributes="0"/>
+                      <Component id="selectAllButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="deselectAll_Btn" min="-2" max="-2" attributes="0"/>
+                      <Component id="deselectAllButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="openSelected_Btn" min="-2" max="-2" attributes="0"/>
+                      <Component id="openSelectedButton" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="15" max="32767" attributes="0"/>
@@ -51,16 +51,16 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <Component id="titleLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jScrollPane2" min="-2" pref="180" max="-2" attributes="0"/>
+              <Component id="dispatchedTrainsPanel" min="-2" pref="180" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
+              <Component id="uiSeparatorOne" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="selectAll_Btn" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="deselectAll_Btn" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="openSelected_Btn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="selectAllButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="deselectAllButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="openSelectedButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="18" max="32767" attributes="0"/>
           </Group>
@@ -68,14 +68,14 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+    <Container class="javax.swing.JScrollPane" name="dispatchedTrainsPanel">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JList" name="dispatchedTrains_List">
+        <Component class="javax.swing.JList" name="dispatchedTrainsList">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
               <StringArray count="10">
@@ -99,7 +99,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="titleLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="24" style="0"/>
@@ -107,25 +107,25 @@
         <Property name="text" type="java.lang.String" value="Dispatched Trains"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JSeparator" name="jSeparator1">
+    <Component class="javax.swing.JSeparator" name="uiSeparatorOne">
     </Component>
-    <Component class="javax.swing.JButton" name="selectAll_Btn">
+    <Component class="javax.swing.JButton" name="selectAllButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Select All"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selectAll_BtnActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selectAllButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="deselectAll_Btn">
+    <Component class="javax.swing.JButton" name="deselectAllButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Deselect All"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deselectAll_BtnActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deselectAllButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="openSelected_Btn">
+    <Component class="javax.swing.JButton" name="openSelectedButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Open Selected"/>
       </Properties>

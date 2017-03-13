@@ -7,26 +7,60 @@ package TrainControllerComps;
  */
 
 /**
- *
- * @author Andrew
+ * This class is responsible for displaying information regarding the block the selected train is 
+ * currently in. This class collaborates with the Train class as well as the 
+ * Train Controller class. 
+ * 
+ * @author Andrew Lendacky
  */
 public class TCBlockInfoPanel extends javax.swing.JPanel {
 
+    
     /**
-     * Creates new form TCBlockInfoPanel
+     * The train to use in order to populate the labels and UI elements. 
+     * This property must be passed in from the Train Controller class. 
+     * 
+     */
+    private TestTrain selectedTrain; 
+    
+    /**
+     * Constructor for a TCBlockInfoPanel object. This constructor does not set 
+     * the selected train, and must be set by the Train Controller before being used. 
+     * 
      */
     public TCBlockInfoPanel() {
         initComponents();
     }
     
-    public void setBlockSpeed(double blockSpeed){
+    /**
+     * Sets the selected train that the class will get its information from. 
+     * This train is set from the Train Controller class. 
+     * 
+     * @param train the selected train
+     */
+    public void setSelectedTrain(TestTrain train){
         
-        this.blockSpeed_lbl.setText(Double.toString(blockSpeed));
+        this.selectedTrain = train; 
     }
     
+    /**
+     * Sets the block speed label to a specified speed in MPH. 
+     * 
+     * @param blockSpeed the speed of the block the train is in. 
+     */
+    public void setBlockSpeed(double blockSpeed){
+        
+        this.blockSpeed.setText(Double.toString(blockSpeed));
+    }
+    
+    /**
+     * Gets the speed of the block the selected train is in. 
+     * 
+     * @return returns the block speed
+     */
     public double getBlockSpeed(){
         
-        return Double.parseDouble(this.blockSpeed_lbl.getText());
+        return Double.parseDouble(this.blockSpeed.getText());
     }
     
     /**
@@ -38,45 +72,45 @@ public class TCBlockInfoPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel3 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        blockSpeed_lbl = new javax.swing.JLabel();
+        blockSpeedLabel = new javax.swing.JLabel();
+        backgroundPanel = new javax.swing.JPanel();
+        unitLabel = new javax.swing.JLabel();
+        blockSpeed = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel3.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel3.setText("Block Speed:");
+        blockSpeedLabel.setBackground(new java.awt.Color(255, 255, 255));
+        blockSpeedLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        blockSpeedLabel.setText("Block Speed:");
 
-        jLabel6.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("MPH");
+        unitLabel.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
+        unitLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        unitLabel.setText("MPH");
 
-        blockSpeed_lbl.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
-        blockSpeed_lbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        blockSpeed_lbl.setText("0");
+        blockSpeed.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
+        blockSpeed.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        blockSpeed.setText("0");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
+        backgroundPanel.setLayout(backgroundPanelLayout);
+        backgroundPanelLayout.setHorizontalGroup(
+            backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(backgroundPanelLayout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addComponent(jLabel6)
+                .addComponent(unitLabel)
                 .addContainerGap(38, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(backgroundPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(blockSpeed_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(blockSpeed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        backgroundPanelLayout.setVerticalGroup(
+            backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(blockSpeed_lbl)
+                .addComponent(blockSpeed)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
+                .addComponent(unitLabel)
                 .addGap(30, 30, 30))
         );
 
@@ -87,26 +121,26 @@ public class TCBlockInfoPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(blockSpeedLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(backgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
+                .addComponent(blockSpeedLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(backgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel blockSpeed_lbl;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel backgroundPanel;
+    private javax.swing.JLabel blockSpeed;
+    private javax.swing.JLabel blockSpeedLabel;
+    private javax.swing.JLabel unitLabel;
     // End of variables declaration//GEN-END:variables
 }

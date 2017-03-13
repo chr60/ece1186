@@ -6,9 +6,9 @@
     </Component>
     <Component class="javax.swing.ButtonGroup" name="normal_testGroup">
     </Component>
-    <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
+    <Menu class="javax.swing.JMenuBar" name="menuBar">
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="jMenu1">
+        <Menu class="javax.swing.JMenu" name="viewMenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="View"/>
           </Properties>
@@ -28,7 +28,7 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu2">
+        <Menu class="javax.swing.JMenu" name="editMenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Edit"/>
           </Properties>
@@ -48,7 +48,7 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu3">
+        <Menu class="javax.swing.JMenu" name="helpMenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Help"/>
           </Properties>
@@ -81,7 +81,7 @@
     <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
   <SyntheticProperties>
-    <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
+    <SyntheticProperty name="menuBar" type="java.lang.String" value="menuBar"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
@@ -105,68 +105,68 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
-                              <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
+                              <Component id="utilitiesTitle" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="tCUtilityPanel1" min="-2" pref="306" max="-2" attributes="0"/>
+                              <Component id="utilityPanel" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jSeparator5" min="-2" max="-2" attributes="0"/>
+                      <Component id="uiSeparatorFive" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
+                                      <Component id="errorLogsLabel" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jButton2" min="-2" pref="70" max="-2" attributes="0"/>
+                                      <Component id="clearErrorLog" min="-2" pref="70" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="jScrollPane4" min="-2" pref="212" max="-2" attributes="0"/>
+                                      <Component id="errorLogScrollPane" min="-2" pref="212" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
+                                      <Component id="operatingLogsLabel" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jButton1" min="-2" pref="77" max="-2" attributes="0"/>
+                                      <Component id="clearOperatingLog" min="-2" pref="77" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
+                                          <Component id="chooseAnnouncementLabel" min="-2" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
+                                              <Component id="announcementsLabel" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jButton3" min="-2" pref="77" max="-2" attributes="0"/>
+                                              <Component id="clearAnnouncements" min="-2" pref="77" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
                                   <Component id="annoucementDropDown" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jScrollPane2" alignment="1" min="-2" pref="265" max="-2" attributes="0"/>
-                                  <Component id="jScrollPane3" alignment="0" pref="269" max="32767" attributes="0"/>
-                                  <Component id="jButton6" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="announcementScrollPane" alignment="1" min="-2" pref="265" max="-2" attributes="0"/>
+                                  <Component id="operatingLogsScrollPane" alignment="0" pref="269" max="32767" attributes="0"/>
+                                  <Component id="makeAnnouncementButton" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
-                              <Component id="jLabel12" min="-2" pref="406" max="-2" attributes="0"/>
+                              <Component id="notificationsTitle" min="-2" pref="406" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <Component id="jSeparator6" min="-2" max="-2" attributes="0"/>
+                      <Component id="uiSeparatorSix" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jLabel14" pref="244" max="32767" attributes="0"/>
+                                  <Component id="speedControllerTitle" pref="244" max="32767" attributes="0"/>
                                   <Component id="speedController" alignment="1" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -177,7 +177,7 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                              <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                              <Component id="blockInfoTitle" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -188,13 +188,13 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                          <Component id="normalMode_RB" max="32767" attributes="0"/>
-                                          <Component id="automaticMode_RB" min="-2" max="-2" attributes="0"/>
+                                          <Component id="normalModeRadioButton" max="32767" attributes="0"/>
+                                          <Component id="automaticModeRadioButton" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="manualMode_RB" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
-                                          <Component id="testingMode_RB" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
+                                          <Component id="manualModeRadioButton" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
+                                          <Component id="testingModeRadioButton" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                                   </Group>
@@ -205,10 +205,10 @@
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="setKpAndKi" min="-2" pref="90" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="switchTrains" pref="123" max="32767" attributes="0"/>
+                                              <Component id="switchTrains" pref="127" max="32767" attributes="0"/>
                                           </Group>
                                           <Component id="dispatchedTrains" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="jSeparator4" max="32767" attributes="0"/>
+                                          <Component id="uiSeparatorOne" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
@@ -216,32 +216,32 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
-                                              <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                                              <Component id="modeSelectionTitle" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
-                                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                              <Component id="trainSelectionTitle" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Component id="jSeparator2" min="-2" max="-2" attributes="0"/>
+                              <Component id="uiSeparatorTwo" min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
-                                      <Component id="jLabel1" min="-2" pref="320" max="-2" attributes="0"/>
+                                      <Component id="trainInfoTitle" min="-2" pref="320" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Component id="trainInfoPanel" pref="0" max="32767" attributes="0"/>
                                           <Group type="102" attributes="0">
-                                              <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                                              <Component id="timeLabel" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="time" min="-2" pref="128" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="182" max="-2" attributes="0"/>
-                                              <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                                              <Component id="dateLabel" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="date" min="-2" pref="87" max="-2" attributes="0"/>
                                           </Group>
@@ -249,35 +249,19 @@
                                   </Group>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jSeparator7" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="eBrake" max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jLabel6" min="-2" pref="158" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
-                                              <Component id="sBrake" min="-2" pref="240" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" attributes="0">
-                                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jLabel7" min="-2" pref="159" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
+                              <Component id="uiSeparatorFour" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
+                                      <Component id="brakesTitle" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="brakePanel" min="-2" pref="245" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
-                          <Component id="jSeparator1" alignment="1" max="32767" attributes="0"/>
+                          <Component id="uiSeparatorThree" alignment="1" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -291,7 +275,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      <Component id="trainSelectionTitle" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="dispatchedTrains" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -301,114 +285,94 @@
                           <Component id="switchTrains" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jSeparator4" min="-2" pref="10" max="-2" attributes="0"/>
+                      <Component id="uiSeparatorOne" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                      <Component id="modeSelectionTitle" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="automaticMode_RB" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="manualMode_RB" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="automaticModeRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="manualModeRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="normalMode_RB" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="testingMode_RB" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="normalModeRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="testingModeRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
+                              <Component id="trainInfoTitle" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel8" alignment="1" min="-2" max="-2" attributes="0"/>
-                                          <Component id="date" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="time" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
+                                  <Component id="timeLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="dateLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="date" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="time" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="eBrake" min="-2" pref="79" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="sBrake" min="-2" pref="81" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                      <Component id="trainInfoPanel" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
+                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                              <Component id="trainInfoPanel" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jSeparator2" alignment="0" min="-2" pref="252" max="-2" attributes="0"/>
-                          <Component id="jSeparator7" alignment="1" min="-2" pref="252" max="-2" attributes="0"/>
+                          <Component id="uiSeparatorTwo" alignment="0" min="-2" pref="252" max="-2" attributes="0"/>
+                          <Component id="uiSeparatorFour" alignment="1" min="-2" pref="252" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="brakesTitle" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="brakePanel" min="-2" pref="208" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
+              <Component id="uiSeparatorThree" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="tCUtilityPanel1" min="-2" pref="421" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="jSeparator5" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
+                      <Component id="utilitiesTitle" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                      <Component id="utilityPanel" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="uiSeparatorFive" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="notificationsTitle" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton1" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="jButton2" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="errorLogsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="operatingLogsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="clearOperatingLog" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="clearErrorLog" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="jScrollPane3" min="-2" pref="186" max="-2" attributes="0"/>
+                              <Component id="operatingLogsScrollPane" min="-2" pref="186" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel17" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jButton3" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                  <Component id="announcementsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="clearAnnouncements" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
+                              <Component id="announcementScrollPane" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
+                              <Component id="chooseAnnouncementLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="annoucementDropDown" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jButton6" min="-2" pref="44" max="-2" attributes="0"/>
+                              <Component id="makeAnnouncementButton" min="-2" pref="44" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jScrollPane4" max="32767" attributes="0"/>
+                          <Component id="errorLogScrollPane" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="jSeparator6" alignment="0" max="32767" attributes="0"/>
+                  <Component id="uiSeparatorSix" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                      <Component id="blockInfoTitle" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="blockInfoPane" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                      <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
+                      <Component id="speedControllerTitle" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="speedController" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
@@ -420,7 +384,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="trainInfoTitle">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="24" style="1"/>
@@ -429,20 +393,7 @@
         <Property name="text" type="java.lang.String" value="Train Info"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="sBrake">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Service Brake"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="eBrake">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Emergency Brake"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="engageEmgBrake"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
+    <Component class="javax.swing.JLabel" name="trainSelectionTitle">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="24" style="1"/>
@@ -450,7 +401,7 @@
         <Property name="text" type="java.lang.String" value="Train Selection"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel3">
+    <Component class="javax.swing.JLabel" name="brakesTitle">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="24" style="1"/>
@@ -458,36 +409,14 @@
         <Property name="text" type="java.lang.String" value="Brakes"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel4">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Operation:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel5">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Operation:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel6">
-      <Properties>
-        <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="Functioning"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel7">
-      <Properties>
-        <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="Functioning"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JSeparator" name="jSeparator1">
+    <Component class="javax.swing.JSeparator" name="uiSeparatorThree">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="0" type="rgb"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JSeparator" name="jSeparator2">
+    <Component class="javax.swing.JSeparator" name="uiSeparatorTwo">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="0" type="rgb"/>
@@ -495,12 +424,12 @@
         <Property name="orientation" type="int" value="1"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel8">
+    <Component class="javax.swing.JLabel" name="timeLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Time:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel9">
+    <Component class="javax.swing.JLabel" name="dateLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Date:"/>
       </Properties>
@@ -541,7 +470,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewVitals"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel10">
+    <Component class="javax.swing.JLabel" name="modeSelectionTitle">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="18" style="1"/>
@@ -549,38 +478,47 @@
         <Property name="text" type="java.lang.String" value="Mode Selection"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JSeparator" name="jSeparator4">
+    <Component class="javax.swing.JSeparator" name="uiSeparatorOne">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="0" type="rgb"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="automaticMode_RB">
+    <Component class="javax.swing.JRadioButton" name="automaticModeRadioButton">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="auto_manGroup"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Automatic"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="switchToAutoMode"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="manualMode_RB">
+    <Component class="javax.swing.JRadioButton" name="manualModeRadioButton">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="auto_manGroup"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Manual"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="switchToManualMode"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="normalMode_RB">
+    <Component class="javax.swing.JRadioButton" name="normalModeRadioButton">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="normal_testGroup"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Normal"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="normalModeSelected"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="testingMode_RB">
+    <Component class="javax.swing.JRadioButton" name="testingModeRadioButton">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="normal_testGroup"/>
@@ -591,7 +529,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="testModeSelected"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel11">
+    <Component class="javax.swing.JLabel" name="blockInfoTitle">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="24" style="1"/>
@@ -599,7 +537,7 @@
         <Property name="text" type="java.lang.String" value="Block Info"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel12">
+    <Component class="javax.swing.JLabel" name="notificationsTitle">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="24" style="1"/>
@@ -608,7 +546,7 @@
         <Property name="text" type="java.lang.String" value="Notifications"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel13">
+    <Component class="javax.swing.JLabel" name="utilitiesTitle">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="24" style="1"/>
@@ -616,7 +554,7 @@
         <Property name="text" type="java.lang.String" value="Utilities"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel14">
+    <Component class="javax.swing.JLabel" name="speedControllerTitle">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="20" style="1"/>
@@ -625,7 +563,7 @@
         <Property name="text" type="java.lang.String" value="Speed Controller"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JSeparator" name="jSeparator5">
+    <Component class="javax.swing.JSeparator" name="uiSeparatorFive">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="0" type="rgb"/>
@@ -633,7 +571,7 @@
         <Property name="orientation" type="int" value="1"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JSeparator" name="jSeparator6">
+    <Component class="javax.swing.JSeparator" name="uiSeparatorSix">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="0" type="rgb"/>
@@ -641,7 +579,7 @@
         <Property name="orientation" type="int" value="1"/>
       </Properties>
     </Component>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+    <Container class="javax.swing.JScrollPane" name="announcementScrollPane">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>
@@ -656,7 +594,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane3">
+    <Container class="javax.swing.JScrollPane" name="operatingLogsScrollPane">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>
@@ -671,17 +609,17 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="jLabel15">
+    <Component class="javax.swing.JLabel" name="errorLogsLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Error Logs:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel16">
+    <Component class="javax.swing.JLabel" name="operatingLogsLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Operating Logs:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel17">
+    <Component class="javax.swing.JLabel" name="announcementsLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Announcements:"/>
       </Properties>
@@ -705,12 +643,12 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel18">
+    <Component class="javax.swing.JLabel" name="chooseAnnouncementLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Choose Announcement"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton6">
+    <Component class="javax.swing.JButton" name="makeAnnouncementButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Make Announcement"/>
       </Properties>
@@ -725,7 +663,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="time">
     </Component>
-    <Component class="javax.swing.JSeparator" name="jSeparator7">
+    <Component class="javax.swing.JSeparator" name="uiSeparatorFour">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="0" type="rgb"/>
@@ -735,11 +673,9 @@
     </Component>
     <Component class="TrainControllerComps.TCSpeedController" name="speedController">
     </Component>
-    <Component class="TrainControllerComps.TCUtilityPanel" name="tCUtilityPanel1">
-    </Component>
     <Component class="TrainControllerComps.TCBlockInfoPanel" name="blockInfoPane">
     </Component>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane4">
+    <Container class="javax.swing.JScrollPane" name="errorLogScrollPane">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>
@@ -753,7 +689,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="clearOperatingLog">
       <Properties>
         <Property name="text" type="java.lang.String" value="Clear"/>
       </Properties>
@@ -761,7 +697,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clearOperatingLogs"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="clearErrorLog">
       <Properties>
         <Property name="text" type="java.lang.String" value="Clear"/>
       </Properties>
@@ -769,7 +705,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clearErrorLogs"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton3">
+    <Component class="javax.swing.JButton" name="clearAnnouncements">
       <Properties>
         <Property name="text" type="java.lang.String" value="Clear"/>
       </Properties>
@@ -778,6 +714,10 @@
       </Events>
     </Component>
     <Component class="TrainControllerComps.TCTrainInfoPane" name="trainInfoPanel">
+    </Component>
+    <Component class="TrainControllerComps.TCUtilityPanel" name="utilityPanel">
+    </Component>
+    <Component class="TrainControllerComps.TCBrakePanel" name="brakePanel">
     </Component>
   </SubComponents>
 </Form>

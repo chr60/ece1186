@@ -2,15 +2,15 @@
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <NonVisualComponents>
-    <Component class="javax.swing.ButtonGroup" name="btnGroup_AC">
+    <Component class="javax.swing.ButtonGroup" name="acButtonGroup">
     </Component>
-    <Component class="javax.swing.ButtonGroup" name="btnGroup_Heat">
+    <Component class="javax.swing.ButtonGroup" name="heatButtonGroup">
     </Component>
-    <Component class="javax.swing.ButtonGroup" name="btnGroup_Lights">
+    <Component class="javax.swing.ButtonGroup" name="lightsButtonGroup">
     </Component>
-    <Component class="javax.swing.ButtonGroup" name="btnGroup_LeftDoors">
+    <Component class="javax.swing.ButtonGroup" name="leftDoorsButtonGroup">
     </Component>
-    <Component class="javax.swing.ButtonGroup" name="btnGroup_RightDoors">
+    <Component class="javax.swing.ButtonGroup" name="rightDoorsButtonGroup">
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -33,79 +33,89 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
-          <Component id="jSeparator3" alignment="1" max="32767" attributes="0"/>
-          <Component id="jSeparator2" alignment="1" max="32767" attributes="0"/>
+          <Component id="uiSeparatorOne" alignment="0" max="32767" attributes="0"/>
+          <Component id="uiSeparatorThree" alignment="1" max="32767" attributes="0"/>
+          <Component id="uiSeparatorTwo" alignment="1" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jSeparator6" alignment="0" max="32767" attributes="0"/>
+                  <Component id="uiSeparatorFour" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="Lights_Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="LeftDoor_Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lightsLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="leftDoorsLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="acTemp_TextField" min="-2" pref="52" max="-2" attributes="0"/>
+                              <Component id="acTempTextField" min="-2" pref="52" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel2" min="-2" pref="28" max="-2" attributes="0"/>
+                              <Component id="acTempDegrees" min="-2" pref="28" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="setAC_Btn" min="-2" pref="55" max="-2" attributes="0"/>
+                              <Component id="setAirCondBotton" min="-2" pref="55" max="-2" attributes="0"/>
                               <EmptySpace pref="20" max="32767" attributes="0"/>
-                              <Component id="Off_Btn" min="-2" pref="56" max="-2" attributes="0"/>
+                              <Component id="acOffRadioButton" min="-2" pref="56" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="Failure_Btn" min="-2" max="-2" attributes="0"/>
+                              <Component id="acFailureRadioButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="On_Btn2" min="-2" max="-2" attributes="0"/>
+                              <Component id="leftDoorsOpenRadioButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="Off_Btn2" min="-2" max="-2" attributes="0"/>
+                              <Component id="leftDoorsCloseRadioButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="Failure_Btn2" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="Heat_Lbl" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="leftDoorsFailureRadioButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="setHeat_TextField" min="-2" pref="52" max="-2" attributes="0"/>
+                                      <Component id="heatTempTextField" min="-2" pref="52" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jLabel1" min="-2" pref="28" max="-2" attributes="0"/>
+                                      <Component id="heatTempDegrees" min="-2" pref="28" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="setHeat_Btn" min="-2" pref="55" max="-2" attributes="0"/>
+                                      <Component id="setHeatButton" min="-2" pref="55" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="AC_Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="On_Btn1" min="-2" pref="53" max="-2" attributes="0"/>
+                                      <Component id="lightsOnRadioButton" min="-2" pref="53" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="Off_Btn1" min="-2" pref="56" max="-2" attributes="0"/>
+                                      <Component id="lightsOffRadioButton" min="-2" pref="56" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="Off_Btn4" min="-2" pref="56" max="-2" attributes="0"/>
+                              <Component id="heatOffRadioButton" min="-2" pref="56" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="Failure_Btn1" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Failure_Btn5" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lightsFailureRadioButton" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="heatFailureRadioButton" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="RightDoor_Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="rightDoorsLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="On_Btn3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="rightDoorsOpenRadioButton" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="Off_Btn3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="rightDoorsCloseRadioButton" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="Failure_Btn3" min="-2" max="-2" attributes="0"/>
+                              <Component id="rightDoorsFailureRadioButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="acLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="acOnRadioButton" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="heatLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="heatOnRadioButton" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -118,66 +128,72 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-              <Component id="AC_Lbl" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="acTemp_TextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Off_Btn" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Failure_Btn" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="setAC_Btn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="acLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="acOnRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="acTempTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="acTempDegrees" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="acOffRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="acFailureRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="setAirCondBotton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
+              <Component id="uiSeparatorOne" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-              <Component id="Heat_Lbl" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="heatLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="heatOnRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="setHeat_TextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Failure_Btn5" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Off_Btn4" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="setHeat_Btn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="heatTempDegrees" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="heatTempTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="heatFailureRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="heatOffRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="setHeatButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
+              <Component id="uiSeparatorTwo" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-              <Component id="Lights_Lbl" min="-2" max="-2" attributes="0"/>
+              <Component id="lightsLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="On_Btn1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Off_Btn1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Failure_Btn1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lightsOnRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lightsOffRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lightsFailureRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jSeparator3" min="-2" pref="10" max="-2" attributes="0"/>
+              <Component id="uiSeparatorThree" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-              <Component id="LeftDoor_Lbl" min="-2" max="-2" attributes="0"/>
+              <Component id="leftDoorsLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="Failure_Btn2" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="leftDoorsFailureRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="On_Btn2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="Off_Btn2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="leftDoorsOpenRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="leftDoorsCloseRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="18" max="32767" attributes="0"/>
-              <Component id="jSeparator6" min="-2" pref="10" max="-2" attributes="0"/>
+              <EmptySpace pref="17" max="32767" attributes="0"/>
+              <Component id="uiSeparatorFour" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="RightDoor_Lbl" min="-2" pref="28" max="-2" attributes="0"/>
+              <Component id="rightDoorsLabel" min="-2" pref="28" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="Off_Btn3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Failure_Btn3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="On_Btn3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="rightDoorsCloseRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="rightDoorsFailureRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="rightDoorsOpenRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="14" max="32767" attributes="0"/>
+              <EmptySpace pref="13" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="AC_Lbl">
+    <Component class="javax.swing.JLabel" name="acLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="18" style="0"/>
@@ -186,7 +202,7 @@
         <Property name="toolTipText" type="java.lang.String" value="Hey"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="Heat_Lbl">
+    <Component class="javax.swing.JLabel" name="heatLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="18" style="0"/>
@@ -194,7 +210,7 @@
         <Property name="text" type="java.lang.String" value="Heat:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="Lights_Lbl">
+    <Component class="javax.swing.JLabel" name="lightsLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="18" style="0"/>
@@ -202,7 +218,7 @@
         <Property name="text" type="java.lang.String" value="Lights:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="LeftDoor_Lbl">
+    <Component class="javax.swing.JLabel" name="leftDoorsLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="18" style="0"/>
@@ -210,7 +226,7 @@
         <Property name="text" type="java.lang.String" value="Left Doors:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="RightDoor_Lbl">
+    <Component class="javax.swing.JLabel" name="rightDoorsLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="18" style="0"/>
@@ -218,18 +234,18 @@
         <Property name="text" type="java.lang.String" value="Right Doors:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="Failure_Btn">
+    <Component class="javax.swing.JRadioButton" name="acFailureRadioButton">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="btnGroup_AC"/>
+          <ComponentRef name="acButtonGroup"/>
         </Property>
         <Property name="text" type="java.lang.String" value="FAIL"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="Off_Btn">
+    <Component class="javax.swing.JRadioButton" name="acOffRadioButton">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="btnGroup_AC"/>
+          <ComponentRef name="acButtonGroup"/>
         </Property>
         <Property name="text" type="java.lang.String" value="OFF"/>
       </Properties>
@@ -237,21 +253,18 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="turnOffAirCond"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="Failure_Btn1">
+    <Component class="javax.swing.JRadioButton" name="lightsFailureRadioButton">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="btnGroup_Lights"/>
+          <ComponentRef name="lightsButtonGroup"/>
         </Property>
         <Property name="text" type="java.lang.String" value="FAIL"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Failure_Btn1ActionPerformed"/>
-      </Events>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="Off_Btn1">
+    <Component class="javax.swing.JRadioButton" name="lightsOffRadioButton">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="btnGroup_Lights"/>
+          <ComponentRef name="lightsButtonGroup"/>
         </Property>
         <Property name="text" type="java.lang.String" value="OFF"/>
       </Properties>
@@ -259,10 +272,10 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="turnOffLights"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="On_Btn1">
+    <Component class="javax.swing.JRadioButton" name="lightsOnRadioButton">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="btnGroup_Lights"/>
+          <ComponentRef name="lightsButtonGroup"/>
         </Property>
         <Property name="text" type="java.lang.String" value="ON"/>
       </Properties>
@@ -270,18 +283,18 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="turnOnLights"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="Failure_Btn2">
+    <Component class="javax.swing.JRadioButton" name="leftDoorsFailureRadioButton">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="btnGroup_LeftDoors"/>
+          <ComponentRef name="leftDoorsButtonGroup"/>
         </Property>
         <Property name="text" type="java.lang.String" value="FAIL"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="Off_Btn2">
+    <Component class="javax.swing.JRadioButton" name="leftDoorsCloseRadioButton">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="btnGroup_LeftDoors"/>
+          <ComponentRef name="leftDoorsButtonGroup"/>
         </Property>
         <Property name="text" type="java.lang.String" value="CLOSE"/>
       </Properties>
@@ -289,10 +302,10 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="closeLeftDoors"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="On_Btn2">
+    <Component class="javax.swing.JRadioButton" name="leftDoorsOpenRadioButton">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="btnGroup_LeftDoors"/>
+          <ComponentRef name="leftDoorsButtonGroup"/>
         </Property>
         <Property name="text" type="java.lang.String" value="OPEN"/>
       </Properties>
@@ -300,21 +313,18 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="openLeftDoors"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="Failure_Btn3">
+    <Component class="javax.swing.JRadioButton" name="rightDoorsFailureRadioButton">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="btnGroup_RightDoors"/>
+          <ComponentRef name="rightDoorsButtonGroup"/>
         </Property>
         <Property name="text" type="java.lang.String" value="FAIL"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Failure_Btn3ActionPerformed"/>
-      </Events>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="Off_Btn3">
+    <Component class="javax.swing.JRadioButton" name="rightDoorsCloseRadioButton">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="btnGroup_RightDoors"/>
+          <ComponentRef name="rightDoorsButtonGroup"/>
         </Property>
         <Property name="text" type="java.lang.String" value="CLOSE"/>
       </Properties>
@@ -322,10 +332,10 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="closeRightDoors"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="On_Btn3">
+    <Component class="javax.swing.JRadioButton" name="rightDoorsOpenRadioButton">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="btnGroup_RightDoors"/>
+          <ComponentRef name="rightDoorsButtonGroup"/>
         </Property>
         <Property name="text" type="java.lang.String" value="OPEN"/>
       </Properties>
@@ -333,10 +343,10 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="openRightDoors"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="Off_Btn4">
+    <Component class="javax.swing.JRadioButton" name="heatOffRadioButton">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="btnGroup_Heat"/>
+          <ComponentRef name="heatButtonGroup"/>
         </Property>
         <Property name="text" type="java.lang.String" value="OFF"/>
       </Properties>
@@ -344,68 +354,82 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="turnOffHeat"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="setHeat_TextField">
+    <Component class="javax.swing.JTextField" name="heatTempTextField">
       <Properties>
         <Property name="text" type="java.lang.String" value="0"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="setHeat_TextFieldActionPerformed"/>
-      </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="heatTempDegrees">
       <Properties>
         <Property name="text" type="java.lang.String" value="&#xb0;F"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
+    <Component class="javax.swing.JLabel" name="acTempDegrees">
       <Properties>
         <Property name="text" type="java.lang.String" value="&#xb0;F"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="acTemp_TextField">
+    <Component class="javax.swing.JTextField" name="acTempTextField">
       <Properties>
         <Property name="text" type="java.lang.String" value="0"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="acTemp_TextFieldActionPerformed"/>
-      </Events>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="Failure_Btn5">
+    <Component class="javax.swing.JRadioButton" name="heatFailureRadioButton">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="btnGroup_AC"/>
+          <ComponentRef name="heatButtonGroup"/>
         </Property>
         <Property name="text" type="java.lang.String" value="FAIL"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Failure_Btn5ActionPerformed"/>
-      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="setAC_Btn">
+    <Component class="javax.swing.JButton" name="setAirCondBotton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Set"/>
         <Property name="toolTipText" type="java.lang.String" value="Set the A/C to the specified temperature"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="transmitTemp_AC"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="setAirCondTemp"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="setHeat_Btn">
+    <Component class="javax.swing.JButton" name="setHeatButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Set"/>
         <Property name="toolTipText" type="java.lang.String" value="Set the heat to the specified temperature"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="transmitTemp_Heat"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="setHeatTemp"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JSeparator" name="jSeparator1">
+    <Component class="javax.swing.JSeparator" name="uiSeparatorOne">
     </Component>
-    <Component class="javax.swing.JSeparator" name="jSeparator2">
+    <Component class="javax.swing.JSeparator" name="uiSeparatorTwo">
     </Component>
-    <Component class="javax.swing.JSeparator" name="jSeparator3">
+    <Component class="javax.swing.JSeparator" name="uiSeparatorThree">
     </Component>
-    <Component class="javax.swing.JSeparator" name="jSeparator6">
+    <Component class="javax.swing.JSeparator" name="uiSeparatorFour">
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="acOnRadioButton">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="acButtonGroup"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="ON"/>
+      </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="turnOnAirCond"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="turnOnAC"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="heatOnRadioButton">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="heatButtonGroup"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="ON"/>
+      </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="turnHeatOn"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

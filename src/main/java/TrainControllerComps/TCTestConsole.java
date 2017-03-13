@@ -14,18 +14,28 @@ import javax.swing.event.ChangeListener;
  */
 
 /**
- *
- * @author Andrew
+ * This class is responsible for testing the various components in the Train Controller, mimicking the components on 
+ * a train object. 
+ * 
+ * This class collaborates with the Train Controller and Train class. 
+ * 
+ * @author Andrew Lendacky
  */
 public class TCTestConsole extends javax.swing.JFrame {
 
-    
+    /**
+     * Train being controlled by the Train Controller.
+     */
     private TestTrain selectedTrain; 
     
+    /**
+     * Train Controller to relay any changes made to the train to.
+     */
     private TrainController trainController; 
-    
-       
-    // used to update GUI every millisecond (1 s)
+        
+    /**
+     * Timer used to update the Test Console every 1 second. 
+     */
     private Timer t = new Timer(1000, new ActionListener(){
         Random rand = new Random(); 
         public void actionPerformed(ActionEvent e) {
@@ -34,7 +44,8 @@ public class TCTestConsole extends javax.swing.JFrame {
         });
     
     /**
-     * Creates new form TCTestConsole
+     * Constructor for creating a TCTestConsole object with no Train Controller and no 
+     * selected train. 
      */
     public TCTestConsole() {
         initComponents();
@@ -43,9 +54,26 @@ public class TCTestConsole extends javax.swing.JFrame {
         this.trainController = null; 
         this.addActionListeners(); 
     }
+        
+    /**
+     * Creates new form TCTestConsole
+     */
+    public TCTestConsole(TestTrain train, TrainController trainCont) {
+        initComponents();
+        
+        this.selectedTrain = train; 
+        this.trainController = trainCont; 
+        this.addActionListeners();
+        t.start();
+            
+    }
     
+    /**
+     * Adds action listeners to their corresponding elements. 
+     */
     private void addActionListeners(){
     
+        // speed slider
         this.speedSlider.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
              
@@ -60,6 +88,7 @@ public class TCTestConsole extends javax.swing.JFrame {
             }
         });
         
+        // block slider
         this.blockSpeedSlider.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
              
@@ -68,7 +97,8 @@ public class TCTestConsole extends javax.swing.JFrame {
                 trainController.getTrain().currentBlockSpeed =  blockSpeedSlider.getValue();
             }
         });
-                
+         
+        // suggested speed slider
         this.suggSpeedSlider.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
              
@@ -81,28 +111,30 @@ public class TCTestConsole extends javax.swing.JFrame {
     }
     
     /**
-    * Creates new form TCTestConsole
-    */
-    public TCTestConsole(TestTrain train, TrainController trainCont) {
-        initComponents();
-        
-        this.selectedTrain = train; 
-        this.trainController = trainCont; 
-        this.addActionListeners();
-        t.start();
-            
-    }
-    
+     * 
+     * 
+     * @param trainCont 
+     */
     private void setTrainController(TrainController trainCont){
     
         this.trainController = trainCont;
     }
     
+    /**
+     * 
+     * 
+     * @param train 
+     */
     public void setTrain(TestTrain train){
     
         this.selectedTrain = train; 
     }
     
+    /**
+     * 
+     * 
+     * 
+     */
     private void refreshUI(){
     
        
@@ -126,9 +158,19 @@ public class TCTestConsole extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        acButtonGroupMurphy = new javax.swing.ButtonGroup();
+        heatButtonGroupMurphy = new javax.swing.ButtonGroup();
+        lightsButtonGroupMurphy = new javax.swing.ButtonGroup();
+        leftDoorsButtonGroupMurphy = new javax.swing.ButtonGroup();
+        rightDoorsButtonGroupMurphy = new javax.swing.ButtonGroup();
+        acButtonGroup = new javax.swing.ButtonGroup();
+        heatButtonGroup = new javax.swing.ButtonGroup();
+        lightsButtonGroup = new javax.swing.ButtonGroup();
+        leftDoorsButtonGroup = new javax.swing.ButtonGroup();
+        rightDoorsButtonGroups = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        trainSpeedLabel = new javax.swing.JLabel();
+        trainPowerLabel = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -143,23 +185,23 @@ public class TCTestConsole extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
-        jRadioButton6 = new javax.swing.JRadioButton();
-        jRadioButton7 = new javax.swing.JRadioButton();
-        jRadioButton8 = new javax.swing.JRadioButton();
-        jRadioButton9 = new javax.swing.JRadioButton();
-        jRadioButton10 = new javax.swing.JRadioButton();
+        breakACMurphy = new javax.swing.JRadioButton();
+        fixACMurphy = new javax.swing.JRadioButton();
+        breakHeatMurphy = new javax.swing.JRadioButton();
+        fixHeatMurphy = new javax.swing.JRadioButton();
+        breakLightsMurphy = new javax.swing.JRadioButton();
+        fixLightsMurphy = new javax.swing.JRadioButton();
+        breakLeftDoorsMurphy = new javax.swing.JRadioButton();
+        fixLeftDoorsMurphy = new javax.swing.JRadioButton();
+        breakRightDoorsMurphy = new javax.swing.JRadioButton();
+        fixRightDoorsMurphy = new javax.swing.JRadioButton();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
+        acLabel = new javax.swing.JLabel();
+        heatLabel = new javax.swing.JLabel();
+        lightsLabel = new javax.swing.JLabel();
+        rightDoorsLabel = new javax.swing.JLabel();
+        leftDoorsLabel = new javax.swing.JLabel();
         jRadioButton11 = new javax.swing.JRadioButton();
         jRadioButton12 = new javax.swing.JRadioButton();
         jRadioButton13 = new javax.swing.JRadioButton();
@@ -172,14 +214,14 @@ public class TCTestConsole extends javax.swing.JFrame {
         jRadioButton20 = new javax.swing.JRadioButton();
         jSeparator5 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
+        logs = new javax.swing.JTextPane();
         trainSpeed = new javax.swing.JLabel();
         trainPower = new javax.swing.JLabel();
         setSpeed = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
+        dispatchTrainsLabel = new javax.swing.JButton();
+        numDispatchedTrains = new javax.swing.JComboBox<>();
+        logsLabel = new javax.swing.JLabel();
         suggSpeedSlider = new javax.swing.JSlider();
         jLabel35 = new javax.swing.JLabel();
         suggSpeed_Slider = new javax.swing.JLabel();
@@ -209,9 +251,9 @@ public class TCTestConsole extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
-        jLabel2.setText("Speed:");
+        trainSpeedLabel.setText("Speed:");
 
-        jLabel4.setText("Power:");
+        trainPowerLabel.setText("Power:");
 
         jLabel5.setText("Set Speed: ");
 
@@ -245,61 +287,181 @@ public class TCTestConsole extends javax.swing.JFrame {
 
         jLabel16.setText("Right Door:");
 
-        jRadioButton1.setText("Break");
+        acButtonGroupMurphy.add(breakACMurphy);
+        breakACMurphy.setText("Break");
+        breakACMurphy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                breakAC(evt);
+            }
+        });
 
-        jRadioButton2.setText("Unbreak");
+        acButtonGroupMurphy.add(fixACMurphy);
+        fixACMurphy.setText("Unbreak");
+        fixACMurphy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fixAC(evt);
+            }
+        });
 
-        jRadioButton3.setText("Break");
+        heatButtonGroupMurphy.add(breakHeatMurphy);
+        breakHeatMurphy.setText("Break");
+        breakHeatMurphy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                breakHeat(evt);
+            }
+        });
 
-        jRadioButton4.setText("Unbreak");
+        heatButtonGroupMurphy.add(fixHeatMurphy);
+        fixHeatMurphy.setText("Unbreak");
+        fixHeatMurphy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fixHeat(evt);
+            }
+        });
 
-        jRadioButton5.setText("Break");
+        lightsButtonGroupMurphy.add(breakLightsMurphy);
+        breakLightsMurphy.setText("Break");
+        breakLightsMurphy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                breakLightsMurphy(evt);
+            }
+        });
 
-        jRadioButton6.setText("Unbreak");
+        lightsButtonGroupMurphy.add(fixLightsMurphy);
+        fixLightsMurphy.setText("Unbreak");
+        fixLightsMurphy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fixLights(evt);
+            }
+        });
 
-        jRadioButton7.setText("Break");
+        leftDoorsButtonGroupMurphy.add(breakLeftDoorsMurphy);
+        breakLeftDoorsMurphy.setText("Break");
+        breakLeftDoorsMurphy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                breakLeftDoors(evt);
+            }
+        });
 
-        jRadioButton8.setText("Unbreak");
+        leftDoorsButtonGroupMurphy.add(fixLeftDoorsMurphy);
+        fixLeftDoorsMurphy.setText("Unbreak");
+        fixLeftDoorsMurphy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fixLeftDoors(evt);
+            }
+        });
 
-        jRadioButton9.setText("Break");
+        rightDoorsButtonGroupMurphy.add(breakRightDoorsMurphy);
+        breakRightDoorsMurphy.setText("Break");
+        breakRightDoorsMurphy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                breakRightDoors(evt);
+            }
+        });
 
-        jRadioButton10.setText("Unbreak");
+        rightDoorsButtonGroupMurphy.add(fixRightDoorsMurphy);
+        fixRightDoorsMurphy.setText("Unbreak");
+        fixRightDoorsMurphy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fixRightDoors(evt);
+            }
+        });
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jLabel18.setText("AC:");
+        acLabel.setText("AC:");
 
-        jLabel19.setText("Heat:");
+        heatLabel.setText("Heat:");
 
-        jLabel24.setText("Lights:");
+        lightsLabel.setText("Lights:");
 
-        jLabel25.setText("Right Door:");
+        rightDoorsLabel.setText("Right Door:");
 
-        jLabel26.setText("Left Door:");
+        leftDoorsLabel.setText("Left Door:");
 
+        acButtonGroup.add(jRadioButton11);
         jRadioButton11.setText("ON");
+        jRadioButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                turnOnAC(evt);
+            }
+        });
 
+        acButtonGroup.add(jRadioButton12);
         jRadioButton12.setText("OFF");
+        jRadioButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                turnOffAC(evt);
+            }
+        });
 
+        heatButtonGroup.add(jRadioButton13);
         jRadioButton13.setText("OFF");
+        jRadioButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                turnOffHeat(evt);
+            }
+        });
 
+        heatButtonGroup.add(jRadioButton14);
         jRadioButton14.setText("ON");
+        jRadioButton14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                turnOnHeat(evt);
+            }
+        });
 
+        lightsButtonGroup.add(jRadioButton15);
         jRadioButton15.setText("ON");
+        jRadioButton15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                turnOnLights(evt);
+            }
+        });
 
+        lightsButtonGroup.add(jRadioButton16);
         jRadioButton16.setText("OFF");
+        jRadioButton16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                turnOffLights(evt);
+            }
+        });
 
+        leftDoorsButtonGroup.add(jRadioButton17);
         jRadioButton17.setText("OPEN");
+        jRadioButton17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openLeftDoors(evt);
+            }
+        });
 
+        leftDoorsButtonGroup.add(jRadioButton18);
         jRadioButton18.setText("CLOSE");
+        jRadioButton18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeLeftDoors(evt);
+            }
+        });
 
+        rightDoorsButtonGroups.add(jRadioButton19);
         jRadioButton19.setText("OPEN");
+        jRadioButton19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openRightDoors(evt);
+            }
+        });
 
+        rightDoorsButtonGroups.add(jRadioButton20);
         jRadioButton20.setText("CLOSE");
+        jRadioButton20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeRightDoors(evt);
+            }
+        });
 
         jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jScrollPane1.setViewportView(jTextPane1);
+        jScrollPane1.setViewportView(logs);
 
         trainSpeed.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         trainSpeed.setText("0");
@@ -313,11 +475,11 @@ public class TCTestConsole extends javax.swing.JFrame {
         jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel34.setText("0");
 
-        jButton1.setText("Dispatch 'x' Trains");
+        dispatchTrainsLabel.setText("Dispatch 'x' Trains");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+        numDispatchedTrains.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
 
-        jLabel1.setText("Logs:");
+        logsLabel.setText("Logs:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -330,13 +492,13 @@ public class TCTestConsole extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
+                                .addComponent(trainPowerLabel)
                                 .addGap(131, 131, 131)
                                 .addComponent(trainPower, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel8))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
+                                .addComponent(trainSpeedLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(trainSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -364,11 +526,11 @@ public class TCTestConsole extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel15)
                                         .addGap(15, 15, 15)
-                                        .addComponent(jRadioButton7))
+                                        .addComponent(breakLeftDoorsMurphy))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel16)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jRadioButton9))
+                                        .addComponent(breakRightDoorsMurphy))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel12)
@@ -376,17 +538,17 @@ public class TCTestConsole extends javax.swing.JFrame {
                                             .addComponent(jLabel13))
                                         .addGap(35, 35, 35)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jRadioButton3)
-                                            .addComponent(jRadioButton1)
-                                            .addComponent(jRadioButton5))))
+                                            .addComponent(breakHeatMurphy)
+                                            .addComponent(breakACMurphy)
+                                            .addComponent(breakLightsMurphy))))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jRadioButton8)
-                                    .addComponent(jRadioButton10)
+                                    .addComponent(fixLeftDoorsMurphy)
+                                    .addComponent(fixRightDoorsMurphy)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jRadioButton4)
-                                        .addComponent(jRadioButton2)
-                                        .addComponent(jRadioButton6)))
+                                        .addComponent(fixHeatMurphy)
+                                        .addComponent(fixACMurphy)
+                                        .addComponent(fixLightsMurphy)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -395,17 +557,17 @@ public class TCTestConsole extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel25)
+                                        .addComponent(rightDoorsLabel)
                                         .addGap(18, 18, 18)
                                         .addComponent(jRadioButton19)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jRadioButton20))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel26, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.LEADING))
+                                            .addComponent(leftDoorsLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(acLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(heatLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lightsLabel, javax.swing.GroupLayout.Alignment.LEADING))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -428,12 +590,12 @@ public class TCTestConsole extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(logsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(dispatchTrainsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(numDispatchedTrains, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1))))
                 .addContainerGap())
         );
@@ -448,7 +610,7 @@ public class TCTestConsole extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel2)
+                                        .addComponent(trainSpeedLabel)
                                         .addComponent(trainSpeed))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(16, 16, 16)
@@ -457,7 +619,7 @@ public class TCTestConsole extends javax.swing.JFrame {
                                     .addComponent(setSpeed))))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
+                            .addComponent(trainPowerLabel)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel10)
                                 .addComponent(jLabel34))))
@@ -485,33 +647,33 @@ public class TCTestConsole extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel12)
-                                    .addComponent(jRadioButton1))
+                                    .addComponent(breakACMurphy))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel13)
-                                    .addComponent(jRadioButton3))
+                                    .addComponent(breakHeatMurphy))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel14)
-                                    .addComponent(jRadioButton5))
+                                    .addComponent(breakLightsMurphy))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel15)
-                                    .addComponent(jRadioButton7))
+                                    .addComponent(breakLeftDoorsMurphy))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel16)
-                                    .addComponent(jRadioButton9)))
+                                    .addComponent(breakRightDoorsMurphy)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jRadioButton2)
+                                .addComponent(fixACMurphy)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton4)
+                                .addComponent(fixHeatMurphy)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton6)
+                                .addComponent(fixLightsMurphy)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton8)
+                                .addComponent(fixLeftDoorsMurphy)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton10))
+                                .addComponent(fixRightDoorsMurphy))
                             .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -519,24 +681,24 @@ public class TCTestConsole extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel18)
+                                    .addComponent(acLabel)
                                     .addComponent(jRadioButton11))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel19)
+                                    .addComponent(heatLabel)
                                     .addComponent(jRadioButton14))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel24)
+                                    .addComponent(lightsLabel)
                                     .addComponent(jRadioButton15))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel26)
+                                    .addComponent(leftDoorsLabel)
                                     .addComponent(jRadioButton17)
                                     .addComponent(jRadioButton18))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel25)
+                                    .addComponent(rightDoorsLabel)
                                     .addComponent(jRadioButton19)
                                     .addComponent(jRadioButton20)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -549,10 +711,10 @@ public class TCTestConsole extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(dispatchTrainsLabel)
+                            .addComponent(numDispatchedTrains, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1)
+                        .addComponent(logsLabel)
                         .addGap(7, 7, 7)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -662,7 +824,6 @@ public class TCTestConsole extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel57)
                                 .addGap(44, 44, 44)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(suggSpeedSlider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -742,6 +903,101 @@ public class TCTestConsole extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void breakAC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakAC
+        this.selectedTrain.ac = -1;     
+    }//GEN-LAST:event_breakAC
+
+    private void fixAC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixAC
+        
+        this.selectedTrain.ac = 0; 
+    }//GEN-LAST:event_fixAC
+
+    private void breakHeat(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakHeat
+        
+        this.selectedTrain.heat = -1; 
+    }//GEN-LAST:event_breakHeat
+
+    private void fixHeat(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixHeat
+        
+        this.selectedTrain.heat = 0; 
+    }//GEN-LAST:event_fixHeat
+
+    private void breakLightsMurphy(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakLightsMurphy
+        this.selectedTrain.lights = -1; 
+    }//GEN-LAST:event_breakLightsMurphy
+
+    private void fixLights(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixLights
+        this.selectedTrain.lights = 0; 
+    }//GEN-LAST:event_fixLights
+
+    private void breakLeftDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakLeftDoors
+        
+        this.selectedTrain.leftDoors = -1; 
+    }//GEN-LAST:event_breakLeftDoors
+
+    private void fixLeftDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixLeftDoors
+        
+        this.selectedTrain.leftDoors = 0; 
+    }//GEN-LAST:event_fixLeftDoors
+
+    private void breakRightDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakRightDoors
+        this.selectedTrain.rightDoors = -1; 
+    }//GEN-LAST:event_breakRightDoors
+
+    private void fixRightDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixRightDoors
+        this.selectedTrain.rightDoors = 0; 
+    }//GEN-LAST:event_fixRightDoors
+
+    private void turnOnAC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOnAC
+        
+        this.selectedTrain.ac = 1; 
+    }//GEN-LAST:event_turnOnAC
+
+    private void turnOffAC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOffAC
+        
+        this.selectedTrain.ac = 0; 
+    }//GEN-LAST:event_turnOffAC
+
+    private void turnOnHeat(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOnHeat
+        
+        this.selectedTrain.heat = 1; 
+    }//GEN-LAST:event_turnOnHeat
+
+    private void turnOffHeat(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOffHeat
+       
+        this.selectedTrain.heat = 0; 
+    }//GEN-LAST:event_turnOffHeat
+
+    private void turnOnLights(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOnLights
+        
+        this.selectedTrain.lights = 1; 
+    }//GEN-LAST:event_turnOnLights
+
+    private void turnOffLights(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOffLights
+        
+        this.selectedTrain.lights = 0; 
+    }//GEN-LAST:event_turnOffLights
+
+    private void openLeftDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openLeftDoors
+        
+        this.selectedTrain.leftDoors = 1; 
+    }//GEN-LAST:event_openLeftDoors
+
+    private void closeLeftDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeLeftDoors
+        
+        this.selectedTrain.leftDoors = 0; 
+    }//GEN-LAST:event_closeLeftDoors
+
+    private void openRightDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openRightDoors
+        
+        this.selectedTrain.rightDoors = 1; 
+    }//GEN-LAST:event_openRightDoors
+
+    private void closeRightDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeRightDoors
+        
+        this.selectedTrain.rightDoors = 0; 
+    }//GEN-LAST:event_closeRightDoors
+
     /**
      * @param args the command line arguments
      */
@@ -778,11 +1034,25 @@ public class TCTestConsole extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup acButtonGroup;
+    private javax.swing.ButtonGroup acButtonGroupMurphy;
+    private javax.swing.JLabel acLabel;
     private javax.swing.JSlider blockSpeedSlider;
     private javax.swing.JLabel blockSpeed_Slider;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JRadioButton breakACMurphy;
+    private javax.swing.JRadioButton breakHeatMurphy;
+    private javax.swing.JRadioButton breakLeftDoorsMurphy;
+    private javax.swing.JRadioButton breakLightsMurphy;
+    private javax.swing.JRadioButton breakRightDoorsMurphy;
+    private javax.swing.JButton dispatchTrainsLabel;
+    private javax.swing.JRadioButton fixACMurphy;
+    private javax.swing.JRadioButton fixHeatMurphy;
+    private javax.swing.JRadioButton fixLeftDoorsMurphy;
+    private javax.swing.JRadioButton fixLightsMurphy;
+    private javax.swing.JRadioButton fixRightDoorsMurphy;
+    private javax.swing.ButtonGroup heatButtonGroup;
+    private javax.swing.ButtonGroup heatButtonGroupMurphy;
+    private javax.swing.JLabel heatLabel;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -790,15 +1060,8 @@ public class TCTestConsole extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
@@ -822,8 +1085,6 @@ public class TCTestConsole extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton10;
     private javax.swing.JRadioButton jRadioButton11;
     private javax.swing.JRadioButton jRadioButton12;
     private javax.swing.JRadioButton jRadioButton13;
@@ -833,28 +1094,33 @@ public class TCTestConsole extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton17;
     private javax.swing.JRadioButton jRadioButton18;
     private javax.swing.JRadioButton jRadioButton19;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton20;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
-    private javax.swing.JRadioButton jRadioButton6;
-    private javax.swing.JRadioButton jRadioButton7;
-    private javax.swing.JRadioButton jRadioButton8;
-    private javax.swing.JRadioButton jRadioButton9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JTextPane jTextPane1;
+    private javax.swing.ButtonGroup leftDoorsButtonGroup;
+    private javax.swing.ButtonGroup leftDoorsButtonGroupMurphy;
+    private javax.swing.JLabel leftDoorsLabel;
+    private javax.swing.ButtonGroup lightsButtonGroup;
+    private javax.swing.ButtonGroup lightsButtonGroupMurphy;
+    private javax.swing.JLabel lightsLabel;
+    private javax.swing.JTextPane logs;
+    private javax.swing.JLabel logsLabel;
+    private javax.swing.JComboBox<String> numDispatchedTrains;
+    private javax.swing.ButtonGroup rightDoorsButtonGroupMurphy;
+    private javax.swing.ButtonGroup rightDoorsButtonGroups;
+    private javax.swing.JLabel rightDoorsLabel;
     private javax.swing.JLabel setSpeed;
     private javax.swing.JSlider speedSlider;
     private javax.swing.JSlider suggSpeedSlider;
     private javax.swing.JLabel suggSpeed_Slider;
     private javax.swing.JLabel trainPower;
+    private javax.swing.JLabel trainPowerLabel;
     private javax.swing.JLabel trainSpeed;
+    private javax.swing.JLabel trainSpeedLabel;
     private javax.swing.JLabel trainSpeed_Slider;
     // End of variables declaration//GEN-END:variables
 }

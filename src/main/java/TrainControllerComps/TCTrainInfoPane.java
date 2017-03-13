@@ -7,55 +7,109 @@ package TrainControllerComps;
  */
 
 /**
+ * A component of the Train Controller responsible for the selected train's speed, power, authority, and suggested speed. 
  *
- * @author Andrew
+ * This class collaborates with the Train Controller and Train class. 
+ * 
+ * @author Andrew Lendacky
  */
 public class TCTrainInfoPane extends javax.swing.JPanel {
 
     /**
-     * Creates new form TCTrainInfoPane
+     * The train used to update the UI based on its information.
+     */
+    private TestTrain selectedTrain; 
+    
+    /**
+     * Constructor for creating a TCTrainInfoPane object with no selected train.
+     * The selected train must be set by the Train Controller before being used. 
      */
     public TCTrainInfoPane() {
-        initComponents();
+        initComponents(); 
     }
     
+    /**
+     * Sets the train whose info to display to the user. 
+     * 
+     * @param train the train controlled by the Train Controller.
+     */
+    public void setSelectedTrain(TestTrain train){
+    
+        this.selectedTrain = train;
+    }
+    
+    /**
+     * Sets the speed the train is currently going. 
+     * 
+     * @param speed the speed the train is going. 
+     */
     public void setSpeedLabel(double speed){
         
         String speed_txt = Double.toString(speed);
-        
-        this.speedLabel.setText(speed_txt);
+        this.currentSpeed.setText(speed_txt);
     }
     
+    /**
+     * Sets the power the train is currently producing. 
+     * 
+     * @param power the power the train is producing. 
+     */
     public void setPowerLabel(double power){
     
         String power_txt = Double.toString(power);
-        this.powerLabel.setText(power_txt);
+        this.currentPower.setText(power_txt);
     }
     
+    /**
+     * Sets the suggested speed for the train. This speed comes from the CTC. 
+     * 
+     * @param suggSpeed the suggested speed for the train. 
+     */
     public void setSuggestSpeedLabel(double suggSpeed){
     
         String suggSpeed_txt = Double.toString(suggSpeed);
-        this.suggestedSpeedLabel.setText(suggSpeed_txt);
+        this.suggestedSpeed.setText(suggSpeed_txt);
     }
     
+    /**
+     * Retrieves the speed the train is going from the speed label. 
+     * 
+     * @return returns the text corresponding to the speed of the train from the speed label. 
+     */
     public String getSpeedLabel(){
     
-        return this.speedLabel.getText(); 
+        return this.currentSpeed.getText(); 
     }
     
+    /**
+     * Retrieves the power the train is applying from the power label. 
+     * 
+     * @return returns the text corresponding to the power of the train from the power label. 
+     */
     public String getPowerLabel(){
     
-        return this.powerLabel.getText(); 
+        return this.currentPower.getText(); 
     }
-        
+     
+    /**
+     * Retrieves the suggested speed of the train from the suggested speed label. 
+     * 
+     * @return returns the text corresponding to the suggested speed of the train from the suggested speed label. 
+     */
     public String getSuggestedSpeedLabel(){
     
-        return this.suggestedSpeedLabel.getText(); 
+        return this.suggestedSpeed.getText(); 
     }
     
+    /**
+     * Updates the labels with the information based on the selected train.
+     * 
+     */
     public void refreshUI(){
     
-        
+        this.setSpeedLabel(this.selectedTrain.speed);
+        this.setPowerLabel(this.selectedTrain.power);
+        this.setSuggestSpeedLabel(this.selectedTrain.currentSuggestedSpeed);
     }
     
     /**
@@ -67,85 +121,82 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel14 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         speedLabel = new javax.swing.JLabel();
         powerLabel = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        suggestedSpeedLabel = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jSeparator3 = new javax.swing.JSeparator();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-
-        jLabel14.setText("jLabel14");
+        currentSpeed = new javax.swing.JLabel();
+        currentPower = new javax.swing.JLabel();
+        suggSpeedLabel = new javax.swing.JLabel();
+        authorityLabel = new javax.swing.JLabel();
+        suggestedSpeed = new javax.swing.JLabel();
+        maxAuthority = new javax.swing.JLabel();
+        uiSeparatorOne = new javax.swing.JSeparator();
+        speedUnit = new javax.swing.JLabel();
+        powerUnit = new javax.swing.JLabel();
+        suggSpeedUnit = new javax.swing.JLabel();
+        authorityUnit = new javax.swing.JLabel();
+        currentAuthority = new javax.swing.JLabel();
+        authorityDivider = new javax.swing.JLabel();
+        powerDivider = new javax.swing.JLabel();
+        maxPower = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel1.setText("Speed:");
-
-        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel2.setText("Power:");
-
         speedLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        speedLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        speedLabel.setText("0");
+        speedLabel.setText("Speed:");
 
         powerLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        powerLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        powerLabel.setText("999");
+        powerLabel.setText("Power:");
 
-        jLabel5.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel5.setText("Sugg. Speed:");
+        currentSpeed.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        currentSpeed.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        currentSpeed.setText("0");
 
-        jLabel6.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel6.setText("Authority:");
+        currentPower.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        currentPower.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        currentPower.setText("999");
 
-        suggestedSpeedLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        suggestedSpeedLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        suggestedSpeedLabel.setText("0");
+        suggSpeedLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        suggSpeedLabel.setText("Sugg. Speed:");
 
-        jLabel8.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel8.setText("999");
+        authorityLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        authorityLabel.setText("Authority:");
 
-        jLabel9.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel9.setText("MPH");
+        suggestedSpeed.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        suggestedSpeed.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        suggestedSpeed.setText("0");
 
-        jLabel10.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel10.setText("W");
+        maxAuthority.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        maxAuthority.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        maxAuthority.setText("999");
 
-        jLabel11.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel11.setText("MPH");
+        speedUnit.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        speedUnit.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        speedUnit.setText("MPH");
 
-        jLabel12.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel12.setText("mi");
+        powerUnit.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        powerUnit.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        powerUnit.setText("W");
 
-        jLabel13.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel13.setText("999");
+        suggSpeedUnit.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        suggSpeedUnit.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        suggSpeedUnit.setText("MPH");
 
-        jLabel15.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel15.setText("/");
+        authorityUnit.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        authorityUnit.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        authorityUnit.setText("mi");
 
-        jLabel16.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel16.setText("/");
+        currentAuthority.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        currentAuthority.setText("999");
 
-        jLabel17.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel17.setText("999");
+        authorityDivider.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        authorityDivider.setText("/");
+
+        powerDivider.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        powerDivider.setText("/");
+
+        maxPower.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        maxPower.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        maxPower.setText("999");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -154,45 +205,45 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(speedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(powerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(speedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(currentSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9))
+                        .addComponent(speedUnit))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(powerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(currentPower, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel16)
+                        .addComponent(powerDivider)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel17)
+                        .addComponent(maxPower)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel10)))
+                        .addComponent(powerUnit)))
                 .addGap(31, 31, 31))
-            .addComponent(jSeparator3)
+            .addComponent(uiSeparatorOne)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6))
+                    .addComponent(suggSpeedLabel)
+                    .addComponent(authorityLabel))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(183, 183, 183)
-                        .addComponent(jLabel13)
+                        .addComponent(currentAuthority)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel15)
+                        .addComponent(authorityDivider)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(82, 82, 82)
-                        .addComponent(suggestedSpeedLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(suggestedSpeed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(maxAuthority, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(suggSpeedUnit)
+                    .addComponent(authorityUnit, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(28, 28, 28))
         );
         layout.setVerticalGroup(
@@ -202,62 +253,60 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(speedLabel))
+                            .addComponent(speedUnit)
+                            .addComponent(currentSpeed))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(powerLabel)
-                                .addComponent(jLabel17)
-                                .addComponent(jLabel16))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel10))))
+                                .addComponent(currentPower)
+                                .addComponent(maxPower)
+                                .addComponent(powerDivider))
+                            .addComponent(powerUnit)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(speedLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel2)))
+                        .addComponent(powerLabel)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(uiSeparatorOne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel11)
+                        .addComponent(suggSpeedUnit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel12))
+                        .addComponent(authorityUnit))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(suggestedSpeedLabel)
+                        .addComponent(suggestedSpeed)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel15)))
+                            .addComponent(maxAuthority)
+                            .addComponent(currentAuthority)
+                            .addComponent(authorityDivider)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addComponent(suggSpeedLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel6)))
+                        .addComponent(authorityLabel)))
                 .addGap(21, 21, 21))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JLabel authorityDivider;
+    private javax.swing.JLabel authorityLabel;
+    private javax.swing.JLabel authorityUnit;
+    private javax.swing.JLabel currentAuthority;
+    private javax.swing.JLabel currentPower;
+    private javax.swing.JLabel currentSpeed;
+    private javax.swing.JLabel maxAuthority;
+    private javax.swing.JLabel maxPower;
+    private javax.swing.JLabel powerDivider;
     private javax.swing.JLabel powerLabel;
+    private javax.swing.JLabel powerUnit;
     private javax.swing.JLabel speedLabel;
-    private javax.swing.JLabel suggestedSpeedLabel;
+    private javax.swing.JLabel speedUnit;
+    private javax.swing.JLabel suggSpeedLabel;
+    private javax.swing.JLabel suggSpeedUnit;
+    private javax.swing.JLabel suggestedSpeed;
+    private javax.swing.JSeparator uiSeparatorOne;
     // End of variables declaration//GEN-END:variables
 }

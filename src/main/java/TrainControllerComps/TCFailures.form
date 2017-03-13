@@ -34,37 +34,37 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="antennaLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="powerLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                      <Component id="brakesLabel" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="powerWorking_RB" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="brakesWorking_RB" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="antennaWorking_RB" min="-2" max="-2" attributes="0"/>
+                  <Component id="powerWorkingRadioButton" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="brakesWorkingRadioButton" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="antennaWorkingRadioButton" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="59" pref="59" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="antennaFailure_RB" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="powerFailure_RB" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="brakesFailure_RB" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="antennaFailureRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="powerFailureRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="brakesFailureRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel4" max="32767" attributes="0"/>
-                  <Component id="requestFix" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jSeparator1" alignment="1" max="32767" attributes="0"/>
+                  <Component id="titleLabel" max="32767" attributes="0"/>
+                  <Component id="requestFixButton" alignment="0" max="32767" attributes="0"/>
+                  <Component id="uiSeparatorOne" alignment="1" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                      <Component id="trainIdLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="trainID_Label" min="-2" pref="312" max="-2" attributes="0"/>
+                      <Component id="trainId" min="-2" pref="312" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -76,41 +76,41 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+              <Component id="titleLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="24" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="trainID_Label" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="trainIdLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="trainId" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
+              <Component id="uiSeparatorOne" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="antennaWorking_RB" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="antennaFailure_RB" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="antennaLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="antennaWorkingRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="antennaFailureRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="powerWorking_RB" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="powerFailure_RB" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="powerLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="powerWorkingRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="powerFailureRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="brakesWorking_RB" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="brakesFailure_RB" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="brakesLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="brakesWorkingRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="brakesFailureRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="requestFix" min="-2" pref="48" max="-2" attributes="0"/>
+              <Component id="requestFixButton" min="-2" pref="48" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="antennaLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="24" style="0"/>
@@ -118,7 +118,7 @@
         <Property name="text" type="java.lang.String" value="Antenna:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
+    <Component class="javax.swing.JLabel" name="powerLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="24" style="0"/>
@@ -126,7 +126,7 @@
         <Property name="text" type="java.lang.String" value="Power:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel3">
+    <Component class="javax.swing.JLabel" name="brakesLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="24" style="0"/>
@@ -134,18 +134,15 @@
         <Property name="text" type="java.lang.String" value="Brakes:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="antennaWorking_RB">
+    <Component class="javax.swing.JRadioButton" name="antennaWorkingRadioButton">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="antennaGroup"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Working"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="antennaWorking_RBActionPerformed"/>
-      </Events>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="antennaFailure_RB">
+    <Component class="javax.swing.JRadioButton" name="antennaFailureRadioButton">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="antennaGroup"/>
@@ -153,7 +150,7 @@
         <Property name="text" type="java.lang.String" value="Failure"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="powerFailure_RB">
+    <Component class="javax.swing.JRadioButton" name="powerFailureRadioButton">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="powerGroup"/>
@@ -161,18 +158,15 @@
         <Property name="text" type="java.lang.String" value="Failure"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="powerWorking_RB">
+    <Component class="javax.swing.JRadioButton" name="powerWorkingRadioButton">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="powerGroup"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Working"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="powerWorking_RBActionPerformed"/>
-      </Events>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="brakesFailure_RB">
+    <Component class="javax.swing.JRadioButton" name="brakesFailureRadioButton">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="brakeGroup"/>
@@ -180,18 +174,15 @@
         <Property name="text" type="java.lang.String" value="Failure"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="brakesWorking_RB">
+    <Component class="javax.swing.JRadioButton" name="brakesWorkingRadioButton">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="brakeGroup"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Working"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="brakesWorking_RBActionPerformed"/>
-      </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel4">
+    <Component class="javax.swing.JLabel" name="titleLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="24" style="0"/>
@@ -200,22 +191,25 @@
         <Property name="text" type="java.lang.String" value="Communications and Vitals"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JSeparator" name="jSeparator1">
+    <Component class="javax.swing.JSeparator" name="uiSeparatorOne">
     </Component>
-    <Component class="javax.swing.JButton" name="requestFix">
+    <Component class="javax.swing.JButton" name="requestFixButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Request Fix"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="requestFix"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="requestFixButton"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel5">
+    <Component class="javax.swing.JLabel" name="trainIdLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Train ID:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="trainID_Label">
+    <Component class="javax.swing.JLabel" name="trainId">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" value="(train ID)"/>

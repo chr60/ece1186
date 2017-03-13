@@ -32,19 +32,19 @@
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jLabel3" max="32767" attributes="0"/>
-                          <Component id="jLabel1" min="-2" pref="52" max="-2" attributes="0"/>
+                          <Component id="KiLabel" max="32767" attributes="0"/>
+                          <Component id="KpLabel" min="-2" pref="52" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="Ki_TextField" max="32767" attributes="0"/>
-                          <Component id="Kp_TextField" min="-2" pref="52" max="-2" attributes="0"/>
+                          <Component id="KiTextField" max="32767" attributes="0"/>
+                          <Component id="KpTextField" min="-2" pref="52" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      <Component id="trainIdLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="trainId" min="-2" pref="111" max="-2" attributes="0"/>
                   </Group>
@@ -58,18 +58,18 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="trainIdLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="trainId" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Kp_TextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="KpLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="KpTextField" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="7" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Ki_TextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="KiLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="KiTextField" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="setConstants" min="-2" max="-2" attributes="0"/>
@@ -79,7 +79,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="KpLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="18" style="0"/>
@@ -87,7 +87,7 @@
         <Property name="text" type="java.lang.String" value="Kp: "/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel3">
+    <Component class="javax.swing.JLabel" name="KiLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="18" style="0"/>
@@ -95,20 +95,17 @@
         <Property name="text" type="java.lang.String" value="Ki: "/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="Ki_TextField">
+    <Component class="javax.swing.JTextField" name="KiTextField">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" value="0.0"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="Kp_TextField">
+    <Component class="javax.swing.JTextField" name="KpTextField">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" value="0.0"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Kp_TextFieldActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="setConstants">
       <Properties>
@@ -118,7 +115,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="setConstants"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
+    <Component class="javax.swing.JLabel" name="trainIdLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value=" Train ID:"/>
       </Properties>

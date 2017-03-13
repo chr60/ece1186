@@ -30,25 +30,25 @@
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="maxSpeed_Slider" min="-2" max="-2" attributes="0"/>
+                              <Component id="maxSpeedSlider" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                              <Component id="maxMPHLabel" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="setSpeed_Label" min="-2" pref="67" max="-2" attributes="0"/>
+                              <Component id="currentSliderSpeedLabel" min="-2" pref="67" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel5" min="-2" pref="53" max="-2" attributes="0"/>
+                              <Component id="mphLabel" min="-2" pref="53" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                          <Component id="setSpeedLabel" min="-2" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Component id="minSpeed_Slider" min="-2" pref="18" max="-2" attributes="0"/>
+                              <Component id="minSpeedSlider" min="-2" pref="18" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                              <Component id="minMPHLabel" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -62,21 +62,21 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel3" min="-2" pref="30" max="-2" attributes="0"/>
+              <Component id="setSpeedLabel" min="-2" pref="30" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="setSpeed_Label" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
-                  <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="currentSliderSpeedLabel" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
+                  <Component id="mphLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                      <Component id="maxSpeed_Slider" alignment="3" max="32767" attributes="0"/>
-                      <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="maxSpeedSlider" alignment="3" max="32767" attributes="0"/>
+                      <Component id="maxMPHLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                      <Component id="minSpeed_Slider" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
-                      <Component id="jLabel2" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
+                      <Component id="minSpeedSlider" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
+                      <Component id="minMPHLabel" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -94,7 +94,7 @@
         <Property name="paintTicks" type="boolean" value="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel3">
+    <Component class="javax.swing.JLabel" name="setSpeedLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="18" style="0"/>
@@ -102,7 +102,7 @@
         <Property name="text" type="java.lang.String" value="Set Speed:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="setSpeed_Label">
+    <Component class="javax.swing.JLabel" name="currentSliderSpeedLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="18" style="0"/>
@@ -111,17 +111,17 @@
         <Property name="text" type="java.lang.String" value="0"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="minSpeed_Slider">
+    <Component class="javax.swing.JLabel" name="minSpeedSlider">
       <Properties>
         <Property name="text" type="java.lang.String" value="0"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="maxSpeed_Slider">
+    <Component class="javax.swing.JLabel" name="maxSpeedSlider">
       <Properties>
         <Property name="text" type="java.lang.String" value="100"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel5">
+    <Component class="javax.swing.JLabel" name="mphLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="18" style="0"/>
@@ -130,12 +130,12 @@
         <Property name="text" type="java.lang.String" value="MPH"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel7">
+    <Component class="javax.swing.JLabel" name="maxMPHLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="MPH"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
+    <Component class="javax.swing.JLabel" name="minMPHLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="MPH"/>
       </Properties>

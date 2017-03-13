@@ -1,5 +1,8 @@
 package TrainControllerComps;
 
+import java.util.LinkedList;
+import javax.swing.JTextArea;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -7,36 +10,98 @@ package TrainControllerComps;
  */
 
 /**
- *
- * @author Andrew
+ * This class is responsible for confirming the use of the selected trains emergency brake when in Manual mode. 
+ * 
+ * This class collaborates with the Train Controller, and the Train class. 
+ * 
+ * @author Andrew Lendacky
  */
 public class TCEmergencyFrame extends javax.swing.JFrame {
 
-    
-    TestTrain selectedTrain; 
     /**
-     * Creates new form TCEmergencyFrame
+     * The train that is being controlled by the Train Controller class. 
+     */
+    TestTrain selectedTrain; 
+    
+    /**
+     * List that contains messages that are to be printed to the operating log.
+     */
+    private LinkedList<String> logbook; 
+    
+    /**
+     * Area used to print messaged from the logbook to. 
+     */
+    private JTextArea operatingLogs; 
+    
+    /**
+     * Constructor for creating a TCEmergencyFrame object without any selected train. 
+     * Selected train must be passed in by the Train Controller class. 
+     * 
      */
     public TCEmergencyFrame() {
-        initComponents();
+        initComponents();   
+        this.logbook = new LinkedList<String>();
     }
     
+    /**
+     * Constructor for creating a TCEmergencyFrame object with a selected train. 
+     * 
+     * @param train the train being controlled by the Train Controller
+     */
     public TCEmergencyFrame(TestTrain train){
         
         this.initComponents();
         this.selectedTrain = train; 
+
+        this.logbook = new LinkedList<String>();
+        this.operatingLogs = null; 
         this.refreshUI();
     }
     
+    /**
+     * Sets the selected train. This method should be called from the Train Controller class. 
+     * 
+     * @param train the selected train controlled by the Train Controller class. 
+     */
     public void setTrain(TestTrain train){
         
         this.selectedTrain = train;  
     }
     
+    /**
+     * Refreshes the UI elements in the window to update any changed train information. 
+     * 
+     */
     private void refreshUI(){
     
         // set the corect label text
-        this.trainId_lbl.setText(this.selectedTrain.id + " ?");
+        this.trainIdLabel.setText(this.selectedTrain.id + " ?");
+    }
+    
+    /**
+     * Sets the operating log to be used to print messages in. 
+     * 
+     * @param operatingLog the operating log. 
+     */
+    public void setOperatingLog(JTextArea operatingLog){
+    
+        this.operatingLogs = operatingLog;
+    }
+    
+    /**
+     * Prints the logbook to the operating log, and then clears the logbook. 
+     * 
+     */
+    private void printLogbook(){
+        
+        if (this.logbook.isEmpty() == false && this.operatingLogs != null){
+        
+            for (String logs : this.logbook){
+                
+                this.operatingLogs.setText(this.operatingLogs.getText() + logs + "\n");   
+            }
+        }   
+        this.logbook.clear();
     }
 
     /**
@@ -48,42 +113,42 @@ public class TCEmergencyFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        trainId_lbl = new javax.swing.JLabel();
+        titleLabel = new javax.swing.JLabel();
+        confirmationLabel = new javax.swing.JLabel();
+        confirmButton = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
+        uiTrainIdLabel = new javax.swing.JLabel();
+        trainIdLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Emergency Brake Inititated");
+        titleLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleLabel.setText("Emergency Brake Inititated");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("<html> <p>Are you sure you want to initiate the emergency brake for</p> <html> ");
+        confirmationLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        confirmationLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        confirmationLabel.setText("<html> <p>Are you sure you want to initiate the emergency brake for</p> <html> ");
 
-        jButton2.setText("Confirm");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        confirmButton.setText("Confirm");
+        confirmButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 initiateEmgBrake(evt);
             }
         });
 
-        jButton4.setText("Cancel");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancel(evt);
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel3.setText("Train ID:");
+        uiTrainIdLabel.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        uiTrainIdLabel.setText("Train ID:");
 
-        trainId_lbl.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        trainId_lbl.setText("(id_here)");
+        trainIdLabel.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        trainIdLabel.setText("(id_here)");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,50 +157,64 @@ public class TCEmergencyFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(confirmationLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                    .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(confirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37))
             .addGroup(layout.createSequentialGroup()
                 .addGap(143, 143, 143)
-                .addComponent(jLabel3)
+                .addComponent(uiTrainIdLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(trainId_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(trainIdLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(titleLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(confirmationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(trainId_lbl))
+                    .addComponent(uiTrainIdLabel)
+                    .addComponent(trainIdLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton4))
+                    .addComponent(confirmButton)
+                    .addComponent(cancelButton))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Initiates the emergency brake on the selected train.
+     * 
+     * @param evt the sender of the event, i.e., the 'Confirm' button
+     */
     private void initiateEmgBrake(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_initiateEmgBrake
-       
-        System.out.println("Engage E-Brake!"); 
-        // send out e-brake command to train
+               
+        this.logbook.add("Engaging the E-Brake!");
+        
+        // FIX ME: Change this once the Train Model is complete
+        this.selectedTrain.speed = this.selectedTrain.speed - 5; 
+        this.printLogbook();
+        
         this.dispose();
     }//GEN-LAST:event_initiateEmgBrake
 
+    /**
+     * Closes the window without engaging the selected train's emergency brake.
+     * 
+     * @param evt the sender of the event, i.e., the 'Cancel' button
+     */
     private void cancel(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel
         
         this.dispose();
@@ -177,11 +256,11 @@ public class TCEmergencyFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel trainId_lbl;
+    private javax.swing.JButton cancelButton;
+    private javax.swing.JButton confirmButton;
+    private javax.swing.JLabel confirmationLabel;
+    private javax.swing.JLabel titleLabel;
+    private javax.swing.JLabel trainIdLabel;
+    private javax.swing.JLabel uiTrainIdLabel;
     // End of variables declaration//GEN-END:variables
 }
