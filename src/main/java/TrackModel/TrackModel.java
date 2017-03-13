@@ -23,10 +23,11 @@ public class TrackModel {
 	public  HashMap<String,HashMap<String, HashMap<Integer, Block>>> trackList =
 		new HashMap<String,HashMap<String, HashMap<Integer, Block>>>();
 
-	public HashMap<String, Block> rootMap = new HashMap<String, Block>();
-	public HashMap<String, ArrayList<Block>> leafMap = new HashMap<String, ArrayList<Block>>();
-	public HashMap<String, ArrayList<Block>> stationList = new HashMap<String, ArrayList<Block>>();
-	public HashMap<String, Station> stationHostList = new HashMap<String, Station>();
+	HashMap<String, Block> rootMap = new HashMap<String, Block>();
+	HashMap<String, ArrayList<Block>> leafMap = new HashMap<String, ArrayList<Block>>();
+	HashMap<String, ArrayList<Block>> stationList = new HashMap<String, ArrayList<Block>>();
+	HashMap<String, Station> stationHostList = new HashMap<String, Station>();
+	HashMap<Block, Station> blockStationMap = new HashMap<Block, Station>();
 
 	/**
 	* Simplicity wrapper to return a block on the track given the parameters
@@ -38,6 +39,33 @@ public class TrackModel {
 		return trackList.get(line).get(section).get(blockNum);
 	}
 
+	/**
+	* Allows viewing of the station map to other modules
+	* @return HashMap<String, ArrayList<Block>>
+	*/
+	public HashMap<String, ArrayList<Block>> viewStationMap(){
+		return this.stationList;
+	}
+
+	/**
+	* Allows viewing of leaf nodes of the switches to other modules
+	* @return HashMap<String, ArrayList<Block>> of the leafmap
+	*/
+	public HashMap<String, ArrayList<Block>> viewLeafMap(){
+		return this.leafMap;
+	}
+
+	/**
+	* Allows viewing of the blockStationMap by other modules
+	* @return HashMap<Block, Station>
+	*/
+	public HashMap<Block, Station> viewBlockStationMap(){
+		return this.blockStationMap;
+	}
+
+	public HashMap<String, Block> viewRootMap(){
+		return this.rootMap;
+	}
 	/**
 	* Adds a selected block to the TrackModel. Expects a valid Block object.
 	*
@@ -96,86 +124,73 @@ public class TrackModel {
 			System.out.print("Examining Line: ");
 			System.out.println(lineKey);
 			//lineKey = "Red";
-			for (String sectionKey : this.trackList.get(lineKey).keySet()){
+			Set<String> sectionKeySet = this.trackList.get(lineKey).keySet();
+			ArrayList<String> sectionKeyList = new ArrayList(sectionKeySet);
+			Collections.sort(sectionKeyList);
+
+			for (String sectionKey : sectionKeyList){
 				System.out.print("On section: ");
 				System.out.println(sectionKey);
 
 				Set<Integer> blockSet = this.trackList.get(lineKey).get(sectionKey).keySet();
 				
 				for (Integer blockNum : blockSet){
-					System.out.println(this.trackList.get(lineKey).get(sectionKey).get(blockNum).nextBlockForward().blockNum);
+					//System.out.println(this.trackList.get(lineKey).get(sectionKey).get(blockNum).nextBlockForward().blockNum);					
+				}
+
+			}
+		}
+	}
+
+
+	/**
+	*	Links blocks across block and sections
+	*/
+	private void linkBlocks(){
+		for (String lineKey : this.trackList.keySet()){
+			Block prevBlock = null;
+			Set<String> sectionKeySet = this.trackList.get(lineKey).keySet();
+			ArrayList<String> sortedSectionKeyList = new ArrayList(sectionKeySet);
+			Collections.sort(sortedSectionKeyList);
+
+			for (String sectionKey : sortedSectionKeyList){
+				for(Integer blk : this.trackList.get(lineKey).get(sectionKey).keySet()){
+
+					Integer max = Collections.max(this.trackList.get(lineKey).get(sectionKey).keySet());
+					Integer min = Collections.min(this.trackList.get(lineKey).get(sectionKey).keySet());
+
+					Block minBlock = this.trackList.get(lineKey).get(sectionKey).get(min);
+					Block maxBlock = this.trackList.get(lineKey).get(sectionKey).get(max);
+					Block curBlock = this.trackList.get(lineKey).get(sectionKey).get(blk);
+					if (prevBlock == null){
+						prevBlock = maxBlock;
+					}
+
+					if (curBlock.equals(maxBlock)){
+						this.trackList.get(lineKey).get(sectionKey).get(blk).setNextBlockForward();
+						prevBlock.setNextBlockForward(minBlock);
+						prevBlock = maxBlock;
+					}
+					else if (!minBlock.equals(maxBlock)){
+						curBlock.setNextBlockForward(this.trackList.get(lineKey).get(sectionKey).get(blk+1));
+					}
+
 				}
 			}
 		}
 	}
 
 	/**
-	* Infers the format of the current TrackModel and associated arrow directions to add
-	* the nextBlock states to blocks where it may be inferred
-	* \todo Refactor to improve efficiency with peakable iterators as well as remove the
-	* necessity of the extra functions
+	* Build a map for storing the blocks and station for use by the train controller and
+	* train model
 	*/
-	private void inferNextBlock(){
-		Block store = null;
-		for (String lineKey : this.trackList.keySet()){
-			store = null;
-			System.out.print("Inferring Line: ");
-			System.out.println(lineKey);
-
-			for (String sectionKey : this.trackList.get(lineKey).keySet()){	
-				//Reference max and min
-				Set<Integer> set = this.trackList.get(lineKey).get(sectionKey).keySet();
-				Integer max = Collections.max(set);
-				Integer min = Collections.min(set);
-
-				Block minBlock = this.trackList.get(lineKey).get(sectionKey).get(min);
-				Block maxBlock = this.trackList.get(lineKey).get(sectionKey).get(max);
-
-				if(store != null){
-					store.setNextBlockForward(minBlock);
-					minBlock.setNextBlockBackward(store);
+	private void buildBlockStationMap(){
+		for(String s : stationList.keySet()){
+			for(Block b : stationList.get(s))
+				if(!this.blockStationMap.containsKey(s)){
+					this.blockStationMap.put(b, this.stationHostList.get(s));
 				}
-				
-				store = maxBlock;
-
-				if (maxBlock.arrowDirection.equals("Head") && minBlock.arrowDirection.equals("Head")){
-					Set<Integer> mySet = new TreeSet<Integer>(this.trackList.get(lineKey).get(sectionKey).keySet());
-					for(Integer myBlock : mySet){
-						Block curBlock = this.trackList.get(lineKey).get(sectionKey).get(myBlock);
-						if (minBlock.equals(curBlock)){
-							curBlock.setNextBlockForward(this.trackList.get(lineKey).get(sectionKey).get(myBlock+1));
-							curBlock.setNextBlockBackward(curBlock);
-						}
-
-						else if(maxBlock.equals(curBlock)){
-							curBlock.setNextBlockForward(curBlock);
-							curBlock.setNextBlockBackward(this.trackList.get(lineKey).get(sectionKey).get(myBlock-1));							
-						}
-
-						else{
-							curBlock.setNextBlockForward(this.trackList.get(lineKey).get(sectionKey).get(myBlock+1));
-							curBlock.setNextBlockBackward(this.trackList.get(lineKey).get(sectionKey).get(myBlock-1));
-						}
-					}
-				}
-
-				else if (maxBlock.arrowDirection.equals("Head") && minBlock.arrowDirection.equals("Tail")){
-					Set<Integer> mySet = new TreeSet<Integer>(this.trackList.get(lineKey).get(sectionKey).keySet());
-
-					for (Integer myBlock : mySet){
-						Block curBlock = this.trackList.get(lineKey).get(sectionKey).get(myBlock);
-						if (minBlock.equals(curBlock)){
-							curBlock.setNextBlockForward();
-						}
-					}
-				}
-				else if (maxBlock.arrowDirection.equals("Head/Head")){
-					maxBlock.setNextBlockForward(maxBlock);
-				}
-			}
 		}
-		this.handleSwitches();
-		this.buildStationHostList();
 	}
 
 	/** 
@@ -191,13 +206,24 @@ public class TrackModel {
 	/** Helper function to link nextBlock for switches
 	*/
 	private void handleSwitches(){
+
 		for (String s : this.rootMap.keySet()){
-			this.rootMap.get(s).setNextBlockForward(this.leafMap.get(s).get(0), this.leafMap.get(s).get(1));
+			
+			if(this.rootMap.get(s).blockLine.equals("Red")){
+				this.rootMap.get(s).setNextBlockForward(this.leafMap.get(s).get(0), this.leafMap.get(s).get(1));
+			}
+
 		}
 
 		for (String s : this.leafMap.keySet()){
-			this.leafMap.get(s).get(0).setRootBlock(this.rootMap.get(s));
-			this.leafMap.get(s).get(1).setRootBlock(this.rootMap.get(s));
+
+			//It is safe to override red-line switches, so we do that first
+			if(this.leafMap.get(s).get(0).blockLine.equals("Red")){
+				this.leafMap.get(s).get(0).setRootBlock(this.rootMap.get(s));
+			}
+			if (this.leafMap.get(s).get(0).blockLine.equals("Red")){
+				this.leafMap.get(s).get(1).setRootBlock(this.rootMap.get(s));
+			}
 		}
 	}
 
@@ -218,7 +244,7 @@ public class TrackModel {
 				while ((line = reader.readLine()) != null){
 					String[] str = line.split(delimiter,-1);
 
-					//For safety when parsing headers
+					//For safety when parsing headers; first line will result in incorrect info
 					if (initLine.equals(false)){
 
 						String blockLine = str[0];
@@ -233,13 +259,12 @@ public class TrackModel {
 						String arrowDirection = str[10];
 						String stationName = str[11];
 
-						//Parse infrastructure string to underground + switch
 						Boolean isUnderground = infrastructure.contains("UNDERGROUND");
 						Boolean hasSwitch = infrastructure.contains("SWITCH");
 						
 						
 						//Initialize and add block
-						Block myBlock = new Block(defaultOccupied, isUnderground, blockLen, blockGrade, 
+						Block myBlock = new Block(this, defaultOccupied, isUnderground, blockLen, blockGrade, 
 										elevation, speedLimit, stationName, arrowDirection, blockLine, 
 										blockSection, blockNum, hasSwitch, switchBlock);
 
@@ -264,7 +289,9 @@ public class TrackModel {
 					System.out.println("Finished Reading");
 				}
 			}
-			this.inferNextBlock();
-			//this.examineNext();
+			this.linkBlocks();
+			this.handleSwitches();
+			this.buildStationHostList();
+			this.buildBlockStationMap();
 		}
 }

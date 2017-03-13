@@ -3,7 +3,7 @@ package TrackModel;
 /**
  * Class for the block object. Contains attributes of a block associated with a train track block.
  * Fundamental building block of the track module.
- * \author Michael
+ * @author Michael
  */
 import java.util.ArrayList;
 
@@ -15,7 +15,6 @@ public class Block implements Comparable<Block>{
 	public Double blockGrade;
 	public Double blockElevation;
 	public Boolean signals;
-	public Boolean crossings;
 	public Boolean brokenRail;
 	public Boolean circuitFailure;
 	public Boolean powerFailure;
@@ -33,10 +32,13 @@ public class Block implements Comparable<Block>{
 	public Block switchNextBlockForward;
 	public Block nextBlockBackward;
 	public Block rootBlock;
+	public TrackModel superTrackModel;
+	public Boolean maintenence;
 
-	public Block(Boolean occupied, Boolean isUnderground, Double blockLen, Double blockGrade, Double elevation, Double speedLimit,
+	public Block(TrackModel track, Boolean occupied, Boolean isUnderground, Double blockLen, Double blockGrade, Double elevation, Double speedLimit,
 				String stationName, String arrowDirection, String blockLine, String blockSection, Integer blockNum, Boolean hasSwitch, String switchBlock){
 
+		this.superTrackModel = track;
 		this.blockLen = blockLen;
 		this.blockGrade = blockGrade;
 		this.blockElevation = elevation;
@@ -53,25 +55,38 @@ public class Block implements Comparable<Block>{
 		this.occupied = false;
 		this.trackHeaters = false;
 		this.signals = false;
-		this.crossings = false;
 		this.brokenRail = false;
 		this.circuitFailure = false;
 		this.powerFailure = false;
-
+		this.maintenence=false;
 	}
 
+	/**
+	* Returns the length of a block object
+	*/
 	public Double getLen(){
 		return this.blockLen;
-	}
-
-	public Boolean getCrossings(){
-		return this.crossings;
 	}
 
 	public Boolean getBroken(){
 		return this.brokenRail;
 	}
 
+	/**
+	*	Returns if a track block is open or not based upon the state of the breakages of a block
+	*/
+	public Boolean getOpen(){
+		if (this.brokenRail || this.powerFailure || this.occupied || this.maintenence){
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
+
+	/**
+	*	Returns the occupied state of a given block object
+	*/
 	public Boolean getOccupied(){
 		return this.occupied;
 	}
@@ -80,14 +95,23 @@ public class Block implements Comparable<Block>{
 		this.occupied= (!this.occupied);
 	}
 
+	/**
+	* Returns the speed limit of a given block
+	*/
 	public Double getSpeedLimit(){
 		return this.speedLimit;
 	}
 
+	/**
+	* Returns the cumulative elevation of a given blcok
+	*/
 	public Double getElevation(){
 		return this.blockElevation;
 	}
 
+	/**
+	* Returns the grade of a given block
+	*/
 	public Double getGrade(){
 		return this.blockGrade;
 	}
@@ -124,10 +148,16 @@ public class Block implements Comparable<Block>{
 		return this.blockNum;
 	}
 	
+	/**
+	* Returns the section a block is on
+	*/
 	public String getBlockSection(){
 		return this.blockSection;
 	}
 
+	/**
+	* Returns the line a block is on
+	*/
 	public String getBlockLine(){
 		return this.blockLine;
 	}
@@ -207,15 +237,21 @@ public class Block implements Comparable<Block>{
 		}
 		return this.switchState;
 	}
+	
+	/**
+	* Returns the associated station of the block
+	* @param track the track the block is on
+	* @return the Station object of the associated block
+	*/
+	public Station getAssociatedStation(){
+		return this.superTrackModel.blockStationMap.get(this);
+	}
 
 	/** Implements the comparable interface for blocks via the associalted blockNum of a given block.
 	* At this time, this implementation does not verify that blocks are the same across lines.
-	*
-	* \todo Implement comparable via line as well as block
-	* \warning Do not use for implementing comparable across lines. This may return incorrect values.
 	*/
 	@Override
 	public int compareTo(Block thatBlock){
-		return Integer.compare(this.blockNum, thatBlock.blockNum);
+		return Integer.compare(this.blockNum, thatBlock.blockNum)+ this.blockLine.compareTo(thatBlock.blockLine);
 	}
 }

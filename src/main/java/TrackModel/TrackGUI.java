@@ -84,7 +84,7 @@ public class TrackGUI {
 	 */
 	private void initialize() {
 
-		String[] fNames = {"resources/redline.csv", };
+		String[] fNames = {"resources/redline.csv"};
 		//Load up the track model
 		TrackModel track = new TrackModel();
 		track.readCSV(fNames);

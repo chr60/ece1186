@@ -39,7 +39,6 @@ public class WaysideGuiMain {
 	 * @throws InstantiationException
 	 * @throws ClassNotFoundException
 	 * @throws IOException
-
 	 */
 	public WaysideGuiMain(TrackModel track) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException {
 		initialize(track);
