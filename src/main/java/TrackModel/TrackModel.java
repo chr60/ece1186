@@ -40,11 +40,11 @@ public class TrackModel {
 	}
 
 	/**
-	* Allows viewing of the station map to other modules
+	* Allows viewing of the station map to other modules, implemented as a copy method
 	* @return HashMap<String, ArrayList<Block>>
 	*/
 	public HashMap<String, ArrayList<Block>> viewStationMap(){
-		return this.stationList;
+		return new HashMap<String, ArrayList<Block>>(this.stationList);
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class TrackModel {
 	* @return HashMap<String, ArrayList<Block>> of the leafmap
 	*/
 	public HashMap<String, ArrayList<Block>> viewLeafMap(){
-		return this.leafMap;
+		return new HashMap<String, ArrayList<Block>>(this.leafMap);
 	}
 
 	/**
@@ -60,11 +60,11 @@ public class TrackModel {
 	* @return HashMap<Block, Station>
 	*/
 	public HashMap<Block, Station> viewBlockStationMap(){
-		return this.blockStationMap;
+		return new HashMap<Block, Station>(this.blockStationMap);
 	}
 
 	public HashMap<String, Block> viewRootMap(){
-		return this.rootMap;
+		return new HashMap<String, Block>(this.rootMap);
 	}
 	/**
 	* Adds a selected block to the TrackModel. Expects a valid Block object.
