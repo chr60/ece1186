@@ -240,7 +240,6 @@ public class Block implements Comparable<Block>{
 	
 	/**
 	* Returns the associated station of the block
-	* @param track the track the block is on
 	* @return the Station object of the associated block
 	*/
 	public Station getAssociatedStation(){

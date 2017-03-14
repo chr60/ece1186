@@ -34,6 +34,12 @@ public class TrackModel {
 	* @param line Line of the block to be looked up
 	* @param section Section of the block to be looked up
 	* @param blockNum Number of the block to be looked up
+	*\msc
+	*  T,"Iberian Dance Task";
+	*
+	*  T->"Iberian Dance Task" [label="IbFandangoReq", URL="\ref IbFandangoReq"];
+	*  T<<"Iberian Dance Task" [label="IbFandangoCnf", URL="\ref IbFandangoCnf", ID="1"];
+	*\endmsc
 	*/
 	public Block getBlock(String line, String section, Integer blockNum){
 		return trackList.get(line).get(section).get(blockNum);
@@ -69,10 +75,16 @@ public class TrackModel {
 	/**
 	* Adds a selected block to the TrackModel. Expects a valid Block object.
 	*
+	 *\msc
+	 *  T,"Iberian Dance Task";
+	 *
+	 *  T->"Iberian Dance Task" [label="IbFandangoReq", URL="\ref IbFandangoReq"];
+	 *  T<<"Iberian Dance Task" [label="IbFandangoCnf", URL="\ref IbFandangoCnf", ID="1"];
+	 *\endmsc
 	* @param blockLine Name of the line being added
 	* @param blockSection Name of the section the block belongs to
 	* @param blockNum Number of the block within a line
-	* @param Block The block to be added.
+	* @param block The block to be added.
 	*/
 	private void addBlock(String blockLine,String blockSection, Integer blockNum, Block block){
 		if (!this.trackList.containsKey(blockLine)){
@@ -229,8 +241,7 @@ public class TrackModel {
 
 	/**
 	* Helper function for reading the information from the excel-dumped CSV
-	* @param String[] fNames: filenames of the csv's of to read in
-	* @param TrackModel track: track to have the given fNames to be added to
+	* @param fNames: filenames of the csv's of to read in
 	*/
 	public void readCSV(String[] fNames){
 

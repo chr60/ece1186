@@ -2130,7 +2130,7 @@ CLASS_DIAGRAMS         = YES
 # the mscgen tool resides. If left empty the tool is assumed to be found in the
 # default search path.
 
-MSCGEN_PATH            = 
+MSCGEN_PATH            = /usr/local/cellar/mscgen/0.20_1/bin
 
 # You can include diagrams made with dia in doxygen documentation. Doxygen will
 # then run dia to produce the diagram and insert it in the documentation. The
@@ -2359,7 +2359,7 @@ DIAFILE_DIRS           =
 # generate a warning when it encounters a \startuml command in this case and
 # will not generate output for the diagram.
 
-PLANTUML_JAR_PATH      =
+PLANTUML_JAR_PATH      = build/plantuml.jar
 
 # When using plantuml, the specified paths are searched for files specified by
 # the !include statement in a plantuml block.
@@ -2367,7 +2367,7 @@ PLANTUML_JAR_PATH      =
 PLANTUML_INCLUDE_PATH  =
 
 # The DOT_GRAPH_MAX_NODES tag can be used to set the maximum number of nodes
-# that will be shown in the graph. If the number of nodes in a graph becomes
+# that will be shown in the graph. If the number of nodes in a graph become
 # larger than this value, doxygen will truncate the graph, which is visualized
 # by representing a node as a red box. Note that doxygen if the number of direct
 # children of the root node in a graph is already larger than
