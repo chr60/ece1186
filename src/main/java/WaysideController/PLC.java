@@ -24,6 +24,9 @@ public class PLC {
 			this.monitorExpression = moE;
 
 		}
+		public void decode(){
+
+		}
 
 		public boolean proceedEval(Block b) throws ScriptException{
 			StringBuilder SB = new StringBuilder(proceedExpression);

@@ -37,7 +37,6 @@ public class Station implements Comparable<Station>{
 		else{
 			numLoaded = this.rand.nextInt(maxPassengers);
 		}
-
 		this.passengersWaiting = this.passengersWaiting - numLoaded;
 		return numLoaded;
 	}

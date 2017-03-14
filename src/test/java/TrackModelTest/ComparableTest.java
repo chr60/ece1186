@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
  	* Test the comparable interface for a true result
  	*/
  	void testComparableTrue(){
- 		assertTrue(this.track.trackList.get("Red").get("A").get(1).equals(this.track.trackList.get("Red").get("A").get(1)));
+ 		assertTrue(this.track.viewTrackList().get("Red").get("A").get(1).equals(this.track.getBlock("Red","A",1)));
  	}
 
  	@Test
@@ -35,7 +35,7 @@ import org.junit.jupiter.api.Test;
  	* Test comparable false on the same line
  	*/
  	void testComparableFalseSameTrack(){
- 		assertFalse(this.track.trackList.get("Red").get("A").get(1).equals(this.track.trackList.get("Red").get("A").get(2)));
+ 		assertFalse(this.track.viewTrackList().get("Red").get("A").get(1).equals(this.track.getBlock("Red","A",2)));
  	}
 
  	@Test
@@ -43,6 +43,6 @@ import org.junit.jupiter.api.Test;
  	* Test comparable different tracks, same block+section
  	*/
  	void testComparableDifferentTrack(){
- 		assertFalse(this.track.trackList.get("Green").get("A").get(1).equals(this.track.trackList.get("Red").get("A").get(1)));
+ 		assertFalse(this.track.viewTrackList().get("Green").get("A").get(1).equals(this.track.getBlock("Red","A",1)));
  	}
  }
