@@ -34,12 +34,6 @@ public class TrackModel {
 	* @param line Line of the block to be looked up
 	* @param section Section of the block to be looked up
 	* @param blockNum Number of the block to be looked up
-	*\msc
-	*  T,"Iberian Dance Task";
-	*
-	*  T->"Iberian Dance Task" [label="IbFandangoReq", URL="\ref IbFandangoReq"];
-	*  T<<"Iberian Dance Task" [label="IbFandangoCnf", URL="\ref IbFandangoCnf", ID="1"];
-	*\endmsc
 	*/
 	public Block getBlock(String line, String section, Integer blockNum){
 		return trackList.get(line).get(section).get(blockNum);
@@ -63,6 +57,13 @@ public class TrackModel {
 
 	/**
 	* Allows viewing of the blockStationMap by other modules
+	*
+	*\msc
+	*	T, "viewBlockStationMap()";
+	*   T=>"viewBlockStationMap()" [label="viewBlockStationmap", URL="\ref viewBlockStationMap"];
+	*   T<< "viewBlockStationMap()";
+	*\endmsc
+	*	
 	* @return HashMap<Block, Station>
 	*/
 	public HashMap<Block, Station> viewBlockStationMap(){
@@ -72,15 +73,15 @@ public class TrackModel {
 	public HashMap<String, Block> viewRootMap(){
 		return new HashMap<String, Block>(this.rootMap);
 	}
+
 	/**
 	* Adds a selected block to the TrackModel. Expects a valid Block object.
 	*
-	 *\msc
-	 *  T,"Iberian Dance Task";
-	 *
-	 *  T->"Iberian Dance Task" [label="IbFandangoReq", URL="\ref IbFandangoReq"];
-	 *  T<<"Iberian Dance Task" [label="IbFandangoCnf", URL="\ref IbFandangoCnf", ID="1"];
-	 *\endmsc
+	*\msc
+	*  T,"addBlock(blockLine, blockSection, blockNum, block)";
+	*  T=>"addBlock(blockLine, blockSection, blockNum, block)" [label="addBlock", URL="\ref addBlock"];
+	*\endmsc
+	*
 	* @param blockLine Name of the line being added
 	* @param blockSection Name of the section the block belongs to
 	* @param blockNum Number of the block within a line
@@ -241,6 +242,9 @@ public class TrackModel {
 
 	/**
 	* Helper function for reading the information from the excel-dumped CSV
+	*\msc
+	*
+	*\endmsc
 	* @param fNames: filenames of the csv's of to read in
 	*/
 	public void readCSV(String[] fNames){

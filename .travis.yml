@@ -6,7 +6,7 @@ before_install:
   - sudo add-apt-repository ppa:jonathonf/texlive-2016 -y
   - mkdir docs
   - sudo apt-get update
-
+  - sudo apt-get install mscgen
 
 jdk:
   - oraclejdk8
@@ -32,4 +32,3 @@ script:
 after_success:
   - doxygen Doxygen
   - sudo chmod +x build_tex.sh
-  - ./build_tex.sh
