@@ -2,7 +2,7 @@
 \usepackage{hyperref}
 \usepackage{multirow}
 % Title Page
-\title{Low-motovation: Master Test Plan}
+\title{Low-motovation: Group Test Plan}
 \author{Michael Ghaben}
 \date{}
 
@@ -12,7 +12,7 @@
 \titlepage
 \section{Introduction}
 \subsection{Document Identifier}
-This document is the Low-Comotovation Master Test Plan(MTP). In this document we detail the testing specifications, requirements, and procedures for the implementation and evaluation of testing procedures.
+This document is the Low-Comotovation Group Test Plan for the design review phase of the Spring 2017 software engineering project.. In this document we detail the testing specifications, requirements, and procedures for the implementation and evaluation of testing procedures.
 
 \subsection{Scope}
 In this document a number of assumptions regarding the projects scope and lifecycle are made. Specifically:
@@ -47,19 +47,23 @@ The test organization is broadly divided into two sections: subsystem and integr
 The test schedul will be implemented as follows::
 
 \subsection{Integrity Level Schema}
-For this project, we only utilize three integrity levels. The integrity levels for this project are as follows:
+For this project, we utilize three integrity levels. The integrity levels for this project are as follows:
 \begin{enumerate}
 	\item The lowest severity level. This is reserved for tasks which will ultimately not be passed onto the finished product and pose no threat to catastrophic failure. 
 	\item This severity level is reserved for failures which may lead to errors in subsystem integration or incorrect information delivered to critical subsystems
 	\item The most severe integrity level. Is a vital system or otherwise threatens life or limb in an imlemented subsystem
 \end{enumerate}
 \subsection{Responsibilities}
-TBD
-\subsection{Tools}
-To implement the test environment and better facilitate a continuous integration test environment, we utilize Travis-CI\footnote{Travis-CI.org} with GitHub\footnote{github.com} integration with Slack\footnote{slack.com} and Jupiter JUnit \footnote{junit.org} integration. By utllizing these tools, we allow automated tests to be run remotely using the Maven\footnote{maven.apache.org}. This allows for rapid feedback into the developmental process, allowing for better integration and testing of the team. The usage of these tools creates feedback loop between implementation, testing, and integration, leading to significant productivity gains.
+Michael Ghaben will be responsible for the integrity of the automated build system as well as the integrity of the master branch.
+
+\subsection{Tools, Techniques, and Metrics}
+To implement the test environment and better facilitate a continuous integration test environment, we utilize Travis-CI\footnote{Travis-CI.org} with GitHub\footnote{github.com} integration with Slack\footnote{slack.com} and Jupiter JUnit \footnote{junit.org} integration. By utllizing these tools, we allow automated tests to be run remotely using the Maven\footnote{maven.apache.org}. This allows for rapid feedback into the developmental process, allowing for better integration and testing of the team. The usage of these tools creates feedback loop between implementation, testing, and integration, leading to significant productivity gains. In each case ,testing will be carried out remotely by the build system.
+
+The system shall be quantitatively evaluated on percentage of percentage of test passing. Each subsystem shall be responsible for the determination of importance of testing individual components of their subsystem, with the exception of vital components.
+
 \section{Details}
 \subsection{Process}
-The test run shall be detailed in the following manner:
+A test shall be detailed in the following manner:
 \begin{table}[]
 	\centering
 	\caption{Test Plan}
@@ -75,11 +79,36 @@ The test run shall be detailed in the following manner:
 		Responsibility & Who are you?\\ \hline
 	\end{tabular}
 \end{table}
-\subsection{Test Documentation}
-Each test shall be documented using the above table as well as any auxillary information by whomever holds testing responsibilities. Each module shall have a specified test plan for each module covering their individual component for testing. Each subsystem test plan shall detail unit tests for his or her own module.
+In this, we expect to utilize both integration as well as unit tests. After each member pushes to GitHub on his or her respective branch, Travis-CI will provide regression testing on all unit and integration tests that have been implemented. To merge into master, all tests must be passing. 
 
-Additionally, integration testing will be accomplished in a similar fashon completed by the group.
+\subsection{Test Documentation Requirements}
+Each test shall be documented using the above table as well as any auxillary information by whomever holds testing responsibilities. Each module shall have a specified test plan for each module covering their individual component for testing. Each subsystem test plan shall detail unit tests for his or her own module. Additionally, integration testing will be accomplished in a similar fashon completed by the group.
+
+Furthermore, the unit and integration testing procedure will be supplemented by functional testing. Each group member shall conduct user testing of each other module. During this time, the testing member will attempt to cause defective behavior at any level. These defects will be tracked via GitHub issues. This testing will occur weekly.
+
 \subsection{Test Administration Requirements}
-For a test to be considered complete, it must successfully build on the continuous integration server utilizing the Maven build system.
+For a unit or integration test to be considered complete, it must successfully build on the build server utilizing the Maven build system. This ensures consistent repeatable builds to attempt to ensure the clients functional requirements will be met.
 
+Additionally, for functional testing it is expected that each group member submits either a bug report via GitHub issues. Should a group member fail to find any defects and register them, he or she must challenge Professor Profeta to find a defect at the next class meeting. If the professor discovers a defect, the group member(s) who failed to find defects owe the other group members pizza. It is hoped that this procedure will lead to people finding more defects.
+\subsection{Test Reporting Requirements}
+Each written unit and integrationtest report will be provided by the Maven automated build system. 
+
+To document user testing (e.g. by working with the user interface and attempting to find defects in that manner), a developmer may supplement this test report with the following syntax to automatically document the bug utilizng the following syntax:\newline \newline
+/** \newline
+* @bug $<Descriptive$ $ message>$ \newline
+*/\newline
+\newline
+This will lead to documentation of the defect in the autmatically generated Doxygen documentation. Note that this should be used for defects which  are not necessarily covered under tests at a given time. By utilizing this process, an iterative cycle of development these defects may be tracked and inclusion in later tests to ensure proper functionality.
+
+\section{Changelog}
+\begin{table}[]
+	\centering
+	\caption{Change}
+	\label{changelogl}
+	\begin{tabular}{|l|l|}
+		\hline
+		Date & \multicolumn{1}{c|}{Change} \\ \hline
+		March 14, 2017 & General Test Plan \\ \hline
+	\end{tabular}
+\end{table}
 \end{document}          
