@@ -22,10 +22,7 @@ import TrackModel.*;
 public class WS extends JPanel {
 	//GUI ELEMENTS
 	private JTextArea blockConsole;
-	private JTextArea trainConsole;
 	private final JTextArea notifConsole = new JTextArea();
-	TextAreaOutputStream notifStream;
-	TextAreaOutputStream blockStream;
 	private String name;
 	private PLC plc;
 
@@ -43,6 +40,7 @@ public class WS extends JPanel {
 
 
 		Set<Integer> blockInts = track.viewTrackList().get("Red").get("A").keySet();
+
 		Integer[] intArr = blockInts.toArray(new Integer[blockInts.size()]);
 		Set<String> lineSet = track.viewTrackList().keySet();
 		String[] lineStrings = lineSet.toArray(new String[lineSet.size()]);
@@ -67,7 +65,7 @@ public class WS extends JPanel {
 		blockDropdown.setModel(new DefaultComboBoxModel<String>(blockStrings));
     blockDropdown.setBounds(281, 11, 130, 20);
 		add(blockDropdown);
-    
+
 		lineDropdown.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e){
@@ -112,25 +110,13 @@ public class WS extends JPanel {
 		blockConsole.setBounds(10, 30, 428, 189);
 		add(blockConsole);
 		blockConsole.setColumns(10);
-		this.blockStream = new TextAreaOutputStream(blockConsole);
 
-		JComboBox<String> comboBox_3 = new JComboBox<String>();
-		comboBox_3.setModel(new DefaultComboBoxModel<String>(new String[] {"Select Train"}));
-		comboBox_3.setBounds(10, 237, 165, 20);
-		add(comboBox_3);
-
-		trainConsole = new JTextArea();
-		trainConsole.setColumns(10);
-		trainConsole.setBounds(10, 257, 428, 180);
-		add(trainConsole);
-
-		JLabel lblNotifications = new JLabel("Notifications");
-		lblNotifications.setBounds(448, 14, 92, 14);
-		add(lblNotifications);
+		JLabel notificationsLabel = new JLabel("Notifications");
+		notificationsLabel.setBounds(448, 14, 92, 14);
+		add(notificationsLabel);
 		notifConsole.setBounds(448, 30, 658, 405);
 		add(notifConsole);
-		this.notifStream = new TextAreaOutputStream(notifConsole);
-		this.notifStream.write(new String("THIS IS A TEST - Wayside Controller " + this.name + " created.").getBytes());
+
 
 		JButton btnOpenTestConsole = new JButton("Open Test Console");
 		btnOpenTestConsole.setBounds(261, 230, 150, 23);
@@ -140,9 +126,6 @@ public class WS extends JPanel {
 			}
 		});
 		add(btnOpenTestConsole);
-	}
-	public TextAreaOutputStream getNotifStream(){
-		return notifStream;
 	}
 	public PLC getPlc() {
 		return plc;

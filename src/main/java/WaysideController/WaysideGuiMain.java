@@ -19,7 +19,6 @@ public class WaysideGuiMain {
 	private String PLCFilePath;
 	private JButton loadBtn;
 	private File PLCFile;
-	private Wayside_PLC WaysidePLC;
 	private Block [] samples;
 	private WS ws;
 
@@ -118,20 +117,20 @@ public class WaysideGuiMain {
 		lblMurphy.setBounds(10, 455, 69, 18);
 		frame.getContentPane().add(lblMurphy);
 
-		JComboBox<String> murphyBox = new JComboBox<String>();
-		murphyBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Select", "Comm Failure with CTC", "Comm Failure with Track"}));
-		murphyBox.setBounds(10, 484, 143, 20);
-		frame.getContentPane().add(murphyBox);
+		JComboBox<String> murphyDropdown = new JComboBox<String>();
+		murphyDropdown.setModel(new DefaultComboBoxModel<String>(new String[] {"Select", "Comm Failure with CTC", "Comm Failure with Track", "Wayside Failure"}));
+		murphyDropdown.setBounds(10, 484, 143, 20);
+		frame.getContentPane().add(murphyDropdown);
 
-		JButton btnFail = new JButton("Fail");
-		btnFail.setBounds(163, 483, 60, 23);
-		btnFail.addActionListener(new ActionListener(){
+		JButton failBtn = new JButton("Fail");
+		failBtn.setBounds(163, 483, 60, 23);
+		failBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				btnFail.setActionCommand(murphyBox.getSelectedItem().toString());
-				printToAllWayside(btnFail.getActionCommand() + "!!!");
+				failBtn.setActionCommand(murphyDropdown.getSelectedItem().toString());
+				printToAllWayside(failBtn.getActionCommand() + "!!!");
 			}
 		});
-		frame.getContentPane().add(btnFail);
+		frame.getContentPane().add(failBtn);
 
 		txtEnterPlcFile = new JTextField();
 		txtEnterPlcFile.setText("Enter PLC file path here...");
@@ -139,33 +138,26 @@ public class WaysideGuiMain {
 		frame.getContentPane().add(txtEnterPlcFile);
 		txtEnterPlcFile.setColumns(10);
 
-		JButton btnLoadBtn = new JButton("Load");
-		btnLoadBtn.addActionListener(new ActionListener(){
+		JButton loadPLCBtn = new JButton("Load");
+		loadPLCBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				btnLoadBtn.setActionCommand(txtEnterPlcFile.getText());
+				loadPLCBtn.setActionCommand(txtEnterPlcFile.getText());
 				try {
-					tryPLCFile(btnLoadBtn.getActionCommand());	//see if selected is a valid file
+					tryPLCFile(loadPLCBtn.getActionCommand());	//see if selected is a valid file
 				} catch (IOException | ScriptException e1) {
 					e1.printStackTrace();
 				}
 			}
 		});
-		this.loadBtn = btnLoadBtn;
-		btnLoadBtn.setBounds(494, 483, 69, 23);
-		frame.getContentPane().add(btnLoadBtn);
+		this.loadBtn = loadPLCBtn;
+		loadPLCBtn.setBounds(494, 483, 69, 23);
+		frame.getContentPane().add(loadPLCBtn);
 
-		JLabel label = new JLabel("Load PLC File");
-		label.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		label.setBounds(264, 455, 115, 18);
-		frame.getContentPane().add(label);
+		JLabel PLCLabel = new JLabel("Load PLC File");
+		PLCLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		PLCLabel.setBounds(264, 455, 115, 18);
+		frame.getContentPane().add(PLCLabel);
 
-		Component verticalStrut = Box.createVerticalStrut(20);
-		verticalStrut.setBounds(233, 455, 12, 73);
-		frame.getContentPane().add(verticalStrut);
-
-		Component verticalStrut_1 = Box.createVerticalStrut(20);
-		verticalStrut_1.setBounds(642, 455, 12, 73);
-		frame.getContentPane().add(verticalStrut_1);
 
 		JButton button = new JButton("Browse");
 		button.setBounds(563, 483, 79, 23);
@@ -198,21 +190,20 @@ public class WaysideGuiMain {
 		if(PLCFile.exists()){
 			printToAllWayside("PLC Data loaded");
 			this.PLCFile = PLCFile;
-			WaysidePLC = new Wayside_PLC(PLCFile);
-			ws.setPlc(WaysidePLC.getPLC());
+			PLC plc = WaysidePLC.parseLine(PLCFile);
+			ws.setPlc(plc);
 		}
 		else
 			JOptionPane.showMessageDialog(new Frame(),"Specified file was not found", "Invalid Filename", JOptionPane.WARNING_MESSAGE);
 	}
 
 	public void printToAllWayside(String toPrint){
-		for(WS ws : Waysides)
+		/*for(WS ws : Waysides)
 			try {
-				ws.getNotifStream().write(new String("\n" + toPrint).getBytes());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 	}
 
 	public String getPLCFilePath() {
