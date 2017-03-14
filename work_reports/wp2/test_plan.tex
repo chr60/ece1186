@@ -1,0 +1,85 @@
+\documentclass[]{article}
+\usepackage{hyperref}
+\usepackage{multirow}
+% Title Page
+\title{Low-motovation: Master Test Plan}
+\author{Michael Ghaben}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\titlepage
+\section{Introduction}
+\subsection{Document Identifier}
+This document is the Low-Comotovation Master Test Plan(MTP). In this document we detail the testing specifications, requirements, and procedures for the implementation and evaluation of testing procedures.
+
+\subsection{Scope}
+In this document a number of assumptions regarding the projects scope and lifecycle are made. Specifically:
+
+\begin{enumerate}
+	\item Due to the short development cycle associated with this project, some non-negligble defects will likely persist
+	\item Under the iterative development methodology this group is following, the development of additional tests may be completed to address defects is expected
+\end{enumerate}
+To better address these constraints, we will utilize a continuous integration methodology around iterative development and testing.So that we may ensure rapid development with minimal time overhead, we shall utilize continuous integration tools and methodology. Testing will be broadly divided into two categories: subsystem, and integration. Subsystem testing will be primarily focused on testing an individual system to ensure minimal functionality of a given subsystem and be done primarily independently by each group member. Integration testing will be designated as tests which require two or more modules functionality to satisfy requirements.
+
+Specifically, it is anticipated that software defects will be found and require that testing which was not anticipated. As a result, we shall primarily focus on defining general tsts to be implemented and leave the exact testing requirements as implementation is completed. Additionally, will primarily focus on subsytems to be delivered to the end-user, the train company.
+
+Examples of these subsystems would be the CTC module or the train controller, which are expected to be integrated into the final deliverable. Subsystems which are not examples of the final deliverables are the Train Model and Track Model subsystems, as they will ultimately be removed and replaced with the physical subsystems.
+
+\subsection{System Overview and Key Features}
+The purpose of the system under development is a to provide a train system for the Pittsburgh North Shore Rail system.
+
+This system broadly consists of 6 subsystems:
+\begin{enumerate}
+	\item  Track Model - a physical model of a track to be used for testing
+	\item Train Model - a physical model of a train to be used for testing
+	\item CTC System - A CTC system to be implemented on the final train system
+	\item MBO - ???
+	\item Wayside System - A wayside for coordinating with all models
+\end{enumerate}
+For a further discussion of the system, we refer the reader to the project reuqirements and discussion board.
+
+\section{Test Overview}
+The test organization is broadly divided into two sections: subsystem and integration testing. Subsystem tests are regarded as tests associated with only a single system at a time. Integration tests broadly refer to the tests of the integration of more than a single subsystem. In this view, testing is accomplished by each subsystem independently at the discresion of the individual developing the subsystem. Then, as members of the team develop their subsystem, each member shall attempt to integrate and develop tests for their integration. Due to the nature of continuous integration, tests are expected to be developed in parallel to the development of the program modules. 
+
+\subsection{Master Test Schedule}
+The test schedul will be implemented as follows::
+
+\subsection{Integrity Level Schema}
+For this project, we only utilize three integrity levels. The integrity levels for this project are as follows:
+\begin{enumerate}
+	\item The lowest severity level. This is reserved for tasks which will ultimately not be passed onto the finished product and pose no threat to catastrophic failure. 
+	\item This severity level is reserved for failures which may lead to errors in subsystem integration or incorrect information delivered to critical subsystems
+	\item The most severe integrity level. Is a vital system or otherwise threatens life or limb in an imlemented subsystem
+\end{enumerate}
+\subsection{Responsibilities}
+TBD
+\subsection{Tools}
+To implement the test environment and better facilitate a continuous integration test environment, we utilize Travis-CI\footnote{Travis-CI.org} with GitHub\footnote{github.com} integration with Slack\footnote{slack.com} and Jupiter JUnit \footnote{junit.org} integration. By utllizing these tools, we allow automated tests to be run remotely using the Maven\footnote{maven.apache.org}. This allows for rapid feedback into the developmental process, allowing for better integration and testing of the team. The usage of these tools creates feedback loop between implementation, testing, and integration, leading to significant productivity gains.
+\section{Details}
+\subsection{Process}
+The test run shall be detailed in the following manner:
+\begin{table}[]
+	\centering
+	\caption{Test Plan}
+	\label{my-label}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Methods & How? \\ \hline
+		Inputs &  What Inputs? \\ \hline
+		Outputs &  What is a successful output?\\ \hline
+		Expected Completion & When will it be done?\\ \hline
+		Risks and Assumptions & What are you assuming?\\ \hline
+		Responsibility & Who are you?\\ \hline
+	\end{tabular}
+\end{table}
+\subsection{Test Documentation}
+Each test shall be documented using the above table as well as any auxillary information by whomever holds testing responsibilities. Each module shall have a specified test plan for each module covering their individual component for testing. Each subsystem test plan shall detail unit tests for his or her own module.
+
+Additionally, integration testing will be accomplished in a similar fashon completed by the group.
+\subsection{Test Administration Requirements}
+For a test to be considered complete, it must successfully build on the continuous integration server utilizing the Maven build system.
+
+\end{document}          
