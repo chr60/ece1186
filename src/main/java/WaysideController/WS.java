@@ -42,9 +42,9 @@ public class WS extends JPanel {
 	public WS(String name, PLC plcinit, TrackModel track) throws IOException {
 
 
-		Set<Integer> blockInts = track.trackList.get("Red").get("A").keySet();
+		Set<Integer> blockInts = track.viewTrackList().get("Red").get("A").keySet();
 		Integer[] intArr = blockInts.toArray(new Integer[blockInts.size()]);
-		Set<String> lineSet = track.trackList.keySet();
+		Set<String> lineSet = track.viewTrackList().keySet();
 		String[] lineStrings = lineSet.toArray(new String[lineSet.size()]);
 
 
@@ -72,7 +72,7 @@ public class WS extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e){
 				String l = (String) lineDropdown.getSelectedItem();
-				Set<String> segmentStrings = track.trackList.get(l).keySet();
+				Set<String> segmentStrings = track.viewTrackList().get(l).keySet();
 				blockDropdown.removeAllItems();
 				for (String item : segmentStrings){
 					segmentDropdown.addItem(item);
@@ -86,7 +86,7 @@ public class WS extends JPanel {
 			public void actionPerformed(ActionEvent e){
 				String l = (String) lineDropdown.getSelectedItem();
 				String s = (String) segmentDropdown.getSelectedItem();
-				Set<Integer> blockSet = track.trackList.get(l).get(s).keySet();
+				Set<Integer> blockSet = track.viewTrackList().get(l).get(s).keySet();
 				System.out.println(blockSet);
 				blockDropdown.removeAllItems();
 				for (Integer item : blockSet)

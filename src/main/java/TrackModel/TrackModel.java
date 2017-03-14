@@ -20,17 +20,18 @@ import java.util.Arrays;
 
 public class TrackModel {
 
-	public  HashMap<String,HashMap<String, HashMap<Integer, Block>>> trackList =
+	HashMap<String,HashMap<String, HashMap<Integer, Block>>> trackList =
 		new HashMap<String,HashMap<String, HashMap<Integer, Block>>>();
 
 	HashMap<String, Block> rootMap = new HashMap<String, Block>();
 	HashMap<String, ArrayList<Block>> leafMap = new HashMap<String, ArrayList<Block>>();
 	HashMap<String, ArrayList<Block>> stationList = new HashMap<String, ArrayList<Block>>();
-	HashMap<String, Station> stationHostList = new HashMap<String, Station>();
+	HashMap<String, Station> stationHostMap = new HashMap<String, Station>();
 	HashMap<Block, Station> blockStationMap = new HashMap<Block, Station>();
+	HashMap<Block, Crossing> crossingMap = new HashMap<Block, Crossing>();
 
 	/**
-	* Simplicity wrapper to return a block on the track given the parameters
+	* Simplicity wrapper to return a non-aliased block on the track given the parameters
 	* @param line Line of the block to be looked up
 	* @param section Section of the block to be looked up
 	* @param blockNum Number of the block to be looked up
@@ -42,7 +43,24 @@ public class TrackModel {
 	*\endmsc
 	*/
 	public Block getBlock(String line, String section, Integer blockNum){
-		return trackList.get(line).get(section).get(blockNum);
+		return this.trackList.get(line).get(section).get(blockNum);
+	}
+
+	/**
+	* Returns a non-aliased section of blocks
+	* @param line line the section is on
+	* @param section section being requested
+	*/
+	public HashMap<Integer, Block> getSection(String line, String section){
+		return this.trackList.get(line).get(section);
+	}
+
+	/**
+	* Allows viewing of the trackList to other modules, implemented as a copy method
+	* @return HashMap<String, HashMap<String,HashMap<Integer,Block>>>
+	*/
+	public HashMap<String,HashMap<String,HashMap<Integer,Block>>> viewTrackList(){
+		return new HashMap<String,HashMap<String,HashMap<Integer,Block>>>(trackList);
 	}
 
 	/**
@@ -51,6 +69,14 @@ public class TrackModel {
 	*/
 	public HashMap<String, ArrayList<Block>> viewStationMap(){
 		return new HashMap<String, ArrayList<Block>>(this.stationList);
+	}
+
+	/*
+	* Allows viewing of the crossingMap from other modules, implemented as a copy method
+	* @return HashMap<Block, Crossing>
+	*/
+	public HashMap<Block, Crossing> viewCrossingMap(){
+		return new HashMap<Block, Crossing>(this.crossingMap);
 	}
 
 	/**
@@ -69,9 +95,14 @@ public class TrackModel {
 		return new HashMap<Block, Station>(this.blockStationMap);
 	}
 
+	/**
+	* Allows viewing of the rootMap by other modules
+	* @return Hash<String, Block>
+	*/
 	public HashMap<String, Block> viewRootMap(){
 		return new HashMap<String, Block>(this.rootMap);
 	}
+
 	/**
 	* Adds a selected block to the TrackModel. Expects a valid Block object.
 	*
@@ -200,7 +231,7 @@ public class TrackModel {
 		for(String s : stationList.keySet()){
 			for(Block b : stationList.get(s))
 				if(!this.blockStationMap.containsKey(s)){
-					this.blockStationMap.put(b, this.stationHostList.get(s));
+					this.blockStationMap.put(b, this.stationHostMap.get(s));
 				}
 		}
 	}
@@ -208,10 +239,10 @@ public class TrackModel {
 	/** 
 	*Build the listing of the host station list for external consumption
 	*/
-	private void buildStationHostList(){
+	private void buildStationHostMap(){
 		for (String stationName : this.stationList.keySet()){
 			Station myStation = new Station(stationName, this.stationList.get(stationName));
-			this.stationHostList.put(stationName, myStation);
+			this.stationHostMap.put(stationName, myStation);
 		}
 	}
 
@@ -302,7 +333,7 @@ public class TrackModel {
 			}
 			this.linkBlocks();
 			this.handleSwitches();
-			this.buildStationHostList();
+			this.buildStationHostMap();
 			this.buildBlockStationMap();
 		}
 }
