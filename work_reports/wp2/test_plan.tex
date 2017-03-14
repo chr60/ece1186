@@ -1,6 +1,7 @@
 \documentclass[]{article}
 \usepackage{hyperref}
 \usepackage{multirow}
+\usepackage{float}
 % Title Page
 \title{Low-motovation: Group Test Plan}
 \author{Michael Ghaben}
@@ -64,7 +65,7 @@ The system shall be quantitatively evaluated on percentage of percentage of test
 \section{Details}
 \subsection{Process}
 A test shall be detailed in the following manner:
-\begin{table}[]
+\begin{table}[H]
 	\centering
 	\caption{Test Plan}
 	\label{my-label}
@@ -100,8 +101,50 @@ To document user testing (e.g. by working with the user interface and attempting
 \newline
 This will lead to documentation of the defect in the autmatically generated Doxygen documentation. Note that this should be used for defects which  are not necessarily covered under tests at a given time. By utilizing this process, an iterative cycle of development these defects may be tracked and inclusion in later tests to ensure proper functionality.
 
+\section{Track Module Test Plan}
+Author: Michael Ghaben
+
+\subsection{Unit Tests}
+\begin{table}[H]
+	\centering
+	\caption{CSV Reading Test Plan}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Methods & Evaluate the readCSV function\\ \hline
+		Inputs &  the files redline.csv and greenline.csv \\ \hline
+		Outputs &  The track model successfully reading the csv files\\ \hline
+		Expected Completion & At initialization of the program\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the files\\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\subsection{Integration Tests}
+
+\section{Track Controller Test Plan}
+\subsection{Unit Tests}
+\subsection{Integration Tests}
+
+\section{CTC Test Plan}
+\subsection{Unit Tests}
+\subsection{Integration Tests}
+
+\section{MBO Test Plan}
+\subsection{Unit Tests}
+\subsection{Integration Tests}
+
+\section{Train Model Test Plan}
+\subsection{Unit Tests}
+\subsection{Integration Tests}
+
+\section{Train Controller Test Plan}
+\subsection{Unit Tests}
+\subsection{Integration Tests}
+
 \section{Changelog}
-\begin{table}[]
+
+\begin{table}[H]
 	\centering
 	\caption{Change}
 	\label{changelogl}
