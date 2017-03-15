@@ -127,10 +127,22 @@ public class WS extends JPanel {
 		});
 		add(btnOpenTestConsole);
 	}
+
+	public boolean manualSwitch(Block block){
+		return true;
+	}
+	public void updateInputs(TrackModel updatedTrack){
+
+	}
+	public boolean[] runPLC(){
+
+		return null;
+	}
 	public PLC getPlc() {
 		return plc;
 	}
-	public void setPlc(PLC plc) {
+	public boolean setPlc(PLC plc) {
 		this.plc = plc;
+		return true;
 	}
 }

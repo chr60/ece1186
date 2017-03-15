@@ -62,12 +62,13 @@ public class WaysideGuiMain {
 	}*/
 
 	/**
-	 * Initialize the contents of the frame.
-	 * @throws UnsupportedLookAndFeelException
-	 * @throws IllegalAccessException
-	 * @throws InstantiationException
-	 * @throws ClassNotFoundException
-	 * @throws IOException
+	 * Initializes Wayside Units
+	 * @param  TrackModel                      Pre-loaded Track Info
+	 * @throws ClassNotFoundException          [description]
+	 * @throws InstantiationException          [description]
+	 * @throws IllegalAccessException          [description]
+	 * @throws UnsupportedLookAndFeelException [description]
+	 * @throws IOException                     [description]
 	 */
 	private void initialize(TrackModel track) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException {
 		for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -158,7 +159,6 @@ public class WaysideGuiMain {
 		PLCLabel.setBounds(264, 455, 115, 18);
 		frame.getContentPane().add(PLCLabel);
 
-
 		JButton button = new JButton("Browse");
 		button.setBounds(563, 483, 79, 23);
 		frame.getContentPane().add(button);
@@ -178,23 +178,33 @@ public class WaysideGuiMain {
 		frame.setVisible(true);
 	    }
 
+	public void setSpeedAuth(Block block){
+
+ 	}
+
 	/**
 	 * Tries to open give PLC file and checks for existence
 	 * @param filename - user entered filename/path of PLC Code File
 	 * @throws IOException
 	 * @throws ScriptException
 	 */
-
-	public void tryPLCFile(String filename) throws IOException, ScriptException{
+	public boolean tryPLCFile(String filename) throws IOException, ScriptException{
 		File PLCFile= new File(filename);
 		if(PLCFile.exists()){
 			printToAllWayside("PLC Data loaded");
 			this.PLCFile = PLCFile;
 			PLC plc = WaysidePLC.parseLine(PLCFile);
 			ws.setPlc(plc);
+			return true;
 		}
-		else
+		else{
 			JOptionPane.showMessageDialog(new Frame(),"Specified file was not found", "Invalid Filename", JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+	}
+
+	public void getStates(){
+
 	}
 
 	public void printToAllWayside(String toPrint){

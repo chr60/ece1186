@@ -1,12 +1,23 @@
 package WaysideController;
 
-import java.util.*;
-import java.io.*;
 import TrackModel.*;
+import java.io.*;
+import java.util.*;
+
 
 public class WaysidePLC {
 
 	/**
+	 * Starts new PLC generation
+	 * @param  File file          [description]
+	 * @return      PLC
+	 */
+	public static PLC newPLC(File file) throws IOException{
+		return parseLine(file);
+	}
+
+	/**
+
 	 * Parses line of PLC code in String Expressions for various parameters.
 	 * @throws IOException
 	 */
