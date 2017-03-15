@@ -1,0 +1,19 @@
+@startuml
+skinparam monochrome true
+
+actor TrackController #white
+' The only difference between actor
+'and participant is the drawing
+participant TrackModel.track
+
+
+TrackController->TrackModel.track: viewRootMap()
+note left: At Initialization
+TrackModel.track-->TrackController: copy(track.rootMap())
+TrackController->TrackController: getBlock{track.rootMap}
+note right: for each block ∈ copy(track.rootMap())
+||100||
+TrackController->Block: Block.setSwitchState(state) 
+note left: During runtime, for each Block
+
+@enduml

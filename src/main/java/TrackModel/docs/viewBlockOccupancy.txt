@@ -1,0 +1,19 @@
+@startuml
+skinparam monochrome true
+
+actor MBO #white
+' The only difference between actor
+'and participant is the drawing
+participant TrackModel.track
+
+
+MBO->TrackModel.track: viewTrackList()
+note left: At Initialization
+TrackModel.track-->MBO: copy(track.trackList()) ∈ {line,section,block}
+note right: for each block ∈ copy(track.crossingMap()) ∈ {line,section,block}
+||100||
+MBO->Block: Block.getOccupied()
+Block-->MBO: Boolean isOccupied
+note left: During runtime ∈ copy(track.trackList()) ∈ {line,section,block}
+
+@enduml

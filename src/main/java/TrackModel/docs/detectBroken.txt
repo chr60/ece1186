@@ -1,0 +1,20 @@
+@startuml
+skinparam monochrome true
+
+actor TrackController #white
+' The only difference between actor
+'and participant is the drawing
+participant TrackModel.track
+
+
+TrackController->TrackModel.track: viewTrackList()
+note left: At Initialization
+TrackModel.track-->TrackController: copy(track.trackList()) ∈ {line,section,block}
+TrackController->TrackController: getBlock{track.trackList}
+note right: for each block ∈ copy(track.crossingMap()) ∈ {line,section,block}
+||100||
+TrackController->Block: Block.getBroken()
+Block-->TrackController: Boolean isBroken
+note left: During runtime ∈ copy(track.trackList()) ∈ {line,section,block}
+
+@enduml

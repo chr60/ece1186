@@ -1,0 +1,11 @@
+@startuml
+skinparam monochrome true
+
+actor TrainModel #white
+' The only difference between actor
+'and participant is the drawing
+participant TrackModel.Block
+
+TrainModel->TrackModel.Block: getGrade()
+TrackModel.Block-->TrainModel: blockGrade
+@enduml

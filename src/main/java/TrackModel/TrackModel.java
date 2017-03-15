@@ -83,12 +83,6 @@ public class TrackModel {
 
 	/**
 	* Allows viewing of the blockStationMap by other modules
-	*
-	*\msc
-	*	T, "viewBlockStationMap()";
-	*   T=>"viewBlockStationMap()" [label="viewBlockStationmap", URL="\ref viewBlockStationMap"];
-	*   T<< "viewBlockStationMap()";
-	*\endmsc
 	*	
 	* @return HashMap<Block, Station>
 	*/
@@ -98,6 +92,7 @@ public class TrackModel {
 
 	/**
 	* Allows viewing of the rootMap by other modules
+	*
 	* @return Hash<String, Block>
 	*/
 	public HashMap<String, Block> viewRootMap(){
@@ -107,24 +102,17 @@ public class TrackModel {
 	/**
 	* Adds a selected block to the TrackModel. Expects a valid Block object.
 	*
-	*\msc
-	*  T,"addBlock(blockLine, blockSection, blockNum, block)";
-	*  T=>"addBlock(blockLine, blockSection, blockNum, block)" [label="addBlock", URL="\ref addBlock"];
-	*\endmsc
-	*
-	* @param blockLine Name of the line being added
-	* @param blockSection Name of the section the block belongs to
-	* @param blockNum Number of the block within a line
 	* @param block The block to be added.
 	*/
-	private void addBlock(String blockLine,String blockSection, Integer blockNum, Block block){
-		if (!this.trackList.containsKey(blockLine)){
-			this.trackList.put(blockLine, new HashMap<String,HashMap<Integer,Block>>());
+	private void addBlock(Block block){
+
+		if (!this.trackList.containsKey(block.blockLine)){
+			this.trackList.put(block.blockLine, new HashMap<String,HashMap<Integer,Block>>());
 		}
-		if (!this.trackList.get(blockLine).containsKey(blockSection)){
-			this.trackList.get(blockLine).put(blockSection, new HashMap<Integer, Block>());
+		if (!this.trackList.get(block.blockLine).containsKey(block.blockSection)){
+			this.trackList.get(block.blockLine).put(block.blockSection, new HashMap<Integer, Block>());
 		}
-		this.trackList.get(blockLine).get(blockSection).put(blockNum, block);
+		this.trackList.get(block.blockLine).get(block.blockSection).put(block.blockNum, block);
 	}
 	
 	/**
@@ -184,7 +172,6 @@ public class TrackModel {
 			}
 		}
 	}
-
 
 	/**
 	*	Links blocks across block and sections
@@ -272,9 +259,7 @@ public class TrackModel {
 
 	/**
 	* Helper function for reading the information from the excel-dumped CSV
-	*\msc
 	*
-	*\endmsc
 	* @param fNames: filenames of the csv's of to read in
 	*/
 	public void readCSV(String[] fNames){
@@ -313,7 +298,7 @@ public class TrackModel {
 										elevation, speedLimit, stationName, arrowDirection, blockLine, 
 										blockSection, blockNum, hasSwitch, switchBlock);
 
-						this.addBlock(blockLine, blockSection, blockNum, myBlock );
+						this.addBlock(myBlock);
 
 						if (!stationName.equals("")){
 							this.addStation(stationName, myBlock);

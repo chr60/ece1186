@@ -1,0 +1,19 @@
+@startuml
+skinparam monochrome true
+
+actor TrackController #white
+' The only difference between actor
+'and participant is the drawing
+participant TrackModel.track
+
+
+TrackController->TrackModel.track: viewCrossingMap()
+note left: At Initialization
+TrackModel.track-->TrackController: copy(track.crossingMap())
+TrackController->TrackController: getBlock{track.crossingMap}
+note right: for each crossing ∈ copy(track.crossingMap())
+||100||
+TrackController->Block: Block.setCrossingState(state) 
+note left: During runtime, for each crossing
+
+@enduml

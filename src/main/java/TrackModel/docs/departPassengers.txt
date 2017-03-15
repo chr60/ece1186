@@ -1,0 +1,11 @@
+@startuml
+skinparam monochrome true
+
+actor TrainModel #white
+' The only difference between actor
+'and participant is the drawing
+participant TrackModel.Station
+
+TrainModel->TrackModel.Station: addDepartingPassengers(numPassengers)
+TrackModel.Station-->TrackModel.Station: Station.numPassengers+=numPassengers
+@enduml

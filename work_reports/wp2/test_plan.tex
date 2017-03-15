@@ -126,6 +126,23 @@ Author: Michael Ghaben
 
 \section{Track Controller Test Plan}
 \subsection{Unit Tests}
+
+\begin{table}[H]
+	\centering
+	\caption{Load PLC Program via Browse Button}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Evaluate the tryPLC() function and Browse Button\\ \hline
+		Inputs &  PLC file selected via 'Browse' button \\ \hline
+		Outputs &  'Success' notification displayed \\ \hline
+		Expected Completion & After initialization, but before any trains dispatched\\ \hline
+		Risks and Assumptions & \multicolumn{1}{p{4cm}|}{\raggedright PLC files exist in src/main/java/WaysideController/PLCResources (for automated testing, other external files may be used) }  \\ \hline
+		Responsibility & Wayside Controller\\ \hline
+	\end{tabular}
+\end{table}
+
 \subsection{Integration Tests}
 
 \section{CTC Test Plan}
@@ -138,6 +155,421 @@ Author: Michael Ghaben
 
 \section{Train Model Test Plan}
 \subsection{Unit Tests}
+ 
+    \begin{table}[H]
+        \centering
+        \caption{Base Test A: Compute Velocity of train at rest with Power command of 100kW}
+        \begin{tabular}{|l|l|}
+            \hline
+            Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+            Integrity Level & 2 \\ \hline
+            Methods & Apply power command to train and compute velocity  \\ \hline
+            Inputs &  Power Command input and "Start Test" button is pressed \\ \hline
+            Outputs &  Velocity greater than 0 MPH will be produced  \\ \hline
+            Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: March 24th}\\ \hline
+            Risks and Assumptions & \parbox[t]{10cm}{The power command should be 100kW for this base case. \\ Assumption will be made that for base test train starts with 0 velocity} \\ \hline
+            Responsibility & Train Model\\ \hline
+        \end{tabular}
+    \end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Repeat Base Test A with Power command greater than 100,000W}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Apply higher power command to train and compute velocity  \\ \hline
+			Inputs &  Power Command input and "Start Test" button is pressed \\ \hline
+			Outputs &  Velocity greater than base case A will be produced  \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: March 24th}\\ \hline
+			Risks and Assumptions & The power command should be a positive value greater than 100kW \\ \hline
+			Responsibility & Train Model\\ \hline
+		\end{tabular}
+	\end{table}
+    
+    \begin{table}[H]
+    	\centering
+    	\caption{Repeat base test A with Power command less than 100,000W}
+    	\begin{tabular}{|l|l|}
+    		\hline
+    		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+    		Integrity Level & 2 \\ \hline
+    		Methods & Apply lower power command to train and compute velocity  \\ \hline
+    		Inputs &  Power Command input and "Start Test" button is pressed \\ \hline
+    		Outputs &  Velocity lower than base case A will be produced  \\ \hline
+    		Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: March 24th}\\ \hline
+    		Risks and Assumptions & The power command should be a positive value smaller than 100kW \\ \hline
+    		Responsibility & Train Model\\ \hline
+    	\end{tabular}
+    \end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Repeat base test A with grade of 3\%}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Increase grade to 3\% and compute velocity  \\ \hline
+			Inputs &  Grade set to 3\% and "Start Test" button is pressed \\ \hline
+			Outputs &  Velocity lower than base case A will be produced  \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: March 24th}\\ \hline
+			Risks and Assumptions & \parbox[t]{10cm}{The power command should be equal to 100kW \\and grade will be set to 3\% }\\ \hline
+			Responsibility & Train Model\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Repeat base test A with grade of -3\%}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Decrease grade to -3\% and compute velocity  \\ \hline
+			Inputs &  Grade set to -3\% and "Start Test" button is pressed \\ \hline
+			Outputs &  Velocity greater than base case A will be produced  \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: March 24th}\\ \hline
+			Risks and Assumptions &\parbox[t]{10cm}{ The power command should be equal to 100kW \\and grade will be set to -3\%} \\ \hline
+			Responsibility & Train Model\\ \hline
+		\end{tabular}
+	\end{table}
+   
+   	\begin{table}[H]
+	   	\centering
+	   	\caption{Repeat base test A with 150 passengers added}
+	   	\begin{tabular}{|l|l|}
+	   		\hline
+	   		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+	   		Integrity Level & 2 \\ \hline
+	   		Methods & Increase passenger count to 150 and compute velocity  \\ \hline
+	   		Inputs &  Number of passengers = 150 and "Start Test" button is pressed \\ \hline
+	   		Outputs &  Velocity smaller than base case A will be produced  \\ \hline
+	   		Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: March 24th}\\ \hline
+	   		Risks and Assumptions & \parbox[t]{10cm}{The power command should be equal to 100k0W \\and 150 passengers will be added onboard the train} \\ \hline
+	   		Responsibility & Train Model\\ \hline
+	   	\end{tabular}
+   \end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Base Case B: Compute Velocity of train at 25MPH with Power command of 100kW }
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Apply Power command of 100kW and compute new velocity  \\ \hline
+			Inputs &  Power Command set to 100kW and "Start Test" button is pressed \\ \hline
+			Outputs &  Velocity larger than 25MPH will be produced  \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: March 24th}\\ \hline
+			Risks and Assumptions & The power command should be equal to 100kW \\ \hline
+			Responsibility & Train Model\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Repeat Base Case B with power command of 0W }
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Apply Power command of 0W and compute new velocity  \\ \hline
+			Inputs &  Power Command set to 0W and "Start Test" button is pressed \\ \hline
+			Outputs &  Velocity smaller than 25MPH will be produced  \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: March 24th}\\ \hline
+			Risks and Assumptions & The power command should be equal to 0W \\ \hline
+			Responsibility & Train Model\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Repeat Base Case B with power command less than 0W }
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Apply negative power command and compute new velocity  \\ \hline
+			Inputs &  Power Command set to -100kW and "Start Test" button is pressed \\ \hline
+			Outputs &  Invalid input message will appear  \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: March 24th}\\ \hline
+			Risks and Assumptions & Power command must be positive for all possible cases\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Repeat Base Case B with power command greater than 120kW }
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Apply power command above max and compute new velocity  \\ \hline
+			Inputs &  Power Command set to 150kW and "Start Test" button is pressed \\ \hline
+			Outputs &  Speed will remain 25MPH as there is no more power available  \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: March 24th}\\ \hline
+			Risks and Assumptions & If power exceeds max, the velocity stays the same\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Repeat Base Case B but apply Service brakes}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 3 \\ \hline
+			Methods & Apply service brakes and compute new velocity  \\ \hline
+			Inputs &  Service brakes engaged and "Start Test" button is pressed \\ \hline
+			Outputs & \parbox[t]{10cm}{ Service brake status switched to ON\\ Power Command set to 0\\ Train speed decreased to lower than 25 MPH  }\\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: March 24th}\\ \hline
+			Risks and Assumptions & Service brake will automatically override power command to 0W\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Repeat Base Case B but apply Emergency brakes}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 3 \\ \hline
+			Methods & Apply Emergency brakes and compute new velocity  \\ \hline
+			Inputs &  Emergency brakes engaged and "Start Test" button is pressed \\ \hline
+			Outputs & \parbox[t]{10cm}{ Emergency brake status switched to ON\\ Power Command set to 0\\ Train speed decreased to lower than 25 MPH\\ Train speed also lower than service brake test case  }\\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: March 24th}\\ \hline
+			Risks and Assumptions & Service brake will automatically override power command to 0W\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Activate engine failure on moving train}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Toggle engine failure status to on  \\ \hline
+			Inputs &  Radio button for engine failure set to ON \\ \hline
+			Outputs & \parbox[t]{10cm}{ Engine Failure status switched to ON\\ Power Command set to 0\\ Train speed decreased to 0 MPH\\ Service brake status set to ON  }\\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: April 5th}\\ \hline
+			Risks and Assumptions & Service brake will automatically activate on failure\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Activate Signal failure on moving train}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Toggle signal failure status to on  \\ \hline
+			Inputs &  Radio button for signal failure set to ON \\ \hline
+			Outputs & \parbox[t]{10cm}{ Signal Failure status switched to ON\\ Power Command set to 0\\ Train speed decreased to 0 MPH\\ Service brake status set to ON  }\\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: April 5th}\\ \hline
+			Risks and Assumptions & Service brake will automatically activate on failure\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Activate Brake failure on moving train}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Toggle brake failure status to on  \\ \hline
+			Inputs &  Radio button for brake failure set to ON \\ \hline
+			Outputs & \parbox[t]{10cm}{ Brake Failure status switched to ON\\ Power Command set to 0\\ Train speed decreased to 0 MPH\\ Emergency brake status set to ON  }\\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: April 5th}\\ \hline
+			Risks and Assumptions & Emergency brake will activate on failure in service brakes\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Open doors on moving train}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Open left side doors on moving train  \\ \hline
+			Inputs &  Radio button for left doors set to OPEN \\ \hline
+			Outputs & Invalid action pop-up\\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: April 5th}\\ \hline
+			Risks and Assumptions & Doors will not open while train is in motion\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Open doors on non-moving train}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Open left side doors on non-moving train  \\ \hline
+			Inputs &  Radio button for left doors set to OPEN \\ \hline
+			Outputs & Left door status on Train model changes to OPEN\\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: April 5th}\\ \hline
+			Risks and Assumptions &\parbox[t]{10cm}{ Left and Right doors can both be opened at the same time \\ but opening is independent}\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Power Command applied to non-moving train with open doors}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Open left door, then apply power of 100kW  \\ \hline
+			Inputs &  \parbox[t]{10cm}{Radio button for left doors set to OPEN\\ Power command Set to 100kW\\ "Start Test" button pressed }\\ \hline
+			Outputs & Error message pop-up\\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: April 5th}\\ \hline
+			Risks and Assumptions & Train can not move if doors are open\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Power Command applied to non-moving train with Failure status}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Engage any failure, then apply power of 100kW  \\ \hline
+			Inputs &  \parbox[t]{10cm}{Radio button for Engine Failure set to ON\\ Power command Set to 100kW\\ "Start Test" button pressed }\\ \hline
+			Outputs & Error message pop-up\\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: April 5th}\\ \hline
+			Risks and Assumptions & Train can not move if failures are present\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Power Command applied to non-moving train with engaged brakes}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Engage either brake, then apply power of 100kW  \\ \hline
+			Inputs &  \parbox[t]{10cm}{Service Brakes engaged\\ Power command Set to 100kW\\ "Start Test" button pressed }\\ \hline
+			Outputs & Error message pop-up\\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: April 5th}\\ \hline
+			Risks and Assumptions & Train can not move if brakes are engaged\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Interior Light Test}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 1 \\ \hline
+			Methods & Lights turned on in test console  \\ \hline
+			Inputs &  \parbox[t]{10cm}{Radio button for lights set to ON\\ "Start Test" button pressed }\\ \hline
+			Outputs &Interior Lights set to ON \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: April 5th}\\ \hline
+			Risks and Assumptions & Lights can be on at any time.\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Train Temperature set to 60F Thermostat set to 65F}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 1 \\ \hline
+			Methods & Set intial temp to 60F, Set Thermostat to 65F  \\ \hline
+			Inputs &  \parbox[t]{10cm}{Train Temperature set to 60F\\ Thermostat set to 65F\\ "Start Test" button pressed }\\ \hline
+			Outputs &\parbox[t]{10cm}{ Heater set to ON\\AC set to OFF\\ Temperature increases to 65F} \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: April 5th}\\ \hline
+			Risks and Assumptions & Heater and AC can not be on at the same time.\\ \hline
+		\end{tabular}
+	\end{table}
+
+
+
+	\begin{table}[H]
+		\centering
+		\caption{Train Temperature set to 60F Thermostat set to 60F}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 1 \\ \hline
+			Methods & Set intial temp to 60F, Set Thermostat to 60F  \\ \hline
+			Inputs &  \parbox[t]{10cm}{Train Temperature set to 60F\\ Thermostat set to 60F\\ "Start Test" button pressed }\\ \hline
+			Outputs &\parbox[t]{10cm}{ Heater set to OFF\\AC set to OFF\\ Temperature does not change} \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: April 5th}\\ \hline
+			Risks and Assumptions & \parbox[t]{10cm}{Temperature can only change if heat or AC is on\\ No heat loss due to windows open}\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Train Temperature set to 60F Thermostat set to 55F}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 1 \\ \hline
+			Methods & Set intial temp to 60F, Set Thermostat to 55F  \\ \hline
+			Inputs &  \parbox[t]{10cm}{Train Temperature set to 60F\\ Thermostat set to 55F\\ "Start Test" button pressed }\\ \hline
+			Outputs &\parbox[t]{10cm}{ Heater set to OFF\\AC set to ON\\ Temperature decreases to 55F} \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: April 5th}\\ \hline
+			Risks and Assumptions & Heater and AC can not be on at the same time.\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Integration test With train Controller}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 1 \\ \hline
+			Methods & Repeat above tests but receiving values from Train Controller \\ \hline
+			Inputs &  Power Command, Utility statuses, Brake Statuses\\ \hline
+			Outputs & Outputs should reflect similar results as the test cases above \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of integration with train controller.\\ Expected date: April 7th}\\ \hline
+			Risks and Assumptions & \parbox[t]{10cm}{Whether inputs come from train controller or test console results should be the same}\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Integration test With Track Model}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 1 \\ \hline
+			Methods & Read in values for current block's grade for calculations \\ \hline
+			Inputs & Request for current grade to track Model\\ \hline
+			Outputs & If successful a grade will be returned to train model \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of integration with Track Model.\\ Expected date: April 7th}\\ \hline
+			Risks and Assumptions & Track model will send grade upon entrance to block\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Integration test With MBO}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 1 \\ \hline
+			Methods & Testing communication between MBo and Train model \\ \hline
+			Inputs & Request for current location from MBO\\ \hline
+			Outputs & If successful a location will be sent to the MBO \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of integration with MBO.\\ Expected date: April 7th}\\ \hline
+			Risks and Assumptions & Train model will periodically update MBO with location\\ \hline
+		\end{tabular}
+	\end{table}
 \subsection{Integration Tests}
 
 \section{Train Controller Test Plan}

@@ -32,9 +32,11 @@ public class Block implements Comparable<Block>{
 	public Block switchNextBlockForward;
 	public Block nextBlockBackward;
 	public Block rootBlock;
+	public Boolean lightState;
 	public TrackModel superTrackModel;
 	public Boolean maintenence;
-
+	public Boolean hasLight;
+	
 	public Block(TrackModel track, Boolean occupied, Boolean isUnderground, Double blockLen, Double blockGrade, Double elevation, Double speedLimit,
 				String stationName, String arrowDirection, String blockLine, String blockSection, Integer blockNum, Boolean hasSwitch, String switchBlock){
 
@@ -49,9 +51,11 @@ public class Block implements Comparable<Block>{
 		this.blockNum = blockNum;
 		this.switchBlock = switchBlock;
 		this.hasSwitch = hasSwitch;
+		this.hasLight = hasSwitch;
 		this.blockLine = blockLine;
 		this.blockSection = blockSection;
 
+		this.lightState=true;
 		this.occupied = false;
 		this.trackHeaters = false;
 		this.signals = false;
@@ -70,6 +74,25 @@ public class Block implements Comparable<Block>{
 
 	public Boolean getBroken(){
 		return this.brokenRail;
+	}
+
+	/**
+	* Setter for the Wayside Controller module to set a light state based upon an Integer
+	* Maps 1 to true, 0 to false based upon the track internal convention.
+	* @param setInt integer for the switch state to be set to
+	* @todo Add strict value assertions that setInt is either 0 or 1 
+	*/
+	public Boolean setLightState(Integer setInt){
+		//condition check for having a switch
+		assert(this.lightState != null);
+
+		if(setInt.equals(1)){
+			this.lightState = true;
+		}
+		else if(setInt.equals(0)){
+			this.lightState = false;
+		}
+		return this.lightState;
 	}
 
 	/**

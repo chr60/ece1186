@@ -1,0 +1,38 @@
+@startuml
+actor User #white
+skinparam monochrome true
+
+' The only difference between actor
+'and participant is the drawing
+participant TrackModel
+/' You can also declare:
+   participant L as "I have a really\nlong name"  #99FF99
+  '/
+
+User->TrackModel: new TrackModel(fNames)
+TrackModel->track: readCSV(fNames)
+track->readCSV: readCSV(fNames)
+note left: initialize block
+readCSV->readCSV: new Block(args) myBlock
+readCSV->track: trackList.add(block)
+|||
+|||
+readCSV->readCSV
+note right: if (hasStation)
+readCSV->track: trackList.add(new Station())
+
+readCSV->readCSV
+note right: if (hasSwitch)
+readCSV->track: addSwitchRoot(switch, myBlock)
+readCSV->readCSV
+note right: if (hasSwitchLeaf)
+readCSV->track: addSwitchLeaf(switch, myBlock)
+|||
+|||
+|||
+readCSV->track: this.linkBlocks()
+readCSV->track: this.handleSwitches()
+note right: Build associated elements
+readCSV->track: this.buildStationHostMap()
+readCSV->track: this.buildBlockStationMap()
+@enduml
