@@ -1,0 +1,190 @@
+\hypertarget{classTrackModelTest_1_1RedlineTest}{}\section{Track\+Model\+Test.\+Redline\+Test Class Reference}
+\label{classTrackModelTest_1_1RedlineTest}\index{Track\+Model\+Test.\+Redline\+Test@{Track\+Model\+Test.\+Redline\+Test}}
+
+
+Collaboration diagram for Track\+Model\+Test.\+Redline\+Test\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classTrackModelTest_1_1RedlineTest__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Package Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classTrackModelTest_1_1RedlineTest_a497f6628deb6bfcdacf364347d91a047}{init} ()
+\item 
+void \hyperlink{classTrackModelTest_1_1RedlineTest_ae4dcd25f8b5aa3ad7b8dc6ba5653fdab}{test\+Reading} ()
+\begin{DoxyCompactList}\small\item\em Test for proper station names reading. \end{DoxyCompactList}\item 
+void \hyperlink{classTrackModelTest_1_1RedlineTest_a44cf11f1134dd573bb7027a345fdb183}{test\+Switch\+Root} ()
+\begin{DoxyCompactList}\small\item\em Test proper block assignment for switch roots. \end{DoxyCompactList}\item 
+void \hyperlink{classTrackModelTest_1_1RedlineTest_a8f55cb6090b37b93a36c5af26ea04ed0}{test\+Switchleaf} ()
+\begin{DoxyCompactList}\small\item\em Test proper leaf assignments for block on the red line. \end{DoxyCompactList}\item 
+void \hyperlink{classTrackModelTest_1_1RedlineTest_a80a489082558d70feb6bcd9e538b259e}{test\+Switch\+Next\+Block\+Forward} ()
+\begin{DoxyCompactList}\small\item\em Check proper funcitonality of next\+Block\+Forward by switch state on the red line. \end{DoxyCompactList}\item 
+void \hyperlink{classTrackModelTest_1_1RedlineTest_aa09b645d2f4de7e88b8e05e82368a6d6}{test\+Next\+Block\+Backward\+Default\+Switch} ()
+\begin{DoxyCompactList}\small\item\em Check testing of next block backward on the redline. \end{DoxyCompactList}\item 
+void \hyperlink{classTrackModelTest_1_1RedlineTest_a2970dbaa3e66e82f5e1c6881dae59112}{test\+Next\+Block\+Backward\+False\+Switch} ()
+\begin{DoxyCompactList}\small\item\em Check testing of next block backwards on the redline. \end{DoxyCompactList}\item 
+void \hyperlink{classTrackModelTest_1_1RedlineTest_a16aa0b2253a86b3b4859ebadbbfc59bf}{test\+Block\+Station\+Map} ()
+\begin{DoxyCompactList}\small\item\em Check the functionality of the external block\+Station map for use in the train model and train controller. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static String \mbox{[}$\,$\mbox{]} \hyperlink{classTrackModelTest_1_1RedlineTest_af522bafd02e8cc4d845420fd692d3d9b}{station\+Names}
+\item 
+static Integer \mbox{[}$\,$\mbox{]} \hyperlink{classTrackModelTest_1_1RedlineTest_af6c0d104a6e4c99a443aa92e20b1bc1c}{root\+Blocks\+Num} =\{16,27,33,38,44,52,9\}
+\item 
+static Integer \mbox{[}$\,$\mbox{]} \hyperlink{classTrackModelTest_1_1RedlineTest_a15b5dcba3d2f7800a07015dfa3a3c015}{expected\+Station\+Block\+Nums} =\{7,9,16,21,25,35,45,48,60\}
+\item 
+static Tree\+Set$<$ Integer $>$ \hyperlink{classTrackModelTest_1_1RedlineTest_a1e7bd5c2798ce063604fc6738103b5e0}{test\+Blocks\+Root} = new Tree\+Set$<$$>$(Arrays.\+as\+List(\hyperlink{classTrackModelTest_1_1RedlineTest_af6c0d104a6e4c99a443aa92e20b1bc1c}{root\+Blocks\+Num}))
+\item 
+static Tree\+Set$<$ String $>$ \hyperlink{classTrackModelTest_1_1RedlineTest_a587f6d52dfee441de79812fededfa84b}{test\+Names\+Set} = new Tree\+Set$<$$>$(Arrays.\+as\+List(\hyperlink{classTrackModelTest_1_1RedlineTest_af522bafd02e8cc4d845420fd692d3d9b}{station\+Names}))
+\item 
+static Tree\+Set$<$ Integer $>$ \hyperlink{classTrackModelTest_1_1RedlineTest_a8a94587a81798044a60016e29a09cd72}{test\+Expected\+Station\+Block\+Nums} = new Tree\+Set$<$$>$(Arrays.\+as\+List(\hyperlink{classTrackModelTest_1_1RedlineTest_a15b5dcba3d2f7800a07015dfa3a3c015}{expected\+Station\+Block\+Nums}))
+\item 
+static \hyperlink{classTrackModel_1_1TrackModel}{Track\+Model} \hyperlink{classTrackModelTest_1_1RedlineTest_afbab32bc166ca48e7544b8c3908f95e3}{track}
+\item 
+static String \mbox{[}$\,$\mbox{]} \hyperlink{classTrackModelTest_1_1RedlineTest_a9a9887d39f3d19ee5daf4de70339ba33}{f\+Names} = \{\char`\"{}src/test/resources/redline.\+csv\char`\"{}\}
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classTrackModelTest_1_1RedlineTest_a497f6628deb6bfcdacf364347d91a047}\label{classTrackModelTest_1_1RedlineTest_a497f6628deb6bfcdacf364347d91a047}} 
+\index{Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}!init@{init}}
+\index{init@{init}!Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void Track\+Model\+Test.\+Redline\+Test.\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [package]}}
+
+\mbox{\Hypertarget{classTrackModelTest_1_1RedlineTest_a16aa0b2253a86b3b4859ebadbbfc59bf}\label{classTrackModelTest_1_1RedlineTest_a16aa0b2253a86b3b4859ebadbbfc59bf}} 
+\index{Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}!test\+Block\+Station\+Map@{test\+Block\+Station\+Map}}
+\index{test\+Block\+Station\+Map@{test\+Block\+Station\+Map}!Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}}
+\subsubsection{\texorpdfstring{test\+Block\+Station\+Map()}{testBlockStationMap()}}
+{\footnotesize\ttfamily void Track\+Model\+Test.\+Redline\+Test.\+test\+Block\+Station\+Map (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [package]}}
+
+
+
+Check the functionality of the external block\+Station map for use in the train model and train controller. 
+
+\mbox{\Hypertarget{classTrackModelTest_1_1RedlineTest_aa09b645d2f4de7e88b8e05e82368a6d6}\label{classTrackModelTest_1_1RedlineTest_aa09b645d2f4de7e88b8e05e82368a6d6}} 
+\index{Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}!test\+Next\+Block\+Backward\+Default\+Switch@{test\+Next\+Block\+Backward\+Default\+Switch}}
+\index{test\+Next\+Block\+Backward\+Default\+Switch@{test\+Next\+Block\+Backward\+Default\+Switch}!Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}}
+\subsubsection{\texorpdfstring{test\+Next\+Block\+Backward\+Default\+Switch()}{testNextBlockBackwardDefaultSwitch()}}
+{\footnotesize\ttfamily void Track\+Model\+Test.\+Redline\+Test.\+test\+Next\+Block\+Backward\+Default\+Switch (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [package]}}
+
+
+
+Check testing of next block backward on the redline. 
+
+For a \char`\"{}true\char`\"{} (default switch state), the nex\+Block\+Backward should return the root\+Block for the lower indexed block. \mbox{\Hypertarget{classTrackModelTest_1_1RedlineTest_a2970dbaa3e66e82f5e1c6881dae59112}\label{classTrackModelTest_1_1RedlineTest_a2970dbaa3e66e82f5e1c6881dae59112}} 
+\index{Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}!test\+Next\+Block\+Backward\+False\+Switch@{test\+Next\+Block\+Backward\+False\+Switch}}
+\index{test\+Next\+Block\+Backward\+False\+Switch@{test\+Next\+Block\+Backward\+False\+Switch}!Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}}
+\subsubsection{\texorpdfstring{test\+Next\+Block\+Backward\+False\+Switch()}{testNextBlockBackwardFalseSwitch()}}
+{\footnotesize\ttfamily void Track\+Model\+Test.\+Redline\+Test.\+test\+Next\+Block\+Backward\+False\+Switch (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [package]}}
+
+
+
+Check testing of next block backwards on the redline. 
+
+For a \char`\"{}false\char`\"{} (non-\/default switch state), the next\+Block\+Backward should return the root\+Block for the higher indexed block. \mbox{\Hypertarget{classTrackModelTest_1_1RedlineTest_ae4dcd25f8b5aa3ad7b8dc6ba5653fdab}\label{classTrackModelTest_1_1RedlineTest_ae4dcd25f8b5aa3ad7b8dc6ba5653fdab}} 
+\index{Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}!test\+Reading@{test\+Reading}}
+\index{test\+Reading@{test\+Reading}!Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}}
+\subsubsection{\texorpdfstring{test\+Reading()}{testReading()}}
+{\footnotesize\ttfamily void Track\+Model\+Test.\+Redline\+Test.\+test\+Reading (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [package]}}
+
+
+
+Test for proper station names reading. 
+
+\mbox{\Hypertarget{classTrackModelTest_1_1RedlineTest_a8f55cb6090b37b93a36c5af26ea04ed0}\label{classTrackModelTest_1_1RedlineTest_a8f55cb6090b37b93a36c5af26ea04ed0}} 
+\index{Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}!test\+Switchleaf@{test\+Switchleaf}}
+\index{test\+Switchleaf@{test\+Switchleaf}!Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}}
+\subsubsection{\texorpdfstring{test\+Switchleaf()}{testSwitchleaf()}}
+{\footnotesize\ttfamily void Track\+Model\+Test.\+Redline\+Test.\+test\+Switchleaf (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [package]}}
+
+
+
+Test proper leaf assignments for block on the red line. 
+
+\mbox{\Hypertarget{classTrackModelTest_1_1RedlineTest_a80a489082558d70feb6bcd9e538b259e}\label{classTrackModelTest_1_1RedlineTest_a80a489082558d70feb6bcd9e538b259e}} 
+\index{Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}!test\+Switch\+Next\+Block\+Forward@{test\+Switch\+Next\+Block\+Forward}}
+\index{test\+Switch\+Next\+Block\+Forward@{test\+Switch\+Next\+Block\+Forward}!Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}}
+\subsubsection{\texorpdfstring{test\+Switch\+Next\+Block\+Forward()}{testSwitchNextBlockForward()}}
+{\footnotesize\ttfamily void Track\+Model\+Test.\+Redline\+Test.\+test\+Switch\+Next\+Block\+Forward (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [package]}}
+
+
+
+Check proper funcitonality of next\+Block\+Forward by switch state on the red line. 
+
+\mbox{\Hypertarget{classTrackModelTest_1_1RedlineTest_a44cf11f1134dd573bb7027a345fdb183}\label{classTrackModelTest_1_1RedlineTest_a44cf11f1134dd573bb7027a345fdb183}} 
+\index{Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}!test\+Switch\+Root@{test\+Switch\+Root}}
+\index{test\+Switch\+Root@{test\+Switch\+Root}!Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}}
+\subsubsection{\texorpdfstring{test\+Switch\+Root()}{testSwitchRoot()}}
+{\footnotesize\ttfamily void Track\+Model\+Test.\+Redline\+Test.\+test\+Switch\+Root (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [package]}}
+
+
+
+Test proper block assignment for switch roots. 
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classTrackModelTest_1_1RedlineTest_a15b5dcba3d2f7800a07015dfa3a3c015}\label{classTrackModelTest_1_1RedlineTest_a15b5dcba3d2f7800a07015dfa3a3c015}} 
+\index{Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}!expected\+Station\+Block\+Nums@{expected\+Station\+Block\+Nums}}
+\index{expected\+Station\+Block\+Nums@{expected\+Station\+Block\+Nums}!Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}}
+\subsubsection{\texorpdfstring{expected\+Station\+Block\+Nums}{expectedStationBlockNums}}
+{\footnotesize\ttfamily Integer \mbox{[}$\,$\mbox{]} Track\+Model\+Test.\+Redline\+Test.\+expected\+Station\+Block\+Nums =\{7,9,16,21,25,35,45,48,60\}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrackModelTest_1_1RedlineTest_a9a9887d39f3d19ee5daf4de70339ba33}\label{classTrackModelTest_1_1RedlineTest_a9a9887d39f3d19ee5daf4de70339ba33}} 
+\index{Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}!f\+Names@{f\+Names}}
+\index{f\+Names@{f\+Names}!Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}}
+\subsubsection{\texorpdfstring{f\+Names}{fNames}}
+{\footnotesize\ttfamily String \mbox{[}$\,$\mbox{]} Track\+Model\+Test.\+Redline\+Test.\+f\+Names = \{\char`\"{}src/test/resources/redline.\+csv\char`\"{}\}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrackModelTest_1_1RedlineTest_af6c0d104a6e4c99a443aa92e20b1bc1c}\label{classTrackModelTest_1_1RedlineTest_af6c0d104a6e4c99a443aa92e20b1bc1c}} 
+\index{Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}!root\+Blocks\+Num@{root\+Blocks\+Num}}
+\index{root\+Blocks\+Num@{root\+Blocks\+Num}!Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}}
+\subsubsection{\texorpdfstring{root\+Blocks\+Num}{rootBlocksNum}}
+{\footnotesize\ttfamily Integer \mbox{[}$\,$\mbox{]} Track\+Model\+Test.\+Redline\+Test.\+root\+Blocks\+Num =\{16,27,33,38,44,52,9\}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrackModelTest_1_1RedlineTest_af522bafd02e8cc4d845420fd692d3d9b}\label{classTrackModelTest_1_1RedlineTest_af522bafd02e8cc4d845420fd692d3d9b}} 
+\index{Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}!station\+Names@{station\+Names}}
+\index{station\+Names@{station\+Names}!Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}}
+\subsubsection{\texorpdfstring{station\+Names}{stationNames}}
+{\footnotesize\ttfamily String \mbox{[}$\,$\mbox{]} Track\+Model\+Test.\+Redline\+Test.\+station\+Names\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=\{\textcolor{stringliteral}{"YARD"},\textcolor{stringliteral}{"SHADYSIDE"},\textcolor{stringliteral}{"HERRON AVE"},\textcolor{stringliteral}{"SWISSVILLE"},\textcolor{stringliteral}{"PENN STATION"},
+                                \textcolor{stringliteral}{"STEEL PLAZA"},\textcolor{stringliteral}{"FIRST AVE"},\textcolor{stringliteral}{"STATION SQUARE"},\textcolor{stringliteral}{"SOUTH HILLS JUNCTION"},\textcolor{stringliteral}{"YARD"}\}
+\end{DoxyCode}
+\mbox{\Hypertarget{classTrackModelTest_1_1RedlineTest_a1e7bd5c2798ce063604fc6738103b5e0}\label{classTrackModelTest_1_1RedlineTest_a1e7bd5c2798ce063604fc6738103b5e0}} 
+\index{Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}!test\+Blocks\+Root@{test\+Blocks\+Root}}
+\index{test\+Blocks\+Root@{test\+Blocks\+Root}!Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}}
+\subsubsection{\texorpdfstring{test\+Blocks\+Root}{testBlocksRoot}}
+{\footnotesize\ttfamily Tree\+Set$<$Integer$>$ Track\+Model\+Test.\+Redline\+Test.\+test\+Blocks\+Root = new Tree\+Set$<$$>$(Arrays.\+as\+List(\hyperlink{classTrackModelTest_1_1RedlineTest_af6c0d104a6e4c99a443aa92e20b1bc1c}{root\+Blocks\+Num}))\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrackModelTest_1_1RedlineTest_a8a94587a81798044a60016e29a09cd72}\label{classTrackModelTest_1_1RedlineTest_a8a94587a81798044a60016e29a09cd72}} 
+\index{Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}!test\+Expected\+Station\+Block\+Nums@{test\+Expected\+Station\+Block\+Nums}}
+\index{test\+Expected\+Station\+Block\+Nums@{test\+Expected\+Station\+Block\+Nums}!Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}}
+\subsubsection{\texorpdfstring{test\+Expected\+Station\+Block\+Nums}{testExpectedStationBlockNums}}
+{\footnotesize\ttfamily Tree\+Set$<$Integer$>$ Track\+Model\+Test.\+Redline\+Test.\+test\+Expected\+Station\+Block\+Nums = new Tree\+Set$<$$>$(Arrays.\+as\+List(\hyperlink{classTrackModelTest_1_1RedlineTest_a15b5dcba3d2f7800a07015dfa3a3c015}{expected\+Station\+Block\+Nums}))\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrackModelTest_1_1RedlineTest_a587f6d52dfee441de79812fededfa84b}\label{classTrackModelTest_1_1RedlineTest_a587f6d52dfee441de79812fededfa84b}} 
+\index{Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}!test\+Names\+Set@{test\+Names\+Set}}
+\index{test\+Names\+Set@{test\+Names\+Set}!Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}}
+\subsubsection{\texorpdfstring{test\+Names\+Set}{testNamesSet}}
+{\footnotesize\ttfamily Tree\+Set$<$String$>$ Track\+Model\+Test.\+Redline\+Test.\+test\+Names\+Set = new Tree\+Set$<$$>$(Arrays.\+as\+List(\hyperlink{classTrackModelTest_1_1RedlineTest_af522bafd02e8cc4d845420fd692d3d9b}{station\+Names}))\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrackModelTest_1_1RedlineTest_afbab32bc166ca48e7544b8c3908f95e3}\label{classTrackModelTest_1_1RedlineTest_afbab32bc166ca48e7544b8c3908f95e3}} 
+\index{Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}!track@{track}}
+\index{track@{track}!Track\+Model\+Test\+::\+Redline\+Test@{Track\+Model\+Test\+::\+Redline\+Test}}
+\subsubsection{\texorpdfstring{track}{track}}
+{\footnotesize\ttfamily \hyperlink{classTrackModel_1_1TrackModel}{Track\+Model} Track\+Model\+Test.\+Redline\+Test.\+track\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/test/java/\+Track\+Model\+Test/\hyperlink{RedlineTest_8java}{Redline\+Test.\+java}\end{DoxyCompactItemize}

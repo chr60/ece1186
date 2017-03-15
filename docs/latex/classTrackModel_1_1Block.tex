@@ -1,0 +1,573 @@
+\hypertarget{classTrackModel_1_1Block}{}\section{Track\+Model.\+Block Class Reference}
+\label{classTrackModel_1_1Block}\index{Track\+Model.\+Block@{Track\+Model.\+Block}}
+
+
+Inheritance diagram for Track\+Model.\+Block\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classTrackModel_1_1Block__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Track\+Model.\+Block\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classTrackModel_1_1Block__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classTrackModel_1_1Block_a016adcf378ac0c1738bd95a4db52f913}{Block} (\hyperlink{classTrackModel_1_1TrackModel}{Track\+Model} track, Boolean \hyperlink{classTrackModel_1_1Block_a000b5a3720b78b92062bbd2a9c560f6a}{occupied}, Boolean \hyperlink{classTrackModel_1_1Block_a3cb044acc87b68c2f7e482c2cdfdeab2}{is\+Underground}, Double \hyperlink{classTrackModel_1_1Block_a2272dc912ea46c59930f09258668a833}{block\+Len}, Double \hyperlink{classTrackModel_1_1Block_a445ba69829a748448595df9e048cc2ab}{block\+Grade}, Double elevation, Double \hyperlink{classTrackModel_1_1Block_a62ab3ddedf85055005dfdd4402716e65}{speed\+Limit}, String \hyperlink{classTrackModel_1_1Block_a178efb49178fd7418c6391ea3e35f106}{station\+Name}, String \hyperlink{classTrackModel_1_1Block_ad5c1ad3ac7452483c42dec413dbb63ab}{arrow\+Direction}, String \hyperlink{classTrackModel_1_1Block_a04e22a2597bed95ae3ed8f723b63de94}{block\+Line}, String \hyperlink{classTrackModel_1_1Block_a2adc620752945c54ae212bc4b6043975}{block\+Section}, Integer \hyperlink{classTrackModel_1_1Block_a429f329eb3c1e2ff40389df240f02b00}{block\+Num}, Boolean \hyperlink{classTrackModel_1_1Block_a1970e1588e5e0645096dc13094b640ff}{has\+Switch}, String \hyperlink{classTrackModel_1_1Block_a04565d6aa499ef51700e9e69d290e7e0}{switch\+Block})
+\item 
+Double \hyperlink{classTrackModel_1_1Block_af62e4fd52ba4f65098dd76ef8382fdde}{get\+Len} ()
+\begin{DoxyCompactList}\small\item\em Returns the length of a block object. \end{DoxyCompactList}\item 
+Boolean \hyperlink{classTrackModel_1_1Block_aa1ac9505793be31e681ef21dba05b85a}{get\+Broken} ()
+\item 
+Boolean \hyperlink{classTrackModel_1_1Block_ade3dc0b39ce6d111e7491443b052051e}{set\+Light\+State} (Integer set\+Int)
+\begin{DoxyCompactList}\small\item\em Setter for the Wayside Controller module to set a light state based upon an Integer Maps 1 to true, 0 to false based upon the track internal convention. \end{DoxyCompactList}\item 
+Boolean \hyperlink{classTrackModel_1_1Block_a5488f8e2329f780616c0189d31269a85}{get\+Open} ()
+\begin{DoxyCompactList}\small\item\em Returns if a track block is open or not based upon the state of the breakages of a block. \end{DoxyCompactList}\item 
+Boolean \hyperlink{classTrackModel_1_1Block_abd32beccef518c0e4622b2df1fd4ed54}{get\+Occupied} ()
+\begin{DoxyCompactList}\small\item\em Returns the occupied state of a given block object. \end{DoxyCompactList}\item 
+void \hyperlink{classTrackModel_1_1Block_a5a3c1477275fe3e3c7d0aaf4d7c32449}{set\+Occupied} ()
+\item 
+Double \hyperlink{classTrackModel_1_1Block_a68017a799915e4ef46455537ef41d124}{get\+Speed\+Limit} ()
+\begin{DoxyCompactList}\small\item\em Returns the speed limit of a given block. \end{DoxyCompactList}\item 
+Double \hyperlink{classTrackModel_1_1Block_a81c9de1ea89cce3046e9b6efc17871da}{get\+Elevation} ()
+\begin{DoxyCompactList}\small\item\em Returns the cumulative elevation of a given blcok. \end{DoxyCompactList}\item 
+Double \hyperlink{classTrackModel_1_1Block_ac33d34db48b02b47a035172af6025a7e}{get\+Grade} ()
+\begin{DoxyCompactList}\small\item\em Returns the grade of a given block. \end{DoxyCompactList}\item 
+Boolean \hyperlink{classTrackModel_1_1Block_a357ab105c5108e9656d10954fab85426}{get\+Circuit\+Failure} ()
+\item 
+Boolean \hyperlink{classTrackModel_1_1Block_abcfeb805be53d52f8034ba3eb629299d}{get\+Power\+Failure} ()
+\item 
+Boolean \hyperlink{classTrackModel_1_1Block_a8e946c966bec108e6540a6dc2321515e}{get\+Underground} ()
+\item 
+String \hyperlink{classTrackModel_1_1Block_a4fa53c36ff1ba06c6178dc651fd9bc4e}{get\+Station\+Name} ()
+\item 
+Boolean \hyperlink{classTrackModel_1_1Block_a43a18b38c61438d59621511020559b11}{get\+Track\+Heaters} ()
+\item 
+void \hyperlink{classTrackModel_1_1Block_a5b78735684cbae8d24cea8874f27e5bd}{set\+Next\+Block\+Forward} ()
+\item 
+void \hyperlink{classTrackModel_1_1Block_a01715a2edb54f2a6791f95e81e613f2b}{set\+Next\+Block\+Forward} (\hyperlink{classTrackModel_1_1Block}{Block} set\+Block)
+\item 
+Integer \hyperlink{classTrackModel_1_1Block_a715fbe2efb7d55f92eab33cb635a4a00}{get\+Block\+Num} ()
+\item 
+String \hyperlink{classTrackModel_1_1Block_a2733e908ed59561bcb58ada3dd6045ab}{get\+Block\+Section} ()
+\begin{DoxyCompactList}\small\item\em Returns the section a block is on. \end{DoxyCompactList}\item 
+String \hyperlink{classTrackModel_1_1Block_a6f5a001898b82c18e371aebeca433eec}{get\+Block\+Line} ()
+\begin{DoxyCompactList}\small\item\em Returns the line a block is on. \end{DoxyCompactList}\item 
+void \hyperlink{classTrackModel_1_1Block_a737780636e43298572855b15fc3b20d5}{set\+Next\+Block\+Forward} (\hyperlink{classTrackModel_1_1Block}{Block} low\+Block, \hyperlink{classTrackModel_1_1Block}{Block} high\+Block)
+\begin{DoxyCompactList}\small\item\em Setter for the next block forward in the condition for a switch is present. \end{DoxyCompactList}\item 
+void \hyperlink{classTrackModel_1_1Block_ad0364d9a5fb2741523cca7abd356d3e9}{set\+Next\+Block\+Backward} (\hyperlink{classTrackModel_1_1Block}{Block} set\+Block)
+\begin{DoxyCompactList}\small\item\em Sets the next block in the \char`\"{}reverse\char`\"{} direction. \end{DoxyCompactList}\item 
+void \hyperlink{classTrackModel_1_1Block_a07ebf377b8be2509705a1fbb5e48e98b}{set\+Root\+Block} (\hyperlink{classTrackModel_1_1Block}{Block} \hyperlink{classTrackModel_1_1Block_a400d119c96231f6cf5db4accbf48cb84}{root\+Block})
+\begin{DoxyCompactList}\small\item\em Sets the root block in the \char`\"{}reverse\char`\"{} direction to deal with switch conditions. \end{DoxyCompactList}\item 
+\hyperlink{classTrackModel_1_1Block}{Block} \hyperlink{classTrackModel_1_1Block_a5b41d49bee482917bbc5d3af78c25020}{next\+Block\+Forward} ()
+\begin{DoxyCompactList}\small\item\em Gets the next block forward along based upon the current switch state. \end{DoxyCompactList}\item 
+\hyperlink{classTrackModel_1_1Block}{Block} \hyperlink{classTrackModel_1_1Block_a0ea37da4be949e0734cd7c6db555013e}{next\+Block\+Backward} ()
+\item 
+Boolean \hyperlink{classTrackModel_1_1Block_aa206833e61700249e5905fe6e6126399}{set\+Switch\+State} (Integer set\+Int)
+\begin{DoxyCompactList}\small\item\em Setter for the Wayside Controller module to set a switch state based upon an Integer Maps 1 to true, 0 to false based upon the track internal convention. \end{DoxyCompactList}\item 
+\hyperlink{classTrackModel_1_1Station}{Station} \hyperlink{classTrackModel_1_1Block_ad01125a6c501452bf33320b01471a24a}{get\+Associated\+Station} ()
+\begin{DoxyCompactList}\small\item\em Returns the associated station of the block. \end{DoxyCompactList}\item 
+int \hyperlink{classTrackModel_1_1Block_a2b940992804680c1146a1fef8f55f7db}{compare\+To} (\hyperlink{classTrackModel_1_1Block}{Block} that\+Block)
+\begin{DoxyCompactList}\small\item\em Implements the comparable interface for blocks via the associalted block\+Num of a given block. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Double \hyperlink{classTrackModel_1_1Block_a2272dc912ea46c59930f09258668a833}{block\+Len}
+\item 
+Boolean \hyperlink{classTrackModel_1_1Block_a000b5a3720b78b92062bbd2a9c560f6a}{occupied}
+\item 
+Double \hyperlink{classTrackModel_1_1Block_a62ab3ddedf85055005dfdd4402716e65}{speed\+Limit}
+\item 
+Double \hyperlink{classTrackModel_1_1Block_a445ba69829a748448595df9e048cc2ab}{block\+Grade}
+\item 
+Double \hyperlink{classTrackModel_1_1Block_ab26ac3adf1ce690a6e187df65f730b0d}{block\+Elevation}
+\item 
+Boolean \hyperlink{classTrackModel_1_1Block_a7fd1ac5eadeb3dd29da9fab51c8c26f2}{signals}
+\item 
+Boolean \hyperlink{classTrackModel_1_1Block_a059c0f4f0b6f5d7b50deee6f13538bab}{broken\+Rail}
+\item 
+Boolean \hyperlink{classTrackModel_1_1Block_a90373dff7852d248a540bd9d9f0514cb}{circuit\+Failure}
+\item 
+Boolean \hyperlink{classTrackModel_1_1Block_a1c69717cb3818955e60763bc8f4dff8a}{power\+Failure}
+\item 
+Boolean \hyperlink{classTrackModel_1_1Block_afd3cf37d0f925e0440179716b2ad2730}{track\+Heaters}
+\item 
+String \hyperlink{classTrackModel_1_1Block_a178efb49178fd7418c6391ea3e35f106}{station\+Name}
+\item 
+Boolean \hyperlink{classTrackModel_1_1Block_a3cb044acc87b68c2f7e482c2cdfdeab2}{is\+Underground}
+\item 
+String \hyperlink{classTrackModel_1_1Block_ad5c1ad3ac7452483c42dec413dbb63ab}{arrow\+Direction}
+\item 
+Integer \hyperlink{classTrackModel_1_1Block_a429f329eb3c1e2ff40389df240f02b00}{block\+Num}
+\item 
+Boolean \hyperlink{classTrackModel_1_1Block_a5c2a0d414f6cca8552f476dd12e94d3f}{switch\+State}
+\item 
+String \hyperlink{classTrackModel_1_1Block_a04565d6aa499ef51700e9e69d290e7e0}{switch\+Block}
+\item 
+Boolean \hyperlink{classTrackModel_1_1Block_a1970e1588e5e0645096dc13094b640ff}{has\+Switch}
+\item 
+String \hyperlink{classTrackModel_1_1Block_a04e22a2597bed95ae3ed8f723b63de94}{block\+Line}
+\item 
+String \hyperlink{classTrackModel_1_1Block_a2adc620752945c54ae212bc4b6043975}{block\+Section}
+\item 
+\hyperlink{classTrackModel_1_1Block}{Block} \hyperlink{classTrackModel_1_1Block_acd730e762fcf625825d4939bc38b2672}{next\+Block\+Forward}
+\item 
+\hyperlink{classTrackModel_1_1Block}{Block} \hyperlink{classTrackModel_1_1Block_a8a7d15ff05ed0c3a56e34c27c06dd99a}{switch\+Next\+Block\+Forward}
+\item 
+\hyperlink{classTrackModel_1_1Block}{Block} \hyperlink{classTrackModel_1_1Block_a267092cfc33a1a5b06d61e605aa16da5}{next\+Block\+Backward}
+\item 
+\hyperlink{classTrackModel_1_1Block}{Block} \hyperlink{classTrackModel_1_1Block_a400d119c96231f6cf5db4accbf48cb84}{root\+Block}
+\item 
+Boolean \hyperlink{classTrackModel_1_1Block_ae2a73faa62ffb87e3a70e72c6bdec27d}{light\+State}
+\item 
+\hyperlink{classTrackModel_1_1TrackModel}{Track\+Model} \hyperlink{classTrackModel_1_1Block_a62ba712491f00e90cc279365a693f00f}{super\+Track\+Model}
+\item 
+Boolean \hyperlink{classTrackModel_1_1Block_a2a4f17aa957073179dd40a0fb5343fbc}{maintenence}
+\item 
+Boolean \hyperlink{classTrackModel_1_1Block_a1cfc614674d2e3ddc91aae595d8c2f83}{has\+Light}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classTrackModel_1_1Block_a016adcf378ac0c1738bd95a4db52f913}\label{classTrackModel_1_1Block_a016adcf378ac0c1738bd95a4db52f913}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!Block@{Block}}
+\index{Block@{Block}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{Block()}{Block()}}
+{\footnotesize\ttfamily Track\+Model.\+Block.\+Block (\begin{DoxyParamCaption}\item[{\hyperlink{classTrackModel_1_1TrackModel}{Track\+Model}}]{track,  }\item[{Boolean}]{occupied,  }\item[{Boolean}]{is\+Underground,  }\item[{Double}]{block\+Len,  }\item[{Double}]{block\+Grade,  }\item[{Double}]{elevation,  }\item[{Double}]{speed\+Limit,  }\item[{String}]{station\+Name,  }\item[{String}]{arrow\+Direction,  }\item[{String}]{block\+Line,  }\item[{String}]{block\+Section,  }\item[{Integer}]{block\+Num,  }\item[{Boolean}]{has\+Switch,  }\item[{String}]{switch\+Block }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classTrackModel_1_1Block_a2b940992804680c1146a1fef8f55f7db}\label{classTrackModel_1_1Block_a2b940992804680c1146a1fef8f55f7db}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!compare\+To@{compare\+To}}
+\index{compare\+To@{compare\+To}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{compare\+To()}{compareTo()}}
+{\footnotesize\ttfamily int Track\+Model.\+Block.\+compare\+To (\begin{DoxyParamCaption}\item[{\hyperlink{classTrackModel_1_1Block}{Block}}]{that\+Block }\end{DoxyParamCaption})}
+
+
+
+Implements the comparable interface for blocks via the associalted block\+Num of a given block. 
+
+At this time, this implementation does not verify that blocks are the same across lines. \mbox{\Hypertarget{classTrackModel_1_1Block_ad01125a6c501452bf33320b01471a24a}\label{classTrackModel_1_1Block_ad01125a6c501452bf33320b01471a24a}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!get\+Associated\+Station@{get\+Associated\+Station}}
+\index{get\+Associated\+Station@{get\+Associated\+Station}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{get\+Associated\+Station()}{getAssociatedStation()}}
+{\footnotesize\ttfamily \hyperlink{classTrackModel_1_1Station}{Station} Track\+Model.\+Block.\+get\+Associated\+Station (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the associated station of the block. 
+
+\begin{DoxyReturn}{Returns}
+the \hyperlink{classTrackModel_1_1Station}{Station} object of the associated block 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classTrackModel_1_1Block_a6f5a001898b82c18e371aebeca433eec}\label{classTrackModel_1_1Block_a6f5a001898b82c18e371aebeca433eec}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!get\+Block\+Line@{get\+Block\+Line}}
+\index{get\+Block\+Line@{get\+Block\+Line}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{get\+Block\+Line()}{getBlockLine()}}
+{\footnotesize\ttfamily String Track\+Model.\+Block.\+get\+Block\+Line (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the line a block is on. 
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a715fbe2efb7d55f92eab33cb635a4a00}\label{classTrackModel_1_1Block_a715fbe2efb7d55f92eab33cb635a4a00}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!get\+Block\+Num@{get\+Block\+Num}}
+\index{get\+Block\+Num@{get\+Block\+Num}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{get\+Block\+Num()}{getBlockNum()}}
+{\footnotesize\ttfamily Integer Track\+Model.\+Block.\+get\+Block\+Num (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a2733e908ed59561bcb58ada3dd6045ab}\label{classTrackModel_1_1Block_a2733e908ed59561bcb58ada3dd6045ab}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!get\+Block\+Section@{get\+Block\+Section}}
+\index{get\+Block\+Section@{get\+Block\+Section}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{get\+Block\+Section()}{getBlockSection()}}
+{\footnotesize\ttfamily String Track\+Model.\+Block.\+get\+Block\+Section (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the section a block is on. 
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_aa1ac9505793be31e681ef21dba05b85a}\label{classTrackModel_1_1Block_aa1ac9505793be31e681ef21dba05b85a}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!get\+Broken@{get\+Broken}}
+\index{get\+Broken@{get\+Broken}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{get\+Broken()}{getBroken()}}
+{\footnotesize\ttfamily Boolean Track\+Model.\+Block.\+get\+Broken (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a357ab105c5108e9656d10954fab85426}\label{classTrackModel_1_1Block_a357ab105c5108e9656d10954fab85426}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!get\+Circuit\+Failure@{get\+Circuit\+Failure}}
+\index{get\+Circuit\+Failure@{get\+Circuit\+Failure}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{get\+Circuit\+Failure()}{getCircuitFailure()}}
+{\footnotesize\ttfamily Boolean Track\+Model.\+Block.\+get\+Circuit\+Failure (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a81c9de1ea89cce3046e9b6efc17871da}\label{classTrackModel_1_1Block_a81c9de1ea89cce3046e9b6efc17871da}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!get\+Elevation@{get\+Elevation}}
+\index{get\+Elevation@{get\+Elevation}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{get\+Elevation()}{getElevation()}}
+{\footnotesize\ttfamily Double Track\+Model.\+Block.\+get\+Elevation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the cumulative elevation of a given blcok. 
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_ac33d34db48b02b47a035172af6025a7e}\label{classTrackModel_1_1Block_ac33d34db48b02b47a035172af6025a7e}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!get\+Grade@{get\+Grade}}
+\index{get\+Grade@{get\+Grade}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{get\+Grade()}{getGrade()}}
+{\footnotesize\ttfamily Double Track\+Model.\+Block.\+get\+Grade (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the grade of a given block. 
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_af62e4fd52ba4f65098dd76ef8382fdde}\label{classTrackModel_1_1Block_af62e4fd52ba4f65098dd76ef8382fdde}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!get\+Len@{get\+Len}}
+\index{get\+Len@{get\+Len}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{get\+Len()}{getLen()}}
+{\footnotesize\ttfamily Double Track\+Model.\+Block.\+get\+Len (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the length of a block object. 
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_abd32beccef518c0e4622b2df1fd4ed54}\label{classTrackModel_1_1Block_abd32beccef518c0e4622b2df1fd4ed54}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!get\+Occupied@{get\+Occupied}}
+\index{get\+Occupied@{get\+Occupied}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{get\+Occupied()}{getOccupied()}}
+{\footnotesize\ttfamily Boolean Track\+Model.\+Block.\+get\+Occupied (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the occupied state of a given block object. 
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a5488f8e2329f780616c0189d31269a85}\label{classTrackModel_1_1Block_a5488f8e2329f780616c0189d31269a85}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!get\+Open@{get\+Open}}
+\index{get\+Open@{get\+Open}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{get\+Open()}{getOpen()}}
+{\footnotesize\ttfamily Boolean Track\+Model.\+Block.\+get\+Open (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns if a track block is open or not based upon the state of the breakages of a block. 
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_abcfeb805be53d52f8034ba3eb629299d}\label{classTrackModel_1_1Block_abcfeb805be53d52f8034ba3eb629299d}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!get\+Power\+Failure@{get\+Power\+Failure}}
+\index{get\+Power\+Failure@{get\+Power\+Failure}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{get\+Power\+Failure()}{getPowerFailure()}}
+{\footnotesize\ttfamily Boolean Track\+Model.\+Block.\+get\+Power\+Failure (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a68017a799915e4ef46455537ef41d124}\label{classTrackModel_1_1Block_a68017a799915e4ef46455537ef41d124}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!get\+Speed\+Limit@{get\+Speed\+Limit}}
+\index{get\+Speed\+Limit@{get\+Speed\+Limit}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{get\+Speed\+Limit()}{getSpeedLimit()}}
+{\footnotesize\ttfamily Double Track\+Model.\+Block.\+get\+Speed\+Limit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the speed limit of a given block. 
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a4fa53c36ff1ba06c6178dc651fd9bc4e}\label{classTrackModel_1_1Block_a4fa53c36ff1ba06c6178dc651fd9bc4e}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!get\+Station\+Name@{get\+Station\+Name}}
+\index{get\+Station\+Name@{get\+Station\+Name}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{get\+Station\+Name()}{getStationName()}}
+{\footnotesize\ttfamily String Track\+Model.\+Block.\+get\+Station\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a43a18b38c61438d59621511020559b11}\label{classTrackModel_1_1Block_a43a18b38c61438d59621511020559b11}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!get\+Track\+Heaters@{get\+Track\+Heaters}}
+\index{get\+Track\+Heaters@{get\+Track\+Heaters}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{get\+Track\+Heaters()}{getTrackHeaters()}}
+{\footnotesize\ttfamily Boolean Track\+Model.\+Block.\+get\+Track\+Heaters (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a8e946c966bec108e6540a6dc2321515e}\label{classTrackModel_1_1Block_a8e946c966bec108e6540a6dc2321515e}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!get\+Underground@{get\+Underground}}
+\index{get\+Underground@{get\+Underground}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{get\+Underground()}{getUnderground()}}
+{\footnotesize\ttfamily Boolean Track\+Model.\+Block.\+get\+Underground (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a0ea37da4be949e0734cd7c6db555013e}\label{classTrackModel_1_1Block_a0ea37da4be949e0734cd7c6db555013e}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!next\+Block\+Backward@{next\+Block\+Backward}}
+\index{next\+Block\+Backward@{next\+Block\+Backward}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{next\+Block\+Backward()}{nextBlockBackward()}}
+{\footnotesize\ttfamily \hyperlink{classTrackModel_1_1Block}{Block} Track\+Model.\+Block.\+next\+Block\+Backward (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a5b41d49bee482917bbc5d3af78c25020}\label{classTrackModel_1_1Block_a5b41d49bee482917bbc5d3af78c25020}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!next\+Block\+Forward@{next\+Block\+Forward}}
+\index{next\+Block\+Forward@{next\+Block\+Forward}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{next\+Block\+Forward()}{nextBlockForward()}}
+{\footnotesize\ttfamily \hyperlink{classTrackModel_1_1Block}{Block} Track\+Model.\+Block.\+next\+Block\+Forward (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the next block forward along based upon the current switch state. 
+
+If there is no switch, it returns the next block \mbox{\Hypertarget{classTrackModel_1_1Block_ade3dc0b39ce6d111e7491443b052051e}\label{classTrackModel_1_1Block_ade3dc0b39ce6d111e7491443b052051e}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!set\+Light\+State@{set\+Light\+State}}
+\index{set\+Light\+State@{set\+Light\+State}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{set\+Light\+State()}{setLightState()}}
+{\footnotesize\ttfamily Boolean Track\+Model.\+Block.\+set\+Light\+State (\begin{DoxyParamCaption}\item[{Integer}]{set\+Int }\end{DoxyParamCaption})}
+
+
+
+Setter for the Wayside Controller module to set a light state based upon an Integer Maps 1 to true, 0 to false based upon the track internal convention. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em set\+Int} & integer for the switch state to be set to \\
+\hline
+\end{DoxyParams}
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000001}{Todo}]Add strict value assertions that set\+Int is either 0 or 1 \end{DoxyRefDesc}
+\mbox{\Hypertarget{classTrackModel_1_1Block_ad0364d9a5fb2741523cca7abd356d3e9}\label{classTrackModel_1_1Block_ad0364d9a5fb2741523cca7abd356d3e9}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!set\+Next\+Block\+Backward@{set\+Next\+Block\+Backward}}
+\index{set\+Next\+Block\+Backward@{set\+Next\+Block\+Backward}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{set\+Next\+Block\+Backward()}{setNextBlockBackward()}}
+{\footnotesize\ttfamily void Track\+Model.\+Block.\+set\+Next\+Block\+Backward (\begin{DoxyParamCaption}\item[{\hyperlink{classTrackModel_1_1Block}{Block}}]{set\+Block }\end{DoxyParamCaption})}
+
+
+
+Sets the next block in the \char`\"{}reverse\char`\"{} direction. 
+
+Does not handle switch conditions 
+\begin{DoxyParams}{Parameters}
+{\em set\+Block} & the block to set the default backwards block to \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTrackModel_1_1Block_a5b78735684cbae8d24cea8874f27e5bd}\label{classTrackModel_1_1Block_a5b78735684cbae8d24cea8874f27e5bd}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!set\+Next\+Block\+Forward@{set\+Next\+Block\+Forward}}
+\index{set\+Next\+Block\+Forward@{set\+Next\+Block\+Forward}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{set\+Next\+Block\+Forward()}{setNextBlockForward()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily void Track\+Model.\+Block.\+set\+Next\+Block\+Forward (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a01715a2edb54f2a6791f95e81e613f2b}\label{classTrackModel_1_1Block_a01715a2edb54f2a6791f95e81e613f2b}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!set\+Next\+Block\+Forward@{set\+Next\+Block\+Forward}}
+\index{set\+Next\+Block\+Forward@{set\+Next\+Block\+Forward}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{set\+Next\+Block\+Forward()}{setNextBlockForward()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily void Track\+Model.\+Block.\+set\+Next\+Block\+Forward (\begin{DoxyParamCaption}\item[{\hyperlink{classTrackModel_1_1Block}{Block}}]{set\+Block }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a737780636e43298572855b15fc3b20d5}\label{classTrackModel_1_1Block_a737780636e43298572855b15fc3b20d5}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!set\+Next\+Block\+Forward@{set\+Next\+Block\+Forward}}
+\index{set\+Next\+Block\+Forward@{set\+Next\+Block\+Forward}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{set\+Next\+Block\+Forward()}{setNextBlockForward()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily void Track\+Model.\+Block.\+set\+Next\+Block\+Forward (\begin{DoxyParamCaption}\item[{\hyperlink{classTrackModel_1_1Block}{Block}}]{low\+Block,  }\item[{\hyperlink{classTrackModel_1_1Block}{Block}}]{high\+Block }\end{DoxyParamCaption})}
+
+
+
+Setter for the next block forward in the condition for a switch is present. 
+
+By default, initializes the switch to the lower block (as determined by block\+Num) to be destination when the this.\+switch\+State = true \mbox{\Hypertarget{classTrackModel_1_1Block_a5a3c1477275fe3e3c7d0aaf4d7c32449}\label{classTrackModel_1_1Block_a5a3c1477275fe3e3c7d0aaf4d7c32449}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!set\+Occupied@{set\+Occupied}}
+\index{set\+Occupied@{set\+Occupied}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{set\+Occupied()}{setOccupied()}}
+{\footnotesize\ttfamily void Track\+Model.\+Block.\+set\+Occupied (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a07ebf377b8be2509705a1fbb5e48e98b}\label{classTrackModel_1_1Block_a07ebf377b8be2509705a1fbb5e48e98b}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!set\+Root\+Block@{set\+Root\+Block}}
+\index{set\+Root\+Block@{set\+Root\+Block}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{set\+Root\+Block()}{setRootBlock()}}
+{\footnotesize\ttfamily void Track\+Model.\+Block.\+set\+Root\+Block (\begin{DoxyParamCaption}\item[{\hyperlink{classTrackModel_1_1Block}{Block}}]{root\+Block }\end{DoxyParamCaption})}
+
+
+
+Sets the root block in the \char`\"{}reverse\char`\"{} direction to deal with switch conditions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em root\+Block} & the root block backwards of a switch block \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTrackModel_1_1Block_aa206833e61700249e5905fe6e6126399}\label{classTrackModel_1_1Block_aa206833e61700249e5905fe6e6126399}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!set\+Switch\+State@{set\+Switch\+State}}
+\index{set\+Switch\+State@{set\+Switch\+State}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{set\+Switch\+State()}{setSwitchState()}}
+{\footnotesize\ttfamily Boolean Track\+Model.\+Block.\+set\+Switch\+State (\begin{DoxyParamCaption}\item[{Integer}]{set\+Int }\end{DoxyParamCaption})}
+
+
+
+Setter for the Wayside Controller module to set a switch state based upon an Integer Maps 1 to true, 0 to false based upon the track internal convention. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em set\+Int} & integer for the switch state to be set to \\
+\hline
+\end{DoxyParams}
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000002}{Todo}]Add strict value assertions that set\+Int is either 0 or 1 \end{DoxyRefDesc}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classTrackModel_1_1Block_ad5c1ad3ac7452483c42dec413dbb63ab}\label{classTrackModel_1_1Block_ad5c1ad3ac7452483c42dec413dbb63ab}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!arrow\+Direction@{arrow\+Direction}}
+\index{arrow\+Direction@{arrow\+Direction}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{arrow\+Direction}{arrowDirection}}
+{\footnotesize\ttfamily String Track\+Model.\+Block.\+arrow\+Direction}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_ab26ac3adf1ce690a6e187df65f730b0d}\label{classTrackModel_1_1Block_ab26ac3adf1ce690a6e187df65f730b0d}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!block\+Elevation@{block\+Elevation}}
+\index{block\+Elevation@{block\+Elevation}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{block\+Elevation}{blockElevation}}
+{\footnotesize\ttfamily Double Track\+Model.\+Block.\+block\+Elevation}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a445ba69829a748448595df9e048cc2ab}\label{classTrackModel_1_1Block_a445ba69829a748448595df9e048cc2ab}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!block\+Grade@{block\+Grade}}
+\index{block\+Grade@{block\+Grade}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{block\+Grade}{blockGrade}}
+{\footnotesize\ttfamily Double Track\+Model.\+Block.\+block\+Grade}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a2272dc912ea46c59930f09258668a833}\label{classTrackModel_1_1Block_a2272dc912ea46c59930f09258668a833}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!block\+Len@{block\+Len}}
+\index{block\+Len@{block\+Len}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{block\+Len}{blockLen}}
+{\footnotesize\ttfamily Double Track\+Model.\+Block.\+block\+Len}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a04e22a2597bed95ae3ed8f723b63de94}\label{classTrackModel_1_1Block_a04e22a2597bed95ae3ed8f723b63de94}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!block\+Line@{block\+Line}}
+\index{block\+Line@{block\+Line}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{block\+Line}{blockLine}}
+{\footnotesize\ttfamily String Track\+Model.\+Block.\+block\+Line}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a429f329eb3c1e2ff40389df240f02b00}\label{classTrackModel_1_1Block_a429f329eb3c1e2ff40389df240f02b00}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!block\+Num@{block\+Num}}
+\index{block\+Num@{block\+Num}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{block\+Num}{blockNum}}
+{\footnotesize\ttfamily Integer Track\+Model.\+Block.\+block\+Num}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a2adc620752945c54ae212bc4b6043975}\label{classTrackModel_1_1Block_a2adc620752945c54ae212bc4b6043975}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!block\+Section@{block\+Section}}
+\index{block\+Section@{block\+Section}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{block\+Section}{blockSection}}
+{\footnotesize\ttfamily String Track\+Model.\+Block.\+block\+Section}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a059c0f4f0b6f5d7b50deee6f13538bab}\label{classTrackModel_1_1Block_a059c0f4f0b6f5d7b50deee6f13538bab}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!broken\+Rail@{broken\+Rail}}
+\index{broken\+Rail@{broken\+Rail}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{broken\+Rail}{brokenRail}}
+{\footnotesize\ttfamily Boolean Track\+Model.\+Block.\+broken\+Rail}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a90373dff7852d248a540bd9d9f0514cb}\label{classTrackModel_1_1Block_a90373dff7852d248a540bd9d9f0514cb}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!circuit\+Failure@{circuit\+Failure}}
+\index{circuit\+Failure@{circuit\+Failure}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{circuit\+Failure}{circuitFailure}}
+{\footnotesize\ttfamily Boolean Track\+Model.\+Block.\+circuit\+Failure}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a1cfc614674d2e3ddc91aae595d8c2f83}\label{classTrackModel_1_1Block_a1cfc614674d2e3ddc91aae595d8c2f83}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!has\+Light@{has\+Light}}
+\index{has\+Light@{has\+Light}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{has\+Light}{hasLight}}
+{\footnotesize\ttfamily Boolean Track\+Model.\+Block.\+has\+Light}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a1970e1588e5e0645096dc13094b640ff}\label{classTrackModel_1_1Block_a1970e1588e5e0645096dc13094b640ff}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!has\+Switch@{has\+Switch}}
+\index{has\+Switch@{has\+Switch}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{has\+Switch}{hasSwitch}}
+{\footnotesize\ttfamily Boolean Track\+Model.\+Block.\+has\+Switch}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a3cb044acc87b68c2f7e482c2cdfdeab2}\label{classTrackModel_1_1Block_a3cb044acc87b68c2f7e482c2cdfdeab2}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!is\+Underground@{is\+Underground}}
+\index{is\+Underground@{is\+Underground}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{is\+Underground}{isUnderground}}
+{\footnotesize\ttfamily Boolean Track\+Model.\+Block.\+is\+Underground}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_ae2a73faa62ffb87e3a70e72c6bdec27d}\label{classTrackModel_1_1Block_ae2a73faa62ffb87e3a70e72c6bdec27d}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!light\+State@{light\+State}}
+\index{light\+State@{light\+State}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{light\+State}{lightState}}
+{\footnotesize\ttfamily Boolean Track\+Model.\+Block.\+light\+State}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a2a4f17aa957073179dd40a0fb5343fbc}\label{classTrackModel_1_1Block_a2a4f17aa957073179dd40a0fb5343fbc}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!maintenence@{maintenence}}
+\index{maintenence@{maintenence}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{maintenence}{maintenence}}
+{\footnotesize\ttfamily Boolean Track\+Model.\+Block.\+maintenence}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a267092cfc33a1a5b06d61e605aa16da5}\label{classTrackModel_1_1Block_a267092cfc33a1a5b06d61e605aa16da5}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!next\+Block\+Backward@{next\+Block\+Backward}}
+\index{next\+Block\+Backward@{next\+Block\+Backward}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{next\+Block\+Backward}{nextBlockBackward}}
+{\footnotesize\ttfamily \hyperlink{classTrackModel_1_1Block}{Block} Track\+Model.\+Block.\+next\+Block\+Backward}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_acd730e762fcf625825d4939bc38b2672}\label{classTrackModel_1_1Block_acd730e762fcf625825d4939bc38b2672}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!next\+Block\+Forward@{next\+Block\+Forward}}
+\index{next\+Block\+Forward@{next\+Block\+Forward}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{next\+Block\+Forward}{nextBlockForward}}
+{\footnotesize\ttfamily \hyperlink{classTrackModel_1_1Block}{Block} Track\+Model.\+Block.\+next\+Block\+Forward}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a000b5a3720b78b92062bbd2a9c560f6a}\label{classTrackModel_1_1Block_a000b5a3720b78b92062bbd2a9c560f6a}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!occupied@{occupied}}
+\index{occupied@{occupied}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{occupied}{occupied}}
+{\footnotesize\ttfamily Boolean Track\+Model.\+Block.\+occupied}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a1c69717cb3818955e60763bc8f4dff8a}\label{classTrackModel_1_1Block_a1c69717cb3818955e60763bc8f4dff8a}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!power\+Failure@{power\+Failure}}
+\index{power\+Failure@{power\+Failure}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{power\+Failure}{powerFailure}}
+{\footnotesize\ttfamily Boolean Track\+Model.\+Block.\+power\+Failure}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a400d119c96231f6cf5db4accbf48cb84}\label{classTrackModel_1_1Block_a400d119c96231f6cf5db4accbf48cb84}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!root\+Block@{root\+Block}}
+\index{root\+Block@{root\+Block}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{root\+Block}{rootBlock}}
+{\footnotesize\ttfamily \hyperlink{classTrackModel_1_1Block}{Block} Track\+Model.\+Block.\+root\+Block}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a7fd1ac5eadeb3dd29da9fab51c8c26f2}\label{classTrackModel_1_1Block_a7fd1ac5eadeb3dd29da9fab51c8c26f2}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!signals@{signals}}
+\index{signals@{signals}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{signals}{signals}}
+{\footnotesize\ttfamily Boolean Track\+Model.\+Block.\+signals}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a62ab3ddedf85055005dfdd4402716e65}\label{classTrackModel_1_1Block_a62ab3ddedf85055005dfdd4402716e65}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!speed\+Limit@{speed\+Limit}}
+\index{speed\+Limit@{speed\+Limit}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{speed\+Limit}{speedLimit}}
+{\footnotesize\ttfamily Double Track\+Model.\+Block.\+speed\+Limit}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a178efb49178fd7418c6391ea3e35f106}\label{classTrackModel_1_1Block_a178efb49178fd7418c6391ea3e35f106}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!station\+Name@{station\+Name}}
+\index{station\+Name@{station\+Name}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{station\+Name}{stationName}}
+{\footnotesize\ttfamily String Track\+Model.\+Block.\+station\+Name}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a62ba712491f00e90cc279365a693f00f}\label{classTrackModel_1_1Block_a62ba712491f00e90cc279365a693f00f}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!super\+Track\+Model@{super\+Track\+Model}}
+\index{super\+Track\+Model@{super\+Track\+Model}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{super\+Track\+Model}{superTrackModel}}
+{\footnotesize\ttfamily \hyperlink{classTrackModel_1_1TrackModel}{Track\+Model} Track\+Model.\+Block.\+super\+Track\+Model}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a04565d6aa499ef51700e9e69d290e7e0}\label{classTrackModel_1_1Block_a04565d6aa499ef51700e9e69d290e7e0}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!switch\+Block@{switch\+Block}}
+\index{switch\+Block@{switch\+Block}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{switch\+Block}{switchBlock}}
+{\footnotesize\ttfamily String Track\+Model.\+Block.\+switch\+Block}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a8a7d15ff05ed0c3a56e34c27c06dd99a}\label{classTrackModel_1_1Block_a8a7d15ff05ed0c3a56e34c27c06dd99a}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!switch\+Next\+Block\+Forward@{switch\+Next\+Block\+Forward}}
+\index{switch\+Next\+Block\+Forward@{switch\+Next\+Block\+Forward}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{switch\+Next\+Block\+Forward}{switchNextBlockForward}}
+{\footnotesize\ttfamily \hyperlink{classTrackModel_1_1Block}{Block} Track\+Model.\+Block.\+switch\+Next\+Block\+Forward}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_a5c2a0d414f6cca8552f476dd12e94d3f}\label{classTrackModel_1_1Block_a5c2a0d414f6cca8552f476dd12e94d3f}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!switch\+State@{switch\+State}}
+\index{switch\+State@{switch\+State}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{switch\+State}{switchState}}
+{\footnotesize\ttfamily Boolean Track\+Model.\+Block.\+switch\+State}
+
+\mbox{\Hypertarget{classTrackModel_1_1Block_afd3cf37d0f925e0440179716b2ad2730}\label{classTrackModel_1_1Block_afd3cf37d0f925e0440179716b2ad2730}} 
+\index{Track\+Model\+::\+Block@{Track\+Model\+::\+Block}!track\+Heaters@{track\+Heaters}}
+\index{track\+Heaters@{track\+Heaters}!Track\+Model\+::\+Block@{Track\+Model\+::\+Block}}
+\subsubsection{\texorpdfstring{track\+Heaters}{trackHeaters}}
+{\footnotesize\ttfamily Boolean Track\+Model.\+Block.\+track\+Heaters}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/\+Track\+Model/\hyperlink{Block_8java}{Block.\+java}\end{DoxyCompactItemize}

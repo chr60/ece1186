@@ -1,0 +1,9 @@
+<map id="TrainControllerComps.TrainController" name="TrainControllerComps.TrainController">
+<area shape="rect" id="node27" href="$classTrainControllerComps_1_1TCTestConsole.html" title="This class is responsible for testing the various components in the Train Controller, mimicking the components on a train object. " alt="" coords="2129,2512,2326,3559"/>
+<area shape="rect" id="node4" href="$classTrainControllerComps_1_1TCUtilityPanel.html" title="A component of the Train Controller responsible for displaying, and transmitting information and chan..." alt="" coords="1691,963,1897,1489"/>
+<area shape="rect" id="node24" href="$classTrainControllerComps_1_1TCSpeedController.html" title="This class is responsible for allowing the user to set the speed of the selected train if in Manual m..." alt="" coords="2831,1069,3042,1383"/>
+<area shape="rect" id="node26" href="$classTrainControllerComps_1_1TCTrainInfoPane.html" title="A component of the Train Controller responsible for the selected train&#39;s speed, power, authority, and suggested speed. " alt="" coords="1016,1089,1218,1363"/>
+<area shape="rect" id="node28" href="$classTrainControllerComps_1_1TCBlockInfoPanel.html" title="This class is responsible for displaying information regarding the block the selected train is curren..." alt="" coords="645,1156,850,1296"/>
+<area shape="rect" id="node16" href="$classTrainControllerComps_1_1TCBrakePanel.html" title="This class is responsible for applying and managing the use of a train&#39;s braking system. " alt="" coords="2682,561,2890,768"/>
+<area shape="rect" id="node8" href="$classTrainControllerComps_1_1TestTrain.html" title="{TrainControllerComps.Test\lTrain\n|~ id\l~ speed\l~ power\l~ kp\l~ ki\l~ currentBlockSpeed\l~ currentSuggestedSpeed\l~ lights\l~ leftDoors\l~ rightDoors\l~ ac\l~ heat\l|+ TestTrain()\l+ powerConstantsSet()\l+ generateRandomTestTrain()\l+ main()\l}" alt="" coords="911,153,1110,427"/>
+</map>

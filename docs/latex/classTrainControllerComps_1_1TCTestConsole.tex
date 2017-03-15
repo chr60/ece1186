@@ -1,0 +1,1067 @@
+\hypertarget{classTrainControllerComps_1_1TCTestConsole}{}\section{Train\+Controller\+Comps.\+T\+C\+Test\+Console Class Reference}
+\label{classTrainControllerComps_1_1TCTestConsole}\index{Train\+Controller\+Comps.\+T\+C\+Test\+Console@{Train\+Controller\+Comps.\+T\+C\+Test\+Console}}
+
+
+This class is responsible for testing the various components in the Train Controller, mimicking the components on a train object.  
+
+
+
+
+Inheritance diagram for Train\+Controller\+Comps.\+T\+C\+Test\+Console\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classTrainControllerComps_1_1TCTestConsole__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Train\+Controller\+Comps.\+T\+C\+Test\+Console\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classTrainControllerComps_1_1TCTestConsole__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classTrainControllerComps_1_1TCTestConsole_a760b79fd912301b36a19c372eafc1616}{T\+C\+Test\+Console} ()
+\begin{DoxyCompactList}\small\item\em Constructor for creating a \hyperlink{classTrainControllerComps_1_1TCTestConsole}{T\+C\+Test\+Console} object with no Train Controller and no selected train. \end{DoxyCompactList}\item 
+\hyperlink{classTrainControllerComps_1_1TCTestConsole_acb9494e195e57188bc7150aa96faef80}{T\+C\+Test\+Console} (\hyperlink{classTrainControllerComps_1_1TestTrain}{Test\+Train} \hyperlink{classtrain}{train}, \hyperlink{classTrainControllerComps_1_1TrainController}{Train\+Controller} train\+Cont)
+\begin{DoxyCompactList}\small\item\em Creates new form \hyperlink{classTrainControllerComps_1_1TCTestConsole}{T\+C\+Test\+Console}. \end{DoxyCompactList}\item 
+void \hyperlink{classTrainControllerComps_1_1TCTestConsole_a3519b295cbb041ec2af003311057f589}{set\+Train} (\hyperlink{classTrainControllerComps_1_1TestTrain}{Test\+Train} \hyperlink{classtrain}{train})
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classTrainControllerComps_1_1TCTestConsole_ac357695bde522e9b9f51b9b8231f6491}{main} (String args\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCTestConsole_a6dbf679049bb88386a66eb60368f1e23}{add\+Action\+Listeners} ()
+\begin{DoxyCompactList}\small\item\em Adds action listeners to their corresponding elements. \end{DoxyCompactList}\item 
+void \hyperlink{classTrainControllerComps_1_1TCTestConsole_a44225d3560eda9d1d281a21b6c4d9793}{set\+Train\+Controller} (\hyperlink{classTrainControllerComps_1_1TrainController}{Train\+Controller} train\+Cont)
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCTestConsole_a8c36f9ef39a0e5b17ff982eb9a5fb2d1}{refresh\+UI} ()
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCTestConsole_a0ce4f7085d384256e806c978e19521cf}{init\+Components} ()
+\begin{DoxyCompactList}\small\item\em This method is called from within the constructor to initialize the form. \end{DoxyCompactList}\item 
+void \hyperlink{classTrainControllerComps_1_1TCTestConsole_a719ba5669ea8d3015b18f7534ac7aef8}{break\+AC} (java.\+awt.\+event.\+Action\+Event evt)
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCTestConsole_aa21461aec8a7c5e82a16aa4170fd88d2}{fix\+AC} (java.\+awt.\+event.\+Action\+Event evt)
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCTestConsole_a4183ab4b832ba4004efe36268e2d42e1}{break\+Heat} (java.\+awt.\+event.\+Action\+Event evt)
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCTestConsole_a7567377a01ddf6773ee63a59f1f2fa24}{fix\+Heat} (java.\+awt.\+event.\+Action\+Event evt)
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCTestConsole_ac653a53d3cf8290b2961434444b54295}{break\+Lights\+Murphy} (java.\+awt.\+event.\+Action\+Event evt)
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCTestConsole_ad3e1912c4e49eaf33bf4ddaba7e1f090}{fix\+Lights} (java.\+awt.\+event.\+Action\+Event evt)
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCTestConsole_a86123ba20ca1fbf0585820d0e314ea0e}{break\+Left\+Doors} (java.\+awt.\+event.\+Action\+Event evt)
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCTestConsole_a074530680797980a0a59b89fd0825854}{fix\+Left\+Doors} (java.\+awt.\+event.\+Action\+Event evt)
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCTestConsole_a58698a92444753ab9cf65df4eecbe23c}{break\+Right\+Doors} (java.\+awt.\+event.\+Action\+Event evt)
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCTestConsole_aee30c912e6a071ea979f0629c5ad7f74}{fix\+Right\+Doors} (java.\+awt.\+event.\+Action\+Event evt)
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCTestConsole_a2accf7ef6ebf4cc4014be09693138a57}{turn\+On\+AC} (java.\+awt.\+event.\+Action\+Event evt)
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCTestConsole_a8350577198661578c091f8ae9f299ad4}{turn\+Off\+AC} (java.\+awt.\+event.\+Action\+Event evt)
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCTestConsole_a7c9c0b19b82810b0b81f8405219e9ccb}{turn\+On\+Heat} (java.\+awt.\+event.\+Action\+Event evt)
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCTestConsole_a37a58178270fbb1e271fd6d71a32313b}{turn\+Off\+Heat} (java.\+awt.\+event.\+Action\+Event evt)
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCTestConsole_aa5f62334d031ea47f3275163b3042a96}{turn\+On\+Lights} (java.\+awt.\+event.\+Action\+Event evt)
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCTestConsole_a1c52342312cab4d62b86bf4a52652703}{turn\+Off\+Lights} (java.\+awt.\+event.\+Action\+Event evt)
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCTestConsole_a9e6b04de1514fc659dbf665a3dd1cf3d}{open\+Left\+Doors} (java.\+awt.\+event.\+Action\+Event evt)
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCTestConsole_a0e23b1193885559198e02aa63c464e36}{close\+Left\+Doors} (java.\+awt.\+event.\+Action\+Event evt)
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCTestConsole_ab960e72ee109ec472767cfd3dc7ef5fe}{open\+Right\+Doors} (java.\+awt.\+event.\+Action\+Event evt)
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCTestConsole_af61e73d9719ecd0201ad535893ddca69}{close\+Right\+Doors} (java.\+awt.\+event.\+Action\+Event evt)
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classTrainControllerComps_1_1TestTrain}{Test\+Train} \hyperlink{classTrainControllerComps_1_1TCTestConsole_a0d334010f5ee13f36d222a1e9c744692}{selected\+Train}
+\begin{DoxyCompactList}\small\item\em Train being controlled by the Train Controller. \end{DoxyCompactList}\item 
+\hyperlink{classTrainControllerComps_1_1TrainController}{Train\+Controller} \hyperlink{classTrainControllerComps_1_1TCTestConsole_a12271d14ee26a5ac90db1e541954b788}{train\+Controller}
+\begin{DoxyCompactList}\small\item\em Train Controller to relay any changes made to the train to. \end{DoxyCompactList}\item 
+Timer \hyperlink{classTrainControllerComps_1_1TCTestConsole_a30e4ba9897434ccc699b1d5cb1f80585}{t}
+\begin{DoxyCompactList}\small\item\em Timer used to update the Test Console every 1 second. \end{DoxyCompactList}\item 
+javax.\+swing.\+Button\+Group \hyperlink{classTrainControllerComps_1_1TCTestConsole_a8f84a548ccc7a10efb6a56bf1d9fb906}{ac\+Button\+Group}
+\item 
+javax.\+swing.\+Button\+Group \hyperlink{classTrainControllerComps_1_1TCTestConsole_a76ccb33a0cd9dae90633880b28844d19}{ac\+Button\+Group\+Murphy}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_af98035d73b1947ae389e67eeea4993c5}{ac\+Label}
+\item 
+javax.\+swing.\+J\+Slider \hyperlink{classTrainControllerComps_1_1TCTestConsole_a21bee125a17a7768a07a80d7783cf294}{block\+Speed\+Slider}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_ab79e1ccde06435df2e134bbe2a5f8742}{block\+Speed\+\_\+\+Slider}
+\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCTestConsole_a7d492665eb6c6971989ec2dc0466114a}{break\+A\+C\+Murphy}
+\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCTestConsole_a5a940e86e0d4401daea1572b40981510}{break\+Heat\+Murphy}
+\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCTestConsole_a684b806da57a86a664067abba549d03b}{break\+Left\+Doors\+Murphy}
+\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCTestConsole_accd7d43228d9317a1324e18187f3e037}{break\+Lights\+Murphy}
+\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCTestConsole_a66d910f995ad161cb6423f9609dc3410}{break\+Right\+Doors\+Murphy}
+\item 
+javax.\+swing.\+J\+Button \hyperlink{classTrainControllerComps_1_1TCTestConsole_ab1001e48d1473360905ff0456d2b6da2}{dispatch\+Trains\+Label}
+\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCTestConsole_a894040a202ec98ab18e585759f783d36}{fix\+A\+C\+Murphy}
+\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCTestConsole_aa536edd88e360f85dd5b3c183fb7bad7}{fix\+Heat\+Murphy}
+\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCTestConsole_af8181606847a064fef6388178f6345df}{fix\+Left\+Doors\+Murphy}
+\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCTestConsole_a64fb6ca41cae7641dc33c8095ffd9fdb}{fix\+Lights\+Murphy}
+\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCTestConsole_aa2c97390a7e262a469599bcb59f5a9c9}{fix\+Right\+Doors\+Murphy}
+\item 
+javax.\+swing.\+Button\+Group \hyperlink{classTrainControllerComps_1_1TCTestConsole_a652801186a60bbfa55e7a7da6e356eac}{heat\+Button\+Group}
+\item 
+javax.\+swing.\+Button\+Group \hyperlink{classTrainControllerComps_1_1TCTestConsole_a1e24f88e3c130a9197c58398af71062b}{heat\+Button\+Group\+Murphy}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_ad009dbddef64d4cf00a17e75888599b1}{heat\+Label}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_afe6f59cd0dbb68f59d14d44937a20560}{j\+Label10}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_aedd451e4b3cb09d6204b76ad2300b40c}{j\+Label11}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_a007650252cf57b42e6de59a615d09728}{j\+Label12}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_a33d57c87dbe079fd23e3c74b00267c32}{j\+Label13}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_af255f1641c06bd410b59a7053693bae3}{j\+Label14}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_a15c9eee45ab19ef43c58bc649724616c}{j\+Label15}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_af9018c9d636ebc614bf81ede1c548656}{j\+Label16}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_a569a1a8efd99421bfbceab4312397ea1}{j\+Label34}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_a44eb572be1c20e76bce8193253e7c88f}{j\+Label35}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_a47b53ca5ad512b2b9ad8d1595bd9e0f5}{j\+Label40}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_ad200ed7938f299f879fa78afe898737f}{j\+Label41}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_a0c9860acba538f840d14c3c8196539a4}{j\+Label42}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_a30909cde3d4367014b41b9cdbb745e97}{j\+Label43}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_a74d463fb2ef1d28d74b44c0102f86b12}{j\+Label44}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_ab9c1736625460c06ef2d293c09c6207d}{j\+Label45}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_ad9411cc13252f071cbed7d084bc8c6e7}{j\+Label46}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_a61e5a756963f60a5cab19f7772d3c81f}{j\+Label47}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_a3749f75bf110d43030c9085761c0457b}{j\+Label49}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_affacc4bea050e28768832ed436c66da7}{j\+Label5}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_acea7edb9ff737a8e16ce6ec754809d62}{j\+Label50}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_a95cb47604da863b779ad035d35025b30}{j\+Label51}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_ad67cc6b4ae4473c6eb60bc8fd3bdfa75}{j\+Label53}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_af0ca5db132c0010e64199a33f6891241}{j\+Label54}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_ac5fa3f2159a209efa8e735c5d04034f4}{j\+Label55}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_a29c4733bf5f643ca90431e82e8ef3bc0}{j\+Label56}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_a3f0313a94952835cb25fbf21dae9ef04}{j\+Label57}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_a4423420eca93e1713f59742dc8ac48fc}{j\+Label58}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_a295d6d79a5053490f1e9ed4f49063369}{j\+Label6}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_a56061314e64982fd14f12f8c157bc446}{j\+Label7}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_af5c88ee6fdf8514186e4be2e0367222d}{j\+Label8}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_a82965e977b9eab5384711fa7dae2c7df}{j\+Label9}
+\item 
+javax.\+swing.\+J\+Panel \hyperlink{classTrainControllerComps_1_1TCTestConsole_af78b45798e2b3493704987ebd4fcdec5}{j\+Panel1}
+\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCTestConsole_a4841a010a5d290e5ccd4ab08c0660cdd}{j\+Radio\+Button11}
+\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCTestConsole_afabaa89b5791c44f113a704f26f0653d}{j\+Radio\+Button12}
+\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCTestConsole_aba8a4cf1aec37a400b88f24df6e6b00f}{j\+Radio\+Button13}
+\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCTestConsole_ac8e7e27aa2da7d8b20473de214f55545}{j\+Radio\+Button14}
+\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCTestConsole_a0ae60a752f0dba23f979a55cb862751f}{j\+Radio\+Button15}
+\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCTestConsole_aec997692de4894a4428e3bf6b665d319}{j\+Radio\+Button16}
+\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCTestConsole_aa0785089513677993651b2ec2401acd9}{j\+Radio\+Button17}
+\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCTestConsole_af96dfe5ab6c3939fd1f1107052b32860}{j\+Radio\+Button18}
+\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCTestConsole_add689f3cb879f656ce537f7b0de37790}{j\+Radio\+Button19}
+\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCTestConsole_a637db2168f9d0e3c3d36b084fe376667}{j\+Radio\+Button20}
+\item 
+javax.\+swing.\+J\+Scroll\+Pane \hyperlink{classTrainControllerComps_1_1TCTestConsole_a5ee544c3a96aebcfc3fb359811f53e17}{j\+Scroll\+Pane1}
+\item 
+javax.\+swing.\+J\+Separator \hyperlink{classTrainControllerComps_1_1TCTestConsole_aa6e341ad4a933305c208ddfab87b7748}{j\+Separator1}
+\item 
+javax.\+swing.\+J\+Separator \hyperlink{classTrainControllerComps_1_1TCTestConsole_a321b1c444b86da9a4c8dd6a5e5206d44}{j\+Separator2}
+\item 
+javax.\+swing.\+J\+Separator \hyperlink{classTrainControllerComps_1_1TCTestConsole_aeb40f199fd2cfcb8f20110d13ddc43ae}{j\+Separator3}
+\item 
+javax.\+swing.\+J\+Separator \hyperlink{classTrainControllerComps_1_1TCTestConsole_ab4b1231ce9b294b2765bb91c44522e3c}{j\+Separator4}
+\item 
+javax.\+swing.\+J\+Separator \hyperlink{classTrainControllerComps_1_1TCTestConsole_a5907933373af800e343932b74f2b5953}{j\+Separator5}
+\item 
+javax.\+swing.\+Button\+Group \hyperlink{classTrainControllerComps_1_1TCTestConsole_a6e9e34dbae54de3d18973079a119b259}{left\+Doors\+Button\+Group}
+\item 
+javax.\+swing.\+Button\+Group \hyperlink{classTrainControllerComps_1_1TCTestConsole_a31e351b69749abd5011ab27db71f2c93}{left\+Doors\+Button\+Group\+Murphy}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_a019c8a0ab8654c401c1e34d4d02237f9}{left\+Doors\+Label}
+\item 
+javax.\+swing.\+Button\+Group \hyperlink{classTrainControllerComps_1_1TCTestConsole_a19ea08b80e017c2370d6a71e6f2c9688}{lights\+Button\+Group}
+\item 
+javax.\+swing.\+Button\+Group \hyperlink{classTrainControllerComps_1_1TCTestConsole_ade57cb3a0c1580b921e0ff5ad758c80a}{lights\+Button\+Group\+Murphy}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_ac6b7301f535cea9ef8d39ba8d9e21bc3}{lights\+Label}
+\item 
+javax.\+swing.\+J\+Text\+Pane \hyperlink{classTrainControllerComps_1_1TCTestConsole_acb8f9a2f8b463f489504ceb2632e0472}{logs}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_a863cecfa16a93d7a4e220853a7202a80}{logs\+Label}
+\item 
+javax.\+swing.\+J\+Combo\+Box$<$ String $>$ \hyperlink{classTrainControllerComps_1_1TCTestConsole_af08c073d08ed471e509709158a0ca2d3}{num\+Dispatched\+Trains}
+\item 
+javax.\+swing.\+Button\+Group \hyperlink{classTrainControllerComps_1_1TCTestConsole_a857ac857bbf765132239734e62c78210}{right\+Doors\+Button\+Group\+Murphy}
+\item 
+javax.\+swing.\+Button\+Group \hyperlink{classTrainControllerComps_1_1TCTestConsole_a5fd502aa4588d4ec5d4503cad1dc399c}{right\+Doors\+Button\+Groups}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_a9305662f0767e36bf1f990834b73cfc3}{right\+Doors\+Label}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_ad8105908c48ad8b5fd4c0a951db655a2}{set\+Speed}
+\item 
+javax.\+swing.\+J\+Slider \hyperlink{classTrainControllerComps_1_1TCTestConsole_a493fcafc1264f633059e840f83207593}{speed\+Slider}
+\item 
+javax.\+swing.\+J\+Slider \hyperlink{classTrainControllerComps_1_1TCTestConsole_a9d7e5b560ae353604fe3281c949dc2a7}{sugg\+Speed\+Slider}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_af9f54adad63841cba14c0bbb41ab3de7}{sugg\+Speed\+\_\+\+Slider}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_a1e94ccf980f441f8e7c411ed38c42be5}{train\+Power}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_ac2dc24779140f31fd6f33be4be926c96}{train\+Power\+Label}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_a5ffb3ab5c0f9a7fc37f72c77e70432a9}{train\+Speed}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_a6d89bc3a12936a14165ba016d51df6b6}{train\+Speed\+Label}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCTestConsole_a4fbf210d4a143467d39d3311171422dd}{train\+Speed\+\_\+\+Slider}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class is responsible for testing the various components in the Train Controller, mimicking the components on a train object. 
+
+This class collaborates with the Train Controller and Train class.
+
+\begin{DoxyAuthor}{Author}
+Andrew Lendacky 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a760b79fd912301b36a19c372eafc1616}\label{classTrainControllerComps_1_1TCTestConsole_a760b79fd912301b36a19c372eafc1616}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!T\+C\+Test\+Console@{T\+C\+Test\+Console}}
+\index{T\+C\+Test\+Console@{T\+C\+Test\+Console}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{T\+C\+Test\+Console()}{TCTestConsole()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+T\+C\+Test\+Console (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Constructor for creating a \hyperlink{classTrainControllerComps_1_1TCTestConsole}{T\+C\+Test\+Console} object with no Train Controller and no selected train. 
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_acb9494e195e57188bc7150aa96faef80}\label{classTrainControllerComps_1_1TCTestConsole_acb9494e195e57188bc7150aa96faef80}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!T\+C\+Test\+Console@{T\+C\+Test\+Console}}
+\index{T\+C\+Test\+Console@{T\+C\+Test\+Console}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{T\+C\+Test\+Console()}{TCTestConsole()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+T\+C\+Test\+Console (\begin{DoxyParamCaption}\item[{\hyperlink{classTrainControllerComps_1_1TestTrain}{Test\+Train}}]{train,  }\item[{\hyperlink{classTrainControllerComps_1_1TrainController}{Train\+Controller}}]{train\+Cont }\end{DoxyParamCaption})}
+
+
+
+Creates new form \hyperlink{classTrainControllerComps_1_1TCTestConsole}{T\+C\+Test\+Console}. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a6dbf679049bb88386a66eb60368f1e23}\label{classTrainControllerComps_1_1TCTestConsole_a6dbf679049bb88386a66eb60368f1e23}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!add\+Action\+Listeners@{add\+Action\+Listeners}}
+\index{add\+Action\+Listeners@{add\+Action\+Listeners}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{add\+Action\+Listeners()}{addActionListeners()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+add\+Action\+Listeners (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Adds action listeners to their corresponding elements. 
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a719ba5669ea8d3015b18f7534ac7aef8}\label{classTrainControllerComps_1_1TCTestConsole_a719ba5669ea8d3015b18f7534ac7aef8}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!break\+AC@{break\+AC}}
+\index{break\+AC@{break\+AC}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{break\+A\+C()}{breakAC()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+break\+AC (\begin{DoxyParamCaption}\item[{java.\+awt.\+event.\+Action\+Event}]{evt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a4183ab4b832ba4004efe36268e2d42e1}\label{classTrainControllerComps_1_1TCTestConsole_a4183ab4b832ba4004efe36268e2d42e1}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!break\+Heat@{break\+Heat}}
+\index{break\+Heat@{break\+Heat}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{break\+Heat()}{breakHeat()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+break\+Heat (\begin{DoxyParamCaption}\item[{java.\+awt.\+event.\+Action\+Event}]{evt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a86123ba20ca1fbf0585820d0e314ea0e}\label{classTrainControllerComps_1_1TCTestConsole_a86123ba20ca1fbf0585820d0e314ea0e}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!break\+Left\+Doors@{break\+Left\+Doors}}
+\index{break\+Left\+Doors@{break\+Left\+Doors}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{break\+Left\+Doors()}{breakLeftDoors()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+break\+Left\+Doors (\begin{DoxyParamCaption}\item[{java.\+awt.\+event.\+Action\+Event}]{evt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_ac653a53d3cf8290b2961434444b54295}\label{classTrainControllerComps_1_1TCTestConsole_ac653a53d3cf8290b2961434444b54295}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!break\+Lights\+Murphy@{break\+Lights\+Murphy}}
+\index{break\+Lights\+Murphy@{break\+Lights\+Murphy}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{break\+Lights\+Murphy()}{breakLightsMurphy()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+break\+Lights\+Murphy (\begin{DoxyParamCaption}\item[{java.\+awt.\+event.\+Action\+Event}]{evt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a58698a92444753ab9cf65df4eecbe23c}\label{classTrainControllerComps_1_1TCTestConsole_a58698a92444753ab9cf65df4eecbe23c}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!break\+Right\+Doors@{break\+Right\+Doors}}
+\index{break\+Right\+Doors@{break\+Right\+Doors}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{break\+Right\+Doors()}{breakRightDoors()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+break\+Right\+Doors (\begin{DoxyParamCaption}\item[{java.\+awt.\+event.\+Action\+Event}]{evt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a0e23b1193885559198e02aa63c464e36}\label{classTrainControllerComps_1_1TCTestConsole_a0e23b1193885559198e02aa63c464e36}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!close\+Left\+Doors@{close\+Left\+Doors}}
+\index{close\+Left\+Doors@{close\+Left\+Doors}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{close\+Left\+Doors()}{closeLeftDoors()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+close\+Left\+Doors (\begin{DoxyParamCaption}\item[{java.\+awt.\+event.\+Action\+Event}]{evt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_af61e73d9719ecd0201ad535893ddca69}\label{classTrainControllerComps_1_1TCTestConsole_af61e73d9719ecd0201ad535893ddca69}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!close\+Right\+Doors@{close\+Right\+Doors}}
+\index{close\+Right\+Doors@{close\+Right\+Doors}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{close\+Right\+Doors()}{closeRightDoors()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+close\+Right\+Doors (\begin{DoxyParamCaption}\item[{java.\+awt.\+event.\+Action\+Event}]{evt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_aa21461aec8a7c5e82a16aa4170fd88d2}\label{classTrainControllerComps_1_1TCTestConsole_aa21461aec8a7c5e82a16aa4170fd88d2}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!fix\+AC@{fix\+AC}}
+\index{fix\+AC@{fix\+AC}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{fix\+A\+C()}{fixAC()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+fix\+AC (\begin{DoxyParamCaption}\item[{java.\+awt.\+event.\+Action\+Event}]{evt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a7567377a01ddf6773ee63a59f1f2fa24}\label{classTrainControllerComps_1_1TCTestConsole_a7567377a01ddf6773ee63a59f1f2fa24}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!fix\+Heat@{fix\+Heat}}
+\index{fix\+Heat@{fix\+Heat}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{fix\+Heat()}{fixHeat()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+fix\+Heat (\begin{DoxyParamCaption}\item[{java.\+awt.\+event.\+Action\+Event}]{evt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a074530680797980a0a59b89fd0825854}\label{classTrainControllerComps_1_1TCTestConsole_a074530680797980a0a59b89fd0825854}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!fix\+Left\+Doors@{fix\+Left\+Doors}}
+\index{fix\+Left\+Doors@{fix\+Left\+Doors}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{fix\+Left\+Doors()}{fixLeftDoors()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+fix\+Left\+Doors (\begin{DoxyParamCaption}\item[{java.\+awt.\+event.\+Action\+Event}]{evt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_ad3e1912c4e49eaf33bf4ddaba7e1f090}\label{classTrainControllerComps_1_1TCTestConsole_ad3e1912c4e49eaf33bf4ddaba7e1f090}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!fix\+Lights@{fix\+Lights}}
+\index{fix\+Lights@{fix\+Lights}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{fix\+Lights()}{fixLights()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+fix\+Lights (\begin{DoxyParamCaption}\item[{java.\+awt.\+event.\+Action\+Event}]{evt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_aee30c912e6a071ea979f0629c5ad7f74}\label{classTrainControllerComps_1_1TCTestConsole_aee30c912e6a071ea979f0629c5ad7f74}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!fix\+Right\+Doors@{fix\+Right\+Doors}}
+\index{fix\+Right\+Doors@{fix\+Right\+Doors}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{fix\+Right\+Doors()}{fixRightDoors()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+fix\+Right\+Doors (\begin{DoxyParamCaption}\item[{java.\+awt.\+event.\+Action\+Event}]{evt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a0ce4f7085d384256e806c978e19521cf}\label{classTrainControllerComps_1_1TCTestConsole_a0ce4f7085d384256e806c978e19521cf}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!init\+Components@{init\+Components}}
+\index{init\+Components@{init\+Components}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{init\+Components()}{initComponents()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+init\+Components (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+This method is called from within the constructor to initialize the form. 
+
+W\+A\+R\+N\+I\+NG\+: Do N\+OT modify this code. The content of this method is always regenerated by the Form Editor. \mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_ac357695bde522e9b9f51b9b8231f6491}\label{classTrainControllerComps_1_1TCTestConsole_ac357695bde522e9b9f51b9b8231f6491}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!main@{main}}
+\index{main@{main}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily static void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+main (\begin{DoxyParamCaption}\item[{String}]{args\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em args} & the command line arguments \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a9e6b04de1514fc659dbf665a3dd1cf3d}\label{classTrainControllerComps_1_1TCTestConsole_a9e6b04de1514fc659dbf665a3dd1cf3d}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!open\+Left\+Doors@{open\+Left\+Doors}}
+\index{open\+Left\+Doors@{open\+Left\+Doors}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{open\+Left\+Doors()}{openLeftDoors()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+open\+Left\+Doors (\begin{DoxyParamCaption}\item[{java.\+awt.\+event.\+Action\+Event}]{evt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_ab960e72ee109ec472767cfd3dc7ef5fe}\label{classTrainControllerComps_1_1TCTestConsole_ab960e72ee109ec472767cfd3dc7ef5fe}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!open\+Right\+Doors@{open\+Right\+Doors}}
+\index{open\+Right\+Doors@{open\+Right\+Doors}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{open\+Right\+Doors()}{openRightDoors()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+open\+Right\+Doors (\begin{DoxyParamCaption}\item[{java.\+awt.\+event.\+Action\+Event}]{evt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a8c36f9ef39a0e5b17ff982eb9a5fb2d1}\label{classTrainControllerComps_1_1TCTestConsole_a8c36f9ef39a0e5b17ff982eb9a5fb2d1}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!refresh\+UI@{refresh\+UI}}
+\index{refresh\+UI@{refresh\+UI}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{refresh\+U\+I()}{refreshUI()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+refresh\+UI (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a3519b295cbb041ec2af003311057f589}\label{classTrainControllerComps_1_1TCTestConsole_a3519b295cbb041ec2af003311057f589}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!set\+Train@{set\+Train}}
+\index{set\+Train@{set\+Train}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{set\+Train()}{setTrain()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+set\+Train (\begin{DoxyParamCaption}\item[{\hyperlink{classTrainControllerComps_1_1TestTrain}{Test\+Train}}]{train }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em train} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a44225d3560eda9d1d281a21b6c4d9793}\label{classTrainControllerComps_1_1TCTestConsole_a44225d3560eda9d1d281a21b6c4d9793}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!set\+Train\+Controller@{set\+Train\+Controller}}
+\index{set\+Train\+Controller@{set\+Train\+Controller}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{set\+Train\+Controller()}{setTrainController()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+set\+Train\+Controller (\begin{DoxyParamCaption}\item[{\hyperlink{classTrainControllerComps_1_1TrainController}{Train\+Controller}}]{train\+Cont }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em train\+Cont} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a8350577198661578c091f8ae9f299ad4}\label{classTrainControllerComps_1_1TCTestConsole_a8350577198661578c091f8ae9f299ad4}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!turn\+Off\+AC@{turn\+Off\+AC}}
+\index{turn\+Off\+AC@{turn\+Off\+AC}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{turn\+Off\+A\+C()}{turnOffAC()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+turn\+Off\+AC (\begin{DoxyParamCaption}\item[{java.\+awt.\+event.\+Action\+Event}]{evt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a37a58178270fbb1e271fd6d71a32313b}\label{classTrainControllerComps_1_1TCTestConsole_a37a58178270fbb1e271fd6d71a32313b}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!turn\+Off\+Heat@{turn\+Off\+Heat}}
+\index{turn\+Off\+Heat@{turn\+Off\+Heat}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{turn\+Off\+Heat()}{turnOffHeat()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+turn\+Off\+Heat (\begin{DoxyParamCaption}\item[{java.\+awt.\+event.\+Action\+Event}]{evt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a1c52342312cab4d62b86bf4a52652703}\label{classTrainControllerComps_1_1TCTestConsole_a1c52342312cab4d62b86bf4a52652703}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!turn\+Off\+Lights@{turn\+Off\+Lights}}
+\index{turn\+Off\+Lights@{turn\+Off\+Lights}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{turn\+Off\+Lights()}{turnOffLights()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+turn\+Off\+Lights (\begin{DoxyParamCaption}\item[{java.\+awt.\+event.\+Action\+Event}]{evt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a2accf7ef6ebf4cc4014be09693138a57}\label{classTrainControllerComps_1_1TCTestConsole_a2accf7ef6ebf4cc4014be09693138a57}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!turn\+On\+AC@{turn\+On\+AC}}
+\index{turn\+On\+AC@{turn\+On\+AC}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{turn\+On\+A\+C()}{turnOnAC()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+turn\+On\+AC (\begin{DoxyParamCaption}\item[{java.\+awt.\+event.\+Action\+Event}]{evt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a7c9c0b19b82810b0b81f8405219e9ccb}\label{classTrainControllerComps_1_1TCTestConsole_a7c9c0b19b82810b0b81f8405219e9ccb}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!turn\+On\+Heat@{turn\+On\+Heat}}
+\index{turn\+On\+Heat@{turn\+On\+Heat}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{turn\+On\+Heat()}{turnOnHeat()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+turn\+On\+Heat (\begin{DoxyParamCaption}\item[{java.\+awt.\+event.\+Action\+Event}]{evt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_aa5f62334d031ea47f3275163b3042a96}\label{classTrainControllerComps_1_1TCTestConsole_aa5f62334d031ea47f3275163b3042a96}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!turn\+On\+Lights@{turn\+On\+Lights}}
+\index{turn\+On\+Lights@{turn\+On\+Lights}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{turn\+On\+Lights()}{turnOnLights()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+turn\+On\+Lights (\begin{DoxyParamCaption}\item[{java.\+awt.\+event.\+Action\+Event}]{evt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a8f84a548ccc7a10efb6a56bf1d9fb906}\label{classTrainControllerComps_1_1TCTestConsole_a8f84a548ccc7a10efb6a56bf1d9fb906}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!ac\+Button\+Group@{ac\+Button\+Group}}
+\index{ac\+Button\+Group@{ac\+Button\+Group}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{ac\+Button\+Group}{acButtonGroup}}
+{\footnotesize\ttfamily javax.\+swing.\+Button\+Group Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+ac\+Button\+Group\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a76ccb33a0cd9dae90633880b28844d19}\label{classTrainControllerComps_1_1TCTestConsole_a76ccb33a0cd9dae90633880b28844d19}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!ac\+Button\+Group\+Murphy@{ac\+Button\+Group\+Murphy}}
+\index{ac\+Button\+Group\+Murphy@{ac\+Button\+Group\+Murphy}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{ac\+Button\+Group\+Murphy}{acButtonGroupMurphy}}
+{\footnotesize\ttfamily javax.\+swing.\+Button\+Group Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+ac\+Button\+Group\+Murphy\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_af98035d73b1947ae389e67eeea4993c5}\label{classTrainControllerComps_1_1TCTestConsole_af98035d73b1947ae389e67eeea4993c5}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!ac\+Label@{ac\+Label}}
+\index{ac\+Label@{ac\+Label}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{ac\+Label}{acLabel}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+ac\+Label\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_ab79e1ccde06435df2e134bbe2a5f8742}\label{classTrainControllerComps_1_1TCTestConsole_ab79e1ccde06435df2e134bbe2a5f8742}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!block\+Speed\+\_\+\+Slider@{block\+Speed\+\_\+\+Slider}}
+\index{block\+Speed\+\_\+\+Slider@{block\+Speed\+\_\+\+Slider}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{block\+Speed\+\_\+\+Slider}{blockSpeed\_Slider}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+block\+Speed\+\_\+\+Slider\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a21bee125a17a7768a07a80d7783cf294}\label{classTrainControllerComps_1_1TCTestConsole_a21bee125a17a7768a07a80d7783cf294}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!block\+Speed\+Slider@{block\+Speed\+Slider}}
+\index{block\+Speed\+Slider@{block\+Speed\+Slider}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{block\+Speed\+Slider}{blockSpeedSlider}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Slider Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+block\+Speed\+Slider\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a7d492665eb6c6971989ec2dc0466114a}\label{classTrainControllerComps_1_1TCTestConsole_a7d492665eb6c6971989ec2dc0466114a}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!break\+A\+C\+Murphy@{break\+A\+C\+Murphy}}
+\index{break\+A\+C\+Murphy@{break\+A\+C\+Murphy}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{break\+A\+C\+Murphy}{breakACMurphy}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+break\+A\+C\+Murphy\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a5a940e86e0d4401daea1572b40981510}\label{classTrainControllerComps_1_1TCTestConsole_a5a940e86e0d4401daea1572b40981510}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!break\+Heat\+Murphy@{break\+Heat\+Murphy}}
+\index{break\+Heat\+Murphy@{break\+Heat\+Murphy}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{break\+Heat\+Murphy}{breakHeatMurphy}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+break\+Heat\+Murphy\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a684b806da57a86a664067abba549d03b}\label{classTrainControllerComps_1_1TCTestConsole_a684b806da57a86a664067abba549d03b}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!break\+Left\+Doors\+Murphy@{break\+Left\+Doors\+Murphy}}
+\index{break\+Left\+Doors\+Murphy@{break\+Left\+Doors\+Murphy}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{break\+Left\+Doors\+Murphy}{breakLeftDoorsMurphy}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+break\+Left\+Doors\+Murphy\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_accd7d43228d9317a1324e18187f3e037}\label{classTrainControllerComps_1_1TCTestConsole_accd7d43228d9317a1324e18187f3e037}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!break\+Lights\+Murphy@{break\+Lights\+Murphy}}
+\index{break\+Lights\+Murphy@{break\+Lights\+Murphy}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{break\+Lights\+Murphy}{breakLightsMurphy}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+break\+Lights\+Murphy\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a66d910f995ad161cb6423f9609dc3410}\label{classTrainControllerComps_1_1TCTestConsole_a66d910f995ad161cb6423f9609dc3410}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!break\+Right\+Doors\+Murphy@{break\+Right\+Doors\+Murphy}}
+\index{break\+Right\+Doors\+Murphy@{break\+Right\+Doors\+Murphy}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{break\+Right\+Doors\+Murphy}{breakRightDoorsMurphy}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+break\+Right\+Doors\+Murphy\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_ab1001e48d1473360905ff0456d2b6da2}\label{classTrainControllerComps_1_1TCTestConsole_ab1001e48d1473360905ff0456d2b6da2}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!dispatch\+Trains\+Label@{dispatch\+Trains\+Label}}
+\index{dispatch\+Trains\+Label@{dispatch\+Trains\+Label}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{dispatch\+Trains\+Label}{dispatchTrainsLabel}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Button Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+dispatch\+Trains\+Label\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a894040a202ec98ab18e585759f783d36}\label{classTrainControllerComps_1_1TCTestConsole_a894040a202ec98ab18e585759f783d36}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!fix\+A\+C\+Murphy@{fix\+A\+C\+Murphy}}
+\index{fix\+A\+C\+Murphy@{fix\+A\+C\+Murphy}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{fix\+A\+C\+Murphy}{fixACMurphy}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+fix\+A\+C\+Murphy\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_aa536edd88e360f85dd5b3c183fb7bad7}\label{classTrainControllerComps_1_1TCTestConsole_aa536edd88e360f85dd5b3c183fb7bad7}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!fix\+Heat\+Murphy@{fix\+Heat\+Murphy}}
+\index{fix\+Heat\+Murphy@{fix\+Heat\+Murphy}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{fix\+Heat\+Murphy}{fixHeatMurphy}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+fix\+Heat\+Murphy\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_af8181606847a064fef6388178f6345df}\label{classTrainControllerComps_1_1TCTestConsole_af8181606847a064fef6388178f6345df}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!fix\+Left\+Doors\+Murphy@{fix\+Left\+Doors\+Murphy}}
+\index{fix\+Left\+Doors\+Murphy@{fix\+Left\+Doors\+Murphy}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{fix\+Left\+Doors\+Murphy}{fixLeftDoorsMurphy}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+fix\+Left\+Doors\+Murphy\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a64fb6ca41cae7641dc33c8095ffd9fdb}\label{classTrainControllerComps_1_1TCTestConsole_a64fb6ca41cae7641dc33c8095ffd9fdb}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!fix\+Lights\+Murphy@{fix\+Lights\+Murphy}}
+\index{fix\+Lights\+Murphy@{fix\+Lights\+Murphy}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{fix\+Lights\+Murphy}{fixLightsMurphy}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+fix\+Lights\+Murphy\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_aa2c97390a7e262a469599bcb59f5a9c9}\label{classTrainControllerComps_1_1TCTestConsole_aa2c97390a7e262a469599bcb59f5a9c9}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!fix\+Right\+Doors\+Murphy@{fix\+Right\+Doors\+Murphy}}
+\index{fix\+Right\+Doors\+Murphy@{fix\+Right\+Doors\+Murphy}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{fix\+Right\+Doors\+Murphy}{fixRightDoorsMurphy}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+fix\+Right\+Doors\+Murphy\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a652801186a60bbfa55e7a7da6e356eac}\label{classTrainControllerComps_1_1TCTestConsole_a652801186a60bbfa55e7a7da6e356eac}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!heat\+Button\+Group@{heat\+Button\+Group}}
+\index{heat\+Button\+Group@{heat\+Button\+Group}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{heat\+Button\+Group}{heatButtonGroup}}
+{\footnotesize\ttfamily javax.\+swing.\+Button\+Group Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+heat\+Button\+Group\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a1e24f88e3c130a9197c58398af71062b}\label{classTrainControllerComps_1_1TCTestConsole_a1e24f88e3c130a9197c58398af71062b}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!heat\+Button\+Group\+Murphy@{heat\+Button\+Group\+Murphy}}
+\index{heat\+Button\+Group\+Murphy@{heat\+Button\+Group\+Murphy}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{heat\+Button\+Group\+Murphy}{heatButtonGroupMurphy}}
+{\footnotesize\ttfamily javax.\+swing.\+Button\+Group Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+heat\+Button\+Group\+Murphy\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_ad009dbddef64d4cf00a17e75888599b1}\label{classTrainControllerComps_1_1TCTestConsole_ad009dbddef64d4cf00a17e75888599b1}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!heat\+Label@{heat\+Label}}
+\index{heat\+Label@{heat\+Label}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{heat\+Label}{heatLabel}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+heat\+Label\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_afe6f59cd0dbb68f59d14d44937a20560}\label{classTrainControllerComps_1_1TCTestConsole_afe6f59cd0dbb68f59d14d44937a20560}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label10@{j\+Label10}}
+\index{j\+Label10@{j\+Label10}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label10}{jLabel10}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label10\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_aedd451e4b3cb09d6204b76ad2300b40c}\label{classTrainControllerComps_1_1TCTestConsole_aedd451e4b3cb09d6204b76ad2300b40c}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label11@{j\+Label11}}
+\index{j\+Label11@{j\+Label11}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label11}{jLabel11}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label11\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a007650252cf57b42e6de59a615d09728}\label{classTrainControllerComps_1_1TCTestConsole_a007650252cf57b42e6de59a615d09728}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label12@{j\+Label12}}
+\index{j\+Label12@{j\+Label12}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label12}{jLabel12}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label12\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a33d57c87dbe079fd23e3c74b00267c32}\label{classTrainControllerComps_1_1TCTestConsole_a33d57c87dbe079fd23e3c74b00267c32}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label13@{j\+Label13}}
+\index{j\+Label13@{j\+Label13}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label13}{jLabel13}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label13\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_af255f1641c06bd410b59a7053693bae3}\label{classTrainControllerComps_1_1TCTestConsole_af255f1641c06bd410b59a7053693bae3}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label14@{j\+Label14}}
+\index{j\+Label14@{j\+Label14}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label14}{jLabel14}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label14\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a15c9eee45ab19ef43c58bc649724616c}\label{classTrainControllerComps_1_1TCTestConsole_a15c9eee45ab19ef43c58bc649724616c}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label15@{j\+Label15}}
+\index{j\+Label15@{j\+Label15}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label15}{jLabel15}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label15\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_af9018c9d636ebc614bf81ede1c548656}\label{classTrainControllerComps_1_1TCTestConsole_af9018c9d636ebc614bf81ede1c548656}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label16@{j\+Label16}}
+\index{j\+Label16@{j\+Label16}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label16}{jLabel16}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label16\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a569a1a8efd99421bfbceab4312397ea1}\label{classTrainControllerComps_1_1TCTestConsole_a569a1a8efd99421bfbceab4312397ea1}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label34@{j\+Label34}}
+\index{j\+Label34@{j\+Label34}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label34}{jLabel34}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label34\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a44eb572be1c20e76bce8193253e7c88f}\label{classTrainControllerComps_1_1TCTestConsole_a44eb572be1c20e76bce8193253e7c88f}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label35@{j\+Label35}}
+\index{j\+Label35@{j\+Label35}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label35}{jLabel35}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label35\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a47b53ca5ad512b2b9ad8d1595bd9e0f5}\label{classTrainControllerComps_1_1TCTestConsole_a47b53ca5ad512b2b9ad8d1595bd9e0f5}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label40@{j\+Label40}}
+\index{j\+Label40@{j\+Label40}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label40}{jLabel40}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label40\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_ad200ed7938f299f879fa78afe898737f}\label{classTrainControllerComps_1_1TCTestConsole_ad200ed7938f299f879fa78afe898737f}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label41@{j\+Label41}}
+\index{j\+Label41@{j\+Label41}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label41}{jLabel41}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label41\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a0c9860acba538f840d14c3c8196539a4}\label{classTrainControllerComps_1_1TCTestConsole_a0c9860acba538f840d14c3c8196539a4}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label42@{j\+Label42}}
+\index{j\+Label42@{j\+Label42}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label42}{jLabel42}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label42\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a30909cde3d4367014b41b9cdbb745e97}\label{classTrainControllerComps_1_1TCTestConsole_a30909cde3d4367014b41b9cdbb745e97}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label43@{j\+Label43}}
+\index{j\+Label43@{j\+Label43}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label43}{jLabel43}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label43\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a74d463fb2ef1d28d74b44c0102f86b12}\label{classTrainControllerComps_1_1TCTestConsole_a74d463fb2ef1d28d74b44c0102f86b12}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label44@{j\+Label44}}
+\index{j\+Label44@{j\+Label44}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label44}{jLabel44}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label44\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_ab9c1736625460c06ef2d293c09c6207d}\label{classTrainControllerComps_1_1TCTestConsole_ab9c1736625460c06ef2d293c09c6207d}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label45@{j\+Label45}}
+\index{j\+Label45@{j\+Label45}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label45}{jLabel45}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label45\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_ad9411cc13252f071cbed7d084bc8c6e7}\label{classTrainControllerComps_1_1TCTestConsole_ad9411cc13252f071cbed7d084bc8c6e7}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label46@{j\+Label46}}
+\index{j\+Label46@{j\+Label46}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label46}{jLabel46}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label46\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a61e5a756963f60a5cab19f7772d3c81f}\label{classTrainControllerComps_1_1TCTestConsole_a61e5a756963f60a5cab19f7772d3c81f}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label47@{j\+Label47}}
+\index{j\+Label47@{j\+Label47}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label47}{jLabel47}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label47\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a3749f75bf110d43030c9085761c0457b}\label{classTrainControllerComps_1_1TCTestConsole_a3749f75bf110d43030c9085761c0457b}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label49@{j\+Label49}}
+\index{j\+Label49@{j\+Label49}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label49}{jLabel49}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label49\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_affacc4bea050e28768832ed436c66da7}\label{classTrainControllerComps_1_1TCTestConsole_affacc4bea050e28768832ed436c66da7}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label5@{j\+Label5}}
+\index{j\+Label5@{j\+Label5}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label5}{jLabel5}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label5\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_acea7edb9ff737a8e16ce6ec754809d62}\label{classTrainControllerComps_1_1TCTestConsole_acea7edb9ff737a8e16ce6ec754809d62}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label50@{j\+Label50}}
+\index{j\+Label50@{j\+Label50}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label50}{jLabel50}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label50\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a95cb47604da863b779ad035d35025b30}\label{classTrainControllerComps_1_1TCTestConsole_a95cb47604da863b779ad035d35025b30}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label51@{j\+Label51}}
+\index{j\+Label51@{j\+Label51}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label51}{jLabel51}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label51\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_ad67cc6b4ae4473c6eb60bc8fd3bdfa75}\label{classTrainControllerComps_1_1TCTestConsole_ad67cc6b4ae4473c6eb60bc8fd3bdfa75}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label53@{j\+Label53}}
+\index{j\+Label53@{j\+Label53}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label53}{jLabel53}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label53\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_af0ca5db132c0010e64199a33f6891241}\label{classTrainControllerComps_1_1TCTestConsole_af0ca5db132c0010e64199a33f6891241}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label54@{j\+Label54}}
+\index{j\+Label54@{j\+Label54}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label54}{jLabel54}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label54\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_ac5fa3f2159a209efa8e735c5d04034f4}\label{classTrainControllerComps_1_1TCTestConsole_ac5fa3f2159a209efa8e735c5d04034f4}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label55@{j\+Label55}}
+\index{j\+Label55@{j\+Label55}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label55}{jLabel55}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label55\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a29c4733bf5f643ca90431e82e8ef3bc0}\label{classTrainControllerComps_1_1TCTestConsole_a29c4733bf5f643ca90431e82e8ef3bc0}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label56@{j\+Label56}}
+\index{j\+Label56@{j\+Label56}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label56}{jLabel56}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label56\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a3f0313a94952835cb25fbf21dae9ef04}\label{classTrainControllerComps_1_1TCTestConsole_a3f0313a94952835cb25fbf21dae9ef04}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label57@{j\+Label57}}
+\index{j\+Label57@{j\+Label57}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label57}{jLabel57}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label57\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a4423420eca93e1713f59742dc8ac48fc}\label{classTrainControllerComps_1_1TCTestConsole_a4423420eca93e1713f59742dc8ac48fc}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label58@{j\+Label58}}
+\index{j\+Label58@{j\+Label58}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label58}{jLabel58}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label58\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a295d6d79a5053490f1e9ed4f49063369}\label{classTrainControllerComps_1_1TCTestConsole_a295d6d79a5053490f1e9ed4f49063369}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label6@{j\+Label6}}
+\index{j\+Label6@{j\+Label6}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label6}{jLabel6}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label6\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a56061314e64982fd14f12f8c157bc446}\label{classTrainControllerComps_1_1TCTestConsole_a56061314e64982fd14f12f8c157bc446}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label7@{j\+Label7}}
+\index{j\+Label7@{j\+Label7}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label7}{jLabel7}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label7\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_af5c88ee6fdf8514186e4be2e0367222d}\label{classTrainControllerComps_1_1TCTestConsole_af5c88ee6fdf8514186e4be2e0367222d}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label8@{j\+Label8}}
+\index{j\+Label8@{j\+Label8}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label8}{jLabel8}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label8\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a82965e977b9eab5384711fa7dae2c7df}\label{classTrainControllerComps_1_1TCTestConsole_a82965e977b9eab5384711fa7dae2c7df}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Label9@{j\+Label9}}
+\index{j\+Label9@{j\+Label9}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Label9}{jLabel9}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Label9\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_af78b45798e2b3493704987ebd4fcdec5}\label{classTrainControllerComps_1_1TCTestConsole_af78b45798e2b3493704987ebd4fcdec5}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Panel1@{j\+Panel1}}
+\index{j\+Panel1@{j\+Panel1}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Panel1}{jPanel1}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Panel Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Panel1\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a4841a010a5d290e5ccd4ab08c0660cdd}\label{classTrainControllerComps_1_1TCTestConsole_a4841a010a5d290e5ccd4ab08c0660cdd}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Radio\+Button11@{j\+Radio\+Button11}}
+\index{j\+Radio\+Button11@{j\+Radio\+Button11}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Radio\+Button11}{jRadioButton11}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Radio\+Button11\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_afabaa89b5791c44f113a704f26f0653d}\label{classTrainControllerComps_1_1TCTestConsole_afabaa89b5791c44f113a704f26f0653d}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Radio\+Button12@{j\+Radio\+Button12}}
+\index{j\+Radio\+Button12@{j\+Radio\+Button12}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Radio\+Button12}{jRadioButton12}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Radio\+Button12\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_aba8a4cf1aec37a400b88f24df6e6b00f}\label{classTrainControllerComps_1_1TCTestConsole_aba8a4cf1aec37a400b88f24df6e6b00f}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Radio\+Button13@{j\+Radio\+Button13}}
+\index{j\+Radio\+Button13@{j\+Radio\+Button13}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Radio\+Button13}{jRadioButton13}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Radio\+Button13\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_ac8e7e27aa2da7d8b20473de214f55545}\label{classTrainControllerComps_1_1TCTestConsole_ac8e7e27aa2da7d8b20473de214f55545}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Radio\+Button14@{j\+Radio\+Button14}}
+\index{j\+Radio\+Button14@{j\+Radio\+Button14}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Radio\+Button14}{jRadioButton14}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Radio\+Button14\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a0ae60a752f0dba23f979a55cb862751f}\label{classTrainControllerComps_1_1TCTestConsole_a0ae60a752f0dba23f979a55cb862751f}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Radio\+Button15@{j\+Radio\+Button15}}
+\index{j\+Radio\+Button15@{j\+Radio\+Button15}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Radio\+Button15}{jRadioButton15}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Radio\+Button15\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_aec997692de4894a4428e3bf6b665d319}\label{classTrainControllerComps_1_1TCTestConsole_aec997692de4894a4428e3bf6b665d319}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Radio\+Button16@{j\+Radio\+Button16}}
+\index{j\+Radio\+Button16@{j\+Radio\+Button16}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Radio\+Button16}{jRadioButton16}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Radio\+Button16\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_aa0785089513677993651b2ec2401acd9}\label{classTrainControllerComps_1_1TCTestConsole_aa0785089513677993651b2ec2401acd9}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Radio\+Button17@{j\+Radio\+Button17}}
+\index{j\+Radio\+Button17@{j\+Radio\+Button17}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Radio\+Button17}{jRadioButton17}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Radio\+Button17\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_af96dfe5ab6c3939fd1f1107052b32860}\label{classTrainControllerComps_1_1TCTestConsole_af96dfe5ab6c3939fd1f1107052b32860}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Radio\+Button18@{j\+Radio\+Button18}}
+\index{j\+Radio\+Button18@{j\+Radio\+Button18}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Radio\+Button18}{jRadioButton18}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Radio\+Button18\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_add689f3cb879f656ce537f7b0de37790}\label{classTrainControllerComps_1_1TCTestConsole_add689f3cb879f656ce537f7b0de37790}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Radio\+Button19@{j\+Radio\+Button19}}
+\index{j\+Radio\+Button19@{j\+Radio\+Button19}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Radio\+Button19}{jRadioButton19}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Radio\+Button19\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a637db2168f9d0e3c3d36b084fe376667}\label{classTrainControllerComps_1_1TCTestConsole_a637db2168f9d0e3c3d36b084fe376667}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Radio\+Button20@{j\+Radio\+Button20}}
+\index{j\+Radio\+Button20@{j\+Radio\+Button20}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Radio\+Button20}{jRadioButton20}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Radio\+Button20\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a5ee544c3a96aebcfc3fb359811f53e17}\label{classTrainControllerComps_1_1TCTestConsole_a5ee544c3a96aebcfc3fb359811f53e17}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Scroll\+Pane1@{j\+Scroll\+Pane1}}
+\index{j\+Scroll\+Pane1@{j\+Scroll\+Pane1}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Scroll\+Pane1}{jScrollPane1}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Scroll\+Pane Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Scroll\+Pane1\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_aa6e341ad4a933305c208ddfab87b7748}\label{classTrainControllerComps_1_1TCTestConsole_aa6e341ad4a933305c208ddfab87b7748}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Separator1@{j\+Separator1}}
+\index{j\+Separator1@{j\+Separator1}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Separator1}{jSeparator1}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Separator Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Separator1\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a321b1c444b86da9a4c8dd6a5e5206d44}\label{classTrainControllerComps_1_1TCTestConsole_a321b1c444b86da9a4c8dd6a5e5206d44}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Separator2@{j\+Separator2}}
+\index{j\+Separator2@{j\+Separator2}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Separator2}{jSeparator2}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Separator Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Separator2\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_aeb40f199fd2cfcb8f20110d13ddc43ae}\label{classTrainControllerComps_1_1TCTestConsole_aeb40f199fd2cfcb8f20110d13ddc43ae}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Separator3@{j\+Separator3}}
+\index{j\+Separator3@{j\+Separator3}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Separator3}{jSeparator3}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Separator Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Separator3\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_ab4b1231ce9b294b2765bb91c44522e3c}\label{classTrainControllerComps_1_1TCTestConsole_ab4b1231ce9b294b2765bb91c44522e3c}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Separator4@{j\+Separator4}}
+\index{j\+Separator4@{j\+Separator4}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Separator4}{jSeparator4}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Separator Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Separator4\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a5907933373af800e343932b74f2b5953}\label{classTrainControllerComps_1_1TCTestConsole_a5907933373af800e343932b74f2b5953}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!j\+Separator5@{j\+Separator5}}
+\index{j\+Separator5@{j\+Separator5}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{j\+Separator5}{jSeparator5}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Separator Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+j\+Separator5\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a6e9e34dbae54de3d18973079a119b259}\label{classTrainControllerComps_1_1TCTestConsole_a6e9e34dbae54de3d18973079a119b259}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!left\+Doors\+Button\+Group@{left\+Doors\+Button\+Group}}
+\index{left\+Doors\+Button\+Group@{left\+Doors\+Button\+Group}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{left\+Doors\+Button\+Group}{leftDoorsButtonGroup}}
+{\footnotesize\ttfamily javax.\+swing.\+Button\+Group Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+left\+Doors\+Button\+Group\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a31e351b69749abd5011ab27db71f2c93}\label{classTrainControllerComps_1_1TCTestConsole_a31e351b69749abd5011ab27db71f2c93}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!left\+Doors\+Button\+Group\+Murphy@{left\+Doors\+Button\+Group\+Murphy}}
+\index{left\+Doors\+Button\+Group\+Murphy@{left\+Doors\+Button\+Group\+Murphy}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{left\+Doors\+Button\+Group\+Murphy}{leftDoorsButtonGroupMurphy}}
+{\footnotesize\ttfamily javax.\+swing.\+Button\+Group Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+left\+Doors\+Button\+Group\+Murphy\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a019c8a0ab8654c401c1e34d4d02237f9}\label{classTrainControllerComps_1_1TCTestConsole_a019c8a0ab8654c401c1e34d4d02237f9}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!left\+Doors\+Label@{left\+Doors\+Label}}
+\index{left\+Doors\+Label@{left\+Doors\+Label}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{left\+Doors\+Label}{leftDoorsLabel}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+left\+Doors\+Label\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a19ea08b80e017c2370d6a71e6f2c9688}\label{classTrainControllerComps_1_1TCTestConsole_a19ea08b80e017c2370d6a71e6f2c9688}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!lights\+Button\+Group@{lights\+Button\+Group}}
+\index{lights\+Button\+Group@{lights\+Button\+Group}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{lights\+Button\+Group}{lightsButtonGroup}}
+{\footnotesize\ttfamily javax.\+swing.\+Button\+Group Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+lights\+Button\+Group\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_ade57cb3a0c1580b921e0ff5ad758c80a}\label{classTrainControllerComps_1_1TCTestConsole_ade57cb3a0c1580b921e0ff5ad758c80a}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!lights\+Button\+Group\+Murphy@{lights\+Button\+Group\+Murphy}}
+\index{lights\+Button\+Group\+Murphy@{lights\+Button\+Group\+Murphy}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{lights\+Button\+Group\+Murphy}{lightsButtonGroupMurphy}}
+{\footnotesize\ttfamily javax.\+swing.\+Button\+Group Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+lights\+Button\+Group\+Murphy\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_ac6b7301f535cea9ef8d39ba8d9e21bc3}\label{classTrainControllerComps_1_1TCTestConsole_ac6b7301f535cea9ef8d39ba8d9e21bc3}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!lights\+Label@{lights\+Label}}
+\index{lights\+Label@{lights\+Label}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{lights\+Label}{lightsLabel}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+lights\+Label\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_acb8f9a2f8b463f489504ceb2632e0472}\label{classTrainControllerComps_1_1TCTestConsole_acb8f9a2f8b463f489504ceb2632e0472}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!logs@{logs}}
+\index{logs@{logs}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{logs}{logs}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Text\+Pane Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+logs\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a863cecfa16a93d7a4e220853a7202a80}\label{classTrainControllerComps_1_1TCTestConsole_a863cecfa16a93d7a4e220853a7202a80}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!logs\+Label@{logs\+Label}}
+\index{logs\+Label@{logs\+Label}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{logs\+Label}{logsLabel}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+logs\+Label\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_af08c073d08ed471e509709158a0ca2d3}\label{classTrainControllerComps_1_1TCTestConsole_af08c073d08ed471e509709158a0ca2d3}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!num\+Dispatched\+Trains@{num\+Dispatched\+Trains}}
+\index{num\+Dispatched\+Trains@{num\+Dispatched\+Trains}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{num\+Dispatched\+Trains}{numDispatchedTrains}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Combo\+Box$<$String$>$ Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+num\+Dispatched\+Trains\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a857ac857bbf765132239734e62c78210}\label{classTrainControllerComps_1_1TCTestConsole_a857ac857bbf765132239734e62c78210}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!right\+Doors\+Button\+Group\+Murphy@{right\+Doors\+Button\+Group\+Murphy}}
+\index{right\+Doors\+Button\+Group\+Murphy@{right\+Doors\+Button\+Group\+Murphy}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{right\+Doors\+Button\+Group\+Murphy}{rightDoorsButtonGroupMurphy}}
+{\footnotesize\ttfamily javax.\+swing.\+Button\+Group Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+right\+Doors\+Button\+Group\+Murphy\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a5fd502aa4588d4ec5d4503cad1dc399c}\label{classTrainControllerComps_1_1TCTestConsole_a5fd502aa4588d4ec5d4503cad1dc399c}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!right\+Doors\+Button\+Groups@{right\+Doors\+Button\+Groups}}
+\index{right\+Doors\+Button\+Groups@{right\+Doors\+Button\+Groups}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{right\+Doors\+Button\+Groups}{rightDoorsButtonGroups}}
+{\footnotesize\ttfamily javax.\+swing.\+Button\+Group Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+right\+Doors\+Button\+Groups\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a9305662f0767e36bf1f990834b73cfc3}\label{classTrainControllerComps_1_1TCTestConsole_a9305662f0767e36bf1f990834b73cfc3}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!right\+Doors\+Label@{right\+Doors\+Label}}
+\index{right\+Doors\+Label@{right\+Doors\+Label}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{right\+Doors\+Label}{rightDoorsLabel}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+right\+Doors\+Label\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a0d334010f5ee13f36d222a1e9c744692}\label{classTrainControllerComps_1_1TCTestConsole_a0d334010f5ee13f36d222a1e9c744692}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!selected\+Train@{selected\+Train}}
+\index{selected\+Train@{selected\+Train}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{selected\+Train}{selectedTrain}}
+{\footnotesize\ttfamily \hyperlink{classTrainControllerComps_1_1TestTrain}{Test\+Train} Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+selected\+Train\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Train being controlled by the Train Controller. 
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_ad8105908c48ad8b5fd4c0a951db655a2}\label{classTrainControllerComps_1_1TCTestConsole_ad8105908c48ad8b5fd4c0a951db655a2}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!set\+Speed@{set\+Speed}}
+\index{set\+Speed@{set\+Speed}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{set\+Speed}{setSpeed}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+set\+Speed\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a493fcafc1264f633059e840f83207593}\label{classTrainControllerComps_1_1TCTestConsole_a493fcafc1264f633059e840f83207593}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!speed\+Slider@{speed\+Slider}}
+\index{speed\+Slider@{speed\+Slider}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{speed\+Slider}{speedSlider}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Slider Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+speed\+Slider\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_af9f54adad63841cba14c0bbb41ab3de7}\label{classTrainControllerComps_1_1TCTestConsole_af9f54adad63841cba14c0bbb41ab3de7}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!sugg\+Speed\+\_\+\+Slider@{sugg\+Speed\+\_\+\+Slider}}
+\index{sugg\+Speed\+\_\+\+Slider@{sugg\+Speed\+\_\+\+Slider}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{sugg\+Speed\+\_\+\+Slider}{suggSpeed\_Slider}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+sugg\+Speed\+\_\+\+Slider\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a9d7e5b560ae353604fe3281c949dc2a7}\label{classTrainControllerComps_1_1TCTestConsole_a9d7e5b560ae353604fe3281c949dc2a7}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!sugg\+Speed\+Slider@{sugg\+Speed\+Slider}}
+\index{sugg\+Speed\+Slider@{sugg\+Speed\+Slider}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{sugg\+Speed\+Slider}{suggSpeedSlider}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Slider Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+sugg\+Speed\+Slider\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a30e4ba9897434ccc699b1d5cb1f80585}\label{classTrainControllerComps_1_1TCTestConsole_a30e4ba9897434ccc699b1d5cb1f80585}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!t@{t}}
+\index{t@{t}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{t}{t}}
+{\footnotesize\ttfamily Timer Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+t\hspace{0.3cm}{\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \textcolor{keyword}{new} Timer(1000, \textcolor{keyword}{new} ActionListener()\{
+        Random rand = \textcolor{keyword}{new} Random(); 
+        \textcolor{keyword}{public} \textcolor{keywordtype}{void} actionPerformed(ActionEvent e) \{
+            \hyperlink{classTrainControllerComps_1_1TCTestConsole_a8c36f9ef39a0e5b17ff982eb9a5fb2d1}{refreshUI}();    
+            \}
+        \})
+\end{DoxyCode}
+
+
+Timer used to update the Test Console every 1 second. 
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a12271d14ee26a5ac90db1e541954b788}\label{classTrainControllerComps_1_1TCTestConsole_a12271d14ee26a5ac90db1e541954b788}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!train\+Controller@{train\+Controller}}
+\index{train\+Controller@{train\+Controller}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{train\+Controller}{trainController}}
+{\footnotesize\ttfamily \hyperlink{classTrainControllerComps_1_1TrainController}{Train\+Controller} Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+train\+Controller\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Train Controller to relay any changes made to the train to. 
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a1e94ccf980f441f8e7c411ed38c42be5}\label{classTrainControllerComps_1_1TCTestConsole_a1e94ccf980f441f8e7c411ed38c42be5}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!train\+Power@{train\+Power}}
+\index{train\+Power@{train\+Power}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{train\+Power}{trainPower}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+train\+Power\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_ac2dc24779140f31fd6f33be4be926c96}\label{classTrainControllerComps_1_1TCTestConsole_ac2dc24779140f31fd6f33be4be926c96}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!train\+Power\+Label@{train\+Power\+Label}}
+\index{train\+Power\+Label@{train\+Power\+Label}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{train\+Power\+Label}{trainPowerLabel}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+train\+Power\+Label\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a5ffb3ab5c0f9a7fc37f72c77e70432a9}\label{classTrainControllerComps_1_1TCTestConsole_a5ffb3ab5c0f9a7fc37f72c77e70432a9}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!train\+Speed@{train\+Speed}}
+\index{train\+Speed@{train\+Speed}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{train\+Speed}{trainSpeed}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+train\+Speed\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a4fbf210d4a143467d39d3311171422dd}\label{classTrainControllerComps_1_1TCTestConsole_a4fbf210d4a143467d39d3311171422dd}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!train\+Speed\+\_\+\+Slider@{train\+Speed\+\_\+\+Slider}}
+\index{train\+Speed\+\_\+\+Slider@{train\+Speed\+\_\+\+Slider}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{train\+Speed\+\_\+\+Slider}{trainSpeed\_Slider}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+train\+Speed\+\_\+\+Slider\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCTestConsole_a6d89bc3a12936a14165ba016d51df6b6}\label{classTrainControllerComps_1_1TCTestConsole_a6d89bc3a12936a14165ba016d51df6b6}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}!train\+Speed\+Label@{train\+Speed\+Label}}
+\index{train\+Speed\+Label@{train\+Speed\+Label}!Train\+Controller\+Comps\+::\+T\+C\+Test\+Console@{Train\+Controller\+Comps\+::\+T\+C\+Test\+Console}}
+\subsubsection{\texorpdfstring{train\+Speed\+Label}{trainSpeedLabel}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Test\+Console.\+train\+Speed\+Label\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/\+Train\+Controller\+Comps/\hyperlink{TCTestConsole_8java}{T\+C\+Test\+Console.\+java}\end{DoxyCompactItemize}

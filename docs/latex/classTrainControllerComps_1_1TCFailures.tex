@@ -1,0 +1,403 @@
+\hypertarget{classTrainControllerComps_1_1TCFailures}{}\section{Train\+Controller\+Comps.\+T\+C\+Failures Class Reference}
+\label{classTrainControllerComps_1_1TCFailures}\index{Train\+Controller\+Comps.\+T\+C\+Failures@{Train\+Controller\+Comps.\+T\+C\+Failures}}
+
+
+This class is responsible for display the states of the 3 failures that can occur on the train, as well as sending a signal to the C\+TC to repair the broken systems.  
+
+
+
+
+Inheritance diagram for Train\+Controller\+Comps.\+T\+C\+Failures\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=245pt]{classTrainControllerComps_1_1TCFailures__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Train\+Controller\+Comps.\+T\+C\+Failures\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classTrainControllerComps_1_1TCFailures__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classTrainControllerComps_1_1TCFailures_afbf09a8c516634c2376901ca04bebae9}{T\+C\+Failures} ()
+\begin{DoxyCompactList}\small\item\em Constructor for creating a T\+C\+Failure object with no selected train, logbook, or error log. \end{DoxyCompactList}\item 
+\hyperlink{classTrainControllerComps_1_1TCFailures_a021613d630232111e9a30398d15dcd51}{T\+C\+Failures} (\hyperlink{classTrainControllerComps_1_1TestTrain}{Test\+Train} \hyperlink{classtrain}{train})
+\begin{DoxyCompactList}\small\item\em Constructor for creating a \hyperlink{classTrainControllerComps_1_1TCFailures}{T\+C\+Failures} object with a given train. \end{DoxyCompactList}\item 
+void \hyperlink{classTrainControllerComps_1_1TCFailures_a9ce6a8fde30a39507e3ee5dfb1a02ba3}{set\+Error\+Logs} (J\+Text\+Pane err\+Log)
+\begin{DoxyCompactList}\small\item\em Sets the error log that is to be printed to. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classTrainControllerComps_1_1TCFailures_a6c248a0171ceab80ac94ea966e97d5ba}{main} (String args\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+javax.\+swing.\+J\+Button \hyperlink{classTrainControllerComps_1_1TCFailures_a0759ba38c88b24a362214722ef0dbfa7}{request\+Fix\+Button}
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCFailures_ac2b39b97af1de62e3c73a74d2b7a20e1}{refresh\+UI} ()
+\begin{DoxyCompactList}\small\item\em This method is not called from anywhere else, so the window does not refresh itself when a train has been fixed. \end{DoxyCompactList}\item 
+boolean \hyperlink{classTrainControllerComps_1_1TCFailures_ab4d70425a3e693a1e21462deb74c8d6b}{is\+Power\+Failure} ()
+\begin{DoxyCompactList}\small\item\em Checks if at least one of the utilities on the train is in a failure state, i.\+e., a power failure. \end{DoxyCompactList}\item 
+void \hyperlink{classTrainControllerComps_1_1TCFailures_a0e826ca632b3289ad5b68ca93bb2fd11}{print\+Log\+Book} ()
+\begin{DoxyCompactList}\small\item\em Prints the stored up logs from the logbook to the error log, and then clears the logbook. \end{DoxyCompactList}\item 
+void \hyperlink{classTrainControllerComps_1_1TCFailures_a258e2032358c8398ea01b0feab32bcd6}{append\+To\+Pane} (J\+Text\+Pane tp, String msg, Color c)
+\begin{DoxyCompactList}\small\item\em Add to a given log a given message in a given color. \end{DoxyCompactList}\item 
+void \hyperlink{classTrainControllerComps_1_1TCFailures_abb8526b0ea750ed8d0570ae2e42713f8}{init\+Components} ()
+\begin{DoxyCompactList}\small\item\em This method is called from within the constructor to initialize the form. \end{DoxyCompactList}\item 
+void \hyperlink{classTrainControllerComps_1_1TCFailures_a16da0e026327d523cdcb1f4b9286e30a}{request\+Fix\+Button} (java.\+awt.\+event.\+Action\+Event evt)
+\begin{DoxyCompactList}\small\item\em Requests a fix to the C\+TC if there is an Antenna, Power, or Brake Failure, and records it to the error log. \end{DoxyCompactList}\item 
+String \hyperlink{classTrainControllerComps_1_1TCFailures_aeed3df89a5204c89c00e75174f8722aa}{get\+Time} ()
+\begin{DoxyCompactList}\small\item\em Gets the time from the Operating System as a String. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classTrainControllerComps_1_1TestTrain}{Test\+Train} \hyperlink{classTrainControllerComps_1_1TCFailures_a65fcb53be7a441d6ceec8872955ad8d7}{selected\+Train}
+\begin{DoxyCompactList}\small\item\em The train in which to display the failures from. \end{DoxyCompactList}\item 
+Linked\+List$<$ String $>$ \hyperlink{classTrainControllerComps_1_1TCFailures_a0c73c29afaca67760bd6b130ccbf2d4c}{logbook}
+\begin{DoxyCompactList}\small\item\em A list to store up messages to print to the error log. \end{DoxyCompactList}\item 
+J\+Text\+Pane \hyperlink{classTrainControllerComps_1_1TCFailures_a07b6a5403f60a1e2e6510836de30d906}{error\+Logs}
+\begin{DoxyCompactList}\small\item\em Area to print the error logs to. \end{DoxyCompactList}\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCFailures_ac74d2657306216535068bd17548b9661}{antenna\+Failure\+Radio\+Button}
+\item 
+javax.\+swing.\+Button\+Group \hyperlink{classTrainControllerComps_1_1TCFailures_a8c7e61b0b03ba87a123c5d9277b13af3}{antenna\+Group}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCFailures_a93e714edc703ad8ddb8ea9e869443ad7}{antenna\+Label}
+\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCFailures_a42b774e2408469ae3ba0d62839f88a42}{antenna\+Working\+Radio\+Button}
+\item 
+javax.\+swing.\+Button\+Group \hyperlink{classTrainControllerComps_1_1TCFailures_a6c7510f746275475950bf30eba68cae8}{brake\+Group}
+\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCFailures_af6a949a714e480c7895ea3bfc888a098}{brakes\+Failure\+Radio\+Button}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCFailures_ab57a4712aba9bf053d7cbedfaca730e5}{brakes\+Label}
+\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCFailures_a248c5a31df39bfb278e59da0b4641b40}{brakes\+Working\+Radio\+Button}
+\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCFailures_a66d3a69d8c53976528fa025cb0acef2c}{power\+Failure\+Radio\+Button}
+\item 
+javax.\+swing.\+Button\+Group \hyperlink{classTrainControllerComps_1_1TCFailures_a28320b6b09f3dfb2f7906d24cdc2cb92}{power\+Group}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCFailures_a567ab26c57cbd96117393bd3ce4958f1}{power\+Label}
+\item 
+javax.\+swing.\+J\+Radio\+Button \hyperlink{classTrainControllerComps_1_1TCFailures_a1801a3cc7ab2a87605497f7d5fb96acd}{power\+Working\+Radio\+Button}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCFailures_a58b8932f973472f4199f77e5d2eaaf14}{title\+Label}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCFailures_ada89c81b5d3fb48652c5f542431dc3da}{train\+Id}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCFailures_aeee00ebb3eb979b4916d3cf8294c1e59}{train\+Id\+Label}
+\item 
+javax.\+swing.\+J\+Separator \hyperlink{classTrainControllerComps_1_1TCFailures_addc1377b0e7ab921bba464c9892593e6}{ui\+Separator\+One}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class is responsible for display the states of the 3 failures that can occur on the train, as well as sending a signal to the C\+TC to repair the broken systems. 
+
+The three failures are\+: antenna, power, and brake.
+
+This class collaborates with the Train Controller and Train class.
+
+\begin{DoxyAuthor}{Author}
+Andrew Lendacky 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_afbf09a8c516634c2376901ca04bebae9}\label{classTrainControllerComps_1_1TCFailures_afbf09a8c516634c2376901ca04bebae9}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!T\+C\+Failures@{T\+C\+Failures}}
+\index{T\+C\+Failures@{T\+C\+Failures}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{T\+C\+Failures()}{TCFailures()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Train\+Controller\+Comps.\+T\+C\+Failures.\+T\+C\+Failures (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Constructor for creating a T\+C\+Failure object with no selected train, logbook, or error log. 
+
+These must be passed in from the Train Controller before being used. \mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_a021613d630232111e9a30398d15dcd51}\label{classTrainControllerComps_1_1TCFailures_a021613d630232111e9a30398d15dcd51}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!T\+C\+Failures@{T\+C\+Failures}}
+\index{T\+C\+Failures@{T\+C\+Failures}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{T\+C\+Failures()}{TCFailures()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Train\+Controller\+Comps.\+T\+C\+Failures.\+T\+C\+Failures (\begin{DoxyParamCaption}\item[{\hyperlink{classTrainControllerComps_1_1TestTrain}{Test\+Train}}]{train }\end{DoxyParamCaption})}
+
+
+
+Constructor for creating a \hyperlink{classTrainControllerComps_1_1TCFailures}{T\+C\+Failures} object with a given train. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em train} & the selected train from the Train Controller \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_a258e2032358c8398ea01b0feab32bcd6}\label{classTrainControllerComps_1_1TCFailures_a258e2032358c8398ea01b0feab32bcd6}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!append\+To\+Pane@{append\+To\+Pane}}
+\index{append\+To\+Pane@{append\+To\+Pane}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{append\+To\+Pane()}{appendToPane()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Failures.\+append\+To\+Pane (\begin{DoxyParamCaption}\item[{J\+Text\+Pane}]{tp,  }\item[{String}]{msg,  }\item[{Color}]{c }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Add to a given log a given message in a given color. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tp} & the text pane to display the message in. \\
+\hline
+{\em msg} & the message to display. \\
+\hline
+{\em c} & the color to display the message in. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_aeed3df89a5204c89c00e75174f8722aa}\label{classTrainControllerComps_1_1TCFailures_aeed3df89a5204c89c00e75174f8722aa}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!get\+Time@{get\+Time}}
+\index{get\+Time@{get\+Time}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{get\+Time()}{getTime()}}
+{\footnotesize\ttfamily String Train\+Controller\+Comps.\+T\+C\+Failures.\+get\+Time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Gets the time from the Operating System as a String. 
+
+\begin{DoxyReturn}{Returns}
+returns the time of the system. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_abb8526b0ea750ed8d0570ae2e42713f8}\label{classTrainControllerComps_1_1TCFailures_abb8526b0ea750ed8d0570ae2e42713f8}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!init\+Components@{init\+Components}}
+\index{init\+Components@{init\+Components}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{init\+Components()}{initComponents()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Failures.\+init\+Components (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+This method is called from within the constructor to initialize the form. 
+
+W\+A\+R\+N\+I\+NG\+: Do N\+OT modify this code. The content of this method is always regenerated by the Form Editor. \mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_ab4d70425a3e693a1e21462deb74c8d6b}\label{classTrainControllerComps_1_1TCFailures_ab4d70425a3e693a1e21462deb74c8d6b}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!is\+Power\+Failure@{is\+Power\+Failure}}
+\index{is\+Power\+Failure@{is\+Power\+Failure}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{is\+Power\+Failure()}{isPowerFailure()}}
+{\footnotesize\ttfamily boolean Train\+Controller\+Comps.\+T\+C\+Failures.\+is\+Power\+Failure (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Checks if at least one of the utilities on the train is in a failure state, i.\+e., a power failure. 
+
+\begin{DoxyReturn}{Returns}
+returns true if there is at least one utility broken, false if all the utilities are working. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_a6c248a0171ceab80ac94ea966e97d5ba}\label{classTrainControllerComps_1_1TCFailures_a6c248a0171ceab80ac94ea966e97d5ba}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!main@{main}}
+\index{main@{main}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily static void Train\+Controller\+Comps.\+T\+C\+Failures.\+main (\begin{DoxyParamCaption}\item[{String}]{args\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em args} & the command line arguments \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_a0e826ca632b3289ad5b68ca93bb2fd11}\label{classTrainControllerComps_1_1TCFailures_a0e826ca632b3289ad5b68ca93bb2fd11}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!print\+Log\+Book@{print\+Log\+Book}}
+\index{print\+Log\+Book@{print\+Log\+Book}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{print\+Log\+Book()}{printLogBook()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Failures.\+print\+Log\+Book (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Prints the stored up logs from the logbook to the error log, and then clears the logbook. 
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_ac2b39b97af1de62e3c73a74d2b7a20e1}\label{classTrainControllerComps_1_1TCFailures_ac2b39b97af1de62e3c73a74d2b7a20e1}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!refresh\+UI@{refresh\+UI}}
+\index{refresh\+UI@{refresh\+UI}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{refresh\+U\+I()}{refreshUI()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Failures.\+refresh\+UI (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+This method is not called from anywhere else, so the window does not refresh itself when a train has been fixed. 
+
+Therefore, it will continue to show the old states of the failures until the user closes the window and reopens it. Refreshes the UI to update the radio buttons based on the status of the train. \mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_a16da0e026327d523cdcb1f4b9286e30a}\label{classTrainControllerComps_1_1TCFailures_a16da0e026327d523cdcb1f4b9286e30a}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!request\+Fix\+Button@{request\+Fix\+Button}}
+\index{request\+Fix\+Button@{request\+Fix\+Button}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{request\+Fix\+Button()}{requestFixButton()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Failures.\+request\+Fix\+Button (\begin{DoxyParamCaption}\item[{java.\+awt.\+event.\+Action\+Event}]{evt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Requests a fix to the C\+TC if there is an Antenna, Power, or Brake Failure, and records it to the error log. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em evt} & the sender of the event, i.\+e., the \textquotesingle{}Request Fix\textquotesingle{} button. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_a9ce6a8fde30a39507e3ee5dfb1a02ba3}\label{classTrainControllerComps_1_1TCFailures_a9ce6a8fde30a39507e3ee5dfb1a02ba3}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!set\+Error\+Logs@{set\+Error\+Logs}}
+\index{set\+Error\+Logs@{set\+Error\+Logs}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{set\+Error\+Logs()}{setErrorLogs()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Failures.\+set\+Error\+Logs (\begin{DoxyParamCaption}\item[{J\+Text\+Pane}]{err\+Log }\end{DoxyParamCaption})}
+
+
+
+Sets the error log that is to be printed to. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em err\+Logs} & a textpane representing the error log \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_ac74d2657306216535068bd17548b9661}\label{classTrainControllerComps_1_1TCFailures_ac74d2657306216535068bd17548b9661}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!antenna\+Failure\+Radio\+Button@{antenna\+Failure\+Radio\+Button}}
+\index{antenna\+Failure\+Radio\+Button@{antenna\+Failure\+Radio\+Button}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{antenna\+Failure\+Radio\+Button}{antennaFailureRadioButton}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Failures.\+antenna\+Failure\+Radio\+Button\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_a8c7e61b0b03ba87a123c5d9277b13af3}\label{classTrainControllerComps_1_1TCFailures_a8c7e61b0b03ba87a123c5d9277b13af3}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!antenna\+Group@{antenna\+Group}}
+\index{antenna\+Group@{antenna\+Group}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{antenna\+Group}{antennaGroup}}
+{\footnotesize\ttfamily javax.\+swing.\+Button\+Group Train\+Controller\+Comps.\+T\+C\+Failures.\+antenna\+Group\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_a93e714edc703ad8ddb8ea9e869443ad7}\label{classTrainControllerComps_1_1TCFailures_a93e714edc703ad8ddb8ea9e869443ad7}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!antenna\+Label@{antenna\+Label}}
+\index{antenna\+Label@{antenna\+Label}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{antenna\+Label}{antennaLabel}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Failures.\+antenna\+Label\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_a42b774e2408469ae3ba0d62839f88a42}\label{classTrainControllerComps_1_1TCFailures_a42b774e2408469ae3ba0d62839f88a42}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!antenna\+Working\+Radio\+Button@{antenna\+Working\+Radio\+Button}}
+\index{antenna\+Working\+Radio\+Button@{antenna\+Working\+Radio\+Button}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{antenna\+Working\+Radio\+Button}{antennaWorkingRadioButton}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Failures.\+antenna\+Working\+Radio\+Button\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_a6c7510f746275475950bf30eba68cae8}\label{classTrainControllerComps_1_1TCFailures_a6c7510f746275475950bf30eba68cae8}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!brake\+Group@{brake\+Group}}
+\index{brake\+Group@{brake\+Group}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{brake\+Group}{brakeGroup}}
+{\footnotesize\ttfamily javax.\+swing.\+Button\+Group Train\+Controller\+Comps.\+T\+C\+Failures.\+brake\+Group\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_af6a949a714e480c7895ea3bfc888a098}\label{classTrainControllerComps_1_1TCFailures_af6a949a714e480c7895ea3bfc888a098}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!brakes\+Failure\+Radio\+Button@{brakes\+Failure\+Radio\+Button}}
+\index{brakes\+Failure\+Radio\+Button@{brakes\+Failure\+Radio\+Button}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{brakes\+Failure\+Radio\+Button}{brakesFailureRadioButton}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Failures.\+brakes\+Failure\+Radio\+Button\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_ab57a4712aba9bf053d7cbedfaca730e5}\label{classTrainControllerComps_1_1TCFailures_ab57a4712aba9bf053d7cbedfaca730e5}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!brakes\+Label@{brakes\+Label}}
+\index{brakes\+Label@{brakes\+Label}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{brakes\+Label}{brakesLabel}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Failures.\+brakes\+Label\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_a248c5a31df39bfb278e59da0b4641b40}\label{classTrainControllerComps_1_1TCFailures_a248c5a31df39bfb278e59da0b4641b40}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!brakes\+Working\+Radio\+Button@{brakes\+Working\+Radio\+Button}}
+\index{brakes\+Working\+Radio\+Button@{brakes\+Working\+Radio\+Button}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{brakes\+Working\+Radio\+Button}{brakesWorkingRadioButton}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Failures.\+brakes\+Working\+Radio\+Button\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_a07b6a5403f60a1e2e6510836de30d906}\label{classTrainControllerComps_1_1TCFailures_a07b6a5403f60a1e2e6510836de30d906}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!error\+Logs@{error\+Logs}}
+\index{error\+Logs@{error\+Logs}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{error\+Logs}{errorLogs}}
+{\footnotesize\ttfamily J\+Text\+Pane Train\+Controller\+Comps.\+T\+C\+Failures.\+error\+Logs\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Area to print the error logs to. 
+
+This comes from the error\+Logs from the Train Controller class. \mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_a0c73c29afaca67760bd6b130ccbf2d4c}\label{classTrainControllerComps_1_1TCFailures_a0c73c29afaca67760bd6b130ccbf2d4c}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!logbook@{logbook}}
+\index{logbook@{logbook}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{logbook}{logbook}}
+{\footnotesize\ttfamily Linked\+List$<$String$>$ Train\+Controller\+Comps.\+T\+C\+Failures.\+logbook\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+A list to store up messages to print to the error log. 
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_a66d3a69d8c53976528fa025cb0acef2c}\label{classTrainControllerComps_1_1TCFailures_a66d3a69d8c53976528fa025cb0acef2c}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!power\+Failure\+Radio\+Button@{power\+Failure\+Radio\+Button}}
+\index{power\+Failure\+Radio\+Button@{power\+Failure\+Radio\+Button}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{power\+Failure\+Radio\+Button}{powerFailureRadioButton}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Failures.\+power\+Failure\+Radio\+Button\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_a28320b6b09f3dfb2f7906d24cdc2cb92}\label{classTrainControllerComps_1_1TCFailures_a28320b6b09f3dfb2f7906d24cdc2cb92}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!power\+Group@{power\+Group}}
+\index{power\+Group@{power\+Group}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{power\+Group}{powerGroup}}
+{\footnotesize\ttfamily javax.\+swing.\+Button\+Group Train\+Controller\+Comps.\+T\+C\+Failures.\+power\+Group\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_a567ab26c57cbd96117393bd3ce4958f1}\label{classTrainControllerComps_1_1TCFailures_a567ab26c57cbd96117393bd3ce4958f1}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!power\+Label@{power\+Label}}
+\index{power\+Label@{power\+Label}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{power\+Label}{powerLabel}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Failures.\+power\+Label\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_a1801a3cc7ab2a87605497f7d5fb96acd}\label{classTrainControllerComps_1_1TCFailures_a1801a3cc7ab2a87605497f7d5fb96acd}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!power\+Working\+Radio\+Button@{power\+Working\+Radio\+Button}}
+\index{power\+Working\+Radio\+Button@{power\+Working\+Radio\+Button}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{power\+Working\+Radio\+Button}{powerWorkingRadioButton}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Radio\+Button Train\+Controller\+Comps.\+T\+C\+Failures.\+power\+Working\+Radio\+Button\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_a0759ba38c88b24a362214722ef0dbfa7}\label{classTrainControllerComps_1_1TCFailures_a0759ba38c88b24a362214722ef0dbfa7}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!request\+Fix\+Button@{request\+Fix\+Button}}
+\index{request\+Fix\+Button@{request\+Fix\+Button}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{request\+Fix\+Button}{requestFixButton}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Button Train\+Controller\+Comps.\+T\+C\+Failures.\+request\+Fix\+Button}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_a65fcb53be7a441d6ceec8872955ad8d7}\label{classTrainControllerComps_1_1TCFailures_a65fcb53be7a441d6ceec8872955ad8d7}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!selected\+Train@{selected\+Train}}
+\index{selected\+Train@{selected\+Train}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{selected\+Train}{selectedTrain}}
+{\footnotesize\ttfamily \hyperlink{classTrainControllerComps_1_1TestTrain}{Test\+Train} Train\+Controller\+Comps.\+T\+C\+Failures.\+selected\+Train\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The train in which to display the failures from. 
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_a58b8932f973472f4199f77e5d2eaaf14}\label{classTrainControllerComps_1_1TCFailures_a58b8932f973472f4199f77e5d2eaaf14}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!title\+Label@{title\+Label}}
+\index{title\+Label@{title\+Label}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{title\+Label}{titleLabel}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Failures.\+title\+Label\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_ada89c81b5d3fb48652c5f542431dc3da}\label{classTrainControllerComps_1_1TCFailures_ada89c81b5d3fb48652c5f542431dc3da}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!train\+Id@{train\+Id}}
+\index{train\+Id@{train\+Id}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{train\+Id}{trainId}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Failures.\+train\+Id\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_aeee00ebb3eb979b4916d3cf8294c1e59}\label{classTrainControllerComps_1_1TCFailures_aeee00ebb3eb979b4916d3cf8294c1e59}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!train\+Id\+Label@{train\+Id\+Label}}
+\index{train\+Id\+Label@{train\+Id\+Label}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{train\+Id\+Label}{trainIdLabel}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Failures.\+train\+Id\+Label\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCFailures_addc1377b0e7ab921bba464c9892593e6}\label{classTrainControllerComps_1_1TCFailures_addc1377b0e7ab921bba464c9892593e6}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}!ui\+Separator\+One@{ui\+Separator\+One}}
+\index{ui\+Separator\+One@{ui\+Separator\+One}!Train\+Controller\+Comps\+::\+T\+C\+Failures@{Train\+Controller\+Comps\+::\+T\+C\+Failures}}
+\subsubsection{\texorpdfstring{ui\+Separator\+One}{uiSeparatorOne}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Separator Train\+Controller\+Comps.\+T\+C\+Failures.\+ui\+Separator\+One\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/\+Train\+Controller\+Comps/\hyperlink{TCFailures_8java}{T\+C\+Failures.\+java}\end{DoxyCompactItemize}

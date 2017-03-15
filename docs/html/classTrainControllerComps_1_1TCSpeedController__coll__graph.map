@@ -1,0 +1,4 @@
+<map id="TrainControllerComps.TCSpeedController" name="TrainControllerComps.TCSpeedController">
+<area shape="rect" id="node9" href="$classTrainControllerComps_1_1TCBrakePanel.html" title="This class is responsible for applying and managing the use of a train&#39;s braking system. " alt="" coords="653,515,860,721"/>
+<area shape="rect" id="node11" href="$classTrainControllerComps_1_1TestTrain.html" title="{TrainControllerComps.Test\lTrain\n|~ id\l~ speed\l~ power\l~ kp\l~ ki\l~ currentBlockSpeed\l~ currentSuggestedSpeed\l~ lights\l~ leftDoors\l~ rightDoors\l~ ac\l~ heat\l|+ TestTrain()\l+ powerConstantsSet()\l+ generateRandomTestTrain()\l+ main()\l}" alt="" coords="957,140,1156,413"/>
+</map>

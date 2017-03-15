@@ -1,0 +1,358 @@
+\hypertarget{classTrackModel_1_1TrackModel}{}\section{Track\+Model.\+Track\+Model Class Reference}
+\label{classTrackModel_1_1TrackModel}\index{Track\+Model.\+Track\+Model@{Track\+Model.\+Track\+Model}}
+
+
+Collaboration diagram for Track\+Model.\+Track\+Model\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classTrackModel_1_1TrackModel__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classTrackModel_1_1Block}{Block} \hyperlink{classTrackModel_1_1TrackModel_a670006658bfbfc272c1097de1080d17c}{get\+Block} (String line, String section, Integer block\+Num)
+\begin{DoxyCompactList}\small\item\em Simplicity wrapper to return a non-\/aliased block on the track given the parameters. \end{DoxyCompactList}\item 
+Hash\+Map$<$ Integer, \hyperlink{classTrackModel_1_1Block}{Block} $>$ \hyperlink{classTrackModel_1_1TrackModel_a19d3841da17500d43607ce4f37fc2de9}{get\+Section} (String line, String section)
+\begin{DoxyCompactList}\small\item\em Returns a non-\/aliased section of blocks. \end{DoxyCompactList}\item 
+Hash\+Map$<$ String, Hash\+Map$<$ String, Hash\+Map$<$ Integer, \hyperlink{classTrackModel_1_1Block}{Block} $>$ $>$ $>$ \hyperlink{classTrackModel_1_1TrackModel_ae74a6b0938494affe4c2b96b7b8f288a}{view\+Track\+List} ()
+\begin{DoxyCompactList}\small\item\em Allows viewing of the track\+List to other modules, implemented as a copy method. \end{DoxyCompactList}\item 
+Hash\+Map$<$ String, Array\+List$<$ \hyperlink{classTrackModel_1_1Block}{Block} $>$ $>$ \hyperlink{classTrackModel_1_1TrackModel_ae43164d0e8478c2bc5ffc3b013f49e60}{view\+Station\+Map} ()
+\begin{DoxyCompactList}\small\item\em Allows viewing of the station map to other modules, implemented as a copy method. \end{DoxyCompactList}\item 
+Hash\+Map$<$ \hyperlink{classTrackModel_1_1Block}{Block}, \hyperlink{classTrackModel_1_1Crossing}{Crossing} $>$ \hyperlink{classTrackModel_1_1TrackModel_a5f9d06be603a4aee4d29da60276b0383}{view\+Crossing\+Map} ()
+\item 
+Hash\+Map$<$ String, Array\+List$<$ \hyperlink{classTrackModel_1_1Block}{Block} $>$ $>$ \hyperlink{classTrackModel_1_1TrackModel_a03ca2c29d73dd39a2dfb3e0342fe4e27}{view\+Leaf\+Map} ()
+\begin{DoxyCompactList}\small\item\em Allows viewing of leaf nodes of the switches to other modules. \end{DoxyCompactList}\item 
+Hash\+Map$<$ \hyperlink{classTrackModel_1_1Block}{Block}, \hyperlink{classTrackModel_1_1Station}{Station} $>$ \hyperlink{classTrackModel_1_1TrackModel_a5bd341c8df3e0ad585f32e1587061f36}{view\+Block\+Station\+Map} ()
+\begin{DoxyCompactList}\small\item\em Allows viewing of the block\+Station\+Map by other modules. \end{DoxyCompactList}\item 
+Hash\+Map$<$ String, \hyperlink{classTrackModel_1_1Block}{Block} $>$ \hyperlink{classTrackModel_1_1TrackModel_aa070a8864c352ab49eae4c93aa88700f}{view\+Root\+Map} ()
+\begin{DoxyCompactList}\small\item\em Allows viewing of the root\+Map by other modules. \end{DoxyCompactList}\item 
+void \hyperlink{classTrackModel_1_1TrackModel_ab4deefd42535c2e06785eba4ed3989a1}{read\+C\+SV} (String\mbox{[}$\,$\mbox{]} f\+Names)
+\begin{DoxyCompactList}\small\item\em Helper function for reading the information from the excel-\/dumped C\+SV. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Package Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Hash\+Map$<$ String, Hash\+Map$<$ String, Hash\+Map$<$ Integer, \hyperlink{classTrackModel_1_1Block}{Block} $>$ $>$ $>$ \hyperlink{classTrackModel_1_1TrackModel_ad9f221dc431ebf142e7930d8116cf705}{track\+List}
+\item 
+Hash\+Map$<$ String, \hyperlink{classTrackModel_1_1Block}{Block} $>$ \hyperlink{classTrackModel_1_1TrackModel_ae48e24ae7b5775111086a3b3734d8dc9}{root\+Map} = new Hash\+Map$<$String, \hyperlink{classTrackModel_1_1Block}{Block}$>$()
+\item 
+Hash\+Map$<$ String, Array\+List$<$ \hyperlink{classTrackModel_1_1Block}{Block} $>$ $>$ \hyperlink{classTrackModel_1_1TrackModel_aaba2349b7ccd094c05ad27c241143e4c}{leaf\+Map} = new Hash\+Map$<$String, Array\+List$<$\hyperlink{classTrackModel_1_1Block}{Block}$>$$>$()
+\item 
+Hash\+Map$<$ String, Array\+List$<$ \hyperlink{classTrackModel_1_1Block}{Block} $>$ $>$ \hyperlink{classTrackModel_1_1TrackModel_a83c47537abca60251a9b99454db44b28}{station\+List} = new Hash\+Map$<$String, Array\+List$<$\hyperlink{classTrackModel_1_1Block}{Block}$>$$>$()
+\item 
+Hash\+Map$<$ String, \hyperlink{classTrackModel_1_1Station}{Station} $>$ \hyperlink{classTrackModel_1_1TrackModel_ac81567431e40365448d71a3411711569}{station\+Host\+Map} = new Hash\+Map$<$String, \hyperlink{classTrackModel_1_1Station}{Station}$>$()
+\item 
+Hash\+Map$<$ \hyperlink{classTrackModel_1_1Block}{Block}, \hyperlink{classTrackModel_1_1Station}{Station} $>$ \hyperlink{classTrackModel_1_1TrackModel_aad5a0edef2a616a3db51d6c5d249c896}{block\+Station\+Map} = new Hash\+Map$<$\hyperlink{classTrackModel_1_1Block}{Block}, \hyperlink{classTrackModel_1_1Station}{Station}$>$()
+\item 
+Hash\+Map$<$ \hyperlink{classTrackModel_1_1Block}{Block}, \hyperlink{classTrackModel_1_1Crossing}{Crossing} $>$ \hyperlink{classTrackModel_1_1TrackModel_a3615fcccbc32c0bc531e67e9fcd8f51e}{crossing\+Map} = new Hash\+Map$<$\hyperlink{classTrackModel_1_1Block}{Block}, \hyperlink{classTrackModel_1_1Crossing}{Crossing}$>$()
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classTrackModel_1_1TrackModel_aeeec35a2eb38afc82b87fd310f161e9e}{add\+Block} (\hyperlink{classTrackModel_1_1Block}{Block} block)
+\begin{DoxyCompactList}\small\item\em Adds a selected block to the \hyperlink{classTrackModel_1_1TrackModel}{Track\+Model}. \end{DoxyCompactList}\item 
+void \hyperlink{classTrackModel_1_1TrackModel_a4c6034df7cc2dc75d516b49b2836d30b}{add\+Station} (String station\+Name, \hyperlink{classTrackModel_1_1Block}{Block} station\+Location)
+\begin{DoxyCompactList}\small\item\em Adds a station-\/block pair to the station\+List. \end{DoxyCompactList}\item 
+void \hyperlink{classTrackModel_1_1TrackModel_ab7bbc240d2612ca3709889f75cf1d40e}{add\+Switch\+Root} (String root\+Block\+String, \hyperlink{classTrackModel_1_1Block}{Block} root\+Block)
+\begin{DoxyCompactList}\small\item\em Adds a switch to the root list of the switches present on a given line. \end{DoxyCompactList}\item 
+void \hyperlink{classTrackModel_1_1TrackModel_acf1825e32611df62702740caddbb3698}{add\+Switch\+Leaf} (String leaf\+Block\+String, \hyperlink{classTrackModel_1_1Block}{Block} leaf\+Block)
+\item 
+void \hyperlink{classTrackModel_1_1TrackModel_a70726fc21e809d98f488fe5b80db7631}{examine\+Next} ()
+\begin{DoxyCompactList}\small\item\em A small function to view the next and previous blocks of a track model. \end{DoxyCompactList}\item 
+void \hyperlink{classTrackModel_1_1TrackModel_a8a320bcb2c2272eb52e05a022f6d4a9c}{link\+Blocks} ()
+\begin{DoxyCompactList}\small\item\em Links blocks across block and sections. \end{DoxyCompactList}\item 
+void \hyperlink{classTrackModel_1_1TrackModel_a09958c9377126378d1efe5054e246405}{build\+Block\+Station\+Map} ()
+\begin{DoxyCompactList}\small\item\em Build a map for storing the blocks and station for use by the train controller and train model. \end{DoxyCompactList}\item 
+void \hyperlink{classTrackModel_1_1TrackModel_a6956005761fa4dbe6272088f5f2a2718}{build\+Station\+Host\+Map} ()
+\begin{DoxyCompactList}\small\item\em Build the listing of the host station list for external consumption. \end{DoxyCompactList}\item 
+void \hyperlink{classTrackModel_1_1TrackModel_a468c19408a6939f20fa6e66b20f8e8ac}{handle\+Switches} ()
+\begin{DoxyCompactList}\small\item\em Helper function to link next\+Block for switches. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classTrackModel_1_1TrackModel_aeeec35a2eb38afc82b87fd310f161e9e}\label{classTrackModel_1_1TrackModel_aeeec35a2eb38afc82b87fd310f161e9e}} 
+\index{Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}!add\+Block@{add\+Block}}
+\index{add\+Block@{add\+Block}!Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}}
+\subsubsection{\texorpdfstring{add\+Block()}{addBlock()}}
+{\footnotesize\ttfamily void Track\+Model.\+Track\+Model.\+add\+Block (\begin{DoxyParamCaption}\item[{\hyperlink{classTrackModel_1_1Block}{Block}}]{block }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Adds a selected block to the \hyperlink{classTrackModel_1_1TrackModel}{Track\+Model}. 
+
+Expects a valid \hyperlink{classTrackModel_1_1Block}{Block} object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em block} & The block to be added. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTrackModel_1_1TrackModel_a4c6034df7cc2dc75d516b49b2836d30b}\label{classTrackModel_1_1TrackModel_a4c6034df7cc2dc75d516b49b2836d30b}} 
+\index{Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}!add\+Station@{add\+Station}}
+\index{add\+Station@{add\+Station}!Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}}
+\subsubsection{\texorpdfstring{add\+Station()}{addStation()}}
+{\footnotesize\ttfamily void Track\+Model.\+Track\+Model.\+add\+Station (\begin{DoxyParamCaption}\item[{String}]{station\+Name,  }\item[{\hyperlink{classTrackModel_1_1Block}{Block}}]{station\+Location }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Adds a station-\/block pair to the station\+List. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em station\+Name} & station to be added to the station\+List \\
+\hline
+{\em station\+Location} & the block location of an point where the station interacts with the block \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTrackModel_1_1TrackModel_acf1825e32611df62702740caddbb3698}\label{classTrackModel_1_1TrackModel_acf1825e32611df62702740caddbb3698}} 
+\index{Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}!add\+Switch\+Leaf@{add\+Switch\+Leaf}}
+\index{add\+Switch\+Leaf@{add\+Switch\+Leaf}!Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}}
+\subsubsection{\texorpdfstring{add\+Switch\+Leaf()}{addSwitchLeaf()}}
+{\footnotesize\ttfamily void Track\+Model.\+Track\+Model.\+add\+Switch\+Leaf (\begin{DoxyParamCaption}\item[{String}]{leaf\+Block\+String,  }\item[{\hyperlink{classTrackModel_1_1Block}{Block}}]{leaf\+Block }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrackModel_1_1TrackModel_ab7bbc240d2612ca3709889f75cf1d40e}\label{classTrackModel_1_1TrackModel_ab7bbc240d2612ca3709889f75cf1d40e}} 
+\index{Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}!add\+Switch\+Root@{add\+Switch\+Root}}
+\index{add\+Switch\+Root@{add\+Switch\+Root}!Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}}
+\subsubsection{\texorpdfstring{add\+Switch\+Root()}{addSwitchRoot()}}
+{\footnotesize\ttfamily void Track\+Model.\+Track\+Model.\+add\+Switch\+Root (\begin{DoxyParamCaption}\item[{String}]{root\+Block\+String,  }\item[{\hyperlink{classTrackModel_1_1Block}{Block}}]{root\+Block }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Adds a switch to the root list of the switches present on a given line. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em root\+Block\+String} & String of the added switch to be added to as the \char`\"{}root\char`\"{} switch \\
+\hline
+{\em root\+Block} & The block where that will point between two blocks depending on the current state of the switch \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTrackModel_1_1TrackModel_a09958c9377126378d1efe5054e246405}\label{classTrackModel_1_1TrackModel_a09958c9377126378d1efe5054e246405}} 
+\index{Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}!build\+Block\+Station\+Map@{build\+Block\+Station\+Map}}
+\index{build\+Block\+Station\+Map@{build\+Block\+Station\+Map}!Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}}
+\subsubsection{\texorpdfstring{build\+Block\+Station\+Map()}{buildBlockStationMap()}}
+{\footnotesize\ttfamily void Track\+Model.\+Track\+Model.\+build\+Block\+Station\+Map (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Build a map for storing the blocks and station for use by the train controller and train model. 
+
+\mbox{\Hypertarget{classTrackModel_1_1TrackModel_a6956005761fa4dbe6272088f5f2a2718}\label{classTrackModel_1_1TrackModel_a6956005761fa4dbe6272088f5f2a2718}} 
+\index{Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}!build\+Station\+Host\+Map@{build\+Station\+Host\+Map}}
+\index{build\+Station\+Host\+Map@{build\+Station\+Host\+Map}!Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}}
+\subsubsection{\texorpdfstring{build\+Station\+Host\+Map()}{buildStationHostMap()}}
+{\footnotesize\ttfamily void Track\+Model.\+Track\+Model.\+build\+Station\+Host\+Map (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Build the listing of the host station list for external consumption. 
+
+\mbox{\Hypertarget{classTrackModel_1_1TrackModel_a70726fc21e809d98f488fe5b80db7631}\label{classTrackModel_1_1TrackModel_a70726fc21e809d98f488fe5b80db7631}} 
+\index{Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}!examine\+Next@{examine\+Next}}
+\index{examine\+Next@{examine\+Next}!Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}}
+\subsubsection{\texorpdfstring{examine\+Next()}{examineNext()}}
+{\footnotesize\ttfamily void Track\+Model.\+Track\+Model.\+examine\+Next (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+A small function to view the next and previous blocks of a track model. 
+
+\mbox{\Hypertarget{classTrackModel_1_1TrackModel_a670006658bfbfc272c1097de1080d17c}\label{classTrackModel_1_1TrackModel_a670006658bfbfc272c1097de1080d17c}} 
+\index{Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}!get\+Block@{get\+Block}}
+\index{get\+Block@{get\+Block}!Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}}
+\subsubsection{\texorpdfstring{get\+Block()}{getBlock()}}
+{\footnotesize\ttfamily \hyperlink{classTrackModel_1_1Block}{Block} Track\+Model.\+Track\+Model.\+get\+Block (\begin{DoxyParamCaption}\item[{String}]{line,  }\item[{String}]{section,  }\item[{Integer}]{block\+Num }\end{DoxyParamCaption})}
+
+
+
+Simplicity wrapper to return a non-\/aliased block on the track given the parameters. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em line} & Line of the block to be looked up \\
+\hline
+{\em section} & Section of the block to be looked up \\
+\hline
+{\em block\+Num} & Number of the block to be looked up \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTrackModel_1_1TrackModel_a19d3841da17500d43607ce4f37fc2de9}\label{classTrackModel_1_1TrackModel_a19d3841da17500d43607ce4f37fc2de9}} 
+\index{Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}!get\+Section@{get\+Section}}
+\index{get\+Section@{get\+Section}!Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}}
+\subsubsection{\texorpdfstring{get\+Section()}{getSection()}}
+{\footnotesize\ttfamily Hash\+Map$<$Integer, \hyperlink{classTrackModel_1_1Block}{Block}$>$ Track\+Model.\+Track\+Model.\+get\+Section (\begin{DoxyParamCaption}\item[{String}]{line,  }\item[{String}]{section }\end{DoxyParamCaption})}
+
+
+
+Returns a non-\/aliased section of blocks. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em line} & line the section is on \\
+\hline
+{\em section} & section being requested \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTrackModel_1_1TrackModel_a468c19408a6939f20fa6e66b20f8e8ac}\label{classTrackModel_1_1TrackModel_a468c19408a6939f20fa6e66b20f8e8ac}} 
+\index{Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}!handle\+Switches@{handle\+Switches}}
+\index{handle\+Switches@{handle\+Switches}!Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}}
+\subsubsection{\texorpdfstring{handle\+Switches()}{handleSwitches()}}
+{\footnotesize\ttfamily void Track\+Model.\+Track\+Model.\+handle\+Switches (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Helper function to link next\+Block for switches. 
+
+\mbox{\Hypertarget{classTrackModel_1_1TrackModel_a8a320bcb2c2272eb52e05a022f6d4a9c}\label{classTrackModel_1_1TrackModel_a8a320bcb2c2272eb52e05a022f6d4a9c}} 
+\index{Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}!link\+Blocks@{link\+Blocks}}
+\index{link\+Blocks@{link\+Blocks}!Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}}
+\subsubsection{\texorpdfstring{link\+Blocks()}{linkBlocks()}}
+{\footnotesize\ttfamily void Track\+Model.\+Track\+Model.\+link\+Blocks (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Links blocks across block and sections. 
+
+\mbox{\Hypertarget{classTrackModel_1_1TrackModel_ab4deefd42535c2e06785eba4ed3989a1}\label{classTrackModel_1_1TrackModel_ab4deefd42535c2e06785eba4ed3989a1}} 
+\index{Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}!read\+C\+SV@{read\+C\+SV}}
+\index{read\+C\+SV@{read\+C\+SV}!Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}}
+\subsubsection{\texorpdfstring{read\+C\+S\+V()}{readCSV()}}
+{\footnotesize\ttfamily void Track\+Model.\+Track\+Model.\+read\+C\+SV (\begin{DoxyParamCaption}\item[{String \mbox{[}$\,$\mbox{]}}]{f\+Names }\end{DoxyParamCaption})}
+
+
+
+Helper function for reading the information from the excel-\/dumped C\+SV. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em f\+Names} & filenames of the csv\textquotesingle{}s of to read in \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTrackModel_1_1TrackModel_a5bd341c8df3e0ad585f32e1587061f36}\label{classTrackModel_1_1TrackModel_a5bd341c8df3e0ad585f32e1587061f36}} 
+\index{Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}!view\+Block\+Station\+Map@{view\+Block\+Station\+Map}}
+\index{view\+Block\+Station\+Map@{view\+Block\+Station\+Map}!Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}}
+\subsubsection{\texorpdfstring{view\+Block\+Station\+Map()}{viewBlockStationMap()}}
+{\footnotesize\ttfamily Hash\+Map$<$\hyperlink{classTrackModel_1_1Block}{Block}, \hyperlink{classTrackModel_1_1Station}{Station}$>$ Track\+Model.\+Track\+Model.\+view\+Block\+Station\+Map (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Allows viewing of the block\+Station\+Map by other modules. 
+
+\begin{DoxyReturn}{Returns}
+Hash\+Map$<$\+Block, Station$>$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classTrackModel_1_1TrackModel_a5f9d06be603a4aee4d29da60276b0383}\label{classTrackModel_1_1TrackModel_a5f9d06be603a4aee4d29da60276b0383}} 
+\index{Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}!view\+Crossing\+Map@{view\+Crossing\+Map}}
+\index{view\+Crossing\+Map@{view\+Crossing\+Map}!Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}}
+\subsubsection{\texorpdfstring{view\+Crossing\+Map()}{viewCrossingMap()}}
+{\footnotesize\ttfamily Hash\+Map$<$\hyperlink{classTrackModel_1_1Block}{Block}, \hyperlink{classTrackModel_1_1Crossing}{Crossing}$>$ Track\+Model.\+Track\+Model.\+view\+Crossing\+Map (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classTrackModel_1_1TrackModel_a03ca2c29d73dd39a2dfb3e0342fe4e27}\label{classTrackModel_1_1TrackModel_a03ca2c29d73dd39a2dfb3e0342fe4e27}} 
+\index{Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}!view\+Leaf\+Map@{view\+Leaf\+Map}}
+\index{view\+Leaf\+Map@{view\+Leaf\+Map}!Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}}
+\subsubsection{\texorpdfstring{view\+Leaf\+Map()}{viewLeafMap()}}
+{\footnotesize\ttfamily Hash\+Map$<$String, Array\+List$<$\hyperlink{classTrackModel_1_1Block}{Block}$>$ $>$ Track\+Model.\+Track\+Model.\+view\+Leaf\+Map (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Allows viewing of leaf nodes of the switches to other modules. 
+
+\begin{DoxyReturn}{Returns}
+Hash\+Map$<$String, Array\+List$<$\+Block$>$$>$ of the leafmap 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classTrackModel_1_1TrackModel_aa070a8864c352ab49eae4c93aa88700f}\label{classTrackModel_1_1TrackModel_aa070a8864c352ab49eae4c93aa88700f}} 
+\index{Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}!view\+Root\+Map@{view\+Root\+Map}}
+\index{view\+Root\+Map@{view\+Root\+Map}!Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}}
+\subsubsection{\texorpdfstring{view\+Root\+Map()}{viewRootMap()}}
+{\footnotesize\ttfamily Hash\+Map$<$String, \hyperlink{classTrackModel_1_1Block}{Block}$>$ Track\+Model.\+Track\+Model.\+view\+Root\+Map (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Allows viewing of the root\+Map by other modules. 
+
+\begin{DoxyReturn}{Returns}
+Hash$<$\+String, Block$>$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classTrackModel_1_1TrackModel_ae43164d0e8478c2bc5ffc3b013f49e60}\label{classTrackModel_1_1TrackModel_ae43164d0e8478c2bc5ffc3b013f49e60}} 
+\index{Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}!view\+Station\+Map@{view\+Station\+Map}}
+\index{view\+Station\+Map@{view\+Station\+Map}!Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}}
+\subsubsection{\texorpdfstring{view\+Station\+Map()}{viewStationMap()}}
+{\footnotesize\ttfamily Hash\+Map$<$String, Array\+List$<$\hyperlink{classTrackModel_1_1Block}{Block}$>$ $>$ Track\+Model.\+Track\+Model.\+view\+Station\+Map (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Allows viewing of the station map to other modules, implemented as a copy method. 
+
+\begin{DoxyReturn}{Returns}
+Hash\+Map$<$String, Array\+List$<$\+Block$>$$>$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classTrackModel_1_1TrackModel_ae74a6b0938494affe4c2b96b7b8f288a}\label{classTrackModel_1_1TrackModel_ae74a6b0938494affe4c2b96b7b8f288a}} 
+\index{Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}!view\+Track\+List@{view\+Track\+List}}
+\index{view\+Track\+List@{view\+Track\+List}!Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}}
+\subsubsection{\texorpdfstring{view\+Track\+List()}{viewTrackList()}}
+{\footnotesize\ttfamily Hash\+Map$<$String,Hash\+Map$<$String,Hash\+Map$<$Integer,\hyperlink{classTrackModel_1_1Block}{Block}$>$ $>$ $>$ Track\+Model.\+Track\+Model.\+view\+Track\+List (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Allows viewing of the track\+List to other modules, implemented as a copy method. 
+
+\begin{DoxyReturn}{Returns}
+Hash\+Map$<$String, Hash\+Map$<$String,Hash\+Map$<$\+Integer,\+Block$>$$>$$>$ 
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classTrackModel_1_1TrackModel_aad5a0edef2a616a3db51d6c5d249c896}\label{classTrackModel_1_1TrackModel_aad5a0edef2a616a3db51d6c5d249c896}} 
+\index{Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}!block\+Station\+Map@{block\+Station\+Map}}
+\index{block\+Station\+Map@{block\+Station\+Map}!Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}}
+\subsubsection{\texorpdfstring{block\+Station\+Map}{blockStationMap}}
+{\footnotesize\ttfamily Hash\+Map$<$\hyperlink{classTrackModel_1_1Block}{Block}, \hyperlink{classTrackModel_1_1Station}{Station}$>$ Track\+Model.\+Track\+Model.\+block\+Station\+Map = new Hash\+Map$<$\hyperlink{classTrackModel_1_1Block}{Block}, \hyperlink{classTrackModel_1_1Station}{Station}$>$()\hspace{0.3cm}{\ttfamily [package]}}
+
+\mbox{\Hypertarget{classTrackModel_1_1TrackModel_a3615fcccbc32c0bc531e67e9fcd8f51e}\label{classTrackModel_1_1TrackModel_a3615fcccbc32c0bc531e67e9fcd8f51e}} 
+\index{Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}!crossing\+Map@{crossing\+Map}}
+\index{crossing\+Map@{crossing\+Map}!Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}}
+\subsubsection{\texorpdfstring{crossing\+Map}{crossingMap}}
+{\footnotesize\ttfamily Hash\+Map$<$\hyperlink{classTrackModel_1_1Block}{Block}, \hyperlink{classTrackModel_1_1Crossing}{Crossing}$>$ Track\+Model.\+Track\+Model.\+crossing\+Map = new Hash\+Map$<$\hyperlink{classTrackModel_1_1Block}{Block}, \hyperlink{classTrackModel_1_1Crossing}{Crossing}$>$()\hspace{0.3cm}{\ttfamily [package]}}
+
+\mbox{\Hypertarget{classTrackModel_1_1TrackModel_aaba2349b7ccd094c05ad27c241143e4c}\label{classTrackModel_1_1TrackModel_aaba2349b7ccd094c05ad27c241143e4c}} 
+\index{Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}!leaf\+Map@{leaf\+Map}}
+\index{leaf\+Map@{leaf\+Map}!Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}}
+\subsubsection{\texorpdfstring{leaf\+Map}{leafMap}}
+{\footnotesize\ttfamily Hash\+Map$<$String, Array\+List$<$\hyperlink{classTrackModel_1_1Block}{Block}$>$ $>$ Track\+Model.\+Track\+Model.\+leaf\+Map = new Hash\+Map$<$String, Array\+List$<$\hyperlink{classTrackModel_1_1Block}{Block}$>$$>$()\hspace{0.3cm}{\ttfamily [package]}}
+
+\mbox{\Hypertarget{classTrackModel_1_1TrackModel_ae48e24ae7b5775111086a3b3734d8dc9}\label{classTrackModel_1_1TrackModel_ae48e24ae7b5775111086a3b3734d8dc9}} 
+\index{Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}!root\+Map@{root\+Map}}
+\index{root\+Map@{root\+Map}!Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}}
+\subsubsection{\texorpdfstring{root\+Map}{rootMap}}
+{\footnotesize\ttfamily Hash\+Map$<$String, \hyperlink{classTrackModel_1_1Block}{Block}$>$ Track\+Model.\+Track\+Model.\+root\+Map = new Hash\+Map$<$String, \hyperlink{classTrackModel_1_1Block}{Block}$>$()\hspace{0.3cm}{\ttfamily [package]}}
+
+\mbox{\Hypertarget{classTrackModel_1_1TrackModel_ac81567431e40365448d71a3411711569}\label{classTrackModel_1_1TrackModel_ac81567431e40365448d71a3411711569}} 
+\index{Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}!station\+Host\+Map@{station\+Host\+Map}}
+\index{station\+Host\+Map@{station\+Host\+Map}!Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}}
+\subsubsection{\texorpdfstring{station\+Host\+Map}{stationHostMap}}
+{\footnotesize\ttfamily Hash\+Map$<$String, \hyperlink{classTrackModel_1_1Station}{Station}$>$ Track\+Model.\+Track\+Model.\+station\+Host\+Map = new Hash\+Map$<$String, \hyperlink{classTrackModel_1_1Station}{Station}$>$()\hspace{0.3cm}{\ttfamily [package]}}
+
+\mbox{\Hypertarget{classTrackModel_1_1TrackModel_a83c47537abca60251a9b99454db44b28}\label{classTrackModel_1_1TrackModel_a83c47537abca60251a9b99454db44b28}} 
+\index{Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}!station\+List@{station\+List}}
+\index{station\+List@{station\+List}!Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}}
+\subsubsection{\texorpdfstring{station\+List}{stationList}}
+{\footnotesize\ttfamily Hash\+Map$<$String, Array\+List$<$\hyperlink{classTrackModel_1_1Block}{Block}$>$ $>$ Track\+Model.\+Track\+Model.\+station\+List = new Hash\+Map$<$String, Array\+List$<$\hyperlink{classTrackModel_1_1Block}{Block}$>$$>$()\hspace{0.3cm}{\ttfamily [package]}}
+
+\mbox{\Hypertarget{classTrackModel_1_1TrackModel_ad9f221dc431ebf142e7930d8116cf705}\label{classTrackModel_1_1TrackModel_ad9f221dc431ebf142e7930d8116cf705}} 
+\index{Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}!track\+List@{track\+List}}
+\index{track\+List@{track\+List}!Track\+Model\+::\+Track\+Model@{Track\+Model\+::\+Track\+Model}}
+\subsubsection{\texorpdfstring{track\+List}{trackList}}
+{\footnotesize\ttfamily Hash\+Map$<$String,Hash\+Map$<$String, Hash\+Map$<$Integer, \hyperlink{classTrackModel_1_1Block}{Block}$>$ $>$ $>$ Track\+Model.\+Track\+Model.\+track\+List\hspace{0.3cm}{\ttfamily [package]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=
+        \textcolor{keyword}{new} HashMap<String,HashMap<String, HashMap<Integer, Block>>>()
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/\+Track\+Model/\hyperlink{TrackModel_8java}{Track\+Model.\+java}\end{DoxyCompactItemize}

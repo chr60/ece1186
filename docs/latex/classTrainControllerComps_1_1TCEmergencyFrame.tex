@@ -1,0 +1,298 @@
+\hypertarget{classTrainControllerComps_1_1TCEmergencyFrame}{}\section{Train\+Controller\+Comps.\+T\+C\+Emergency\+Frame Class Reference}
+\label{classTrainControllerComps_1_1TCEmergencyFrame}\index{Train\+Controller\+Comps.\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps.\+T\+C\+Emergency\+Frame}}
+
+
+This class is responsible for confirming the use of the selected trains emergency brake when in Manual mode.  
+
+
+
+
+Inheritance diagram for Train\+Controller\+Comps.\+T\+C\+Emergency\+Frame\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=260pt]{classTrainControllerComps_1_1TCEmergencyFrame__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Train\+Controller\+Comps.\+T\+C\+Emergency\+Frame\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classTrainControllerComps_1_1TCEmergencyFrame__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classTrainControllerComps_1_1TCEmergencyFrame_a318efda39f1845bdcc8beacab2f15f02}{T\+C\+Emergency\+Frame} ()
+\begin{DoxyCompactList}\small\item\em Constructor for creating a \hyperlink{classTrainControllerComps_1_1TCEmergencyFrame}{T\+C\+Emergency\+Frame} object without any selected train. \end{DoxyCompactList}\item 
+\hyperlink{classTrainControllerComps_1_1TCEmergencyFrame_a389f462d159a3b37df539384297e4aca}{T\+C\+Emergency\+Frame} (\hyperlink{classTrainControllerComps_1_1TestTrain}{Test\+Train} \hyperlink{classtrain}{train})
+\begin{DoxyCompactList}\small\item\em Constructor for creating a \hyperlink{classTrainControllerComps_1_1TCEmergencyFrame}{T\+C\+Emergency\+Frame} object with a selected train. \end{DoxyCompactList}\item 
+void \hyperlink{classTrainControllerComps_1_1TCEmergencyFrame_a61d8cb274f6be974634700dd6eee045c}{set\+Train} (\hyperlink{classTrainControllerComps_1_1TestTrain}{Test\+Train} \hyperlink{classtrain}{train})
+\begin{DoxyCompactList}\small\item\em Sets the selected train. \end{DoxyCompactList}\item 
+void \hyperlink{classTrainControllerComps_1_1TCEmergencyFrame_a976ebb5248e43db7b076148f1d1e8f0b}{set\+Operating\+Log} (J\+Text\+Area operating\+Log)
+\begin{DoxyCompactList}\small\item\em Sets the operating log to be used to print messages in. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classTrainControllerComps_1_1TCEmergencyFrame_a3a4826e73daed7e795104224492dfd78}{main} (String args\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+\subsection*{Package Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classTrainControllerComps_1_1TestTrain}{Test\+Train} \hyperlink{classTrainControllerComps_1_1TCEmergencyFrame_ac99b85a0ae38a4b60920f7ab057eb3c5}{selected\+Train}
+\begin{DoxyCompactList}\small\item\em The train that is being controlled by the Train Controller class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCEmergencyFrame_a9314711626f90cd94306caa329311d60}{refresh\+UI} ()
+\begin{DoxyCompactList}\small\item\em Refreshes the UI elements in the window to update any changed train information. \end{DoxyCompactList}\item 
+void \hyperlink{classTrainControllerComps_1_1TCEmergencyFrame_a6a8c92fdc073a69ed2e86373e145d34a}{print\+Logbook} ()
+\begin{DoxyCompactList}\small\item\em Prints the logbook to the operating log, and then clears the logbook. \end{DoxyCompactList}\item 
+void \hyperlink{classTrainControllerComps_1_1TCEmergencyFrame_aa5cf83696387c257f09ff198718eaf33}{init\+Components} ()
+\begin{DoxyCompactList}\small\item\em This method is called from within the constructor to initialize the form. \end{DoxyCompactList}\item 
+void \hyperlink{classTrainControllerComps_1_1TCEmergencyFrame_a03d0a51aadee6e85a856d7f4e1d41677}{initiate\+Emg\+Brake} (java.\+awt.\+event.\+Action\+Event evt)
+\begin{DoxyCompactList}\small\item\em Initiates the emergency brake on the selected train. \end{DoxyCompactList}\item 
+void \hyperlink{classTrainControllerComps_1_1TCEmergencyFrame_a657c1dcd129d412134610a08c8d3cdfd}{cancel} (java.\+awt.\+event.\+Action\+Event evt)
+\begin{DoxyCompactList}\small\item\em Closes the window without engaging the selected train\textquotesingle{}s emergency brake. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Linked\+List$<$ String $>$ \hyperlink{classTrainControllerComps_1_1TCEmergencyFrame_a862e94d85954c294ac65c7ad438e81a1}{logbook}
+\begin{DoxyCompactList}\small\item\em List that contains messages that are to be printed to the operating log. \end{DoxyCompactList}\item 
+J\+Text\+Area \hyperlink{classTrainControllerComps_1_1TCEmergencyFrame_acc095e29e87ce6e8cb31fbc942303d78}{operating\+Logs}
+\begin{DoxyCompactList}\small\item\em Area used to print messaged from the logbook to. \end{DoxyCompactList}\item 
+javax.\+swing.\+J\+Button \hyperlink{classTrainControllerComps_1_1TCEmergencyFrame_a26994214c39f2a3b8f0dba373cfb0b5e}{cancel\+Button}
+\item 
+javax.\+swing.\+J\+Button \hyperlink{classTrainControllerComps_1_1TCEmergencyFrame_a09a53fb532f9214e271fc811c729a274}{confirm\+Button}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCEmergencyFrame_ab69b8c59e98e915d38dd2eff13711fea}{confirmation\+Label}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCEmergencyFrame_a611138a25d7b488a12107dc7e3b9efaa}{title\+Label}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCEmergencyFrame_abcbe7bf869507518346fef39f3701ec7}{train\+Id\+Label}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCEmergencyFrame_aed0a549c9bb0b9a7adf7b4d81fd21904}{ui\+Train\+Id\+Label}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class is responsible for confirming the use of the selected trains emergency brake when in Manual mode. 
+
+This class collaborates with the Train Controller, and the Train class.
+
+\begin{DoxyAuthor}{Author}
+Andrew Lendacky 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCEmergencyFrame_a318efda39f1845bdcc8beacab2f15f02}\label{classTrainControllerComps_1_1TCEmergencyFrame_a318efda39f1845bdcc8beacab2f15f02}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}!T\+C\+Emergency\+Frame@{T\+C\+Emergency\+Frame}}
+\index{T\+C\+Emergency\+Frame@{T\+C\+Emergency\+Frame}!Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}}
+\subsubsection{\texorpdfstring{T\+C\+Emergency\+Frame()}{TCEmergencyFrame()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Train\+Controller\+Comps.\+T\+C\+Emergency\+Frame.\+T\+C\+Emergency\+Frame (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Constructor for creating a \hyperlink{classTrainControllerComps_1_1TCEmergencyFrame}{T\+C\+Emergency\+Frame} object without any selected train. 
+
+Selected train must be passed in by the Train Controller class. \mbox{\Hypertarget{classTrainControllerComps_1_1TCEmergencyFrame_a389f462d159a3b37df539384297e4aca}\label{classTrainControllerComps_1_1TCEmergencyFrame_a389f462d159a3b37df539384297e4aca}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}!T\+C\+Emergency\+Frame@{T\+C\+Emergency\+Frame}}
+\index{T\+C\+Emergency\+Frame@{T\+C\+Emergency\+Frame}!Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}}
+\subsubsection{\texorpdfstring{T\+C\+Emergency\+Frame()}{TCEmergencyFrame()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Train\+Controller\+Comps.\+T\+C\+Emergency\+Frame.\+T\+C\+Emergency\+Frame (\begin{DoxyParamCaption}\item[{\hyperlink{classTrainControllerComps_1_1TestTrain}{Test\+Train}}]{train }\end{DoxyParamCaption})}
+
+
+
+Constructor for creating a \hyperlink{classTrainControllerComps_1_1TCEmergencyFrame}{T\+C\+Emergency\+Frame} object with a selected train. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em train} & the train being controlled by the Train Controller \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCEmergencyFrame_a657c1dcd129d412134610a08c8d3cdfd}\label{classTrainControllerComps_1_1TCEmergencyFrame_a657c1dcd129d412134610a08c8d3cdfd}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}!cancel@{cancel}}
+\index{cancel@{cancel}!Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}}
+\subsubsection{\texorpdfstring{cancel()}{cancel()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Emergency\+Frame.\+cancel (\begin{DoxyParamCaption}\item[{java.\+awt.\+event.\+Action\+Event}]{evt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Closes the window without engaging the selected train\textquotesingle{}s emergency brake. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em evt} & the sender of the event, i.\+e., the \textquotesingle{}Cancel\textquotesingle{} button \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCEmergencyFrame_aa5cf83696387c257f09ff198718eaf33}\label{classTrainControllerComps_1_1TCEmergencyFrame_aa5cf83696387c257f09ff198718eaf33}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}!init\+Components@{init\+Components}}
+\index{init\+Components@{init\+Components}!Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}}
+\subsubsection{\texorpdfstring{init\+Components()}{initComponents()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Emergency\+Frame.\+init\+Components (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+This method is called from within the constructor to initialize the form. 
+
+W\+A\+R\+N\+I\+NG\+: Do N\+OT modify this code. The content of this method is always regenerated by the Form Editor. \mbox{\Hypertarget{classTrainControllerComps_1_1TCEmergencyFrame_a03d0a51aadee6e85a856d7f4e1d41677}\label{classTrainControllerComps_1_1TCEmergencyFrame_a03d0a51aadee6e85a856d7f4e1d41677}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}!initiate\+Emg\+Brake@{initiate\+Emg\+Brake}}
+\index{initiate\+Emg\+Brake@{initiate\+Emg\+Brake}!Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}}
+\subsubsection{\texorpdfstring{initiate\+Emg\+Brake()}{initiateEmgBrake()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Emergency\+Frame.\+initiate\+Emg\+Brake (\begin{DoxyParamCaption}\item[{java.\+awt.\+event.\+Action\+Event}]{evt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Initiates the emergency brake on the selected train. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em evt} & the sender of the event, i.\+e., the \textquotesingle{}Confirm\textquotesingle{} button \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCEmergencyFrame_a3a4826e73daed7e795104224492dfd78}\label{classTrainControllerComps_1_1TCEmergencyFrame_a3a4826e73daed7e795104224492dfd78}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}!main@{main}}
+\index{main@{main}!Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily static void Train\+Controller\+Comps.\+T\+C\+Emergency\+Frame.\+main (\begin{DoxyParamCaption}\item[{String}]{args\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em args} & the command line arguments \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCEmergencyFrame_a6a8c92fdc073a69ed2e86373e145d34a}\label{classTrainControllerComps_1_1TCEmergencyFrame_a6a8c92fdc073a69ed2e86373e145d34a}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}!print\+Logbook@{print\+Logbook}}
+\index{print\+Logbook@{print\+Logbook}!Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}}
+\subsubsection{\texorpdfstring{print\+Logbook()}{printLogbook()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Emergency\+Frame.\+print\+Logbook (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Prints the logbook to the operating log, and then clears the logbook. 
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCEmergencyFrame_a9314711626f90cd94306caa329311d60}\label{classTrainControllerComps_1_1TCEmergencyFrame_a9314711626f90cd94306caa329311d60}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}!refresh\+UI@{refresh\+UI}}
+\index{refresh\+UI@{refresh\+UI}!Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}}
+\subsubsection{\texorpdfstring{refresh\+U\+I()}{refreshUI()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Emergency\+Frame.\+refresh\+UI (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Refreshes the UI elements in the window to update any changed train information. 
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCEmergencyFrame_a976ebb5248e43db7b076148f1d1e8f0b}\label{classTrainControllerComps_1_1TCEmergencyFrame_a976ebb5248e43db7b076148f1d1e8f0b}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}!set\+Operating\+Log@{set\+Operating\+Log}}
+\index{set\+Operating\+Log@{set\+Operating\+Log}!Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}}
+\subsubsection{\texorpdfstring{set\+Operating\+Log()}{setOperatingLog()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Emergency\+Frame.\+set\+Operating\+Log (\begin{DoxyParamCaption}\item[{J\+Text\+Area}]{operating\+Log }\end{DoxyParamCaption})}
+
+
+
+Sets the operating log to be used to print messages in. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em operating\+Log} & the operating log. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCEmergencyFrame_a61d8cb274f6be974634700dd6eee045c}\label{classTrainControllerComps_1_1TCEmergencyFrame_a61d8cb274f6be974634700dd6eee045c}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}!set\+Train@{set\+Train}}
+\index{set\+Train@{set\+Train}!Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}}
+\subsubsection{\texorpdfstring{set\+Train()}{setTrain()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Emergency\+Frame.\+set\+Train (\begin{DoxyParamCaption}\item[{\hyperlink{classTrainControllerComps_1_1TestTrain}{Test\+Train}}]{train }\end{DoxyParamCaption})}
+
+
+
+Sets the selected train. 
+
+This method should be called from the Train Controller class.
+
+
+\begin{DoxyParams}{Parameters}
+{\em train} & the selected train controlled by the Train Controller class. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCEmergencyFrame_a26994214c39f2a3b8f0dba373cfb0b5e}\label{classTrainControllerComps_1_1TCEmergencyFrame_a26994214c39f2a3b8f0dba373cfb0b5e}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}!cancel\+Button@{cancel\+Button}}
+\index{cancel\+Button@{cancel\+Button}!Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}}
+\subsubsection{\texorpdfstring{cancel\+Button}{cancelButton}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Button Train\+Controller\+Comps.\+T\+C\+Emergency\+Frame.\+cancel\+Button\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCEmergencyFrame_ab69b8c59e98e915d38dd2eff13711fea}\label{classTrainControllerComps_1_1TCEmergencyFrame_ab69b8c59e98e915d38dd2eff13711fea}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}!confirmation\+Label@{confirmation\+Label}}
+\index{confirmation\+Label@{confirmation\+Label}!Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}}
+\subsubsection{\texorpdfstring{confirmation\+Label}{confirmationLabel}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Emergency\+Frame.\+confirmation\+Label\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCEmergencyFrame_a09a53fb532f9214e271fc811c729a274}\label{classTrainControllerComps_1_1TCEmergencyFrame_a09a53fb532f9214e271fc811c729a274}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}!confirm\+Button@{confirm\+Button}}
+\index{confirm\+Button@{confirm\+Button}!Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}}
+\subsubsection{\texorpdfstring{confirm\+Button}{confirmButton}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Button Train\+Controller\+Comps.\+T\+C\+Emergency\+Frame.\+confirm\+Button\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCEmergencyFrame_a862e94d85954c294ac65c7ad438e81a1}\label{classTrainControllerComps_1_1TCEmergencyFrame_a862e94d85954c294ac65c7ad438e81a1}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}!logbook@{logbook}}
+\index{logbook@{logbook}!Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}}
+\subsubsection{\texorpdfstring{logbook}{logbook}}
+{\footnotesize\ttfamily Linked\+List$<$String$>$ Train\+Controller\+Comps.\+T\+C\+Emergency\+Frame.\+logbook\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+List that contains messages that are to be printed to the operating log. 
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCEmergencyFrame_acc095e29e87ce6e8cb31fbc942303d78}\label{classTrainControllerComps_1_1TCEmergencyFrame_acc095e29e87ce6e8cb31fbc942303d78}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}!operating\+Logs@{operating\+Logs}}
+\index{operating\+Logs@{operating\+Logs}!Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}}
+\subsubsection{\texorpdfstring{operating\+Logs}{operatingLogs}}
+{\footnotesize\ttfamily J\+Text\+Area Train\+Controller\+Comps.\+T\+C\+Emergency\+Frame.\+operating\+Logs\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Area used to print messaged from the logbook to. 
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCEmergencyFrame_ac99b85a0ae38a4b60920f7ab057eb3c5}\label{classTrainControllerComps_1_1TCEmergencyFrame_ac99b85a0ae38a4b60920f7ab057eb3c5}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}!selected\+Train@{selected\+Train}}
+\index{selected\+Train@{selected\+Train}!Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}}
+\subsubsection{\texorpdfstring{selected\+Train}{selectedTrain}}
+{\footnotesize\ttfamily \hyperlink{classTrainControllerComps_1_1TestTrain}{Test\+Train} Train\+Controller\+Comps.\+T\+C\+Emergency\+Frame.\+selected\+Train\hspace{0.3cm}{\ttfamily [package]}}
+
+
+
+The train that is being controlled by the Train Controller class. 
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCEmergencyFrame_a611138a25d7b488a12107dc7e3b9efaa}\label{classTrainControllerComps_1_1TCEmergencyFrame_a611138a25d7b488a12107dc7e3b9efaa}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}!title\+Label@{title\+Label}}
+\index{title\+Label@{title\+Label}!Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}}
+\subsubsection{\texorpdfstring{title\+Label}{titleLabel}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Emergency\+Frame.\+title\+Label\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCEmergencyFrame_abcbe7bf869507518346fef39f3701ec7}\label{classTrainControllerComps_1_1TCEmergencyFrame_abcbe7bf869507518346fef39f3701ec7}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}!train\+Id\+Label@{train\+Id\+Label}}
+\index{train\+Id\+Label@{train\+Id\+Label}!Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}}
+\subsubsection{\texorpdfstring{train\+Id\+Label}{trainIdLabel}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Emergency\+Frame.\+train\+Id\+Label\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCEmergencyFrame_aed0a549c9bb0b9a7adf7b4d81fd21904}\label{classTrainControllerComps_1_1TCEmergencyFrame_aed0a549c9bb0b9a7adf7b4d81fd21904}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}!ui\+Train\+Id\+Label@{ui\+Train\+Id\+Label}}
+\index{ui\+Train\+Id\+Label@{ui\+Train\+Id\+Label}!Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame@{Train\+Controller\+Comps\+::\+T\+C\+Emergency\+Frame}}
+\subsubsection{\texorpdfstring{ui\+Train\+Id\+Label}{uiTrainIdLabel}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Emergency\+Frame.\+ui\+Train\+Id\+Label\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/\+Train\+Controller\+Comps/\hyperlink{TCEmergencyFrame_8java}{T\+C\+Emergency\+Frame.\+java}\end{DoxyCompactItemize}

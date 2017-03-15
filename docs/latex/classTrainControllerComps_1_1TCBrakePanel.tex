@@ -1,0 +1,315 @@
+\hypertarget{classTrainControllerComps_1_1TCBrakePanel}{}\section{Train\+Controller\+Comps.\+T\+C\+Brake\+Panel Class Reference}
+\label{classTrainControllerComps_1_1TCBrakePanel}\index{Train\+Controller\+Comps.\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps.\+T\+C\+Brake\+Panel}}
+
+
+This class is responsible for applying and managing the use of a train\textquotesingle{}s braking system.  
+
+
+
+
+Inheritance diagram for Train\+Controller\+Comps.\+T\+C\+Brake\+Panel\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=236pt]{classTrainControllerComps_1_1TCBrakePanel__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Train\+Controller\+Comps.\+T\+C\+Brake\+Panel\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classTrainControllerComps_1_1TCBrakePanel__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classTrainControllerComps_1_1TCBrakePanel_a5940e47f6529fb96044ba90413906b30}{T\+C\+Brake\+Panel} ()
+\begin{DoxyCompactList}\small\item\em Constructor for creating a \hyperlink{classTrainControllerComps_1_1TCBrakePanel}{T\+C\+Brake\+Panel} object without a selected train. \end{DoxyCompactList}\item 
+void \hyperlink{classTrainControllerComps_1_1TCBrakePanel_a081a9013d44c3933e6acb9a7bd01135f}{set\+Selected\+Train} (\hyperlink{classTrainControllerComps_1_1TestTrain}{Test\+Train} \hyperlink{classTrainControllerComps_1_1TCBrakePanel_ac8f5bb4b6ea27c0d53b99945f9c68141}{selected\+Train})
+\begin{DoxyCompactList}\small\item\em Sets the selected train that this class is to control. \end{DoxyCompactList}\item 
+void \hyperlink{classTrainControllerComps_1_1TCBrakePanel_ac705fa5eeb5f291ccc8a5af7885fc7c6}{set\+Operating\+Logs} (J\+Text\+Area op\+Logs)
+\begin{DoxyCompactList}\small\item\em Sets the text field to be used for the operating logs. \end{DoxyCompactList}\item 
+void \hyperlink{classTrainControllerComps_1_1TCBrakePanel_a4ba678ac423a17477b5b15077c55cb7a}{in\+Manual\+Mode} (boolean b)
+\begin{DoxyCompactList}\small\item\em Set if the system should be in Manual or Automatic mode. \end{DoxyCompactList}\item 
+J\+Button \hyperlink{classTrainControllerComps_1_1TCBrakePanel_af33870de15eae5f27e4cfce85efda275}{get\+Service\+Brake} ()
+\begin{DoxyCompactList}\small\item\em Returns the service brake button. \end{DoxyCompactList}\item 
+J\+Button \hyperlink{classTrainControllerComps_1_1TCBrakePanel_a1e16cb37e8eecb4d6fc13fbb6f9aa09d}{get\+Emg\+Brake} ()
+\begin{DoxyCompactList}\small\item\em Returns the emergency brake button. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCBrakePanel_a901968694edba045f8ee6216d89a4096}{print\+Logs} ()
+\begin{DoxyCompactList}\small\item\em Prints the messages stored in the logbook to the operating log, then clears the logbook. \end{DoxyCompactList}\item 
+void \hyperlink{classTrainControllerComps_1_1TCBrakePanel_a9de925ba11a22e74716c6009d666b0d2}{init\+Components} ()
+\begin{DoxyCompactList}\small\item\em This method is called from within the constructor to initialize the form. \end{DoxyCompactList}\item 
+void \hyperlink{classTrainControllerComps_1_1TCBrakePanel_a88605d5c8969b8c38af57f077a6289ce}{initate\+Emergency\+Brake} (java.\+awt.\+event.\+Action\+Event evt)
+\begin{DoxyCompactList}\small\item\em Initiates the emergency brake on the selected train. \end{DoxyCompactList}\item 
+void \hyperlink{classTrainControllerComps_1_1TCBrakePanel_a14938e5fe8d51e9f556097d274fa5b92}{engage\+Service\+Brake} (java.\+awt.\+event.\+Action\+Event evt)
+\begin{DoxyCompactList}\small\item\em Initiates the service brake on the selected train. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classTrainControllerComps_1_1TestTrain}{Test\+Train} \hyperlink{classTrainControllerComps_1_1TCBrakePanel_ac8f5bb4b6ea27c0d53b99945f9c68141}{selected\+Train}
+\begin{DoxyCompactList}\small\item\em The train whose brakes that are being controlled. \end{DoxyCompactList}\item 
+J\+Text\+Area \hyperlink{classTrainControllerComps_1_1TCBrakePanel_a2ba550a51ec095044bdebb4cf00f67b6}{operating\+Logs}
+\begin{DoxyCompactList}\small\item\em Text area to print notifications to. \end{DoxyCompactList}\item 
+Linked\+List$<$ String $>$ \hyperlink{classTrainControllerComps_1_1TCBrakePanel_a78a980aa80c948e54642057226f41e25}{log\+Book}
+\begin{DoxyCompactList}\small\item\em A list used to store up messages to print to the operating log. \end{DoxyCompactList}\item 
+boolean \hyperlink{classTrainControllerComps_1_1TCBrakePanel_a7ef33ee76ed0b5f0759b24430e196b89}{in\+Manual\+Mode}
+\begin{DoxyCompactList}\small\item\em Value used to determine if the system in Manual or Automatic mode. \end{DoxyCompactList}\item 
+javax.\+swing.\+J\+Button \hyperlink{classTrainControllerComps_1_1TCBrakePanel_af3b802bb0a81c57ee5429fdd75aeb0ea}{emergency\+Brake}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCBrakePanel_a076bed5a497e04e53ef355147b17ff99}{function\+Label\+Emg}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCBrakePanel_a2d6c94b0c372a2bb5ae99003c5f12864}{function\+Label\+Service}
+\item 
+javax.\+swing.\+J\+Button \hyperlink{classTrainControllerComps_1_1TCBrakePanel_a4cf0bb6697c799dc416ef1f9c08a1c70}{service\+Brake}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCBrakePanel_afa54fa32b72311b670556a7cfbf8c61c}{status\+Label\+Emg}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCBrakePanel_ad30222226055f9cc2153bd1d18b717f8}{status\+Label\+Service}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class is responsible for applying and managing the use of a train\textquotesingle{}s braking system. 
+
+In manual mode, this class must present a window to confirm the use of the emergency brake to the user.
+
+This class collaborates with the Train, \hyperlink{classTrainControllerComps_1_1TCSpeedController}{T\+C\+Speed\+Controller}, and the \hyperlink{classTrainControllerComps_1_1TCEmergencyFrame}{T\+C\+Emergency\+Frame} class.
+
+\begin{DoxyAuthor}{Author}
+Andrew Lendacky 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCBrakePanel_a5940e47f6529fb96044ba90413906b30}\label{classTrainControllerComps_1_1TCBrakePanel_a5940e47f6529fb96044ba90413906b30}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}!T\+C\+Brake\+Panel@{T\+C\+Brake\+Panel}}
+\index{T\+C\+Brake\+Panel@{T\+C\+Brake\+Panel}!Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}}
+\subsubsection{\texorpdfstring{T\+C\+Brake\+Panel()}{TCBrakePanel()}}
+{\footnotesize\ttfamily Train\+Controller\+Comps.\+T\+C\+Brake\+Panel.\+T\+C\+Brake\+Panel (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Constructor for creating a \hyperlink{classTrainControllerComps_1_1TCBrakePanel}{T\+C\+Brake\+Panel} object without a selected train. 
+
+The selected train property must be passed in from the Train Controller class before being used. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCBrakePanel_a14938e5fe8d51e9f556097d274fa5b92}\label{classTrainControllerComps_1_1TCBrakePanel_a14938e5fe8d51e9f556097d274fa5b92}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}!engage\+Service\+Brake@{engage\+Service\+Brake}}
+\index{engage\+Service\+Brake@{engage\+Service\+Brake}!Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}}
+\subsubsection{\texorpdfstring{engage\+Service\+Brake()}{engageServiceBrake()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Brake\+Panel.\+engage\+Service\+Brake (\begin{DoxyParamCaption}\item[{java.\+awt.\+event.\+Action\+Event}]{evt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Initiates the service brake on the selected train. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em evt} & the send of the event, i.\+e., the \textquotesingle{}Service Brake\textquotesingle{} button \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCBrakePanel_a1e16cb37e8eecb4d6fc13fbb6f9aa09d}\label{classTrainControllerComps_1_1TCBrakePanel_a1e16cb37e8eecb4d6fc13fbb6f9aa09d}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}!get\+Emg\+Brake@{get\+Emg\+Brake}}
+\index{get\+Emg\+Brake@{get\+Emg\+Brake}!Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}}
+\subsubsection{\texorpdfstring{get\+Emg\+Brake()}{getEmgBrake()}}
+{\footnotesize\ttfamily J\+Button Train\+Controller\+Comps.\+T\+C\+Brake\+Panel.\+get\+Emg\+Brake (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the emergency brake button. 
+
+\begin{DoxyReturn}{Returns}
+the emergency brake 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCBrakePanel_af33870de15eae5f27e4cfce85efda275}\label{classTrainControllerComps_1_1TCBrakePanel_af33870de15eae5f27e4cfce85efda275}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}!get\+Service\+Brake@{get\+Service\+Brake}}
+\index{get\+Service\+Brake@{get\+Service\+Brake}!Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}}
+\subsubsection{\texorpdfstring{get\+Service\+Brake()}{getServiceBrake()}}
+{\footnotesize\ttfamily J\+Button Train\+Controller\+Comps.\+T\+C\+Brake\+Panel.\+get\+Service\+Brake (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the service brake button. 
+
+\begin{DoxyReturn}{Returns}
+the service brake 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCBrakePanel_a88605d5c8969b8c38af57f077a6289ce}\label{classTrainControllerComps_1_1TCBrakePanel_a88605d5c8969b8c38af57f077a6289ce}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}!initate\+Emergency\+Brake@{initate\+Emergency\+Brake}}
+\index{initate\+Emergency\+Brake@{initate\+Emergency\+Brake}!Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}}
+\subsubsection{\texorpdfstring{initate\+Emergency\+Brake()}{initateEmergencyBrake()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Brake\+Panel.\+initate\+Emergency\+Brake (\begin{DoxyParamCaption}\item[{java.\+awt.\+event.\+Action\+Event}]{evt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Initiates the emergency brake on the selected train. 
+
+If the system is in Manual mode, a \hyperlink{classTrainControllerComps_1_1TCEmergencyFrame}{T\+C\+Emergency\+Frame} object is created to confirm the use of the emergency brake.
+
+If the system is in Automatic mode, the speed of the selected train is decreased by the emergency brake deceleration constant.
+
+
+\begin{DoxyParams}{Parameters}
+{\em evt} & the send of the event, i.\+e., the \textquotesingle{}Emergency Brake\textquotesingle{} button \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCBrakePanel_a9de925ba11a22e74716c6009d666b0d2}\label{classTrainControllerComps_1_1TCBrakePanel_a9de925ba11a22e74716c6009d666b0d2}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}!init\+Components@{init\+Components}}
+\index{init\+Components@{init\+Components}!Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}}
+\subsubsection{\texorpdfstring{init\+Components()}{initComponents()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Brake\+Panel.\+init\+Components (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+This method is called from within the constructor to initialize the form. 
+
+W\+A\+R\+N\+I\+NG\+: Do N\+OT modify this code. The content of this method is always regenerated by the Form Editor. \mbox{\Hypertarget{classTrainControllerComps_1_1TCBrakePanel_a4ba678ac423a17477b5b15077c55cb7a}\label{classTrainControllerComps_1_1TCBrakePanel_a4ba678ac423a17477b5b15077c55cb7a}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}!in\+Manual\+Mode@{in\+Manual\+Mode}}
+\index{in\+Manual\+Mode@{in\+Manual\+Mode}!Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}}
+\subsubsection{\texorpdfstring{in\+Manual\+Mode()}{inManualMode()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Brake\+Panel.\+in\+Manual\+Mode (\begin{DoxyParamCaption}\item[{boolean}]{b }\end{DoxyParamCaption})}
+
+
+
+Set if the system should be in Manual or Automatic mode. 
+
+This method is called from the Train Controller class.
+
+
+\begin{DoxyParams}{Parameters}
+{\em b} & true if in Manual mode, false if in Automatic mode \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCBrakePanel_a901968694edba045f8ee6216d89a4096}\label{classTrainControllerComps_1_1TCBrakePanel_a901968694edba045f8ee6216d89a4096}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}!print\+Logs@{print\+Logs}}
+\index{print\+Logs@{print\+Logs}!Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}}
+\subsubsection{\texorpdfstring{print\+Logs()}{printLogs()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Brake\+Panel.\+print\+Logs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Prints the messages stored in the logbook to the operating log, then clears the logbook. 
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCBrakePanel_ac705fa5eeb5f291ccc8a5af7885fc7c6}\label{classTrainControllerComps_1_1TCBrakePanel_ac705fa5eeb5f291ccc8a5af7885fc7c6}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}!set\+Operating\+Logs@{set\+Operating\+Logs}}
+\index{set\+Operating\+Logs@{set\+Operating\+Logs}!Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}}
+\subsubsection{\texorpdfstring{set\+Operating\+Logs()}{setOperatingLogs()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Brake\+Panel.\+set\+Operating\+Logs (\begin{DoxyParamCaption}\item[{J\+Text\+Area}]{op\+Logs }\end{DoxyParamCaption})}
+
+
+
+Sets the text field to be used for the operating logs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em op\+Logs} & the area to display messages in. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCBrakePanel_a081a9013d44c3933e6acb9a7bd01135f}\label{classTrainControllerComps_1_1TCBrakePanel_a081a9013d44c3933e6acb9a7bd01135f}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}!set\+Selected\+Train@{set\+Selected\+Train}}
+\index{set\+Selected\+Train@{set\+Selected\+Train}!Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}}
+\subsubsection{\texorpdfstring{set\+Selected\+Train()}{setSelectedTrain()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Brake\+Panel.\+set\+Selected\+Train (\begin{DoxyParamCaption}\item[{\hyperlink{classTrainControllerComps_1_1TestTrain}{Test\+Train}}]{selected\+Train }\end{DoxyParamCaption})}
+
+
+
+Sets the selected train that this class is to control. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em selected\+Train} & the train being controlled. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCBrakePanel_af3b802bb0a81c57ee5429fdd75aeb0ea}\label{classTrainControllerComps_1_1TCBrakePanel_af3b802bb0a81c57ee5429fdd75aeb0ea}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}!emergency\+Brake@{emergency\+Brake}}
+\index{emergency\+Brake@{emergency\+Brake}!Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}}
+\subsubsection{\texorpdfstring{emergency\+Brake}{emergencyBrake}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Button Train\+Controller\+Comps.\+T\+C\+Brake\+Panel.\+emergency\+Brake\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCBrakePanel_a076bed5a497e04e53ef355147b17ff99}\label{classTrainControllerComps_1_1TCBrakePanel_a076bed5a497e04e53ef355147b17ff99}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}!function\+Label\+Emg@{function\+Label\+Emg}}
+\index{function\+Label\+Emg@{function\+Label\+Emg}!Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}}
+\subsubsection{\texorpdfstring{function\+Label\+Emg}{functionLabelEmg}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Brake\+Panel.\+function\+Label\+Emg\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCBrakePanel_a2d6c94b0c372a2bb5ae99003c5f12864}\label{classTrainControllerComps_1_1TCBrakePanel_a2d6c94b0c372a2bb5ae99003c5f12864}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}!function\+Label\+Service@{function\+Label\+Service}}
+\index{function\+Label\+Service@{function\+Label\+Service}!Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}}
+\subsubsection{\texorpdfstring{function\+Label\+Service}{functionLabelService}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Brake\+Panel.\+function\+Label\+Service\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCBrakePanel_a7ef33ee76ed0b5f0759b24430e196b89}\label{classTrainControllerComps_1_1TCBrakePanel_a7ef33ee76ed0b5f0759b24430e196b89}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}!in\+Manual\+Mode@{in\+Manual\+Mode}}
+\index{in\+Manual\+Mode@{in\+Manual\+Mode}!Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}}
+\subsubsection{\texorpdfstring{in\+Manual\+Mode}{inManualMode}}
+{\footnotesize\ttfamily boolean Train\+Controller\+Comps.\+T\+C\+Brake\+Panel.\+in\+Manual\+Mode\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Value used to determine if the system in Manual or Automatic mode. 
+
+This field gets set by the Train Controller class. \mbox{\Hypertarget{classTrainControllerComps_1_1TCBrakePanel_a78a980aa80c948e54642057226f41e25}\label{classTrainControllerComps_1_1TCBrakePanel_a78a980aa80c948e54642057226f41e25}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}!log\+Book@{log\+Book}}
+\index{log\+Book@{log\+Book}!Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}}
+\subsubsection{\texorpdfstring{log\+Book}{logBook}}
+{\footnotesize\ttfamily Linked\+List$<$String$>$ Train\+Controller\+Comps.\+T\+C\+Brake\+Panel.\+log\+Book\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+A list used to store up messages to print to the operating log. 
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCBrakePanel_a2ba550a51ec095044bdebb4cf00f67b6}\label{classTrainControllerComps_1_1TCBrakePanel_a2ba550a51ec095044bdebb4cf00f67b6}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}!operating\+Logs@{operating\+Logs}}
+\index{operating\+Logs@{operating\+Logs}!Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}}
+\subsubsection{\texorpdfstring{operating\+Logs}{operatingLogs}}
+{\footnotesize\ttfamily J\+Text\+Area Train\+Controller\+Comps.\+T\+C\+Brake\+Panel.\+operating\+Logs\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Text area to print notifications to. 
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCBrakePanel_ac8f5bb4b6ea27c0d53b99945f9c68141}\label{classTrainControllerComps_1_1TCBrakePanel_ac8f5bb4b6ea27c0d53b99945f9c68141}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}!selected\+Train@{selected\+Train}}
+\index{selected\+Train@{selected\+Train}!Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}}
+\subsubsection{\texorpdfstring{selected\+Train}{selectedTrain}}
+{\footnotesize\ttfamily \hyperlink{classTrainControllerComps_1_1TestTrain}{Test\+Train} Train\+Controller\+Comps.\+T\+C\+Brake\+Panel.\+selected\+Train\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The train whose brakes that are being controlled. 
+
+This variable is passed in from the Train Controller class. \mbox{\Hypertarget{classTrainControllerComps_1_1TCBrakePanel_a4cf0bb6697c799dc416ef1f9c08a1c70}\label{classTrainControllerComps_1_1TCBrakePanel_a4cf0bb6697c799dc416ef1f9c08a1c70}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}!service\+Brake@{service\+Brake}}
+\index{service\+Brake@{service\+Brake}!Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}}
+\subsubsection{\texorpdfstring{service\+Brake}{serviceBrake}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Button Train\+Controller\+Comps.\+T\+C\+Brake\+Panel.\+service\+Brake\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCBrakePanel_afa54fa32b72311b670556a7cfbf8c61c}\label{classTrainControllerComps_1_1TCBrakePanel_afa54fa32b72311b670556a7cfbf8c61c}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}!status\+Label\+Emg@{status\+Label\+Emg}}
+\index{status\+Label\+Emg@{status\+Label\+Emg}!Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}}
+\subsubsection{\texorpdfstring{status\+Label\+Emg}{statusLabelEmg}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Brake\+Panel.\+status\+Label\+Emg\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCBrakePanel_ad30222226055f9cc2153bd1d18b717f8}\label{classTrainControllerComps_1_1TCBrakePanel_ad30222226055f9cc2153bd1d18b717f8}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}!status\+Label\+Service@{status\+Label\+Service}}
+\index{status\+Label\+Service@{status\+Label\+Service}!Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Brake\+Panel}}
+\subsubsection{\texorpdfstring{status\+Label\+Service}{statusLabelService}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Brake\+Panel.\+status\+Label\+Service\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/\+Train\+Controller\+Comps/\hyperlink{TCBrakePanel_8java}{T\+C\+Brake\+Panel.\+java}\end{DoxyCompactItemize}

@@ -1,0 +1,3 @@
+<map id="TrainControllerComps.TCFailures" name="TrainControllerComps.TCFailures">
+<area shape="rect" id="node6" href="$classTrainControllerComps_1_1TestTrain.html" title="{TrainControllerComps.Test\lTrain\n|~ id\l~ speed\l~ power\l~ kp\l~ ki\l~ currentBlockSpeed\l~ currentSuggestedSpeed\l~ lights\l~ leftDoors\l~ rightDoors\l~ ac\l~ heat\l|+ TestTrain()\l+ powerConstantsSet()\l+ generateRandomTestTrain()\l+ main()\l}" alt="" coords="350,140,549,413"/>
+</map>

@@ -1,0 +1,10 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node2" href="$classCommonUIElements_1_1ConfirmationWindow.html" title="A window that displays a title and a message for a given amount of time, in seconds, and then closes. " alt="" coords="138,5,362,44"/>
+<area shape="rect" id="node3" href="$classTrainControllerComps_1_1TCDispatchedTrainFrame.html" title="This class is responsible for displaying all the dispatched trains to the user, and allow them to ope..." alt="" coords="130,68,370,107"/>
+<area shape="rect" id="node4" href="$classTrainControllerComps_1_1TCEmergencyFrame.html" title="This class is responsible for confirming the use of the selected trains emergency brake when in Manua..." alt="" coords="130,131,370,169"/>
+<area shape="rect" id="node5" href="$classTrainControllerComps_1_1TCEngineerPanel.html" title="This class is responsible to set the Kp and Ki constants of a given train. " alt="" coords="137,193,363,232"/>
+<area shape="rect" id="node6" href="$classTrainControllerComps_1_1TCFailures.html" title="This class is responsible for display the states of the 3 failures that can occur on the train..." alt="" coords="140,256,360,281"/>
+<area shape="rect" id="node7" href="$classTrainControllerComps_1_1TCPassengerGUI.html" title="This class is responsible for allowing the passengers on the train to initiate the emergency brake on..." alt="" coords="120,305,380,331"/>
+<area shape="rect" id="node8" href="$classTrainControllerComps_1_1TCTestConsole.html" title="This class is responsible for testing the various components in the Train Controller, mimicking the components on a train object. " alt="" coords="151,355,349,393"/>
+<area shape="rect" id="node9" href="$classTrainControllerComps_1_1TrainController.html" title="This class is a GUI that is used to control a selected train. " alt="" coords="158,417,342,456"/>
+</map>

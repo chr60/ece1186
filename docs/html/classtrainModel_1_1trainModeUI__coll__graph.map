@@ -1,0 +1,3 @@
+<map id="trainModel.trainModeUI" name="trainModel.trainModeUI">
+<area shape="rect" id="node2" href="$classtrainModel_1_1Train.html" title="{trainModel.Train\n|~ mass\l~ velocity\l~ oldvelocity\l~ power\l~ currGrade\l~ Vx\l~ Vy\l~ oldVx\l~ oldVy\l~ maxPower\l~ frictionC\l~ g\l~ TrainID\l~ startTime\l|+ Train()\l+ getID()\l+ getVelocity()\l+ getMass()\l+ powerCommand()\l+ getPower()\l&#45; changeSpeed()\l&#45; magnitude()\l&#45; myCos()\l&#45; mySin()\l}" alt="" coords="5,5,145,372"/>
+</map>

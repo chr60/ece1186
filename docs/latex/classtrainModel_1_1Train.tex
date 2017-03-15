@@ -1,0 +1,227 @@
+\hypertarget{classtrainModel_1_1Train}{}\section{train\+Model.\+Train Class Reference}
+\label{classtrainModel_1_1Train}\index{train\+Model.\+Train@{train\+Model.\+Train}}
+
+
+Collaboration diagram for train\+Model.\+Train\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=185pt]{classtrainModel_1_1Train__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtrainModel_1_1Train_ace267efabb37b0bf7b681af1ddf12690}{Train} (int ID)
+\item 
+int \hyperlink{classtrainModel_1_1Train_ad29a94a10fad2b26fc32989cd3431850}{get\+ID} ()
+\item 
+Double \hyperlink{classtrainModel_1_1Train_a1e0b8055a7cbfdf6edbce0ae09273219}{get\+Velocity} ()
+\item 
+Double \hyperlink{classtrainModel_1_1Train_a6b09bef43b1858aae11d2d02dfd6ffb4}{get\+Mass} ()
+\item 
+void \hyperlink{classtrainModel_1_1Train_acd407d7861947859becc92cc1fb5c937}{power\+Command} (Double new\+Power)
+\item 
+Double \hyperlink{classtrainModel_1_1Train_a48de926812a7be60f611f37dd738a47a}{get\+Power} ()
+\end{DoxyCompactItemize}
+\subsection*{Package Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Double \hyperlink{classtrainModel_1_1Train_a81b0e04517e168bb5381c165ae068210}{mass}
+\item 
+Double \hyperlink{classtrainModel_1_1Train_ae0f4175c59c12b888c12587a7c64768e}{velocity}
+\item 
+Double \hyperlink{classtrainModel_1_1Train_ae03291f43c83952e1452fc0d4031fd16}{oldvelocity}
+\item 
+Double \hyperlink{classtrainModel_1_1Train_ad650d5136222ba3bdf3272f7ea908ab8}{power}
+\item 
+Double \hyperlink{classtrainModel_1_1Train_a5b231e967030c5143f13efe7b993751c}{curr\+Grade}
+\item 
+Double \hyperlink{classtrainModel_1_1Train_ad934166ba4e535a033771eaa5b758c42}{Vx}
+\item 
+Double \hyperlink{classtrainModel_1_1Train_a60dfaef269a503c72700a405a1ba465e}{Vy}
+\item 
+Double \hyperlink{classtrainModel_1_1Train_aa81f6ae6deb7fb21c94d8af2b37c61f7}{old\+Vx}
+\item 
+Double \hyperlink{classtrainModel_1_1Train_a0fc26e7ed97d3d83749fe5fa1156812d}{old\+Vy}
+\item 
+Double \hyperlink{classtrainModel_1_1Train_aeb7f280cf048608f22c6c0ec8544b7c0}{max\+Power} = 120000.\+00
+\item 
+Double \hyperlink{classtrainModel_1_1Train_aa660ffb9dcd63059f8e9e3c282ae5cae}{frictionC} = 0.\+42
+\item 
+Double \hyperlink{classtrainModel_1_1Train_a163d398b8467040f820386cff418e8ac}{g} = 9.\+8
+\item 
+int \hyperlink{classtrainModel_1_1Train_af258aa71b69e7f7878164cb40d0422ab}{Train\+ID}
+\item 
+Double \hyperlink{classtrainModel_1_1Train_ab498b674cbe1209d6903ff1d79c600e8}{start\+Time}
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classtrainModel_1_1Train_a1ab142928b7f173d3593a2482c3fcdec}{change\+Speed} (Double Fapp)
+\item 
+Double \hyperlink{classtrainModel_1_1Train_a0eabada19eac6142f2f174109de8551a}{magnitude} (Double x, Double y)
+\item 
+Double \hyperlink{classtrainModel_1_1Train_affdb8691217f966a1cd2cbbeda59b005}{my\+Cos} (Double deg)
+\item 
+Double \hyperlink{classtrainModel_1_1Train_a4a42a9493ba183b960f3e92fe2430475}{my\+Sin} (Double deg)
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtrainModel_1_1Train_ace267efabb37b0bf7b681af1ddf12690}\label{classtrainModel_1_1Train_ace267efabb37b0bf7b681af1ddf12690}} 
+\index{train\+Model\+::\+Train@{train\+Model\+::\+Train}!Train@{Train}}
+\index{Train@{Train}!train\+Model\+::\+Train@{train\+Model\+::\+Train}}
+\subsubsection{\texorpdfstring{Train()}{Train()}}
+{\footnotesize\ttfamily train\+Model.\+Train.\+Train (\begin{DoxyParamCaption}\item[{int}]{ID }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classtrainModel_1_1Train_a1ab142928b7f173d3593a2482c3fcdec}\label{classtrainModel_1_1Train_a1ab142928b7f173d3593a2482c3fcdec}} 
+\index{train\+Model\+::\+Train@{train\+Model\+::\+Train}!change\+Speed@{change\+Speed}}
+\index{change\+Speed@{change\+Speed}!train\+Model\+::\+Train@{train\+Model\+::\+Train}}
+\subsubsection{\texorpdfstring{change\+Speed()}{changeSpeed()}}
+{\footnotesize\ttfamily void train\+Model.\+Train.\+change\+Speed (\begin{DoxyParamCaption}\item[{Double}]{Fapp }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classtrainModel_1_1Train_ad29a94a10fad2b26fc32989cd3431850}\label{classtrainModel_1_1Train_ad29a94a10fad2b26fc32989cd3431850}} 
+\index{train\+Model\+::\+Train@{train\+Model\+::\+Train}!get\+ID@{get\+ID}}
+\index{get\+ID@{get\+ID}!train\+Model\+::\+Train@{train\+Model\+::\+Train}}
+\subsubsection{\texorpdfstring{get\+I\+D()}{getID()}}
+{\footnotesize\ttfamily int train\+Model.\+Train.\+get\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classtrainModel_1_1Train_a6b09bef43b1858aae11d2d02dfd6ffb4}\label{classtrainModel_1_1Train_a6b09bef43b1858aae11d2d02dfd6ffb4}} 
+\index{train\+Model\+::\+Train@{train\+Model\+::\+Train}!get\+Mass@{get\+Mass}}
+\index{get\+Mass@{get\+Mass}!train\+Model\+::\+Train@{train\+Model\+::\+Train}}
+\subsubsection{\texorpdfstring{get\+Mass()}{getMass()}}
+{\footnotesize\ttfamily Double train\+Model.\+Train.\+get\+Mass (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classtrainModel_1_1Train_a48de926812a7be60f611f37dd738a47a}\label{classtrainModel_1_1Train_a48de926812a7be60f611f37dd738a47a}} 
+\index{train\+Model\+::\+Train@{train\+Model\+::\+Train}!get\+Power@{get\+Power}}
+\index{get\+Power@{get\+Power}!train\+Model\+::\+Train@{train\+Model\+::\+Train}}
+\subsubsection{\texorpdfstring{get\+Power()}{getPower()}}
+{\footnotesize\ttfamily Double train\+Model.\+Train.\+get\+Power (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classtrainModel_1_1Train_a1e0b8055a7cbfdf6edbce0ae09273219}\label{classtrainModel_1_1Train_a1e0b8055a7cbfdf6edbce0ae09273219}} 
+\index{train\+Model\+::\+Train@{train\+Model\+::\+Train}!get\+Velocity@{get\+Velocity}}
+\index{get\+Velocity@{get\+Velocity}!train\+Model\+::\+Train@{train\+Model\+::\+Train}}
+\subsubsection{\texorpdfstring{get\+Velocity()}{getVelocity()}}
+{\footnotesize\ttfamily Double train\+Model.\+Train.\+get\+Velocity (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classtrainModel_1_1Train_a0eabada19eac6142f2f174109de8551a}\label{classtrainModel_1_1Train_a0eabada19eac6142f2f174109de8551a}} 
+\index{train\+Model\+::\+Train@{train\+Model\+::\+Train}!magnitude@{magnitude}}
+\index{magnitude@{magnitude}!train\+Model\+::\+Train@{train\+Model\+::\+Train}}
+\subsubsection{\texorpdfstring{magnitude()}{magnitude()}}
+{\footnotesize\ttfamily Double train\+Model.\+Train.\+magnitude (\begin{DoxyParamCaption}\item[{Double}]{x,  }\item[{Double}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classtrainModel_1_1Train_affdb8691217f966a1cd2cbbeda59b005}\label{classtrainModel_1_1Train_affdb8691217f966a1cd2cbbeda59b005}} 
+\index{train\+Model\+::\+Train@{train\+Model\+::\+Train}!my\+Cos@{my\+Cos}}
+\index{my\+Cos@{my\+Cos}!train\+Model\+::\+Train@{train\+Model\+::\+Train}}
+\subsubsection{\texorpdfstring{my\+Cos()}{myCos()}}
+{\footnotesize\ttfamily Double train\+Model.\+Train.\+my\+Cos (\begin{DoxyParamCaption}\item[{Double}]{deg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classtrainModel_1_1Train_a4a42a9493ba183b960f3e92fe2430475}\label{classtrainModel_1_1Train_a4a42a9493ba183b960f3e92fe2430475}} 
+\index{train\+Model\+::\+Train@{train\+Model\+::\+Train}!my\+Sin@{my\+Sin}}
+\index{my\+Sin@{my\+Sin}!train\+Model\+::\+Train@{train\+Model\+::\+Train}}
+\subsubsection{\texorpdfstring{my\+Sin()}{mySin()}}
+{\footnotesize\ttfamily Double train\+Model.\+Train.\+my\+Sin (\begin{DoxyParamCaption}\item[{Double}]{deg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classtrainModel_1_1Train_acd407d7861947859becc92cc1fb5c937}\label{classtrainModel_1_1Train_acd407d7861947859becc92cc1fb5c937}} 
+\index{train\+Model\+::\+Train@{train\+Model\+::\+Train}!power\+Command@{power\+Command}}
+\index{power\+Command@{power\+Command}!train\+Model\+::\+Train@{train\+Model\+::\+Train}}
+\subsubsection{\texorpdfstring{power\+Command()}{powerCommand()}}
+{\footnotesize\ttfamily void train\+Model.\+Train.\+power\+Command (\begin{DoxyParamCaption}\item[{Double}]{new\+Power }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classtrainModel_1_1Train_a5b231e967030c5143f13efe7b993751c}\label{classtrainModel_1_1Train_a5b231e967030c5143f13efe7b993751c}} 
+\index{train\+Model\+::\+Train@{train\+Model\+::\+Train}!curr\+Grade@{curr\+Grade}}
+\index{curr\+Grade@{curr\+Grade}!train\+Model\+::\+Train@{train\+Model\+::\+Train}}
+\subsubsection{\texorpdfstring{curr\+Grade}{currGrade}}
+{\footnotesize\ttfamily Double train\+Model.\+Train.\+curr\+Grade\hspace{0.3cm}{\ttfamily [package]}}
+
+\mbox{\Hypertarget{classtrainModel_1_1Train_aa660ffb9dcd63059f8e9e3c282ae5cae}\label{classtrainModel_1_1Train_aa660ffb9dcd63059f8e9e3c282ae5cae}} 
+\index{train\+Model\+::\+Train@{train\+Model\+::\+Train}!frictionC@{frictionC}}
+\index{frictionC@{frictionC}!train\+Model\+::\+Train@{train\+Model\+::\+Train}}
+\subsubsection{\texorpdfstring{frictionC}{frictionC}}
+{\footnotesize\ttfamily Double train\+Model.\+Train.\+frictionC = 0.\+42\hspace{0.3cm}{\ttfamily [package]}}
+
+\mbox{\Hypertarget{classtrainModel_1_1Train_a163d398b8467040f820386cff418e8ac}\label{classtrainModel_1_1Train_a163d398b8467040f820386cff418e8ac}} 
+\index{train\+Model\+::\+Train@{train\+Model\+::\+Train}!g@{g}}
+\index{g@{g}!train\+Model\+::\+Train@{train\+Model\+::\+Train}}
+\subsubsection{\texorpdfstring{g}{g}}
+{\footnotesize\ttfamily Double train\+Model.\+Train.\+g = 9.\+8\hspace{0.3cm}{\ttfamily [package]}}
+
+\mbox{\Hypertarget{classtrainModel_1_1Train_a81b0e04517e168bb5381c165ae068210}\label{classtrainModel_1_1Train_a81b0e04517e168bb5381c165ae068210}} 
+\index{train\+Model\+::\+Train@{train\+Model\+::\+Train}!mass@{mass}}
+\index{mass@{mass}!train\+Model\+::\+Train@{train\+Model\+::\+Train}}
+\subsubsection{\texorpdfstring{mass}{mass}}
+{\footnotesize\ttfamily Double train\+Model.\+Train.\+mass\hspace{0.3cm}{\ttfamily [package]}}
+
+\mbox{\Hypertarget{classtrainModel_1_1Train_aeb7f280cf048608f22c6c0ec8544b7c0}\label{classtrainModel_1_1Train_aeb7f280cf048608f22c6c0ec8544b7c0}} 
+\index{train\+Model\+::\+Train@{train\+Model\+::\+Train}!max\+Power@{max\+Power}}
+\index{max\+Power@{max\+Power}!train\+Model\+::\+Train@{train\+Model\+::\+Train}}
+\subsubsection{\texorpdfstring{max\+Power}{maxPower}}
+{\footnotesize\ttfamily Double train\+Model.\+Train.\+max\+Power = 120000.\+00\hspace{0.3cm}{\ttfamily [package]}}
+
+\mbox{\Hypertarget{classtrainModel_1_1Train_ae03291f43c83952e1452fc0d4031fd16}\label{classtrainModel_1_1Train_ae03291f43c83952e1452fc0d4031fd16}} 
+\index{train\+Model\+::\+Train@{train\+Model\+::\+Train}!oldvelocity@{oldvelocity}}
+\index{oldvelocity@{oldvelocity}!train\+Model\+::\+Train@{train\+Model\+::\+Train}}
+\subsubsection{\texorpdfstring{oldvelocity}{oldvelocity}}
+{\footnotesize\ttfamily Double train\+Model.\+Train.\+oldvelocity\hspace{0.3cm}{\ttfamily [package]}}
+
+\mbox{\Hypertarget{classtrainModel_1_1Train_aa81f6ae6deb7fb21c94d8af2b37c61f7}\label{classtrainModel_1_1Train_aa81f6ae6deb7fb21c94d8af2b37c61f7}} 
+\index{train\+Model\+::\+Train@{train\+Model\+::\+Train}!old\+Vx@{old\+Vx}}
+\index{old\+Vx@{old\+Vx}!train\+Model\+::\+Train@{train\+Model\+::\+Train}}
+\subsubsection{\texorpdfstring{old\+Vx}{oldVx}}
+{\footnotesize\ttfamily Double train\+Model.\+Train.\+old\+Vx\hspace{0.3cm}{\ttfamily [package]}}
+
+\mbox{\Hypertarget{classtrainModel_1_1Train_a0fc26e7ed97d3d83749fe5fa1156812d}\label{classtrainModel_1_1Train_a0fc26e7ed97d3d83749fe5fa1156812d}} 
+\index{train\+Model\+::\+Train@{train\+Model\+::\+Train}!old\+Vy@{old\+Vy}}
+\index{old\+Vy@{old\+Vy}!train\+Model\+::\+Train@{train\+Model\+::\+Train}}
+\subsubsection{\texorpdfstring{old\+Vy}{oldVy}}
+{\footnotesize\ttfamily Double train\+Model.\+Train.\+old\+Vy\hspace{0.3cm}{\ttfamily [package]}}
+
+\mbox{\Hypertarget{classtrainModel_1_1Train_ad650d5136222ba3bdf3272f7ea908ab8}\label{classtrainModel_1_1Train_ad650d5136222ba3bdf3272f7ea908ab8}} 
+\index{train\+Model\+::\+Train@{train\+Model\+::\+Train}!power@{power}}
+\index{power@{power}!train\+Model\+::\+Train@{train\+Model\+::\+Train}}
+\subsubsection{\texorpdfstring{power}{power}}
+{\footnotesize\ttfamily Double train\+Model.\+Train.\+power\hspace{0.3cm}{\ttfamily [package]}}
+
+\mbox{\Hypertarget{classtrainModel_1_1Train_ab498b674cbe1209d6903ff1d79c600e8}\label{classtrainModel_1_1Train_ab498b674cbe1209d6903ff1d79c600e8}} 
+\index{train\+Model\+::\+Train@{train\+Model\+::\+Train}!start\+Time@{start\+Time}}
+\index{start\+Time@{start\+Time}!train\+Model\+::\+Train@{train\+Model\+::\+Train}}
+\subsubsection{\texorpdfstring{start\+Time}{startTime}}
+{\footnotesize\ttfamily Double train\+Model.\+Train.\+start\+Time\hspace{0.3cm}{\ttfamily [package]}}
+
+\mbox{\Hypertarget{classtrainModel_1_1Train_af258aa71b69e7f7878164cb40d0422ab}\label{classtrainModel_1_1Train_af258aa71b69e7f7878164cb40d0422ab}} 
+\index{train\+Model\+::\+Train@{train\+Model\+::\+Train}!Train\+ID@{Train\+ID}}
+\index{Train\+ID@{Train\+ID}!train\+Model\+::\+Train@{train\+Model\+::\+Train}}
+\subsubsection{\texorpdfstring{Train\+ID}{TrainID}}
+{\footnotesize\ttfamily int train\+Model.\+Train.\+Train\+ID\hspace{0.3cm}{\ttfamily [package]}}
+
+\mbox{\Hypertarget{classtrainModel_1_1Train_ae0f4175c59c12b888c12587a7c64768e}\label{classtrainModel_1_1Train_ae0f4175c59c12b888c12587a7c64768e}} 
+\index{train\+Model\+::\+Train@{train\+Model\+::\+Train}!velocity@{velocity}}
+\index{velocity@{velocity}!train\+Model\+::\+Train@{train\+Model\+::\+Train}}
+\subsubsection{\texorpdfstring{velocity}{velocity}}
+{\footnotesize\ttfamily Double train\+Model.\+Train.\+velocity\hspace{0.3cm}{\ttfamily [package]}}
+
+\mbox{\Hypertarget{classtrainModel_1_1Train_ad934166ba4e535a033771eaa5b758c42}\label{classtrainModel_1_1Train_ad934166ba4e535a033771eaa5b758c42}} 
+\index{train\+Model\+::\+Train@{train\+Model\+::\+Train}!Vx@{Vx}}
+\index{Vx@{Vx}!train\+Model\+::\+Train@{train\+Model\+::\+Train}}
+\subsubsection{\texorpdfstring{Vx}{Vx}}
+{\footnotesize\ttfamily Double train\+Model.\+Train.\+Vx\hspace{0.3cm}{\ttfamily [package]}}
+
+\mbox{\Hypertarget{classtrainModel_1_1Train_a60dfaef269a503c72700a405a1ba465e}\label{classtrainModel_1_1Train_a60dfaef269a503c72700a405a1ba465e}} 
+\index{train\+Model\+::\+Train@{train\+Model\+::\+Train}!Vy@{Vy}}
+\index{Vy@{Vy}!train\+Model\+::\+Train@{train\+Model\+::\+Train}}
+\subsubsection{\texorpdfstring{Vy}{Vy}}
+{\footnotesize\ttfamily Double train\+Model.\+Train.\+Vy\hspace{0.3cm}{\ttfamily [package]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/train\+Model/\hyperlink{Train_8java}{Train.\+java}\end{DoxyCompactItemize}

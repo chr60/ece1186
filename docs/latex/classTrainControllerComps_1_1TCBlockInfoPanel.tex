@@ -1,0 +1,179 @@
+\hypertarget{classTrainControllerComps_1_1TCBlockInfoPanel}{}\section{Train\+Controller\+Comps.\+T\+C\+Block\+Info\+Panel Class Reference}
+\label{classTrainControllerComps_1_1TCBlockInfoPanel}\index{Train\+Controller\+Comps.\+T\+C\+Block\+Info\+Panel@{Train\+Controller\+Comps.\+T\+C\+Block\+Info\+Panel}}
+
+
+This class is responsible for displaying information regarding the block the selected train is currently in.  
+
+
+
+
+Inheritance diagram for Train\+Controller\+Comps.\+T\+C\+Block\+Info\+Panel\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=234pt]{classTrainControllerComps_1_1TCBlockInfoPanel__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Train\+Controller\+Comps.\+T\+C\+Block\+Info\+Panel\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classTrainControllerComps_1_1TCBlockInfoPanel__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classTrainControllerComps_1_1TCBlockInfoPanel_a44a1b4c66f0a95faae3698b9a37cd71c}{T\+C\+Block\+Info\+Panel} ()
+\begin{DoxyCompactList}\small\item\em Constructor for a \hyperlink{classTrainControllerComps_1_1TCBlockInfoPanel}{T\+C\+Block\+Info\+Panel} object. \end{DoxyCompactList}\item 
+void \hyperlink{classTrainControllerComps_1_1TCBlockInfoPanel_a930f11785e7efa17ccc8909d885de1c5}{set\+Selected\+Train} (\hyperlink{classTrainControllerComps_1_1TestTrain}{Test\+Train} \hyperlink{classtrain}{train})
+\begin{DoxyCompactList}\small\item\em Sets the selected train that the class will get its information from. \end{DoxyCompactList}\item 
+void \hyperlink{classTrainControllerComps_1_1TCBlockInfoPanel_a2579f1bf5addf760f020e222f831b35a}{set\+Block\+Speed} (double \hyperlink{classTrainControllerComps_1_1TCBlockInfoPanel_a3b3aa9808843291162c5f169c7aea308}{block\+Speed})
+\begin{DoxyCompactList}\small\item\em Sets the block speed label to a specified speed in M\+PH. \end{DoxyCompactList}\item 
+double \hyperlink{classTrainControllerComps_1_1TCBlockInfoPanel_af6abb156c9e61d36d7fd3d8cb8c899f6}{get\+Block\+Speed} ()
+\begin{DoxyCompactList}\small\item\em Gets the speed of the block the selected train is in. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classTrainControllerComps_1_1TCBlockInfoPanel_a0bbafa154ac2cdc3b83140374e85ed25}{init\+Components} ()
+\begin{DoxyCompactList}\small\item\em This method is called from within the constructor to initialize the form. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classTrainControllerComps_1_1TestTrain}{Test\+Train} \hyperlink{classTrainControllerComps_1_1TCBlockInfoPanel_a26dda8277000855ca35d16e6bdb97665}{selected\+Train}
+\begin{DoxyCompactList}\small\item\em The train to use in order to populate the labels and UI elements. \end{DoxyCompactList}\item 
+javax.\+swing.\+J\+Panel \hyperlink{classTrainControllerComps_1_1TCBlockInfoPanel_a6a9c969b6131a6e6f3d01fd2a9434d6d}{background\+Panel}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCBlockInfoPanel_a3b3aa9808843291162c5f169c7aea308}{block\+Speed}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCBlockInfoPanel_a4e08f23bf589fc1e8b361f7473f54127}{block\+Speed\+Label}
+\item 
+javax.\+swing.\+J\+Label \hyperlink{classTrainControllerComps_1_1TCBlockInfoPanel_a6038128e0c97c299a84e81d8e77b6215}{unit\+Label}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class is responsible for displaying information regarding the block the selected train is currently in. 
+
+This class collaborates with the Train class as well as the Train Controller class.
+
+\begin{DoxyAuthor}{Author}
+Andrew Lendacky 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCBlockInfoPanel_a44a1b4c66f0a95faae3698b9a37cd71c}\label{classTrainControllerComps_1_1TCBlockInfoPanel_a44a1b4c66f0a95faae3698b9a37cd71c}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel}!T\+C\+Block\+Info\+Panel@{T\+C\+Block\+Info\+Panel}}
+\index{T\+C\+Block\+Info\+Panel@{T\+C\+Block\+Info\+Panel}!Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel}}
+\subsubsection{\texorpdfstring{T\+C\+Block\+Info\+Panel()}{TCBlockInfoPanel()}}
+{\footnotesize\ttfamily Train\+Controller\+Comps.\+T\+C\+Block\+Info\+Panel.\+T\+C\+Block\+Info\+Panel (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Constructor for a \hyperlink{classTrainControllerComps_1_1TCBlockInfoPanel}{T\+C\+Block\+Info\+Panel} object. 
+
+This constructor does not set the selected train, and must be set by the Train Controller before being used. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCBlockInfoPanel_af6abb156c9e61d36d7fd3d8cb8c899f6}\label{classTrainControllerComps_1_1TCBlockInfoPanel_af6abb156c9e61d36d7fd3d8cb8c899f6}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel}!get\+Block\+Speed@{get\+Block\+Speed}}
+\index{get\+Block\+Speed@{get\+Block\+Speed}!Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel}}
+\subsubsection{\texorpdfstring{get\+Block\+Speed()}{getBlockSpeed()}}
+{\footnotesize\ttfamily double Train\+Controller\+Comps.\+T\+C\+Block\+Info\+Panel.\+get\+Block\+Speed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the speed of the block the selected train is in. 
+
+\begin{DoxyReturn}{Returns}
+returns the block speed 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCBlockInfoPanel_a0bbafa154ac2cdc3b83140374e85ed25}\label{classTrainControllerComps_1_1TCBlockInfoPanel_a0bbafa154ac2cdc3b83140374e85ed25}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel}!init\+Components@{init\+Components}}
+\index{init\+Components@{init\+Components}!Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel}}
+\subsubsection{\texorpdfstring{init\+Components()}{initComponents()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Block\+Info\+Panel.\+init\+Components (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+This method is called from within the constructor to initialize the form. 
+
+W\+A\+R\+N\+I\+NG\+: Do N\+OT modify this code. The content of this method is always regenerated by the Form Editor. \mbox{\Hypertarget{classTrainControllerComps_1_1TCBlockInfoPanel_a2579f1bf5addf760f020e222f831b35a}\label{classTrainControllerComps_1_1TCBlockInfoPanel_a2579f1bf5addf760f020e222f831b35a}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel}!set\+Block\+Speed@{set\+Block\+Speed}}
+\index{set\+Block\+Speed@{set\+Block\+Speed}!Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel}}
+\subsubsection{\texorpdfstring{set\+Block\+Speed()}{setBlockSpeed()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Block\+Info\+Panel.\+set\+Block\+Speed (\begin{DoxyParamCaption}\item[{double}]{block\+Speed }\end{DoxyParamCaption})}
+
+
+
+Sets the block speed label to a specified speed in M\+PH. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em block\+Speed} & the speed of the block the train is in. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCBlockInfoPanel_a930f11785e7efa17ccc8909d885de1c5}\label{classTrainControllerComps_1_1TCBlockInfoPanel_a930f11785e7efa17ccc8909d885de1c5}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel}!set\+Selected\+Train@{set\+Selected\+Train}}
+\index{set\+Selected\+Train@{set\+Selected\+Train}!Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel}}
+\subsubsection{\texorpdfstring{set\+Selected\+Train()}{setSelectedTrain()}}
+{\footnotesize\ttfamily void Train\+Controller\+Comps.\+T\+C\+Block\+Info\+Panel.\+set\+Selected\+Train (\begin{DoxyParamCaption}\item[{\hyperlink{classTrainControllerComps_1_1TestTrain}{Test\+Train}}]{train }\end{DoxyParamCaption})}
+
+
+
+Sets the selected train that the class will get its information from. 
+
+This train is set from the Train Controller class.
+
+
+\begin{DoxyParams}{Parameters}
+{\em train} & the selected train \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCBlockInfoPanel_a6a9c969b6131a6e6f3d01fd2a9434d6d}\label{classTrainControllerComps_1_1TCBlockInfoPanel_a6a9c969b6131a6e6f3d01fd2a9434d6d}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel}!background\+Panel@{background\+Panel}}
+\index{background\+Panel@{background\+Panel}!Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel}}
+\subsubsection{\texorpdfstring{background\+Panel}{backgroundPanel}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Panel Train\+Controller\+Comps.\+T\+C\+Block\+Info\+Panel.\+background\+Panel\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCBlockInfoPanel_a3b3aa9808843291162c5f169c7aea308}\label{classTrainControllerComps_1_1TCBlockInfoPanel_a3b3aa9808843291162c5f169c7aea308}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel}!block\+Speed@{block\+Speed}}
+\index{block\+Speed@{block\+Speed}!Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel}}
+\subsubsection{\texorpdfstring{block\+Speed}{blockSpeed}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Block\+Info\+Panel.\+block\+Speed\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCBlockInfoPanel_a4e08f23bf589fc1e8b361f7473f54127}\label{classTrainControllerComps_1_1TCBlockInfoPanel_a4e08f23bf589fc1e8b361f7473f54127}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel}!block\+Speed\+Label@{block\+Speed\+Label}}
+\index{block\+Speed\+Label@{block\+Speed\+Label}!Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel}}
+\subsubsection{\texorpdfstring{block\+Speed\+Label}{blockSpeedLabel}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Block\+Info\+Panel.\+block\+Speed\+Label\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTrainControllerComps_1_1TCBlockInfoPanel_a26dda8277000855ca35d16e6bdb97665}\label{classTrainControllerComps_1_1TCBlockInfoPanel_a26dda8277000855ca35d16e6bdb97665}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel}!selected\+Train@{selected\+Train}}
+\index{selected\+Train@{selected\+Train}!Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel}}
+\subsubsection{\texorpdfstring{selected\+Train}{selectedTrain}}
+{\footnotesize\ttfamily \hyperlink{classTrainControllerComps_1_1TestTrain}{Test\+Train} Train\+Controller\+Comps.\+T\+C\+Block\+Info\+Panel.\+selected\+Train\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The train to use in order to populate the labels and UI elements. 
+
+This property must be passed in from the Train Controller class. \mbox{\Hypertarget{classTrainControllerComps_1_1TCBlockInfoPanel_a6038128e0c97c299a84e81d8e77b6215}\label{classTrainControllerComps_1_1TCBlockInfoPanel_a6038128e0c97c299a84e81d8e77b6215}} 
+\index{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel}!unit\+Label@{unit\+Label}}
+\index{unit\+Label@{unit\+Label}!Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel@{Train\+Controller\+Comps\+::\+T\+C\+Block\+Info\+Panel}}
+\subsubsection{\texorpdfstring{unit\+Label}{unitLabel}}
+{\footnotesize\ttfamily javax.\+swing.\+J\+Label Train\+Controller\+Comps.\+T\+C\+Block\+Info\+Panel.\+unit\+Label\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/\+Train\+Controller\+Comps/\hyperlink{TCBlockInfoPanel_8java}{T\+C\+Block\+Info\+Panel.\+java}\end{DoxyCompactItemize}
