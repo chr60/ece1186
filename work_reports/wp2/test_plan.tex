@@ -114,7 +114,7 @@ Author: Michael Ghaben
 		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
 		Integrity Level & 1 \\ \hline
 		Methods & Evaluate the readCSV function\\ \hline
-		Inputs &  the files redline.csv and greenline.csv \\ \hline
+		Inputs &  The files redline.csv and greenline.csv \\ \hline
 		Outputs &  The track model successfully reading the csv files\\ \hline
 		Expected Completion & At initialization of the program\\ \hline
 		Risks and Assumptions & Both redline and greenline have been properly input to the files\\ \hline
@@ -573,8 +573,266 @@ Author: Michael Ghaben
 \subsection{Integration Tests}
 
 \section{Train Controller Test Plan}
+Author: Andrew Lendacky
 \subsection{Unit Tests}
+
+\begin{table}[H]
+	\centering
+	\caption{UI Elements Disabled in Automatic Mode}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Checks to see if the desired UI elements are disabled\\ \hline
+		Inputs & The variable 'inAutomaticMode'\\ \hline
+		Outputs & All the desired elements are disabled. \\ \hline
+		Expected Completion & When the system is in Automatic mode\\ \hline
+		Risks and Assumptions & The desired elements are known\\ \hline
+		Responsibility & Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{System is in Manual Mode}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Compares 'inManualMode' and 'inAutomaticMode'\\ \hline
+		Inputs & 'inManualMode' and 'inAutomaticMode', which are booleans\\ \hline
+		Outputs & 'inManualMode' is true and 'inAutomaticMode' is false \\ \hline
+		Expected Completion & When the system is switched to Manual mode\\ \hline
+		Risks and Assumptions & none\\ \hline
+		Responsibility & Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{System is in Automatic Mode}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Compares 'inManualMode' and 'inAutomaticMode'\\ \hline
+		Inputs & 'inManualMode' and 'inAutomaticMode, which are booleans'\\ \hline
+		Outputs & 'inManualMode' is false and 'inAutomaticMode' is true \\ \hline
+		Expected Completion & When the system is switched to Automatic mode\\ \hline
+		Risks and Assumptions & none\\ \hline
+		Responsibility & Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{System is in Normal Mode}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & Compares 'inNormalMode' and 'inTestingMode'\\ \hline
+		Inputs & 'inTestingMode' and 'inNormalMode', which are booleans\\ \hline
+		Outputs & 'inTestingMode' is false and 'inNormalMode' is true \\ \hline
+		Expected Completion & When the system is switched to Normal mode\\ \hline
+		Risks and Assumptions & none\\ \hline
+		Responsibility & Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{System is in Testing Mode}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & Compares 'inTestingMode' and 'inNormalMode'\\ \hline
+		Inputs & 'inTestingMode' and 'inNormalMode', which are booleans\\ \hline
+		Outputs & 'inTestingMode' is true and 'inNormalMode'  is false\\ \hline
+		Expected Completion & When the system is switched to Testing mode\\ \hline
+		Risks and Assumptions & none\\ \hline
+		Responsibility & Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Set Speed is Not Greater than Block Speed}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Compares the set speed and the block speed\\ \hline
+		Inputs & The block speed and the set speed\\ \hline
+		Outputs & The set speed is equal to the block speed \\ \hline
+		Expected Completion & When the 'Set Speed' button is clicked\\ \hline
+		Risks and Assumptions & The system is in Manual mode\\ \hline
+		Responsibility & Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Set Speed is Not Greater than Suggested Speed}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Compares the set speed and the suggested speed\\ \hline
+		Inputs & The suggested speed and the set speed\\ \hline
+		Outputs & The set speed is equal to the suggested speed \\ \hline
+		Expected Completion & When the train needs to change speeds\\ \hline
+		Risks and Assumptions & The system is in Automatic mode \\ \hline
+		Responsibility &  Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Slider's Max Value is Equal to the Suggested Speed}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Compares the slider's max value to the suggested speed\\ \hline
+		Inputs & The suggested speed\\ \hline
+		Outputs & The suggested speed equals the max value of the slider \\ \hline
+		Expected Completion & When the suggested speed is changed\\ \hline
+		Risks and Assumptions & The system is in Automatic mode \\ \hline
+		Responsibility &  Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Slider?s Max Value is Equal to the Block Speed}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Compares the slider's max value to the block speed\\ \hline
+		Inputs & The block speed\\ \hline
+		Outputs & The block speed equals the max value \\ \hline
+		Expected Completion & When the block speed changes\\ \hline
+		Risks and Assumptions & The system is in Manual mode \\ \hline
+		Responsibility &  Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
 \subsection{Integration Tests}
+
+\begin{table}[H]
+	\centering
+	\caption{Selecting a Train}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Compare the IDs of the two trains\\ \hline
+		Inputs & ID of the train selected \\ \hline
+		Outputs &  The two IDs match\\ \hline
+		Expected Completion & When a train is selected from the dropdown menu\\ \hline
+		Risks and Assumptions & there is at least one dispatched train\\ \hline
+		Responsibility & Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Turning AC On - Using Radio Button}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & Compares the states of the AC and heat on the train\\ \hline
+		Inputs & The selected train\\ \hline
+		Outputs & The AC is on and the heat is off \\ \hline
+		Expected Completion & When the 'ON' radio button is selected\\ \hline
+		Risks and Assumptions & System is in Automatic or Manual mode, heat was on \\ \hline
+		Responsibility & Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Turning AC On - Clicking Set}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & Compares the states of the AC and heat on the train\\ \hline
+		Inputs & The selected train\\ \hline
+		Outputs & The AC is on and the heat is off \\ \hline
+		Expected Completion & When the 'Set' button is clicked\\ \hline
+		Risks and Assumptions & System is in Manual Mode, heat was on \\ \hline
+		Responsibility &  Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Turning Heat On - Using Radio Buttons}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & Compares the states of the AC and the heat on the train\\ \hline
+		Inputs & The selected train\\ \hline
+		Outputs & The heat is on and the AC is off\\ \hline
+		Expected Completion & When the 'ON' radio button is selected\\ \hline
+		Risks and Assumptions & System is in Automatic or Manual mode, AC was on \\ \hline
+		Responsibility &  Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Turning Heat On - Clicking Set}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & Compares the states of the AC and the heat on the train\\ \hline
+		Inputs & The selected train\\ \hline
+		Outputs & The heat is on and the AC is off \\ \hline
+		Expected Completion & When the 'Set' button is clicked\\ \hline
+		Risks and Assumptions & System is in Manual mode, AC was on \\ \hline
+		Responsibility &  Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Failures Window Reflects Failure on Train}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Compares the state of the train to the radio buttons\\ \hline
+		Inputs & The selected train\\ \hline
+		Outputs & The radio buttons match the failure on the train\\ \hline
+		Expected Completion & When a failure on the train occurs\\ \hline
+		Risks and Assumptions & the test checks all three (antenna, power, and brake) failures \\ \hline
+		Responsibility & Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Sub-Component Receives Correct Train}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Compares the two IDs of the trains\\ \hline
+		Inputs & The selected train from the Train Cont.\\ \hline
+		Outputs & The two IDs match \\ \hline
+		Expected Completion & When a train is selected from the dropdown\\ \hline
+		Risks and Assumptions & none \\ \hline
+		Responsibility & Train Controller\\ \hline
+	\end{tabular}
+\end{table}
 
 \section{Changelog}
 
