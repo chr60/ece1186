@@ -1,3 +1,0 @@
-<map id="TrainControllerComps.TCPassengerGUI" name="TrainControllerComps.TCPassengerGUI">
-<area shape="rect" id="node4" href="$classTrainControllerComps_1_1TestTrain.html" title="{TrainControllerComps.Test\lTrain\n|~ id\l~ speed\l~ power\l~ kp\l~ ki\l~ currentBlockSpeed\l~ currentSuggestedSpeed\l~ lights\l~ leftDoors\l~ rightDoors\l~ ac\l~ heat\l|+ TestTrain()\l+ powerConstantsSet()\l+ generateRandomTestTrain()\l+ main()\l}" alt="" coords="187,5,386,279"/>
-</map>

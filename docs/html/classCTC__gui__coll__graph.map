@@ -1,3 +1,0 @@
-<map id="CTC_gui" name="CTC_gui">
-<area shape="rect" id="node2" href="$classtrackDetails.html" title="{trackDetails\n|&#45; line\l&#45; section\l&#45; block\l&#45; speedLimit\l&#45; station\l&#45; switchNum\l|+ trackDetails()\l+ getLine()\l+ setLine()\l+ getSection()\l+ setSection()\l+ getBlock()\l+ setBlock()\l+ getSpeedLimit()\l+ getSpeedLimitS()\l+ setSpeedLimit()\l+ getStation()\l+ setStation()\l+ getSwitchNum()\l+ setSwitchNum()\l}" alt="" coords="5,140,141,453"/>
-</map>

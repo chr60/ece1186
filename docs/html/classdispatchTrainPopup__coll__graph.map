@@ -1,3 +1,0 @@
-<map id="dispatchTrainPopup" name="dispatchTrainPopup">
-<area shape="rect" id="node2" href="$classtrain.html" title="{train\n|&#45; trainID\l&#45; speed\l&#45; authority\l&#45; line\l|+ train()\l+ getTrainID()\l+ setTrainID()\l+ getSpeed()\l+ setSpeed()\l+ getAuthority()\l+ getAuthorityS()\l+ getSpeedS()\l+ setAuthority()\l+ getLine()\l+ setLine()\l}" alt="" coords="5,140,127,387"/>
-</map>

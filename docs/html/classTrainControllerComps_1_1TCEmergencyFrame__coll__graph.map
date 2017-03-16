@@ -1,3 +1,0 @@
-<map id="TrainControllerComps.TCEmergencyFrame" name="TrainControllerComps.TCEmergencyFrame">
-<area shape="rect" id="node7" href="$classTrainControllerComps_1_1TestTrain.html" title="{TrainControllerComps.Test\lTrain\n|~ id\l~ speed\l~ power\l~ kp\l~ ki\l~ currentBlockSpeed\l~ currentSuggestedSpeed\l~ lights\l~ leftDoors\l~ rightDoors\l~ ac\l~ heat\l|+ TestTrain()\l+ powerConstantsSet()\l+ generateRandomTestTrain()\l+ main()\l}" alt="" coords="546,140,745,413"/>
-</map>

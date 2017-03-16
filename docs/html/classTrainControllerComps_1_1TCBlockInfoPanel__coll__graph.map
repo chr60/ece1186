@@ -1,3 +1,0 @@
-<map id="TrainControllerComps.TCBlockInfoPanel" name="TrainControllerComps.TCBlockInfoPanel">
-<area shape="rect" id="node3" href="$classTrainControllerComps_1_1TestTrain.html" title="{TrainControllerComps.Test\lTrain\n|~ id\l~ speed\l~ power\l~ kp\l~ ki\l~ currentBlockSpeed\l~ currentSuggestedSpeed\l~ lights\l~ leftDoors\l~ rightDoors\l~ ac\l~ heat\l|+ TestTrain()\l+ powerConstantsSet()\l+ generateRandomTestTrain()\l+ main()\l}" alt="" coords="108,5,307,279"/>
-</map>
