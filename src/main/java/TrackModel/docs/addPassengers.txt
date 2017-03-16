@@ -2,12 +2,10 @@
 skinparam monochrome true
 
 actor TrainModel #white
-' The only difference between actor
-'and participant is the drawing
-participant TrackModel.Station
+participant Station
 
-TrainModel->TrackModel.Station: loadPassengers(maxPassengers)
-TrackModel.Station->TrackModel.Station: Station.numPassengers-=numPassengersAdded
+TrainModel->Station: loadPassengers(maxPassengers)
+Station->Station: Station.numPassengers-=numPassengersAdded
 note right: draw random number between maxPassengers and waitingPassengers
-TrackModel.Station-->TrainModel: numPassengersAdded
+Station-->TrainModel: numPassengersAdded
 @enduml

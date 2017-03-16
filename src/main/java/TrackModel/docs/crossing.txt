@@ -2,12 +2,10 @@
 skinparam monochrome true
 
 actor TrackController #white
-' The only difference between actor
-'and participant is the drawing
-participant TrackModel.track
+participant TrackModel
 
 
-TrackController->TrackModel.track: viewCrossingMap()
+TrackController->TrackModel: viewCrossingMap()
 note left: At Initialization
 TrackModel.track-->TrackController: copy(track.crossingMap())
 TrackController->TrackController: getBlock{track.crossingMap}
