@@ -931,6 +931,9 @@ The track model package consists of a block object to be utilized by all classes
 	\includegraphics[scale=.75]{trainmodelclassdiagram.png}
 	\caption{Train Model Class diagram}
 \end{figure}
+
+The train model package consists of a train object, a train Handler, a UI class, a GPS object, and a dummyTrack and dummyBlock class. The train class will handle all train properties including utilities, failure statuses, and physics calculations. This will contain ample setters and getters for the train controller to access in order to modify states on board the train as well as change various values. The train handler will contain all trains in the system and will be used to communicate with other modules in order to assure the proper communication paths are followed. The UI class will update a GUI containing all relevant data for the current train being monitored. The GPS class will contain the current location of the train in terms of current block and distance into block and will primarily be used by the MBO in order to calculate exact train positioning. THe DummyTrack and DummyBlock are both classes that will be accessed by the train at startup. They will contain newly intialized copies of the track model with values based on the excel sheet. This will be used in order to compute current block as the train moves through the system to determine the change in grade and other various properties.
+
 \subsection{Train Controller}
 \begin{figure}[H]
 	\centering
@@ -1318,86 +1321,262 @@ In this seciton, we provide the sequence diagrams of the train model.
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.5]{train_model_sqd_toggle_signal_failure.png}
-	\caption{Toggle Signal Failure Use Case Diagram}
+	\caption{Toggle Signal Failure Sequence Diagram}
 \end{figure}
+
+\begin{table}[H]
+	\centering
+	\caption{Sequence Diagram for : Toggle Signal Failure}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Murphy, Train} \\ \hline
+		Description & \parbox[t]{10cm}{Murphy is able to toggle the signal failure status in order to distrupt the train's signaling and communication abilities. Once engaged the train will be required to stop until the issue is resolved. In order to stop the service brake will be activated and this will send a power command of zero so that the train decelerates and the service brake rate. The current speed, distance, and location will all be updated as a result of the power command call.} \\ \hline
+		Data &  \parbox[t]{10cm}{Signal Failure command, Service Brake Command} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{A command will be sent to the train model from the Murphy console to toggle the failure status of the train's signaling system.} \\ \hline
+		Response & \parbox[t]{10cm}{The signal failure status will be toggled as a response to the command. When a signal failure occurs the service brakes are also engaged to bring the train to a stop until issues are resolved.}\\ \hline
+		Comments & \parbox[t]{10cm}{The signal failure status will toggle between failure, and non-failure.}  \\ \hline
+	\end{tabular}
+\end{table}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.5]{train_model_sqd_add_passengers.png}
-	\caption{Add Passengers Use Case Diagram}
+	\caption{Add Passengers Sequence Diagram}
 \end{figure}
+
+\begin{table}[H]
+	\centering
+	\caption{Sequence Diagram for : checking for station}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Train, TrackModel, Block} \\ \hline
+		Description & \parbox[t]{10cm}{Whenever stopped the train will check if it is stopped at a station. If there is a station, the train will request the actual block object from the TrackModel and using the block it will obtain a station object to add passengers from station onto the train and remove passengers from the train to the station.} \\ \hline
+		Data &  \parbox[t]{10cm}{Current Block, Station, Passengers to Add, Passengers to remove} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{This check will occur every time the train comes to a complete stop} \\ \hline
+		Response & \parbox[t]{10cm}{Current station will be returned and the number of passengers to add and remove will be determined}\\ \hline
+		Comments & \parbox[t]{10cm}{ }  \\ \hline
+	\end{tabular}
+\end{table}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.5]{train_model_sqd_engage_emergency_brake.png}
-	\caption{Engage Emergency Brake Use Case Diagram}
+	\caption{Engage Emergency Brake Sequence Diagram}
 \end{figure}
+
+	\begin{table}[H]
+	\centering
+	\caption{Sequence Diagram for : Engaging Emergency Brake}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Train Controller, Train} \\ \hline
+		Description & \parbox[t]{10cm}{Train controller will engage or disengage the emergency brake in order to slow down or stop the train for any emergencies that may occur. Once engaged the power command will be set to zero and the train will begin to decelerate. The current speed, distance, and location will also be updated during the power command call.} \\ \hline
+		Data &  \parbox[t]{10cm}{Emergency Brake command } \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Emergency brake will be engaged under the following conditions:\\1) Emergency brake button is manually pressed by the driver or passenger via the train controller\\2) Failure occurs in the service brakes and the emergency brakes are required to stop the train  } \\ \hline
+		Response & \parbox[t]{10cm}{Emergency brake status is set to engaged and train begins to decelerate at emergency brake deceleration rate.}\\ \hline
+		Comments & \parbox[t]{10cm}{The Emergency brake can either posses the status of on or off. For this model we are assuming that the emergency brakes never fail}  \\ \hline
+	\end{tabular}
+\end{table}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.5]{train_model_sqd_engage_service_brake.png}
-	\caption{Engage Service Brake Use Case Diagram}
+	\caption{Engage Service Brake Sequence Diagram}
 \end{figure}
+
+\begin{table}[H]
+	\centering
+	\caption{Sequence Diagram for : Engaging Service Brake}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Train Controller, Train} \\ \hline
+		Description & \parbox[t]{10cm}{Train controller will engage or disengage the Service brake in order to slow down or stop the train for any emergencies that may occur. Once engaged the power command will be set to zero and the train will begin to decelerate. The current speed, distance, and location will also be updated during the power command call.} \\ \hline
+		Data &  \parbox[t]{10cm}{Service Brake command } \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Service brake will be engaged under the following conditions:\\1) Service brake button is manually pressed by the driver or passenger via the train controller\\2) Failure occurs in the engines or signaling and the Service brakes are required to stop the train  } \\ \hline
+		Response & \parbox[t]{10cm}{Service brake status is set to engaged and train begins to decelerate at Service brake deceleration rate.}\\ \hline
+		Comments & \parbox[t]{10cm}{The Service brake can either posses the status of on,off or failure}  \\ \hline
+	\end{tabular}
+\end{table}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.3]{train_model_sqd_get_location.png}
-	\caption{Get Location Use Case Diagram}
+	\caption{Get Location Sequence Diagram}
 \end{figure}
+
+\begin{table}[H]
+	\centering
+	\caption{Sequence Diagram for : Getting GPS Location}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{MBO, Train} \\ \hline
+		Description & \parbox[t]{10cm}{The MBO will request to receive the current location of the given train. This will be determined using the GPS object which is updated by the train calculations. The GPS object will be then returned to the MBO with the current block and distance into block to the nearest meter} \\ \hline
+		Data &  \parbox[t]{10cm}{GPS position} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Command will be requested from the MBO to get the current location from the train} \\ \hline
+		Response & \parbox[t]{10cm}{GPS position object will be returned for that given train}\\ \hline
+		Comments & \parbox[t]{10cm}{ }  \\ \hline
+	\end{tabular}
+\end{table}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.5]{train_model_sqd_get_safebraking_dist.png}
-	\caption{Calculate Safe Braking Distance Use Case Diagram}
+	\caption{Calculate Safe Braking Distance Sequence Diagram}
 \end{figure}
+
+\begin{table}[H]
+	\centering
+	\caption{Sequence Diagram : Get Safe Braking Distance (Service Brake)}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{MBO} \\ \hline
+		Description & \parbox[t]{10cm}{In order to better determine the train's footprint the MBO will call to obtain the safe braking distance of the Train. This will be the distance required to bring the train to a complete stop using the service brake deceleration rate. This distance will vary based on the number of passengers on board the train and the current velocity of the train. The call will compute the time required to stop and based on current speed determine the distance required to stop. Similar procedure is performed for the safe braking distance using Emergency Brake} \\ \hline
+		Data &  \parbox[t]{10cm}{Safe Braking Distance for Service Brake} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Command will be requested from the MBO to get the current safe braking distance using the service brakes which would be computed based on the current velocity and mass of the train.} \\ \hline
+		Response & \parbox[t]{10cm}{The safe braking distance using the service brakes will be returned to the MBO.}\\ \hline
+		Comments & \parbox[t]{10cm}{ }  \\ \hline
+	\end{tabular}
+\end{table}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.5]{train_model_sqd_get_velocity.png}
-	\caption{Get Velocity Use Case Diagram}
+	\caption{Get Velocity Sequence Diagram}
 \end{figure}
 
-\begin{figure}[H]
+\begin{table}[H]
 	\centering
-	\includegraphics[scale=.5]{train_model_sqd_increase_temp.png}
-	\caption{Increase Temperature Use Case Diagram}
-\end{figure}
+	\caption{Sequence Diagram for: Get Velocity}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Train Controller, Train} \\ \hline
+		Description & \parbox[t]{10cm}{Train Controller will request the current velocity of the train periodically to modify the power command. Once requested the current velocity is returned to the Train Controller} \\ \hline
+		Data &  \parbox[t]{10cm}{Get Velocity command  } \\ \hline
+		Stimulus &  \parbox[t]{10cm}{The get velocity command is called by the train controller} \\ \hline
+		Response & \parbox[t]{10cm}{The train will return its current velocity}\\ \hline
+		Comments & \parbox[t]{10cm}{ }  \\ \hline
+	\end{tabular}
+\end{table}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.5]{train_model_sqd_modify_utlilties.png}
-	\caption{Modify Utilities Use Case Diagram}
+	\caption{Modify Utilities Sequence Diagram}
 \end{figure}
+
+	\begin{table}[H]
+	\centering
+	\caption{Sequence Diagram for: Setting utilities}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Train Controller, Train} \\ \hline
+		Description & \parbox[t]{10cm}{Each onboard train utility has a setter and getter for each train that the train controller will access to modify the selected utility. Similar commands will be used for the Heater, AC, Lights, and Door controls. } \\ \hline
+		Data &  \parbox[t]{10cm}{Utility command } \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Setter is called to change the current status of a train utility} \\ \hline
+		Response & \parbox[t]{10cm}{The status of the selected utility is changed to the corresponding value }\\ \hline
+		Comments & \parbox[t]{10cm}{Each utility will be toggled individually and will require individual method calls to change each}  \\ \hline
+	\end{tabular}
+\end{table}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.5]{train_model_sqd_set_speed_authority.png}
-	\caption{Set Speed and Authority Use Case Diagram}
+	\caption{Set Speed and Authority Sequence Diagram}
 \end{figure}
+
+\begin{table}[H]
+	\centering
+	\caption{Sequence Diagram for: Updating Speed and Authority}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Train, Track Model, Block} \\ \hline
+		Description & \parbox[t]{10cm}{Train will automatically check for updates on setpoint speed and authority from the track. This will be stored in the Track Model block objects. Using its current position the train will request the actual block object using the dummyBlock attributes. From that block object the setpoint speed and authority will be extracted to update the train values} \\ \hline
+		Data &  \parbox[t]{10cm}{dummyBlock, currentBlock, Setpoint Speed, Authority } \\ \hline
+		Stimulus &  \parbox[t]{10cm}{This check will occur periodically every clock tick in the system} \\ \hline
+		Response & \parbox[t]{10cm}{The Setpoint speed and Authority will be updated based on the values dropped by the track model on the current block}\\ \hline
+		Comments & \parbox[t]{10cm}{This method will only work in fixed mode. In MBO mode the speed and authority will be passed directly from the MBO to the train controller}  \\ \hline
+	\end{tabular}
+\end{table}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.5]{train_model_sqd_toggle_brake_failure.png}
-	\caption{Toggle Brake Failure Use Case Diagram}
+	\caption{Toggle Brake Failure Sequence Diagram}
 \end{figure}
+
+	\begin{table}[H]
+	\centering
+	\caption{Sequence Diagram for : Toggle Brake Failure}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Murphy, Train} \\ \hline
+		Description & \parbox[t]{10cm}{Murphy is able to toggle the brake failure status in order to distrupt the train's service brake. Once engaged the train will be required to stop until the issue is resolved. In order to stop the emergency brake will be activated and this will send a power command of zero so that the train decelerates and the emergency brake rate. The current speed, distance, and location will all be updated as a result of the power command call. } \\ \hline
+		Data &  \parbox[t]{10cm}{Brake Failure command, Emergency Brake Command} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{A command will be sent to the train model from the Murphy console to toggle the failure status of the train's service brake. } \\ \hline
+		Response & \parbox[t]{10cm}{The brake failure status will be toggled as a response to the command. When a service brake failure occurs the emergency brakes are also engaged to bring the train to a stop until issues are resolved.}\\ \hline
+		Comments & \parbox[t]{10cm}{The brake failure status will toggle between failure, and non-failure.}  \\ \hline
+	\end{tabular}
+\end{table}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.5]{train_model_sqd_toggle_engine_failure.png}
-	\caption{Toggle Engine Failure Use Case Diagram}
+	\caption{Toggle Engine Failure Sequence Diagram}
 \end{figure}
+
+\begin{table}[H]
+	\centering
+	\caption{Sequence Diagram for : Toggle Engine Failure}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Murphy} \\ \hline
+		Description & \parbox[t]{10cm}{Murphy is able to toggle the engine failure status in order to distrupt the train's engine. Once engaged the train will be required to stop until the issue is resolved.In order to stop the service brake will be activated and this will send a power command of zero so that the train decelerates and the service brake rate. The current speed, distance, and location will all be updated as a result of the power command call.} \\ \hline
+		Data &  \parbox[t]{10cm}{Engine Failure command, service Brake Command} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{A command will be sent to the train model from the Murphy console to toggle the failure status of the train's engine.} \\ \hline
+		Response & \parbox[t]{10cm}{The engine failure status will be toggled as a response to the command. When an engine failure occurs the service brakes are also engaged to bring the train to a stop until issues are resolved.}\\ \hline
+		Comments & \parbox[t]{10cm}{The engine failure status will toggle between failure, and non-failure. }  \\ \hline
+	\end{tabular}
+\end{table}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.5]{train_model_sqd_toggle_signal_failure.png}
-	\caption{Toggle Signal Failure Use Case Diagram}
+	\caption{Toggle Signal Failure Sequence Diagram}
 \end{figure}
+
+\begin{table}[H]
+	\centering
+	\caption{Sequence Diagram for : Toggle Signal Failure}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Murphy, Train} \\ \hline
+		Description & \parbox[t]{10cm}{Murphy is able to toggle the signal failure status in order to distrupt the train's signaling and communication abilities. Once engaged the train will be required to stop until the issue is resolved. In order to stop the service brake will be activated and this will send a power command of zero so that the train decelerates and the service brake rate. The current speed, distance, and location will all be updated as a result of the power command call.} \\ \hline
+		Data &  \parbox[t]{10cm}{Signal Failure command, Service Brake Command} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{A command will be sent to the train model from the Murphy console to toggle the failure status of the train's signaling system.} \\ \hline
+		Response & \parbox[t]{10cm}{The signal failure status will be toggled as a response to the command. When a signal failure occurs the service brakes are also engaged to bring the train to a stop until issues are resolved.}\\ \hline
+		Comments & \parbox[t]{10cm}{The signal failure status will toggle between failure, and non-failure.}  \\ \hline
+	\end{tabular}
+\end{table}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.5]{train_model_sqd_set_power.png}
-	\caption{Toggle Signal Failure Use Case Diagram}
+	\caption{Toggle set Power Sequence Diagram}
 \end{figure}
+
+\begin{table}[H]
+	\centering
+	\caption{Sequence Diagram for : Set New Power Command}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Train Controller , Train} \\ \hline
+		Description & \parbox[t]{10cm}{Train Controller will set a new power command based on the current velocity of the train and the new setpoint speed set by the driver. This power command will be used to determine the force applied to the train and thus compute the new current velocity. Using the new velocity the distance traveled by the train will be updated. This will be used to update the current block and GPS location for determining the Grade and current position} \\ \hline
+		Data &  \parbox[t]{10cm}{Power Command issued to the train} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{When a setpoint speed is provided to the train controller, a Power command is computed using the current velocity and sent to train} \\ \hline
+		Response & \parbox[t]{10cm}{New current velocity is computed by the train and using this new velocity, the distance traveled , current Block, and GPS position are all updated }\\ \hline
+		Comments & \parbox[t]{10cm}{Power command sent must be between 0W and 120kW}  \\ \hline
+	\end{tabular}
+\end{table}
 
 \subsection{Train Controller}
 
