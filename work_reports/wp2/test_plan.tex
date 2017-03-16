@@ -114,19 +114,244 @@ Author: Michael Ghaben
 		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
 		Integrity Level & 1 \\ \hline
 		Methods & Evaluate the readCSV function\\ \hline
-		Inputs &  The files redline.csv and greenline.csv \\ \hline
-		Outputs &  The track model successfully reading the csv files\\ \hline
-		Expected Completion & At initialization of the program\\ \hline
+		Inputs &  The files redline.csv \\ \hline
+		Outputs &  The track model successfully reading the redline csv files\\ \hline
+		Expected Completion & March 20, 2017\\ \hline
 		Risks and Assumptions & Both redline and greenline have been properly input to the files\\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{CSV Reading Test Plan}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Evaluate the readCSV function on green line\\ \hline
+		Inputs &  The files greenline.csv \\ \hline
+		Outputs &  The track model successfully reading the redline csv files\\ \hline
+		Expected Completion & March 15, 2017\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Both redline and greenline have been properly input to the csv files}\\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test Switch Root Node Reading}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & \parbox[t]{10cm}{Evaluate the switch nodes association in TrackModel}\\ \hline
+		Inputs &  The file redline.csv \\ \hline
+		Outputs &  The track model successfully holding the root nodes in the rootMap\\ \hline
+		Expected Completion & March 15, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the csv files \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test Switch Root Node Reading}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Evaluate the switch nodes association in TrackModel\\ \hline
+		Inputs &  The file greenline.csv \\ \hline
+		Outputs &  The track model successfully holding the root nodes in the rootMap\\ \hline
+		Expected Completion & March 15, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the csv files \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test Switch Node Leaf Reading}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Evaluate the leaf nodes association in TrackModel\\ \hline
+		Inputs &  The file redline.csv \\ \hline
+		Outputs & \parbox[t]{10cm}{ The track model successfully holding the proper refererences in the Block object set by rootMap}\\ \hline
+		Expected Completion & March 15, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the csv files \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test Switch Node Leaf Reading}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Evaluate the leaf nodes association in TrackModel\\ \hline
+		Inputs &  The file greenline.csv \\ \hline
+		Outputs &  \parbox[t]{10cm}{The track model successfully holding the proper refererences to the leaf nodes in the Block object set by rootMap}\\ \hline
+		Expected Completion & March 15, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the csv files \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test Switch Node Leaf Reading}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Evaluate the switching functionality in the red line\\ \hline
+		Inputs &  The file redline.csv \\ \hline
+		Outputs &  The proper  block given a non-default switch state\\ \hline
+		Expected Completion & March 15, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the csv files \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test nextBlockForward() Red Line}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Evaluate the functionality of the nextBlockForward() function on the redline \\ \hline
+		Inputs &  The file redline.csv \\ \hline
+		Outputs &  The proper block given a switch on the red line\\ \hline
+		Expected Completion & March 15, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the csv files \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test nextBlockForward() Green Line}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Evaluate the functionality of the nextBlockForward() function on the green line \\ \hline
+		Inputs &  The file greenline.csv \\ \hline
+		Outputs &  The proper block given a switch on the green line\\ \hline
+		Expected Completion & March 15, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the csv files \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test nextBlockBackward() Red Line}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & \parbox[t]{10cm}{Evaluate the functionality of the nextBlockBackward() function on the red line} \\ \hline
+		Inputs &  The file redline.csv \\ \hline
+		Outputs &  The proper block given a switch on the red line\\ \hline
+		Expected Completion & March 15, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the csv files \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test nextBlockBackward() Green Line}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & \parbox[t]{10cm}{Evaluate the functionality of the nextBlockBackward() function on the red line} \\ \hline
+		Inputs &  The file redline.csv \\ \hline
+		Outputs &  The proper block given a switch on the red line\\ \hline
+		Expected Completion & March 15, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the csv files \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test nextBlockBackward() Secondary Switch Conditions Red Line}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & \parbox[t]{10cm}{Evaluate the functionality of the nextBlockBackward() function on the red line under the alternate switch functionality}\\ \hline
+		Inputs &  The file redline.csv \\ \hline
+		Outputs &  The proper block given a switch on the red line\\ \hline
+		Expected Completion & March 15, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the csv files \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test nextBlockBackward() Secondary Switch Conditions Green Line}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & \parbox[t]{10cm}{Evaluate the functionality of the nextBlockBackward() function on the red line under the alternate switch functionality} \\ \hline
+		Inputs &  The file greenline.csv \\ \hline
+		Outputs &  The proper block given a switch on the red line\\ \hline
+		Expected Completion & Before Half-Life 3\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the csv files \\ \hline
 		Responsibility & Track Model\\ \hline
 	\end{tabular}
 \end{table}
 
 \subsection{Integration Tests}
 
+\begin{table}[H]
+	\centering
+	\caption{Test Track Controller Switching}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Evaluate the functionality of the track controller to switch a switch state \\ \hline
+		Inputs &  The files redline.csv and greenline.csv \\ \hline
+		Outputs &  \parbox[t]{10cm}{The proper block given a switch on the green line and the MBO switching the switch}\\ \hline
+		Expected Completion & April 1, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline switches are able to be toggled successfully \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test Track Controller Switching}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Evaluate the functionality of the track controller to switch a switch state \\ \hline
+		Inputs &  The files redline.csv and greenline.csv \\ \hline
+		Outputs &  \parbox[t]{10cm}{The proper block given a switch on the green line and the MBO switching the switch}\\ \hline
+		Expected Completion & April 1, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline switches are able to be toggled successfully \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+
+
 \section{Track Controller Test Plan}
 \subsection{Unit Tests}
-
 \begin{table}[H]
 	\centering
 	\caption{Load PLC Program via Browse Button}
@@ -844,6 +1069,7 @@ Author: Andrew Lendacky
 		\hline
 		Date & \multicolumn{1}{c|}{Change} \\ \hline
 		March 14, 2017 & General Test Plan \\ \hline
+		March 15, 2017 & Add more tests \\ \hline
 	\end{tabular}
 \end{table}
 \end{document}          
