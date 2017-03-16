@@ -79,6 +79,259 @@ In this subsection, the use cases of the train model are provided.
 	\includegraphics[scale=.3]{trainmodelusecase.png}
 	\caption{Train model use case diagram}
 \end{figure}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Set New Power Command}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{Train Controller} \\ \hline
+   		Description & \parbox[t]{10cm}{Train Controller will set a new power command based on the current velocity of the train and the new setpoint speed set by the driver. This power command will be used to determine the force applied to the train and thus compute the new current velocity.} \\ \hline
+   		Data &  \parbox[t]{10cm}{Power Command issued to the train} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{When a setpoint speed is provided to the train controller, a Power command is computed using the current velocity and sent to train} \\ \hline
+   		Response & \parbox[t]{10cm}{New current velocity is returned to actor at the end of the computation. }\\ \hline
+   		Comments & \parbox[t]{10cm}{ }  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Engage Service Brake}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{Train Controller} \\ \hline
+   		Description & \parbox[t]{10cm}{Train controller will engage or disengage the service brake in order to slow down or stop the train for any given reason. Once engaged the power command will be set to zero and the train will begin to decelerate } \\ \hline
+   		Data &  \parbox[t]{10cm}{Service Brake command } \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{Service brake will be engaged under the following conditions:\\1) Service brake button is manually pressed by the driver via the train controller\\2) Failure occurs in the train that requires the train to stop, this will engage the service brakes unless failure is caused by service brakes\\3) Train is set to slow down and service brakes are applied to reduce speed} \\ \hline
+   		Response & \parbox[t]{10cm}{Service brake status is set to engaged and train begins to decelerate at service brake deceleration rate.}\\ \hline
+   		Comments & \parbox[t]{10cm}{The service brake can either posses the status of on, off , or failure.}  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Engage Emergency Brake	}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{Train Controller} \\ \hline
+   		Description & \parbox[t]{10cm}{Train controller will engage or disengage the emergency brake in order to slow down or stop the train for any emergencies that may occur. Once engaged the power command will be set to zero and the train will begin to decelerate } \\ \hline
+   		Data &  \parbox[t]{10cm}{Emergency Brake command } \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{Emergency brake will be engaged under the following conditions:\\1) Emergency brake button is manually pressed by the driver or passenger via the train controller\\2) Failure occurs in the service brakes and the emergency brakes are required to stop the train  } \\ \hline
+   		Response & \parbox[t]{10cm}{Emergency brake status is set to engaged and train begins to decelerate at emergency brake deceleration rate.}\\ \hline
+   		Comments & \parbox[t]{10cm}{The Emergency brake can either posses the status of on or off. For this model we are assuming that the emergency brakes never fail}  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Air Conditioning (AC) Control}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{Train Controller} \\ \hline
+   		Description & \parbox[t]{10cm}{Train controller will activate or deactivate the Air conditioning unit onboard the train to decrease the current temperature of the train.} \\ \hline
+   		Data &  \parbox[t]{10cm}{Air conditioning command  } \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{The air conditioning will be turned on or off by the train controller. This will either be performed manually by the driver using a button or automatically by the train controller based on current temperature and thermostat setting.} \\ \hline
+   		Response & \parbox[t]{10cm}{AC control set to on will result in a gradual decrease of the current train internal temperature. }\\ \hline
+   		Comments & \parbox[t]{10cm}{The AC can either posses the status of on, off, or failure.}  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Heater Control}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{Train Controller} \\ \hline
+   		Description & \parbox[t]{10cm}{Train controller will activate or deactivate the heating unit onboard the train to increase the current temperature of the train.} \\ \hline
+   		Data &  \parbox[t]{10cm}{Heater command } \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{The heating unit will be turned on or off by the train controller. This will either be performed manually by the driver using a button or automatically by the train controller based on current temperature and thermostat setting.} \\ \hline
+   		Response & \parbox[t]{10cm}{Heater control set to on will result in a gradual increase of the current train internal temperature. }\\ \hline
+   		Comments & \parbox[t]{10cm}{The heater can either posses the status of on, off, or failure. }  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Door Control}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{Train Controller} \\ \hline
+   		Description & \parbox[t]{10cm}{Train controller will open and close the doors on the left and right side individually using individual commands for each side. } \\ \hline
+   		Data &  \parbox[t]{10cm}{Left door command, Right door command } \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{The left or right doors will be opened or closed by the train controller. This will either be performed manually by the driver using a button or automatically by the train controller upon arrival and departure at each station.} \\ \hline
+   		Response & \parbox[t]{10cm}{If the right door command is passed, all doors on the right side are opened. If the left door command is passed, all doors on the left side are opened. }\\ \hline
+   		Comments & \parbox[t]{10cm}{The Left and Right doors can either posses the status of open, closed, or failure.}  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Light Control}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{Train Controller} \\ \hline
+   		Description & \parbox[t]{10cm}{Train controller will turn the interior lights onboard the train on and off based on time of day and location of train (e.g. within tunnel or not)} \\ \hline
+   		Data &  \parbox[t]{10cm}{Interior Light command } \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{The lights will be toggled on and off by the train controller. This will either be performed manually by the driver using a button or automatically by the train controller based on time of day and upon entering and exiting a tunnel} \\ \hline
+   		Response & \parbox[t]{10cm}{If the light command is passed, all lights onboard the train are turned on.}\\ \hline
+   		Comments & \parbox[t]{10cm}{The interior lights can either posses the status of on, off, or failure. }  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Get Current Velocity}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{Train Controller, MBO} \\ \hline
+   		Description & \parbox[t]{10cm}{A call will be made to request the current velocity of the train and this will be passed back to the actor which required it. The train controllor will request the current velocity in order to compute the power command to send to the train model. The MBO will request the current velocity in order to compute the variation between the suggested speed and the actual speed of the train.} \\ \hline
+   		Data &  \parbox[t]{10cm}{Current Velocity value} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{A request will be sent to the train model to obtain the current velocity of the train at that given moment} \\ \hline
+   		Response & \parbox[t]{10cm}{The current velocity of the train will be returned to the caller in MPH.}\\ \hline
+   		Comments & \parbox[t]{10cm}{ }  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Toggle Engine Failure}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{Murphy} \\ \hline
+   		Description & \parbox[t]{10cm}{Murphy is able to toggle the engine failure status in order to distrupt the train's engine. Once engaged the train will be required to stop until the issue is resolved.} \\ \hline
+   		Data &  \parbox[t]{10cm}{Engine Failure command} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{A command will be sent to the train model from the Murphy console to toggle the failure status of the train's engine.} \\ \hline
+   		Response & \parbox[t]{10cm}{The engine failure status will be toggled as a response to the command. When an engine failure occurs the service brakes are also engaged to bring the train to a stop until issues are resolved.}\\ \hline
+   		Comments & \parbox[t]{10cm}{The engine failure status will toggle between failure, and non-failure. }  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Toggle Signal Failure}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{Murphy} \\ \hline
+   		Description & \parbox[t]{10cm}{Murphy is able to toggle the signal failure status in order to distrupt the train's signaling and communication abilities. Once engaged the train will be required to stop until the issue is resolved.} \\ \hline
+   		Data &  \parbox[t]{10cm}{Signal Failure command} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{A command will be sent to the train model from the Murphy console to toggle the failure status of the train's signaling system.} \\ \hline
+   		Response & \parbox[t]{10cm}{The signal failure status will be toggled as a response to the command. When a signal failure occurs the service brakes are also engaged to bring the train to a stop until issues are resolved.}\\ \hline
+   		Comments & \parbox[t]{10cm}{The signal failure status will toggle between failure, and non-failure.}  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Toggle Brake Failure}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{Murphy} \\ \hline
+   		Description & \parbox[t]{10cm}{Murphy is able to toggle the brake failure status in order to distrupt the train's service brake. Once engaged the train will be required to stop until the issue is resolved.} \\ \hline
+   		Data &  \parbox[t]{10cm}{Brake Failure command} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{A command will be sent to the train model from the Murphy console to toggle the failure status of the train's service brake} \\ \hline
+   		Response & \parbox[t]{10cm}{The brake failure status will be toggled as a response to the command. When a service brake failure occurs the emergency brakes are also engaged to bring the train to a stop until issues are resolved.}\\ \hline
+   		Comments & \parbox[t]{10cm}{The brake failure status will toggle between failure, and non-failure.}  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Get Safe Braking Distance (Service Brake)}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{MBO} \\ \hline
+   		Description & \parbox[t]{10cm}{In order to better determine the train's footprint the MBO will call to obtain the safe braking distance of the Train. This will be the distance required to bring the train to a complete stop using the service brake deceleration rate. This distance will vary based on the number of passengers on board the train and the current velocity of the train.} \\ \hline
+   		Data &  \parbox[t]{10cm}{Safe Braking Distance for Service Brake} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{Command will be requested from the MBO to get the current safe braking distance using the service brakes which would be computed based on the current velocity and mass of the train.} \\ \hline
+   		Response & \parbox[t]{10cm}{The safe braking distance using the service brakes will be returned to the MBO.}\\ \hline
+   		Comments & \parbox[t]{10cm}{ }  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Get Safe Braking Distance (Emergency Brake)}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{MBO} \\ \hline
+   		Description & \parbox[t]{10cm}{In order to better determine the train's footprint the MBO will call to obtain the safe braking distance of the Train. This will be the distance required to bring the train to a complete stop using the emergency brake deceleration rate. This distance will vary based on the number of passengers on board the train and the current velocity of the train.} \\ \hline
+   		Data &  \parbox[t]{10cm}{Safe Braking Distance for Emergency Brake} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{Command will be requested from the MBO to get the current safe braking distance using the emergency brakes which would be computed based on the current velocity and mass of the train.} \\ \hline
+   		Response & \parbox[t]{10cm}{The safe braking distance using the emergency brakes will be returned to the MBO.}\\ \hline
+   		Comments & \parbox[t]{10cm}{ }  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Get GPS Location}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{MBO} \\ \hline
+   		Description & \parbox[t]{10cm}{The MBO will elect to receive the current GPS location to determine the train's current location to the nearest meter. This will be determined by calculating the distance traveled by the train and compute the distance into the current block to return to the MBO} \\ \hline
+   		Data &  \parbox[t]{10cm}{Current Block, Distance Into block} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{Command will be requested from the MBO to get the current GPS location from the train} \\ \hline
+   		Response & \parbox[t]{10cm}{GPS location will be returned providing the current block the train is in as well as the distance into that current block to the nearest meter.}\\ \hline
+   		Comments & \parbox[t]{10cm}{ }  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Get Authority}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{MBO} \\ \hline
+   		Description & \parbox[t]{10cm}{The MBO will request to receive the current Authority of the given train. This will be used in conjuction with the suggested authority to determine the variation between suggested authority and actual authority for the train.} \\ \hline
+   		Data &  \parbox[t]{10cm}{Current Authority} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{Command will be requested from the MBO to get the current Authority from the train} \\ \hline
+   		Response & \parbox[t]{10cm}{Current authority will be returned for that given train}\\ \hline
+   		Comments & \parbox[t]{10cm}{ }  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Add Passengers}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{Track Model} \\ \hline
+   		Description & \parbox[t]{10cm}{The track model will randomly generate a number of passengers to wait at a station then upon arrival to a station a random number of passengers will board based on space avaliable on the train. This number will be sent to the train model to modify passenger count and mass of train based on capacity.} \\ \hline
+   		Data &  \parbox[t]{10cm}{ Number of passengers boarding} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{Command will be requested from the MBO to get the current Authority from the train} \\ \hline
+   		Response & \parbox[t]{10cm}{Based on space on board, a random number of passengers between 0 and amount of space will be passed to the train model}\\ \hline
+   		Comments & \parbox[t]{10cm}{ }  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Set Speed/ Authority}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{Track Model} \\ \hline
+   		Description & \parbox[t]{10cm}{The track model will pass the speed and authority to the train model. This speed and authority will then be passed to the train controller with no variation.} \\ \hline
+   		Data &  \parbox[t]{10cm}{ Speed, Authority} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{Command will be sent to train model with speed and authority} \\ \hline
+   		Response & \parbox[t]{10cm}{Speed and authority will be passed to train controller.}\\ \hline
+   		Comments & \parbox[t]{10cm}{ }  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Set Current Block}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{Track Model} \\ \hline
+   		Description & \parbox[t]{10cm}{The track model will pass the current block the train is on as the train enters each new block area. This current block object will provide the train with the block's grade as well as its length, to be used by the train's GPS } \\ \hline
+   		Data &  \parbox[t]{10cm}{Current Block} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{Command will be sent to train model with current block } \\ \hline
+   		Response & \parbox[t]{10cm}{Block length will be extracted for train GPS, and Block grade will be extracted for train movement calculations}\\ \hline
+   		Comments & \parbox[t]{10cm}{ }  \\ \hline
+   	\end{tabular}
+   \end{table}
 
 \subsection{Train Controller}
 In this subsection, the use cases of the train controller are provided.
@@ -230,7 +483,6 @@ In this section, we detail the use class diagrams for each subsystem..
 \section{Sequence Diagrams}
 In this section, we detail the sequence diagrams each subsystem.
 \subsection{Track Model}
-
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.3]{addPassengers.png}
