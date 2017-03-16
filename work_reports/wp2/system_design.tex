@@ -933,6 +933,26 @@ In this section, we detail the sequence diagrams each subsystem.
 \subsection{Track Model}
 \begin{figure}[H]
 	\centering
+	\includegraphics[scale=.5]{getStationDirection.png}
+	\caption{Getting station direction}
+\end{figure}
+\begin{table}[H]
+	\centering
+	\caption{Getting the Door Side to Open on a Train}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{TrainModel, TrainController} \\ \hline
+		Description & \parbox[t]{10cm}{The train model gets a message, gives it to the train controller, which calls the station with that beacon direction to get a door side} \\ \hline
+		Data &  \parbox[t]{10cm}{The beacon message} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{A train reaching a block with a beacon} \\ \hline
+		Response & \parbox[t]{10cm}{A message then a door side}\\ \hline
+		Comments & \parbox[t]{10cm}{This is a composite action which may not be accurate for actions between the TrainController and TrainModel. While they are assumed to communicate for these purposes, the exact API may not be reflected in this diagram. User should consult pertinent diagrams.}  \\ \hline
+	\end{tabular}
+\end{table}
+
+
+\begin{figure}[H]
+	\centering
 	\includegraphics[scale=.5]{addPassengers.png}
 	\caption{Add Passengers Use Case Diagram}
 \end{figure}

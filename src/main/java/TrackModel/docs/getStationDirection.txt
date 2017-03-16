@@ -1,0 +1,17 @@
+@startuml
+skinparam monochrome true
+
+actor TrainController #white
+actor TrainModel #white
+participant TrackModel
+
+TrainModel->TrackModel.Block: getBeacon.getMessage()
+TrackModel.Block-->TrainModel: message
+TrainModel->TrainController: setMessage(message)
+note left: TrainController and TrainModel may modify this API
+
+TrainController->TrackModel.Station: getDoorSide(message)
+note left: TrainController queries station with the message
+TrackModel.Station-->TrainController: doorSide
+
+@enduml
