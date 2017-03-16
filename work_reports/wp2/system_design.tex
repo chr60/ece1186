@@ -96,6 +96,117 @@ In this subsection, the use cases of the Moving Block Overlay (MBO) are provided
 	\includegraphics[scale=.2]{mbousecase.png}
 	\caption{Train controller use case diagram}
 \end{figure}
+\begin{table}[H]
+	\centering
+	\caption{Update}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Scheduler} \\ \hline
+		Description & \parbox[t]{10cm}{The Scheduler is able to update the list of drivers. This will change whether or not a driver is able to be scheduled.} \\ \hline
+		Data &  \parbox[t]{10cm}{filename} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Click drivers button} \\ \hline
+		Response & \parbox[t]{10cm}{Loops through a CSV file to add all the drivers to the list of drivers. When adding a driver, a driver object will be created with the entered properties. This object will then be added to the Driver Schedule where it can be accessed as part of the list.}\\ \hline
+		Comments & \parbox[t]{10cm}{There will be a default file so that it can be saved between sessions.}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Enter Throughput}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Scheduler} \\ \hline
+		Description & \parbox[t]{10cm}{The Scheduler enters the number of trains they would like to be on the track at a certain point in time.} \\ \hline
+		Data &  \parbox[t]{10cm}{number of trains} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Click submit button} \\ \hline
+		Response & \parbox[t]{10cm}{The number of trains is entered by the scheduler. This is used to generate both the train and driver schedules for both MBO and FB modes.}\\ \hline
+		Comments & \parbox[t]{10cm}{}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{View Train/Driver Schedule}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Scheduler, CTC} \\ \hline
+		Description & \parbox[t]{10cm}{Scheduler can see a list of all  trains, as well as their station arrival times. Scheduler can see a list of all current drivers, as well as their corresponding break times and current train. } \\ \hline
+		Data &  \parbox[t]{10cm}{train ID, arrival times, driver name, ID, break times} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Updates triggered by clock} \\ \hline
+		Response & \parbox[t]{10cm}{Two tables will be displayed, one for the train schedule, and one for the driver schedule. The train schedule will list IDs as the rows and station names as the columns. Each cell will contain the time that train will arrive at that station. The driver schedule will what train they are on at what times. It will also show whenever they start and stop work and when they are on breaks.}\\ \hline
+		Comments & \parbox[t]{10cm}{The table that is displayed will automatically update itself when triggered by the clock.}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{View Variance}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Scheduler} \\ \hline
+		Description & \parbox[t]{10cm}{Scheduler can see a list of all  trains, as well as their corresponding speed and current position. The suggested speed and authority will be displayed as well as the variance between the two.} \\ \hline
+		Data &  \parbox[t]{10cm}{train ID, speed, suggested/actual position/authority, variance} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Updates triggered by clock} \\ \hline
+		Response & \parbox[t]{10cm}{In Fixed Block mode the current block will have to be kept track of based on past block occupancy. In MBO mode the position can be gotten through GPS.}\\ \hline
+		Comments & \parbox[t]{10cm}{In Fixed Block mode the position is denoted as the current block. In MBO mode the position is denoted as the current block and the distance into that block.}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Generate Schedules}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Scheduler} \\ \hline
+		Description & \parbox[t]{10cm}{When required a schedule will be generated based on the input data. This will then be displayed for the scheduler/CTC. It is used to dispatch trains and calculate a path for a train.} \\ \hline
+		Data &  \parbox[t]{10cm}{number of trains, track data} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{On launch, change in number of drivers, clock triggered} \\ \hline
+		Response & \parbox[t]{10cm}{A schedule will be generated for trains and drivers. It will have to take into account the mode of operation (MBO or FB), speed limits, track occupancy, drivers’ break times, and other variables.}\\ \hline
+		Comments & \parbox[t]{10cm}{Can only happen in automatic mode - schedule will be either fixed block or MBO depending on dispatcher's selection of mode.}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Give Operation Mode}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{CTC} \\ \hline
+		Description & \parbox[t]{10cm}{The CTC sends the mode of operation whenever it is changed.} \\ \hline
+		Data &  \parbox[t]{10cm}{mode} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{CTC changes the mode.} \\ \hline
+		Response & \parbox[t]{10cm}{The mode is updated in the MovingBlockOverlay class. Any “shutdown” procedures to switch between modes are performed.}\\ \hline
+		Comments & \parbox[t]{10cm}{The default mode will be manual.}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Fail Communication with CTC}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Murphy} \\ \hline
+		Description & \parbox[t]{10cm}{Murphy breaks communication between CTC and MBO.} \\ \hline
+		Data &  \parbox[t]{10cm}{communication failure} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{CTC clicks Fail Communication with MBO button.} \\ \hline
+		Response & \parbox[t]{10cm}{Since scheduling will be unavailable without communication with the MBO, the CTC will be forced into manual mode and let the dispatcher know with a message.}\\ \hline
+		Comments & \parbox[t]{10cm}{}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Fail Communication with Train}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Murphy} \\ \hline
+		Description & \parbox[t]{10cm}{Murphy breaks communication between Train and wayside.} \\ \hline
+		Data &  \parbox[t]{10cm}{communication failure} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Click Fail Communication with Train button.} \\ \hline
+		Response & \parbox[t]{10cm}{The MBO can no longer receive the GPS position of individual trains and is therefore unable to safely operate in MBO mode. So a transition must be made to either Fixed Block mode or to manual mode.}\\ \hline
+		Comments & \parbox[t]{10cm}{}  \\ \hline
+	\end{tabular}
+\end{table}
 
 \subsection{Centralized Train Control}
 In this subsection, the use cases of the Centralized Train Control (CTC) are provided.
