@@ -352,6 +352,7 @@ Author: Michael Ghaben
 
 \section{Track Controller Test Plan}
 \subsection{Unit Tests}
+%UNIT TEST
 \begin{table}[H]
 	\centering
 	\caption{Load PLC Program via Browse Button}
@@ -360,15 +361,134 @@ Author: Michael Ghaben
 		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
 		Integrity Level & 1 \\ \hline
 		Methods & Evaluate the tryPLC() function and Browse Button\\ \hline
-		Inputs &  PLC file selected via 'Browse' button \\ \hline
+		Inputs &  PLC file selected via 'Browse' button, then clicking 'Load' button \\ \hline
 		Outputs &  'Success' notification displayed \\ \hline
 		Expected Completion & After initialization, but before any trains dispatched\\ \hline
-		Risks and Assumptions & \multicolumn{1}{p{4cm}|}{\raggedright PLC files exist in src/main/java/WaysideController/PLCResources (for automated testing, other external files may be used) }  \\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{For automated testing, PLC files exist in PLCResources Folder \\(Other external files may be used normally)}  \\ \hline
+		Responsibility & Wayside Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Load PLC Program via File Path}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Evaluate the tryPLC() function\\ \hline
+		Inputs &  PLC file selected via entering file path, then clicking 'Load' button \\ \hline
+		Outputs &  'Success' notification displayed \\ \hline
+		Expected Completion & After initialization, but before any trains dispatched\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{For automated testing, PLC files exist in PLCResources Folder \\(Other external files may be used normally)} \\ \hline
+		Responsibility & Wayside Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{PLC Logic Calculation}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Evaluate runPLC() function\\ \hline
+		Inputs &  Current block \\ \hline
+		Outputs &  Boolean [] of necessary track state \\ \hline
+		Expected Completion & After calculation before next set of data is passed\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Valid block is passed to function} \\ \hline
+		Responsibility & Wayside Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{View Block info}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Tests dropdown menu functionality\\ \hline
+		Inputs &  Select of Line, Section, Block \\ \hline
+		Outputs &  Block\\ \hline
+		Expected Completion & As soon as user makes selection, info is returned\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Current information returned is updated} \\ \hline
 		Responsibility & Wayside Controller\\ \hline
 	\end{tabular}
 \end{table}
 
 \subsection{Integration Tests}
+		%INTEGRATION TEST
+	\begin{table}[H]
+		\centering
+		\caption{Set Speed and Authority}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 3 \\ \hline
+			Methods & Evaluate setSpeedAuth() function\\ \hline
+			Inputs &  \parbox[t]{10cm}{Block to assign Speed \& Authority to, Authority (as a Block), Speed} \\ \hline
+			Outputs & None\\ \hline
+			Expected Completion & Set indicated Speed and Authority of specified Block \\ \hline
+			Risks and Assumptions & \parbox[t]{10cm}{Block is open and given Speed \& Authority are valid.} \\ \hline
+			Responsibility & Wayside Controller\\ \hline
+		\end{tabular}
+	\end{table}
+	
+	%INTEGRATION TEST
+	\begin{table}[H]
+		\centering
+		\caption{Close a Block}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Evaluate closeBlock() function\\ \hline
+			Inputs &  Block to be closed\\ \hline
+			Outputs & None\\ \hline
+			Expected Completion & Track block set to broken status before next state \\ \hline
+			Risks and Assumptions & \parbox[t]{10cm}{Block is not already closed and/or occupied} \\ \hline
+			Responsibility & Wayside Controller\\ \hline
+		\end{tabular}
+	\end{table}
+	
+	
+	%INTEGRATION TEST
+	\begin{table}[H]
+		\centering
+		\caption{Change Switch}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 3 \\ \hline
+			Methods & Test PLC code and setSwitchState()\\ \hline
+			Inputs &  Block containing desired switch\\ \hline
+			Outputs &  True/False result of action completed\\ \hline
+			Expected Completion & Switch state is opposite of original state. \\ \hline
+			Risks and Assumptions & \parbox[t]{10cm}{Block passed to function contains a valid switch, and that block is not occupied.} \\ \hline
+			Responsibility & Wayside Controller\\ \hline
+		\end{tabular}
+	\end{table}
+	
+	%INTEGRATION TEST
+	\begin{table}[H]
+		\centering
+		\caption{Manually Change Switch}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 1 \\ \hline
+			Methods & Evaluate manualSwitch() function and setSwitchState()\\ \hline
+			Inputs &  Block containing desired switch\\ \hline
+			Outputs &  True/False result of action completed\\ \hline
+			Expected Completion & Switch state is opposite of original state. \\ \hline
+			Risks and Assumptions & \parbox[t]{10cm}{Block passed to function contains a valid switch, and that block is not occupied.} \\ \hline
+			Responsibility & Wayside Controller\\ \hline
+		\end{tabular}
+	\end{table}
 
 \section{CTC Test Plan}
 \subsection{Unit Tests}
