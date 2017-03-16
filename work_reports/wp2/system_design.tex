@@ -319,7 +319,103 @@ In this subsection, the use cases of the track controller are provided.
 	\includegraphics[scale=.3]{trackcontrollerusecase.png}
 	\caption{Track controller use case diagram}
 \end{figure}
+\begin{table}[H]
+	\centering
+	\caption{Load PLC File}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Transit Engineer, Wayside Controller} \\ \hline
+		Description & \parbox[t]{10cm}{A Transit Engineer will load a PLC file upon startup of the Wayside unit(s), and will do so by either browsing for a file or supplying the file path.} \\ \hline
+		Data &  \parbox[t]{10cm}{PLC File's name, path} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{ 'Load' button pressed} \\ \hline
+		Response & \parbox[t]{10cm}{Validity of File checked; Invalid File/Success of Load will be displayed to Transit Engineer}\\ \hline
+		Comments & \parbox[t]{10cm}{Proper formatting/convention of PLC file is required	}  \\ \hline
+	\end{tabular}
+\end{table}
 
+\begin{table}[H]
+	\centering
+	\caption{Monitor Blocks/Track}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Transit Engineer, Wayside Controller} \\ \hline
+		Description & \parbox[t]{10cm}{For a given wayside, a Transit Engineer may select a block (by Line, Section, Block) from dropdowns to view its characteristics i.e. switch state \& crossing status (if applicable), occupancy, lights} \\ \hline
+		Data &  \parbox[t]{10cm}{Track Blocks, Switches, Crossings, Lights} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Block selected} \\ \hline
+		Response & \parbox[t]{10cm}{Information queried from block and displayed}\\ \hline
+		Comments & \parbox[t]{10cm}{Selection of blocks changes based on Wayside Controller selected}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Dispatch/Edit Train}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{CTC, Wayside Controller} \\ \hline
+		Description & \parbox[t]{10cm}{A CTC will dispatch a train/update a train with a given speed and authority (passed to wayside controller) which will then be relayed to the track model by the wayside controller.} \\ \hline
+		Data &  \parbox[t]{10cm}{Speed, Authority, Block} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Speed, Authority, and Block passed to Wayside Controller} \\ \hline
+		Response & \parbox[t]{10cm}{Wayside sets Speed, Authority of given block on the track model}\\ \hline
+		Comments & \parbox[t]{10cm}{}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Open/Close a Block}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{CTC, Wayside Controller} \\ \hline
+		Description & \parbox[t]{10cm}{The CTC will prompt the Wayside to close or open a block for maintenance.} \\ \hline
+		Data &  \parbox[t]{10cm}{Block, Open/Closed Status} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{CTC prompts Wayside controller to close or open a block.} \\ \hline
+		Response & \parbox[t]{10cm}{Wayside sets status of given Block to open/closed.}\\ \hline
+		Comments & \parbox[t]{10cm}{}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Supply Updated Track}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Track Model, Wayside Controller} \\ \hline
+		Description & \parbox[t]{10cm}{The Track Model will provide Block Occupancies, Switch statuses, and Crossing statuses to the Wayside Controller} \\ \hline
+		Data &  \parbox[t]{10cm}{Block, Switch, Crossing} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Track sends updated information} \\ \hline
+		Response & \parbox[t]{10cm}{Wayside gives updated info to PLC code}\\ \hline
+		Comments & \parbox[t]{10cm}{}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Fail Communication with CTC/Track Model}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Murphy, Wayside Controller} \\ \hline
+		Description & \parbox[t]{10cm}{Murphy will eliminate communication between the Wayside Controller and the CTC and Track.} \\ \hline
+		Data &  \parbox[t]{10cm}{N/A} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{ 'Communication Fail' button pressed} \\ \hline
+		Response & \parbox[t]{10cm}{All Trains are stopped.}\\ \hline
+		Comments & \parbox[t]{10cm}{}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Fail a Wayside}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Murphy, Wayside Controller} \\ \hline
+		Description & \parbox[t]{10cm}{Murphy will break a Wayside Controller causing the unit to be non-responsive} \\ \hline
+		Data &  \parbox[t]{10cm}{N/A} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{ 'Fail Wayside' button pressed} \\ \hline
+		Response & \parbox[t]{10cm}{All trains within jurisdiction of Wayside's line are stopped.}\\ \hline
+		Comments & \parbox[t]{10cm}{i.e. Red Line can operate if Green Line is shut down.}  \\ \hline
+	\end{tabular}
+\end{table}
 \subsection{Train Model}
 In this subsection, the use cases of the train model are provided.
 
