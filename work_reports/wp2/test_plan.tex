@@ -314,6 +314,22 @@ Author: Michael Ghaben
 	\end{tabular}
 \end{table}
 
+\begin{table}[H]
+	\centering
+	\caption{Test Station Arrival/Departure Time}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Station Arrival and Departure Time setting} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Evaluate the functionality of the ability to set arrival and departure times at a given station \\ \hline
+		Inputs &  TArrival and departure time \\ \hline
+		Outputs &  \parbox[t]{10cm}{The proper time set in a station}\\ \hline
+		Expected Completion & April 1, 2017\\ \hline
+		Risks and Assumptions & That the test will not interact with other functionality \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
 \subsection{Integration Tests}
 
 \begin{table}[H]
@@ -348,7 +364,21 @@ Author: Michael Ghaben
 	\end{tabular}
 \end{table}
 
-
+\begin{table}[H]
+	\centering
+	\caption{Test Train Door Side}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Evaluate the functionality of the ability to relay the proper door side of train to open based upon incoming direction of approach to a station \\ \hline
+		Inputs &  The beacon info called by the train controller \\ \hline
+		Outputs &  \parbox[t]{10cm}{The proper approach side}\\ \hline
+		Expected Completion & April 1, 2017\\ \hline
+		Risks and Assumptions & That the communication between train model and train controller will be successful \\ \hline
+		Responsibility & Track Model, Train Model and Train Controller\\ \hline
+	\end{tabular}
+\end{table}
 
 \section{Track Controller Test Plan}
 \subsection{Unit Tests}
