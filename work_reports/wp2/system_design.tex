@@ -1116,8 +1116,8 @@ The train model package consists of a train object, a train Handler, a UI class,
 \subsection{Moving Block Overlay}
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=.2]{mbo.png}
-	\caption{MBO Class diagram}
+	\includegraphics[width=\textwidth]{mbo.png}
+	\caption{MBO Class Diagram}
 \end{figure}
 \subsection{Centralized Train Controller}
 \begin{figure}[H]
@@ -2044,6 +2044,133 @@ In this seciton, we provide the sequence diagrams of the train model.
 
 
 \subsection{Moving Block Overlay}
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{updateDrivers.png}
+		\caption{Update Drivers}
+	\end{figure}
+	
+	\begin{table}[H]
+		\centering
+		\caption{Update Drivers}
+		\begin{tabular}{|l|l|}
+			\hline
+			Actors & \parbox[t]{10cm}{MBOgui, DriverSchedule, Driver} \\ \hline
+			Description & \parbox[t]{10cm}{The Scheduler is able to update the list of drivers. This will change whether or not a driver is able to be scheduled.} \\ \hline
+			Data &  \parbox[t]{10cm}{filename} \\ \hline
+			Stimulus &  \parbox[t]{10cm}{Click drivers button} \\ \hline
+			Response & \parbox[t]{10cm}{Loops through a CSV file to add all the drivers to the list of drivers. When adding a driver, a driver object will be created with the entered properties. This object will then be added to the Driver Schedule where it can be accessed as part of the list.}\\ \hline
+			Comments & \parbox[t]{10cm}{There will be a default file so that it can be saved between sessions.}  \\ \hline
+		\end{tabular}
+	\end{table}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics{enterThroughput.png}
+		\caption{Enter Throughput}
+	\end{figure}
+	
+	\begin{table}[H]
+		\centering
+		\caption{Enter Throughput}
+		\begin{tabular}{|l|l|}
+			\hline
+			Actors & \parbox[t]{10cm}{MBOgui, MovingBlockOverlay} \\ \hline
+			Description & \parbox[t]{10cm}{The Scheduler enters the number of trains they would like to be on the track at a certain point in time.} \\ \hline
+			Data &  \parbox[t]{10cm}{number of trains} \\ \hline
+			Stimulus &  \parbox[t]{10cm}{Click submit button} \\ \hline
+			Response & \parbox[t]{10cm}{The number of trains is entered by the scheduler. This is used to generate both the train and driver schedules for both MBO and FB modes.}\\ \hline
+			Comments & \parbox[t]{10cm}{}  \\ \hline
+		\end{tabular}
+	\end{table}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics{viewDriverSched.png}
+		\caption{View Driver Schedule}
+	\end{figure}
+	
+	\begin{table}[H]
+		\centering
+		\caption{View Driver Schedule}
+		\begin{tabular}{|l|l|}
+			\hline
+			Actors & \parbox[t]{10cm}{MBOgui, DriverSchedule} \\ \hline
+			Description & \parbox[t]{10cm}{Scheduler can see a list of all current drivers, as well as their corresponding break times and current train. } \\ \hline
+			Data &  \parbox[t]{10cm}{train ID, driver name, employeeID, break times} \\ \hline
+			Stimulus &  \parbox[t]{10cm}{Updates triggered by clock} \\ \hline
+			Response & \parbox[t]{10cm}{A table will be displayed for the driver schedule. The driver schedule will display what train they are on at what times. It will also show whenever they start and stop work and when they are on breaks.}\\ \hline
+			Comments & \parbox[t]{10cm}{The table that is displayed will automatically update itself when triggered by the clock.}  \\ \hline
+		\end{tabular}
+	\end{table}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics{viewSchedule.png}
+		\caption{View Train Schedule}
+	\end{figure}
+	
+	\begin{table}[H]
+		\centering
+		\caption{View Train Schedule}
+		\begin{tabular}{|l|l|}
+			\hline
+			Actors & \parbox[t]{10cm}{MBOgui, Schedule} \\ \hline
+			Description & \parbox[t]{10cm}{Scheduler can see a list of all  trains, as well as their station arrival times.} \\ \hline
+			Data &  \parbox[t]{10cm}{train ID, arrival times} \\ \hline
+			Stimulus &  \parbox[t]{10cm}{Updates triggered by clock} \\ \hline
+			Response & \parbox[t]{10cm}{A table will be displayed for the train schedule. The train schedule will list IDs as the rows and station names as the columns. Each cell will contain the time that train will arrive at that station.}\\ \hline
+			Comments & \parbox[t]{10cm}{The table that is displayed will automatically update itself when triggered by the clock.}  \\ \hline
+		\end{tabular}
+	\end{table}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics{viewVariance.png}
+		\caption{View Variance}
+	\end{figure}
+	
+	\begin{table}[H]
+		\centering
+		\caption{View Variance}
+		\begin{tabular}{|l|l|}
+			\hline
+			Actors & \parbox[t]{10cm}{MBOgui, MovingBlockOverlay} \\ \hline
+			Description & \parbox[t]{10cm}{Scheduler can see a list of all  trains, as well as their corresponding speed and current position. The suggested speed and authority will be displayed as well as the variance between the two.} \\ \hline
+			Data &  \parbox[t]{10cm}{train ID, speed, suggested/actual position/authority, variance} \\ \hline
+			Stimulus &  \parbox[t]{10cm}{Updates triggered by clock} \\ \hline
+			Response & \parbox[t]{10cm}{In Fixed Block mode the current block will have to be kept track of based on past block occupancy. In MBO mode the position can be gotten through GPS.}\\ \hline
+			Comments & \parbox[t]{10cm}{In Fixed Block mode the position is denoted as the current block. In MBO mode the position is denoted as the current block and the distance into that block.}  \\ \hline
+		\end{tabular}
+	\end{table}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics{genSched.png}
+		\caption{Generate Schedules}
+	\end{figure}
+	
+	\begin{table}[H]
+		\centering
+		\caption{Generate Schedules}
+		\begin{tabular}{|l|l|}
+			\hline
+			Actors & \parbox[t]{10cm}{Schedule, TrainHandler} \\ \hline
+			Description & \parbox[t]{10cm}{When required a schedule will be generated based on the input data. This will then be displayed for the scheduler/CTC. It is used to dispatch trains and calculate a path for a train.} \\ \hline
+			Data &  \parbox[t]{10cm}{number of trains, track data} \\ \hline
+			Stimulus &  \parbox[t]{10cm}{On launch, change in number of drivers, clock triggered} \\ \hline
+			Response & \parbox[t]{10cm}{A schedule will be generated for trains and drivers. It will have to take into account the mode of operation (MBO or FB), speed limits, track occupancy, drivers’ break times, and other variables.}\\ \hline
+			Comments & \parbox[t]{10cm}{Can only happen in automatic mode - schedule will be either fixed block or MBO depending on dispatcher's selection of mode.}  \\ \hline
+		\end{tabular}
+	\end{table}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics{routeTrain.png}
+		\caption{Route Train}
+	\end{figure}
+	
 \subsection{Centralized Train Controller}
 
 \begin{figure}[H]
