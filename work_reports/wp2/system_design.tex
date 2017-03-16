@@ -242,7 +242,75 @@ In this subsection, the use cases of the train model are provided.
    		Comments & \parbox[t]{10cm}{Functionally equivalent to the read track info for the user}  \\ \hline
    	\end{tabular}
    \end{table}
-
+	 \begin{table}[H]
+	 	\centering
+	 	\caption{Set Station Arrival/Departure}
+	 	\begin{tabular}{|l|l|}
+	 		\hline
+	 		Actors & \parbox[t]{10cm}{MBO} \\ \hline
+	 		Description & \parbox[t]{10cm}{Set station arrival and departure time} \\ \hline
+	 		Data &  \parbox[t]{10cm}{Receives the expected arrival and departure time from the MBO and displays them at a station} \\ \hline
+	 		Stimulus &  \parbox[t]{10cm}{The MBO setting an arrival or departure at a given station} \\ \hline
+	 		Response & \parbox[t]{10cm}{Setting an arrival or departure at a given station}\\ \hline
+	 		Comments & \parbox[t]{10cm}{Set and called by the MBO}  \\ \hline
+	 	\end{tabular}
+	 \end{table}
+	  \begin{table}[H]
+	  	\centering
+	  	\caption{Get Door Side}
+	  	\begin{tabular}{|l|l|}
+	  		\hline
+	  		Actors & \parbox[t]{10cm}{Train Controller} \\ \hline
+	  		Description & \parbox[t]{10cm}{Get the side of the door for arrival at a station given the visible beacon} \\ \hline
+	  		Data &  \parbox[t]{10cm}{Returns the side of the door to open for a given train} \\ \hline
+	  		Stimulus &  \parbox[t]{10cm}{Query with a station given a beacon} \\ \hline
+	  		Response & \parbox[t]{10cm}{Side of the train to open the door on}\\ \hline
+	  		Comments & \parbox[t]{10cm}{Set and called by the Train Conroller}  \\ \hline
+	  	\end{tabular}
+	  \end{table}
+	  
+	  \begin{table}[H]
+	  	\centering
+	  	\caption{Depart Passengers to Station}
+	  	\begin{tabular}{|l|l|}
+	  		\hline
+	  		Actors & \parbox[t]{10cm}{Train Model} \\ \hline
+		   	Description & \parbox[t]{10cm}{Depart passengers from a train to a station} \\ \hline
+	  		Data &  \parbox[t]{10cm}{Number of passengers to depart} \\ \hline
+	  		Stimulus &  \parbox[t]{10cm}{Train model calling the station of the track model} \\ \hline
+	  		Response & \parbox[t]{10cm}{Add the people to the station loitering group}\\ \hline
+	  		Comments & \parbox[t]{10cm}{Set and called by the Train Model}  \\ \hline
+	  	\end{tabular}
+	  \end{table}
+	  
+	  \begin{table}[H]
+	  	\centering
+	  	\caption{Get speed and authority from a given block}
+	  	\begin{tabular}{|l|l|}
+	  		\hline
+	  		Actors & \parbox[t]{10cm}{Train Model} \\ \hline
+	  		Description & \parbox[t]{10cm}{Calls a given block} \\ \hline
+	  		Data &  \parbox[t]{10cm}{Number of passengers to depart} \\ \hline
+	  		Stimulus &  \parbox[t]{10cm}{Train model calling the station of the track model} \\ \hline
+	  		Response & \parbox[t]{10cm}{Return speed and authority at a given block}\\ \hline
+	  		Comments & \parbox[t]{10cm}{Set and called by the Train Model}  \\ \hline
+	  	\end{tabular}
+	  \end{table}
+	  
+	  \begin{table}[H]
+	  	\centering
+	  	\caption{Load Passengers From Station}
+	  	\begin{tabular}{|l|l|}
+	  		\hline
+	  		Actors & \parbox[t]{10cm}{Train Controller} \\ \hline
+	  		Description & \parbox[t]{10cm}{Load passengers to a track model from a station} \\ \hline
+	  		Data &  \parbox[t]{10cm}{Maximum number of passengers to load a train to capacity} \\ \hline
+	  		Stimulus &  \parbox[t]{10cm}{Train model queryiing the track model} \\ \hline
+	  		Response & \parbox[t]{10cm}{Number of people to add to the train}\\ \hline
+	  		Comments & \parbox[t]{10cm}{Set and called by the Train Conroller}  \\ \hline
+	  	\end{tabular}
+	  \end{table}
+	  
 \subsection{Track Controller}
 In this subsection, the use cases of the track controller are provided.
 
