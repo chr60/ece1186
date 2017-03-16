@@ -522,8 +522,109 @@ Author: Michael Ghaben
 
 \section{CTC Test Plan}
 \subsection{Unit Tests}
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Choosing Modes}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & \parbox[t]{10cm}{Evaluate single radio button selection. Disable Automatic options when Manual chosen, diable dispatch train ability when Automatic chosen.}\\ \hline
+		Inputs &  Click on radio buttons. \\ \hline
+		Outputs &  See option choice on screen.\\ \hline
+		Expected Completion & \parbox[t]{10cm}{With user selection, however Manual is initially chosen at startup.}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Assume only one or the other can be chosen. i.e. can only choose Auto or Manual, not both.} \\ \hline
+		Responsibility & CTC\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{View Block info}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Tests dropdown functions as well as display of track info.\\ \hline
+		Inputs &  Selections of Line, Section, Block \\ \hline
+		Outputs &  Info from Excel as well as updates from Wayside.\\ \hline
+		Expected Completion & \parbox[t]{10cm}{Upon user selection. Should selection stay on screen, will continue to be updated with time.}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Pulling info from valid CSV file.} \\ \hline
+		Responsibility & CTC\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Failure Color Change}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Evaluate color change in Failure Area.\\ \hline
+		Inputs &  Failure alerted to CTC. \\ \hline
+		Outputs &  Color change occurs on GUI. \\ \hline
+		Expected Completion & \parbox[t]{10cm}{Upon receipt of a failure, will pass fake failure to test.}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Assume will only show red or green.} \\ \hline
+		Responsibility & CTC\\ \hline
+	\end{tabular}
+\end{table}
 \subsection{Integration Tests}
 
+ 
+%INTEGRATION TEST
+\begin{table}[H]
+	\centering
+	\caption{Dispatch/Edit Train via Button}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & \parbox[t]{10cm}{Evaluate the ability to dispatch a train and add it to the list of trains. This info will be passed on to all modules in some way to make/edit a train.}\\ \hline
+		Inputs &  \parbox[t]{10cm}{Select Dispatch/Edit Train Button. Complete all info in the resulting popup window (speed, auth, line, id). Click Complete.} \\ \hline
+		Outputs &  \parbox[t]{10cm}{Will update the train list displayed to dispatcher as well as the selections to edit.} \\ \hline
+		Expected Completion & At any time, at the will of the dispatcher. \\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Correct occupancy/position data received from Wayside.}  \\ \hline
+		Responsibility & CTC\\ \hline
+	\end{tabular}
+\end{table}
+
+%INTEGRATION TEST
+\begin{table}[H]
+	\centering
+	\caption{Close Block/Send Maintenance}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & \parbox[t]{10cm}{Evaluate ability to send command to close/repair a block to the wayside.}\\ \hline
+		Inputs &  Select correct block, select Close Block or Send Maintenance. \\ \hline
+		Outputs &  \parbox[t]{10cm}{Show rerouting/stopping/restarting of trains in train list based on choice.}\\ \hline
+		Expected Completion & After a failure is reported.\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Failure is reported correctly.} \\ \hline
+		Responsibility & CTC\\ \hline
+	\end{tabular}
+\end{table}
+
+%INTEGRATION TEST
+\begin{table}[H]
+	\centering
+	\caption{View Schedule}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Display schedule from MBO in table format.\\ \hline
+		Inputs &  Updated schedule from MBO. \\ \hline
+		Outputs &  Table of schedules for both lines in popup window. \\ \hline
+		Expected Completion & \parbox[t]{10cm}{Whenever dispatcher chooses to view it, and updates occur in time as they happen.}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Valid schedule is passed/correctly updated by MBO.} \\ \hline
+		Responsibility & CTC\\ \hline
+	\end{tabular}
+\end{table}
 \section{MBO Test Plan}
 \subsection{Unit Tests}
 \subsection{Integration Tests}
