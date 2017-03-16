@@ -11,7 +11,8 @@ public class Crossing{
 	public Block hostBlock;
 	public TrackModel superTrackModel;
 
-	public Crossing(Block hostBlock){
+	public Crossing(TrackModel superTrackModel, Block hostBlock){
+		this.superTrackModel = superTrackModel;
 		this.hostBlock = hostBlock;
 	}
 }

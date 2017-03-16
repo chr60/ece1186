@@ -269,6 +269,9 @@ public class Block implements Comparable<Block>{
 		return this.superTrackModel.blockStationMap.get(this);
 	}
 
+	public Crossing getAssociatedCrossing(){
+		return this.superTrackModel.crossingMap.get(this);
+	}
 	/** Implements the comparable interface for blocks via the associalted blockNum of a given block.
 	* At this time, this implementation does not verify that blocks are the same across lines.
 	*/

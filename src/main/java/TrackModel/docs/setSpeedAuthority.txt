@@ -1,17 +1,17 @@
 @startuml
 skinparam monochrome true
 
-actor TrainController #white
-participant TrackModel.dummyTrack
+actor Wayside #white
+participant TrackModel
 
 
-TrainController->TrackModel.dummyTrack: viewTrackList()
+Wayside->TrackModel: viewTrackList()
 note left: At Initialization
-TrackModel.dummyTrack-->TrainController: copy(dummyTrack.trackList()) ∈ {line,section,block}
-note right: for each block ∈ copy(dummyTrack.crossingMap()) ∈ {line,section,block}
+TrackModel-->Wayside: copy(track.trackList()) ∈ {line,section,block}
+note right: for each block ∈ copy(track.crossingMap()) ∈ {line,section,block}
 ||100||
 
-TrainController->Block: track.getBlock({line,section,block}).setSpeedAuthority(speed, authority)
-note left: During runtime ∈ copy(dummyTrack.trackList()) ∈ {line,section,block}
+Wayside->Block: track.getBlock({line,section,block}).setSpeedAuthority(speed, authority)
+note left: During runtime ∈ copy(track.trackList()) ∈ {line,section,block}
 
 @enduml
