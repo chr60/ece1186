@@ -61,6 +61,187 @@ In this subsection, the use cases of the train model are provided.
 	\includegraphics[scale=.3]{trackmodelusecase.png}
 	\caption{Track model use case diagram}
 \end{figure}
+   \begin{table}[H]
+   	\centering
+   	\caption{Set Speed and Authority}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{Track Controller} \\ \hline
+   		Description & \parbox[t]{10cm}{The track controller shall be capable of setting a speed and authority via the track circuit modeled by the track model} \\ \hline
+   		Data &  \parbox[t]{10cm}{Speed and authority for the trains} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{None. The speed and authority are set externally } \\ \hline
+   		Response & \parbox[t]{10cm}{The track model possesses the attributes set.}\\ \hline
+   		Comments & \parbox[t]{10cm}{ The track model only exists as a passthrough for this information }  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Set Switch State}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{Track Controller} \\ \hline
+   		Description & \parbox[t]{10cm}{The track controller shall be capable of setting the switch of a given state} \\ \hline
+   		Data &  \parbox[t]{10cm}{A boolean statement for the state of a switch} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{The Track Controller signal } \\ \hline
+   		Response & \parbox[t]{10cm}{Setting the state of the switch}\\ \hline
+   		Comments & \parbox[t]{10cm}{ These are set simultaneously with no delays }  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Control Railyway Crossing}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		\hline
+   		Actors & \parbox[t]{10cm}{Track Controller} \\ \hline
+   		Description & \parbox[t]{10cm}{The track controller shall be capable of setting the railway crossing to a given state} \\ \hline
+   		Data &  \parbox[t]{10cm}{A boolean statement for the state of a railway crossing} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{The Track Controller boolean signal } \\ \hline
+   		Response & \parbox[t]{10cm}{Setting the state of the railway crossing}\\ \hline
+   		Comments & \parbox[t]{10cm}{ These are set simultaneously with no delays }  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Detect Broken Rails}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{Track Controller} \\ \hline
+   		Description & \parbox[t]{10cm}{The track controller shall be capable of detecting broken rails} \\ \hline
+   		Data &  \parbox[t]{10cm}{A boolean statement for the state of a block} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{A track controller query } \\ \hline
+   		Response & \parbox[t]{10cm}{A return of the boolean broken state of the blocks on a track }\\ \hline
+   		Comments & \parbox[t]{10cm}{ The track controller calls the track model in this case}  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{View Block Occupancy}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{Track Controller} \\ \hline
+   		Description & \parbox[t]{10cm}{The track controller shall be capable of viewing block occupancy} \\ \hline
+   		Data &  \parbox[t]{10cm}{A boolean statement for the occupancy of the block} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{A track controller query } \\ \hline
+   		Response & \parbox[t]{10cm}{A return of the boolean occupied state of the blocks on a trackl }\\ \hline
+   		Comments & \parbox[t]{10cm}{ The track controller calls the track model in this case}  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Set Light Switch State}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{Track Controller} \\ \hline
+   		Description & \parbox[t]{10cm}{The track controller shall be capable of setting the light states} \\ \hline
+   		Data &  \parbox[t]{10cm}{A boolean statement for the next light switch state} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{A track controller function call } \\ \hline
+   		Response & \parbox[t]{10cm}{A setting of the light switch state to that set by the track controller }\\ \hline
+   		Comments & \parbox[t]{10cm}{ }  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Set Light Switch State}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{Track Controller} \\ \hline
+   		Description & \parbox[t]{10cm}{The track controller shall be opening or closing a given block for maintenance} \\ \hline
+   		Data &  \parbox[t]{10cm}{A boolean statement for if a given block is open or closed due to maintenance} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{A track controller function call with a boolean variable } \\ \hline
+   		Response & \parbox[t]{10cm}{A setting of the blocks open state }\\ \hline
+   		Comments & \parbox[t]{10cm}{ This block will not be considered "open" for planning purposes in new path. This is reflected in the nextBlock functionality}  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Upoad Track Model}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{User} \\ \hline
+   		Description & \parbox[t]{10cm}{The user shall be capable of uploading track models to the track model} \\ \hline
+   		Data &  \parbox[t]{10cm}{The track model given in a .csv form. This may be provided by Excel "save as" function or similar.} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{None} \\ \hline
+   		Response & \parbox[t]{10cm}{The user loads the files in }\\ \hline
+   		Comments & \parbox[t]{10cm}{This will require multiple csv files in practice }  \\ \hline
+   	\end{tabular}
+   \end{table}
+   \begin{table}[H]
+   	\centering
+   	\caption{Set Light Switch State}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{Track Controller} \\ \hline
+   		Description & \parbox[t]{10cm}{The track controller shall be capable of setting the light states} \\ \hline
+   		Data &  \parbox[t]{10cm}{A boolean statement for the next light switch state} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{A track controller function call } \\ \hline
+   		Response & \parbox[t]{10cm}{A setting of the light switch state to that set by the track controller }\\ \hline
+   		Comments & \parbox[t]{10cm}{ }  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Toggle Broken Rail}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{Murphy} \\ \hline
+   		Description & \parbox[t]{10cm}{A test environment shall be provided to toggle the rail broken state for testing} \\ \hline
+   		Data &  \parbox[t]{10cm}{A boolean statement to set the rail to} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{External user testing stimulus} \\ \hline
+   		Response & \parbox[t]{10cm}{Setting a given block to broken or fixed}\\ \hline
+   		Comments & \parbox[t]{10cm}{ This should be considered for test purposes of other modules}  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Toggle Track Circuit Failure}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{Murphy} \\ \hline
+   		Description & \parbox[t]{10cm}{A test environment shall be provided to toggle the circuit failure state for testing} \\ \hline
+   		Data &  \parbox[t]{10cm}{A boolean statement to set the track circuit functionality} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{External user testing stimulus} \\ \hline
+   		Response & \parbox[t]{10cm}{Setting the track circuit to broken or functional}\\ \hline
+   		Comments & \parbox[t]{10cm}{ This should be considered for test purposes of other modules}  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Toggle Power Failure}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{Murphy} \\ \hline
+   		Description & \parbox[t]{10cm}{A test environment shall be provided to toggle the power failure state for testing} \\ \hline
+   		Data &  \parbox[t]{10cm}{A boolean statement to set the power failure state of a rail to} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{External user testing stimulus} \\ \hline
+   		Response & \parbox[t]{10cm}{Setting a broken or fixed power state to}\\ \hline
+   		Comments & \parbox[t]{10cm}{ This should be considered for test purposes of other modules}  \\ \hline
+   	\end{tabular}
+   \end{table}
+   
+   \begin{table}[H]
+   	\centering
+   	\caption{Upload Track Module}
+   	\begin{tabular}{|l|l|}
+   		\hline
+   		Actors & \parbox[t]{10cm}{MBO} \\ \hline
+   		Description & \parbox[t]{10cm}{Upload a track model to the track module} \\ \hline
+   		Data &  \parbox[t]{10cm}{identical to the user inputs} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{Initialization of a program} \\ \hline
+   		Response & \parbox[t]{10cm}{The reading of the excel file}\\ \hline
+   		Comments & \parbox[t]{10cm}{Functionally equivalent to the read track info for the user}  \\ \hline
+   	\end{tabular}
+   \end{table}
 
 \subsection{Track Controller}
 In this subsection, the use cases of the track controller are provided.
