@@ -914,6 +914,174 @@ In this subsection, the use cases of the Centralized Train Control (CTC) are pro
 	\caption{Centralized Train Control use case}
 \end{figure}
 
+\begin{table}[H]
+	\centering
+	\caption{Choose Auto/Manual Mode}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Dispatcher} \\ \hline
+		Description & \parbox[t]{10cm}{Dispatcher can choose between automatic and manual mode. Automatic can then be either MBO or fixed block mode. Automatic uses a schedule while manual allows the dispatcher to send out trains.} \\ \hline
+		Data &  \parbox[t]{10cm}{Mode Selection: manual vs automatic, and MBO vs fixed block (only if auto chosen)} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Radio button selections} \\ \hline
+		Response & \parbox[t]{10cm}{Automatic passes a schedule along to the other applicable modules. Schedule can also be viewed by dispatcher as well as disabling the Trains Panel. Manual enables the manual dispatching of trains via the Trains Panel but disables viewing a schedule.}\\ \hline
+		Comments & \parbox[t]{10cm}{Can be triggered at any time - no previous requirements needed. }  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Dispatch/Edit a Train}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Dispatcher} \\ \hline
+		Description & \parbox[t]{10cm}{When in manual mode, the dispatcher is responsible for dispatching new trains from the yard or editing a train's speed and authority as it goes around the track.} \\ \hline
+		Data &  \parbox[t]{10cm}{Speed, authority, train ID, current block of train} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Click dispatch or edit a train buttons in Train Panel.} \\ \hline
+		Response & \parbox[t]{10cm}{Speed and authority are given to the wayside. If it is a new train, the ID will be -1 and will be updated by the train model. If it is a preexisting train, the ID will be a passed integer value. The ID is passed to the track model.}\\ \hline
+		Comments & \parbox[t]{10cm}{Can only happen in manual mode. It is completely disabled in automatic mode.}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{View Block Info}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Dispatcher} \\ \hline
+		Description & \parbox[t]{10cm}{Dispatcher can see information relating to a chosen block on the track.} \\ \hline
+		Data &  \parbox[t]{10cm}{Block} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Choose line, segment, block from dropdown menu.} \\ \hline
+		Response & \parbox[t]{10cm}{After choosing from dropdowns, info relating to this block of the track will be displayed. This info includes: if there is a station/crossing/switch, station name/switch number/switch state/crossing state if applicable, block occupancy and speed limit.}\\ \hline
+		Comments & \parbox[t]{10cm}{Will auto update in real time if this info changes while the block remains selected on the screen.}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{View All Trains}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Dispatcher} \\ \hline
+		Description & \parbox[t]{10cm}{Dispatcher can see a list of all current trains, as well as their corresponding speed and current position.} \\ \hline
+		Data &  \parbox[t]{10cm}{train ID, speed, position/authority} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Click View Trains button.} \\ \hline
+		Response & \parbox[t]{10cm}{After clicking this button, a list of trains will appear by line, followed by their IDs, speed, and current position/authority (depending on the mode).}\\ \hline
+		Comments & \parbox[t]{10cm}{What info is displayed will depend on the current mode selected.}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{View Schedules}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Dispatcher} \\ \hline
+		Description & \parbox[t]{10cm}{Dispatcher can see the schedule for both lines and all trains.} \\ \hline
+		Data &  \parbox[t]{10cm}{schedule from MBO} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Click View Schedule button.} \\ \hline
+		Response & \parbox[t]{10cm}{After clicking this button, the train schedule per line will appear as sent from the MBO.}\\ \hline
+		Comments & \parbox[t]{10cm}{Can only happen in automatic mode - schedule will be either fixed block or MBO depending on dispatcher's selection of mode.}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Send Maintenance}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Dispatcher} \\ \hline
+		Description & \parbox[t]{10cm}{Dispatcher sends maintenance when a block is broken but only after the broken block is closed.} \\ \hline
+		Data &  \parbox[t]{10cm}{block, closed status} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Click Send Maintenance button.} \\ \hline
+		Response & \parbox[t]{10cm}{After clicking this button, the block will be fixed by maintenance personnel and the block will be automatically re-opened.}\\ \hline
+		Comments & \parbox[t]{10cm}{Can only happen after a block is empty and successfully closed.}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Close Block}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Dispatcher} \\ \hline
+		Description & \parbox[t]{10cm}{Dispatcher closes a block when informed of a failure via the wayside.} \\ \hline
+		Data &  \parbox[t]{10cm}{block, failure status} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Click Close Block button.} \\ \hline
+		Response & \parbox[t]{10cm}{After clicking this button, the block will be closed and emptied of trains. Any trains around it will be rereouted or stopped as necessary.}\\ \hline
+		Comments & \parbox[t]{10cm}{Can only happen when block failure status changes from good to broken.}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Fail Communication with MBO}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Murphy} \\ \hline
+		Description & \parbox[t]{10cm}{Murphy breaks communication between CTC and MBO.} \\ \hline
+		Data &  \parbox[t]{10cm}{communication failure} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Click Fail Communication with MBO button.} \\ \hline
+		Response & \parbox[t]{10cm}{Since scheduling will be unavailable without communication with the MBO, the CTC will be forced into manual mode and let the dispatcher know with a message.}\\ \hline
+		Comments & \parbox[t]{10cm}{ }  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Fail Communication with Wayside}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Murphy} \\ \hline
+		Description & \parbox[t]{10cm}{Murphy breaks communication between CTC and wayside.} \\ \hline
+		Data &  \parbox[t]{10cm}{communication failure} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Click Fail Communication with Wayside button.} \\ \hline
+		Response & \parbox[t]{10cm}{Since the wayside is vital, all trains will be alerted to stop as this is the safest thing to do. They will be instructed to start up again only when communications resume.}\\ \hline
+		Comments & \parbox[t]{10cm}{ }  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Get Schedule}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{MBO} \\ \hline
+		Description & \parbox[t]{10cm}{MBO updates schedule and give it to the CTC whenever there is an update to the file.} \\ \hline
+		Data &  \parbox[t]{10cm}{train schedule} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Update as schedule changes.} \\ \hline
+		Response & \parbox[t]{10cm}{The schedule will be updated whenever the MBO makes any changes and those changes will be reflected should the dispatcher choose to view the schedule in the popup.}\\ \hline
+		Comments & \parbox[t]{10cm}{ }  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Get Broken Blocks/Failures}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Wayside} \\ \hline
+		Description & \parbox[t]{10cm}{Wayside informs CTC of any broken blocks or failures.} \\ \hline
+		Data &  \parbox[t]{10cm}{block} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Updates constantly as wayside receives info from track.} \\ \hline
+		Response & \parbox[t]{10cm}{The schedule will be updated whenever the MBO makes any changes and those changes will be reflected should the dispatcher choose to view the schedule in the popup.}\\ \hline
+		Comments & \parbox[t]{10cm}{ }  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Get Updated Block Info}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Wayside} \\ \hline
+		Description & \parbox[t]{10cm}{Wayside informs CTC of updated info in requested block.} \\ \hline
+		Data &  \parbox[t]{10cm}{switch status, crossing status, block occupancy} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Updates with the clock tick as the wayside gets updates from the track, info then goes to CTC.} \\ \hline
+		Response & \parbox[t]{10cm}{These changes will be reflected on the track panel of the GUI so that the dispatcher can see updated info constantly and react accordingly.}\\ \hline
+		Comments & \parbox[t]{10cm}{ }  \\ \hline
+	\end{tabular}
+\end{table}
+
 \section{Class Diagrams}
 In this section, the class diagrams for each subsystem are provided.
 \subsection{Track Model}
@@ -946,7 +1114,17 @@ The train model package consists of a train object, a train Handler, a UI class,
 	\caption{Train Controller Class Diagram}
 \end{figure}
 \subsection{Moving Block Overlay}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.2]{mbo.png}
+	\caption{MBO Class diagram}
+\end{figure}
 \subsection{Centralized Train Controller}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.2]{ctc.png}
+	\caption{CTC Class diagram}
+\end{figure}
 
 
 \section{Sequence Diagrams}
@@ -1867,6 +2045,147 @@ In this seciton, we provide the sequence diagrams of the train model.
 
 \subsection{Moving Block Overlay}
 \subsection{Centralized Train Controller}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{CTCcloseTrack.png}
+	\caption{Close Block Sequence Diagram}
+\end{figure}
+
+    \begin{table}[H]
+	\centering
+	\caption{Sequence Diagram for : Close Block}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{CTC, Wayside, Track Model} \\ \hline
+		Description & \parbox[t]{10cm}{After the CTC is informed of a broken block, CTC gets an updated train list with all current positions. The waysideMain is called and informed of the broken block which will be sent to corresponding wayside. Then the block on the track model will be updated by the wayside. The CTC generates a list of trains to stop/change speed and authority in order to accommodate the closing block. A copy of this list of trains with original speed and authority is kept to be used when the block is reopened. In order to stop the trains, an updated speed and authority must be sent to the wayside in order to change the trains. This will proceed as if the CTC is dispatching/editing a train and the wayside will act accordingly. The CTC updates the train list to reflect these changes.} \\ \hline
+		Data &  \parbox[t]{10cm}{Selection of line, segment and block to close, speed, authority, current position} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Selection of line, segment, block to close by dispatcher and then dispatcher chooses close block button.} \\ \hline
+		Response & \parbox[t]{10cm}{Block status is changed on the track via the wayside, speed an authority for restarted trains is given to the rest of the system and the train list is updated with changed speed and authority.}\\ \hline
+		Comments & \parbox[t]{10cm}{Only a reaction to a failure sent by wayside. Block can only officially close when it is free of all trains on it.}  \\ \hline
+	\end{tabular}
+\end{table}
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{CTCsendMaint.png}
+	\caption{Send Maintenance Sequence Diagram}
+\end{figure}
+
+\begin{table}[H]
+	\centering
+	\caption{Sequence Diagram for: Sending Maintenance}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{CTC, Wayside, Track Model} \\ \hline
+		Description & \parbox[t]{10cm}{This is the opposite of closing a block. Sending maintenance will reopen a block. The CTC will get an updated train list. The CTC will call the waysideMain in the same way as closing a block, however the broken attribute will be set to false, instead of true, and changed in the corresponding wayside. This wayside updates the block in the track model. The CTC will take the list saved from the closing to reinstate the speeds and authorities to all affected trains. This will be passed along to the wayside in the same manner as dispatching or editing a train.} \\ \hline
+		Data &  \parbox[t]{10cm}{Selection of line, segment, block to reopen, speed, authority, current position} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Selection of line, segment, block to close by dispatcher and then dispatcher chooses send maintenance button.} \\ \hline
+		Response & \parbox[t]{10cm}{Block status is changed on the track via the wayside, speed an authority for restarted trains is given to the rest of the system, and the train list is updated with changed speed and authority.}\\ \hline
+		Comments & \parbox[t]{10cm}{Will cause block to reopen instantly.}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{CTCgetTrainPosition.png}
+	\caption{Get Train Position Sequence Diagram}
+\end{figure}
+
+\begin{table}[H]
+	\centering
+	\caption{Sequence Diagram for: Getting Train Position}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{CTC, Wayside} \\ \hline
+		Description & \parbox[t]{10cm}{In both Manual and Fixed Block mode, the CTC queries the wayside with every clock tick. From these block occupancies, the CTC must infer the train that corresponds with the occupancy since no IDs are passed between wayside and CTC. Then the CTC updates the train list.} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Done with every clock tick.} \\ \hline
+		Response & \parbox[t]{10cm}{The train list will be updated constantly with applicable changes. It can be seen in the view all trains popup window.}\\ \hline
+		Comments & \parbox[t]{10cm}{Updated train positions will help MBO and dispatcher in getting new train authorities out.}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{CTCloadSchedule.png}
+	\caption{View Schedule Sequence Diagram}
+\end{figure}
+
+\begin{table}[H]
+	\centering
+	\caption{Sequence Diagram for: View Schedule}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{CTC, MBO} \\ \hline
+		Description & \parbox[t]{10cm}{Should the dispatcher wish to view the schedule, a popup will occur from his button click to show him complete 24 hour schedules for both lines of all trains. The CTC will receive the schedule whenever the MBO updates it so that a valid, current schedule is always displayed. The list of the schedule will be parsed by the CTC and displayed in table format.} \\ \hline
+		Data &  \parbox[t]{10cm}{Updated schedule} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Will receive an updated schedule whenever MBO updates it. Will be viewed on button click via dispatcher.} \\ \hline
+		Response & \parbox[t]{10cm}{Popup will appear.}\\ \hline
+		Comments & \parbox[t]{10cm}{ }  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{CTCviewAllTrains.png}
+	\caption{View All Trains Sequence Diagram}
+\end{figure}
+
+\begin{table}[H]
+	\centering
+	\caption{Sequence Diagram for : View All Trains}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{MBO, CTC} \\ \hline
+		Description & \parbox[t]{10cm}{Should the dispatcher wish to view all the trains currently out, a popup will occur from his button click to show him complete list of all trains. The CTC will get an updated train list with the clock so it is always showing correct positions. } \\ \hline
+		Data &  \parbox[t]{10cm}{Train List} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Will constantly received updated train list. Will be viewed on button click via dispatcher. } \\ \hline
+		Response & \parbox[t]{10cm}{Popup will appear}\\ \hline
+		Comments & \parbox[t]{10cm}{}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{CTCviewBlock.png}
+	\caption{View Track Info Sequence Diagram}
+\end{figure}
+
+\begin{table}[H]
+	\centering
+	\caption{Sequence Diagram for : View Track Info}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{CTC} \\ \hline
+		Description & \parbox[t]{10cm}{The CTC has access to all the info in the initial Excel file which it accesses from an instance of the track, DummyTrack. When the dispatcher selects a line, segment, block to view, it will ask the track for all info about a certain block and display it on the screen. Then any constantly updating info such as switch/crossing states or block occupancy will be retrieved from the Wayside and constantly updated to show correct info in real time. } \\ \hline
+		Data &  \parbox[t]{10cm}{Track Instance, states/occupancy} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{Dispatcher selects line, segment, block.} \\ \hline
+		Response & \parbox[t]{10cm}{Block info will be displayed while any constantly updating info will be updated in real time.}\\ \hline
+		Comments & \parbox[t]{10cm}{}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{CTCdispatchTrain.png}
+	\caption{Dispatch/Edit a Train Sequence Diagram}
+\end{figure}
+
+\begin{table}[H]
+	\centering
+	\caption{Sequence Diagram for : Dispatch/Edit a Train}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{CTC with Wayside, Wayside with Track, Train with Track, Train Controller with Train} \\ \hline
+		Description & \parbox[t]{10cm}{This is the overall process for dispatching a train. Not all of the modules interact with everyone but the waterfall of interaction is shown here. The dispatcher chooses to dispatch a train in manual mode which opens the dispatch train window. Here, his inputs for speed, line and authority are checked for correctness in a non vital check. This is sent as a train object back to CTC who generates a train ID based on the last one generated. Then the CTC updates the train list with this new train, as well as pull the newly updated train list. The CTC sets the speed and authority for this new train to the wayside, signified as new by its current position being null. If it were editing a train, the current position of the train would be sent there. The switch states necessary to move any trains at that time are generated by CTC and updated in the wayside. The wayside updates a block in the track with the speed and authority so that the train can receive it directly from the block. The train updates its speed and authority from this info. The train controller gets speed and authority from the train, updates its interface and calculates the power which the train gets.} \\ \hline
+		Data &  \parbox[t]{10cm}{suggSpeed, suggAuthority, trainID, Block} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{This whole process is started from the dispatcher clicking the dispatch a train button.} \\ \hline
+		Response & \parbox[t]{10cm}{A train is either created or updated with its speed and authority which gets passed down the line of communication accordingly.}\\ \hline
+		Comments & \parbox[t]{10cm}{Please keep in mind that not all modules see the same info, rather they only get it from their correct communication partners.}  \\ \hline
+	\end{tabular}
+\end{table}
+
 
 
 \end{document}          
