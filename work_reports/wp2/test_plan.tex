@@ -121,6 +121,21 @@ Author: Michael Ghaben
 		Responsibility & Track Model\\ \hline
 	\end{tabular}
 \end{table}
+\begin{table}[H]
+	\centering
+	\caption{CSV Reading Test Plan}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Evaluate the readCSV function\\ \hline
+		Inputs &  The files redline.csv \\ \hline
+		Outputs &  The track model successfully reading the redline csv files\\ \hline
+		Expected Completion & March 20, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the files\\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
 
 \begin{table}[H]
 	\centering
@@ -322,13 +337,48 @@ Author: Michael Ghaben
 		Task & \multicolumn{1}{c|}{Test Station Arrival and Departure Time setting} \\ \hline
 		Integrity Level & 1 \\ \hline
 		Methods & Evaluate the functionality of the ability to set arrival and departure times at a given station \\ \hline
-		Inputs &  TArrival and departure time \\ \hline
+		Inputs &  Arrival and departure time \\ \hline
 		Outputs &  \parbox[t]{10cm}{The proper time set in a station}\\ \hline
 		Expected Completion & April 1, 2017\\ \hline
 		Risks and Assumptions & That the test will not interact with other functionality \\ \hline
 		Responsibility & Track Model\\ \hline
 	\end{tabular}
 \end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test Station Passenger Loading}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Validate the usage of loading passengers from station to train} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Evaluate the functionality of the ability to load passengers for multiple input values \\ \hline
+		Inputs &  Maximum number of passengers\\ \hline
+		Outputs &  \parbox[t]{10cm}{Number of passengers to be added}\\ \hline
+		Expected Completion & April 1, 2017\\ \hline
+		Risks and Assumptions & The input will be an Integer type \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test Station Passenger Unloading}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Validate the usage of unloading passengers from train to station} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Evaluate the functionality of the ability to unload passengers for multiple input values \\ \hline
+		Inputs &  Number of passengers unloaded\\ \hline
+		Outputs &  \parbox[t]{10cm}{None}\\ \hline
+		Expected Completion & April 1, 2017\\ \hline
+		Risks and Assumptions & The input will be an Integer type \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+
+
 
 \subsection{Integration Tests}
 
@@ -342,7 +392,7 @@ Author: Michael Ghaben
 		Methods & Evaluate the functionality of the track controller to switch a switch state \\ \hline
 		Inputs &  The files redline.csv and greenline.csv \\ \hline
 		Outputs &  \parbox[t]{10cm}{The proper block given a switch on the green line and the MBO switching the switch}\\ \hline
-		Expected Completion & April 1, 2017\\ \hline
+		Expected Completion & April 15, 2017\\ \hline
 		Risks and Assumptions & Both redline and greenline switches are able to be toggled successfully \\ \hline
 		Responsibility & Track Model\\ \hline
 	\end{tabular}
@@ -371,12 +421,28 @@ Author: Michael Ghaben
 		\hline
 		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
 		Integrity Level & 1 \\ \hline
-		Methods & Evaluate the functionality of the ability to relay the proper door side of train to open based upon incoming direction of approach to a station \\ \hline
+		Methods &  \parbox[t]{10cm}{Evaluate the functionality of the ability to relay the proper door side of train to open based upon incoming direction of approach to a station} \\ \hline
 		Inputs &  The beacon info called by the train controller \\ \hline
 		Outputs &  \parbox[t]{10cm}{The proper approach side}\\ \hline
-		Expected Completion & April 1, 2017\\ \hline
-		Risks and Assumptions & That the communication between train model and train controller will be successful \\ \hline
+		Expected Completion & April 15, 2017\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{That the communication between train model and train controller will be successful} \\ \hline
 		Responsibility & Track Model, Train Model and Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test Setting Speed and Authority}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Validate the capability of the Track Controller to set speed and authority} \\ \hline
+		Integrity Level & 2\\ \hline
+		Methods & Evaluate the functionality of the ability to set speed and authority \\ \hline
+		Inputs &  Set speed and authority\\ \hline
+		Outputs &  \parbox[t]{10cm}{None}\\ \hline
+		Expected Completion & April 15, 2017\\ \hline
+		Risks and Assumptions & The input will be a valid speed and authority \\ \hline
+		Responsibility & Track Model and Track Controller\\ \hline
 	\end{tabular}
 \end{table}
 
