@@ -34,18 +34,18 @@ This document will specify the architecture and design of the Low-Comotovation t
 \subsection{Stakeholders \& Concerns}
 The stakeholders of this document are anticipated to be the following:
 \begin{itemize}
-	\item Future Design Teams: Future design teams are anticiapted to utilize this document to guide their usage of the track controller system
-	\item Pittsburgh Rail Company: The rail company utlizing the Software Design Specification (SDS) to guide the development of physical systems associated with the software
+	\item Future Design Teams: Future design teams are anticipated to utilize this document to guide their usage of the track controller system
+	\item Pittsburgh Rail Company: The rail company utilizing the Software Design Specification (SDS) to guide the development of physical systems associated with the software
 \end{itemize}
 
-Future design teams associated with the continued development beneift from increased documentation of the original system by allowing for more efficient software design procedures in future revision by potentially unrelated developers.
+Future design teams associated with the continued development benefit from increased documentation of the original system by allowing for more efficient software design procedures in future revision by potentially unrelated developers.
 
 The benefits to the Pittsburgh Rail Company from  a detailed software design specification are twofold. First, a detailed SDD provides developers of railway hardware the information required to produced a paired system. Second, a documented SDD allows the Pittsburgh Rail Company to evaluate the designs ability to meet specifications for vitality.
 
 \section{Introduction}
 To ensure safe, predictable, and reliable operation of the system, there are three primary considerations:
 \begin{enumerate}
-	\item \emph{Vitality:} Vitality of a system within this document referse to a safety-critical system.
+	\item \emph{Vitality:} Vitality of a system within this document refers to a safety-critical system.
 	\item \emph{Testability:} Any system implemented must be easily tested to ensure reliability
 	\item \emph{Modularity:} Any system designed must reuse code wherever possible
 \end{enumerate}
@@ -307,7 +307,7 @@ In this subsection, the use cases of the train model are provided.
 	  		Data &  \parbox[t]{10cm}{Maximum number of passengers to load a train to capacity} \\ \hline
 	  		Stimulus &  \parbox[t]{10cm}{Train model queryiing the track model} \\ \hline
 	  		Response & \parbox[t]{10cm}{Number of people to add to the train}\\ \hline
-	  		Comments & \parbox[t]{10cm}{Set and called by the Train Conroller}  \\ \hline
+	  		Comments & \parbox[t]{10cm}{Set and called by the Train Controller}  \\ \hline
 	  	\end{tabular}
 	  \end{table}
 	  
@@ -683,9 +683,23 @@ In this subsection, the use cases of the train controller are provided.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=.5]{traincontrollerusecase.png}
+	\includegraphics[scale=.2]{traincontrollerusecase.png}
 	\caption{Train controller use case diagram}
 \end{figure}
+
+\begin{table}[H]
+	\centering
+	\caption{Select Train}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Driver} \\ \hline
+		Description & \parbox[t]{10cm}{The user picks a train from the dropdown and switches the train controlled by the Train Controller to the selected train by clicking the 'Switch' button. The Train Controller then passes the selected train to its sub-components. } \\ \hline
+		Data &  \parbox[t]{10cm}{Train ID corresponding to the item in dropdown box.} \\ \hline
+		Response & \parbox[t]{10cm}{The Train Controller now controls the train that was picked from the dropdown.  }\\ \hline
+		Comments & \parbox[t]{10cm}{}  \\ \hline
+	\end{tabular}
+\end{table}
+
 
    \begin{table}[H]
    	\centering
@@ -693,36 +707,37 @@ In this subsection, the use cases of the train controller are provided.
    	\begin{tabular}{|l|l|}
    		\hline
    		Actors & \parbox[t]{10cm}{Driver, Train} \\ \hline
-   		Description & \parbox[t]{10cm}{Begins the process of changing the selected train's speed by using power control law. The power command is passed to the train and the train changes to a new speed.} \\ \hline
-   		Data &  \parbox[t]{10cm}{Set speed, block speed, suggested speed} \\ \hline
-   		Stimulus &  \parbox[t]{10cm}{'Set Speed' button is pressed or the train enters a block with a different block speed. } \\ \hline
-   		Response & \parbox[t]{10cm}{Sends a power command to the selected train, signaling to either increases or decreases its speed until the actual speed equals the set speed.  }\\ \hline
-   		Comments & \parbox[t]{10cm}{The set speed must not be over the suggested speed or the block speed. This is made sure by the UI elements. }  \\ \hline
+   		Description & \parbox[t]{10cm}{Begins the process of changing the selected train's speed by using power control law. The power command is passed to the train and the train changes to a new speed. This continues until the train's speed is equal to the speed set by the driver or system.} \\ \hline
+   		Data &  \parbox[t]{10cm}{Set speed, block speed, suggested speed, selected train} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{Happens when th 'Set Speed' button is clicked or the train enters a block with a different block speed and has to adjust. } \\ \hline
+   		Response & \parbox[t]{10cm}{Sends a power command to the selected train, signaling to either increases or decreases its speed until the actual speed of the train equals the set speed.  }\\ \hline
+   		Comments & \parbox[t]{10cm}{The set speed must not be over the suggested speed or the block speed. This is made sure by the UI elements in the Speed Controller. }  \\ \hline
    	\end{tabular}
    \end{table}
    
-      \begin{table}[H]
+  
+ \begin{table}[H]
    	\centering
    	\caption{Control Utilities}
    	\begin{tabular}{|l|l|}
    		\hline
    		Actors & \parbox[t]{10cm}{Driver, Train} \\ \hline
-   		Description & \parbox[t]{10cm}{The driver will open, close, turn on, or turn off the selected train's utilities such as AC, Heat, Lights, and Left/Right Doors or the utilities will be controlled automatically by the Train Controller. } \\ \hline
+   		Description & \parbox[t]{10cm}{The driver will open, close, turn on, or turn off the selected train's utilities such as AC, Heat, Lights, and Left/Right Doors or the utilities will be controlled automatically by the Train Controller. This is done by selecting the corresponding radio button from the Utility Panel. } \\ \hline
    		Data &  \parbox[t]{10cm}{Selected train} \\ \hline
-   		Stimulus &  \parbox[t]{10cm}{Signals transmitted from the Train Controller to the train. } \\ \hline
-   		Response & \parbox[t]{10cm}{Train updates the states of the utilities. }\\ \hline
-   		Comments & \parbox[t]{10cm}{AC and Heat cannot be on at the same time. }  \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{The user changing the states of the radio button or the system detects that a utility must be turn on, off, opened, or closed.  } \\ \hline
+   		Response & \parbox[t]{10cm}{Train updates the states of the corresponding utilities. }\\ \hline
+   		Comments & \parbox[t]{10cm}{AC and Heat cannot be on at the same time. This is made sure by the UI elements in the Utility Panel. }  \\ \hline
    	\end{tabular}
    \end{table}
    
-      \begin{table}[H]
+\begin{table}[H]
    	\centering
    	\caption{Set $K_{p}$ and $K_{i}$}
    	\begin{tabular}{|l|l|}
    		\hline
    		Actors & \parbox[t]{10cm}{Engineer, Train} \\ \hline
-   		Description & \parbox[t]{10cm}{The engineer will set $K_p$ and $K_i$ of the selected train.} \\ \hline
-   		Data &  \parbox[t]{10cm}{Train and doubles representing $K_p$ and $K_i$} \\ \hline
+   		Description & \parbox[t]{10cm}{The Engineer will set $K_p$ and $K_i$ of the selected train by inputting the value as double and clicking the 'Set' button.} \\ \hline
+   		Data &  \parbox[t]{10cm}{The selected train and doubles representing $K_p$ and $K_i$} \\ \hline
    		Stimulus &  \parbox[t]{10cm}{The selected train has no $K_p$ and $K_i$ set or the user clicks the 'Set $K_p$/$K_i$' button on the Train Controller.} \\ \hline
    		Response & \parbox[t]{10cm}{The $K_p$ and $K_i$ of the train will be set. }\\ \hline
    		Comments & \parbox[t]{10cm}{If the $K_p$ and the $K_i$ are not chosen for a selected train when the train is first selected, a window will pop up to allow the Engineer to set the $K_p$ and $K_i$.}  \\ \hline
@@ -736,55 +751,41 @@ In this subsection, the use cases of the train controller are provided.
    		\hline
    		Actors & \parbox[t]{10cm}{Driver, Train} \\ \hline
    		Description & \parbox[t]{10cm}{Initiates the service brake on the selected train, decreasing its speed.} \\ \hline
-   		Data &  \parbox[t]{10cm}{Deceleration constant of the selected train's service brake.} \\ \hline
-   		Stimulus &  \parbox[t]{10cm}{A negative power command during the power law control or user interaction.} \\ \hline
-   		Response & \parbox[t]{10cm}{The service brake is engaged on the selected train, and its speed decreases.   }\\ \hline
+   		Data &  \parbox[t]{10cm}{Deceleration constant of the selected train's service brake and if the train must slow down.} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{A negative power command during the power law control or user interaction by pressing the 'Service Brake' button. } \\ \hline
+   		Response & \parbox[t]{10cm}{The service brake is engaged on the selected train, and its speed decreases by some amount.}\\ \hline
    		Comments & \parbox[t]{10cm}{}  \\ \hline
    	\end{tabular}
    \end{table}
    
-         \begin{table}[H]
+  \begin{table}[H]
    	\centering
    	\caption{Engage Emergency Brake}
    	\begin{tabular}{|l|l|}
    		\hline
-   		Actors & \parbox[t]{10cm}{Driver, Train} \\ \hline
+   		Actors & \parbox[t]{10cm}{Driver, Train, Passenger} \\ \hline
    		Description & \parbox[t]{10cm}{Initiates the emergency brake on the selected train, decreasing its speed.} \\ \hline
    		Data &  \parbox[t]{10cm}{Deceleration constant of the selected train's emergency brake.} \\ \hline
-   		Stimulus &  \parbox[t]{10cm}{The emergency brake is pressed.} \\ \hline
+   		Stimulus &  \parbox[t]{10cm}{The emergency brake is pressed or the system detects that the train must use the emergency brake.} \\ \hline
    		Response & \parbox[t]{10cm}{The emergency brake is engaged on the selected train, and its speed decreases.  }\\ \hline
-   		Comments & \parbox[t]{10cm}{In manual mode, the user must confirm the use of the emergency brake before it's actually used. }  \\ \hline
+   		Comments & \parbox[t]{10cm}{In Manual mode, the user must confirm the use of the emergency brake before it's actually used. This isn't the case in Automatic mode. }  \\ \hline
    	\end{tabular}
    \end{table}
 
-      \begin{table}[H]
+  \begin{table}[H]
    	\centering
    	\caption{Get Speed and Authority}
    	\begin{tabular}{|l|l|}
    		\hline
    		Actors & \parbox[t]{10cm}{Train} \\ \hline
-   		Description & \parbox[t]{10cm}{The Train Controller retreives the suggested speed and authority of the selected train based on which block the train is in.} \\ \hline
-   		Data &  \parbox[t]{10cm}{Selected train } \\ \hline
+   		Description & \parbox[t]{10cm}{The Train Controller retrieves the suggested speed and authority of the selected train based on which block the train is in. This is used to determine if the train is allowed to continue to the next block, or if it needs to change its speed based on the suggested speed.} \\ \hline
+   		Data &  \parbox[t]{10cm}{The selected train } \\ \hline
    		Stimulus &  \parbox[t]{10cm}{During every clock tick.} \\ \hline
-   		Response & \parbox[t]{10cm}{Train Controller updates its sub-components.  }\\ \hline
+   		Response & \parbox[t]{10cm}{Train Controller updates its sub-components with the suggested speed and authority.  }\\ \hline
    		Comments & \parbox[t]{10cm}{}  \\ \hline
    	\end{tabular}
    \end{table}
    
-     \begin{table}[H]
-   	\centering
-   	\caption{Track Train Position}
-   	\begin{tabular}{|l|l|}
-   		\hline
-   		Actors & \parbox[t]{10cm}{MBO, Train} \\ \hline
-   		Description & \parbox[t]{10cm}{Determines the position of the train on the track and sends it to the MBO when in MBO mode.} \\ \hline
-   		Data &  \parbox[t]{10cm}{Block, Train} \\ \hline
-   		Stimulus &  \parbox[t]{10cm}{During every clock tick.} \\ \hline
-   		Response & \parbox[t]{10cm}{Train Controller updates its sub-components.  }\\ \hline
-   		Comments & \parbox[t]{10cm}{}  \\ \hline
-   	\end{tabular}
-   \end{table}
-
 \subsection{Moving Block Overlay}
 In this subsection, the use cases of the Moving Block Overlay (MBO) are provided.
 
@@ -931,6 +932,11 @@ The track model package consists of a block object to be utilized by all classes
 	\caption{Train Model Class diagram}
 \end{figure}
 \subsection{Train Controller}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.5]{tc_classdiagram.png}
+	\caption{Train Controller Class Diagram}
+\end{figure}
 \subsection{Moving Block Overlay}
 \subsection{Centralized Train Controller}
 
@@ -1401,11 +1407,100 @@ In this seciton, we provide the sequence diagrams of the train model.
 	\caption{Select Train Use Case}
 \end{figure}
 
+\begin{table}[H]
+	\centering
+	\caption{Select Train}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Driver, TrainHandler} \\ \hline
+		Description & \parbox[t]{10cm}{The user picks a train from the list of dispatched trains to via the Train Controller. The user clicks the 'Switch'. The ID in the dropdown is sent to the TrainHandler and returns the train with the corresponding ID. The Train Controller then refreshes its components.} \\ \hline
+		Data &  \parbox[t]{10cm}{Train ID} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{ A train was selected from the drop down and the 'Switch' button was pressed by the user. } \\ \hline
+		Response & \parbox[t]{10cm}{Switches the train that the Train Controller is controlling and updates the sub-components of with the train information.  }\\ \hline
+		Comments & \parbox[t]{10cm}{}  \\ \hline
+	\end{tabular}
+\end{table}
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.3]{tc_setKpAndKi_usecase}
+	\caption{Set $K_p$ and $K_i$ Use Case}
+\end{figure}
+
+\begin{table}[H]
+	\centering
+	\caption{Set $K_p$ and $K_i$}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Engineer, Train, TCEngineerFrame} \\ \hline
+		Description & \parbox[t]{10cm}{The user selects a for the Train Controller to control and switches to that train. If the selected train has no $K_p$ and $K_i$ set, the Engineer Frame opens. The Engineer can then set the $K_p$ and $K_i$. The user can also change the Kp and Ki by clicking the 'Set Kp/Ki' button. The train then has its $K_p$ and $K_i$ set.} \\ \hline
+		Data &  \parbox[t]{10cm}{The selected train} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{ Happens when the user clicks the 'Set $K_p$/$K_i$' button or the user selects a train that has no $K_p$ and $K_i$ set. } \\ \hline
+		Response & \parbox[t]{10cm}{Sets the $K_p$ and $K_i$ of the selected train.  }\\ \hline
+		Comments & \parbox[t]{10cm}{}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.3]{tc_speedAndAuth_usecase}
+	\caption{Get Suggested Speed and Authority Use Case}
+\end{figure}
+
+\begin{table}[H]
+	\centering
+	\caption{Get Suggested Speed and Authority}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Train, TCBlockInfo, TCTrainInfoPanel} \\ \hline
+		Description & \parbox[t]{10cm}{The Train Controller gets the suggested speed and authority from the selected train during every clock tick. The Train Controller then refreshes its components.} \\ \hline
+		Data &  \parbox[t]{10cm}{The selected train} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{ This happens every clock tick. } \\ \hline
+		Response & \parbox[t]{10cm}{The suggested speed and authority of the selected train is obtained and used to update the Train Info Pane and the Block Info Pane.  }\\ \hline
+		Comments & \parbox[t]{10cm}{}  \\ \hline
+	\end{tabular}
+\end{table}
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.5]{tc_turnOnLights_usecase}
 	\caption{Turn On Lights Use Case}
 \end{figure}
+
+\begin{table}[H]
+	\centering
+	\caption{Turn on Lights}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Driver, Train, TCUtilities, TrainController} \\ \hline
+		Description & \parbox[t]{10cm}{The user turns on the lights by choosing the 'ON' radio button from the Utilities Panel or the system detects that the lights need to be turned on. This will tell the selected train to turn on its lights. On the next clock tick, the UI elements of the Utility Panel will be updated.} \\ \hline
+		Data &  \parbox[t]{10cm}{The selected train} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{The user chooses the 'ON' radio button or the system detects that the lights must be turned on.  } \\ \hline
+		Response & \parbox[t]{10cm}{The selected train turns on its lights. }\\ \hline
+		Comments & \parbox[t]{10cm}{}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.3]{tc_openDoors_usecase}
+	\caption{Open Doors Use Case}
+\end{figure}
+
+\begin{table}[H]
+	\centering
+	\caption{Open Doors}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Driver, Train, TCUtilities, TrainController} \\ \hline
+		Description & \parbox[t]{10cm}{The user changes the radio button of the specified doors by selecting the 'Open' radio button. This tells the selected train to open its doors. On the next clock tick, the UI is updated to reflect the state of the doors. If the system is in Automatic mode, and detects that the train must open its door (stopped at a station, etc..), this process is repeated without the user interaction.} \\ \hline
+		Data &  \parbox[t]{10cm}{The selected train} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{ This happens when the user chooses the 'Open' radio button or the system needs to open the doors to let passengers in and out. } \\ \hline
+		Response & \parbox[t]{10cm}{The doors on the train are opened. }\\ \hline
+		Comments & \parbox[t]{10cm}{The doors can only be opened when the train is stopped. Assume that the train is stopped for the call diagram. }  \\ \hline
+	\end{tabular}
+\end{table}
 
 \begin{figure}[H]
 	\centering
@@ -1413,30 +1508,99 @@ In this seciton, we provide the sequence diagrams of the train model.
 	\caption{Turn On Air Conditioning Use Case}
 \end{figure}
 
+\begin{table}[H]
+	\centering
+	\caption{Turn on Air Conditioning}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Driver, Train, TCUtilities, TrainController} \\ \hline
+		Description & \parbox[t]{10cm}{The user changes the radio button of the AC to 'On'. This tells the train to turn on its AC unit, and to turn off the heat. On the next clock tick, the UI elements are updated to reflect the state of the AC. If the system in in Automatic mode, and detects that the temperature is too high, this process is repeated without the user interaction. } \\ \hline
+		Data &  \parbox[t]{10cm}{The selected train} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{ The user chooses the 'ON' radio button or the system detects that the temperature on the train is too high. } \\ \hline
+		Response & \parbox[t]{10cm}{Turns on the AC and tells the train to set its temperature to the desired temperature.}\\ \hline
+		Comments & \parbox[t]{10cm}{}  \\ \hline
+	\end{tabular}
+\end{table}
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.5]{tc_turnOnHeat_usecase}
 	\caption{Turn On Heat Use Case}
 \end{figure}
 
+\begin{table}[H]
+	\centering
+	\caption{Turn on Heat}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Driver, Train, TCUtilities, TrainController} \\ \hline
+		Description & \parbox[t]{10cm}{The user changes the radio button of the heat to 'On'. This tells the train to turn on its heating unit, and to turn off the AC.  On the next clock tick, the UI elements are updated to reflect the state of the heating unit. If the system in in Automatic mode, and detects that the temperature is too low, this process is repeated without the user interaction.} \\ \hline
+		Data &  \parbox[t]{10cm}{The selected train} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{ The user chooses the 'ON' radio button or the system detects that the temperature on the train is too low. } \\ \hline
+		Response & \parbox[t]{10cm}{Turns on the heat and tells the train to set its temperature to the desired temperature.}\\ \hline
+		Comments & \parbox[t]{10cm}{}  \\ \hline
+	\end{tabular}
+\end{table}
+
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=.5]{tc_emgBrake_usecase}
+	\includegraphics[scale=.3]{tc_emgBrake_usecase}
 	\caption{Engage Emergency Brake Use Case}
 \end{figure}
 
+\begin{table}[H]
+	\centering
+	\caption{Engage Emergency Brake}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Driver, Train, TCBrakePanel, TCEmergencyFrame, TrainController} \\ \hline
+		Description & \parbox[t]{10cm}{The user clicks the 'Emergency Brake' button in the Brake Panel. This opens a confirmation window. The user then must click 'Confirm' in order to use the emergency brake. This will tell the train to engage its emergency brake and slow down the train. During the next clock tick, the Train Controller will refresh its components to show the new speed. If the system is in automatic mode, and detects that the emergency brake must be engaged, the process is repeated without the user interaction. } \\ \hline
+		Data &  \parbox[t]{10cm}{The selected train} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{ The user presses the 'Emergency Brake' button. } \\ \hline
+		Response & \parbox[t]{10cm}{Slows down the train by the emergency brake's deceleration constant. }\\ \hline
+		Comments & \parbox[t]{10cm}{If in manual mode, the user must confirm using the Emergency brake. This is not the case when in Automatic mode.}  \\ \hline
+	\end{tabular}
+\end{table}
+
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=.5]{tc_serviceBrake_usecase}
+	\includegraphics[scale=.3]{tc_serviceBrake_usecase}
 	\caption{Engage Service Brake Use case}
 \end{figure}
 
+\begin{table}[H]
+	\centering
+	\caption{Engage Service Brake}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Driver, Train, TCBrakePanel, TrainController} \\ \hline
+		Description & \parbox[t]{10cm}{The user clicks the 'Service Brake' button in the Brake Panel. This will tell the selected train to engage its service brake, and slow down the train. On the next clock tick, the Train Controller will refresh its components and update them with the new speed. If the system detects that the train must slow down (during set speed), the process if repeated without user interaction. } \\ \hline
+		Data &  \parbox[t]{10cm}{The selected train} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{ The user presses the 'Service Brake' button or the system detects that it must slow down the train. } \\ \hline
+		Response & \parbox[t]{10cm}{Slows down the train by the service brake's deceleration constant. }\\ \hline
+		Comments & \parbox[t]{10cm}{}  \\ \hline
+	\end{tabular}
+\end{table}
+
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=.5]{tc_setSpeed_usecase}
+	\includegraphics[scale=.3]{tc_setSpeed_usecase}
 	\caption{Toggle Signal Failure Use Case Diagram}
 \end{figure}
 
+\begin{table}[H]
+	\centering
+	\caption{Set Speed}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Driver, Train, TCSpeedController, TrainController} \\ \hline
+		Description & \parbox[t]{10cm}{The user sets the desired speed using the slider in the Speed Controller. This starts the power law timer. The Speed Controller sends the train a power command, and the train calculates a new speed. This process is repeated until the speed of the train is equal to the desired speed. During every clock tick, the Train Controller refreshes its components updates its sub-components with the new speed. If  the system is in Automatic mode, and detects that the train's speed needs to be changed, the process is repeated without the user interaction. } \\ \hline
+		Data &  \parbox[t]{10cm}{The selected train, set speed(desired speed)} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{ The user presses the 'Set Speed' button or the Train Controller detects that the train needs to speed up or slow down. } \\ \hline
+		Response & \parbox[t]{10cm}{The selected train changes its speed to the set speed. }\\ \hline
+		Comments & \parbox[t]{10cm}{The desired speed cannot be set higher than the allowed speed. This is safeguarded by the Speed Controller. }  \\ \hline
+	\end{tabular}
+\end{table}
 
 
 \subsection{Moving Block Overlay}
