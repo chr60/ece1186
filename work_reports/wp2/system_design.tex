@@ -11,6 +11,7 @@
 \date{}
 
 \begin{document}
+
 \maketitle
 \tableofcontents
 \titlepage
@@ -57,7 +58,7 @@ In this subsection, the use cases of the train model are provided.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=.15]{trackmodelusecase.png}
+	\includegraphics[scale=.3]{trackmodelusecase.png}
 	\caption{Track model use case diagram}
 \end{figure}
 
@@ -66,7 +67,7 @@ In this subsection, the use cases of the track controller are provided.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=.2]{trackcontrollerusecase.png}
+	\includegraphics[scale=.3]{trackcontrollerusecase.png}
 	\caption{Track controller use case diagram}
 \end{figure}
 
@@ -75,7 +76,7 @@ In this subsection, the use cases of the train model are provided.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=.2]{trainmodelusecase.png}
+	\includegraphics[scale=.3]{trainmodelusecase.png}
 	\caption{Train model use case diagram}
 \end{figure}
 
@@ -230,85 +231,182 @@ In this section, we detail the use class diagrams for each subsystem..
 In this section, we detail the sequence diagrams each subsystem.
 \subsection{Track Model}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.3]{addPassengers.png}
+	\caption{Add Passengers Use Case Diagram}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.3]{crossing.png}
+	\caption{Toggle Crossing State Use Case Diagram}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.3]{departPassengers.png}
+	\caption{TDeparting Passengers to Station Use Case Diagram}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.3]{detectBroken.png}
+	\caption{Detect Broken Rail Use Case Diagram}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.3]{detectOccupied.png}
+	\caption{Detect Block Occupancy use Case Diagram}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.3]{switching.png}
+	\caption{Toggle Switching Use Case Diagram}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.3]{viewBlockOccupancy.png}
+	\caption{View Block Occupancy Use Case Diagram}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.3]{setSpeedAuthority.png}
+	\caption{Set Speed and Authority use Case Diagram}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.3]{getSpeed.png}
+	\caption{Get Speed Use Case Diagram}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.3]{getAuthority.png}
+	\caption{Get Authority Use Case Diagram}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.3]{getGrade.png}
+	\caption{Get Grade Use Case Diagram}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.3]{getLen.png}
+	\caption{Get Length Use Case Diagram}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.3]{getSpeed.png}
+	\caption{Get Speed Use Case Diagram}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.3]{lights.png}
+	\caption{Toggle Lights Use Case Diagram}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.3]{readFile.png}
+	\caption{Read File Use Case Diagram}
+\end{figure}
+
 \subsection{Track Controller}
+
 \subsection{Train Model}
-
+In this seciton, we provide the sequence diagrams of the train model.
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=.2]{train_model_sqd_toggle_signal_failure.png}
-	\caption{Train controller use case diagram}
+	\includegraphics[scale=.3]{train_model_sqd_toggle_signal_failure.png}
+	\caption{Toggle Signal Failure Use Case Diagram}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=.2]{train_model_sqd_add_passengers.png}
-	\caption{Train controller use case diagram}
+	\includegraphics[scale=.3]{train_model_sqd_add_passengers.png}
+	\caption{Add Passengers Use Case Diagram}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=.2]{train_model_sqd_engage_emergency_brake.png}
-	\caption{Train controller use case diagram}
+	\includegraphics[scale=.3]{train_model_sqd_engage_emergency_brake.png}
+	\caption{Engage Emergency Brake Use Case Diagram}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=.2]{train_model_sqd_engage_service_brake.png}
-	\caption{Train controller use case diagram}
+	\includegraphics[scale=.3]{train_model_sqd_engage_service_brake.png}
+	\caption{Engage Service Brake Use Case Diagram}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=.2]{train_model_sqd_get_location.png}
-	\caption{Train controller use case diagram}
+	\includegraphics[scale=.3]{train_model_sqd_get_location.png}
+	\caption{Get Location Use Case Diagram}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=.2]{train_model_sqd_get_safebraking_dist.png}
-	\caption{Train controller use case diagram}
+	\includegraphics[scale=.3]{train_model_sqd_get_safebraking_dist.png}
+	\caption{Calculate Safe Braking Distance Use Case Diagram}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=.2]{train_model_sqd_get_velocity.png}
-	\caption{Train controller use case diagram}
+	\includegraphics[scale=.3]{train_model_sqd_get_velocity.png}
+	\caption{Get Velocity Use Case Diagram}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=.2]{train_model_sqd_increase_temp.png}
-	\caption{Train controller use case diagram}
+	\includegraphics[scale=.3]{train_model_sqd_increase_temp.png}
+	\caption{Increase Temperature Use Case Diagram}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=.2]{train_model_sqd_modify_utlilties.png}
-	\caption{Train controller use case diagram}
+	\includegraphics[scale=.3]{train_model_sqd_modify_utlilties.png}
+	\caption{Modify Utilities Use Case Diagram}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=.2]{train_model_sqd_set_speed_authority.png}
-	\caption{Train controller use case diagram}
+	\includegraphics[scale=.3]{train_model_sqd_set_speed_authority.png}
+	\caption{Set Speed and Authority Use Case Diagram}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=.2]{train_model_sqd_toggle_brake_failure.png}
-	\caption{Train controller use case diagram}
+	\includegraphics[scale=.3]{train_model_sqd_toggle_brake_failure.png}
+	\caption{Toggle Brake Failure Use Case Diagram}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=.2]{train_model_sqd_toggle_engine_failure.png}
-	\caption{Train controller use case diagram}
+	\includegraphics[scale=.3]{train_model_sqd_toggle_engine_failure.png}
+	\caption{Toggle Engine Failure Use Case Diagram}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=.2]{train_model_sqd_toggle_signal_failure.png}
-	\caption{Train controller use case diagram}
+	\includegraphics[scale=.3]{train_model_sqd_toggle_signal_failure.png}
+	\caption{Toggle Signal Failure Use Case Diagram}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.3]{train_model_sqd_set_power.png}
+	\caption{Toggle Signal Failure Use Case Diagram}
 \end{figure}
 
 \subsection{Train Controller}
