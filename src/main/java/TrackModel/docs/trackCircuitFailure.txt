@@ -1,0 +1,8 @@
+@startuml
+skinparam monochrome true
+
+actor Murphy #white
+participant Block
+
+Murphy->Block: setTrackCircuitFailure(boolean)
+@enduml

@@ -920,8 +920,8 @@ In this section, the class diagrams for each subsystem are provided.
 \subsection{Train Model}
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=.25]{trainmodelclassdiagram.png}
-	\caption{Centralized Train Control use case}
+	\includegraphics[scale=.5]{trainmodelclassdiagram.png}
+	\caption{Train Model Class diagram}
 \end{figure}
 \subsection{Train Controller}
 \subsection{Moving Block Overlay}
@@ -1218,10 +1218,66 @@ In this section, we detail the sequence diagrams each subsystem.
 		Data &  \parbox[t]{10cm}{CSV files for each file to be read in} \\ \hline
 		Stimulus &  \parbox[t]{10cm}{The user starting the proram} \\ \hline
 		Response & \parbox[t]{10cm}{The program will be run on those TrackModel}\\ \hline
-		Comments & \parbox[t]{10cm}{The CSV functions are produced by Microsoft Excel > Save As...>*.csv}  \\ \hline
+		Comments & \parbox[t]{10cm}{The CSV functions are produced by Microsoft Excel :: Save As...::*.csv}  \\ \hline
 	\end{tabular}
 \end{table}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.3]{trackCircuitFailure.png}
+	\caption{TrackCircuitFailure Test Case}
+\end{figure}
+\begin{table}[H]
+	\centering
+	\caption{Test Track Circuit Failure}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Murphy} \\ \hline
+		Description & \parbox[t]{10cm}{The track circuit failure will no longer transmit after setting a failure state} \\ \hline
+		Data &  \parbox[t]{10cm}{A boolean representing the failure states} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{A user seeking to test a track circuit failure} \\ \hline
+		Response & \parbox[t]{10cm}{A track circuit failure}\\ \hline
+		Comments & \parbox[t]{10cm}{This is concisdered a part of the testing and i snot a part of normal functionality}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.3]{trackCircuitFailure.png}
+	\caption{TrackCircuitFailure Test Case}
+\end{figure}
+\begin{table}[H]
+	\centering
+	\caption{Test Track Broken Failure}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Murphy} \\ \hline
+		Description & \parbox[t]{10cm}{The track block object broken state will be set for testing by this function} \\ \hline
+		Data &  \parbox[t]{10cm}{A boolean representing the failure states} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{A user seeking to test a track block broken failure case} \\ \hline
+		Response & \parbox[t]{10cm}{A track circuit broken setting}\\ \hline
+		Comments & \parbox[t]{10cm}{This is concisdered a part of the testing and i snot a part of normal functionality}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.3]{setPowerFailure.png}
+	\caption{Track Power Failure Test Case}
+\end{figure}
+\begin{table}[H]
+	\centering
+	\caption{Test Track Power Failure}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{Murphy} \\ \hline
+		Description & \parbox[t]{10cm}{The track block object power failure state will be set for testing by this function} \\ \hline
+		Data &  \parbox[t]{10cm}{A boolean representing the failure states} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{A user seeking to test a track block power failure case} \\ \hline
+		Response & \parbox[t]{10cm}{A track power failure setting}\\ \hline
+		Comments & \parbox[t]{10cm}{This is concisdered a part of the testing and i snot a part of normal functionality}  \\ \hline
+	\end{tabular}
+\end{table}
 \subsection{Track Controller}
 
 \subsection{Train Model}
