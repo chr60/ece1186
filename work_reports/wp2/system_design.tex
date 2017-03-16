@@ -1314,7 +1314,65 @@ In this section, we detail the sequence diagrams each subsystem.
 		Comments & \parbox[t]{10cm}{This is concisdered a part of the testing and i snot a part of normal functionality}  \\ \hline
 	\end{tabular}
 \end{table}
+
 \subsection{Track Controller}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=.5]{seq_wayside_loadplc.png}
+		\caption{Loading a PLC file}
+	\end{figure}
+	\begin{table}[H]
+		\centering
+		\caption{Loading a PLC file}
+		\begin{tabular}{|l|l|}
+			\hline
+			Actors & \parbox[t]{10cm}{Transit Engineer, Wayside Controller} \\ \hline
+			Description & \parbox[t]{10cm}{The Transit Engineer browses for a PLC file and loads it. It is tested to make sure it is a valid file (Invalid File displayed if not valid), then a new PLC object is created and given to a WS (Wayside), and Success is displayed. } \\ \hline
+			Data &  \parbox[t]{10cm}{PLC File} \\ \hline
+			Stimulus &  \parbox[t]{10cm}{Loading of PLC File} \\ \hline
+			Response & \parbox[t]{10cm}{File Evaluated and set}\\ \hline
+			Comments & \parbox[t]{10cm}{The PLC file may be browsed for or the file path may simply be given}  \\ \hline
+		\end{tabular}
+	\end{table}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=.5]{seq_wayside_setvital.png}
+		\caption{Loading a PLC file}
+	\end{figure}
+	\begin{table}[H]
+		\centering
+		\caption{Vital Check}
+		\begin{tabular}{|l|l|}
+			\hline
+			Actors & \parbox[t]{10cm}{Wayside Controller} \\ \hline
+			Description & \parbox[t]{10cm}{When a change is needed on the Track, a Wayside Controller shall run its PLC code to determine if the change can be made and return a boolean result. This result will be compared with a sub-wayside unit which will evaluate the PLC code differently, and a result will be chosen to issue to the track. } \\ \hline
+			Data &  \parbox[t]{10cm}{Switch, Light, or Crossing State} \\ \hline
+			Stimulus &  \parbox[t]{10cm}{State Change needed} \\ \hline
+			Response & \parbox[t]{10cm}{PLC Evaluation and Comparison, followed by changing track state if safe}\\ \hline
+			Comments & \parbox[t]{10cm}{}  \\ \hline
+		\end{tabular}
+	\end{table}
+	
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=.5]{seq_wayside_updatetrack.png}
+		\caption{Loading a PLC file}
+	\end{figure}
+	\begin{table}[H]
+		\centering
+		\caption{Update Track}
+		\begin{tabular}{|l|l|}
+			\hline
+			Actors & \parbox[t]{10cm}{Wayside Controller, Track Model, CTC} \\ \hline
+			Description & \parbox[t]{10cm}{The Wayside Controller will update its knowledge of the track every clock cycle. It shall retrieve the current state of track from the track model, and check for and report broken blocks to the CTC.} \\ \hline
+			Data &  \parbox[t]{10cm}{Track State, Block} \\ \hline
+			Stimulus &  \parbox[t]{10cm}{Clock tick} \\ \hline
+			Response & \parbox[t]{10cm}{Track state retrieved, checked for broken blocks, report to CTC if any are broken.}\\ \hline
+			Comments & \parbox[t]{10cm}{}  \\ \hline
+		\end{tabular}
+	\end{table}
 
 \subsection{Train Model}
 In this seciton, we provide the sequence diagrams of the train model.
