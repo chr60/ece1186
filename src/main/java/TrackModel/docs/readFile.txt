@@ -35,4 +35,6 @@ readCSV->track: this.handleSwitches()
 note right: Build associated elements
 readCSV->track: this.buildStationHostMap()
 readCSV->track: this.buildBlockStationMap()
+readCSV->track: this.buildLightMap()
+readCSV->track: this.buildBeaconMap()
 @enduml
