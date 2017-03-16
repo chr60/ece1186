@@ -1645,6 +1645,26 @@ In this seciton, we provide the sequence diagrams of the train model.
 
 \begin{figure}[H]
 	\centering
+	\includegraphics[width=\textwidth]{tc_refreshui_usecase}
+	\caption{Refresh Components Sequence Diagram}
+\end{figure}
+
+\begin{table}[H]
+	\centering
+	\caption{Refresh Components}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{TrainController, TCUtilitiesPanel, TCSpeedController, TCBlockInfo, TCBrakePanel, TCTrainInfoPanel} \\ \hline
+		Description & \parbox[t]{10cm}{This method is called during every clock tick. It passes in the train the TrainController is controlling to its sub-components, and then refreshes each of the sub-components.} \\ \hline
+		Data &  \parbox[t]{10cm}{The selected train} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{ Happens during every clock tick} \\ \hline
+		Response & \parbox[t]{10cm}{The sub-components refresh their UI to reflect the train information of the passed in train. }\\ \hline
+		Comments & \parbox[t]{10cm}{}  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+	\centering
 	\includegraphics[width=\textwidth]{tc_selectTrain_usecase}
 	\caption{Select Train Sequence Diagram}
 \end{figure}
