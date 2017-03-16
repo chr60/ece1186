@@ -7,7 +7,7 @@
 \usepackage{float}
 % Title Page
 \title{Low-Comotovation: System Design Document}
-\author{Michael Ghaben}
+\author{}
 \date{}
 
 \begin{document}
@@ -914,11 +914,16 @@ In this subsection, the use cases of the Centralized Train Control (CTC) are pro
 \end{figure}
 
 \section{Class Diagrams}
-In this section, we detail the use class diagrams for each subsystem..
+In this section, the class diagrams for each subsystem are provided.
 \subsection{Track Model}
 \subsection{Track Controller}
 \subsection{Train Model}
-\subsection{Train Controlled}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=.25]{trainmodelclassdiagram.png}
+	\caption{Centralized Train Control use case}
+\end{figure}
+\subsection{Train Controller}
 \subsection{Moving Block Overlay}
 \subsection{Centralized Train Controller}
 
@@ -931,6 +936,19 @@ In this section, we detail the sequence diagrams each subsystem.
 	\includegraphics[scale=.3]{addPassengers.png}
 	\caption{Add Passengers Use Case Diagram}
 \end{figure}
+\begin{table}[H]
+	\centering
+	\caption{Adding passengers}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{TrainModel} \\ \hline
+		Description & \parbox[t]{10cm}{The train model calls the station to load passengers to a train} \\ \hline
+		Data &  \parbox[t]{10cm}{maximum number of passengers to add to a train} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{A train model calling the station} \\ \hline
+		Response & \parbox[t]{10cm}{A number of people to add to a given train model}\\ \hline
+		Comments & \parbox[t]{10cm}{The passengers added to the trainmodel are removed from the passengers waiting at the station}  \\ \hline
+	\end{tabular}
+\end{table}
 
 \begin{figure}[H]
 	\centering
@@ -938,11 +956,38 @@ In this section, we detail the sequence diagrams each subsystem.
 	\caption{Toggle Crossing State Use Case Diagram}
 \end{figure}
 
+\begin{table}[H]
+	\centering
+	\caption{Toggle crossing state description}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{TrackController} \\ \hline
+		Description & \parbox[t]{10cm}{The track controller first indexes all the switches on a given track at initialization. The track controller then calls the toggleCrossing function on each block } \\ \hline
+		Data &  \parbox[t]{10cm}{A boolean state represented as an Integer} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{A track controller call} \\ \hline
+		Response & \parbox[t]{10cm}{Setting the boolean state of the crossing based on the TrackController}\\ \hline
+		Comments & \parbox[t]{10cm}{Blocks without a crossing have a null in lieu of an integer}  \\ \hline
+	\end{tabular}
+\end{table}
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.3]{departPassengers.png}
-	\caption{TDeparting Passengers to Station Use Case Diagram}
+	\caption{Departing Passengers to Station Use Case Diagram}
 \end{figure}
+\begin{table}[H]
+	\centering
+	\caption{Depart Passengers to a Station}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{TrainModel} \\ \hline
+		Description & \parbox[t]{10cm}{The train model calls the station to depart passengers from a train} \\ \hline
+		Data &  \parbox[t]{10cm}{Number of passengers to depart} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{A train model calling the station} \\ \hline
+		Response & \parbox[t]{10cm}{The number of people departing the train are added to the people waiting at a station}\\ \hline
+		Comments & \parbox[t]{10cm}{The passengers in the system are assumed to be finite and a closed model in this system}  \\ \hline
+	\end{tabular}
+\end{table}
 
 \begin{figure}[H]
 	\centering
@@ -950,17 +995,57 @@ In this section, we detail the sequence diagrams each subsystem.
 	\caption{Detect Broken Rail Use Case Diagram}
 \end{figure}
 
+\begin{table}[H]
+	\centering
+	\caption{Detect broken rail}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{TrackController} \\ \hline
+		Description & \parbox[t]{10cm}{The track controller iterates over the track to identify any broken rails} \\ \hline
+		Data &  \parbox[t]{10cm}{None} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{None} \\ \hline
+		Response & \parbox[t]{10cm}{None}\\ \hline
+		Comments & \parbox[t]{10cm}{The TrackController is responsible for identifying broken rails}  \\ \hline
+	\end{tabular}
+\end{table}
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.3]{detectOccupied.png}
 	\caption{Detect Block Occupancy use Case Diagram}
 \end{figure}
+\begin{table}[H]
+	\centering
+	\caption{Detect block occupancy}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{TrackController} \\ \hline
+		Description & \parbox[t]{10cm}{The track controller iterates over the track to identify any occupied blocks} \\ \hline
+		Data &  \parbox[t]{10cm}{None} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{None} \\ \hline
+		Response & \parbox[t]{10cm}{None}\\ \hline
+		Comments & \parbox[t]{10cm}{The TrackController is responsible for detecting block occupancy}  \\ \hline
+	\end{tabular}
+\end{table}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.3]{switching.png}
 	\caption{Toggle Switching Use Case Diagram}
 \end{figure}
+\begin{table}[H]
+	\centering
+	\caption{Toggle switching use case description}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{TrackController} \\ \hline
+		Description & \parbox[t]{10cm}{The track controller switches track switches} \\ \hline
+		Data &  \parbox[t]{10cm}{Boolean state of the switches of the track} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{The Track Controller calling the functions} \\ \hline
+		Response & \parbox[t]{10cm}{Switching to the desired state}\\ \hline
+		Comments & \parbox[t]{10cm}{The TrackController is expected to store the location of the switches at initialization}  \\ \hline
+	\end{tabular}
+\end{table}
 
 \begin{figure}[H]
 	\centering
@@ -968,11 +1053,38 @@ In this section, we detail the sequence diagrams each subsystem.
 	\caption{View Block Occupancy Use Case Diagram}
 \end{figure}
 
+\begin{table}[H]
+	\centering
+	\caption{View Block occupancy}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{MBO} \\ \hline
+		Description & \parbox[t]{10cm}{The MBO views block occupancy when operating in MBO mode} \\ \hline
+		Data &  \parbox[t]{10cm}{None} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{The MBO calling the track model} \\ \hline
+		Response & \parbox[t]{10cm}{Return the occupancy state of the blocks in the track}\\ \hline
+		Comments & \parbox[t]{10cm}{The MBO is expected to store the listing of blocks at initialization}  \\ \hline
+	\end{tabular}
+\end{table}
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.3]{setSpeedAuthority.png}
 	\caption{Set Speed and Authority use Case Diagram}
 \end{figure}
+\begin{table}[H]
+	\centering
+	\caption{Set speed and authority description}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{TrainController} \\ \hline
+		Description & \parbox[t]{10cm}{The TrainController sets a given speed and authority at a block} \\ \hline
+		Data &  \parbox[t]{10cm}{Double Speed, Block Authority} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{The TrainController calling the track model} \\ \hline
+		Response & \parbox[t]{10cm}{Updating the communicated values of speed and authority sent by a given block}\\ \hline
+		Comments & \parbox[t]{10cm}{The TrainController is expected to clear these values after use}  \\ \hline
+	\end{tabular}
+\end{table}
 
 \begin{figure}[H]
 	\centering
@@ -980,11 +1092,38 @@ In this section, we detail the sequence diagrams each subsystem.
 	\caption{Get Speed Use Case Diagram}
 \end{figure}
 
+\begin{table}[H]
+	\centering
+	\caption{View speed}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{TrainController} \\ \hline
+		Description & \parbox[t]{10cm}{The TrainController views block speed message} \\ \hline
+		Data &  \parbox[t]{10cm}{None} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{The TrainController calling the track model} \\ \hline
+		Response & \parbox[t]{10cm}{Return the speed set at the block on the track}\\ \hline
+		Comments & \parbox[t]{10cm}{This value is set by the TrainController}  \\ \hline
+	\end{tabular}
+\end{table}
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.3]{getAuthority.png}
 	\caption{Get Authority Use Case Diagram}
 \end{figure}
+\begin{table}[H]
+	\centering
+	\caption{View authority}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{TrainController} \\ \hline
+		Description & \parbox[t]{10cm}{The TrainController views block authority message} \\ \hline
+		Data &  \parbox[t]{10cm}{None} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{The TrainController calling the track model} \\ \hline
+		Response & \parbox[t]{10cm}{Return the authority set at the block on the track}\\ \hline
+		Comments & \parbox[t]{10cm}{This value is set by the TrainController}  \\ \hline
+	\end{tabular}
+\end{table}
 
 \begin{figure}[H]
 	\centering
@@ -992,29 +1131,96 @@ In this section, we detail the sequence diagrams each subsystem.
 	\caption{Get Grade Use Case Diagram}
 \end{figure}
 
+\begin{table}[H]
+	\centering
+	\caption{View block grade}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{TrainModel} \\ \hline
+		Description & \parbox[t]{10cm}{The TrainModel views block grade attribute} \\ \hline
+		Data &  \parbox[t]{10cm}{None} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{The TrainModel calling the track model} \\ \hline
+		Response & \parbox[t]{10cm}{Return the grade read in at the block on the track}\\ \hline
+		Comments & \parbox[t]{10cm}{This value is set at initialization}  \\ \hline
+	\end{tabular}
+\end{table}
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.3]{getLen.png}
 	\caption{Get Length Use Case Diagram}
 \end{figure}
+\begin{table}[H]
+	\centering
+	\caption{View block length}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{TrainModel} \\ \hline
+		Description & \parbox[t]{10cm}{The TrainModel views block length attribute} \\ \hline
+		Data &  \parbox[t]{10cm}{None} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{The TrainModel calling the track model} \\ \hline
+		Response & \parbox[t]{10cm}{Return the length read in at the block on the track}\\ \hline
+		Comments & \parbox[t]{10cm}{This value is set at initialization}  \\ \hline
+	\end{tabular}
+\end{table}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.3]{getSpeed.png}
 	\caption{Get Speed Use Case Diagram}
 \end{figure}
+\begin{table}[H]
+	\centering
+	\caption{View block maximum speed}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{TrainController} \\ \hline
+		Description & \parbox[t]{10cm}{The TrainModel views block speed maximum setting read in at initialization} \\ \hline
+		Data &  \parbox[t]{10cm}{None} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{The TrainModel calling the track model} \\ \hline
+		Response & \parbox[t]{10cm}{Return the max block speed read in at the block on the track}\\ \hline
+		Comments & \parbox[t]{10cm}{This value is set at initialization}  \\ \hline
+	\end{tabular}
+\end{table}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.3]{lights.png}
 	\caption{Toggle Lights Use Case Diagram}
 \end{figure}
+\begin{table}[H]
+	\centering
+	\caption{Toggle block lights}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{TrackController} \\ \hline
+		Description & \parbox[t]{10cm}{The TrackModel toggles lights at any block that has them} \\ \hline
+		Data &  \parbox[t]{10cm}{None} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{The TrackController calling the track model} \\ \hline
+		Response & \parbox[t]{10cm}{Sets the lights to the boolean state passed by the TrackController (green=1,red=0)}\\ \hline
+		Comments & \parbox[t]{10cm}{The TrackModel stores lights at each root of a switch and before and after a station}  \\ \hline
+	\end{tabular}
+\end{table}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.3]{readFile.png}
 	\caption{Read File Use Case Diagram}
 \end{figure}
+
+\begin{table}[H]
+	\centering
+	\caption{Read file}
+	\begin{tabular}{|l|l|}
+		\hline
+		Actors & \parbox[t]{10cm}{User (train company)} \\ \hline
+		Description & \parbox[t]{10cm}{The TrackModel CSV files to be read in} \\ \hline
+		Data &  \parbox[t]{10cm}{CSV files for each file to be read in} \\ \hline
+		Stimulus &  \parbox[t]{10cm}{The user starting the proram} \\ \hline
+		Response & \parbox[t]{10cm}{The program will be run on those TrackModel}\\ \hline
+		Comments & \parbox[t]{10cm}{The CSV functions are produced by Microsoft Excel > Save As...>*.csv}  \\ \hline
+	\end{tabular}
+\end{table}
 
 \subsection{Track Controller}
 
