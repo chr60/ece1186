@@ -14,6 +14,7 @@ import java.util.Random;
 import javax.swing.Timer;
 
 import TrainModel.*;
+import java.util.ArrayList;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -49,7 +50,7 @@ public class TrainController extends javax.swing.JFrame {
     private boolean testingMode; // used to tell if the Train Controller is in Automatic mode
      
     // FOR TESTING!
-    LinkedList<Train> trains = new LinkedList<Train>();
+    ArrayList<Train> trains = new ArrayList<Train>();
    
     double blockSpeed = 80.0; 
     private TCTestConsole testConsole = null; 
@@ -104,16 +105,13 @@ public class TrainController extends javax.swing.JFrame {
      * 
      */
     public TrainController() {
-               
-        // FIX ME: This is for testing!!
-        Train train = new Train(5);
-        
+                       
         initComponents();
         
-        this.trains.add(train);
+        //this.trains.add(train);
         
         this.initHashMaps();
-        this.setTrainList_ComboBox();
+        this.setTrainListComboBox();
         this.setMode("Manual", "Normal");
         
       
@@ -136,7 +134,7 @@ public class TrainController extends javax.swing.JFrame {
         initComponents();
        
         this.initHashMaps();
-        this.setTrainList_ComboBox();
+        this.setTrainListComboBox();
         this.setMode("Manual", "Normal");
          
         this.selectedTrain = train;   
@@ -165,7 +163,7 @@ public class TrainController extends javax.swing.JFrame {
         initComponents();
        
         this.initHashMaps();
-        this.setTrainList_ComboBox();
+        this.setTrainListComboBox();
         this.setMode(playMode, testMode);
          
         this.selectedTrain = null; 
@@ -184,7 +182,7 @@ public class TrainController extends javax.swing.JFrame {
         
         initComponents(); 
         this.initHashMaps();
-        this.setTrainList_ComboBox();
+        this.setTrainListComboBox();
         this.setMode(playMode, testMode);
     
         this.selectedTrain = train; 
@@ -336,8 +334,11 @@ public class TrainController extends javax.swing.JFrame {
     /**
      * Updates the combo box that contains the dispatched trains. 
      */
-    private void setTrainList_ComboBox(){
-    
+    public void setTrainListComboBox(){
+            
+        System.out.println(this.trains.size()); 
+        this.dispatchedTrains.removeAllItems();
+        this.dispatchedTrains.addItem("No Train Selected");
         for (Train train : this.trains){
         
             this.dispatchedTrains.addItem(Integer.toString(train.getID()) );       
@@ -1017,7 +1018,13 @@ public class TrainController extends javax.swing.JFrame {
             this.testingMode = true; 
             this.normalMode = false; 
             System.out.println("Normal Mode: " + this.normalMode + " Testing Mode: " + this.testingMode); 
+        }else{
+        
+            TCTestConsole testConsole = new TCTestConsole(this);
+            testConsole.setVisible(true);
+            testConsole.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         }
+        
     }//GEN-LAST:event_testModeSelected
 
     private void normalModeSelected(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_normalModeSelected
@@ -1100,6 +1107,8 @@ public class TrainController extends javax.swing.JFrame {
     public void refreshComponents(){
             
         this.updateTime();
+                
+        this.initHashMaps();
         
         if (this.NoTrainSelected() == false){
         
@@ -1113,12 +1122,12 @@ public class TrainController extends javax.swing.JFrame {
 //            // TrainInfoPanelClass
 //            
             // set the train info panels speed.. 
-            this.trainInfoPanel.setSpeedLabel(this.selectedTrain.getVelocity()); 
+            this.trainInfoPanel.setSpeedLabel(Double.toString( this.selectedTrain.getVelocity() ) ); 
                 
             // set the trains info panels power.. 
-            this.trainInfoPanel.setPowerLabel(this.selectedTrain.getPower());  
+            this.trainInfoPanel.setPowerLabel(Double.toString( this.selectedTrain.getPower() ) );  
             
-            //this.trainInfoPanel.setSuggestSpeedLabel(this.selectedTrain.getSuggestedSpeed());
+            //this.trainInfoPanel.setSuggestSpeedLabel(Double.toString( this.selectedTrain.getSuggestedSpeed() ) );
             
             // get the block speed from the train
             // FIX ME: Right now, it's set at 80.0 for the purpose 

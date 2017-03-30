@@ -45,15 +45,18 @@ public class TCTestConsole extends javax.swing.JFrame {
             }
         });
     
+    private int dispatchedTrains; 
+    
     /**
      * Constructor for creating a TCTestConsole object with no Train Controller and no 
      * selected train. 
      */
-    public TCTestConsole() {
+    public TCTestConsole(TrainController trainCont) {
         initComponents();
         
+        this.dispatchedTrains = 0; 
         this.selectedTrain = null; 
-        this.trainController = null; 
+        this.trainController = trainCont; 
         this.addActionListeners(); 
     }
         
@@ -63,6 +66,7 @@ public class TCTestConsole extends javax.swing.JFrame {
     public TCTestConsole(Train train, TrainController trainCont) {
         initComponents();
         
+        this.dispatchedTrains = 0; 
         this.selectedTrain = train; 
         this.trainController = trainCont; 
         this.addActionListeners();
@@ -221,7 +225,7 @@ public class TCTestConsole extends javax.swing.JFrame {
         trainPower = new javax.swing.JLabel();
         setSpeed = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
-        dispatchTrainsLabel = new javax.swing.JButton();
+        dispatchTrainsButton = new javax.swing.JButton();
         numDispatchedTrains = new javax.swing.JComboBox<>();
         logsLabel = new javax.swing.JLabel();
         suggSpeedSlider = new javax.swing.JSlider();
@@ -477,7 +481,12 @@ public class TCTestConsole extends javax.swing.JFrame {
         jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel34.setText("0");
 
-        dispatchTrainsLabel.setText("Dispatch 'x' Trains");
+        dispatchTrainsButton.setText("Dispatch 'x' Trains");
+        dispatchTrainsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dispatchTrains(evt);
+            }
+        });
 
         numDispatchedTrains.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
 
@@ -595,7 +604,7 @@ public class TCTestConsole extends javax.swing.JFrame {
                                 .addComponent(logsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(dispatchTrainsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(dispatchTrainsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(numDispatchedTrains, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1))))
@@ -713,7 +722,7 @@ public class TCTestConsole extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(dispatchTrainsLabel)
+                            .addComponent(dispatchTrainsButton)
                             .addComponent(numDispatchedTrains, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(logsLabel)
@@ -1000,6 +1009,24 @@ public class TCTestConsole extends javax.swing.JFrame {
         this.selectedTrain.setRightDoor( 0 );
     }//GEN-LAST:event_closeRightDoors
 
+    private void dispatchTrains(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dispatchTrains
+       
+        // get value from combo box
+   
+        String value = (String) this.numDispatchedTrains.getSelectedItem();
+        
+        // add to the list of dispatched trains 
+        System.out.println("Dispatching " + value + " trains."); 
+         
+        for (int i = 0; i < Integer.parseInt(value); i++){
+        
+            this.trainController.trains.add(new Train( this.dispatchedTrains) );
+            this.dispatchedTrains++; 
+        }
+        
+        this.trainController.setTrainListComboBox();
+    }//GEN-LAST:event_dispatchTrains
+
     /**
      * @param args the command line arguments
      */
@@ -1030,7 +1057,7 @@ public class TCTestConsole extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TCTestConsole().setVisible(true);
+                //new TCTestConsole().setVisible(true);
             }
         });
     }
@@ -1046,7 +1073,7 @@ public class TCTestConsole extends javax.swing.JFrame {
     private javax.swing.JRadioButton breakLeftDoorsMurphy;
     private javax.swing.JRadioButton breakLightsMurphy;
     private javax.swing.JRadioButton breakRightDoorsMurphy;
-    private javax.swing.JButton dispatchTrainsLabel;
+    private javax.swing.JButton dispatchTrainsButton;
     private javax.swing.JRadioButton fixACMurphy;
     private javax.swing.JRadioButton fixHeatMurphy;
     private javax.swing.JRadioButton fixLeftDoorsMurphy;

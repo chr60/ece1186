@@ -1,6 +1,8 @@
 package TrainControllerComps;
 
 import TrainModel.*;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -45,10 +47,9 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
      * 
      * @param speed the speed the train is going. 
      */
-    public void setSpeedLabel(double speed){
-        
-        String speed_txt = Double.toString(speed);
-        this.currentSpeed.setText(speed_txt);
+    public void setSpeedLabel(String speed){
+       
+        this.currentSpeed.setText(speed);
     }
     
     /**
@@ -56,10 +57,9 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
      * 
      * @param power the power the train is producing. 
      */
-    public void setPowerLabel(double power){
+    public void setPowerLabel(String power){
     
-        String power_txt = Double.toString(power);
-        this.currentPower.setText(power_txt);
+        this.currentPower.setText(power);
     }
     
     /**
@@ -67,10 +67,9 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
      * 
      * @param suggSpeed the suggested speed for the train. 
      */
-    public void setSuggestSpeedLabel(double suggSpeed){
+    public void setSuggestSpeedLabel(String suggSpeed){
     
-        String suggSpeed_txt = Double.toString(suggSpeed);
-        this.suggestedSpeed.setText(suggSpeed_txt);
+        this.suggestedSpeed.setText(suggSpeed);
     }
     
     /**
@@ -109,10 +108,16 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
      */
     public void refreshUI(){
     
-        this.setSpeedLabel(this.selectedTrain.getVelocity());
-        this.setPowerLabel(this.selectedTrain.getPower());
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.CEILING);
+        
+        this.setSpeedLabel(df.format( this.selectedTrain.getVelocity() ) );
+        this.setPowerLabel(df.format( this.selectedTrain.getPower() ) );
+        
+        
+        System.out.println(df.format( this.selectedTrain.getVelocity() ) );
         // FIX ME: This should be the suggested speed!
-        this.setSuggestSpeedLabel(77);
+        //this.setSuggestSpeedLabel(df.format( this.selectedTrain.getSuggestedSpeed() ) );
     }
     
     /**
@@ -152,11 +157,11 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
 
         currentSpeed.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         currentSpeed.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        currentSpeed.setText("0");
+        currentSpeed.setText("0.00");
 
         currentPower.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         currentPower.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        currentPower.setText("999");
+        currentPower.setText("0.00");
 
         suggSpeedLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         suggSpeedLabel.setText("Sugg. Speed:");
@@ -199,7 +204,7 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
 
         maxPower.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         maxPower.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        maxPower.setText("999");
+        maxPower.setText("0.00");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -210,14 +215,14 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(speedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(powerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(currentSpeed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(speedUnit))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(currentPower, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(currentPower, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(powerDivider)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
