@@ -109,9 +109,9 @@ public class TCFailures extends javax.swing.JFrame {
     private boolean isPowerFailure(){
     
         // checks for a power failure
-        if (this.selectedTrain.ac == -1 || this.selectedTrain.heat == -1 
-                || this.selectedTrain.lights == -1 || this.selectedTrain.leftDoors == -1 
-                || this.selectedTrain.rightDoors == -1){ return true; }
+        if (this.selectedTrain.getAC() == -1 || this.selectedTrain.getHeat() == -1 
+                || this.selectedTrain.getLights() == -1 || this.selectedTrain.getLeftDoor() == -1 
+                || this.selectedTrain.getRightDoor() == -1){ return true; }
         else{ return false; }
     }
     
@@ -334,11 +334,11 @@ public class TCFailures extends javax.swing.JFrame {
             // send request to ctc to request fix
             
             // For testing, it will be automatically fixed
-            if (this.selectedTrain.ac == -1){ this.selectedTrain.ac = 0; }
-            if (this.selectedTrain.heat == -1){ this.selectedTrain.heat = 0; }
-            if (this.selectedTrain.lights == -1){ this.selectedTrain.lights = 0; }
-            if (this.selectedTrain.leftDoors == -1){ this.selectedTrain.leftDoors = 0; }
-            if (this.selectedTrain.rightDoors == -1){ this.selectedTrain.rightDoors = 0; }
+            if (this.selectedTrain.getAC() == -1){ this.selectedTrain.setAC( 0 ); }
+            if (this.selectedTrain.getHeat() == -1){ this.selectedTrain.setHeat( 0 ); }
+            if (this.selectedTrain.getLights() == -1){ this.selectedTrain.setLights( 0 ); }
+            if (this.selectedTrain.getLeftDoor() == -1){ this.selectedTrain.setLeftDoor( 0 ); }
+            if (this.selectedTrain.getRightDoor() == -1){ this.selectedTrain.setRightDoor( 0 ); }
 
             this.powerWorkingRadioButton.setSelected(true);
         }

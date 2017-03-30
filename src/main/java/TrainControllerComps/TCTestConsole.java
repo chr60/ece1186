@@ -85,7 +85,7 @@ public class TCTestConsole extends javax.swing.JFrame {
                 // pass new value to train 
                 
                 if (selectedTrain != null){
-                   trainController.getTrain().speed =  speedSlider.getValue(); 
+                   trainController.getTrain().setSpeed((double) speedSlider.getValue());
                 }
             }
         });
@@ -96,7 +96,7 @@ public class TCTestConsole extends javax.swing.JFrame {
              
                 String sliderValue = Integer.toString(blockSpeedSlider.getValue());
                 blockSpeed_Slider.setText(sliderValue);
-                trainController.getTrain().currentBlockSpeed =  blockSpeedSlider.getValue();
+                //trainController.getTrain().currentBlockSpeed =  blockSpeedSlider.getValue();
             }
         });
          
@@ -106,7 +106,7 @@ public class TCTestConsole extends javax.swing.JFrame {
              
                 String sliderValue = Integer.toString(suggSpeedSlider.getValue());
                  suggSpeed_Slider.setText(sliderValue);
-                 trainController.getTrain().currentSuggestedSpeed =  suggSpeedSlider.getValue();
+                 //trainController.getTrain().currentSuggestedSpeed =  suggSpeedSlider.getValue();
                  
             }
         });
@@ -142,8 +142,8 @@ public class TCTestConsole extends javax.swing.JFrame {
        
        if (this.selectedTrain != null){
             // update labels
-            this.trainSpeed.setText(Double.toString(this.selectedTrain.speed));
-            this.trainPower.setText(Double.toString(this.selectedTrain.power));
+            this.trainSpeed.setText(Double.toString(this.selectedTrain.getVelocity()));
+            this.trainPower.setText(Double.toString(this.selectedTrain.getPower()));
             this.setSpeed.setText(Double.toString(this.trainController.getSpeedController().getSetSpeed())); 
             // 
        }
@@ -906,98 +906,98 @@ public class TCTestConsole extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void breakAC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakAC
-        this.selectedTrain.ac = -1;     
+        this.selectedTrain.setAC( -1 );    
     }//GEN-LAST:event_breakAC
 
     private void fixAC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixAC
         
-        this.selectedTrain.ac = 0; 
+        this.selectedTrain.setAC( 0 ); 
     }//GEN-LAST:event_fixAC
 
     private void breakHeat(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakHeat
         
-        this.selectedTrain.heat = -1; 
+        this.selectedTrain.setHeat( -1 );
     }//GEN-LAST:event_breakHeat
 
     private void fixHeat(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixHeat
         
-        this.selectedTrain.heat = 0; 
+        this.selectedTrain.setHeat( 0 ); 
     }//GEN-LAST:event_fixHeat
 
     private void breakLightsMurphy(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakLightsMurphy
-        this.selectedTrain.lights = -1; 
+        this.selectedTrain.setLights( -1 );
     }//GEN-LAST:event_breakLightsMurphy
 
     private void fixLights(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixLights
-        this.selectedTrain.lights = 0; 
+        this.selectedTrain.setLights( 0 ); 
     }//GEN-LAST:event_fixLights
 
     private void breakLeftDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakLeftDoors
         
-        this.selectedTrain.leftDoors = -1; 
+        this.selectedTrain.setLeftDoor( -1 );
     }//GEN-LAST:event_breakLeftDoors
 
     private void fixLeftDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixLeftDoors
         
-        this.selectedTrain.leftDoors = 0; 
+        this.selectedTrain.setLeftDoor( 0 );
     }//GEN-LAST:event_fixLeftDoors
 
     private void breakRightDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakRightDoors
-        this.selectedTrain.rightDoors = -1; 
+        this.selectedTrain.setRightDoor( -1 );
     }//GEN-LAST:event_breakRightDoors
 
     private void fixRightDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixRightDoors
-        this.selectedTrain.rightDoors = 0; 
+        this.selectedTrain.setRightDoor( 0 ); 
     }//GEN-LAST:event_fixRightDoors
 
     private void turnOnAC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOnAC
         
-        this.selectedTrain.ac = 1; 
+        this.selectedTrain.setAC( 1 );
     }//GEN-LAST:event_turnOnAC
 
     private void turnOffAC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOffAC
         
-        this.selectedTrain.ac = 0; 
+        this.selectedTrain.setAC( 0 );
     }//GEN-LAST:event_turnOffAC
 
     private void turnOnHeat(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOnHeat
         
-        this.selectedTrain.heat = 1; 
+        this.selectedTrain.setHeat( 1 );
     }//GEN-LAST:event_turnOnHeat
 
     private void turnOffHeat(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOffHeat
        
-        this.selectedTrain.heat = 0; 
+        this.selectedTrain.setHeat( 0 );
     }//GEN-LAST:event_turnOffHeat
 
     private void turnOnLights(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOnLights
         
-        this.selectedTrain.lights = 1; 
+        this.selectedTrain.setLights( 1 );
     }//GEN-LAST:event_turnOnLights
 
     private void turnOffLights(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOffLights
         
-        this.selectedTrain.lights = 0; 
+        this.selectedTrain.setLights( 0 );
     }//GEN-LAST:event_turnOffLights
 
     private void openLeftDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openLeftDoors
         
-        this.selectedTrain.leftDoors = 1; 
+        this.selectedTrain.setLeftDoor( 1 );
     }//GEN-LAST:event_openLeftDoors
 
     private void closeLeftDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeLeftDoors
         
-        this.selectedTrain.leftDoors = 0; 
+        this.selectedTrain.setLeftDoor( 0 );
     }//GEN-LAST:event_closeLeftDoors
 
     private void openRightDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openRightDoors
         
-        this.selectedTrain.rightDoors = 1; 
+        this.selectedTrain.setRightDoor( 1 );
     }//GEN-LAST:event_openRightDoors
 
     private void closeRightDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeRightDoors
         
-        this.selectedTrain.rightDoors = 0; 
+        this.selectedTrain.setRightDoor( 0 );
     }//GEN-LAST:event_closeRightDoors
 
     /**

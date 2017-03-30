@@ -28,14 +28,14 @@
                   <Component id="powerLabel" min="-2" pref="74" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="currentSpeed" min="-2" pref="51" max="-2" attributes="0"/>
+                      <Component id="currentSpeed" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="speedUnit" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="currentPower" min="-2" pref="52" max="-2" attributes="0"/>
+                      <Component id="currentPower" min="-2" pref="184" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="powerDivider" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>

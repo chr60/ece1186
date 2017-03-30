@@ -49,8 +49,8 @@ public class TrainController extends javax.swing.JFrame {
     private boolean testingMode; // used to tell if the Train Controller is in Automatic mode
      
     // FOR TESTING!
-    
-    //LinkedList<Train> trains = Train.generateRandomTestTrain(10);
+    LinkedList<Train> trains = new LinkedList<Train>();
+   
     double blockSpeed = 80.0; 
     private TCTestConsole testConsole = null; 
     
@@ -65,7 +65,7 @@ public class TrainController extends javax.swing.JFrame {
             refreshComponents();    
             
             
-            if (selectedTrain != null && (selectedTrain.kp != null && selectedTrain.ki != null) ){
+            if (selectedTrain != null && (selectedTrain.getKp() != null && selectedTrain.getKi() != null) ){
                 speedController.powerControl();
             }
             
@@ -104,7 +104,13 @@ public class TrainController extends javax.swing.JFrame {
      * 
      */
     public TrainController() {
+               
+        // FIX ME: This is for testing!!
+        Train train = new Train(5);
+        
         initComponents();
+        
+        this.trains.add(train);
         
         this.initHashMaps();
         this.setTrainList_ComboBox();
@@ -183,7 +189,7 @@ public class TrainController extends javax.swing.JFrame {
     
         this.selectedTrain = train; 
         
-        if (this.selectedTrain.kp == null & this.selectedTrain.ki == null){
+        if (this.selectedTrain.powerConstantsSet() == false){
         
             TCEngineerPanel engPanel = new TCEngineerPanel(this.selectedTrain);
             engPanel.setVisible(true);
@@ -294,7 +300,7 @@ public class TrainController extends javax.swing.JFrame {
         // get the list of dispatched trains         
         for (Train train : this.trains){
             // add them to the hashmaps
-            this.trainList.put(train.getID(), train );
+            this.trainList.put(Integer.toString(train.getID()), train );
         }
     }
         
@@ -334,7 +340,7 @@ public class TrainController extends javax.swing.JFrame {
     
         for (Train train : this.trains){
         
-            this.dispatchedTrains.addItem(train.getID());       
+            this.dispatchedTrains.addItem(Integer.toString(train.getID()) );       
         }
     }
   
@@ -898,7 +904,7 @@ public class TrainController extends javax.swing.JFrame {
    
     }//GEN-LAST:event_switchTrains
 
-    public void setTrains(TestTrain train){
+    public void setTrains(Train train){
     
         this.speedController.setTrain(train);
         this.utilityPanel.setSelectedTrain(train);
@@ -1101,27 +1107,27 @@ public class TrainController extends javax.swing.JFrame {
             
             //this.speedController.setTrain(this.selectedTrain);
             
-            //this.trainInfoPanel.setSelectedTrain(this.selectedTrain);
+            this.trainInfoPanel.setSelectedTrain(this.selectedTrain);
             this.trainInfoPanel.refreshUI();
 //            // FIX ME: TrainInfoPanelStuff should be put in the refreshUI method in the
 //            // TrainInfoPanelClass
 //            
-//            // set the train info panels speed.. 
-//            this.trainInfoPanel.setSpeedLabel(this.selectedTrain.speed); 
-//                
-//            // set the trains info panels power.. 
-//            this.trainInfoPanel.setPowerLabel(this.selectedTrain.power);  
-//            
-//            this.trainInfoPanel.setSuggestSpeedLabel(this.selectedTrain.currentSuggestedSpeed);
+            // set the train info panels speed.. 
+            this.trainInfoPanel.setSpeedLabel(this.selectedTrain.getVelocity()); 
+                
+            // set the trains info panels power.. 
+            this.trainInfoPanel.setPowerLabel(this.selectedTrain.getPower());  
+            
+            //this.trainInfoPanel.setSuggestSpeedLabel(this.selectedTrain.getSuggestedSpeed());
             
             // get the block speed from the train
             // FIX ME: Right now, it's set at 80.0 for the purpose 
             // of getting the block speed to update
-            //this.speedController.setMaxSpeed(this.selectedTrain.);
-            //this.blockInfoPane.setBlockSpeed(this.selectedTrain.currentBlockSpeed);
+            this.speedController.setMaxSpeed(this.blockSpeed);
+            this.blockInfoPane.setBlockSpeed(this.blockSpeed);
             
             this.utilityPanel.setManualMode(this.manualMode);
-            //this.utilityPanel.setSelectedTrain(this.selectedTrain);
+            this.utilityPanel.setSelectedTrain(this.selectedTrain);
             this.utilityPanel.refreshUI();
             
             // disable buttons if in automatic mode..
@@ -1141,7 +1147,7 @@ public class TrainController extends javax.swing.JFrame {
             this.speedController.refreshUI();
             
             
-            //this.brakePanel.setSelectedTrain(this.selectedTrain);
+            this.brakePanel.setSelectedTrain(this.selectedTrain);
             this.brakePanel.setOperatingLogs(this.operatingLogs);
             this.brakePanel.inManualMode(this.manualMode);
             

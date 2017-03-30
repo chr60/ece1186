@@ -449,26 +449,27 @@ public class TCSpeedController extends javax.swing.JPanel {
         this.powerCommandOut = this.selectedTrain.getKp() * error + this.selectedTrain.getKi();
         
         // send powerCommandOut to the train, which then changes its speed
-        // this.selectedTrain.powerCommand(this.powerCommand); 
+        this.selectedTrain.powerCommand(this.powerCommandOut); 
           
         // if (this.powerCommand < 0){
             // this.selectedTrain.setServiceBrake(); 
         //}
         
         // train should maintain speed when powerCommandOut stays the same
-        
-        
+         
         System.out.println(this.powerCommandOut);  
         
-        if (this.powerCommandOut < 0){ this.brakePanel.getServiceBrake().doClick(); } // train should slow down
-        else if (this.powerCommandOut > 0){
-            this.logBook.add("Full steam ahead!");
-            // speed up train by 1 MPH 
-            // FOR TESTING PURPOSES, THIS IS 1 MPH
-            this.selectedTrain.setSpeed(this.selectedTrain.getVelocity() + 1); 
-            
-        } // train should speed up
-        else if (this.powerCommandOut == 0){ this.logBook.add("Steady Power!!."); } // train should continue at same speed
+     
+//        if (this.powerCommandOut < 0){ this.brakePanel.getServiceBrake().doClick(); } // train should slow down
+//        else if (this.powerCommandOut > 0){
+//            this.logBook.add("Full steam ahead!");
+//            // speed up train by 1 MPH 
+//            // FOR TESTING PURPOSES, THIS IS 1 MPH
+//            this.selectedTrain.setSpeed(this.selectedTrain.getVelocity() + 1);
+//            System.out.println("Velocity: " + this.selectedTrain.getVelocity()); 
+//            
+//        } // train should speed up
+//        else if (this.powerCommandOut == 0){ this.logBook.add("Steady Power!!."); } // train should continue at same speed
 
         this.logBook.add(Integer.toString(timeElapsed));
         printLogs();

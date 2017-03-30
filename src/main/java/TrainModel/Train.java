@@ -324,6 +324,16 @@ public class Train {
 	public void setRightDoor(int status){
 		statusRightDoor = status; 		//1 = open, 0 = closed, -1 = failure
 	}
+        
+        /**
+         * Returns the status of the right doors.
+         * 
+         * @return int which corresponds to the right door's status. 1 means open, 0 means closed, and -1 denotes a failure.
+         */
+        public int getRightDoor(){
+            
+            return this.statusRightDoor;
+        }
 
 	/**
      * Modifier to change the status of the left doors
@@ -332,6 +342,16 @@ public class Train {
 	public void setLeftDoor(int status){
 		statusLeftDoor = status; 		//1 = open, 0 = closed, -1 = failure
 	}
+        
+        /**
+         * Returns the status of the left door.
+         * 
+         * @return int which corresponds to the left door's status. 1 means open, 0 means closed, and -1 denotes a failure.
+         */
+        public int getLeftDoor(){
+        
+            return this.statusLeftDoor;
+        }
 
 	/**
      * Modifier to change the status of the interior lights onboard the train
@@ -340,7 +360,7 @@ public class Train {
 	public void setLights(int status){
 		statusLights = status; 		//1 = on, 0 = off, -1 = failure
 	}
-
+        
 	/**
      * Accessor to get the status of the interior lights onboard the train
      * @return an int which corresponds to the light's status. 1 means on, 0 means off, and -1 denotes a failure.
@@ -356,6 +376,11 @@ public class Train {
 	public void setAC(int status){
 		statusAC = status; 		//1 = on, 0 = off, -1 = failure
 	}
+        
+        public int getAC(){
+        
+            return this.statusAC;
+        }
 
 	/**
      * Modifier to change the status of the heater onboard the train
@@ -364,6 +389,11 @@ public class Train {
 	public void setHeat(int status){
 		statusHeater = status; 		//1 = on, 0 = off, -1 = failure
 	}
+        
+        public int getHeat(){
+        
+            return this.statusHeater;
+        }
 
 
 	/**

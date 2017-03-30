@@ -244,9 +244,9 @@ public class TCUtilityPanel extends javax.swing.JPanel {
      */
     private void refreshAC(){
 
-        if (this.selectedTrain.ac == 1){ this.acOnRadioButton.setSelected(true); }
-        else if (this.selectedTrain.ac == 0){ this.acOffRadioButton.setSelected(true); }
-        else if (this.selectedTrain.ac == -1){ this.acFailureRadioButton.setSelected(true); }
+        if (this.selectedTrain.getAC() == 1){ this.acOnRadioButton.setSelected(true); }
+        else if (this.selectedTrain.getAC() == 0){ this.acOffRadioButton.setSelected(true); }
+        else if (this.selectedTrain.getAC() == -1){ this.acFailureRadioButton.setSelected(true); }
     }
     
     /**
@@ -254,9 +254,9 @@ public class TCUtilityPanel extends javax.swing.JPanel {
      */
     private void refreshHeat(){
     
-        if (this.selectedTrain. == 1){ this.heatOnRadioButton.setSelected(true); }
-        else if (this.selectedTrain.heat == 0){ this.heatOffRadioButton.setSelected(true);}
-        else if (this.selectedTrain.heat == -1){ this.heatFailureRadioButton.setSelected(true); }
+        if (this.selectedTrain.getHeat() == 1){ this.heatOnRadioButton.setSelected(true); }
+        else if (this.selectedTrain.getHeat() == 0){ this.heatOffRadioButton.setSelected(true);}
+        else if (this.selectedTrain.getHeat() == -1){ this.heatFailureRadioButton.setSelected(true); }
     }
     
     /**
@@ -264,9 +264,9 @@ public class TCUtilityPanel extends javax.swing.JPanel {
      */
     private void refreshLights(){
     
-        if (this.selectedTrain.lights == 1){ this.lightsOnRadioButton.setSelected(true); }
-        else if (this.selectedTrain.lights == 0){ this.lightsOffRadioButton.setSelected(true); }
-        else if (this.selectedTrain.lights == -1){ this.lightsFailureRadioButton.setSelected(true); }
+        if (this.selectedTrain.getLights() == 1){ this.lightsOnRadioButton.setSelected(true); }
+        else if (this.selectedTrain.getLights() == 0){ this.lightsOffRadioButton.setSelected(true); }
+        else if (this.selectedTrain.getLights() == -1){ this.lightsFailureRadioButton.setSelected(true); }
     }
     
     /**
@@ -274,9 +274,9 @@ public class TCUtilityPanel extends javax.swing.JPanel {
      */
     private void refreshLeftDoors(){
     
-        if (this.selectedTrain.leftDoors == 1){ this.leftDoorsOpenRadioButton.setSelected(true); }
-        else if (this.selectedTrain.leftDoors == 0){ this.leftDoorsCloseRadioButton.setSelected(true); }
-        else if (this.selectedTrain.leftDoors == -1){ this.leftDoorsFailureRadioButton.setSelected(true); }
+        if (this.selectedTrain.getLeftDoor() == 1){ this.leftDoorsOpenRadioButton.setSelected(true); }
+        else if (this.selectedTrain.getLeftDoor() == 0){ this.leftDoorsCloseRadioButton.setSelected(true); }
+        else if (this.selectedTrain.getLeftDoor() == -1){ this.leftDoorsFailureRadioButton.setSelected(true); }
     }
     
     /**
@@ -284,9 +284,9 @@ public class TCUtilityPanel extends javax.swing.JPanel {
      */
     private void refreshRightDoors(){
     
-        if (this.selectedTrain.rightDoors == 1){ this.rightDoorsOpenRadioButton.setSelected(true); }
-        else if (this.selectedTrain.rightDoors == 0){ this.rightDoorsCloseRadioButton.setSelected(true); }
-        else if (this.selectedTrain.rightDoors == -1) {this.rightDoorsFailureRadioButton.setSelected(true); }
+        if (this.selectedTrain.getRightDoor() == 1){ this.rightDoorsOpenRadioButton.setSelected(true); }
+        else if (this.selectedTrain.getRightDoor() == 0){ this.rightDoorsCloseRadioButton.setSelected(true); }
+        else if (this.selectedTrain.getRightDoor() == -1) {this.rightDoorsFailureRadioButton.setSelected(true); }
     }
    
     /**
@@ -619,7 +619,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
         
         System.out.println("Telling train to turn off lights."); 
         // send signal to train
-        this.selectedTrain.lights = 0; 
+        this.selectedTrain.setLights( 0 );
     }//GEN-LAST:event_turnOffLights
 
     /**
@@ -631,7 +631,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
         
         System.out.println("Telling train to turn on lights."); 
         // send signal to train
-        this.selectedTrain.lights = 1; 
+        this.selectedTrain.setLights(1); 
     }//GEN-LAST:event_turnOnLights
 
     /**
@@ -643,7 +643,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
         
         System.out.println("Telling train to close left doors.");
         // send signal to train
-        this.selectedTrain.leftDoors = 0;      
+        this.selectedTrain.setLeftDoor( 0 );   
     }//GEN-LAST:event_closeLeftDoors
 
     /**
@@ -655,7 +655,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
        
         System.out.println("Telling train to open left doors."); 
         // send signal to train
-        this.selectedTrain.leftDoors = 1; 
+        this.selectedTrain.setLeftDoor( 1 ); 
     }//GEN-LAST:event_openLeftDoors
 
     
@@ -668,7 +668,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
         
         System.out.println("Telling train to close right doors."); 
         // send signal to train
-        this.selectedTrain.rightDoors = 0; 
+        this.selectedTrain.setRightDoor( 0 ); 
     }//GEN-LAST:event_closeRightDoors
 
     
@@ -681,7 +681,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
         
         System.out.println("Telling train to open right doors."); 
         // send signal to train
-        this.selectedTrain.rightDoors = 1; 
+        this.selectedTrain.setRightDoor( 1 );
     }//GEN-LAST:event_openRightDoors
 
     /**
@@ -693,7 +693,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
        
         System.out.println("Telling train to turn off heat.");  
         // send signal to train
-        this.selectedTrain.heat = 0; 
+        this.selectedTrain.setHeat( 0 ); 
     }//GEN-LAST:event_turnOffHeat
 
     /**
@@ -713,7 +713,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
         }else{
             // turn the heat on the train, this will cause the GUI to update on the next refreshGUI call.
             // turn on heat and transmit the temp
-            if (this.selectedTrain.heat == 0){ this.selectedTrain.heat = 1; }
+            if (this.selectedTrain.getHeat() == 0){ this.selectedTrain.setHeat( 1 ); }
             
             // transmit the temp
             // FIX ME: replace when the train model is complete to set the temp
@@ -743,7 +743,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
             // turn on the ac, and transmit the temp
             // if it's off turn it on
      
-            if (this.selectedTrain.ac == 0){ this.selectedTrain.ac = 1; }
+            if (this.selectedTrain.getAC() == 0){ this.selectedTrain.setAC( 1 ); }
                                  
             System.out.println("Telling the train to set temperature to " + temp + " for Air Conditioning unit"); 
         }  
@@ -782,20 +782,20 @@ public class TCUtilityPanel extends javax.swing.JPanel {
             // manual vs automatic mode
             if (this.inManualMode){
                 // turn on ac and transmit temp
-                this.selectedTrain.ac = 1; 
+                this.selectedTrain.setAC( 1 );
                 Double temp = Double.parseDouble(this.acTempTextField.getText());
             }else{
             
                 // transmit default temp        
                 Double temp = 45.0; 
-                this.selectedTrain.ac = 1; 
+                this.selectedTrain.setAC( 1 );
                 // update the text on the gui
                 this.acTempTextField.setText(Double.toString(temp));       
             }
             
             // turn heat off if its on
             if (this.heatOnRadioButton.isSelected() == true){ 
-                this.selectedTrain.heat = 0;  
+                this.selectedTrain.setHeat( 0 ); 
                 //this.heatOffRadioButton.setSelected(true); // set the OFF radio button
             }
         }
@@ -814,21 +814,21 @@ public class TCUtilityPanel extends javax.swing.JPanel {
             // manual vs automatic mode
             if (this.inManualMode){
                 // turn on heat and transmit temp             
-                this.selectedTrain.heat = 1; 
+                this.selectedTrain.setHeat( 1 );
                 Double temp = Double.parseDouble(this.heatTempTextField.getText());
                 System.out.println("Telling the train to set temperature to " + temp + " for Heating unit");
             }else{
                 // transmit default temp        
                 Double temp = 65.0;     
                 // update the text on the gui
-                this.selectedTrain.heat = 1;
+                this.selectedTrain.setHeat( 1 );
                 this.heatTempTextField.setText(Double.toString(temp));
                 System.out.println("Telling the train to set temperature to " + temp + " for Heating unit");
             }
             
             // turn off ac if its on
             if (this.acOnRadioButton.isSelected() == true){ 
-                this.selectedTrain.ac = 0; 
+                this.selectedTrain.setAC( 0 );
                 //this.acOffRadioButton.setSelected(true); 
             }
         }
@@ -837,7 +837,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
 
     private void turnOnAC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOnAC
         
-        this.selectedTrain.ac = 1; 
+        this.selectedTrain.setAC( 1 );
             
         // set train to default default temp
         this.acTempTextField.setText("40.0");
@@ -850,7 +850,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
      */
     private void turnOffAirCond(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOffAirCond
         
-        this.selectedTrain.ac = 0;         
+        this.selectedTrain.setAC( 0 );         
         System.out.println("Telling Air Conditioning unit to turn off."); 
     }//GEN-LAST:event_turnOffAirCond
 
