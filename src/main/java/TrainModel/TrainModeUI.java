@@ -1,4 +1,4 @@
-package trainModel;
+package TrainModel;
 
 import java.awt.EventQueue;
 
@@ -25,41 +25,42 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 
-public class trainModeUI {
+public class TrainModeUI {
 
 	JFrame frmTrainModel;
-	private JTextField txtFdsf;
-	private JTextField txtM;
-	private JTextField txtM_1;
-	private JTextField txtTons;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField txtOpen;
-	private JTextField txtClosed;
-	private JTextField txtOn;
-	private JTextField txtF;
-	private JTextField txtF_1;
-	private JTextField txtFailure;
-	private JTextField txtOn_1;
-	private JTextField txtN;
-	private JTextField textField_3;
-	private JTextField txtN_1;
-	private JTextField textField_4;
-	private JTextField txtMi;
-	private final ButtonGroup buttonGroup = new ButtonGroup();
-	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
-	private final ButtonGroup buttonGroup_2 = new ButtonGroup();
-	private final ButtonGroup buttonGroup_3 = new ButtonGroup();
-	private final ButtonGroup buttonGroup_4 = new ButtonGroup();
-	private final ButtonGroup buttonGroup_5 = new ButtonGroup();
-	private final ButtonGroup buttonGroup_6 = new ButtonGroup();
-	private final ButtonGroup buttonGroup_7 = new ButtonGroup();
-	JTextPane txtpnMph;
-	JTextPane txtpnMi;
+	private JTextField txtHeight;
+	private JTextField txtLength;
+	private JTextField txtWidth;
+	private JTextField txtMass;
+	private JTextField txtPass;
+	private JTextField txtCrew;
+	private JTextField txtCar;
+	private JTextField txtRightDoor;
+	private JTextField txtLeftDoor;
+	private JTextField txtLights;
+	private JTextField txtTemperature;
+	private JTextField txtThermostat;
+	private JTextField txtServiceBrake;
+	private JTextField txtEmergencyBrake;
+	private JTextField txtPower;
+	private JTextField txtTestThermostat;
+	private JTextField txtTestPower;
+	private JTextField txtTestAddPassengers;
+	private JTextField txtTestAuthority;
+	private final ButtonGroup engineFailureBG = new ButtonGroup();
+	private final ButtonGroup signalFailureBG = new ButtonGroup();
+	private final ButtonGroup brakeFailureBG = new ButtonGroup();
+	private final ButtonGroup rightDoorBG = new ButtonGroup();
+	private final ButtonGroup lightsBG = new ButtonGroup();
+	private final ButtonGroup serviceBrakeBG = new ButtonGroup();
+	private final ButtonGroup emergencyBrakeBG = new ButtonGroup();
+	private final ButtonGroup leftDoorBG = new ButtonGroup();
+	JTextPane txtSpeed;
+	JTextPane txtAuthority;
 	static Train [] trainArray;
 	static Train currTrain;
 	int stop;
+	private JTextField txtTestGrade;
 
 	/**
 	 * Launch the application.
@@ -77,7 +78,7 @@ public class trainModeUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					trainModeUI window = new trainModeUI();
+					TrainModeUI window = new TrainModeUI();
 					window.frmTrainModel.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -89,7 +90,7 @@ public class trainModeUI {
 	/**
 	 * Create the application.
 	 */
-	public trainModeUI() {
+	public TrainModeUI() {
 		initialize();
 	}
 
@@ -119,7 +120,7 @@ public class trainModeUI {
 		
 		JLabel lblLeftDoor_1 = new JLabel("Left Door");
 		lblLeftDoor_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblLeftDoor_1.setBounds(488, 342, 71, 33);
+		lblLeftDoor_1.setBounds(488, 320, 71, 33);
 		frmTrainModel.getContentPane().add(lblLeftDoor_1);
 		
 		JLabel lblTrainModel = new JLabel("Train Model");
@@ -140,14 +141,14 @@ public class trainModeUI {
 		separator.setBounds(10, 58, 162, 2);
 		frmTrainModel.getContentPane().add(separator);
 		
-		txtFdsf = new JTextField();
-		txtFdsf.setBackground(Color.WHITE);
-		txtFdsf.setEditable(false);
-		txtFdsf.setForeground(Color.BLACK);
-		txtFdsf.setText("11.22 ft");
-		txtFdsf.setBounds(116, 71, 86, 20);
-		frmTrainModel.getContentPane().add(txtFdsf);
-		txtFdsf.setColumns(10);
+		txtHeight = new JTextField();
+		txtHeight.setBackground(Color.WHITE);
+		txtHeight.setEditable(false);
+		txtHeight.setForeground(Color.BLACK);
+		txtHeight.setText("11.22 ft");
+		txtHeight.setBounds(116, 71, 86, 20);
+		frmTrainModel.getContentPane().add(txtHeight);
+		txtHeight.setColumns(10);
 		
 		JLabel lblHeight = new JLabel("Height");
 		lblHeight.setBounds(20, 77, 46, 14);
@@ -157,79 +158,79 @@ public class trainModeUI {
 		lblLength.setBounds(20, 108, 46, 14);
 		frmTrainModel.getContentPane().add(lblLength);
 		
-		txtM = new JTextField();
-		txtM.setBackground(Color.WHITE);
-		txtM.setEditable(false);
-		txtM.setForeground(Color.BLACK);
-		txtM.setText("105.64 ft");
-		txtM.setColumns(10);
-		txtM.setBounds(116, 102, 86, 20);
-		frmTrainModel.getContentPane().add(txtM);
+		txtLength = new JTextField();
+		txtLength.setBackground(Color.WHITE);
+		txtLength.setEditable(false);
+		txtLength.setForeground(Color.BLACK);
+		txtLength.setText("105.64 ft");
+		txtLength.setColumns(10);
+		txtLength.setBounds(116, 102, 86, 20);
+		frmTrainModel.getContentPane().add(txtLength);
 		
 		JLabel lblWidth = new JLabel("Width");
 		lblWidth.setBounds(20, 139, 46, 14);
 		frmTrainModel.getContentPane().add(lblWidth);
 		
-		txtM_1 = new JTextField();
-		txtM_1.setBackground(Color.WHITE);
-		txtM_1.setEditable(false);
-		txtM_1.setForeground(Color.BLACK);
-		txtM_1.setText("8.69 ft");
-		txtM_1.setColumns(10);
-		txtM_1.setBounds(116, 133, 86, 20);
-		frmTrainModel.getContentPane().add(txtM_1);
+		txtWidth = new JTextField();
+		txtWidth.setBackground(Color.WHITE);
+		txtWidth.setEditable(false);
+		txtWidth.setForeground(Color.BLACK);
+		txtWidth.setText("8.69 ft");
+		txtWidth.setColumns(10);
+		txtWidth.setBounds(116, 133, 86, 20);
+		frmTrainModel.getContentPane().add(txtWidth);
 		
 		JLabel lblMass = new JLabel("Mass");
 		lblMass.setBounds(20, 167, 46, 14);
 		frmTrainModel.getContentPane().add(lblMass);
 		
-		txtTons = new JTextField();
-		txtTons.setBackground(Color.WHITE);
-		txtTons.setEditable(false);
-		txtTons.setForeground(Color.BLACK);
-		txtTons.setText("100,000 lbs");
-		txtTons.setColumns(10);
-		txtTons.setBounds(116, 161, 86, 20);
-		frmTrainModel.getContentPane().add(txtTons);
+		txtMass = new JTextField();
+		txtMass.setEditable(false);
+		txtMass.setBackground(Color.WHITE);
+		txtMass.setForeground(Color.BLACK);
+		txtMass.setText("100000 ");
+		txtMass.setColumns(10);
+		txtMass.setBounds(116, 161, 86, 20);
+		frmTrainModel.getContentPane().add(txtMass);
 		
 		JLabel lblNumberOfCrew = new JLabel("Crew Count");
 		lblNumberOfCrew.setBounds(20, 195, 70, 14);
 		frmTrainModel.getContentPane().add(lblNumberOfCrew);
 		
-		textField = new JTextField();
-		textField.setBackground(Color.WHITE);
-		textField.setEditable(false);
-		textField.setForeground(Color.BLACK);
-		textField.setText("145");
-		textField.setColumns(120);
-		textField.setBounds(116, 217, 86, 20);
-		frmTrainModel.getContentPane().add(textField);
+		txtPass = new JTextField();
+		txtPass.setBackground(Color.WHITE);
+		txtPass.setEditable(false);
+		txtPass.setForeground(Color.BLACK);
+		txtPass.setText("145");
+		txtPass.setColumns(120);
+		txtPass.setBounds(116, 217, 86, 20);
+		frmTrainModel.getContentPane().add(txtPass);
 		
 		JLabel lblPassengerCount = new JLabel("Passenger Count");
 		lblPassengerCount.setBounds(20, 220, 86, 14);
 		frmTrainModel.getContentPane().add(lblPassengerCount);
 		
-		textField_1 = new JTextField();
-		textField_1.setBackground(Color.WHITE);
-		textField_1.setEditable(false);
-		textField_1.setForeground(Color.BLACK);
-		textField_1.setText("2");
-		textField_1.setColumns(10);
-		textField_1.setBounds(116, 192, 86, 20);
-		frmTrainModel.getContentPane().add(textField_1);
+		txtCrew = new JTextField();
+		txtCrew.setEditable(false);
+		txtCrew.setBackground(Color.WHITE);
+		txtCrew.setForeground(Color.BLACK);
+		txtCrew.setText("2");
+		txtCrew.setColumns(10);
+		txtCrew.setBounds(116, 192, 86, 20);
+		frmTrainModel.getContentPane().add(txtCrew);
 		
 		JLabel lblCarCount = new JLabel("Number of Cars");
 		lblCarCount.setBounds(20, 251, 86, 14);
 		frmTrainModel.getContentPane().add(lblCarCount);
 		
-		textField_2 = new JTextField();
-		textField_2.setBackground(Color.WHITE);
-		textField_2.setEditable(false);
-		textField_2.setForeground(Color.BLACK);
-		textField_2.setText("1");
-		textField_2.setColumns(120);
-		textField_2.setBounds(116, 248, 86, 20);
-		frmTrainModel.getContentPane().add(textField_2);
+		txtCar = new JTextField();
+		txtCar.setBackground(Color.WHITE);
+		txtCar.setEditable(false);
+		txtCar.setForeground(Color.BLACK);
+		txtCar.setText("1");
+		txtCar.setColumns(120);
+		txtCar.setBounds(116, 248, 86, 20);
+		frmTrainModel.getContentPane().add(txtCar);
 		
 		JLabel lblTrainStatuses = new JLabel("Train Statuses");
 		lblTrainStatuses.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -246,21 +247,21 @@ public class trainModeUI {
 		lblRightDoor.setBounds(488, 77, 70, 14);
 		frmTrainModel.getContentPane().add(lblRightDoor);
 		
-		txtOpen = new JTextField();
-		txtOpen.setBackground(Color.WHITE);
-		txtOpen.setEditable(false);
-		txtOpen.setText("OPEN");
-		txtOpen.setColumns(10);
-		txtOpen.setBounds(584, 71, 86, 20);
-		frmTrainModel.getContentPane().add(txtOpen);
+		txtRightDoor = new JTextField();
+		txtRightDoor.setBackground(Color.WHITE);
+		txtRightDoor.setEditable(false);
+		txtRightDoor.setText("OPEN");
+		txtRightDoor.setColumns(10);
+		txtRightDoor.setBounds(584, 71, 86, 20);
+		frmTrainModel.getContentPane().add(txtRightDoor);
 		
-		txtClosed = new JTextField();
-		txtClosed.setBackground(Color.WHITE);
-		txtClosed.setEditable(false);
-		txtClosed.setText("CLOSED");
-		txtClosed.setColumns(10);
-		txtClosed.setBounds(584, 102, 86, 20);
-		frmTrainModel.getContentPane().add(txtClosed);
+		txtLeftDoor = new JTextField();
+		txtLeftDoor.setBackground(Color.WHITE);
+		txtLeftDoor.setEditable(false);
+		txtLeftDoor.setText("CLOSED");
+		txtLeftDoor.setColumns(10);
+		txtLeftDoor.setBounds(584, 102, 86, 20);
+		frmTrainModel.getContentPane().add(txtLeftDoor);
 		
 		JLabel lblLeftDoor = new JLabel("Left Door");
 		lblLeftDoor.setBounds(488, 108, 46, 14);
@@ -270,21 +271,21 @@ public class trainModeUI {
 		lblLights.setBounds(488, 139, 46, 14);
 		frmTrainModel.getContentPane().add(lblLights);
 		
-		txtOn = new JTextField();
-		txtOn.setBackground(Color.WHITE);
-		txtOn.setEditable(false);
-		txtOn.setText("ON");
-		txtOn.setColumns(10);
-		txtOn.setBounds(584, 133, 86, 20);
-		frmTrainModel.getContentPane().add(txtOn);
+		txtLights = new JTextField();
+		txtLights.setBackground(Color.WHITE);
+		txtLights.setEditable(false);
+		txtLights.setText("ON");
+		txtLights.setColumns(10);
+		txtLights.setBounds(584, 133, 86, 20);
+		frmTrainModel.getContentPane().add(txtLights);
 		
-		txtF = new JTextField();
-		txtF.setBackground(Color.WHITE);
-		txtF.setEditable(false);
-		txtF.setText("55 F");
-		txtF.setColumns(10);
-		txtF.setBounds(584, 161, 86, 20);
-		frmTrainModel.getContentPane().add(txtF);
+		txtTemperature = new JTextField();
+		txtTemperature.setBackground(Color.WHITE);
+		txtTemperature.setEditable(false);
+		txtTemperature.setText("55 F");
+		txtTemperature.setColumns(10);
+		txtTemperature.setBounds(584, 161, 86, 20);
+		frmTrainModel.getContentPane().add(txtTemperature);
 		
 		JLabel lblTemperature = new JLabel("Temperature");
 		lblTemperature.setBounds(488, 167, 70, 14);
@@ -294,22 +295,22 @@ public class trainModeUI {
 		lblThermostat.setBounds(488, 195, 70, 14);
 		frmTrainModel.getContentPane().add(lblThermostat);
 		
-		txtF_1 = new JTextField();
-		txtF_1.setBackground(Color.WHITE);
-		txtF_1.setEditable(false);
-		txtF_1.setText("60 F");
-		txtF_1.setColumns(10);
-		txtF_1.setBounds(584, 192, 86, 20);
-		frmTrainModel.getContentPane().add(txtF_1);
+		txtThermostat = new JTextField();
+		txtThermostat.setBackground(Color.WHITE);
+		txtThermostat.setEditable(false);
+		txtThermostat.setText("60 F");
+		txtThermostat.setColumns(10);
+		txtThermostat.setBounds(584, 192, 86, 20);
+		frmTrainModel.getContentPane().add(txtThermostat);
 		
-		txtFailure = new JTextField();
-		txtFailure.setEditable(false);
-		txtFailure.setBackground(Color.WHITE);
-		txtFailure.setForeground(new Color(0, 0, 0));
-		txtFailure.setText("OFF");
-		txtFailure.setColumns(120);
-		txtFailure.setBounds(584, 217, 86, 20);
-		frmTrainModel.getContentPane().add(txtFailure);
+		txtServiceBrake = new JTextField();
+		txtServiceBrake.setEditable(false);
+		txtServiceBrake.setBackground(Color.WHITE);
+		txtServiceBrake.setForeground(new Color(0, 0, 0));
+		txtServiceBrake.setText("OFF");
+		txtServiceBrake.setColumns(120);
+		txtServiceBrake.setBounds(584, 217, 86, 20);
+		frmTrainModel.getContentPane().add(txtServiceBrake);
 		
 		JLabel lblServiceBrake = new JLabel("Service Brake");
 		lblServiceBrake.setBounds(488, 220, 86, 14);
@@ -319,13 +320,13 @@ public class trainModeUI {
 		lblEmergencyBrake.setBounds(488, 251, 86, 14);
 		frmTrainModel.getContentPane().add(lblEmergencyBrake);
 		
-		txtOn_1 = new JTextField();
-		txtOn_1.setBackground(Color.WHITE);
-		txtOn_1.setEditable(false);
-		txtOn_1.setText("OFF");
-		txtOn_1.setColumns(120);
-		txtOn_1.setBounds(584, 248, 86, 20);
-		frmTrainModel.getContentPane().add(txtOn_1);
+		txtEmergencyBrake = new JTextField();
+		txtEmergencyBrake.setBackground(Color.WHITE);
+		txtEmergencyBrake.setEditable(false);
+		txtEmergencyBrake.setText("OFF");
+		txtEmergencyBrake.setColumns(120);
+		txtEmergencyBrake.setBounds(584, 248, 86, 20);
+		frmTrainModel.getContentPane().add(txtEmergencyBrake);
 		
 		JLabel lblCurrentSpeed = new JLabel("Current Speed");
 		lblCurrentSpeed.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -364,71 +365,71 @@ public class trainModeUI {
 		lblBrakeFailure.setBounds(16, 419, 99, 33);
 		frmTrainModel.getContentPane().add(lblBrakeFailure);
 		
-		JRadioButton rdbtnOn = new JRadioButton("ON");
-		buttonGroup.add(rdbtnOn);
-		rdbtnOn.setBounds(112, 369, 46, 23);
-		frmTrainModel.getContentPane().add(rdbtnOn);
+		JRadioButton rdbtnEngineOn = new JRadioButton("ON");
+		engineFailureBG.add(rdbtnEngineOn);
+		rdbtnEngineOn.setBounds(112, 369, 46, 23);
+		frmTrainModel.getContentPane().add(rdbtnEngineOn);
 		
-		JRadioButton radioButton = new JRadioButton("ON");
-		buttonGroup_1.add(radioButton);
-		radioButton.setBounds(112, 397, 46, 23);
-		frmTrainModel.getContentPane().add(radioButton);
+		JRadioButton rdbtnSignalOn = new JRadioButton("ON");
+		signalFailureBG.add(rdbtnSignalOn);
+		rdbtnSignalOn.setBounds(112, 397, 46, 23);
+		frmTrainModel.getContentPane().add(rdbtnSignalOn);
 		
-		JRadioButton radioButton_1 = new JRadioButton("ON");
-		buttonGroup_2.add(radioButton_1);
-		radioButton_1.setSelected(true);
-		radioButton_1.setBounds(112, 429, 46, 23);
-		frmTrainModel.getContentPane().add(radioButton_1);
+		JRadioButton rdbtnBrakeOn = new JRadioButton("ON");
+		brakeFailureBG.add(rdbtnBrakeOn);
+		rdbtnBrakeOn.setSelected(true);
+		rdbtnBrakeOn.setBounds(112, 429, 46, 23);
+		frmTrainModel.getContentPane().add(rdbtnBrakeOn);
 		
-		JRadioButton rdbtnOff = new JRadioButton("OFF");
-		buttonGroup.add(rdbtnOff);
-		rdbtnOff.setSelected(true);
-		rdbtnOff.setBounds(156, 369, 46, 23);
-		frmTrainModel.getContentPane().add(rdbtnOff);
+		JRadioButton rdbtnEngineOff = new JRadioButton("OFF");
+		engineFailureBG.add(rdbtnEngineOff);
+		rdbtnEngineOff.setSelected(true);
+		rdbtnEngineOff.setBounds(156, 369, 46, 23);
+		frmTrainModel.getContentPane().add(rdbtnEngineOff);
 		
-		JRadioButton rdbtnOff_1 = new JRadioButton("OFF");
-		buttonGroup_1.add(rdbtnOff_1);
-		rdbtnOff_1.setSelected(true);
-		rdbtnOff_1.setBounds(156, 397, 46, 23);
-		frmTrainModel.getContentPane().add(rdbtnOff_1);
+		JRadioButton rdbtnSignalOff = new JRadioButton("OFF");
+		signalFailureBG.add(rdbtnSignalOff);
+		rdbtnSignalOff.setSelected(true);
+		rdbtnSignalOff.setBounds(156, 397, 46, 23);
+		frmTrainModel.getContentPane().add(rdbtnSignalOff);
 		
-		JRadioButton rdbtnOff_2 = new JRadioButton("OFF");
-		buttonGroup_2.add(rdbtnOff_2);
-		rdbtnOff_2.setBounds(156, 429, 46, 23);
-		frmTrainModel.getContentPane().add(rdbtnOff_2);
+		JRadioButton rdbtnBrakeOff = new JRadioButton("OFF");
+		brakeFailureBG.add(rdbtnBrakeOff);
+		rdbtnBrakeOff.setBounds(156, 429, 46, 23);
+		frmTrainModel.getContentPane().add(rdbtnBrakeOff);
 		
-		JTextPane txtpnMessageBoard = new JTextPane();
-		txtpnMessageBoard.setEditable(false);
-		txtpnMessageBoard.setText("\tMessage Board\r\nPower Command of 5,000 Recieved.\r\nCurrent Speed 65 MPH\r\nSERVICE BRAKE FAILURE!\r\nCurrent Speed Dropping.");
-		txtpnMessageBoard.setBounds(229, 186, 232, 85);
-		frmTrainModel.getContentPane().add(txtpnMessageBoard);
+		JTextPane txtMessageBoard = new JTextPane();
+		txtMessageBoard.setEditable(false);
+		txtMessageBoard.setText("\tMessage Board\r\nPower Command of 5,000 Recieved.\r\nCurrent Speed 65 MPH\r\nSERVICE BRAKE FAILURE!\r\nCurrent Speed Dropping.");
+		txtMessageBoard.setBounds(229, 186, 232, 85);
+		frmTrainModel.getContentPane().add(txtMessageBoard);
 		
-		txtpnMph = new JTextPane();
-		txtpnMph.setEditable(false);
-		txtpnMph.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		txtpnMph.setText("                                                                                                  65 MPH");
-		txtpnMph.setBounds(229, 71, 77, 67);
-		frmTrainModel.getContentPane().add(txtpnMph);
+		txtSpeed = new JTextPane();
+		txtSpeed.setEditable(false);
+		txtSpeed.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtSpeed.setText("                                                                                                  65 MPH");
+		txtSpeed.setBounds(229, 71, 77, 67);
+		frmTrainModel.getContentPane().add(txtSpeed);
 
-		txtpnMi = new JTextPane();
-		txtpnMi.setEditable(false);
-		txtpnMi.setText("             3 mi");
-		txtpnMi.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		txtpnMi.setBounds(351, 71, 77, 67);
-		frmTrainModel.getContentPane().add(txtpnMi);
+		txtAuthority = new JTextPane();
+		txtAuthority.setEditable(false);
+		txtAuthority.setText("             3 mi");
+		txtAuthority.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtAuthority.setBounds(351, 71, 77, 67);
+		frmTrainModel.getContentPane().add(txtAuthority);
 		
 		JLabel lblPowerCommand = new JLabel("Power Command");
 		lblPowerCommand.setBounds(237, 161, 100, 14);
 		frmTrainModel.getContentPane().add(lblPowerCommand);
 		
-		txtN = new JTextField();
-		txtN.setBackground(Color.WHITE);
-		txtN.setEditable(false);
-		txtN.setText("5,000 W");
-		txtN.setForeground(Color.BLACK);
-		txtN.setColumns(10);
-		txtN.setBounds(351, 154, 86, 20);
-		frmTrainModel.getContentPane().add(txtN);
+		txtPower = new JTextField();
+		txtPower.setBackground(Color.WHITE);
+		txtPower.setEditable(false);
+		txtPower.setText("5,000 W");
+		txtPower.setForeground(Color.BLACK);
+		txtPower.setColumns(10);
+		txtPower.setBounds(351, 154, 86, 20);
+		frmTrainModel.getContentPane().add(txtPower);
 		
 		JSeparator separator_3 = new JSeparator();
 		separator_3.setForeground(Color.BLACK);
@@ -448,113 +449,113 @@ public class trainModeUI {
 		lblRightDoor_1.setBounds(245, 361, 60, 33);
 		frmTrainModel.getContentPane().add(lblRightDoor_1);
 		
-		JRadioButton rdbtnOpen = new JRadioButton("OPEN");
-		buttonGroup_3.add(rdbtnOpen);
-		rdbtnOpen.setSelected(true);
-		rdbtnOpen.setBounds(328, 360, 71, 23);
-		frmTrainModel.getContentPane().add(rdbtnOpen);
+		JRadioButton rdbtnRightDoorOpen = new JRadioButton("OPEN");
+		rightDoorBG.add(rdbtnRightDoorOpen);
+		rdbtnRightDoorOpen.setSelected(true);
+		rdbtnRightDoorOpen.setBounds(328, 360, 71, 23);
+		frmTrainModel.getContentPane().add(rdbtnRightDoorOpen);
 		
-		JRadioButton radioButton_2 = new JRadioButton("OPEN");
-		buttonGroup_7.add(radioButton_2);
-		radioButton_2.setBounds(559, 347, 64, 23);
-		frmTrainModel.getContentPane().add(radioButton_2);
+		JRadioButton rdbtnLeftDoorOpen = new JRadioButton("OPEN");
+		leftDoorBG.add(rdbtnLeftDoorOpen);
+		rdbtnLeftDoorOpen.setBounds(559, 325, 64, 23);
+		frmTrainModel.getContentPane().add(rdbtnLeftDoorOpen);
 		
-		JRadioButton radioButton_3 = new JRadioButton("CLOSED");
-		buttonGroup_7.add(radioButton_3);
-		radioButton_3.setSelected(true);
-		radioButton_3.setBounds(625, 347, 73, 23);
-		frmTrainModel.getContentPane().add(radioButton_3);
+		JRadioButton rdbtnLeftDoorClosed = new JRadioButton("CLOSED");
+		leftDoorBG.add(rdbtnLeftDoorClosed);
+		rdbtnLeftDoorClosed.setSelected(true);
+		rdbtnLeftDoorClosed.setBounds(625, 325, 73, 23);
+		frmTrainModel.getContentPane().add(rdbtnLeftDoorClosed);
 		
 		JLabel lblLights_1 = new JLabel("Lights");
 		lblLights_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblLights_1.setBounds(245, 383, 61, 33);
 		frmTrainModel.getContentPane().add(lblLights_1);
 		
-		JRadioButton radioButton_4 = new JRadioButton("ON");
-		buttonGroup_4.add(radioButton_4);
-		radioButton_4.setBounds(328, 388, 46, 23);
-		frmTrainModel.getContentPane().add(radioButton_4);
+		JRadioButton rdbtnLightsOn = new JRadioButton("ON");
+		lightsBG.add(rdbtnLightsOn);
+		rdbtnLightsOn.setBounds(328, 388, 46, 23);
+		frmTrainModel.getContentPane().add(rdbtnLightsOn);
 		
-		JRadioButton radioButton_5 = new JRadioButton("OFF");
-		buttonGroup_4.add(radioButton_5);
-		radioButton_5.setSelected(true);
-		radioButton_5.setBounds(377, 386, 46, 23);
-		frmTrainModel.getContentPane().add(radioButton_5);
+		JRadioButton rdbtnLightsOff = new JRadioButton("OFF");
+		lightsBG.add(rdbtnLightsOff);
+		rdbtnLightsOff.setSelected(true);
+		rdbtnLightsOff.setBounds(377, 386, 46, 23);
+		frmTrainModel.getContentPane().add(rdbtnLightsOff);
 		
 		JLabel lblSetThermostat = new JLabel("Set Thermostat");
 		lblSetThermostat.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblSetThermostat.setBounds(490, 373, 86, 14);
 		frmTrainModel.getContentPane().add(lblSetThermostat);
 		
-		textField_3 = new JTextField();
-		textField_3.setText("60 F");
-		textField_3.setColumns(10);
-		textField_3.setBounds(615, 368, 70, 20);
-		frmTrainModel.getContentPane().add(textField_3);
+		txtTestThermostat = new JTextField();
+		txtTestThermostat.setText("60 F");
+		txtTestThermostat.setColumns(10);
+		txtTestThermostat.setBounds(615, 368, 70, 20);
+		frmTrainModel.getContentPane().add(txtTestThermostat);
 		
 		JLabel lblServiceBrake_1 = new JLabel("Service Brake");
 		lblServiceBrake_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblServiceBrake_1.setBounds(245, 405, 70, 33);
 		frmTrainModel.getContentPane().add(lblServiceBrake_1);
 		
-		JRadioButton radioButton_6 = new JRadioButton("ON");
-		buttonGroup_5.add(radioButton_6);
-		radioButton_6.setBounds(328, 410, 46, 23);
-		frmTrainModel.getContentPane().add(radioButton_6);
+		JRadioButton rdbtnServiceBrakeOn = new JRadioButton("ON");
+		serviceBrakeBG.add(rdbtnServiceBrakeOn);
+		rdbtnServiceBrakeOn.setBounds(328, 410, 46, 23);
+		frmTrainModel.getContentPane().add(rdbtnServiceBrakeOn);
 		
-		JRadioButton radioButton_7 = new JRadioButton("OFF");
-		buttonGroup_5.add(radioButton_7);
-		radioButton_7.setSelected(true);
-		radioButton_7.setBounds(377, 410, 46, 23);
-		frmTrainModel.getContentPane().add(radioButton_7);
+		JRadioButton rdbtnServiceBrakeOff = new JRadioButton("OFF");
+		serviceBrakeBG.add(rdbtnServiceBrakeOff);
+		rdbtnServiceBrakeOff.setSelected(true);
+		rdbtnServiceBrakeOff.setBounds(377, 410, 46, 23);
+		frmTrainModel.getContentPane().add(rdbtnServiceBrakeOff);
 		
 		JLabel lblEmergencyBrake_1 = new JLabel("Emergency Brake");
 		lblEmergencyBrake_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblEmergencyBrake_1.setBounds(245, 430, 86, 33);
 		frmTrainModel.getContentPane().add(lblEmergencyBrake_1);
 		
-		JRadioButton radioButton_8 = new JRadioButton("ON");
-		buttonGroup_6.add(radioButton_8);
-		radioButton_8.setSelected(true);
-		radioButton_8.setBounds(328, 436, 46, 23);
-		frmTrainModel.getContentPane().add(radioButton_8);
+		JRadioButton rdbtnEmergencyBrakeOn = new JRadioButton("ON");
+		emergencyBrakeBG.add(rdbtnEmergencyBrakeOn);
+		rdbtnEmergencyBrakeOn.setSelected(true);
+		rdbtnEmergencyBrakeOn.setBounds(328, 436, 46, 23);
+		frmTrainModel.getContentPane().add(rdbtnEmergencyBrakeOn);
 		
-		JRadioButton radioButton_9 = new JRadioButton("OFF");
-		buttonGroup_6.add(radioButton_9);
-		radioButton_9.setBounds(377, 436, 46, 23);
-		frmTrainModel.getContentPane().add(radioButton_9);
+		JRadioButton rdbtnEmergencyBrakeOff = new JRadioButton("OFF");
+		emergencyBrakeBG.add(rdbtnEmergencyBrakeOff);
+		rdbtnEmergencyBrakeOff.setBounds(377, 436, 46, 23);
+		frmTrainModel.getContentPane().add(rdbtnEmergencyBrakeOff);
 		
 		JLabel lblSetPowerCommand = new JLabel("Set Power Command");
 		lblSetPowerCommand.setBounds(245, 342, 107, 14);
 		frmTrainModel.getContentPane().add(lblSetPowerCommand);
 		
-		txtN_1 = new JTextField();
-		txtN_1.setText("5000 ");
-		txtN_1.setColumns(10);
-		txtN_1.setBounds(350, 336, 71, 20);
-		frmTrainModel.getContentPane().add(txtN_1);
+		txtTestPower = new JTextField();
+		txtTestPower.setText("5000 ");
+		txtTestPower.setColumns(10);
+		txtTestPower.setBounds(350, 336, 71, 20);
+		frmTrainModel.getContentPane().add(txtTestPower);
 		
 		JLabel lblAddPassengers = new JLabel("Add/Remove Passengers");
 		lblAddPassengers.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblAddPassengers.setBounds(490, 391, 127, 14);
 		frmTrainModel.getContentPane().add(lblAddPassengers);
 		
-		textField_4 = new JTextField();
-		textField_4.setText("120");
-		textField_4.setColumns(10);
-		textField_4.setBounds(615, 386, 70, 20);
-		frmTrainModel.getContentPane().add(textField_4);
+		txtTestAddPassengers = new JTextField();
+		txtTestAddPassengers.setText("120");
+		txtTestAddPassengers.setColumns(10);
+		txtTestAddPassengers.setBounds(615, 386, 70, 20);
+		frmTrainModel.getContentPane().add(txtTestAddPassengers);
 		
 		JLabel lblSetAuthority = new JLabel("Set Authority");
 		lblSetAuthority.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblSetAuthority.setBounds(488, 410, 86, 14);
 		frmTrainModel.getContentPane().add(lblSetAuthority);
 		
-		txtMi = new JTextField();
-		txtMi.setText("3 mi");
-		txtMi.setColumns(10);
-		txtMi.setBounds(615, 405, 70, 20);
-		frmTrainModel.getContentPane().add(txtMi);
+		txtTestAuthority = new JTextField();
+		txtTestAuthority.setText("3 mi");
+		txtTestAuthority.setColumns(10);
+		txtTestAuthority.setBounds(615, 405, 70, 20);
+		frmTrainModel.getContentPane().add(txtTestAuthority);
 		
 		
 		
@@ -564,10 +565,10 @@ public class trainModeUI {
 		comboBox.setBounds(10, 9, 118, 23);
 		frmTrainModel.getContentPane().add(comboBox);
 		
-		JRadioButton rdbtnClosed = new JRadioButton("CLOSED");
-		buttonGroup_3.add(rdbtnClosed);
-		rdbtnClosed.setBounds(401, 359, 86, 23);
-		frmTrainModel.getContentPane().add(rdbtnClosed);
+		JRadioButton rdbtnRightDoorClosed = new JRadioButton("CLOSED");
+		rightDoorBG.add(rdbtnRightDoorClosed);
+		rdbtnRightDoorClosed.setBounds(401, 359, 86, 23);
+		frmTrainModel.getContentPane().add(rdbtnRightDoorClosed);
 		
 		JButton btnApplyChanges = new JButton("Start Test\r\n");
 		btnApplyChanges.setBounds(488, 435, 107, 23);
@@ -582,6 +583,17 @@ public class trainModeUI {
 		
 		btnStopTest.setBounds(603, 435, 107, 23);
 		frmTrainModel.getContentPane().add(btnStopTest);
+		
+		JLabel lblGrade = new JLabel("Grade\r\n");
+		lblGrade.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblGrade.setBounds(490, 350, 86, 14);
+		frmTrainModel.getContentPane().add(lblGrade);
+		
+		txtTestGrade = new JTextField();
+		txtTestGrade.setText("0");
+		txtTestGrade.setColumns(10);
+		txtTestGrade.setBounds(615, 350, 70, 20);
+		frmTrainModel.getContentPane().add(txtTestGrade);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frmTrainModel.setJMenuBar(menuBar);
@@ -616,9 +628,12 @@ public class trainModeUI {
 			public void actionPerformed(ActionEvent arg0) {
 				//action button to apply changes made to test console once pressed all pertinent values will be updated based on the component values
 				//for prototype first thing to update is velocity based on power command
-					String pwrCmdStr = txtN_1.getText();
+					String pwrCmdStr = txtTestPower.getText();
+					String gradeStr = txtTestGrade.getText();
+					Double grade = Double.parseDouble(gradeStr);
 					Double pwrCmd = Double.parseDouble(pwrCmdStr);
-					new Launch().powerLoop(pwrCmd,currTrain);					
+					currTrain.setGrade(grade);
+					new Launch().powerCommandToTrain(pwrCmd,currTrain);					
 				
 			}
 		});
@@ -635,10 +650,8 @@ public class trainModeUI {
 	public void updateGUI(Train currT) {
 		//method to update GUI based on selected train info
 		currTrain = currT;
-		txtpnMph.setText("\n   "+currTrain.getVelocity().intValue()+" MPH");
-		txtN.setText(currTrain.getPower().intValue()+" W");
-		txtTons.setText(currTrain.getMass().intValue()+" lbs");
+		txtSpeed.setText("\n   "+currTrain.getVelocity().intValue()+" MPH");
+		txtPower.setText(currTrain.getPower().intValue()+" W");
+		txtMass.setText(currTrain.getMass().intValue()+" "); // +" lbs");
 	}
-	
-	
 }

@@ -1,8 +1,8 @@
-package trainModel;
+package TrainModel;
 
 import java.util.Scanner;
 
-public class tester {
+public class Tester {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
