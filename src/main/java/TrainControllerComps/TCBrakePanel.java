@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JTextArea;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
+import TrainModel.*;
+
 /**
  * This class is responsible for applying and managing the use of a train's braking 
  * system. In manual mode, this class must present a window to confirm the use of
@@ -26,7 +28,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
      * This variable is passed in from the Train Controller class. 
      * 
      */
-    private TestTrain selectedTrain;
+    private Train selectedTrain;
     
     /**
      * Text area to print notifications to. 
@@ -59,7 +61,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
      * 
      * @param selectedTrain the train being controlled.
      */
-    public void setSelectedTrain(TestTrain selectedTrain){
+    public void setSelectedTrain(Train selectedTrain){
     
         this.selectedTrain = selectedTrain; 
     }
@@ -220,7 +222,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
         }else if (this.inManualMode == false){
             
             // FIX ME: Change this when train model is done. 
-            this.selectedTrain.speed = this.selectedTrain.speed - 5; 
+            this.selectedTrain.setSpeed(this.selectedTrain.getVelocity() - 5);
         }   
     }//GEN-LAST:event_initateEmergencyBrake
   
@@ -235,7 +237,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
         
         // decrease speed on the train
         // FIX ME: for testing, it will decrease by 1   
-        this.selectedTrain.speed = this.selectedTrain.speed - 1;  
+        this.selectedTrain.setSpeed(this.selectedTrain.getVelocity() - 1);
         
         this.printLogs();
     }//GEN-LAST:event_engageServiceBrake

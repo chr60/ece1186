@@ -1,6 +1,7 @@
 package TrainControllerComps;
 
 import CommonUIElements.ConfirmationWindow;
+import TrainModel.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -21,7 +22,7 @@ public class TCEngineerPanel extends javax.swing.JFrame {
      * The selected train whose power constants are being set. 
      * This train corresponds to the train that is being controlled by the Train Controller. 
      */
-    private TestTrain selectedTrain; 
+    private Train selectedTrain; 
     
     /**
      * Constructor for creating a TCEngineerPanel object without any selected train. 
@@ -37,7 +38,7 @@ public class TCEngineerPanel extends javax.swing.JFrame {
      * 
      * @param train the train controlled by the Train Controller. 
      */
-    public TCEngineerPanel(TestTrain train){
+    public TCEngineerPanel(Train train){
             
         this.initComponents();
         
@@ -55,13 +56,13 @@ public class TCEngineerPanel extends javax.swing.JFrame {
     private void refreshUI(){
     
         // set the label for the train's id
-        this.trainId.setText(this.selectedTrain.id); 
+        this.trainId.setText(Integer.toString( this.selectedTrain.getID() ) ); 
         
         // check if the train has a kp and ki already
-        if (this.selectedTrain.kp != null && this.selectedTrain.ki != null){
+        if (this.selectedTrain.powerConstantsSet()){
         
-            this.KpTextField.setText(Double.toString(this.selectedTrain.kp));
-            this.KiTextField.setText(Double.toString(this.selectedTrain.ki));
+            this.KpTextField.setText(Double.toString(this.selectedTrain.getKp()));
+            this.KiTextField.setText(Double.toString(this.selectedTrain.getKi()));
         }else{
         
             // set it to 0.0 if the train doesnt have a kp and ki
@@ -75,7 +76,7 @@ public class TCEngineerPanel extends javax.swing.JFrame {
      * 
      * @param train the train to control
      */
-    public void setTrain(TestTrain train){
+    public void setTrain(Train train){
         
         this.selectedTrain = train;
     }
@@ -186,11 +187,10 @@ public class TCEngineerPanel extends javax.swing.JFrame {
             System.out.println("Ki_TextField: " + this.KiTextField.getText());
             
             // give the train the set Kp and Ki
-            this.selectedTrain.kp = Double.parseDouble(this.KpTextField.getText());
-            this.selectedTrain.ki = Double.parseDouble(this.KiTextField.getText());
+            this.selectedTrain.setKpAndKi(Double.parseDouble(this.KpTextField.getText()), Double.parseDouble(this.KiTextField.getText()) );
             
-            System.out.println("Kp: " + this.selectedTrain.kp);             
-            System.out.println("Ki: " + this.selectedTrain.ki); 
+            System.out.println("Kp: " + this.selectedTrain.getKp());             
+            System.out.println("Ki: " + this.selectedTrain.getKi()); 
             
             // display a confirmation window for 1 second
             ConfirmationWindow confirmWindow = new ConfirmationWindow("Kp and Ki Set", "Kp and Ki were successfully set.", 1); 

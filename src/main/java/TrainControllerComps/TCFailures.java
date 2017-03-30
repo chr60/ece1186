@@ -14,6 +14,8 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 
+import TrainModel.*; 
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -34,7 +36,7 @@ public class TCFailures extends javax.swing.JFrame {
     /**
      * The train in which to display the failures from. 
      */
-    private TestTrain selectedTrain;
+    private Train selectedTrain;
     
     /**
      * A list to store up messages to print to the error log. 
@@ -63,7 +65,7 @@ public class TCFailures extends javax.swing.JFrame {
      * 
      * @param train the selected train from the Train Controller 
      */
-    public TCFailures(TestTrain train) {
+    public TCFailures(Train train) {
         
         initComponents();
         this.logbook = new LinkedList(); 
@@ -87,7 +89,7 @@ public class TCFailures extends javax.swing.JFrame {
      */
     private void refreshUI(){
     
-        this.trainId.setText(this.selectedTrain.id);
+        this.trainId.setText(Integer.toString( this.selectedTrain.getID()) );
         
         // update the radio buttons based on the train    
         if (this.isPowerFailure()){ this.powerFailureRadioButton.setSelected(true); }

@@ -10,6 +10,8 @@ import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import TrainModel.*;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -32,7 +34,7 @@ public class TCSpeedController extends javax.swing.JPanel {
     /**
      * The train that is being controlled by the Train Controller. 
      */
-    private TestTrain selectedTrain; 
+    private Train selectedTrain; 
     
     /**
      * Area the logs are printed to.
@@ -175,10 +177,10 @@ public class TCSpeedController extends javax.swing.JPanel {
      * 
      * @param train the train that is being controlled in the Train Controller class.
      */
-    public void setTrain(TestTrain train){
+    public void setTrain(Train train){
 
         this.selectedTrain = train;  
-        this.setSpeed = (int) this.selectedTrain.speed;
+        this.setSpeed = selectedTrain.getVelocity().intValue();
     }
     
     /**
@@ -442,9 +444,9 @@ public class TCSpeedController extends javax.swing.JPanel {
          
         this.logBook.add("Set Speed: " + this.setSpeed);
         // calculate the error 
-        double error = this.setSpeed - this.selectedTrain.speed; 
+        double error = this.setSpeed - this.selectedTrain.getVelocity(); 
             
-        this.powerCommandOut = this.selectedTrain.kp * error + this.selectedTrain.ki;
+        this.powerCommandOut = this.selectedTrain.getKp() * error + this.selectedTrain.getKi();
         
         // send powerCommandOut to the train, which then changes its speed
         // this.selectedTrain.powerCommand(this.powerCommand); 
@@ -463,7 +465,7 @@ public class TCSpeedController extends javax.swing.JPanel {
             this.logBook.add("Full steam ahead!");
             // speed up train by 1 MPH 
             // FOR TESTING PURPOSES, THIS IS 1 MPH
-            this.selectedTrain.speed++; 
+            this.selectedTrain.setSpeed(this.selectedTrain.getVelocity() + 1); 
             
         } // train should speed up
         else if (this.powerCommandOut == 0){ this.logBook.add("Steady Power!!."); } // train should continue at same speed

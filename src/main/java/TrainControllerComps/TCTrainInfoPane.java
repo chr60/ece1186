@@ -1,5 +1,7 @@
 package TrainControllerComps;
 
+import TrainModel.*;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -18,7 +20,7 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
     /**
      * The train used to update the UI based on its information.
      */
-    private TestTrain selectedTrain; 
+    private Train selectedTrain; 
     
     /**
      * Constructor for creating a TCTrainInfoPane object with no selected train.
@@ -33,7 +35,7 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
      * 
      * @param train the train controlled by the Train Controller.
      */
-    public void setSelectedTrain(TestTrain train){
+    public void setSelectedTrain(Train train){
     
         this.selectedTrain = train;
     }
@@ -107,9 +109,10 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
      */
     public void refreshUI(){
     
-        this.setSpeedLabel(this.selectedTrain.speed);
-        this.setPowerLabel(this.selectedTrain.power);
-        this.setSuggestSpeedLabel(this.selectedTrain.currentSuggestedSpeed);
+        this.setSpeedLabel(this.selectedTrain.getVelocity());
+        this.setPowerLabel(this.selectedTrain.getPower());
+        // FIX ME: This should be the suggested speed!
+        this.setSuggestSpeedLabel(77);
     }
     
     /**

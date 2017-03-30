@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.event.ItemEvent;
 import javax.swing.JButton;
 
+import TrainModel.*;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -27,7 +29,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
      * The train in which the UI should update from based on its values. 
      * This object is passed from the parent Train Controller.
      */
-    private TestTrain selectedTrain; 
+    private Train selectedTrain; 
         
     /**
      * A boolean used to determine if the component should operate in manual or automatic mode.
@@ -75,7 +77,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
      * 
      * @param train the train controlled by the Train Controller. 
      */
-    public void setSelectedTrain(TestTrain train){
+    public void setSelectedTrain(Train train){
  
         this.selectedTrain = train; 
     }
@@ -85,7 +87,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
      * 
      * @return returns the selected train. 
      */
-    public TestTrain getSelectedTrain(){
+    public Train getSelectedTrain(){
         
         return this.selectedTrain; 
     }
@@ -252,7 +254,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
      */
     private void refreshHeat(){
     
-        if (this.selectedTrain.heat == 1){ this.heatOnRadioButton.setSelected(true); }
+        if (this.selectedTrain. == 1){ this.heatOnRadioButton.setSelected(true); }
         else if (this.selectedTrain.heat == 0){ this.heatOffRadioButton.setSelected(true);}
         else if (this.selectedTrain.heat == -1){ this.heatFailureRadioButton.setSelected(true); }
     }
