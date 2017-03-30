@@ -5,7 +5,7 @@ import java.io.*;
 import java.util.*;
 
 
-public class WaysidePLC {
+public class PLCParse {
 
 	/**
 	 * Starts new PLC generation
@@ -32,13 +32,13 @@ public class WaysidePLC {
                  else if(comp.equals("switch"))
                      switchExpression = expression[1];
                  else if(comp.equals("maintenance"))
-                     switchExpression = expression[1];
+                     maintenanceExpression = expression[1];
                  else if(comp.equals("crossing"))
-                     switchExpression = expression[1];
+                     crossingExpression = expression[1];
                  else if(comp.equals("crossingactivate"))
-                     switchExpression = expression[1];
+                     crossingStateExpression = expression[1];
                  else if(comp.equals("monitor"))
-                     switchExpression = expression[1];
+                     monitorExpression = expression[1];
              }
 		 reader.close();
 		 return new PLC(proceedExpression, switchExpression, maintenanceExpression, crossingExpression, crossingStateExpression, monitorExpression);
