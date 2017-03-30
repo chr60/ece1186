@@ -6,8 +6,9 @@ package TrackModel;
  * @author Michael
  */
 import java.util.ArrayList;
+import java.io.*;
 
-public class Block implements Comparable<Block>{
+public class Block implements Comparable<Block>, java.io.Serializable{
 
 	public Double blockLen;
 	public Boolean occupied;

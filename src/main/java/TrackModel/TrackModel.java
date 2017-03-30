@@ -17,10 +17,19 @@ import java.util.TreeSet;
 import java.util.Collections;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.io.*;
 
-public class TrackModel {
+public class TrackModel implements Serializable{
+	public String trackScope;
 
-	HashMap<String,HashMap<String, HashMap<Integer, Block>>> trackList =
+	public TrackModel(String scope){
+		this.trackScope = scope;
+	}
+
+	public TrackModel(){}
+
+
+	public HashMap<String,HashMap<String, HashMap<Integer, Block>>> trackList =
 		new HashMap<String,HashMap<String, HashMap<Integer, Block>>>();
 
 	HashMap<String, Block> rootMap = new HashMap<String, Block>();
@@ -40,6 +49,10 @@ public class TrackModel {
 		return this.trackList.get(line).get(section).get(blockNum);
 	}
 
+	public TrackModel view(){
+		return this;
+	}
+	
 	/**
 	* Returns a non-aliased section of blocks
 	* @param line line the section is on
