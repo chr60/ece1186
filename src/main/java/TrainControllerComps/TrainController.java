@@ -64,6 +64,11 @@ public class TrainController extends javax.swing.JFrame {
             //blockSpeed = (int)(rand.nextDouble() * 100.0) % 100.0;
             refreshComponents();    
             
+            
+            if (selectedTrain != null && (selectedTrain.kp != null && selectedTrain.ki != null) ){
+                speedController.powerControl();
+            }
+            
             // Do specific things if in testing mode...
             if (testingMode == true){
             
@@ -885,11 +890,22 @@ public class TrainController extends javax.swing.JFrame {
                 engPanel.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             }
            
-            this.refreshComponents(); // populate the other components with train info
+         
+            this.setTrains(this.selectedTrain);
+            
+            //this.refreshComponents(); // populate the other components with train info
         }else{ System.out.println((String) this.dispatchedTrains.getSelectedItem()); }
    
     }//GEN-LAST:event_switchTrains
 
+    public void setTrains(TestTrain train){
+    
+        this.speedController.setTrain(train);
+        this.utilityPanel.setSelectedTrain(train);
+        this.trainInfoPanel.setSelectedTrain(train);
+        this.brakePanel.setSelectedTrain(train);  
+    }
+    
     /**
      * Opens up the Engineering Panel so the engineer can change the Kp and Ki
      * manually. 
@@ -1075,7 +1091,7 @@ public class TrainController extends javax.swing.JFrame {
      * For now, it only updates the train's speed and power in the TrainInfoPanel. 
      * Flesh this out more!
      */
-    private void refreshComponents(){
+    public void refreshComponents(){
             
         this.updateTime();
         
@@ -1083,9 +1099,9 @@ public class TrainController extends javax.swing.JFrame {
         
             // assign other componets the selected train
             
-            this.speedController.setTrain(this.selectedTrain);
+            //this.speedController.setTrain(this.selectedTrain);
             
-            this.trainInfoPanel.setSelectedTrain(this.selectedTrain);
+            //this.trainInfoPanel.setSelectedTrain(this.selectedTrain);
             this.trainInfoPanel.refreshUI();
 //            // FIX ME: TrainInfoPanelStuff should be put in the refreshUI method in the
 //            // TrainInfoPanelClass
@@ -1105,7 +1121,7 @@ public class TrainController extends javax.swing.JFrame {
             //this.blockInfoPane.setBlockSpeed(this.selectedTrain.currentBlockSpeed);
             
             this.utilityPanel.setManualMode(this.manualMode);
-            this.utilityPanel.setSelectedTrain(this.selectedTrain);
+            //this.utilityPanel.setSelectedTrain(this.selectedTrain);
             this.utilityPanel.refreshUI();
             
             // disable buttons if in automatic mode..
@@ -1125,7 +1141,7 @@ public class TrainController extends javax.swing.JFrame {
             this.speedController.refreshUI();
             
             
-            this.brakePanel.setSelectedTrain(this.selectedTrain);
+            //this.brakePanel.setSelectedTrain(this.selectedTrain);
             this.brakePanel.setOperatingLogs(this.operatingLogs);
             this.brakePanel.inManualMode(this.manualMode);
             

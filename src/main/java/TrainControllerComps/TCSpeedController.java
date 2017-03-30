@@ -43,7 +43,7 @@ public class TCSpeedController extends javax.swing.JPanel {
      * This is the power command sent from the Train Controller to the train.
      * Based on this value, the train either speeds up, brakes, or does nothing.
      */
-    private double powerCommand_Out;
+    private double powerCommandOut;
     
     /**
      * Max speed the train is allowed to go. The source of this value is determined based on 
@@ -62,7 +62,7 @@ public class TCSpeedController extends javax.swing.JPanel {
      * The speed that the train is desired to go. This is set by the user or
      * automatically depending on what mode the system is in. 
      */
-    private int setSpeed;  
+    private int setSpeed;   
     
     /**
      * Used to keep track of how long it takes the train to reach the set speed.
@@ -75,6 +75,8 @@ public class TCSpeedController extends javax.swing.JPanel {
      */
     private boolean inManualMode; 
     
+    private boolean speedSet; 
+    
     /**
      * Brake panel used to control the brakes on the train if needed to slow down. 
      */
@@ -83,37 +85,37 @@ public class TCSpeedController extends javax.swing.JPanel {
     /**
      * Timer used to perform the power law calculations with the train 1 second. 
      */
-    private Timer beginPowerControl = new Timer(1000, new ActionListener(){
-        Random rand = new Random(); 
-        public void actionPerformed(ActionEvent e) {
-             
-            // if there is a selected train and that train's speed doesnt match the set speed
-            if (selectedTrain != null && systemStable() == false){
-                timeElapsed++;
-                String log;
-                // get the error 
-                double error = setSpeed - selectedTrain.speed; 
-            
-                // FIX ME: Kp and Ki must be some value, and not null
-                // If user opens the window, and wants to enter 0, 0. if they are null they are set to 
-                // 0,0.
-                powerCommand_Out = selectedTrain.kp * error + selectedTrain.ki;
-                System.out.println(powerCommand_Out);   
-                if (powerCommand_Out < 0){
-                    
-                    brakePanel.getServiceBrake().doClick();
-                }else if (powerCommand_Out > 0){
-                    logBook.add("Full steam ahead!");
-                    // speed up train by 1 MPH 
-                    // FOR TESTING PURPOSES, THIS IS 1 MPH
-                    selectedTrain.speed++; 
-                }else if (powerCommand_Out == 0){ logBook.add("No more power."); }
-
-                logBook.add(Integer.toString(timeElapsed));
-                printLogs();
-             } 
-        }
-    });
+//    private Timer beginPowerControl = new Timer(1000, new ActionListener(){
+//        Random rand = new Random(); 
+//        public void actionPerformed(ActionEvent e) {
+//             
+//            // if there is a selected train and that train's speed doesnt match the set speed
+//            if (selectedTrain != null && speedsEqual() == false){
+//                timeElapsed++;
+//                String log;
+//                // get the error 
+//                double error = setSpeed - selectedTrain.speed; 
+//            
+//                // FIX ME: Kp and Ki must be some value, and not null
+//                // If user opens the window, and wants to enter 0, 0. if they are null they are set to 
+//                // 0,0.
+//                powerCommand_Out = selectedTrain.kp * error + selectedTrain.ki;
+//                System.out.println(powerCommand_Out);   
+//                if (powerCommand_Out < 0){
+//                    
+//                    brakePanel.getServiceBrake().doClick();
+//                }else if (powerCommand_Out > 0){
+//                    logBook.add("Full steam ahead!");
+//                    // speed up train by 1 MPH 
+//                    // FOR TESTING PURPOSES, THIS IS 1 MPH
+//                    selectedTrain.speed++; 
+//                }else if (powerCommand_Out == 0){ logBook.add("No more power."); }
+//
+//                logBook.add(Integer.toString(timeElapsed));
+//                printLogs();
+//             } 
+//        }
+//    });
     
     // MARK: - Constructors
     
@@ -125,11 +127,12 @@ public class TCSpeedController extends javax.swing.JPanel {
     public TCSpeedController() {
                        
         initComponents();
-        
-        this.powerCommand_Out = 0.0; 
+        this.powerCommandOut = 0.0; 
         this.maxSpeed = 0.0;         
         this.logBook = new LinkedList<String>(); 
-         
+        
+        this.speedSet = false; 
+        
         // add action listensers
         this.speedSlider.addChangeListener(new ChangeListener() {
         public void stateChanged(ChangeEvent e) {
@@ -174,7 +177,8 @@ public class TCSpeedController extends javax.swing.JPanel {
      */
     public void setTrain(TestTrain train){
 
-        this.selectedTrain = train;         
+        this.selectedTrain = train;  
+        this.setSpeed = (int) this.selectedTrain.speed;
     }
     
     /**
@@ -388,7 +392,7 @@ public class TCSpeedController extends javax.swing.JPanel {
            
         String log;
         this.setSpeed = speedSlider.getValue();
-        this.beginPowerControl.start();
+        //this.beginPowerControl.start();
         
         log = "Telling train to set speed to " + setSpeed;
         logBook.add(log);
@@ -401,17 +405,17 @@ public class TCSpeedController extends javax.swing.JPanel {
      * 
      * @return returns true if the train's speed is equal to the set speed, false otherwise. 
      */
-    private boolean systemStable(){
-    
-        // if train's speed is equal to the set speed, we can stop power control 
-        if (this.selectedTrain.speed == this.setSpeed ){ 
-            this.beginPowerControl.stop();
-            System.out.println("The train took " + this.timeElapsed + " s to get to " + this.setSpeed);
-            this.timeElapsed = 0; 
-            return true;
-        }
-        else {return false; }
-    }
+//    private boolean speedsEqual(){
+//    
+//        // if train's speed is equal to the set speed, we can stop power control 
+//        if (this.selectedTrain.speed == this.setSpeed ){ 
+//            this.beginPowerControl.stop();
+//            System.out.println("The train took " + this.timeElapsed + " s to get to " + this.setSpeed);
+//            this.timeElapsed = 0; 
+//            return true;
+//        }
+//        else {return false; }
+//    }
     
     /**
      * Prints the stored logs to the operating log, then clears the logbook. 
@@ -429,6 +433,45 @@ public class TCSpeedController extends javax.swing.JPanel {
         this.logBook.clear();
     }
 
+    /**
+     * Regulates the train's speed using Power Law.
+     */
+    public void powerControl(){
+            
+        //String log;
+         
+        this.logBook.add("Set Speed: " + this.setSpeed);
+        // calculate the error 
+        double error = this.setSpeed - this.selectedTrain.speed; 
+            
+        this.powerCommandOut = this.selectedTrain.kp * error + this.selectedTrain.ki;
+        
+        // send powerCommandOut to the train, which then changes its speed
+        // this.selectedTrain.powerCommand(this.powerCommand); 
+          
+        // if (this.powerCommand < 0){
+            // this.selectedTrain.setServiceBrake(); 
+        //}
+        
+        // train should maintain speed when powerCommandOut stays the same
+        
+        
+        System.out.println(this.powerCommandOut);  
+        
+        if (this.powerCommandOut < 0){ this.brakePanel.getServiceBrake().doClick(); } // train should slow down
+        else if (this.powerCommandOut > 0){
+            this.logBook.add("Full steam ahead!");
+            // speed up train by 1 MPH 
+            // FOR TESTING PURPOSES, THIS IS 1 MPH
+            this.selectedTrain.speed++; 
+            
+        } // train should speed up
+        else if (this.powerCommandOut == 0){ this.logBook.add("Steady Power!!."); } // train should continue at same speed
+
+        this.logBook.add(Integer.toString(timeElapsed));
+        printLogs();
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel currentSliderSpeedLabel;
     private javax.swing.JLabel maxMPHLabel;
