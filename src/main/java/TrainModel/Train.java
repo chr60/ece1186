@@ -127,9 +127,17 @@ public class Train {
 			//if power command calls for increase of speed
 			changeSpeed(forceApp);
 		}
-
-
 	}
+        
+        /**
+         * Returns the max power the train can go.
+         * 
+         * @return a Double corresponding to the max power the train can go.
+         */
+        public Double getMaxPower(){
+            
+            return this.maxPower;
+        }
 
 
 	/**

@@ -1,8 +1,6 @@
 package TrainControllerComps;
 
 import TrainModel.*;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -47,19 +45,19 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
      * 
      * @param speed the speed the train is going. 
      */
-    public void setSpeedLabel(String speed){
+    public void setSpeedLabel(Double speed){
        
-        this.currentSpeed.setText(speed);
+        this.currentSpeed.setText(String.format("%.2f", this.selectedTrain.getVelocity()));
     }
     
     /**
-     * Sets the power the train is currently producing. 
+     * Sets the power the train is currently producing in kW. 
      * 
      * @param power the power the train is producing. 
      */
-    public void setPowerLabel(String power){
-    
-        this.currentPower.setText(power);
+    public void setPowerLabel(Double power){
+        
+        this.currentPower.setText(String.format("%.2f", (this.selectedTrain.getPower()/1000)));
     }
     
     /**
@@ -67,9 +65,9 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
      * 
      * @param suggSpeed the suggested speed for the train. 
      */
-    public void setSuggestSpeedLabel(String suggSpeed){
+    public void setSuggestSpeedLabel(Double suggSpeed){
     
-        this.suggestedSpeed.setText(suggSpeed);
+        this.suggestedSpeed.setText(String.format("%.2f", this.selectedTrain.getSuggestedSpeed()));
     }
     
     /**
@@ -103,21 +101,66 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
     }
     
     /**
+     * Retrieves the max power the train can go from the max power label.
+     * 
+     * @return returns the text corresponding to the max power of the train from the suggested speed label. 
+     */   
+    public String getMaxPowerLabel(){
+    
+        return this.maxPower.getText();
+    }
+
+    /**
+     * Sets the max power label.
+     * 
+     * @param maxPower the max power the train can produce.
+     * 
+     */
+    public void setMaxPowerLabel(Double maxPower){
+    
+        this.maxPower.setText(Double.toString( maxPower/1000) );
+    }
+    
+   /**
+     * Retrieves the authority of the train from the authority label.
+     * 
+     * @return returns the text corresponding to the authority of the train from the authority label. 
+     */ 
+    public String getAuthorityLabel(){
+    
+        return this.authorityLabel.getText();
+    }
+    
+    /**
+     * Sets the authority label for the train.
+     * 
+     * @param blockNum the authority, as a block number.
+     */
+    public void setAuthorityLabel(Integer blockNum){
+    
+        this.authorityLabel.setText(Integer.toString(blockNum)); 
+    }
+    
+    /**
      * Updates the labels with the information based on the selected train.
      * 
      */
     public void refreshUI(){
-    
-        DecimalFormat df = new DecimalFormat("#.##");
-        df.setRoundingMode(RoundingMode.CEILING);
+         
+        // these should never be null
+        this.setMaxPowerLabel(this.selectedTrain.getMaxPower() );
+        this.setSpeedLabel( this.selectedTrain.getVelocity() );
+        this.setPowerLabel( this.selectedTrain.getPower() );
         
-        this.setSpeedLabel(df.format( this.selectedTrain.getVelocity() ) );
-        this.setPowerLabel(df.format( this.selectedTrain.getPower() ) );
+        if (this.selectedTrain.getSuggestedSpeed() != null){
         
+            this.setSuggestSpeedLabel( this.selectedTrain.getSuggestedSpeed() );
+        }
         
-        System.out.println(df.format( this.selectedTrain.getVelocity() ) );
-        // FIX ME: This should be the suggested speed!
-        //this.setSuggestSpeedLabel(df.format( this.selectedTrain.getSuggestedSpeed() ) );
+        if (this.selectedTrain.getAuthority() != null){
+        
+            this.setAuthorityLabel(this.selectedTrain.getAuthority().blockNum);
+        }
     }
     
     /**
@@ -141,9 +184,6 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
         speedUnit = new javax.swing.JLabel();
         powerUnit = new javax.swing.JLabel();
         suggSpeedUnit = new javax.swing.JLabel();
-        authorityUnit = new javax.swing.JLabel();
-        currentAuthority = new javax.swing.JLabel();
-        authorityDivider = new javax.swing.JLabel();
         powerDivider = new javax.swing.JLabel();
         maxPower = new javax.swing.JLabel();
 
@@ -167,7 +207,7 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
         suggSpeedLabel.setText("Sugg. Speed:");
 
         authorityLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        authorityLabel.setText("Authority:");
+        authorityLabel.setText("Authority (Block ID):");
 
         suggestedSpeed.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         suggestedSpeed.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -175,7 +215,7 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
 
         maxAuthority.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         maxAuthority.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        maxAuthority.setText("999");
+        maxAuthority.setText("0");
 
         speedUnit.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         speedUnit.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -183,21 +223,11 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
 
         powerUnit.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         powerUnit.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        powerUnit.setText("W");
+        powerUnit.setText("kW");
 
         suggSpeedUnit.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         suggSpeedUnit.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         suggSpeedUnit.setText("MPH");
-
-        authorityUnit.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        authorityUnit.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        authorityUnit.setText("mi");
-
-        currentAuthority.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        currentAuthority.setText("999");
-
-        authorityDivider.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        authorityDivider.setText("/");
 
         powerDivider.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         powerDivider.setText("/");
@@ -215,10 +245,10 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(speedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(powerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(currentSpeed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(currentSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(speedUnit))
                     .addGroup(layout.createSequentialGroup()
@@ -226,7 +256,7 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(powerDivider)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(maxPower)
+                        .addComponent(maxPower, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(powerUnit)))
                 .addGap(31, 31, 31))
@@ -238,20 +268,13 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
                     .addComponent(authorityLabel))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(183, 183, 183)
-                        .addComponent(currentAuthority)
+                        .addGap(4, 4, 4)
+                        .addComponent(suggestedSpeed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(authorityDivider)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(82, 82, 82)
-                        .addComponent(suggestedSpeed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(maxAuthority, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(suggSpeedUnit)
-                    .addComponent(authorityUnit, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addComponent(suggSpeedUnit))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(maxAuthority, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(28, 28, 28))
         );
         layout.setVerticalGroup(
@@ -279,30 +302,22 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(suggSpeedUnit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(authorityUnit))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(suggestedSpeed)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(maxAuthority)
-                            .addComponent(currentAuthority)
-                            .addComponent(authorityDivider)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(suggSpeedLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(authorityLabel)))
+                        .addComponent(authorityLabel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(suggSpeedUnit, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(suggestedSpeed, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(maxAuthority)))
                 .addGap(21, 21, 21))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel authorityDivider;
     private javax.swing.JLabel authorityLabel;
-    private javax.swing.JLabel authorityUnit;
-    private javax.swing.JLabel currentAuthority;
     private javax.swing.JLabel currentPower;
     private javax.swing.JLabel currentSpeed;
     private javax.swing.JLabel maxAuthority;

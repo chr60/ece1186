@@ -76,51 +76,14 @@ public class TCSpeedController extends javax.swing.JPanel {
      * This value is set from the Train Controller class. 
      */
     private boolean inManualMode; 
-    
-    private boolean speedSet; 
-    
+        
     /**
      * Brake panel used to control the brakes on the train if needed to slow down. 
      */
     private TCBrakePanel brakePanel; 
-    
-    /**
-     * Timer used to perform the power law calculations with the train 1 second. 
-     */
-//    private Timer beginPowerControl = new Timer(1000, new ActionListener(){
-//        Random rand = new Random(); 
-//        public void actionPerformed(ActionEvent e) {
-//             
-//            // if there is a selected train and that train's speed doesnt match the set speed
-//            if (selectedTrain != null && speedsEqual() == false){
-//                timeElapsed++;
-//                String log;
-//                // get the error 
-//                double error = setSpeed - selectedTrain.speed; 
-//            
-//                // FIX ME: Kp and Ki must be some value, and not null
-//                // If user opens the window, and wants to enter 0, 0. if they are null they are set to 
-//                // 0,0.
-//                powerCommand_Out = selectedTrain.kp * error + selectedTrain.ki;
-//                System.out.println(powerCommand_Out);   
-//                if (powerCommand_Out < 0){
-//                    
-//                    brakePanel.getServiceBrake().doClick();
-//                }else if (powerCommand_Out > 0){
-//                    logBook.add("Full steam ahead!");
-//                    // speed up train by 1 MPH 
-//                    // FOR TESTING PURPOSES, THIS IS 1 MPH
-//                    selectedTrain.speed++; 
-//                }else if (powerCommand_Out == 0){ logBook.add("No more power."); }
-//
-//                logBook.add(Integer.toString(timeElapsed));
-//                printLogs();
-//             } 
-//        }
-//    });
-    
+        
     // MARK: - Constructors
-    
+   
     /**
      * Constructor for creating a new TCSpeedController object with no selected train.
      * The selected train must be set by the Train Controller before being used. 
@@ -132,18 +95,14 @@ public class TCSpeedController extends javax.swing.JPanel {
         this.powerCommandOut = 0.0; 
         this.maxSpeed = 0.0;         
         this.logBook = new LinkedList<String>(); 
-        
-        this.speedSet = false; 
-        
+                
         // add action listensers
         this.speedSlider.addChangeListener(new ChangeListener() {
         public void stateChanged(ChangeEvent e) {
              
         String sliderValue = Integer.toString(speedSlider.getValue());
-        //System.out.println("Speed: " + sliderValue);
          
-        currentSliderSpeedLabel.setText(sliderValue);
-        
+        currentSliderSpeedLabel.setText(sliderValue);  
         }
        
     });
@@ -218,12 +177,14 @@ public class TCSpeedController extends javax.swing.JPanel {
             this.setSpeedButton.setEnabled(false);
             this.speedSlider.setEnabled(false);
             
-            
-            // get suggested speed
-            
-            // set slider value to suggested speed
-            
-            // set speed
+            // get suggested speed and control the train to that speed.
+            Double suggSpeed = this.selectedTrain.getSuggestedSpeed();
+           
+            if (suggSpeed != null){
+                
+                this.speedSlider.setValue(suggSpeed.intValue());
+                this.setSpeedButton.doClick();
+            }
         }     
     }
     
@@ -400,24 +361,6 @@ public class TCSpeedController extends javax.swing.JPanel {
         logBook.add(log);
         this.printLogs();
     }//GEN-LAST:event_setSpeed
-
-    /**
-     * Determines if the the train's speed is equal to the speed the user set. 
-     * The system will continue to run the Power Control until this function returns true. 
-     * 
-     * @return returns true if the train's speed is equal to the set speed, false otherwise. 
-     */
-//    private boolean speedsEqual(){
-//    
-//        // if train's speed is equal to the set speed, we can stop power control 
-//        if (this.selectedTrain.speed == this.setSpeed ){ 
-//            this.beginPowerControl.stop();
-//            System.out.println("The train took " + this.timeElapsed + " s to get to " + this.setSpeed);
-//            this.timeElapsed = 0; 
-//            return true;
-//        }
-//        else {return false; }
-//    }
     
     /**
      * Prints the stored logs to the operating log, then clears the logbook. 
@@ -457,20 +400,6 @@ public class TCSpeedController extends javax.swing.JPanel {
         
         // train should maintain speed when powerCommandOut stays the same
          
-        System.out.println(this.powerCommandOut);  
-        
-     
-//        if (this.powerCommandOut < 0){ this.brakePanel.getServiceBrake().doClick(); } // train should slow down
-//        else if (this.powerCommandOut > 0){
-//            this.logBook.add("Full steam ahead!");
-//            // speed up train by 1 MPH 
-//            // FOR TESTING PURPOSES, THIS IS 1 MPH
-//            this.selectedTrain.setSpeed(this.selectedTrain.getVelocity() + 1);
-//            System.out.println("Velocity: " + this.selectedTrain.getVelocity()); 
-//            
-//        } // train should speed up
-//        else if (this.powerCommandOut == 0){ this.logBook.add("Steady Power!!."); } // train should continue at same speed
-
         this.logBook.add(Integer.toString(timeElapsed));
         printLogs();
     }

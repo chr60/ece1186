@@ -1122,12 +1122,7 @@ public class TrainController extends javax.swing.JFrame {
 //            // TrainInfoPanelClass
 //            
             // set the train info panels speed.. 
-            this.trainInfoPanel.setSpeedLabel(Double.toString( this.selectedTrain.getVelocity() ) ); 
-                
-            // set the trains info panels power.. 
-            this.trainInfoPanel.setPowerLabel(Double.toString( this.selectedTrain.getPower() ) );  
-            
-            //this.trainInfoPanel.setSuggestSpeedLabel(Double.toString( this.selectedTrain.getSuggestedSpeed() ) );
+            this.trainInfoPanel.refreshUI();
             
             // get the block speed from the train
             // FIX ME: Right now, it's set at 80.0 for the purpose 
