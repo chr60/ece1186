@@ -13,6 +13,8 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
+import TrainModel.*;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -34,10 +36,10 @@ public class TrainController extends javax.swing.JFrame {
     
     // Data Structures: 
     // used to get a dispatched train by its ID. 
-    private HashMap<String, TestTrain> trainList = new HashMap<String, TestTrain>(); 
+    private HashMap<String, Train> trainList = new HashMap<String, Train>(); 
         
     // Train Stuff: 
-    private TestTrain selectedTrain; // the train that the Train Controller is controlling. 
+    private Train selectedTrain; // the train that the Train Controller is controlling. 
   
     // Modes: 
     private boolean manualMode; // used to tell if the Train Controller is in Manual mode
@@ -48,7 +50,7 @@ public class TrainController extends javax.swing.JFrame {
      
     // FOR TESTING!
     
-    LinkedList<TestTrain> trains = TestTrain.generateRandomTestTrain(10);
+    //LinkedList<Train> trains = Train.generateRandomTestTrain(10);
     double blockSpeed = 80.0; 
     private TCTestConsole testConsole = null; 
     
@@ -118,7 +120,7 @@ public class TrainController extends javax.swing.JFrame {
      * 
      * @param train the train the controller will launch with. 
      */
-    public TrainController(TestTrain train){
+    public TrainController(Train train){
         
         initComponents();
        
@@ -127,11 +129,11 @@ public class TrainController extends javax.swing.JFrame {
         this.setMode("Manual", "Normal");
          
         this.selectedTrain = train;   
-        this.dispatchedTrains.setSelectedItem(this.selectedTrain.id);
+        this.dispatchedTrains.setSelectedItem(this.selectedTrain.getID());
            
         // check if kp/ki is set
         
-        if (this.selectedTrain.kp == null & this.selectedTrain.ki == null){
+        if (this.selectedTrain.getKp() == null & this.selectedTrain.getKi() == null){
         
             TCEngineerPanel engPanel = new TCEngineerPanel(this.selectedTrain);
             engPanel.setVisible(true);
@@ -167,7 +169,7 @@ public class TrainController extends javax.swing.JFrame {
      * @param playMode the mode (Manual or Automatic) that the Train Controller will launch in. 
      * @param testMode the mode (Normal or Testing) that the Train Controller will launch in. 
      */
-    public TrainController(TestTrain train, String playMode, String testMode){
+    public TrainController(Train train, String playMode, String testMode){
         
         initComponents(); 
         this.initHashMaps();
@@ -285,9 +287,9 @@ public class TrainController extends javax.swing.JFrame {
     private void initHashMaps(){
     
         // get the list of dispatched trains         
-        for (TestTrain train : this.trains){
+        for (Train train : this.trains){
             // add them to the hashmaps
-            this.trainList.put(train.id, train );
+            this.trainList.put(train.getID(), train );
         }
     }
         
@@ -298,7 +300,7 @@ public class TrainController extends javax.swing.JFrame {
      * 
      * @param train the train object that the Train Controller will control. 
      */
-    private void setTrain(TestTrain train){
+    private void setTrain(Train train){
     
         this.selectedTrain = train; 
     }
@@ -308,7 +310,7 @@ public class TrainController extends javax.swing.JFrame {
      * 
      * @return returns the selected train that the Train Controller is controlling, or returns null if no train is selected. 
      */
-    public TestTrain getTrain(){
+    public Train getTrain(){
         
         if (this.selectedTrain == null){
             System.out.println("No train is selected");
@@ -325,9 +327,9 @@ public class TrainController extends javax.swing.JFrame {
      */
     private void setTrainList_ComboBox(){
     
-        for (TestTrain train : this.trains){
+        for (Train train : this.trains){
         
-            this.dispatchedTrains.addItem(train.id);       
+            this.dispatchedTrains.addItem(train.getID());       
         }
     }
   
@@ -1099,8 +1101,8 @@ public class TrainController extends javax.swing.JFrame {
             // get the block speed from the train
             // FIX ME: Right now, it's set at 80.0 for the purpose 
             // of getting the block speed to update
-            this.speedController.setMaxSpeed(this.selectedTrain.currentBlockSpeed);
-            this.blockInfoPane.setBlockSpeed(this.selectedTrain.currentBlockSpeed);
+            //this.speedController.setMaxSpeed(this.selectedTrain.);
+            //this.blockInfoPane.setBlockSpeed(this.selectedTrain.currentBlockSpeed);
             
             this.utilityPanel.setManualMode(this.manualMode);
             this.utilityPanel.setSelectedTrain(this.selectedTrain);

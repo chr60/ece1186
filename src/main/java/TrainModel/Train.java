@@ -587,6 +587,20 @@ public class Train {
 	public void updateTemp(){
 
 	}
+        
+        /**
+         * Checks to see if both the Kp and Ki are set.
+         * 
+         * @return returns true if they are both set, and false otherwise.
+         */
+        public boolean powerConstantsSet(){
+        
+            if (this.Kp != null && this.Ki != null){
+                return true; 
+            }else{
+                return false; 
+            }
+        }
 
 	public void setSpeed(Double speed) {
 		// TODO Auto-generated method stub

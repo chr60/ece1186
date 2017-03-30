@@ -1,5 +1,7 @@
 package TrainControllerComps;
 
+import TrainModel.Train;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
@@ -26,7 +28,7 @@ public class TCTestConsole extends javax.swing.JFrame {
     /**
      * Train being controlled by the Train Controller.
      */
-    private TestTrain selectedTrain; 
+    private Train selectedTrain; 
     
     /**
      * Train Controller to relay any changes made to the train to.
@@ -58,7 +60,7 @@ public class TCTestConsole extends javax.swing.JFrame {
     /**
      * Creates new form TCTestConsole
      */
-    public TCTestConsole(TestTrain train, TrainController trainCont) {
+    public TCTestConsole(Train train, TrainController trainCont) {
         initComponents();
         
         this.selectedTrain = train; 
@@ -125,7 +127,7 @@ public class TCTestConsole extends javax.swing.JFrame {
      * 
      * @param train 
      */
-    public void setTrain(TestTrain train){
+    public void setTrain(Train train){
     
         this.selectedTrain = train; 
     }
