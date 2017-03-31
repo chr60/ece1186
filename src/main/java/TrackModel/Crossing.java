@@ -6,8 +6,9 @@ package TrackModel;
 */
 import java.util.ArrayList;
 import java.util.Random;
+import java.io.Serializable;
 
-public class Crossing{
+public class Crossing implements java.io.Serializable{
 	public Block hostBlock;
 	public TrackModel superTrackModel;
 

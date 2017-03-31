@@ -1,7 +1,7 @@
 /**	GUI associated with the track module.
 *  \author Michael
 */
-package TrackModel;
+package Loggy;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -24,7 +24,10 @@ import java.io.FileInputStream;
 import java.nio.charset.Charset;
 import java.io.InputStreamReader;
 
-public class TrackGUI {
+import TrackModel.*;
+import java.util.ArrayList;
+
+public class LogView {
 
 	private JFrame frame;
 	private JTextField lengthField;
@@ -63,7 +66,7 @@ public class TrackGUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TrackGUI window = new TrackGUI();
+					LogView window = new LogView();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -75,19 +78,21 @@ public class TrackGUI {
 	/**
 	 * Create the application.
 	 */
-	public TrackGUI() {
+	public LogView() throws Exception {
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize() throws Exception{
+		
+		//Load our logs
+		String logName = "log.txt";
+		Loggy logger = new Loggy();
+		logger.loadModel(logName);
 
-		String[] fNames = {"resources/redline.csv"};
-		//Load up the track model
-		TrackModel track = new TrackModel();
-		track.readCSV(fNames);
+		TrackModel track = logger.trackModels.get(0);
 
 		Set<Integer> blockInts = track.trackList.get("Red").get("A").keySet();
 		Integer[] intArr = blockInts.toArray(new Integer[blockInts.size()]);
@@ -99,6 +104,18 @@ public class TrackGUI {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
+		ArrayList<String> scopeVars = new ArrayList<String>();
+		
+		for (TrackModel t : logger.trackModels){
+			scopeVars.add(t.trackScope);
+		}
+
+		String[] scopeStrs = new String[scopeVars.size()];
+		scopeStrs = scopeVars.toArray(scopeStrs);
+
+		JComboBox dropdownScope = new JComboBox(scopeStrs);
+		dropdownScope.setBounds(100,22,86,23);
+		frame.getContentPane().add(dropdownScope);
 
 		JComboBox dropdownLine = new JComboBox(lineStrings);
 		dropdownLine.setBounds(337, 22, 86, 23);
@@ -334,6 +351,12 @@ public class TrackGUI {
 			}
 		});
 
+		dropdownScope.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				String l = (String) dropdownScope.getSelectedItem();
+			}
+		});
 
 		dropdownSegment.addActionListener(new ActionListener() {
 
@@ -370,14 +393,16 @@ public class TrackGUI {
 		toggleUpdate.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e){
+				System.out.println(dropdownScope.getSelectedItem());
+				TrackModel myTrack = (TrackModel) logger.lookupTrack((String) dropdownScope.getSelectedItem());
 
 				String block = (String) dropdownBlock.getSelectedItem();
 				String section = (String) dropdownSegment.getSelectedItem();
 				String line = (String) dropdownLine.getSelectedItem();
 
 
-				lengthField.setText(String.valueOf(track.trackList.get(line).get(section).get(Integer.valueOf(block)).getLen()));
-				elevationField.setText(String.valueOf(track.trackList.get(line).get(section).get(Integer.valueOf(block)).getElevation()));
+				lengthField.setText(String.valueOf(myTrack.trackList.get(line).get(section).get(Integer.valueOf(block)).getLen()));
+				elevationField.setText(String.valueOf(myTrack.trackList.get(line).get(section).get(Integer.valueOf(block)).getElevation()));
 				speedField.setText(String.valueOf(track.trackList.get(line).get(section).get(Integer.valueOf(block)).getSpeedLimit()));
 				gradeField.setText(String.valueOf(track.trackList.get(line).get(section).get(Integer.valueOf(block)).getGrade()));
 				txtname.setText(track.trackList.get(line).get(section).get(Integer.valueOf(block)).getStationName());
