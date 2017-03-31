@@ -1,12 +1,10 @@
-
-
 import TrackModel.TrackModel;
 import WaysideController.*;
 import javax.swing.UnsupportedLookAndFeelException;
 import java.io.*;
 
 
-public class Launcher{
+public class IndieLauncher{
 	public static final String[] fNames = {"resources/redline.csv"};
 
 	public static void main(String[] args){
@@ -14,19 +12,20 @@ public class Launcher{
 		//We can move these into functions for cleanliness.
 		TrackModel globalTrack = new TrackModel();
 		globalTrack.readCSV(fNames);
-		try{
-			WaysideGuiMain wayside = new WaysideGuiMain(globalTrack);
-		} catch (ClassNotFoundException ex){
 
-		} catch (InstantiationException ex){
+    try{
+      WaysideGUI wayside = new WaysideGUI(globalTrack, null);
+    } catch (ClassNotFoundException ex){
 
-		} catch (IllegalAccessException ex){
+    } catch (InstantiationException ex){
 
-		} catch (UnsupportedLookAndFeelException ex){
+    } catch (IllegalAccessException ex){
 
-		} catch (IOException ex){
+    } catch (UnsupportedLookAndFeelException ex){
 
-		}
+    } catch (IOException ex){
+
+    }
 
 	}
 }

@@ -36,7 +36,7 @@ This system broadly consists of 6 subsystems:
 	\item  Track Model - a physical model of a track to be used for testing
 	\item Train Model - a physical model of a train to be used for testing
 	\item CTC System - A CTC system to be implemented on the final train system
-	\item MBO - ???
+	\item MBO - Schedules trains and implements Fixed Block Mode and Moving Block Overlay mode
 	\item Wayside System - A wayside for coordinating with all models
 \end{enumerate}
 For a further discussion of the system, we refer the reader to the project reuqirements and discussion board.
@@ -1374,8 +1374,115 @@ Author: Andrew Lendacky
 \end{table}
 
 \section{MBO Test Plan}
+Author: Zach Scheider
+
 \subsection{Unit Tests}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Update Drivers}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Successfully read CSV, and add drivers. \\ \hline
+		Inputs &  CSV path \\ \hline
+		Outputs &  Driver Schedule\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Pulling info from valid CSV file.} \\ \hline
+		Responsibility & MBO\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Generate Schedule}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & Validate throughput, route a train, collision checking. \\ \hline
+		Inputs &  Number of trains, info from excel file, block occupancy \\ \hline
+		Outputs &  Schedule for trains for each line \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Able to receive information from excel at load time.} \\ \hline
+		Responsibility & MBO\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{View Schedule}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Display schedule in table format.\\ \hline
+		Inputs &  Updated schedule. \\ \hline
+		Outputs &  Table of schedules for both lines in popup window. \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Valid schedule is passed/correctly updated.} \\ \hline
+		Responsibility & MBO\\ \hline
+	\end{tabular}
+\end{table}
+
 \subsection{Integration Tests}
+
+%INTEGRATION TEST
+\begin{table}[H]
+	\centering
+	\caption{Get Mode}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & \parbox[t]{10cm}{Receive the correct mode from the CTC, checking for incorrect input. Perform "shutdown operation" if necessary.}\\ \hline
+		Inputs &  String of mode \\ \hline
+		Outputs &  No outputs \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{A risk is that communication is interrupted when switching modes.} \\ \hline
+		Responsibility & MBO\\ \hline
+	\end{tabular}
+\end{table}
+
+%INTEGRATION TEST
+\begin{table}[H]
+	\centering
+	\caption{CTC comm failure}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & \parbox[t]{10cm}{Successfully receive failure. Handle failure appropriately. }\\ \hline
+		Inputs &  \parbox[t]{10cm}{Failure signal from Murphy. } \\ \hline
+		Outputs &  \parbox[t]{10cm}{No outputs. } \\ \hline
+		Expected Completion & April 15th \\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Modules integrated together.}  \\ \hline
+		Responsibility & MBO\\ \hline
+	\end{tabular}
+\end{table}
+
+%INTEGRATION TEST
+\begin{table}[H]
+	\centering
+	\caption{Train Antenna comm failure}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & \parbox[t]{10cm}{Successfully receive failure. Handle failure appropriately. }\\ \hline
+		Inputs &  \parbox[t]{10cm}{Failure signal from Murphy. } \\ \hline
+		Outputs &  \parbox[t]{10cm}{No outputs. } \\ \hline
+		Expected Completion & April 15th \\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Modules integrated together.}  \\ \hline
+		Responsibility & MBO\\ \hline
+	\end{tabular}
+\end{table}
+
+
 \section{Changelog}
 
 \begin{table}[H]
