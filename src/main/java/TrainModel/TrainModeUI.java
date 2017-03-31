@@ -660,8 +660,69 @@ public class TrainModeUI {
 	public void updateGUI(Train currT) {
 		//method to update GUI based on selected train info
 		currTrain = currT;
-		txtSpeed.setText("\n   "+currTrain.getVelocity().intValue()+" MPH");
+		txtSpeed.setText("\n   "+ currTrain.getVelocity().intValue()+" MPH");
 		txtPower.setText(currTrain.getPower().intValue()+" W");
 		txtMass.setText(currTrain.getMass().intValue()+" "); // +" lbs");
+                
+                String status = ""; 
+                if (this.currTrain.getLeftDoor() == 1){
+                    // open 
+                    status = "OPEN";
+                }else if (this.currTrain.getLeftDoor() == 0){
+                    // close
+                    status = "CLOSED";
+                }else if (this.currTrain.getLeftDoor() == -1){
+                    // failure
+                    status = "FAILURE";
+                }
+                
+                // set labels of status
+                this.txtLeftDoor.setText(this.getStatusOfTrainDoors(this.currTrain.getLeftDoor()));
+                this.txtRightDoor.setText(this.getStatusOfTrainDoors(this.currTrain.getRightDoor()));
+                
+                this.txtServiceBrake.setText(this.getStatusOfTrainLightsAndBrakes(this.currTrain.getServiceBrake()));
+                this.txtEmergencyBrake.setText(this.getStatusOfTrainLightsAndBrakes(this.currTrain.getEmergencyBrake()));
+                
+                this.txtLights.setText(this.getStatusOfTrainLightsAndBrakes(this.currTrain.getLights()));           
 	}
+        
+        /**
+         * 
+         * 
+         * 
+         * @param numStatus
+         * @return 
+         */
+        private String getStatusOfTrainDoors(int numStatus){
+                    
+            if (numStatus == 1){
+                // open 
+                return "OPEN";
+            }else if (numStatus == 0){
+                // close
+                return "CLOSED";
+            }else if (numStatus == -1){
+                // failure
+               return "FAILURE";
+            }                
+            return null; 
+        }
+        
+        private String getStatusOfTrainLightsAndBrakes(int numStatus){
+                    
+            if (numStatus == 1){
+                // open 
+                return "ON";
+            }else if (numStatus == 0){
+                // close
+                return "OFF";
+            }else if (numStatus == -1){
+                // failure
+               return "FAILURE";
+            }                
+            return null; 
+        }
+        
+        
+        
 }
