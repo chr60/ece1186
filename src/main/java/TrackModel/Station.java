@@ -6,8 +6,9 @@ package TrackModel;
 */
 import java.util.ArrayList;
 import java.util.Random;
+import java.io.Serializable;
 
-public class Station implements Comparable<Station>{
+public class Station implements Comparable<Station>, Serializable{
 	public String stationName;
 	public Integer stationTemp;
 	public Boolean trackHeatersOn;
