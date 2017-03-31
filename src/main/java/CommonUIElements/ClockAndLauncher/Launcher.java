@@ -149,6 +149,7 @@ public class Launcher extends javax.swing.JFrame {
         dateLabel = new javax.swing.JLabel();
         time = new javax.swing.JLabel();
         date = new javax.swing.JLabel();
+        launchMBOandScheduleButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -220,6 +221,13 @@ public class Launcher extends javax.swing.JFrame {
 
         date.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
+        launchMBOandScheduleButton1.setText("Logger");
+        launchMBOandScheduleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createLogger(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -248,7 +256,8 @@ public class Launcher extends javax.swing.JFrame {
                     .addComponent(launchTrainControllerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(launchTrainButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(launchTrackControllerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(launchTrackButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(launchTrackButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(launchMBOandScheduleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -269,7 +278,7 @@ public class Launcher extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(dateLabel)
                     .addComponent(date))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(launchCTCButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(launchTrackButton)
@@ -281,7 +290,9 @@ public class Launcher extends javax.swing.JFrame {
                 .addComponent(launchTrainControllerButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(launchMBOandScheduleButton)
-                .addGap(28, 28, 28))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(launchMBOandScheduleButton1)
+                .addContainerGap())
         );
 
         pack();
@@ -393,6 +404,13 @@ public class Launcher extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_openMBOandScheduler
 
+    private void createLogger(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createLogger
+            
+        // logger stuff here...
+        System.out.println("Logger Stuff!");
+        
+    }//GEN-LAST:event_createLogger
+
     /**
      * Generates a "Dummy Track" and returns it.
      * @return Dummy Track
@@ -448,6 +466,7 @@ public class Launcher extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JButton launchCTCButton;
     private javax.swing.JButton launchMBOandScheduleButton;
+    private javax.swing.JButton launchMBOandScheduleButton1;
     private javax.swing.JButton launchTrackButton;
     private javax.swing.JButton launchTrackControllerButton;
     private javax.swing.JButton launchTrainButton;
