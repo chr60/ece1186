@@ -14,110 +14,115 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Random;
 import javax.swing.Timer;
+import javax.swing.UnsupportedLookAndFeelException;
+import java.io.IOException;
+
 
 // import modules here:
 import TrainControllerComps.*;
+import WaysideController.*;
+import TrackModel.*;
 
 /**
- * This class is responsible for refreshing the system on a given clock period as 
- * well as launch the various GUI for each of the models. 
- * 
- * 
- * 
+ * This class is responsible for refreshing the system on a given clock period as
+ * well as launch the various GUI for each of the models.
+ *
+ *
+ *
  * @author Andrew Lendacky
  */
 public class Launcher extends javax.swing.JFrame {
-    
+
     /**
      * The speed that the system is running in.
      */
-    int systemSpeed; 
-    
+    int systemSpeed;
+
     /**
      * The timer used to refresh the modules during some given time period.
      */
     private Timer systemClock;
-    
+
     /**
-     * Constructor for creating a Launcher object. By default, the system begins operating 
-     * in normal speed, i.e., wall clock speed. 
-     * 
+     * Constructor for creating a Launcher object. By default, the system begins operating
+     * in normal speed, i.e., wall clock speed.
+     *
      */
     public Launcher() {
         initComponents();
-        
+
         this.normalSpeedRadioButton.setSelected(true);
         // for now, we start in normal mode
-        this.systemSpeed = 1000; 
-        
+        this.systemSpeed = 1000;
+
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
-            Random rand = new Random(); 
+            Random rand = new Random();
             public void actionPerformed(ActionEvent e) {
-                
-                updateDateAndTime(); 
+
+                updateDateAndTime();
                 // what should be called every tick
             }
         });
-        
+
        this.systemClock.start();
     }
-    
+
         /**
-     * Returns the current time of the system in "HH:mm:ss a" format. 
+     * Returns the current time of the system in "HH:mm:ss a" format.
      * HH - the hours
      * mm - the minutes
      * ss - the seconds
      * a - AM or PM
-     * 
+     *
      * @return the current system time.
      */
     private String getTime(){
-    
+
         DateFormat sdf;
         Calendar cal = Calendar.getInstance();
         sdf = new SimpleDateFormat("HH:mm:ss a");
-              
+
         // get time
         return sdf.format(cal.getTime());
     }
-    
+
         /**
      * Returns the current time of the system in "MM/dd/yyyy" format.
      * MM - month
      * dd - day
      * yyyy - year
-     * 
+     *
      * @return the current date of the system.
      */
     private String getDate(){
-       
+
         LocalDate localDate = LocalDate.now();
-        
+
         return DateTimeFormatter.ofPattern("MM/dd/yyyy").format(localDate);
     }
-    
+
     /**
      * Returns the timer object that's being used.
-     * 
+     *
      * @return the timer object
      */
     public Timer getSystemClock(){
-   
+
         return this.systemClock;
     }
-    
+
     /**
      * Updates the date and time labels of the system.
-     * 
+     *
      */
     private void updateDateAndTime(){
-    
+
         String date = this.getDate();
-        String time = this.getTime(); 
-        
+        String time = this.getTime();
+
         this.date.setText(date);
         this.time.setText(time);
-        //System.out.println("Date Updated"); 
+        //System.out.println("Date Updated");
     }
 
     /**
@@ -283,107 +288,122 @@ public class Launcher extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Switches the speed of the system to update every 1 second, 1000 ms. 
-     * 
+     * Switches the speed of the system to update every 1 second, 1000 ms.
+     *
      * @param evt the event that triggered the action, i.e., the x1 radio button.
      */
     private void playNormalSpeed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playNormalSpeed
-       
-        this.systemSpeed = 1000; 
-        System.out.println("System should play in x1 speed."); 
-        
+
+        this.systemSpeed = 1000;
+        System.out.println("System should play in x1 speed.");
+
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
-            Random rand = new Random(); 
+            Random rand = new Random();
             public void actionPerformed(ActionEvent e) {
-                
-                updateDateAndTime(); 
+
+                updateDateAndTime();
                 // what should be called every tick
             }
-        });    
-        
+        });
+
         System.out.println(this.systemClock.getDelay());
     }//GEN-LAST:event_playNormalSpeed
 
     /**
-     * Switches the speed of the system to update every 1/10 s, 100 ms. 
-     * 
+     * Switches the speed of the system to update every 1/10 s, 100 ms.
+     *
      * @param evt the event that triggered the action, i.e., the x10 radio button.
      */
     private void playFastSpeed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playFastSpeed
-        
+
         // set the system speed
-        this.systemSpeed = 100; 
-        System.out.println("System should play in x10 speed."); 
-        
+        this.systemSpeed = 100;
+        System.out.println("System should play in x10 speed.");
+
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
-            Random rand = new Random(); 
+            Random rand = new Random();
             public void actionPerformed(ActionEvent e) {
-                
-                updateDateAndTime(); 
-                
+
+                updateDateAndTime();
+
                 // what should be called every tick
             }
         });
-        
+
         System.out.println(this.systemClock.getDelay());
     }//GEN-LAST:event_playFastSpeed
 
     /**
-     * Opens a Train Controller module. 
-     * 
+     * Opens a Train Controller module.
+     *
      * @param evt the sender of the event, i.e., the "Train Controller" button.
      */
     private void openTrainController(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTrainController
-        
-        TrainController tc = new TrainController();         
+
+        TrainController tc = new TrainController();
         tc.setVisible(true);
         tc.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_openTrainController
 
     /**
      * Opens the CTC module.
-     * 
-     * @param evt 
+     *
+     * @param evt
      */
     private void openCTC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openCTC
         // TODO add your handling code here:
     }//GEN-LAST:event_openCTC
- 
+
     /**
      * Opens the Track module.
-     * 
-     * @param evt 
+     *
+     * @param evt
      */
     private void openTrack(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTrack
         // TODO add your handling code here:
     }//GEN-LAST:event_openTrack
 
     /**
-     * Opens the Track Controller module. 
-     * 
-     * @param evt 
+     * Opens the Track Controller module.
+     *
+     * @param evt
      */
     private void openTrackController(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTrackController
-        // TODO add your handling code here:
+
+          WaysideGUI ws = new WaysideGUI(generateTrack(), null);
+          ws.getFrame().setVisible(true);
+          ws.getFrame().setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_openTrackController
 
     /**
      * Opens the Train module.
-     * 
-     * @param evt 
+     *
+     * @param evt
      */
     private void openTrain(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTrain
         // TODO add your handling code here:
     }//GEN-LAST:event_openTrain
- 
+
     /**
      * Opens the MBO and Scheduler module.
-     * 
-     * @param evt 
+     *
+     * @param evt
      */
     private void openMBOandScheduler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMBOandScheduler
         // TODO add your handling code here:
     }//GEN-LAST:event_openMBOandScheduler
+
+    /**
+     * Generates a "Dummy Track" and returns it.
+     * @return Dummy Track
+     * @bug REDLINE ONLY CURRENTLY
+     */
+    public TrackModel generateTrack(){
+      String[] fNames = {"resources/redline.csv"};
+      TrackModel globalTrack = new TrackModel();
+  		globalTrack.readCSV(fNames);
+      return globalTrack;
+    }
 
     /**
      * @param args the command line arguments
@@ -392,7 +412,7 @@ public class Launcher extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
