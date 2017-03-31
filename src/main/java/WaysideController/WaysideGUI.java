@@ -15,17 +15,23 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class WaysideGUI {
 
   ArrayList<WS> Waysides;
+  private JFrame MainFrame;
 
-  public WaysideGUI(TrackModel track, ArrayList<WS> Waysides) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException{
-    for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+  public JFrame getFrame(){
+    return this.MainFrame;
+  }
+
+  public WaysideGUI(TrackModel track, ArrayList<WS> Waysides) {
+    /*for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 			if ("Windows".equals(info.getName()))
 				{javax.swing.UIManager.setLookAndFeel(info.getClassName());
 				break;}
-			}
+			}*/
 
       this.Waysides=Waysides;
 
       JFrame frame = new JFrame();
+      this.MainFrame = frame;
       frame.setBounds(100, 100, 1050, 587);
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.getContentPane().setLayout(null);
