@@ -27,7 +27,7 @@ import javax.swing.JButton;
 
 public class TrainModeUI {
 
-	JFrame frmTrainModel;
+	public JFrame frmTrainModel;
 	private JTextField txtHeight;
 	private JTextField txtLength;
 	private JTextField txtWidth;

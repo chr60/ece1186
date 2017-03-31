@@ -406,6 +406,7 @@ public class TrainController extends javax.swing.JFrame {
         viewMenu = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -586,6 +587,14 @@ public class TrainController extends javax.swing.JFrame {
 
         jMenuItem6.setText("Failures");
         viewMenu.add(jMenuItem6);
+
+        jMenuItem7.setText("Selected Train Detail");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        viewMenu.add(jMenuItem7);
 
         menuBar.add(viewMenu);
 
@@ -1046,6 +1055,19 @@ public class TrainController extends javax.swing.JFrame {
         this.manualMode = true;
         this.automaticMode = false; 
     }//GEN-LAST:event_switchToManualMode
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+        
+        // open up the train GUI
+        TrainModeUI trainUI = new TrainModeUI();
+        Train[] trainArray = new Train[1];
+        
+        trainArray[0] = this.selectedTrain;
+        trainUI.setTrainArray(trainArray); 
+        trainUI.frmTrainModel.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        trainUI.frmTrainModel.setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
        
     /**
      * Returns the current time of the system in "HH:mm:ss a" format. 
@@ -1236,6 +1258,7 @@ public class TrainController extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JButton makeAnnouncementButton;
     private javax.swing.JRadioButton manualModeRadioButton;
     private javax.swing.JMenuBar menuBar;
