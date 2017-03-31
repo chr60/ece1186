@@ -499,7 +499,11 @@ public class Train implements Serializable {
      * @param a Double argument which denotes the thermostat setting on board the train in Fahrenheit
      */
 	public void setThermostat(Double newThermostat){
+            
+            System.out.println("Set Thermostat Called."); 
 		currThermostat = newThermostat;
+                
+                this.updateTemp();
 	}
 	
 	/**
@@ -593,8 +597,15 @@ public class Train implements Serializable {
 	public void setSpeed(Double speed) {
 		setPointSpeed = speed;
 	}
-	
-	
+        
+        /**
+         * Refreshes the temperature on the train.
+         * 
+         */
+        public void refreshTemp(){
+        
+            this.updateTemp();
+        }
 	
 	
 	

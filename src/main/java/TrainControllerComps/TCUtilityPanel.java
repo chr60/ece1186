@@ -713,12 +713,13 @@ public class TCUtilityPanel extends javax.swing.JPanel {
         }else{
             // turn the heat on the train, this will cause the GUI to update on the next refreshGUI call.
             // turn on heat and transmit the temp
-            if (this.selectedTrain.getHeat() == 0){ this.selectedTrain.setHeat( 1 ); }
-            
-            // transmit the temp
-            // FIX ME: replace when the train model is complete to set the temp
-            System.out.println("Telling the train to set temperature to " + temp + " for Heating unit");
-                         
+            if (this.selectedTrain.getHeat() == 0){
+                this.selectedTrain.setHeat( 1 ); 
+                
+                this.selectedTrain.setThermostat(Double.parseDouble(temp));
+                System.out.println("Telling the train to set temperature to " + temp + " for Heating unit");
+
+            }                         
         }        
     }//GEN-LAST:event_setHeatTemp
 
@@ -736,16 +737,16 @@ public class TCUtilityPanel extends javax.swing.JPanel {
         if (Double.parseDouble(temp) < 40.0 || Double.parseDouble(temp) > 60.0 ){
             System.out.println("Error. Please set a temperature between 40.0 - 60.0"); 
             
-            // display error:   
-            //ConfirmationWindow window = new ConfirmationWindow("Error!", "Please set a temperature between 40.0 - 60.0", 1); 
         }else{
                    
             // turn on the ac, and transmit the temp
             // if it's off turn it on
      
-            if (this.selectedTrain.getAC() == 0){ this.selectedTrain.setAC( 1 ); }
-                                 
-            System.out.println("Telling the train to set temperature to " + temp + " for Air Conditioning unit"); 
+            if (this.selectedTrain.getAC() == 0){ 
+                this.selectedTrain.setAC( 1 ); 
+                this.selectedTrain.setThermostat(Double.parseDouble(temp));
+                System.out.println("Telling the train to set temperature to " + temp + " for Air Conditioning unit"); 
+            }                            
         }  
     }//GEN-LAST:event_setAirCondTemp
 
@@ -784,19 +785,20 @@ public class TCUtilityPanel extends javax.swing.JPanel {
                 // turn on ac and transmit temp
                 this.selectedTrain.setAC( 1 );
                 Double temp = Double.parseDouble(this.acTempTextField.getText());
+                this.selectedTrain.setThermostat(temp);
             }else{
             
                 // transmit default temp        
                 Double temp = 45.0; 
                 this.selectedTrain.setAC( 1 );
                 // update the text on the gui
-                this.acTempTextField.setText(Double.toString(temp));       
+                this.acTempTextField.setText(Double.toString(temp));  
+                this.selectedTrain.setThermostat(temp);
             }
             
             // turn heat off if its on
             if (this.heatOnRadioButton.isSelected() == true){ 
                 this.selectedTrain.setHeat( 0 ); 
-                //this.heatOffRadioButton.setSelected(true); // set the OFF radio button
             }
         }
     }//GEN-LAST:event_turnOnAirCond
@@ -817,6 +819,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
                 this.selectedTrain.setHeat( 1 );
                 Double temp = Double.parseDouble(this.heatTempTextField.getText());
                 System.out.println("Telling the train to set temperature to " + temp + " for Heating unit");
+                this.selectedTrain.setThermostat(temp);
             }else{
                 // transmit default temp        
                 Double temp = 65.0;     
@@ -824,12 +827,12 @@ public class TCUtilityPanel extends javax.swing.JPanel {
                 this.selectedTrain.setHeat( 1 );
                 this.heatTempTextField.setText(Double.toString(temp));
                 System.out.println("Telling the train to set temperature to " + temp + " for Heating unit");
+                this.selectedTrain.setThermostat(temp);
             }
             
             // turn off ac if its on
             if (this.acOnRadioButton.isSelected() == true){ 
                 this.selectedTrain.setAC( 0 );
-                //this.acOffRadioButton.setSelected(true); 
             }
         }
     }//GEN-LAST:event_turnHeatOn
@@ -841,6 +844,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
             
         // set train to default default temp
         this.acTempTextField.setText("40.0");
+        this.selectedTrain.setThermostat(Double.parseDouble(this.acTempTextField.getText()));
     }//GEN-LAST:event_turnOnAC
 
     /**

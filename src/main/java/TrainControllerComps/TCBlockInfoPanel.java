@@ -76,18 +76,20 @@ public class TCBlockInfoPanel extends javax.swing.JPanel {
         backgroundPanel = new javax.swing.JPanel();
         unitLabel = new javax.swing.JLabel();
         blockSpeed = new javax.swing.JLabel();
+        blockSpeedLabel1 = new javax.swing.JLabel();
+        blockSpeedLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
         blockSpeedLabel.setBackground(new java.awt.Color(255, 255, 255));
         blockSpeedLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        blockSpeedLabel.setText("Block Speed:");
+        blockSpeedLabel.setText("Current Block:");
 
-        unitLabel.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
+        unitLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         unitLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         unitLabel.setText("MPH");
 
-        blockSpeed.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
+        blockSpeed.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         blockSpeed.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         blockSpeed.setText("0");
 
@@ -95,24 +97,33 @@ public class TCBlockInfoPanel extends javax.swing.JPanel {
         backgroundPanel.setLayout(backgroundPanelLayout);
         backgroundPanelLayout.setHorizontalGroup(
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backgroundPanelLayout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(unitLabel)
-                .addContainerGap(38, Short.MAX_VALUE))
-            .addGroup(backgroundPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(blockSpeed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(backgroundPanelLayout.createSequentialGroup()
+                .addGap(85, 85, 85)
+                .addComponent(unitLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         backgroundPanelLayout.setVerticalGroup(
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(blockSpeed)
+                .addGap(9, 9, 9)
+                .addComponent(blockSpeed, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(unitLabel)
-                .addGap(30, 30, 30))
+                .addContainerGap())
         );
+
+        blockSpeedLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        blockSpeedLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        blockSpeedLabel1.setText("Block Speed:");
+
+        blockSpeedLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        blockSpeedLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        blockSpeedLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        blockSpeedLabel2.setText("0");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -121,18 +132,29 @@ public class TCBlockInfoPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(blockSpeedLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(backgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(backgroundPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(blockSpeedLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(blockSpeedLabel)
+                                .addGap(18, 18, 18)
+                                .addComponent(blockSpeedLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 10, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(blockSpeedLabel)
+                .addContainerGap(13, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(blockSpeedLabel)
+                    .addComponent(blockSpeedLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(backgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(blockSpeedLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(backgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -141,6 +163,8 @@ public class TCBlockInfoPanel extends javax.swing.JPanel {
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JLabel blockSpeed;
     private javax.swing.JLabel blockSpeedLabel;
+    private javax.swing.JLabel blockSpeedLabel1;
+    private javax.swing.JLabel blockSpeedLabel2;
     private javax.swing.JLabel unitLabel;
     // End of variables declaration//GEN-END:variables
 }

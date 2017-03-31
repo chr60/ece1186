@@ -172,20 +172,18 @@
                       <Component id="uiSeparatorSix" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="speedControllerTitle" pref="244" max="32767" attributes="0"/>
-                                  <Component id="speedController" alignment="1" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="blockInfoPane" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
                               <Component id="blockInfoTitle" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="blockInfoPane" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="speedControllerTitle" pref="244" max="32767" attributes="0"/>
+                                      <Component id="speedController" alignment="1" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>
@@ -379,7 +377,7 @@
                       <Component id="blockInfoTitle" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="blockInfoPane" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                       <Component id="speedControllerTitle" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="speedController" min="-2" max="-2" attributes="0"/>
@@ -681,8 +679,6 @@
     </Component>
     <Component class="TrainControllerComps.TCSpeedController" name="speedController">
     </Component>
-    <Component class="TrainControllerComps.TCBlockInfoPanel" name="blockInfoPane">
-    </Component>
     <Container class="javax.swing.JScrollPane" name="errorLogScrollPane">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -726,6 +722,8 @@
     <Component class="TrainControllerComps.TCUtilityPanel" name="utilityPanel">
     </Component>
     <Component class="TrainControllerComps.TCBrakePanel" name="brakePanel">
+    </Component>
+    <Component class="TrainControllerComps.TCBlockInfoPanel" name="blockInfoPane">
     </Component>
   </SubComponents>
 </Form>
