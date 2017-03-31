@@ -1,6 +1,7 @@
 package TrainControllerComps;
 
 
+import TrackModel.Block;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
@@ -82,6 +83,9 @@ public class TCSpeedController extends javax.swing.JPanel {
      */
     private TCBrakePanel brakePanel; 
         
+    
+    private double error; 
+    
     // MARK: - Constructors
    
     /**
@@ -177,13 +181,18 @@ public class TCSpeedController extends javax.swing.JPanel {
             this.setSpeedButton.setEnabled(false);
             this.speedSlider.setEnabled(false);
             
-            // get suggested speed and control the train to that speed.
-            Double suggSpeed = this.selectedTrain.getSuggestedSpeed();
-           
-            if (suggSpeed != null){
-                
-                this.speedSlider.setValue(suggSpeed.intValue());
-                this.setSpeedButton.doClick();
+            // get the block the train is on, and the set suggested speed
+            Block currBlock = this.selectedTrain.getGPS().getCurrBlock();
+            Double blockSuggestedSpeed = currBlock.getSpeedLimit(); 
+            
+            if (blockSuggestedSpeed != null){
+                // if the train is going faster than the suggested block speed, 
+                // change the speed. 
+                if (this.selectedTrain.getVelocity() > blockSuggestedSpeed){
+            
+                    this.speedSlider.setValue(blockSuggestedSpeed.intValue());
+                    this.setSpeedButton.doClick(); 
+                }
             }
         }     
     }
@@ -355,7 +364,6 @@ public class TCSpeedController extends javax.swing.JPanel {
            
         String log;
         this.setSpeed = speedSlider.getValue();
-        //this.beginPowerControl.start();
         
         log = "Telling train to set speed to " + setSpeed;
         logBook.add(log);
@@ -382,14 +390,15 @@ public class TCSpeedController extends javax.swing.JPanel {
      * Regulates the train's speed using Power Law.
      */
     public void powerControl(){
-            
-        //String log;
-         
+              
         this.logBook.add("Set Speed: " + this.setSpeed);
         // calculate the error 
-        double error = this.setSpeed - this.selectedTrain.getVelocity(); 
-            
-        this.powerCommandOut = this.selectedTrain.getKp() * error + this.selectedTrain.getKi();
+        this.error = Math.abs(this.setSpeed - this.selectedTrain.getVelocity()); 
+        this.logBook.add(Double.toString( this.error) );
+        
+        this.logBook.add(Double.toString( this.powerCommandOut) );
+        
+        this.powerCommandOut = this.selectedTrain.getKp() * error + this.selectedTrain.getKi()*this.selectedTrain.getVelocity();
         
         // send powerCommandOut to the train, which then changes its speed
         this.selectedTrain.powerCommand(this.powerCommandOut); 
