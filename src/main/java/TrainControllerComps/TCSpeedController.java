@@ -394,9 +394,9 @@ public class TCSpeedController extends javax.swing.JPanel {
         // send powerCommandOut to the train, which then changes its speed
         this.selectedTrain.powerCommand(this.powerCommandOut); 
           
-        // if (this.powerCommand < 0){
-            // this.selectedTrain.setServiceBrake(); 
-        //}
+//        if (this.powerCommandOut == 0){
+//             this.brakePanel.getServiceBrake().doClick();
+//        }
         
         // train should maintain speed when powerCommandOut stays the same
          

@@ -212,18 +212,25 @@ public class TCBrakePanel extends javax.swing.JPanel {
      */
     private void initateEmergencyBrake(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_initateEmergencyBrake
 
-        if (this.inManualMode == true){ 
+        if (this.selectedTrain != null){
         
-            TCEmergencyFrame window = new TCEmergencyFrame(this.selectedTrain); 
+            if (this.inManualMode == true){ 
+        
+                TCEmergencyFrame window = new TCEmergencyFrame(this.selectedTrain); 
            
-            window.setOperatingLog(this.operatingLogs);
-            window.setVisible(true);
-            window.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        }else if (this.inManualMode == false){
-            
-            // FIX ME: Change this when train model is done. 
-            this.selectedTrain.setSpeed(this.selectedTrain.getVelocity() - 5);
-        }   
+                window.setOperatingLog(this.operatingLogs);
+                window.setVisible(true);
+                window.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+             }else if (this.inManualMode == false){
+           
+                // if the emergency brake is broke, this can't happen
+                if (this.selectedTrain.getEmergencyBrake() != -1){
+                
+                    this.selectedTrain.setEmergencyBrake( 1 );
+                    this.selectedTrain.setEmergencyBrake( 0 );
+                }  
+            }
+        }
     }//GEN-LAST:event_initateEmergencyBrake
   
     /**
@@ -233,13 +240,15 @@ public class TCBrakePanel extends javax.swing.JPanel {
      */
     private void engageServiceBrake(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_engageServiceBrake
   
-        this.logBook.add("Engage the service brakes!"); 
+        if (this.selectedTrain != null){
         
-        // decrease speed on the train
-        // FIX ME: for testing, it will decrease by 1   
-        this.selectedTrain.setSpeed(this.selectedTrain.getVelocity() - 1);
+            this.logBook.add("Engage the service brakes!"); 
         
-        this.printLogs();
+            this.selectedTrain.setServiceBrake( 1 );
+            this.selectedTrain.setServiceBrake( 0 ); 
+        
+            this.printLogs();
+        }
     }//GEN-LAST:event_engageServiceBrake
 
 

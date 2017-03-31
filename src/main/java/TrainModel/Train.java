@@ -1,5 +1,6 @@
 package TrainModel;
 import TrackModel.*;
+import java.io.Serializable;
 
 //doxygen comment format below!
 /**
@@ -12,7 +13,7 @@ import TrackModel.*;
  * @see publicVar()
  * @return The test results
  */
-public class Train {
+public class Train implements Serializable {
 
 	//variables for train values.
 	Block currAuthority;
