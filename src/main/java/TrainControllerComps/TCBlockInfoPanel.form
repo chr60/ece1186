@@ -29,9 +29,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="blockSpeedLabel1" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="blockSpeedLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="currentBlockLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="blockSpeedLabel2" min="-2" pref="72" max="-2" attributes="0"/>
+                              <Component id="currentBlock" min="-2" pref="72" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="0" pref="10" max="32767" attributes="0"/>
@@ -46,8 +46,8 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace pref="13" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="blockSpeedLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="blockSpeedLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="currentBlockLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="currentBlock" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="blockSpeedLabel1" min="-2" max="-2" attributes="0"/>
@@ -59,7 +59,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="blockSpeedLabel">
+    <Component class="javax.swing.JLabel" name="currentBlockLabel">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -131,7 +131,7 @@
         <Property name="text" type="java.lang.String" value="Block Speed:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="blockSpeedLabel2">
+    <Component class="javax.swing.JLabel" name="currentBlock">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>

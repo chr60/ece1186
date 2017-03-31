@@ -1,5 +1,7 @@
 package TrainControllerComps;
 
+import TrainModel.Train;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -21,7 +23,7 @@ public class TCBlockInfoPanel extends javax.swing.JPanel {
      * This property must be passed in from the Train Controller class. 
      * 
      */
-    private TestTrain selectedTrain; 
+    private Train selectedTrain; 
     
     /**
      * Constructor for a TCBlockInfoPanel object. This constructor does not set 
@@ -38,7 +40,7 @@ public class TCBlockInfoPanel extends javax.swing.JPanel {
      * 
      * @param train the selected train
      */
-    public void setSelectedTrain(TestTrain train){
+    public void setSelectedTrain(Train train){
         
         this.selectedTrain = train; 
     }
@@ -63,6 +65,13 @@ public class TCBlockInfoPanel extends javax.swing.JPanel {
         return Double.parseDouble(this.blockSpeed.getText());
     }
     
+    public void refreshUI(){
+    
+              
+        //this.blockSpeed.setText(Double.toString( this.selectedTrain.getGPS().getCurrBlock().getSpeedLimit() ));
+        //this.currentBlock.setText(Integer.toString( this.selectedTrain.getGPS().getCurrBlock().getBlockNum() ));
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -72,18 +81,18 @@ public class TCBlockInfoPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        blockSpeedLabel = new javax.swing.JLabel();
+        currentBlockLabel = new javax.swing.JLabel();
         backgroundPanel = new javax.swing.JPanel();
         unitLabel = new javax.swing.JLabel();
         blockSpeed = new javax.swing.JLabel();
         blockSpeedLabel1 = new javax.swing.JLabel();
-        blockSpeedLabel2 = new javax.swing.JLabel();
+        currentBlock = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        blockSpeedLabel.setBackground(new java.awt.Color(255, 255, 255));
-        blockSpeedLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        blockSpeedLabel.setText("Current Block:");
+        currentBlockLabel.setBackground(new java.awt.Color(255, 255, 255));
+        currentBlockLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        currentBlockLabel.setText("Current Block:");
 
         unitLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         unitLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -120,10 +129,10 @@ public class TCBlockInfoPanel extends javax.swing.JPanel {
         blockSpeedLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         blockSpeedLabel1.setText("Block Speed:");
 
-        blockSpeedLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        blockSpeedLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        blockSpeedLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        blockSpeedLabel2.setText("0");
+        currentBlock.setBackground(new java.awt.Color(255, 255, 255));
+        currentBlock.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        currentBlock.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        currentBlock.setText("0");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -137,9 +146,9 @@ public class TCBlockInfoPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(blockSpeedLabel1)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(blockSpeedLabel)
+                                .addComponent(currentBlockLabel)
                                 .addGap(18, 18, 18)
-                                .addComponent(blockSpeedLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(currentBlock, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 10, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -148,8 +157,8 @@ public class TCBlockInfoPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(13, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(blockSpeedLabel)
-                    .addComponent(blockSpeedLabel2))
+                    .addComponent(currentBlockLabel)
+                    .addComponent(currentBlock))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(blockSpeedLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -162,9 +171,9 @@ public class TCBlockInfoPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JLabel blockSpeed;
-    private javax.swing.JLabel blockSpeedLabel;
     private javax.swing.JLabel blockSpeedLabel1;
-    private javax.swing.JLabel blockSpeedLabel2;
+    private javax.swing.JLabel currentBlock;
+    private javax.swing.JLabel currentBlockLabel;
     private javax.swing.JLabel unitLabel;
     // End of variables declaration//GEN-END:variables
 }

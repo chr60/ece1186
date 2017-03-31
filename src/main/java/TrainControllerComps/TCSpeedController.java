@@ -1,13 +1,8 @@
 package TrainControllerComps;
 
-
 import TrackModel.Block;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.LinkedList;
-import java.util.Random;
 import javax.swing.JTextArea;
-import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -83,7 +78,9 @@ public class TCSpeedController extends javax.swing.JPanel {
      */
     private TCBrakePanel brakePanel; 
         
-    
+    /**
+     * Used to calculate the power command.
+     */
     private double error; 
     
     // MARK: - Constructors
@@ -111,6 +108,8 @@ public class TCSpeedController extends javax.swing.JPanel {
        
     });
     }
+    
+    // MARK: - Setters and Getters
     
     /**
      * Sets which Operating Logs the Speed Controller should print to. 
@@ -163,10 +162,9 @@ public class TCSpeedController extends javax.swing.JPanel {
     }
     
     /**
-     * Refreshes all the UI components in the SpeedController. 
+     * Refreshes all the UI components in the SpeedController, and regulates the 
+     * speed of the train if in Automatic mode.
      * 
-     * FIX ME: This should be called from the TrainController every 'x' seconds to update 
-     * the components with up-to-date information. 
      */
     public void refreshUI(){
        
@@ -181,6 +179,7 @@ public class TCSpeedController extends javax.swing.JPanel {
             this.setSpeedButton.setEnabled(false);
             this.speedSlider.setEnabled(false);
             
+            // Automatic speed control:
             // get the block the train is on, and the set suggested speed
             Block currBlock = this.selectedTrain.getGPS().getCurrBlock();
             Double blockSuggestedSpeed = currBlock.getSpeedLimit(); 
@@ -406,9 +405,7 @@ public class TCSpeedController extends javax.swing.JPanel {
 //        if (this.powerCommandOut == 0){
 //             this.brakePanel.getServiceBrake().doClick();
 //        }
-        
-        // train should maintain speed when powerCommandOut stays the same
-         
+                 
         this.logBook.add(Integer.toString(timeElapsed));
         printLogs();
     }
