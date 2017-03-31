@@ -56,6 +56,10 @@ public class TrainController extends javax.swing.JFrame {
     private TCTestConsole testConsole = null; 
     
     
+    public boolean detailedTrainWindowOpen;
+    
+    TrainModeUI trainUI; 
+    
     // used to update GUI every millisecond (1 s)
     // FIX ME: This time should be set by the CTC can be 
     // wall speed or 10x faster ()
@@ -65,7 +69,8 @@ public class TrainController extends javax.swing.JFrame {
             //blockSpeed = (int)(rand.nextDouble() * 100.0) % 100.0;
             refreshComponents();    
             
-            
+            if (detailedTrainWindowOpen == true){ trainUI.updateGUI(selectedTrain); }
+                
             if (selectedTrain != null && (selectedTrain.getKp() != null && selectedTrain.getKi() != null) ){
                 speedController.powerControl();
             }
@@ -119,7 +124,7 @@ public class TrainController extends javax.swing.JFrame {
         this.selectedTrain = null;  
                         
         this.utilityPanel.setVitalsButton(this.vitals);
-        
+        this.detailedTrainWindowOpen = false; 
         systemRunSpeed.start();
        
     }
@@ -1058,15 +1063,16 @@ public class TrainController extends javax.swing.JFrame {
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         // TODO add your handling code here:
-        
+       
         // open up the train GUI
-        TrainModeUI trainUI = new TrainModeUI();
-        Train[] trainArray = new Train[1];
+        this.trainUI = new TrainModeUI();
         
-        trainArray[0] = this.selectedTrain;
-        trainUI.setTrainArray(trainArray); 
+        trainUI.updateGUI(this.selectedTrain);
+        
         trainUI.frmTrainModel.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         trainUI.frmTrainModel.setVisible(true);
+       
+        this.detailedTrainWindowOpen = true; 
     }//GEN-LAST:event_jMenuItem7ActionPerformed
        
     /**

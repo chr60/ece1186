@@ -55,10 +55,11 @@ public class TrainModeUI {
 	private final ButtonGroup serviceBrakeBG = new ButtonGroup();
 	private final ButtonGroup emergencyBrakeBG = new ButtonGroup();
 	private final ButtonGroup leftDoorBG = new ButtonGroup();
+        JComboBox<String> comboBox = new JComboBox<String>();
 	JTextPane txtSpeed;
 	JTextPane txtAuthority;
-	static Train [] trainArray;
-	static Train currTrain;
+	Train [] trainArray;
+	Train currTrain;
 	int stop;
 	private JTextField txtTestGrade;
 
@@ -72,6 +73,15 @@ public class TrainModeUI {
 	
 	public void setTrainArray(Train [] trains){
 		trainArray = trains;
+                
+                if (this.comboBox.getItemCount() != 0){
+                    this.comboBox.removeAllItems();
+                }
+                
+                for (int i = 0; i < trains.length; i++){
+                    this.comboBox.addItem(Integer.toString( trains[i].getID()) );
+                }
+                
 	}
 	
 	public static void main(String[] args) {
@@ -560,7 +570,7 @@ public class TrainModeUI {
 		
 		
 		
-		JComboBox<String> comboBox = new JComboBox<String>();
+		//JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Select Train", "123"}));
 		comboBox.setBounds(10, 9, 118, 23);
 		frmTrainModel.getContentPane().add(comboBox);
