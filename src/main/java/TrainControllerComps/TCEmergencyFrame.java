@@ -3,6 +3,8 @@ package TrainControllerComps;
 import java.util.LinkedList;
 import javax.swing.JTextArea;
 
+
+import TrainModel.*;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -21,7 +23,7 @@ public class TCEmergencyFrame extends javax.swing.JFrame {
     /**
      * The train that is being controlled by the Train Controller class. 
      */
-    TestTrain selectedTrain; 
+    Train selectedTrain; 
     
     /**
      * List that contains messages that are to be printed to the operating log.
@@ -48,7 +50,7 @@ public class TCEmergencyFrame extends javax.swing.JFrame {
      * 
      * @param train the train being controlled by the Train Controller
      */
-    public TCEmergencyFrame(TestTrain train){
+    public TCEmergencyFrame(Train train){
         
         this.initComponents();
         this.selectedTrain = train; 
@@ -63,7 +65,7 @@ public class TCEmergencyFrame extends javax.swing.JFrame {
      * 
      * @param train the selected train controlled by the Train Controller class. 
      */
-    public void setTrain(TestTrain train){
+    public void setTrain(Train train){
         
         this.selectedTrain = train;  
     }
@@ -75,7 +77,7 @@ public class TCEmergencyFrame extends javax.swing.JFrame {
     private void refreshUI(){
     
         // set the corect label text
-        this.trainIdLabel.setText(this.selectedTrain.id + " ?");
+        this.trainIdLabel.setText(this.selectedTrain.getID() + " ?");
     }
     
     /**
@@ -204,7 +206,7 @@ public class TCEmergencyFrame extends javax.swing.JFrame {
         this.logbook.add("Engaging the E-Brake!");
         
         // FIX ME: Change this once the Train Model is complete
-        this.selectedTrain.speed = this.selectedTrain.speed - 5; 
+        this.selectedTrain.setSpeed(this.selectedTrain.getVelocity() - 5);
         this.printLogbook();
         
         this.dispose();

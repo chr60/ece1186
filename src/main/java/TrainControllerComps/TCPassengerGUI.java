@@ -1,5 +1,7 @@
 package TrainControllerComps;
 
+import TrainModel.*;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -19,7 +21,7 @@ public class TCPassengerGUI extends javax.swing.JFrame {
     /**
      * The train being controlled by the Train Controller.
      */
-    private TestTrain selectedTrain; 
+    private Train selectedTrain; 
     
     /**
      * Constructor for creating a TCPassengerGUI object with no selected train. 
@@ -35,12 +37,12 @@ public class TCPassengerGUI extends javax.swing.JFrame {
      * 
      * @param train the train controlled by the Train Controller class. 
      */
-    public TCPassengerGUI(TestTrain train){
+    public TCPassengerGUI(Train train){
     
         this.selectedTrain = train; 
     }
     
-    public void setSelectedTrain(TestTrain train){
+    public void setSelectedTrain(Train train){
         
         this.selectedTrain = train; 
     }

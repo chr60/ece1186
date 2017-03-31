@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import javax.swing.ListModel;
 
+import TrainModel.*;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -24,7 +25,7 @@ public class TCDispatchedTrainFrame extends javax.swing.JFrame {
     /**
      * HashMap used to store the dispatched trains by its unique ID.
      */
-    private HashMap<String, TestTrain> dispatchedTrains;
+    private HashMap<String, Train> dispatchedTrains;
     
     /**
      * A list of trains that the user selected to open a Train Controller for. 
@@ -46,7 +47,7 @@ public class TCDispatchedTrainFrame extends javax.swing.JFrame {
      * 
      * @param dispatchedTrains HashMap corresponding to the dispatched trains.
      */
-    public TCDispatchedTrainFrame(HashMap<String, TestTrain> dispatchedTrains) {
+    public TCDispatchedTrainFrame(HashMap<String, Train> dispatchedTrains) {
         initComponents();
         
         this.dispatchedTrains = dispatchedTrains;
@@ -191,7 +192,7 @@ public class TCDispatchedTrainFrame extends javax.swing.JFrame {
      */
     private void openSelectedTrains(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openSelectedTrains
         
-        TestTrain train; 
+        Train train; 
         // get each of the trains that were selected
         for (String trainId : this.dispatchedTrainsList.getSelectedValuesList()){
         

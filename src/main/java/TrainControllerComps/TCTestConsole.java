@@ -1,5 +1,7 @@
 package TrainControllerComps;
 
+import TrainModel.Train;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
@@ -26,7 +28,7 @@ public class TCTestConsole extends javax.swing.JFrame {
     /**
      * Train being controlled by the Train Controller.
      */
-    private TestTrain selectedTrain; 
+    private Train selectedTrain; 
     
     /**
      * Train Controller to relay any changes made to the train to.
@@ -43,24 +45,28 @@ public class TCTestConsole extends javax.swing.JFrame {
             }
         });
     
+    private int dispatchedTrains; 
+    
     /**
      * Constructor for creating a TCTestConsole object with no Train Controller and no 
      * selected train. 
      */
-    public TCTestConsole() {
+    public TCTestConsole(TrainController trainCont) {
         initComponents();
         
+        this.dispatchedTrains = 0; 
         this.selectedTrain = null; 
-        this.trainController = null; 
+        this.trainController = trainCont; 
         this.addActionListeners(); 
     }
         
     /**
      * Creates new form TCTestConsole
      */
-    public TCTestConsole(TestTrain train, TrainController trainCont) {
+    public TCTestConsole(Train train, TrainController trainCont) {
         initComponents();
         
+        this.dispatchedTrains = 0; 
         this.selectedTrain = train; 
         this.trainController = trainCont; 
         this.addActionListeners();
@@ -83,7 +89,7 @@ public class TCTestConsole extends javax.swing.JFrame {
                 // pass new value to train 
                 
                 if (selectedTrain != null){
-                   trainController.getTrain().speed =  speedSlider.getValue(); 
+                   trainController.getTrain().setSpeed((double) speedSlider.getValue());
                 }
             }
         });
@@ -94,7 +100,7 @@ public class TCTestConsole extends javax.swing.JFrame {
              
                 String sliderValue = Integer.toString(blockSpeedSlider.getValue());
                 blockSpeed_Slider.setText(sliderValue);
-                trainController.getTrain().currentBlockSpeed =  blockSpeedSlider.getValue();
+                //trainController.getTrain().currentBlockSpeed =  blockSpeedSlider.getValue();
             }
         });
          
@@ -104,7 +110,7 @@ public class TCTestConsole extends javax.swing.JFrame {
              
                 String sliderValue = Integer.toString(suggSpeedSlider.getValue());
                  suggSpeed_Slider.setText(sliderValue);
-                 trainController.getTrain().currentSuggestedSpeed =  suggSpeedSlider.getValue();
+                 //trainController.getTrain().currentSuggestedSpeed =  suggSpeedSlider.getValue();
                  
             }
         });
@@ -125,7 +131,7 @@ public class TCTestConsole extends javax.swing.JFrame {
      * 
      * @param train 
      */
-    public void setTrain(TestTrain train){
+    public void setTrain(Train train){
     
         this.selectedTrain = train; 
     }
@@ -140,8 +146,8 @@ public class TCTestConsole extends javax.swing.JFrame {
        
        if (this.selectedTrain != null){
             // update labels
-            this.trainSpeed.setText(Double.toString(this.selectedTrain.speed));
-            this.trainPower.setText(Double.toString(this.selectedTrain.power));
+            this.trainSpeed.setText(Double.toString(this.selectedTrain.getVelocity()));
+            this.trainPower.setText(Double.toString(this.selectedTrain.getPower()));
             this.setSpeed.setText(Double.toString(this.trainController.getSpeedController().getSetSpeed())); 
             // 
        }
@@ -219,7 +225,7 @@ public class TCTestConsole extends javax.swing.JFrame {
         trainPower = new javax.swing.JLabel();
         setSpeed = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
-        dispatchTrainsLabel = new javax.swing.JButton();
+        dispatchTrainsButton = new javax.swing.JButton();
         numDispatchedTrains = new javax.swing.JComboBox<>();
         logsLabel = new javax.swing.JLabel();
         suggSpeedSlider = new javax.swing.JSlider();
@@ -475,7 +481,12 @@ public class TCTestConsole extends javax.swing.JFrame {
         jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel34.setText("0");
 
-        dispatchTrainsLabel.setText("Dispatch 'x' Trains");
+        dispatchTrainsButton.setText("Dispatch 'x' Trains");
+        dispatchTrainsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dispatchTrains(evt);
+            }
+        });
 
         numDispatchedTrains.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
 
@@ -593,7 +604,7 @@ public class TCTestConsole extends javax.swing.JFrame {
                                 .addComponent(logsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(dispatchTrainsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(dispatchTrainsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(numDispatchedTrains, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1))))
@@ -711,7 +722,7 @@ public class TCTestConsole extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(dispatchTrainsLabel)
+                            .addComponent(dispatchTrainsButton)
                             .addComponent(numDispatchedTrains, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(logsLabel)
@@ -904,99 +915,117 @@ public class TCTestConsole extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void breakAC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakAC
-        this.selectedTrain.ac = -1;     
+        this.selectedTrain.setAC( -1 );    
     }//GEN-LAST:event_breakAC
 
     private void fixAC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixAC
         
-        this.selectedTrain.ac = 0; 
+        this.selectedTrain.setAC( 0 ); 
     }//GEN-LAST:event_fixAC
 
     private void breakHeat(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakHeat
         
-        this.selectedTrain.heat = -1; 
+        this.selectedTrain.setHeat( -1 );
     }//GEN-LAST:event_breakHeat
 
     private void fixHeat(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixHeat
         
-        this.selectedTrain.heat = 0; 
+        this.selectedTrain.setHeat( 0 ); 
     }//GEN-LAST:event_fixHeat
 
     private void breakLightsMurphy(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakLightsMurphy
-        this.selectedTrain.lights = -1; 
+        this.selectedTrain.setLights( -1 );
     }//GEN-LAST:event_breakLightsMurphy
 
     private void fixLights(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixLights
-        this.selectedTrain.lights = 0; 
+        this.selectedTrain.setLights( 0 ); 
     }//GEN-LAST:event_fixLights
 
     private void breakLeftDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakLeftDoors
         
-        this.selectedTrain.leftDoors = -1; 
+        this.selectedTrain.setLeftDoor( -1 );
     }//GEN-LAST:event_breakLeftDoors
 
     private void fixLeftDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixLeftDoors
         
-        this.selectedTrain.leftDoors = 0; 
+        this.selectedTrain.setLeftDoor( 0 );
     }//GEN-LAST:event_fixLeftDoors
 
     private void breakRightDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakRightDoors
-        this.selectedTrain.rightDoors = -1; 
+        this.selectedTrain.setRightDoor( -1 );
     }//GEN-LAST:event_breakRightDoors
 
     private void fixRightDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixRightDoors
-        this.selectedTrain.rightDoors = 0; 
+        this.selectedTrain.setRightDoor( 0 ); 
     }//GEN-LAST:event_fixRightDoors
 
     private void turnOnAC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOnAC
         
-        this.selectedTrain.ac = 1; 
+        this.selectedTrain.setAC( 1 );
     }//GEN-LAST:event_turnOnAC
 
     private void turnOffAC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOffAC
         
-        this.selectedTrain.ac = 0; 
+        this.selectedTrain.setAC( 0 );
     }//GEN-LAST:event_turnOffAC
 
     private void turnOnHeat(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOnHeat
         
-        this.selectedTrain.heat = 1; 
+        this.selectedTrain.setHeat( 1 );
     }//GEN-LAST:event_turnOnHeat
 
     private void turnOffHeat(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOffHeat
        
-        this.selectedTrain.heat = 0; 
+        this.selectedTrain.setHeat( 0 );
     }//GEN-LAST:event_turnOffHeat
 
     private void turnOnLights(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOnLights
         
-        this.selectedTrain.lights = 1; 
+        this.selectedTrain.setLights( 1 );
     }//GEN-LAST:event_turnOnLights
 
     private void turnOffLights(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOffLights
         
-        this.selectedTrain.lights = 0; 
+        this.selectedTrain.setLights( 0 );
     }//GEN-LAST:event_turnOffLights
 
     private void openLeftDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openLeftDoors
         
-        this.selectedTrain.leftDoors = 1; 
+        this.selectedTrain.setLeftDoor( 1 );
     }//GEN-LAST:event_openLeftDoors
 
     private void closeLeftDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeLeftDoors
         
-        this.selectedTrain.leftDoors = 0; 
+        this.selectedTrain.setLeftDoor( 0 );
     }//GEN-LAST:event_closeLeftDoors
 
     private void openRightDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openRightDoors
         
-        this.selectedTrain.rightDoors = 1; 
+        this.selectedTrain.setRightDoor( 1 );
     }//GEN-LAST:event_openRightDoors
 
     private void closeRightDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeRightDoors
         
-        this.selectedTrain.rightDoors = 0; 
+        this.selectedTrain.setRightDoor( 0 );
     }//GEN-LAST:event_closeRightDoors
+
+    private void dispatchTrains(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dispatchTrains
+       
+        // get value from combo box
+   
+        String value = (String) this.numDispatchedTrains.getSelectedItem();
+        
+        // add to the list of dispatched trains 
+        System.out.println("Dispatching " + value + " trains."); 
+         
+        for (int i = 0; i < Integer.parseInt(value); i++){
+        
+            this.trainController.trains.add(new Train( this.dispatchedTrains) );
+            this.dispatchedTrains++; 
+        }
+        
+        this.trainController.setTrainListComboBox();
+    }//GEN-LAST:event_dispatchTrains
 
     /**
      * @param args the command line arguments
@@ -1028,7 +1057,7 @@ public class TCTestConsole extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TCTestConsole().setVisible(true);
+                //new TCTestConsole().setVisible(true);
             }
         });
     }
@@ -1044,7 +1073,7 @@ public class TCTestConsole extends javax.swing.JFrame {
     private javax.swing.JRadioButton breakLeftDoorsMurphy;
     private javax.swing.JRadioButton breakLightsMurphy;
     private javax.swing.JRadioButton breakRightDoorsMurphy;
-    private javax.swing.JButton dispatchTrainsLabel;
+    private javax.swing.JButton dispatchTrainsButton;
     private javax.swing.JRadioButton fixACMurphy;
     private javax.swing.JRadioButton fixHeatMurphy;
     private javax.swing.JRadioButton fixLeftDoorsMurphy;
