@@ -81,4 +81,28 @@ public class Tester {
 	}
 
 	*/
+	
+	
+	
+	/*
+	 * 
+	 
+	 
+     * Method to calculate safe emergency Braking Distance of train based on its current velocity and mass
+     * @return a Double which corresponds to the amount of distance required to stop the train using the emergency brake
+     
+	private Double safeBrakingDist(Double Drate){
+	//compute distance required to stop based on rate selected
+	/* Safe braking distance computation found on https://pdfs.semanticscholar.org/bdd1/42932455dce2c08b8027bd9672aa0ed548f6.pdf
+		S = -((U + b*td)^2)/2(a + b) - U*td- (b*td^2)/2
+		"U" is the speed of the train when the brake command was issued
+		"a" is the acceleration provided by the braking system
+		"b" is the acceleration provided by gravity
+		"td" is the train's brake delay time
+	
+
+		Double SEBD =0.0;
+		return SEBD;
+	
+	*/
 }

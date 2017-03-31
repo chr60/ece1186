@@ -83,6 +83,7 @@ public class Train {
 			//if power command calls for increase of speed
 			changeSpeed(forceApp);
 		}
+		
 	}
         
         
@@ -96,7 +97,7 @@ public class Train {
      * @see magnitude()
      */
 	private void changeSpeed(Double Fapp) {
-
+		oldVelocity = velocity;
 		//compute force lost due to friction
 		Double Fs = mass * g * mySin(currGrade);
 		//compute net force based on applied force and friction
@@ -125,6 +126,11 @@ public class Train {
 		{
 			velocity = 0.0;
 		}
+		
+		//using S = Vi(t) + (1/2)(a)(t^2)  to compute distance
+		distance = (oldVelocity) + (1/2)*acceleration; 
+		
+		
 
 		
 	}
@@ -135,8 +141,8 @@ public class Train {
      * @return a Double which corresponds to the amount of distance required to stop the train using the service brake
      */
 	public Double getSafeBrakingDistSB(){
-		Double SBD = safeBrakingDist(SBrate);
 		Double timeSB = timeToStop(SBrate);
+		Double SBD = distanceToStop(SBrate,timeSB);
 		return SBD;
 	}
 
@@ -145,29 +151,15 @@ public class Train {
      * @return a Double which corresponds to the amount of distance required to stop the train using the emergency brake
      */
 	public Double getSafeBrakingDistEB(){
-		Double SEBD =0.0;
+		Double timeEB = timeToStop(EBrate);
+		Double SEBD = distanceToStop(EBrate,timeEB);
 		return SEBD;
 	}
-	/**
-     * Method to calculate safe emergency Braking Distance of train based on its current velocity and mass
-     * @return a Double which corresponds to the amount of distance required to stop the train using the emergency brake
-     */
-	private Double safeBrakingDist(Double Drate){
-	//compute distance required to stop based on rate selected
-	/* Safe braking distance computation found on https://pdfs.semanticscholar.org/bdd1/42932455dce2c08b8027bd9672aa0ed548f6.pdf
-		S = -((U + b*td)^2)/2(a + b) - U*td- (b*td^2)/2
-		"U" is the speed of the train when the brake command was issued
-		"a" is the acceleration provided by the braking system
-		"b" is the acceleration provided by gravity
-		"td" is the train's brake delay time
-	*/
-
-		Double SEBD =0.0;
-		return SEBD;
-	}
+	
 
 	/**
      * Method to calculate time to stop based on brake rate, mass and velocity
+     * @param a Double which corresponds to the deceleration rate of the brakes
      * @return a Double which corresponds to the amount of time required to stop the train using the brakes
      */
 	private Double timeToStop(Double Drate){
@@ -180,6 +172,18 @@ public class Train {
 		}
 
 		return time; 				//time required to stop the train in seconds
+	}
+	
+	/**
+     * Method to calculate distance to stop based on brake rate, mass and velocity
+     * @param a Double which corresponds to the deceleration rate of the brakes
+     * @param a Double which corresponds to the time that it will take the train to stop
+     * @return a Double which corresponds to the amount of distance required to stop the train using the brakes
+     */
+	private Double distanceToStop(Double Drate, Double stopTime){
+		//using S = Vi(t) + (1/2)(a)(t^2)  to compute distance
+		Double stopDist = (velocity)*(stopTime) + (1/2)*(Drate)*(Math.pow(stopTime, 2));  
+		return stopDist; 				//time required to stop the train in seconds
 	}
 
 
