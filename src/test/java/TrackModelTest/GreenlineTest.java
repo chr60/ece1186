@@ -1,4 +1,4 @@
-package TrackModelTest;
+package TrackModel;
 
 import TrackModel.TrackModel;
 import TrackModel.Block;

@@ -1,9 +1,10 @@
-package TrackModelTest;
+package TrackModel;
 
 import TrackModel.TrackModel;
 import TrackModel.Block;
 import java.util.TreeSet;
 import java.util.Arrays;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
@@ -44,8 +45,8 @@ import org.junit.jupiter.api.Test;
  	*/
  	void testSwitchRoot(){
  		TreeSet<Integer> treeSetTest = new TreeSet<Integer>();
- 		for(String blk : this.track.viewRootMap().keySet()){
- 			treeSetTest.add(this.track.viewRootMap().get(blk).blockNum);
+ 		for(String switchBlock : this.track.viewRootMap().keySet()){
+ 			treeSetTest.add(this.track.viewRootMap().get(switchBlock).getBlockNum());
  		}
  		assertEquals(treeSetTest,testBlocksRoot);
  	}
@@ -57,7 +58,7 @@ import org.junit.jupiter.api.Test;
  	void testSwitchleaf(){
  		TreeSet<Integer> treeSetTest = new TreeSet<Integer>();
  		for(String blk : this.track.viewRootMap().keySet()){
- 			assertTrue(this.track.viewLeafMap().get(blk).get(0).blockNum.compareTo(track.viewLeafMap().get(blk).get(1).blockNum)<0);
+ 			assertTrue(this.track.viewLeafMap().get(blk).get(0).getBlockNum().compareTo(track.viewLeafMap().get(blk).get(1).getBlockNum())<0);
  		}
  	}
 
@@ -115,8 +116,18 @@ import org.junit.jupiter.api.Test;
  	void testBlockStationMap(){
  		TreeSet<Integer> blockNums = new TreeSet<Integer>();
  		for (Block b : track.viewBlockStationMap().keySet()){
- 			blockNums.add(b.blockNum);
+ 			blockNums.add(b.getBlockNum());
  		}
  		assertEquals(testExpectedStationBlockNums, blockNums);
+ 	}
+
+ 	@Test
+ 	/**
+ 	*	Test the nextBlock functionality in a simple case.
+ 	*/
+ 	void testBlockToBlockSimple() {
+ 		Block startBlock = track.getBlock("Red", "U", new Integer(77));
+ 		Block endBlock = track.getBlock("Red", "C", new Integer(7));
+ 		ArrayList<ArrayList<Block>> paths = track.blockToBlock(startBlock, endBlock);
  	}
  }
