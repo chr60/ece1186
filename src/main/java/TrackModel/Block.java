@@ -68,7 +68,8 @@ public class Block implements Comparable<Block>, java.io.Serializable{
     this.powerFailure = false;
     this.maintenence = false;
     this.authority = null;
-    this.trainId = null;
+    this.trainId = new Integer(-1);
+
     }
 
   /**
@@ -78,6 +79,51 @@ public class Block implements Comparable<Block>, java.io.Serializable{
     return this.brokenRail;
   }
 
+  /**
+  * Sets the suggested speed to a new speed.
+  * @param new speed to set
+  */
+  public void setSuggestedSpeed(double newSpeed){
+    this.suggestedSpeed = suggestedSpeed;
+  }
+
+  /**
+  * Get the current suggested speed at this block.
+  */
+  public double getSuggestedSpeed(){
+    return this.suggestedSpeed;
+  }
+
+  /**
+  * Gets the authority of this block.
+  */
+  public Block getAuthority(){
+    return this.authority;
+  }
+
+  /**
+  * Sets the new authority of a block.
+  * @param the new authority at this block
+  */
+  public void setAuthority(Block newAuthority){
+    this.authority = newAuthority;
+  }
+
+  /**
+  * Gets the train ID that occupies the block.
+  * @param the new trainId
+  */
+  public Integer getTrainId(){
+    return this.trainId;
+  }
+
+  /**
+  * Sets the occupied train id
+  * @param thew new id to be assigned to the block
+  */
+  public void setTrainId(Integer newId){
+    this.trainId = newId;
+  }
   /**
   * Setter for the Wayside Controller module to set a light state based upon an Integer
   * Maps 1 to true, 0 to false based upon the track internal convention.
