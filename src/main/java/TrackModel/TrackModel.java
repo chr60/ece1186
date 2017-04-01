@@ -52,7 +52,7 @@ public class TrackModel implements Serializable{
 	public TrackModel view(){
 		return this;
 	}
-	
+
 	/**
 	* Returns a non-aliased section of blocks
 	* @param line line the section is on
@@ -96,7 +96,7 @@ public class TrackModel implements Serializable{
 
 	/**
 	* Allows viewing of the blockStationMap by other modules
-	*	
+	*
 	* @return HashMap<Block, Station>
 	*/
 	public HashMap<Block, Station> viewBlockStationMap(){
@@ -127,9 +127,9 @@ public class TrackModel implements Serializable{
 		}
 		this.trackList.get(block.blockLine).get(block.blockSection).put(block.blockNum, block);
 	}
-	
+
 	/**
-	* Adds a station-block pair to the stationList. 
+	* Adds a station-block pair to the stationList.
 	* @param stationName station to be added to the stationList
 	* @param stationLocation the block location of an point where the station interacts with the block
 	*/
@@ -157,7 +157,7 @@ public class TrackModel implements Serializable{
 		if (!this.leafMap.containsKey(leafBlockString)){
 			this.leafMap.put(leafBlockString, new ArrayList<Block>());
 		}
-		this.leafMap.get(leafBlockString).add(leafBlock);	
+		this.leafMap.get(leafBlockString).add(leafBlock);
 	}
 
 	/**
@@ -177,9 +177,9 @@ public class TrackModel implements Serializable{
 				System.out.println(sectionKey);
 
 				Set<Integer> blockSet = this.trackList.get(lineKey).get(sectionKey).keySet();
-				
+
 				for (Integer blockNum : blockSet){
-					//System.out.println(this.trackList.get(lineKey).get(sectionKey).get(blockNum).nextBlockForward().blockNum);					
+					//System.out.println(this.trackList.get(lineKey).get(sectionKey).get(blockNum).nextBlockForward().blockNum);
 				}
 
 			}
@@ -236,7 +236,7 @@ public class TrackModel implements Serializable{
 		}
 	}
 
-	/** 
+	/**
 	*Build the listing of the host station list for external consumption
 	*/
 	private void buildStationHostMap(){
@@ -251,7 +251,7 @@ public class TrackModel implements Serializable{
 	private void handleSwitches(){
 
 		for (String s : this.rootMap.keySet()){
-			
+
 			if(this.rootMap.get(s).blockLine.equals("Red")){
 				this.rootMap.get(s).setNextBlockForward(this.leafMap.get(s).get(0), this.leafMap.get(s).get(1));
 			}
@@ -304,11 +304,11 @@ public class TrackModel implements Serializable{
 
 						Boolean isUnderground = infrastructure.contains("UNDERGROUND");
 						Boolean hasSwitch = infrastructure.contains("SWITCH");
-						
-						
+
+
 						//Initialize and add block
-						Block myBlock = new Block(this, defaultOccupied, isUnderground, blockLen, blockGrade, 
-										elevation, speedLimit, stationName, arrowDirection, blockLine, 
+						Block myBlock = new Block(this, defaultOccupied, isUnderground, blockLen, blockGrade,
+										elevation, speedLimit, stationName, arrowDirection, blockLine,
 										blockSection, blockNum, hasSwitch, switchBlock);
 
 						this.addBlock(myBlock);

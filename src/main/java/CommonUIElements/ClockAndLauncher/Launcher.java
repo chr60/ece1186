@@ -381,7 +381,7 @@ public class Launcher extends javax.swing.JFrame {
      */
     private void openTrackController(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTrackController
 
-          WaysideGUI ws = new WaysideGUI(generateTrack(), null);
+          WaysideGUI ws = new WaysideGUI(TRACK, null);
           ws.getFrame().setVisible(true);
           ws.getFrame().setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_openTrackController
@@ -405,10 +405,10 @@ public class Launcher extends javax.swing.JFrame {
     }//GEN-LAST:event_openMBOandScheduler
 
     private void createLogger(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createLogger
-            
+
         // logger stuff here...
         System.out.println("Logger Stuff!");
-        
+
     }//GEN-LAST:event_createLogger
 
     /**
@@ -453,10 +453,21 @@ public class Launcher extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                TRACK = new TrackModel();
+                String[] fNames = {"resources/redline.csv"};
+                TRACK.readCSV(fNames);
+
                 new Launcher().setVisible(true);
             }
         });
     }
+
+
+    //References to ACTIVE modules
+    private static TrackModel TRACK;
+
+
+    //END ACTIVE MODULES
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel clockSpeedLabel;
