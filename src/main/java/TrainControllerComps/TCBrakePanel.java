@@ -156,12 +156,12 @@ public class TCBrakePanel extends javax.swing.JPanel {
         statusLabelService.setText("Status:");
 
         functionLabelService.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        functionLabelService.setText("Functioning");
+        functionLabelService.setText("Off");
 
         statusLabelEmg.setText("Status:");
 
         functionLabelEmg.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        functionLabelEmg.setText("Functioning");
+        functionLabelEmg.setText("Off");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -225,9 +225,11 @@ public class TCBrakePanel extends javax.swing.JPanel {
            
                 // if the emergency brake is broke, this can't happen
                 if (this.selectedTrain.getEmergencyBrake() != -1){
-                
+                    
                     this.selectedTrain.setEmergencyBrake( 1 );
+                    this.functionLabelEmg.setText("On");
                     this.selectedTrain.setEmergencyBrake( 0 );
+                    this.functionLabelEmg.setText("Off");
                 }  
             }
         }
@@ -245,7 +247,9 @@ public class TCBrakePanel extends javax.swing.JPanel {
             this.logBook.add("Engage the service brakes!"); 
         
             this.selectedTrain.setServiceBrake( 1 );
-            this.selectedTrain.setServiceBrake( 0 ); 
+            this.functionLabelService.setText("On");
+            this.selectedTrain.setServiceBrake( 0 );
+            this.functionLabelService.setText("Off");
         
             this.printLogs();
         }

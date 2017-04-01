@@ -82,7 +82,7 @@
     <Component class="javax.swing.JLabel" name="functionLabelService">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="Functioning"/>
+        <Property name="text" type="java.lang.String" value="Off"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="statusLabelEmg">
@@ -93,7 +93,7 @@
     <Component class="javax.swing.JLabel" name="functionLabelEmg">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="Functioning"/>
+        <Property name="text" type="java.lang.String" value="Off"/>
       </Properties>
     </Component>
   </SubComponents>
