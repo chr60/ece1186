@@ -26,7 +26,9 @@ public class TrackModel implements Serializable{
         this.trackScope = scope;
     }
 
-    public TrackModel(){}
+    @Deprecated public TrackModel(){
+        System.out.println("WARNING! This initializaaiton of a track model will be deprecated in the future.");
+    }
 
 
     public HashMap<String,HashMap<String, HashMap<Integer, Block>>> trackList =
@@ -94,63 +96,24 @@ public class TrackModel implements Serializable{
     * @param the current block
     * @param the desired ending block
     */
-    private ArrayList<ArrayList<Block>> blockPath(ArrayList<ArrayList<Block>> possiblePaths, ArrayList<Block> visited, Block currBlock, Block endBlock) { 
+    private ArrayList<ArrayList<Block>> blockPath(ArrayList<ArrayList<Block>> possiblePaths, 
+            ArrayList<Block> visited, Block currBlock, Block endBlock) { 
         
-        if (visited.contains(currBlock)) {
+        if(visited.contains(currBlock)) {
             return possiblePaths;
-        } else {
-            visited.add(currBlock);
         }
+        visited.add(currBlock);
 
-        if (currBlock.equals(endBlock)) {
+        for(Block b : visited) {
+            //System.out.println(b.blockNum());
+        }
+        if(currBlock.equals(endBlock)) {
+            System.out.println("DONE");
             possiblePaths.add(visited);
             return possiblePaths;
         }
-
-        if(!currBlock.switchBlock.equals("") && this.rootMap.containsKey(currBlock.switchBlock) && 
-            this.rootMap.get(currBlock.switchBlock).equals(currBlock)) {
-            
-        }
-
-        if(!currBlock.switchBlock.equals("") && this.leafMap.get(currBlock.switchBlock).contains(currBlock)) {
-            Block switchBlock = this.rootMap.get(currBlock.switchBlock);
-            //Test case for switch = 0
-
-            switchBlock.setSwitchState(0);
-            if(visited.contains(currBlock.nextBlockBackward())) {
-                return possiblePaths;
-            }
-            else {
-                possiblePaths = blockPath(possiblePaths, visited, currBlock.nextBlockBackward(), endBlock);
-            }
-
-            if(visited.contains(currBlock.nextBlockForward())) {
-                return possiblePaths;
-            }
-            else {
-                possiblePaths = blockPath(possiblePaths, visited, currBlock.nextBlockForward(), endBlock);
-            }
-
-            //Test case for switch = 1
-            switchBlock.setSwitchState(1);
-            if(visited.contains(currBlock.nextBlockBackward())) {
-                return possiblePaths;
-            }
-            else {
-                possiblePaths = blockPath(possiblePaths, visited, currBlock.nextBlockBackward(), endBlock);
-            }
-
-            if(visited.contains(currBlock.nextBlockForward())) {
-                return possiblePaths;
-            }
-            else {
-                possiblePaths = blockPath(possiblePaths, visited, currBlock.nextBlockForward(), endBlock);
-            }
-        }
-        else {
-            possiblePaths = blockPath(possiblePaths, visited, currBlock.nextBlockForward(), endBlock);
-            possiblePaths = blockPath(possiblePaths, visited, currBlock.nextBlockBackward(), endBlock);
-        }
+        possiblePaths = blockPath(possiblePaths, new ArrayList<Block>(visited), currBlock.nextBlockBackward(), endBlock);
+        possiblePaths = blockPath(possiblePaths, new ArrayList<Block>(visited), currBlock.nextBlockForward(), endBlock);
         return possiblePaths;
     }
 

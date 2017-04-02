@@ -159,7 +159,7 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
         
         if (this.selectedTrain.getAuthority() != null){
         
-            this.setAuthorityLabel(this.selectedTrain.getAuthority().getBlockNum());
+            this.setAuthorityLabel(this.selectedTrain.getAuthority().blockNum());
         }
     }
     

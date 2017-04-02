@@ -118,7 +118,7 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   }
 
   /**
-  * Sets the occupied train id
+  * Sets the occupied train id.
   * @param thew new id to be assigned to the block
   */
   public void setTrainId(Integer newId){
@@ -144,14 +144,14 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   }
 
   /**
-  * Returns the length of a block object
+  * Returns the length of a block object.
   */
   public Double getLen(){
     return this.blockLen;
   }
 
   /**
-  *   Returns if a track block is open or not based upon the state of the breakages of a block
+  * Returns if a track block is open or not based upon the state of the breakages of a block.
   */
   public Boolean getOpen(){
     if (this.brokenRail || this.powerFailure || this.occupied || this.maintenence){
@@ -163,40 +163,43 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   }
 
   /**
-  *   Returns the occupied state of a given block object
+  *   Returns the occupied state of a given block object.
   */
   public Boolean getOccupied(){
     return this.occupied;
   }
 
   /**
-  * Sets the occupied state of the given block
+  * Sets the occupied state of the given block.
   */
   public void setOccupied(){
     this.occupied= (!this.occupied);
   }
 
   /**
-  * Returns the speed limit of a given block
+  * Returns the speed limit of a given block.
   */
   public Double getSpeedLimit(){
     return this.speedLimit;
   }
 
   /**
-  * Returns the cumulative elevation of a given blcok
+  * Returns the cumulative elevation of a given blcok.
   */
   public Double getElevation(){
     return this.blockElevation;
   }
 
   /**
-  * Returns the grade of a given block
+  * Returns the grade of a given block.
   */
   public Double getGrade(){
     return this.blockGrade;
   }
 
+  /**
+  * Returns the status of a circuit failure at a given block.
+  */
   public Boolean getCircuitFailure(){
     return this.circuitFailure;
   }
@@ -224,13 +227,16 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   public void setNextBlockForward(Block setBlock){
     this.nextBlockForward = setBlock;
   }
-
-  public Integer getBlockNum(){
+  
+  /**
+  * Returns the number of a given block.
+  */
+  public Integer blockNum(){
     return this.blockNum;
   }
     
   /**
-  * Returns the section a block is on
+  * Returns the section a block is on.
   */
   public String getBlockSection(){
     return this.blockSection;
@@ -286,6 +292,10 @@ public class Block implements Comparable<Block>, java.io.Serializable{
     }
   }
 
+  /**
+  * Returns the next block backward given a current switch state.
+  * @return the nextBlock in the backward direction given a blocks switch state.
+  */
   public Block nextBlockBackward(){
     if(this.rootBlock != null){
       if (this.rootBlock.nextBlockForward().equals(this)){
@@ -300,41 +310,50 @@ public class Block implements Comparable<Block>, java.io.Serializable{
     }
   }
 
-    /**
-    * Setter for the Wayside Controller module to set a switch state based upon an Integer
-    * Maps 1 to true, 0 to false based upon the track internal convention.
-    * @param setInt integer for the switch state to be set to
-    * @todo Add strict value assertions that setInt is either 0 or 1 
-    */
-    public Boolean setSwitchState(Integer setInt){
-        //condition check for having a switch
-        assert(this.switchState != null);
+  /**
+  * Setter for the Wayside Controller module to set a switch state based upon an Integer
+  * Maps 1 to true, 0 to false based upon the track internal convention.
+  * @param setInt integer for the switch state to be set to
+  * @todo Add strict value assertions that setInt is either 0 or 1 
+  */
+  public Boolean setSwitchState(Integer setInt){
+    //condition check for having a switch
+    assert(this.switchState != null);
 
-        if(setInt.equals(1)){
-            this.switchState = true;
-        }
-        else if(setInt.equals(0)){
-            this.switchState = false;
-        }
-        return this.switchState;
+    if(setInt.equals(1)){
+        this.switchState = true;
     }
-    
-    /**
-    * Returns the associated station of the block
-    * @return the Station object of the associated block
-    */
-    public Station getAssociatedStation(){
-        return this.superTrackModel.blockStationMap.get(this);
+    else if(setInt.equals(0)){
+        this.switchState = false;
     }
+    return this.switchState;
+  }
 
-    public Crossing getAssociatedCrossing(){
-        return this.superTrackModel.crossingMap.get(this);
-    }
-    /** Implements the comparable interface for blocks via the associalted blockNum of a given block.
-    * At this time, this implementation does not verify that blocks are the same across lines.
-    */
-    @Override
-    public int compareTo(Block thatBlock){
-        return Integer.compare(this.blockNum, thatBlock.blockNum)+ this.blockLine.compareTo(thatBlock.blockLine);
-    }
+  /**
+  * Returns the switch state of a given block.
+  * @param the switch state
+  */
+  public Boolean hasSwitch(){
+    return this.hasSwitch;
+  }
+
+  /**
+  * Returns the associated station of the block.
+  * @return the Station object of the associated block
+  */
+  public Station getAssociatedStation(){
+    return this.superTrackModel.blockStationMap.get(this);
+  }
+
+  public Crossing getAssociatedCrossing(){
+    return this.superTrackModel.crossingMap.get(this);
+  }
+
+  /** Implements the comparable interface for blocks via the associalted blockNum of a given block.
+  * At this time, this implementation does not verify that blocks are the same across lines.
+  */
+  @Override
+  public int compareTo(Block thatBlock){
+    return Integer.compare(this.blockNum, thatBlock.blockNum)+ this.blockLine.compareTo(thatBlock.blockLine);
+  }
 }
