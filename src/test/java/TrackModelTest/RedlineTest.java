@@ -25,6 +25,9 @@ import org.junit.jupiter.api.Test;
   private static String[] fNames = {"src/test/resources/redline.csv"};
 
   @BeforeEach
+  /**
+  * Initialization of the trackmodel to be used for testing
+  */
   void init(){
     String[] fNames = {"src/test/resources/redline.csv"};
     this.track = new TrackModel("Test");
@@ -33,16 +36,18 @@ import org.junit.jupiter.api.Test;
 
   @Test
   /**
-  * Test for proper station names reading
+  * Test for proper station names reading.
   */
+  @DisplayName("Validate some reading of a trackModel from a csv")
   void testReading(){
     assertEquals(testNamesSet, this.track.viewStationMap().keySet());
   }
 
   @Test
   /**
-  * Test proper block assignment for switch roots
+  * Test proper block assignment for switch roots.
   */
+  @DisplayName("Validate proper switch roots of a track")
   void testSwitchRoot(){
     TreeSet<Integer> treeSetTest = new TreeSet<Integer>();
     for(String switchBlock : this.track.viewRootMap().keySet()){
@@ -53,8 +58,9 @@ import org.junit.jupiter.api.Test;
 
   @Test
   /**
-  * Test proper leaf assignments for block on the red line
+  * Test proper leaf assignments for block on the red line.
   */
+  @DisplayName("Validate correct switch leaves")
   void testSwitchleaf(){
     TreeSet<Integer> treeSetTest = new TreeSet<Integer>();
     for(String blk : this.track.viewRootMap().keySet()){
@@ -64,8 +70,9 @@ import org.junit.jupiter.api.Test;
 
   @Test
   /**
-  * Check proper funcitonality of nextBlockForward by switch state on the red line
+  * Check proper funcitonality of nextBlockForward by switch state on the red line.
   */
+  @DisplayName("Validate the nextBlockForward through a switch")
   void testSwitchNextBlockForward(){
     for (String blk : this.track.viewRootMap().keySet()){
       Block switchTrue = this.track.viewRootMap().get(blk).nextBlockForward();
@@ -82,6 +89,7 @@ import org.junit.jupiter.api.Test;
   * Check testing of next block backward on the redline. For a "true" (default switch state),
   * the nexBlockBackward should return the rootBlock for the lower indexed block. 
   */
+  @DisplayName("Validate switching and nextBlockBackward default switch state")
   void testNextBlockBackwardDefaultSwitch(){
     //For the case where we don't toggle switches
     for (String s : this.track.viewLeafMap().keySet()){
@@ -95,6 +103,7 @@ import org.junit.jupiter.api.Test;
   * Check testing of next block backwards on the redline. For a "false" (non-default switch state),
   * the nextBlockBackward should return the rootBlock for the higher indexed block.
   */
+  @DisplayName("Validate Switching and nextBlockBackward functionality")
   void testNextBlockBackwardFalseSwitch(){
     //Toggle all the switches
     for (String s : this.track.viewRootMap().keySet()){
@@ -113,6 +122,7 @@ import org.junit.jupiter.api.Test;
   *  Check the functionality of the external blockStation map for use in the train model and 
   *  train controller.
   */
+  @DisplayName("Test proper block station map of a track")
   void testBlockStationMap(){
     TreeSet<Integer> blockNums = new TreeSet<Integer>();
     for (Block b : track.viewBlockStationMap().keySet()){
@@ -125,6 +135,7 @@ import org.junit.jupiter.api.Test;
   /**
   * Test the pathing functionality in a simple case expecting forward.
   */
+  @DisplayName("Simple pathing test 1")
   void testBlockToBlockSimpleForward() {
     Block startBlock = track.getBlock("Red", "H", new Integer(24));
     Block endBlock = track.getBlock("Red", "H", new Integer(25));
@@ -133,13 +144,14 @@ import org.junit.jupiter.api.Test;
 
     testArr.add(startBlock);
     testArr.add(endBlock);
-    assertEquals(paths.get(0),testArr);
+    assertEquals(testArr,paths.get(0));
   }
 
   @Test
   /**
   * Test the pathing functionality in a simple case expecting backward.
   */
+  @DisplayName("Simple pathing test 2")
   void testBlockToBlockSimpleBackward() {
     Block startBlock = track.getBlock("Red", "H", new Integer(25));
     Block endBlock = track.getBlock("Red", "H", new Integer(24));
@@ -148,13 +160,47 @@ import org.junit.jupiter.api.Test;
 
     testArr.add(startBlock);
     testArr.add(endBlock);
-    assertEquals(paths.get(0),testArr);
+    assertEquals(testArr,paths.get(0));
+  }
+
+  @Test
+  /**
+  * Test the ability of the path planning to deal with switching conditions.
+  */
+  @DisplayName("Switching pathing test 1")
+  void testPathingSwitching() {
+    Block startBlock = track.getBlock("Red","U",new Integer(77));
+    Block endBlock  = track.getBlock("Red","C",new Integer(7));
+    ArrayList<ArrayList<Block>> paths = track.blockToBlock(startBlock, endBlock);
+    ArrayList<Block> testArr = new ArrayList<Block>();
+  }
+
+  @Test
+  /**
+  * Test the pathing functionality in a simple case expecting backward.
+  */
+  @DisplayName("MBO Pathing Test 1")
+  void testMBOOne() {
+    Block startBlock = track.getBlock("Red", "C", new Integer(7));
+    Block endBlock = track.getBlock("Red", "F", new Integer(16));
+    ArrayList<ArrayList<Block>> paths = track.blockToBlock(startBlock, endBlock);
+    ArrayList<Block> testArr = new ArrayList<Block>();
+    testArr.add(track.getBlock("Red", "C", new Integer(7)));
+    testArr.add(track.getBlock("Red", "B", new Integer(6)));
+    testArr.add(track.getBlock("Red", "B", new Integer(5)));
+    testArr.add(track.getBlock("Red", "B", new Integer(4)));
+    testArr.add(track.getBlock("Red", "A", new Integer(3)));
+    testArr.add(track.getBlock("Red", "A", new Integer(2)));
+    testArr.add(track.getBlock("Red", "A", new Integer(1)));
+    testArr.add(track.getBlock("Red", "F", new Integer(16)));
+    assertEquals(testArr, paths.get(0));
   }
 
   @Test
   /**
   * Validate no nulls after linking blocks.
   */
+  @DisplayName("Test the presence of a nullptr in the track due to incorrect linking")
   void testNullPtrExceptionDefault() {
     for(String l : this.track.trackList.keySet()) {
       for(String s : this.track.trackList.get(l).keySet()) {
@@ -170,6 +216,7 @@ import org.junit.jupiter.api.Test;
   /**
   * Validate no nulls after linking blocks and switching all switches.
   */
+  @DisplayName("Test the presence of a nullptr in the track due to incorrect linking under switched condition")
   void testNullPtrExceptionSwitched() {
     for(String s : this.track.viewRootMap().keySet()) {
       Integer falseInt = new Integer(0);

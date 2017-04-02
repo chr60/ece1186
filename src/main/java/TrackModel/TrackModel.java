@@ -52,15 +52,25 @@ public class TrackModel implements Serializable{
     }
 
     /**
+    * Lateral lookup for tracks. Intended for use with dummyTrack->globalTrack and
+    * vica-versa. Should be called on the object whose information is desired using
+    * the source block.
+    * @param block to be lateral lookup.
+    */
+    public Block lateralLookup(Block block) {
+        return this.trackList.get(block.blockLine).get(block.blockSection).get(block.blockNum);
+    }
+
+    /**
     * A method for viewing the trackmodels object. A god method, not intended for use
-    * by other modules. FOr logging purposes; other modules should use the accessors
+    * by other modules. For logging purposes; other modules should use the accessors.
     */
     public TrackModel view(){
         return this;
     }
 
     /**
-    * Returns a non-aliased section of blocks
+    * Returns a non-aliased section of blocks.
     * @param line line the section is on
     * @param section section being requested
     */
@@ -108,12 +118,25 @@ public class TrackModel implements Serializable{
             //System.out.println(b.blockNum());
         }
         if(currBlock.equals(endBlock)) {
-            System.out.println("DONE");
+            //System.out.println("DONE");
             possiblePaths.add(visited);
             return possiblePaths;
         }
+
         possiblePaths = blockPath(possiblePaths, new ArrayList<Block>(visited), currBlock.nextBlockBackward(), endBlock);
+        //System.out.println(possiblePaths.size());
         possiblePaths = blockPath(possiblePaths, new ArrayList<Block>(visited), currBlock.nextBlockForward(), endBlock);
+        //System.out.println(possiblePaths.size());
+        //path logic
+        if(!currBlock.switchBlock.equals("") && this.leafMap.get(currBlock.switchBlock).contains(currBlock)) {
+            Block switchBlock = this.rootMap.get(currBlock.switchBlock);
+            switchBlock.setSwitchState(1);
+            possiblePaths = blockPath(possiblePaths, new ArrayList<Block>(visited), currBlock.nextBlockBackward(), endBlock);
+            //System.out.println(possiblePaths.size());
+            possiblePaths = blockPath(possiblePaths, new ArrayList<Block>(visited), currBlock.nextBlockForward(), endBlock);
+            
+        }
+
         return possiblePaths;
     }
 
@@ -200,6 +223,11 @@ public class TrackModel implements Serializable{
         }
     }
 
+    /**
+    * Add the leaf of a switch to the list.
+    * @param the string linking the block
+    * @param the block to be referenced
+    */
     private void addSwitchLeaf(String leafBlockString, Block leafBlock){
         if (!this.leafMap.containsKey(leafBlockString)){
             this.leafMap.put(leafBlockString, new ArrayList<Block>());
@@ -234,7 +262,7 @@ public class TrackModel implements Serializable{
     }
 
     /**
-    *   Links blocks across block and sections
+    *   Links blocks across block and sections.
     */
     private void linkBlocks(){
         for (String lineKey : this.trackList.keySet()){
@@ -277,7 +305,7 @@ public class TrackModel implements Serializable{
     }
 
     /**
-    * Build a map for storing the blocks and station for use by the train controller and
+    * Build a map for storing the blocks and station for use by the train controller and.
     * train model
     */
     private void buildBlockStationMap(){
@@ -290,7 +318,7 @@ public class TrackModel implements Serializable{
     }
 
     /**
-    *Build the listing of the host station list for external consumption
+    *Build the listing of the host station list for external consumption.
     */
     private void buildStationHostMap(){
         for (String stationName : this.stationList.keySet()){
@@ -299,7 +327,7 @@ public class TrackModel implements Serializable{
         }
     }
 
-    /** Helper function to link nextBlock for switches
+    /** Helper function to link nextBlock for switches.
     */
     private void handleSwitches(){
 
