@@ -50,12 +50,24 @@ public class TrackModel implements Serializable{
     public Block getBlock(String line, String section, Integer blockNum){
         return this.trackList.get(line).get(section).get(blockNum);
     }
-
+    /**
+    * Returns the occupancy of a section on a given line.
+    * @param the line to be searched
+    * @param the section to be searched
+    */
+    public Boolean sectionOccupancy(String line, String section){
+        for (Integer b : this.trackList.get(line).get(section).keySet()) {
+            if(this.trackList.get(line).get(section).get(b).getOccupied()){
+                return true;
+            }
+        }
+        return false;
+    }
     /**
     * Lateral lookup for tracks. Intended for use with dummyTrack->globalTrack and
     * vica-versa. Should be called on the object whose information is desired using
     * the source block.
-    * @param block to be lateral lookup.
+    * @param block to be laterally looked up.
     */
     public Block lateralLookup(Block block) {
         return this.trackList.get(block.blockLine).get(block.blockSection).get(block.blockNum);
@@ -64,6 +76,7 @@ public class TrackModel implements Serializable{
     /**
     * A method for viewing the trackmodels object. A god method, not intended for use
     * by other modules. For logging purposes; other modules should use the accessors.
+    * @return this track model.
     */
     public TrackModel view(){
         return this;
