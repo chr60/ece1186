@@ -174,10 +174,9 @@ import org.junit.jupiter.api.Test;
     ArrayList<ArrayList<Block>> paths = track.blockToBlock(startBlock, endBlock);
     ArrayList<Block> testArr = new ArrayList<Block>();
   }
-
   @Test
   /**
-  * Test the pathing functionality in a simple case expecting backward.
+  * MBO pathing test 1
   */
   @DisplayName("MBO Pathing Test 1")
   void testMBOOne() {
@@ -193,6 +192,50 @@ import org.junit.jupiter.api.Test;
     testArr.add(track.getBlock("Red", "A", new Integer(2)));
     testArr.add(track.getBlock("Red", "A", new Integer(1)));
     testArr.add(track.getBlock("Red", "F", new Integer(16)));
+    assertEquals(testArr, paths.get(0));
+}
+
+  //@Test
+  /**
+  * MBO pathing test 2
+  */
+  @DisplayName("MBO Pathing Test 2")
+  void testMBOTwo() {
+    Block startBlock = track.getBlock("Red", "H", new Integer(25));
+    Block endBlock = track.getBlock("Red", "H", new Integer(35));
+    ArrayList<ArrayList<Block>> paths = track.blockToBlock(startBlock, endBlock);
+    ArrayList<Block> testArr = new ArrayList<Block>();
+    System.out.println("MBO 2");
+
+    
+    // First possible path
+    testArr.add(track.getBlock("Red", "H", new Integer(25)));
+    testArr.add(track.getBlock("Red", "H", new Integer(26)));
+    testArr.add(track.getBlock("Red", "H", new Integer(27)));
+    testArr.add(track.getBlock("Red", "H", new Integer(28)));
+    testArr.add(track.getBlock("Red", "H", new Integer(29)));
+    testArr.add(track.getBlock("Red", "H", new Integer(30)));
+    testArr.add(track.getBlock("Red", "H", new Integer(31)));
+    testArr.add(track.getBlock("Red", "H", new Integer(32)));
+    testArr.add(track.getBlock("Red", "H", new Integer(33)));
+    testArr.add(track.getBlock("Red", "H", new Integer(34)));
+    testArr.add(track.getBlock("Red", "H", new Integer(35)));
+    /*
+    // Second possible path
+    testArr.add(track.getBlock("Red", "H", new Integer(25)));
+    testArr.add(track.getBlock("Red", "H", new Integer(26)));
+    testArr.add(track.getBlock("Red", "H", new Integer(27)));
+    testArr.add(track.getBlock("Red", "T", new Integer(76)));
+    testArr.add(track.getBlock("Red", "S", new Integer(75)));  
+    testArr.add(track.getBlock("Red", "S", new Integer(74)));
+    testArr.add(track.getBlock("Red", "S", new Integer(73))); 
+    testArr.add(track.getBlock("Red", "R", new Integer(72)));
+    testArr.add(track.getBlock("Red", "H", new Integer(33)));
+    testArr.add(track.getBlock("Red", "H", new Integer(34)));
+    testArr.add(track.getBlock("Red", "H", new Integer(35)));
+    System.out.println("paths:");
+    System.out.print(paths.get(0));
+    */
     assertEquals(testArr, paths.get(0));
   }
 
@@ -231,5 +274,43 @@ import org.junit.jupiter.api.Test;
         }
       }
     }
+  }
+
+  @Test
+  /**
+  * Test the functionality of the brokenList
+  */
+  @DisplayName("Broken List Test--expecting false")
+  void testBrokenListFalse() {
+    ArrayList<Block> brokenListTest = new ArrayList<Block>();
+    Block first = this.track.getBlock("Red","A",new Integer(1));
+    Block second = this.track.getBlock("Red","U",new Integer(77));
+    brokenListTest.add(first);
+    brokenListTest.add(second);
+    assertFalse(brokenListTest.equals(this.track.getBrokenBlocks("Red")));
+
+    this.track.getBlock("Red","A",new Integer(1)).setBroken(true);
+    this.track.getBlock("Red","U",new Integer(77)).setBroken(true);
+
+  }
+
+  @Test
+  /**
+  * Test the functionality of the brokenList
+  */
+  @DisplayName("Broken List Test--expecting true")
+  void testBrokenListTrue() {
+    ArrayList<Block> brokenListTest = new ArrayList<Block>();
+    Block first = this.track.getBlock("Red","A",new Integer(1));
+    Block second = this.track.getBlock("Red","U",new Integer(77));
+    brokenListTest.add(first);
+    brokenListTest.add(second);
+
+
+    this.track.getBlock("Red","A",new Integer(1)).setBroken(true);
+    this.track.getBlock("Red","U",new Integer(77)).setBroken(true);
+    assertTrue(brokenListTest.equals(this.track.getBrokenBlocks("Red")));
+
+
   }
  }

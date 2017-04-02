@@ -51,6 +51,7 @@ public class TrackModel implements Serializable{
     public Block getBlock(String line, String section, Integer blockNum){
         return this.trackList.get(line).get(section).get(blockNum);
     }
+
     /**
     * Returns the occupancy of a section on a given line.
     * @param the line to be searched
@@ -64,6 +65,24 @@ public class TrackModel implements Serializable{
         }
         return false;
     }
+
+    /**
+    * Returns a block given a line and number.
+    * @param the line
+    * @param the block number
+    */
+    public ArrayList<Block> getBrokenBlocks(String line){
+        ArrayList<Block> brokenList = new ArrayList<Block>();
+        for (String section : this.trackList.get(line).keySet()) {
+            for(Integer blk : this.trackList.get(line).get(section).keySet() ) {
+                if (this.trackList.get(line).get(section).get(blk).getBroken()){
+                    brokenList.add(this.trackList.get(line).get(section).get(blk));
+                }
+            }
+        }
+        return brokenList;
+    }
+
     /**
     * Lateral lookup for tracks. Intended for use with dummyTrack->globalTrack and
     * vica-versa. Should be called on the object whose information is desired using

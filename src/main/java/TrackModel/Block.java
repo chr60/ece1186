@@ -74,9 +74,18 @@ public class Block implements Comparable<Block>, java.io.Serializable{
 
   /**
   * Returns the broken status of a given block.
+  * @return the boolean state of the broken rail
   */
   public Boolean getBroken(){
     return this.brokenRail;
+  }
+
+  /**
+  * Sets a rail to the broken state.
+  * @param the new state of broken of the rail
+  */
+  public void setBroken(Boolean brokenState) {
+    this.brokenRail = brokenState;
   }
 
   /**
