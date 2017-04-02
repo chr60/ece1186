@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Random;
+import java.util.ArrayList;
 import javax.swing.Timer;
 import javax.swing.UnsupportedLookAndFeelException;
 import java.io.IOException;
@@ -381,7 +382,8 @@ public class Launcher extends javax.swing.JFrame {
      */
     private void openTrackController(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTrackController
 
-          WaysideGUI ws = new WaysideGUI(TRACK, null);
+          WaysideGUI ws = new WaysideGUI(TRACK, Waysides);
+
           ws.getFrame().setVisible(true);
           ws.getFrame().setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_openTrackController
@@ -456,6 +458,11 @@ public class Launcher extends javax.swing.JFrame {
                 TRACK = new TrackModel();
                 String[] fNames = {"resources/redline.csv"};
                 TRACK.readCSV(fNames);
+                for(String s : TRACK.trackList.keySet()){
+                  WS ws = new WS("Red", TRACK);
+                  Waysides.add(ws);
+                }
+
 
                 new Launcher().setVisible(true);
             }
@@ -465,6 +472,7 @@ public class Launcher extends javax.swing.JFrame {
 
     //References to ACTIVE modules
     private static TrackModel TRACK;
+    private static ArrayList<WS> Waysides = new ArrayList<WS>();
 
 
     //END ACTIVE MODULES

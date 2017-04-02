@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.io.Serializable;
 
 public class TrackModel implements Serializable{
+
     public String trackScope;
 
     public TrackModel(String scope){
