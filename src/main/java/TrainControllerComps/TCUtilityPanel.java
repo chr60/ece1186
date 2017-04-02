@@ -133,6 +133,21 @@ public class TCUtilityPanel extends javax.swing.JPanel {
         this.refreshLeftDoors();
         this.refreshRightDoors(); 
         
+        if (this.inManualMode == false){
+        
+            // turn on lights if underground
+            if (this.isUnderground()){ this.selectedTrain.setLights(1);}
+
+
+            // open doors when at station
+            // FIX ME: Open both doors for now, change later to open correct door
+            if (this.canOpenDoors() && this.isAtStation()){ this.selectedTrain.setLeftDoor(1);}
+            if (this.canOpenDoors() && this.isAtStation()){ this.selectedTrain.setRightDoor(1);}
+
+            // turn on and off ac/heat
+
+        }
+        
         // change the vital button to red if there is a power failure.         
         if (this.isPowerFailure()){ this.vitalsButton.setForeground(Color.red); }
         
@@ -243,12 +258,41 @@ public class TCUtilityPanel extends javax.swing.JPanel {
      * 
      */
     private void refreshAC(){
-
+       
         if (this.selectedTrain.getAC() == 1){ this.acOnRadioButton.setSelected(true); }
         else if (this.selectedTrain.getAC() == 0){ this.acOffRadioButton.setSelected(true); }
         else if (this.selectedTrain.getAC() == -1){ this.acFailureRadioButton.setSelected(true); }
     }
+      
+    /**
+     * Checks to see if the train is underground.
+     * 
+     * @return returns true if the train is underground, false otherwise
+     */
+    private boolean isUnderground(){
     
+        if (this.selectedTrain.getGPS().getCurrBlock().isUnderground == true){return true; }
+        else{ return false; }
+    }
+    
+    private boolean canOpenDoors(){
+    
+        // if the train is stoped, we can open doors
+        if (this.selectedTrain.getVelocity() == 0.0){ return true; }
+        else { return false; }
+    }
+    
+    /**
+     * Checks if the block the train is on has a station. 
+     * 
+     * @return returns true if there is a station, false otherwise
+     */
+    private boolean isAtStation(){
+    
+        if (this.selectedTrain.getGPS().getCurrBlock().getStationName() != null){return true; }
+        else { return false; }
+    }
+
     /**
      * Refreshes the Heating Radio Buttons based on the status of the train.
      */
