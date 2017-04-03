@@ -2,7 +2,7 @@ dist: trusty
 language: java
 sudo: true
 before_install:
-- sudo add-apt-repository ppa:jonathonf/texlive-2016 -y
+#- sudo add-apt-repository ppa:jonathonf/texlive-2016 -y
 - sudo apt-get update
 - gem install dpl
 jdk:
