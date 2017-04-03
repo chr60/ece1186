@@ -34,19 +34,19 @@ public class Train implements Serializable {
 	Double g = 9.8;
 	//Double Fx, Fy, Ax, Ay, Vx, Vy, oldVx, oldVy;				//gravity constant in m/s^2
 	boolean engineFailure, signalFailure, brakeFailure;
-	int trainID;
+	Integer trainID;
 	int numPassengers, numCars, numCrew;
 	int statusAC, statusHeater, statusLeftDoor, statusRightDoor, statusEB, statusSB, statusLights;
 	String messageBoard;
 	GPS trainLocation;
-	//TrackModel dummyTrack = new TrackModel("local");
+	TrackModel globalTrack;
 
 
 	/**
      * Constructor to create a new Train object based on Assigned ID
      * @param a an integer argument to assign to Trains new ID.
      */
-	public Train(int ID){
+	public Train(Integer ID, TrackModel gTrack){
 		mass = 40.9 * 907.185;  		//mass of empty car in kg
 		velocity = 0.01;
 		velocity =0.0;
@@ -55,6 +55,8 @@ public class Train implements Serializable {
 		trainID = ID;
 		power = 0.0;
 		currGrade = 0.0;
+		globalTrack = gTrack;
+		//currBlock = 
 	}
 
 	
@@ -131,11 +133,21 @@ public class Train implements Serializable {
 		//using S = Vi(t) + (1/2)(a)(t^2)  to compute distance
 		distance = (oldVelocity) + (1/2)*acceleration; 
 		
-		
+		newCurrBlock(distance);
 
 		
 	}
 
+	/**
+     * Method to calculate time to stop based on brake rate, mass and velocity
+     * @param a Double which corresponds to the deceleration rate of the brakes
+     * @return a Double which corresponds to the amount of time required to stop the train using the brakes
+     */
+	private void newCurrBlock(Double distTravelled){
+		
+		
+	}
+	
 
 	/**
      * Method to calculate safe Braking Distance of train based on its current velocity and mass
@@ -240,9 +252,9 @@ public class Train implements Serializable {
 	
     /**
      * Accessor to return current train's ID
-     * @return an integer which corresponds to the current train's ID.
+     * @return an Integer which corresponds to the current train's ID.
      */
-	public int getID(){
+	public Integer getID(){
 		return trainID;
 	}
 
@@ -651,5 +663,6 @@ public class Train implements Serializable {
 	private Double mySin (Double deg){
 		return Math.sin(Math.toRadians(deg));
 	}
+
 
 }
