@@ -387,6 +387,11 @@ public class TCSpeedController extends javax.swing.JPanel {
 
     /**
      * Regulates the train's speed using Power Law.
+     * If the train's speed is greater than the set speed, 
+     * the train's service brake is pressed to slow the train down.
+     * 
+     * This is called every second. 
+     * 
      */
     public void powerControl(){
 
