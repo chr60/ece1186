@@ -66,4 +66,26 @@ public class WaysideRedTest{
     ArrayList<Block> brokenBlocks = redWS.checkForBroken();
     assertTrue(brokenBlocks.size()==0);
   }
+
+  @Test
+  /**
+  * Test for checking switch status
+  */
+  @DisplayName("Checking switch status of C9, default pos")
+  void testSwitchStatusDefault(){
+    Block aBlock = this.track.getBlock("Red", "C", 9);
+    assertTrue(redWS.switchStatus(aBlock) == 1);
+  }
+
+  @Test
+  /**
+  * Test for checking switch status
+  */
+  @DisplayName("Checking switch status of C9, switched pos")
+  void testSwithStatusSwitched(){
+    Block aBlock = this.track.getBlock("Red", "C", 9);
+    assertTrue(redWS.switchStatus(aBlock) == 1);
+    redWS.manualSwitch(aBlock);
+    assertTrue(redWS.switchStatus(aBlock) == 0);
+  }
 }

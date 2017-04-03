@@ -45,6 +45,16 @@ public class WS {
 		}
 		return false;
 	}
+	public Integer switchStatus(Block b){
+		if(b.hasSwitch()){
+			boolean result = b.setSwitchState(-1);
+			if(result == true)
+				return 1;	//default position, root connected to lower block num
+			else if(result == false)
+				return 0;	//switched position, root connected to higher block num
+		}
+		return -1;
+	}
 	public ArrayList<Block> checkForBroken(){
 		ArrayList<Block> brokenBlocks = Track.getBrokenBlocks(this.line);
 		if(brokenBlocks.size()>0){
