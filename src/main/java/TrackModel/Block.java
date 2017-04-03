@@ -180,6 +180,13 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   }
 
   /**
+  * Returns the underground status of a block.
+  */
+  public Boolean isUnderground(){
+    return this.isUnderground;
+  }
+  
+  /**
   *   Returns the occupied state of a given block object.
   */
   public Boolean getOccupied(){
