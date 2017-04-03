@@ -1020,7 +1020,8 @@ public class TCTestConsole extends javax.swing.JFrame {
          
         for (int i = 0; i < Integer.parseInt(value); i++){
         
-            this.trainController.trains.add(new Train( this.dispatchedTrains) );
+            // FIX ME: Get this integrated with the Track model.
+            //this.trainController.trains.add(new Train( this.dispatchedTrains) );
             this.dispatchedTrains++; 
         }
         

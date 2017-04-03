@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Random;
+import java.util.ArrayList;
 import javax.swing.Timer;
 import javax.swing.UnsupportedLookAndFeelException;
 import java.io.IOException;
@@ -149,6 +150,7 @@ public class Launcher extends javax.swing.JFrame {
         dateLabel = new javax.swing.JLabel();
         time = new javax.swing.JLabel();
         date = new javax.swing.JLabel();
+        launchMBOandScheduleButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -220,6 +222,13 @@ public class Launcher extends javax.swing.JFrame {
 
         date.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
+        launchMBOandScheduleButton1.setText("Logger");
+        launchMBOandScheduleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createLogger(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -248,7 +257,8 @@ public class Launcher extends javax.swing.JFrame {
                     .addComponent(launchTrainControllerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(launchTrainButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(launchTrackControllerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(launchTrackButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(launchTrackButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(launchMBOandScheduleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -269,7 +279,7 @@ public class Launcher extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(dateLabel)
                     .addComponent(date))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(launchCTCButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(launchTrackButton)
@@ -281,7 +291,9 @@ public class Launcher extends javax.swing.JFrame {
                 .addComponent(launchTrainControllerButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(launchMBOandScheduleButton)
-                .addGap(28, 28, 28))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(launchMBOandScheduleButton1)
+                .addContainerGap())
         );
 
         pack();
@@ -370,7 +382,8 @@ public class Launcher extends javax.swing.JFrame {
      */
     private void openTrackController(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTrackController
 
-          WaysideGUI ws = new WaysideGUI(generateTrack(), null);
+          WaysideGUI ws = new WaysideGUI(TRACK, Waysides);
+
           ws.getFrame().setVisible(true);
           ws.getFrame().setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_openTrackController
@@ -392,6 +405,13 @@ public class Launcher extends javax.swing.JFrame {
     private void openMBOandScheduler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMBOandScheduler
         // TODO add your handling code here:
     }//GEN-LAST:event_openMBOandScheduler
+
+    private void createLogger(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createLogger
+
+        // logger stuff here...
+        System.out.println("Logger Stuff!");
+
+    }//GEN-LAST:event_createLogger
 
     /**
      * Generates a "Dummy Track" and returns it.
@@ -435,10 +455,27 @@ public class Launcher extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                TRACK = new TrackModel();
+                String[] fNames = {"resources/redline.csv"};
+                TRACK.readCSV(fNames);
+                for(String s : TRACK.trackList.keySet()){
+                  WS ws = new WS("Red", TRACK);
+                  Waysides.add(ws);
+                }
+
+
                 new Launcher().setVisible(true);
             }
         });
     }
+
+
+    //References to ACTIVE modules
+    private static TrackModel TRACK;
+    private static ArrayList<WS> Waysides = new ArrayList<WS>();
+
+
+    //END ACTIVE MODULES
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel clockSpeedLabel;
@@ -448,6 +485,7 @@ public class Launcher extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JButton launchCTCButton;
     private javax.swing.JButton launchMBOandScheduleButton;
+    private javax.swing.JButton launchMBOandScheduleButton1;
     private javax.swing.JButton launchTrackButton;
     private javax.swing.JButton launchTrackControllerButton;
     private javax.swing.JButton launchTrainButton;

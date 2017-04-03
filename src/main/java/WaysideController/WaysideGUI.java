@@ -14,8 +14,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class WaysideGUI {
 
-  ArrayList<WS> Waysides;
   private JFrame MainFrame;
+  ArrayList<WS> Waysides;
+  JTextArea notifConsole;
+  TrackModel track;
+
 
   public JFrame getFrame(){
     return this.MainFrame;
@@ -27,6 +30,7 @@ public class WaysideGUI {
 				{javax.swing.UIManager.setLookAndFeel(info.getClassName());
 				break;}
 			}*/
+      this.track=track;
 
       this.Waysides=Waysides;
 
@@ -109,7 +113,7 @@ public class WaysideGUI {
   		notificationsLabel.setBounds(448, 14, 92, 14);
   		frame.add(notificationsLabel);
 
-      JTextArea notifConsole = new JTextArea();
+      notifConsole = new JTextArea();
   		notifConsole.setBounds(448, 30, 658, 405);
   		frame.add(notifConsole);
 
@@ -131,7 +135,8 @@ public class WaysideGUI {
   		failBtn.addActionListener(new ActionListener(){
   			public void actionPerformed(ActionEvent e){
   				failBtn.setActionCommand(murphyDropdown.getSelectedItem().toString());
-  				printToAllWayside(failBtn.getActionCommand() + "!!!");
+          if(!failBtn.getActionCommand().equals("Select"))
+  				    printNotification(failBtn.getActionCommand() + "!!!");
   			}
   		});
   		frame.getContentPane().add(failBtn);
@@ -194,8 +199,10 @@ public class WaysideGUI {
   	public boolean tryPLCFile(String filename) throws IOException, ScriptException{
   		File PLCFile= new File(filename);
   		if(PLCFile.exists()){
-  			printToAllWayside("PLC Data loaded");
   			PLC plc = PLCParse.parseLine(PLCFile);
+        for(WS ws : Waysides)
+          //ws.setPlc(plc);
+        printNotification("PLC Data loaded");
   			return true;
   		}
   		else{
@@ -208,13 +215,8 @@ public class WaysideGUI {
 
   	}
 
-  	public void printToAllWayside(String toPrint){
-  		/*for(WS ws : Waysides)
-  			try {
-  			} catch (IOException e) {
-  				// TODO Auto-generated catch block
-  				e.printStackTrace();
-  			}*/
+  	public void printNotification(String toPrint){
+      notifConsole.setText(notifConsole.getText()+ "\n" + toPrint);
   	}
 
 }

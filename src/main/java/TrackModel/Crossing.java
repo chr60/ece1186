@@ -9,11 +9,11 @@ import java.util.Random;
 import java.io.Serializable;
 
 public class Crossing implements java.io.Serializable{
-	public Block hostBlock;
-	public TrackModel superTrackModel;
+    public Block hostBlock;
+    public TrackModel superTrackModel;
 
-	public Crossing(TrackModel superTrackModel, Block hostBlock){
-		this.superTrackModel = superTrackModel;
-		this.hostBlock = hostBlock;
-	}
+    public Crossing(TrackModel superTrackModel, Block hostBlock){
+        this.superTrackModel = superTrackModel;
+        this.hostBlock = hostBlock;
+    }
 }

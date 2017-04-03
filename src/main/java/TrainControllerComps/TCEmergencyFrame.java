@@ -208,6 +208,7 @@ public class TCEmergencyFrame extends javax.swing.JFrame {
         this.selectedTrain.setEmergencyBrake( 1 );
         this.selectedTrain.setEmergencyBrake( 0 );
         
+
         this.printLogbook();
         
         this.dispose();
