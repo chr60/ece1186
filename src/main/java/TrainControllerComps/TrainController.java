@@ -69,6 +69,7 @@ public class TrainController extends javax.swing.JFrame {
             //blockSpeed = (int)(rand.nextDouble() * 100.0) % 100.0;
             refreshComponents();    
             
+
         
             if (detailedTrainWindowOpen == true){ trainUI.updateGUI(selectedTrain); }
                 
@@ -76,6 +77,7 @@ public class TrainController extends javax.swing.JFrame {
                 speedController.powerControl();
                 
                
+
             }
             
             // Do specific things if in testing mode...

@@ -133,10 +133,13 @@ public class Train implements Serializable {
 		//using S = Vi(t) + (1/2)(a)(t^2)  to compute distance
 		distance = (oldVelocity) + (1/2)*acceleration; 
 		
+
 		newCurrBlock(distance);
+
 
 		
 	}
+
 
 	/**
      * Method to calculate time to stop based on brake rate, mass and velocity
@@ -148,6 +151,7 @@ public class Train implements Serializable {
 		
 	}
 	
+
 
 	/**
      * Method to calculate safe Braking Distance of train based on its current velocity and mass
@@ -252,9 +256,11 @@ public class Train implements Serializable {
 	
     /**
      * Accessor to return current train's ID
+
      * @return an Integer which corresponds to the current train's ID.
      */
 	public Integer getID(){
+
 		return trainID;
 	}
 
@@ -511,11 +517,13 @@ public class Train implements Serializable {
      * @param a Double argument which denotes the thermostat setting on board the train in Fahrenheit
      */
 	public void setThermostat(Double newThermostat){
+
             
             System.out.println("Set Thermostat Called."); 
 		currThermostat = newThermostat;
                 
                 this.updateTemp();
+
 	}
 	
 	/**
@@ -609,6 +617,7 @@ public class Train implements Serializable {
 	public void setSpeed(Double speed) {
 		setPointSpeed = speed;
 	}
+
         
         /**
          * Refreshes the temperature on the train.
@@ -618,6 +627,7 @@ public class Train implements Serializable {
         
             this.updateTemp();
         }
+
 	
 	
 	
@@ -663,6 +673,5 @@ public class Train implements Serializable {
 	private Double mySin (Double deg){
 		return Math.sin(Math.toRadians(deg));
 	}
-
 
 }

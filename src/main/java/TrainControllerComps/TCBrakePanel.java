@@ -218,6 +218,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
         
                 TCEmergencyFrame window = new TCEmergencyFrame(this.selectedTrain); 
            
+
                 window.setOperatingLog(this.operatingLogs);
                 window.setVisible(true);
                 window.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -233,6 +234,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
                 }  
             }
         }
+
     }//GEN-LAST:event_initateEmergencyBrake
   
     /**
@@ -246,10 +248,12 @@ public class TCBrakePanel extends javax.swing.JPanel {
         
             this.logBook.add("Engage the service brakes!"); 
         
+
             this.selectedTrain.setServiceBrake( 1 );
             this.functionLabelService.setText("On");
             this.selectedTrain.setServiceBrake( 0 );
             this.functionLabelService.setText("Off");
+
         
             this.printLogs();
         }

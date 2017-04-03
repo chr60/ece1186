@@ -258,7 +258,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
      * 
      */
     private void refreshAC(){
-       
+
         if (this.selectedTrain.getAC() == 1){ this.acOnRadioButton.setSelected(true); }
         else if (this.selectedTrain.getAC() == 0){ this.acOffRadioButton.setSelected(true); }
         else if (this.selectedTrain.getAC() == -1){ this.acFailureRadioButton.setSelected(true); }
@@ -757,6 +757,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
         }else{
             // turn the heat on the train, this will cause the GUI to update on the next refreshGUI call.
             // turn on heat and transmit the temp
+
             if (this.selectedTrain.getHeat() == 0){
                 this.selectedTrain.setHeat( 1 ); 
                 
@@ -764,6 +765,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
                 System.out.println("Telling the train to set temperature to " + temp + " for Heating unit");
 
             }                         
+
         }        
     }//GEN-LAST:event_setHeatTemp
 
@@ -786,11 +788,13 @@ public class TCUtilityPanel extends javax.swing.JPanel {
             // turn on the ac, and transmit the temp
             // if it's off turn it on
      
+
             if (this.selectedTrain.getAC() == 0){ 
                 this.selectedTrain.setAC( 1 ); 
                 this.selectedTrain.setThermostat(Double.parseDouble(temp));
                 System.out.println("Telling the train to set temperature to " + temp + " for Air Conditioning unit"); 
             }                            
+
         }  
     }//GEN-LAST:event_setAirCondTemp
 
@@ -843,6 +847,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
             // turn heat off if its on
             if (this.heatOnRadioButton.isSelected() == true){ 
                 this.selectedTrain.setHeat( 0 ); 
+
             }
         }
     }//GEN-LAST:event_turnOnAirCond
@@ -877,6 +882,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
             // turn off ac if its on
             if (this.acOnRadioButton.isSelected() == true){ 
                 this.selectedTrain.setAC( 0 );
+
             }
         }
     }//GEN-LAST:event_turnHeatOn

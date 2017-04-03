@@ -78,11 +78,13 @@ public class TCSpeedController extends javax.swing.JPanel {
      */
     private TCBrakePanel brakePanel; 
         
+
     /**
      * Used to calculate the power command.
      */
     private double error; 
     
+
     // MARK: - Constructors
    
     /**
@@ -179,6 +181,7 @@ public class TCSpeedController extends javax.swing.JPanel {
             this.setSpeedButton.setEnabled(false);
             this.speedSlider.setEnabled(false);
             
+
             // Automatic speed control:
             // get the block the train is on, and the set suggested speed
             Block currBlock = this.selectedTrain.getGPS().getCurrBlock();
@@ -192,6 +195,7 @@ public class TCSpeedController extends javax.swing.JPanel {
                     this.speedSlider.setValue(blockSuggestedSpeed.intValue());
                     this.setSpeedButton.doClick(); 
                 }
+
             }
         }     
     }
@@ -363,6 +367,7 @@ public class TCSpeedController extends javax.swing.JPanel {
            
         String log;
         this.setSpeed = speedSlider.getValue();
+
         
         log = "Telling train to set speed to " + setSpeed;
         logBook.add(log);
@@ -389,6 +394,7 @@ public class TCSpeedController extends javax.swing.JPanel {
      * Regulates the train's speed using Power Law.
      */
     public void powerControl(){
+
               
         this.logBook.add("Set Speed: " + this.setSpeed);
         // calculate the error 
@@ -398,14 +404,17 @@ public class TCSpeedController extends javax.swing.JPanel {
         this.logBook.add(Double.toString( this.powerCommandOut) );
         
         this.powerCommandOut = this.selectedTrain.getKp() * error + this.selectedTrain.getKi()*this.selectedTrain.getVelocity();
+
         
         // send powerCommandOut to the train, which then changes its speed
         this.selectedTrain.powerCommand(this.powerCommandOut); 
           
+
 //        if (this.powerCommandOut == 0){
 //             this.brakePanel.getServiceBrake().doClick();
 //        }
                  
+
         this.logBook.add(Integer.toString(timeElapsed));
         printLogs();
     }
