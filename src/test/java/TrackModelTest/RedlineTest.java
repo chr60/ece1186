@@ -13,6 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
  public class RedlineTest{
+  private static String line = "Red";
   private static String[] stationNames={"YARD","SHADYSIDE","HERRON AVE","SWISSVILLE","PENN STATION",
                 "STEEL PLAZA","FIRST AVE","STATION SQUARE","SOUTH HILLS JUNCTION","YARD"};
   private static Integer[] rootBlocksNum={16,27,33,38,44,52,9};
@@ -40,7 +41,7 @@ import org.junit.jupiter.api.Test;
   */
   @DisplayName("Validate some reading of a trackModel from a csv")
   void testReading(){
-    assertEquals(testNamesSet, this.track.viewStationMap().keySet());
+    assertEquals(testNamesSet, this.track.viewStationMap().get(line).keySet());
   }
 
   @Test
@@ -207,8 +208,6 @@ import org.junit.jupiter.api.Test;
     ArrayList<Block> testArr = new ArrayList<Block>();
     System.out.println("MBO 2");
 
-
-    // First possible path
     testArr.add(track.getBlock("Red", "H", new Integer(25)));
     testArr.add(track.getBlock("Red", "H", new Integer(26)));
     testArr.add(track.getBlock("Red", "H", new Integer(27)));
@@ -220,22 +219,7 @@ import org.junit.jupiter.api.Test;
     testArr.add(track.getBlock("Red", "H", new Integer(33)));
     testArr.add(track.getBlock("Red", "H", new Integer(34)));
     testArr.add(track.getBlock("Red", "H", new Integer(35)));
-    /*
-    // Second possible path
-    testArr.add(track.getBlock("Red", "H", new Integer(25)));
-    testArr.add(track.getBlock("Red", "H", new Integer(26)));
-    testArr.add(track.getBlock("Red", "H", new Integer(27)));
-    testArr.add(track.getBlock("Red", "T", new Integer(76)));
-    testArr.add(track.getBlock("Red", "S", new Integer(75)));
-    testArr.add(track.getBlock("Red", "S", new Integer(74)));
-    testArr.add(track.getBlock("Red", "S", new Integer(73)));
-    testArr.add(track.getBlock("Red", "R", new Integer(72)));
-    testArr.add(track.getBlock("Red", "H", new Integer(33)));
-    testArr.add(track.getBlock("Red", "H", new Integer(34)));
-    testArr.add(track.getBlock("Red", "H", new Integer(35)));
-    System.out.println("paths:");
-    System.out.print(paths.get(0));
-    */
+
     assertEquals(testArr, paths.get(0));
   }
 
@@ -310,7 +294,6 @@ import org.junit.jupiter.api.Test;
     this.track.getBlock("Red","A",new Integer(1)).setBroken(true);
     this.track.getBlock("Red","U",new Integer(77)).setBroken(true);
     assertTrue(brokenListTest.equals(this.track.getBrokenBlocks("Red")));
-
-
+    }
   }
- }
+
