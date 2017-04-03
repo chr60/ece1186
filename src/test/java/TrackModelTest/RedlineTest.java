@@ -11,7 +11,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
- 
+
  public class RedlineTest{
   private static String[] stationNames={"YARD","SHADYSIDE","HERRON AVE","SWISSVILLE","PENN STATION",
                 "STEEL PLAZA","FIRST AVE","STATION SQUARE","SOUTH HILLS JUNCTION","YARD"};
@@ -87,7 +87,7 @@ import org.junit.jupiter.api.Test;
   @Test
   /**
   * Check testing of next block backward on the redline. For a "true" (default switch state),
-  * the nexBlockBackward should return the rootBlock for the lower indexed block. 
+  * the nexBlockBackward should return the rootBlock for the lower indexed block.
   */
   @DisplayName("Validate switching and nextBlockBackward default switch state")
   void testNextBlockBackwardDefaultSwitch(){
@@ -113,13 +113,13 @@ import org.junit.jupiter.api.Test;
 
     for (String s : this.track.viewLeafMap().keySet()){
       assertTrue(this.track.viewLeafMap().get(s).get(0).nextBlockBackward().equals(track.viewLeafMap().get(s).get(0)));
-      assertTrue(this.track.viewLeafMap().get(s).get(1).nextBlockBackward().equals(track.viewRootMap().get(s)));      
+      assertTrue(this.track.viewLeafMap().get(s).get(1).nextBlockBackward().equals(track.viewRootMap().get(s)));
     }
-  } 
+  }
 
   @Test
   /**
-  *  Check the functionality of the external blockStation map for use in the train model and 
+  *  Check the functionality of the external blockStation map for use in the train model and
   *  train controller.
   */
   @DisplayName("Test proper block station map of a track")
@@ -207,7 +207,7 @@ import org.junit.jupiter.api.Test;
     ArrayList<Block> testArr = new ArrayList<Block>();
     System.out.println("MBO 2");
 
-    
+
     // First possible path
     testArr.add(track.getBlock("Red", "H", new Integer(25)));
     testArr.add(track.getBlock("Red", "H", new Integer(26)));
@@ -226,9 +226,9 @@ import org.junit.jupiter.api.Test;
     testArr.add(track.getBlock("Red", "H", new Integer(26)));
     testArr.add(track.getBlock("Red", "H", new Integer(27)));
     testArr.add(track.getBlock("Red", "T", new Integer(76)));
-    testArr.add(track.getBlock("Red", "S", new Integer(75)));  
+    testArr.add(track.getBlock("Red", "S", new Integer(75)));
     testArr.add(track.getBlock("Red", "S", new Integer(74)));
-    testArr.add(track.getBlock("Red", "S", new Integer(73))); 
+    testArr.add(track.getBlock("Red", "S", new Integer(73)));
     testArr.add(track.getBlock("Red", "R", new Integer(72)));
     testArr.add(track.getBlock("Red", "H", new Integer(33)));
     testArr.add(track.getBlock("Red", "H", new Integer(34)));

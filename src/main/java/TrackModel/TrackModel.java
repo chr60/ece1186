@@ -120,7 +120,7 @@ public class TrackModel implements Serializable{
     }
 
     /**
-    * Returns a block-to-block list of lists that details the possible paths from a block to block. Does not permit 
+    * Returns a block-to-block list of lists that details the possible paths from a block to block. Does not permit
     * revisiting a block from within this function
     * @param block that you start at
     * @param blcok that you end at
@@ -134,14 +134,14 @@ public class TrackModel implements Serializable{
     }
 
     /**
-    * Build a specific path 
+    * Build a specific path
     * @param the list of visited blocks
     * @param the current block
     * @param the desired ending block
     */
-    private ArrayList<ArrayList<Block>> blockPath(ArrayList<ArrayList<Block>> possiblePaths, 
-            ArrayList<Block> visited, Block currBlock, Block endBlock) { 
-        
+    private ArrayList<ArrayList<Block>> blockPath(ArrayList<ArrayList<Block>> possiblePaths,
+            ArrayList<Block> visited, Block currBlock, Block endBlock) {
+
         if(visited.contains(currBlock)) {
             return possiblePaths;
         }
@@ -167,7 +167,7 @@ public class TrackModel implements Serializable{
             possiblePaths = blockPath(possiblePaths, new ArrayList<Block>(visited), currBlock.nextBlockBackward(), endBlock);
             //System.out.println(possiblePaths.size());
             possiblePaths = blockPath(possiblePaths, new ArrayList<Block>(visited), currBlock.nextBlockForward(), endBlock);
-            
+
         }
 
         return possiblePaths;

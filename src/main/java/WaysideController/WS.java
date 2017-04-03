@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Set;
 import javax.script.ScriptException;
 import javax.sound.midi.Track;
 import javax.swing.Box;
@@ -16,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import java.util.ArrayList;
+import java.util.Set;
 
 //Train Packages
 import TrackModel.Block;
@@ -24,14 +25,13 @@ public class WS {
 
 
 	//WS ELEMENTS
-	public String name;
 	public String line;
 	private PLC plc;
 	private TrackModel Track;
 
 
-	public WS(String name, TrackModel track) {
-		this.name = name;
+	public WS(String line, TrackModel track) {
+		this.line = line;
 		this.Track = track;
 	}
 
@@ -45,7 +45,18 @@ public class WS {
 		}
 		return false;
 	}
-
+	public ArrayList<Block> checkForBroken(){
+		ArrayList<Block> brokenBlocks = Track.getBrokenBlocks(this.line);
+		if(brokenBlocks.size()>0){
+			//alert CTC
+		}
+		return brokenBlocks;
+	}
+	public Block getBlock(Block b) {
+		Block liveBlock = Track.lateralLookup(b);
+		Block toReturn = new Block(null, liveBlock.getOccupied(), null, null, null, null, liveBlock.getSpeedLimit(), liveBlock.getStationName(), null, liveBlock.getBlockLine(), liveBlock.getBlockSection(), liveBlock.blockNum(), liveBlock.hasSwitch(), liveBlock.getSwitchBlock());
+		return toReturn;
+	}
 	public void updateInputs(TrackModel updatedTrack){
 
 	}

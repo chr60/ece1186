@@ -73,6 +73,14 @@ public class Block implements Comparable<Block>, java.io.Serializable{
     }
 
   /**
+   * Returns the switch name (if it exists) on a block
+   * @return the name of the switch on a block
+   */
+  public String getSwitchBlock(){
+    return this.switchBlock;
+  }
+
+  /**
   * Returns the broken status of a given block.
   * @return the boolean state of the broken rail
   */
@@ -137,7 +145,7 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   * Setter for the Wayside Controller module to set a light state based upon an Integer
   * Maps 1 to true, 0 to false based upon the track internal convention.
   * @param setInt integer for the switch state to be set to
-  * @todo Add strict value assertions that setInt is either 0 or 1 
+  * @todo Add strict value assertions that setInt is either 0 or 1
   */
   public Boolean setLightState(Integer setInt){
     //condition check for having a switch
@@ -236,14 +244,14 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   public void setNextBlockForward(Block setBlock){
     this.nextBlockForward = setBlock;
   }
-  
+
   /**
   * Returns the number of a given block.
   */
   public Integer blockNum(){
     return this.blockNum;
   }
-    
+
   /**
   * Returns the section a block is on.
   */
@@ -268,7 +276,7 @@ public class Block implements Comparable<Block>, java.io.Serializable{
     this.switchState = true;
   }
 
-  /** 
+  /**
   * Sets the next block in the "reverse" direction. Does not handle switch conditions
   * @param setBlock the block to set the default backwards block to
   */
@@ -276,7 +284,7 @@ public class Block implements Comparable<Block>, java.io.Serializable{
     this.nextBlockBackward = setBlock;
   }
 
-  /** 
+  /**
   * Sets the root block in the "reverse" direction to deal with switch conditions
   * @param rootBlock the root block backwards of a switch block
   */
@@ -310,7 +318,7 @@ public class Block implements Comparable<Block>, java.io.Serializable{
       if (this.rootBlock.nextBlockForward().equals(this)){
           return this.rootBlock;
         }
-        else{               
+        else{
           return this;
         }
       }
@@ -323,7 +331,7 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   * Setter for the Wayside Controller module to set a switch state based upon an Integer
   * Maps 1 to true, 0 to false based upon the track internal convention.
   * @param setInt integer for the switch state to be set to
-  * @todo Add strict value assertions that setInt is either 0 or 1 
+  * @todo Add strict value assertions that setInt is either 0 or 1
   */
   public Boolean setSwitchState(Integer setInt){
     //condition check for having a switch
