@@ -21,14 +21,18 @@ public class TCBlockInfoPanel extends javax.swing.JPanel {
     /**
      * The train to use in order to populate the labels and UI elements. 
      * This property must be passed in from the Train Controller class. 
-     * 
      */
     private Train selectedTrain; 
     
     /**
+     * Used to keep track if the system is in Manual or Automatic mode. 
+     * This is passed is from the Train Controller class. 
+     */
+    private boolean inManualMode; 
+    
+    /**
      * Constructor for a TCBlockInfoPanel object. This constructor does not set 
      * the selected train, and must be set by the Train Controller before being used. 
-     * 
      */
     public TCBlockInfoPanel() {
         initComponents();
@@ -65,13 +69,21 @@ public class TCBlockInfoPanel extends javax.swing.JPanel {
         return Double.parseDouble(this.blockSpeed.getText());
     }
     
+    /**
+     * Refreshes the UI elements on the GUI to display information corresponding to the 
+     * selected train. 
+     * 
+     */
     public void refreshUI(){
        
-//        if (this.selectedTrain.getGPS().getCurrBlock() != null){
-//            
-//            this.blockSpeed.setText(Double.toString( this.selectedTrain.getGPS().getCurrBlock().getSpeedLimit() ));
-//            this.currentBlock.setText(Integer.toString( this.selectedTrain.getGPS().getCurrBlock().blockNum() ));
-//        }        
+        if (this.selectedTrain.getGPS()!= null){
+        
+            if (this.selectedTrain.getGPS().getCurrBlock() != null){
+            
+                this.blockSpeed.setText(Double.toString( this.selectedTrain.getGPS().getCurrBlock().getSpeedLimit() ));
+                this.currentBlock.setText(Integer.toString( this.selectedTrain.getGPS().getCurrBlock().blockNum() )); 
+            }
+        }
     }
     
     /** 
