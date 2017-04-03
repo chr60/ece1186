@@ -4,19 +4,16 @@ sudo: true
 before_install:
 - sudo add-apt-repository ppa:jonathonf/texlive-2016 -y
 - sudo apt-get update
+- gem install dpl
 jdk:
 - oraclejdk8
 script:
-- sudo apt-get install doxygen; sudo apt-get
-  install texlive-fonts-recommended; sudo apt-get install texlive-generic-recommended;
-  sudo apt-get install texlive-latex-extra; sudo apt-get install texlive-latex-recommended;
-  sudo apt-get install texlive-extra-utils; sudo apt-get install texlive-font-utils;
+- sudo apt-get install doxygen;
   sudo apt-get install ghostscript; sudo apt-get install graphviz; sudo apt-get install
   latex-xcolor; sudo apt-get install rdfind;
 - mvn test -B
 after_success:
 - doxygen Doxygen
-- sudo chmod +x build_tex.sh
 deploy:
   skip_cleanup: true
   provider: pages
