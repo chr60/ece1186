@@ -35,7 +35,6 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   Boolean lightState;
   TrackModel superTrackModel;
   Boolean maintenence;
-  Boolean hasLight;
   Double suggestedSpeed;
   Block authority;
   Integer trainId;
@@ -54,7 +53,6 @@ public class Block implements Comparable<Block>, java.io.Serializable{
     this.blockNum = blockNum;
     this.switchBlock = switchBlock;
     this.hasSwitch = hasSwitch;
-    this.hasLight = hasSwitch;
     this.blockLine = blockLine;
     this.blockSection = blockSection;
 

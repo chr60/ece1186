@@ -295,5 +295,15 @@ import org.junit.jupiter.api.Test;
     this.track.getBlock("Red","U",new Integer(77)).setBroken(true);
     assertTrue(brokenListTest.equals(this.track.getBrokenBlocks("Red")));
     }
+
+    @Test 
+    /** 
+    * Test valid block getting via viewStationMap
+    */
+    @DisplayName("Test that we can yard blocks via external api")
+    void testLookup() {
+      Block yardBlock = this.track.viewStationMap().get("Red").get("YARD").get(0);
+      assertEquals(new Integer(77), yardBlock.blockNum());
+    }
   }
 
