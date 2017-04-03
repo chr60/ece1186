@@ -389,25 +389,28 @@ public class TCSpeedController extends javax.swing.JPanel {
      * Regulates the train's speed using Power Law.
      */
     public void powerControl(){
-              
-        this.logBook.add("Set Speed: " + this.setSpeed);
-        // calculate the error 
-        this.error = Math.abs(this.setSpeed - this.selectedTrain.getVelocity()); 
-        this.logBook.add(Double.toString( this.error) );
         
-        this.logBook.add(Double.toString( this.powerCommandOut) );
         
-        this.powerCommandOut = this.selectedTrain.getKp() * error + this.selectedTrain.getKi()*this.selectedTrain.getVelocity();
-        
-        // send powerCommandOut to the train, which then changes its speed
-        this.selectedTrain.powerCommand(this.powerCommandOut); 
-          
-//        if (this.powerCommandOut == 0){
-//             this.brakePanel.getServiceBrake().doClick();
-//        }
-                 
-        this.logBook.add(Integer.toString(timeElapsed));
-        printLogs();
+        if (this.selectedTrain.getVelocity() > this.setSpeed){
+            
+            this.brakePanel.getServiceBrake().doClick();
+        }else{
+            this.logBook.add("Set Speed: " + this.setSpeed);
+            // calculate the error 
+            this.error = this.setSpeed - this.selectedTrain.getVelocity(); 
+
+            this.logBook.add("Error: " + Double.toString( this.error) );
+
+            this.logBook.add(Double.toString( this.powerCommandOut) );
+
+            this.powerCommandOut = this.selectedTrain.getKp() * error + this.selectedTrain.getKi()*this.selectedTrain.getVelocity();
+
+            // send powerCommandOut to the train, which then changes its speed
+            this.selectedTrain.powerCommand(this.powerCommandOut); 
+
+            this.logBook.add(Integer.toString(timeElapsed));
+            printLogs();
+        }
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

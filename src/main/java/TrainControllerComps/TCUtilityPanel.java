@@ -135,17 +135,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
         
         if (this.inManualMode == false){
         
-            // turn on lights if underground
-            if (this.isUnderground()){ this.selectedTrain.setLights(1);}
-
-
-            // open doors when at station
-            // FIX ME: Open both doors for now, change later to open correct door
-            if (this.canOpenDoors() && this.isAtStation()){ this.selectedTrain.setLeftDoor(1);}
-            if (this.canOpenDoors() && this.isAtStation()){ this.selectedTrain.setRightDoor(1);}
-
-            // turn on and off ac/heat
-
+           this.automaticModeChecks();
         }
         
         // change the vital button to red if there is a power failure.         
@@ -156,6 +146,24 @@ public class TCUtilityPanel extends javax.swing.JPanel {
          * 
          */
         else if (this.isPowerFailure() == false){this.vitalsButton.setForeground(new Color(0,0,0));}
+    }
+    
+    /**
+     * Performs the checks to see if certain utilities need to be turned on/off, open/closed 
+     * when in Automatic mode. 
+     * 
+     */
+    private void automaticModeChecks(){
+        // turn on lights if underground
+        if (this.isUnderground()){ this.selectedTrain.setLights(1);}
+
+
+        // open doors when at station
+        // FIX ME: Open both doors for now, change later to open correct door
+        if (this.canOpenDoors() && this.isAtStation()){ this.selectedTrain.setLeftDoor(1);}
+        if (this.canOpenDoors() && this.isAtStation()){ this.selectedTrain.setRightDoor(1);}
+
+        // turn on and off ac/heat   
     }
     
     /**
