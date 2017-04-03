@@ -22,12 +22,13 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 
 public class TrainModeUI {
 
-	JFrame frmTrainModel;
+	public JFrame frmTrainModel;
 	private JTextField txtHeight;
 	private JTextField txtLength;
 	private JTextField txtWidth;
@@ -55,10 +56,11 @@ public class TrainModeUI {
 	private final ButtonGroup serviceBrakeBG = new ButtonGroup();
 	private final ButtonGroup emergencyBrakeBG = new ButtonGroup();
 	private final ButtonGroup leftDoorBG = new ButtonGroup();
+        JComboBox<String> comboBox = new JComboBox<String>();
 	JTextPane txtSpeed;
 	JTextPane txtAuthority;
-	static Train [] trainArray;
-	static Train currTrain;
+	ArrayList<Train> trainArray;
+	Train currTrain;
 	int stop;
 	private JTextField txtTestGrade;
 
@@ -70,8 +72,17 @@ public class TrainModeUI {
 	 * @throws ClassNotFoundException 
 	 */
 	
-	public void setTrainArray(Train [] trains){
+	public void setTrainArray(ArrayList<Train> trains){
 		trainArray = trains;
+		this.comboBox.addItem("Select a Train:");
+        if (this.comboBox.getItemCount() != 0){
+            this.comboBox.removeAllItems();
+        }
+        this.comboBox.addItem("Select a Train:");
+        for (int i = 0; i < trains.size(); i++){
+            this.comboBox.addItem(Integer.toString( trains.get(i).getID()) );
+        }
+                
 	}
 	
 	public static void main(String[] args) {
@@ -560,7 +571,7 @@ public class TrainModeUI {
 		
 		
 		
-		JComboBox<String> comboBox = new JComboBox<String>();
+		//JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Select Train", "123"}));
 		comboBox.setBounds(10, 9, 118, 23);
 		frmTrainModel.getContentPane().add(comboBox);
@@ -613,12 +624,15 @@ public class TrainModeUI {
 				JComboBox<String> combo = (JComboBox<String>) arg0.getSource();
 		        String selectedTrain = (String) combo.getSelectedItem();
 		 
-		        if (selectedTrain.equals("Select Train")) {
-		           //no train selected clear all values
+		        if (comboBox.getItemCount() == 0) {
+		           //no trains exist.
 		        																								//CREATE CLEAR CLASS LATER
-		        } else if (selectedTrain.equals("123")) {
-		            //if train 123 is selected update info for this train
-		        	updateGUI(trainArray[0]);
+		        } else if (selectedTrain == "Select a Train:"){
+		        	//no train selected CLEAR ALL VALUES 
+		        }else{
+		            //if a train is selected update info for this train
+		        	
+		        	updateGUI(findTrain(Integer.parseInt(selectedTrain)));
 		        }
 			}
 
@@ -650,8 +664,82 @@ public class TrainModeUI {
 	public void updateGUI(Train currT) {
 		//method to update GUI based on selected train info
 		currTrain = currT;
-		txtSpeed.setText("\n   "+currTrain.getVelocity().intValue()+" MPH");
+		txtSpeed.setText("\n   "+ currTrain.getVelocity().intValue()+" MPH");
 		txtPower.setText(currTrain.getPower().intValue()+" W");
 		txtMass.setText(currTrain.getMass().intValue()+" "); // +" lbs");
+                
+                String status = ""; 
+                if (this.currTrain.getLeftDoor() == 1){
+                    // open 
+                    status = "OPEN";
+                }else if (this.currTrain.getLeftDoor() == 0){
+                    // close
+                    status = "CLOSED";
+                }else if (this.currTrain.getLeftDoor() == -1){
+                    // failure
+                    status = "FAILURE";
+                }
+                
+                // set labels of status
+                this.txtLeftDoor.setText(this.getStatusOfTrainDoors(this.currTrain.getLeftDoor()));
+                this.txtRightDoor.setText(this.getStatusOfTrainDoors(this.currTrain.getRightDoor()));
+                
+                this.txtServiceBrake.setText(this.getStatusOfTrainLightsAndBrakes(this.currTrain.getServiceBrake()));
+                this.txtEmergencyBrake.setText(this.getStatusOfTrainLightsAndBrakes(this.currTrain.getEmergencyBrake()));
+                
+                this.txtLights.setText(this.getStatusOfTrainLightsAndBrakes(this.currTrain.getLights()));           
 	}
+        
+        /**
+         * 
+         * 
+         * 
+         * @param numStatus
+         * @return 
+         */
+        private String getStatusOfTrainDoors(int numStatus){
+                    
+            if (numStatus == 1){
+                // open 
+                return "OPEN";
+            }else if (numStatus == 0){
+                // close
+                return "CLOSED";
+            }else if (numStatus == -1){
+                // failure
+               return "FAILURE";
+            }                
+            return null; 
+        }
+        
+        private String getStatusOfTrainLightsAndBrakes(int numStatus){
+                    
+            if (numStatus == 1){
+                // open 
+                return "ON";
+            }else if (numStatus == 0){
+                // close
+                return "OFF";
+            }else if (numStatus == -1){
+                // failure
+               return "FAILURE";
+            }                
+            return null; 
+        }
+        
+      //method to search and return train object based on train ID
+    	public Train findTrain(Integer id)
+    	{
+    		for(int i = 0; i < trainArray.size(); i++)
+    		{
+    			if (trainArray.get(i).getID() == id)
+    			{
+    				return trainArray.get(i);
+    			}
+    		}
+    		return null;
+    	}
+        
+        
+        
 }

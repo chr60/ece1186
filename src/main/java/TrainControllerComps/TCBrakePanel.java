@@ -46,6 +46,9 @@ public class TCBrakePanel extends javax.swing.JPanel {
      */
     private boolean inManualMode; 
     
+    
+    private TCSpeedController speedController; 
+    
     /**
      * Constructor for creating a TCBrakePanel object without a selected train. 
      * The selected train property must be passed in from the Train Controller class before being used. 
@@ -120,9 +123,45 @@ public class TCBrakePanel extends javax.swing.JPanel {
      * @return the emergency brake 
      */
     public JButton getEmgBrake(){
+        
         return this.emergencyBrake;
     }
-
+    
+    /**
+     * Checks if the train should come to a stop based on different criteria. 
+     * 
+     */
+    private boolean shouldStopTrainChecks(){
+            
+        // stop if 
+        
+        // there is a failure
+                
+        // approaching a station
+        
+        // train stopped ahead   
+        
+        // FIX ME: Change this based on if we should stop the train.
+        return true; 
+    }
+    
+    public void setSpeedController(TCSpeedController speedController){
+    
+        this.speedController = speedController;
+    }
+    
+    public void refreshUI(){
+        
+        // we need to stop the train
+        /**
+         * @bug The train needs to use the emergency brakes if there's an emergency and needs to slow down.
+         * Currently, this uses the service brakes.
+         * 
+         * FIX ME: Have it use the emergency brake to stop in a hurry.
+         */
+        if (this.shouldStopTrainChecks()){ this.speedController.setSetSpeed(0); }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -156,12 +195,12 @@ public class TCBrakePanel extends javax.swing.JPanel {
         statusLabelService.setText("Status:");
 
         functionLabelService.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        functionLabelService.setText("Functioning");
+        functionLabelService.setText("Off");
 
         statusLabelEmg.setText("Status:");
 
         functionLabelEmg.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        functionLabelEmg.setText("Functioning");
+        functionLabelEmg.setText("Off");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -212,34 +251,54 @@ public class TCBrakePanel extends javax.swing.JPanel {
      */
     private void initateEmergencyBrake(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_initateEmergencyBrake
 
-        if (this.inManualMode == true){ 
+        if (this.selectedTrain != null){
         
-            TCEmergencyFrame window = new TCEmergencyFrame(this.selectedTrain); 
+            if (this.inManualMode == true){ 
+        
+                TCEmergencyFrame window = new TCEmergencyFrame(this.selectedTrain); 
            
-            window.setOperatingLog(this.operatingLogs);
-            window.setVisible(true);
-            window.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        }else if (this.inManualMode == false){
-            
-            // FIX ME: Change this when train model is done. 
-            this.selectedTrain.setSpeed(this.selectedTrain.getVelocity() - 5);
-        }   
+
+                window.setOperatingLog(this.operatingLogs);
+                window.setVisible(true);
+                window.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+             }else if (this.inManualMode == false){
+           
+                // if the emergency brake is broke, this can't happen
+                if (this.selectedTrain.getEmergencyBrake() != -1){
+                    
+                    this.selectedTrain.setEmergencyBrake( 1 );
+                    this.functionLabelEmg.setText("On");
+                    this.selectedTrain.setEmergencyBrake( 0 );
+                    this.functionLabelEmg.setText("Off");
+                }  
+            }
+        }
+
     }//GEN-LAST:event_initateEmergencyBrake
   
     /**
-     * Initiates the service brake on the selected train.
+     * Initiates the service brake on the selected train. If the service brakes are 
+     * broken, the service brake won't trigger.
      * 
      * @param evt the send of the event, i.e., the 'Service Brake' button
      */
     private void engageServiceBrake(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_engageServiceBrake
   
-        this.logBook.add("Engage the service brakes!"); 
+        if (this.selectedTrain != null){
         
-        // decrease speed on the train
-        // FIX ME: for testing, it will decrease by 1   
-        this.selectedTrain.setSpeed(this.selectedTrain.getVelocity() - 1);
+            this.logBook.add("Engage the service brakes!"); 
         
-        this.printLogs();
+            // make sure the train brakes are not broken
+            if (this.selectedTrain.getServiceBrake() != -1){
+                this.selectedTrain.setServiceBrake( 1 );
+                this.functionLabelService.setText("On");
+            
+                this.selectedTrain.setServiceBrake( 0 );
+                this.functionLabelService.setText("Off");
+
+                this.printLogs();
+            }
+        }
     }//GEN-LAST:event_engageServiceBrake
 
 

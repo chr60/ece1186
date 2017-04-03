@@ -1,12 +1,8 @@
 package TrainControllerComps;
 
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import TrackModel.Block;
 import java.util.LinkedList;
-import java.util.Random;
 import javax.swing.JTextArea;
-import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -65,12 +61,7 @@ public class TCSpeedController extends javax.swing.JPanel {
      * automatically depending on what mode the system is in. 
      */
     private int setSpeed;   
-    
-    /**
-     * Used to keep track of how long it takes the train to reach the set speed.
-     */
-    private int timeElapsed;
-    
+        
     /**
      * A boolean value indicating if the Speed Controller is operating in Manual or Automatic mode. 
      * This value is set from the Train Controller class. 
@@ -82,6 +73,13 @@ public class TCSpeedController extends javax.swing.JPanel {
      */
     private TCBrakePanel brakePanel; 
         
+
+    /**
+     * Used to calculate the power command.
+     */
+    private double error; 
+    
+
     // MARK: - Constructors
    
     /**
@@ -107,6 +105,8 @@ public class TCSpeedController extends javax.swing.JPanel {
        
     });
     }
+    
+    // MARK: - Setters and Getters
     
     /**
      * Sets which Operating Logs the Speed Controller should print to. 
@@ -159,10 +159,19 @@ public class TCSpeedController extends javax.swing.JPanel {
     }
     
     /**
-     * Refreshes all the UI components in the SpeedController. 
+     * Sets the set speed that the train should go.
      * 
-     * FIX ME: This should be called from the TrainController every 'x' seconds to update 
-     * the components with up-to-date information. 
+     * @param setSpeed the speed the train should go.
+     */
+    public void setSetSpeed(int setSpeed){
+        
+        this.setSpeed = setSpeed; 
+    }
+    
+    /**
+     * Refreshes all the UI components in the SpeedController, and regulates the 
+     * speed of the train if in Automatic mode.
+     * 
      */
     public void refreshUI(){
        
@@ -177,13 +186,21 @@ public class TCSpeedController extends javax.swing.JPanel {
             this.setSpeedButton.setEnabled(false);
             this.speedSlider.setEnabled(false);
             
-            // get suggested speed and control the train to that speed.
-            Double suggSpeed = this.selectedTrain.getSuggestedSpeed();
-           
-            if (suggSpeed != null){
-                
-                this.speedSlider.setValue(suggSpeed.intValue());
-                this.setSpeedButton.doClick();
+
+            // Automatic speed control:
+            // get the block the train is on, and the set suggested speed
+            Block currBlock = this.selectedTrain.getGPS().getCurrBlock();
+            Double blockSuggestedSpeed = currBlock.getSpeedLimit(); 
+            
+            if (blockSuggestedSpeed != null){
+                // if the train is going faster than the suggested block speed, 
+                // change the speed. 
+                if (this.selectedTrain.getVelocity() > blockSuggestedSpeed){
+            
+                    this.speedSlider.setValue(blockSuggestedSpeed.intValue());
+                    this.setSpeedButton.doClick(); 
+                }
+
             }
         }     
     }
@@ -355,7 +372,7 @@ public class TCSpeedController extends javax.swing.JPanel {
            
         String log;
         this.setSpeed = speedSlider.getValue();
-        //this.beginPowerControl.start();
+
         
         log = "Telling train to set speed to " + setSpeed;
         logBook.add(log);
@@ -380,28 +397,34 @@ public class TCSpeedController extends javax.swing.JPanel {
 
     /**
      * Regulates the train's speed using Power Law.
+     * If the train's speed is greater than the set speed, 
+     * the train's service brake is pressed to slow the train down.
+     * 
+     * This is called every second. 
+     * 
      */
     public void powerControl(){
+
+        // train is going too fast
+        if (this.selectedTrain.getVelocity() > this.setSpeed){
             
-        //String log;
-         
-        this.logBook.add("Set Speed: " + this.setSpeed);
-        // calculate the error 
-        double error = this.setSpeed - this.selectedTrain.getVelocity(); 
+            this.brakePanel.getServiceBrake().doClick(); // apply brakes
+        }else{
+            this.logBook.add("Set Speed: " + this.setSpeed);
             
-        this.powerCommandOut = this.selectedTrain.getKp() * error + this.selectedTrain.getKi();
-        
-        // send powerCommandOut to the train, which then changes its speed
-        this.selectedTrain.powerCommand(this.powerCommandOut); 
-          
-        // if (this.powerCommand < 0){
-            // this.selectedTrain.setServiceBrake(); 
-        //}
-        
-        // train should maintain speed when powerCommandOut stays the same
-         
-        this.logBook.add(Integer.toString(timeElapsed));
-        printLogs();
+            this.error = this.setSpeed - this.selectedTrain.getVelocity(); // calculate the error 
+
+            this.logBook.add("Error: " + Double.toString( this.error) ); // log error
+
+            this.logBook.add(Double.toString( this.powerCommandOut) ); // log power command
+
+            this.powerCommandOut = this.selectedTrain.getKp() * error + this.selectedTrain.getKi()*this.selectedTrain.getVelocity();
+
+            // send powerCommandOut to the train, which then changes its speed
+            this.selectedTrain.powerCommand(this.powerCommandOut); 
+
+            printLogs();
+        }
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -1,5 +1,6 @@
 package TrainControllerComps;
 
+import TrackModel.TrackModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
@@ -56,6 +57,15 @@ public class TrainController extends javax.swing.JFrame {
     private TCTestConsole testConsole = null; 
     
     
+    public boolean detailedTrainWindowOpen;
+    
+    
+    // TESTING
+        
+    TrainModeUI trainUI; 
+    
+    TrackModel track = new TrackModel(); 
+    
     // used to update GUI every millisecond (1 s)
     // FIX ME: This time should be set by the CTC can be 
     // wall speed or 10x faster ()
@@ -65,9 +75,15 @@ public class TrainController extends javax.swing.JFrame {
             //blockSpeed = (int)(rand.nextDouble() * 100.0) % 100.0;
             refreshComponents();    
             
-            
+
+        
+            if (detailedTrainWindowOpen == true){ trainUI.updateGUI(selectedTrain); }
+                
             if (selectedTrain != null && (selectedTrain.getKp() != null && selectedTrain.getKi() != null) ){
                 speedController.powerControl();
+                
+               
+
             }
             
             // Do specific things if in testing mode...
@@ -107,9 +123,11 @@ public class TrainController extends javax.swing.JFrame {
     public TrainController() {
                        
         initComponents();
-        
+        String[] fNames = {"resources/redline.csv"};
+        this.track.readCSV(fNames);
+          
         //this.trains.add(train);
-        
+          
         this.initHashMaps();
         this.setTrainListComboBox();
         this.setMode("Manual", "Normal");
@@ -119,7 +137,7 @@ public class TrainController extends javax.swing.JFrame {
         this.selectedTrain = null;  
                         
         this.utilityPanel.setVitalsButton(this.vitals);
-        
+        this.detailedTrainWindowOpen = false; 
         systemRunSpeed.start();
        
     }
@@ -393,7 +411,6 @@ public class TrainController extends javax.swing.JFrame {
         time = new javax.swing.JLabel();
         uiSeparatorFour = new javax.swing.JSeparator();
         speedController = new TrainControllerComps.TCSpeedController();
-        blockInfoPane = new TrainControllerComps.TCBlockInfoPanel();
         errorLogScrollPane = new javax.swing.JScrollPane();
         errorLogs = new javax.swing.JTextPane();
         clearOperatingLog = new javax.swing.JButton();
@@ -402,10 +419,12 @@ public class TrainController extends javax.swing.JFrame {
         trainInfoPanel = new TrainControllerComps.TCTrainInfoPane();
         utilityPanel = new TrainControllerComps.TCUtilityPanel();
         brakePanel = new TrainControllerComps.TCBrakePanel();
+        blockInfoPane = new TrainControllerComps.TCBlockInfoPanel();
         menuBar = new javax.swing.JMenuBar();
         viewMenu = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -587,6 +606,14 @@ public class TrainController extends javax.swing.JFrame {
         jMenuItem6.setText("Failures");
         viewMenu.add(jMenuItem6);
 
+        jMenuItem7.setText("Selected Train Detail");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        viewMenu.add(jMenuItem7);
+
         menuBar.add(viewMenu);
 
         editMenu.setText("Edit");
@@ -679,17 +706,15 @@ public class TrainController extends javax.swing.JFrame {
                         .addComponent(uiSeparatorSix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(speedControllerTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-                                    .addComponent(speedController, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(blockInfoPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(41, 41, 41))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGap(64, 64, 64)
-                                .addComponent(blockInfoTitle))))
+                                .addComponent(blockInfoTitle))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(blockInfoPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(speedControllerTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+                                        .addComponent(speedController, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -838,7 +863,7 @@ public class TrainController extends javax.swing.JFrame {
                         .addComponent(blockInfoTitle)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(blockInfoPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(36, 36, 36)
                         .addComponent(speedControllerTitle)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(speedController, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1046,6 +1071,20 @@ public class TrainController extends javax.swing.JFrame {
         this.manualMode = true;
         this.automaticMode = false; 
     }//GEN-LAST:event_switchToManualMode
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+       
+        // open up the train GUI
+        this.trainUI = new TrainModeUI();
+        
+        trainUI.updateGUI(this.selectedTrain);
+        
+        trainUI.frmTrainModel.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        trainUI.frmTrainModel.setVisible(true);
+       
+        this.detailedTrainWindowOpen = true; 
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
        
     /**
      * Returns the current time of the system in "HH:mm:ss a" format. 
@@ -1128,7 +1167,9 @@ public class TrainController extends javax.swing.JFrame {
             // FIX ME: Right now, it's set at 80.0 for the purpose 
             // of getting the block speed to update
             this.speedController.setMaxSpeed(this.blockSpeed);
-            this.blockInfoPane.setBlockSpeed(this.blockSpeed);
+            
+            this.blockInfoPane.refreshUI();
+            //this.blockInfoPane.setBlockSpeed(this.blockSpeed);
             
             this.utilityPanel.setManualMode(this.manualMode);
             this.utilityPanel.setSelectedTrain(this.selectedTrain);
@@ -1236,6 +1277,7 @@ public class TrainController extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JButton makeAnnouncementButton;
     private javax.swing.JRadioButton manualModeRadioButton;
     private javax.swing.JMenuBar menuBar;

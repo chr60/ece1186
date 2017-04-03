@@ -204,9 +204,11 @@ public class TCEmergencyFrame extends javax.swing.JFrame {
     private void initiateEmgBrake(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_initiateEmgBrake
                
         this.logbook.add("Engaging the E-Brake!");
+                
+        this.selectedTrain.setEmergencyBrake( 1 );
+        this.selectedTrain.setEmergencyBrake( 0 );
         
-        // FIX ME: Change this once the Train Model is complete
-        this.selectedTrain.setSpeed(this.selectedTrain.getVelocity() - 5);
+
         this.printLogbook();
         
         this.dispose();
