@@ -11,8 +11,10 @@ script:
 - sudo apt-get install doxygen;sudo apt-get install graphviz; sudo apt-get install rdfind;
 - mvn test -B
 after_success:
+- skip_cleanup: true
 - doxygen Doxygen
 - git push
+
 
 #deploy:
 #  skip_cleanup: true
