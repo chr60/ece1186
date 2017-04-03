@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
   private static String[] stationNames={"YARD","SHADYSIDE","HERRON AVE","SWISSVILLE","PENN STATION",
                 "STEEL PLAZA","FIRST AVE","STATION SQUARE","SOUTH HILLS JUNCTION","YARD"};
   private static Integer[] rootBlocksNum={16,27,33,38,44,52,9};
-  private static Integer[] expectedStationBlockNums={7,9,16,21,25,35,45,48,60};
+  private static Integer[] expectedStationBlockNums={7,16,21,25,35,45,48,60,77};
   //Move to a Set based interface for easy comparables
   private static TreeSet<Integer> testBlocksRoot = new TreeSet<>(Arrays.asList(rootBlocksNum));
   private static TreeSet<String> testNamesSet = new TreeSet<>(Arrays.asList(stationNames));

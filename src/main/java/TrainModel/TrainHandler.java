@@ -80,4 +80,29 @@ public class TrainHandler {
 	{
 		//yardBlock = globalTrack.viewStationMap().get("YARD").get(0);
 	}  
+        
+        
+        /**
+         * Checks to see if the CTC dispatched a new train. This method is called every second
+         * from the Launcher class.
+         * 
+         */
+        public void pollCTC(){
+            
+            System.out.println("Not Currently Implemented."); 
+        }
+            
+        public void spawnTrainAtYard(Integer trainId){
+        
+            Block yardBlock = this.globalTrack.viewStationMap().get("Red").get("YARD").get(0);
+            
+            yardBlock.setTrainId(trainId);
+            
+            yardBlock.setOccupied();
+            
+            System.out.println(yardBlock.blockNum());
+            System.out.println(yardBlock.getStationName()); 
+            System.out.println(yardBlock.getTrainId());
+        }
+
 }
