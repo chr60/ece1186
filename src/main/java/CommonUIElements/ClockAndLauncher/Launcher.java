@@ -23,6 +23,7 @@ import java.io.IOException;
 import TrainControllerComps.*;
 import WaysideController.*;
 import TrackModel.*;
+import CTC.*;
 
 /**
  * This class is responsible for refreshing the system on a given clock period as
@@ -38,6 +39,11 @@ public class Launcher extends javax.swing.JFrame {
      * The speed that the system is running in.
      */
     int systemSpeed;
+
+    /**
+     *  The trainManager is shared by MBO/CTC_gui
+     */
+    private TrainManager tm = new TrainManager();
 
     /**
      * The timer used to refresh the modules during some given time period.
@@ -56,12 +62,14 @@ public class Launcher extends javax.swing.JFrame {
         // for now, we start in normal mode
         this.systemSpeed = 1000;
 
+
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
             Random rand = new Random();
             public void actionPerformed(ActionEvent e) {
 
                 updateDateAndTime();
                 // what should be called every tick
+
             }
         });
 
@@ -363,7 +371,9 @@ public class Launcher extends javax.swing.JFrame {
      * @param evt
      */
     private void openCTC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openCTC
-        // TODO add your handling code here:
+        CTCgui ctc = new CTCgui(generateTrainManager(), generateTrack(), Waysides);
+        ctc.getFrame().setVisible(true);
+        ctc.getFrame().setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_openCTC
 
     /**
@@ -424,6 +434,11 @@ public class Launcher extends javax.swing.JFrame {
   		globalTrack.readCSV(fNames);
       return globalTrack;
     }
+
+    public TrainManager generateTrainManager(){
+      return tm;
+    }
+
 
     /**
      * @param args the command line arguments
