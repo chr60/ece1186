@@ -10,19 +10,3 @@ jdk:
 script:
 - sudo apt-get install doxygen;sudo apt-get install graphviz; sudo apt-get install rdfind;
 - mvn test -B
-after_success:
-- skip_cleanup: true
-- doxygen Doxygen
-- git push
-
-
-#deploy:
-#  skip_cleanup: true
-#  provider: master
-#  github_token: $encrypted_25c9faf2a456_key
-#  api_key:
-#    secure: Ztna0CgVo4UermagK3jjjEburFVZZDDmT4Bq8Q549fzb1oreZ0ARFKtlre4nFJ/b5CQZH/ToxAR7u5L55N7dyBB4vnWhkzDcmskrMg+5fDbONlT8ygMx0NcC20whQeR2f6U3lUh2GSC1DXkw3mRMv3X7ikfjg+Krs+qz16/YQkPeM3TuM2u0tIf73glBXaPipyhctPqysi8gK4Z6AoMmVbNaGvfnnqgmCLwswBhyKMNqlUPo3XYIcqfB832Qjxq1RsiY15Lw3SC6ZNoccoydyErx1hnENhEPlzGcwoiGX7nVAWYjOhSTivYNeVOOCQo3bO10K6GrrPO9+jNhcGt7ZuZcV9krDP3MQnYCphLgrPtCXlZSEcOwlhNPN4UCxwBd5RUYS24xHu7rFZBo7X4/WlGThCcypIuobTN0wqkBsIMKtPIt7S3IRmoqkuG159F2rW0zDIIdNIMJAqS40GUJR72WUwymQVE9bNIss4fBVWU+XuHe8UIA/x87t/WSMl0HckK9B+Z6UuqTzt12GfZHNQhxrpwPo9YY2o5NFWpqAdgK3xFUUlykC65vHgkRd52z44F2TlojDtZWWFO1ZjSN7a1XT1NpuXXm4MyiCvw6xBwtpJajD2OCJuBLhqhTIJhtGAFp3HL3VfpMUhoG9PJLbiTmHQtbpLXhAioen8c05cU=
-#  file: docs/html/
-#  on:
-#    repo: michaelghaben/ece1186
-#    branch: master
