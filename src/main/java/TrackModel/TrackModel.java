@@ -37,7 +37,7 @@ public class TrackModel implements Serializable{
 
     HashMap<String, Block> rootMap = new HashMap<String, Block>();
     HashMap<String, ArrayList<Block>> leafMap = new HashMap<String, ArrayList<Block>>();
-    HashMap<String, ArrayList<Block>> stationList = new HashMap<String, ArrayList<Block>>();
+    HashMap<String,HashMap<String, ArrayList<Block>>> stationList = new HashMap<String,HashMap<String, ArrayList<Block>>>();
     HashMap<String, Station> stationHostMap = new HashMap<String, Station>();
     HashMap<Block, Station> blockStationMap = new HashMap<Block, Station>();
     HashMap<Block, Crossing> crossingMap = new HashMap<Block, Crossing>();
@@ -177,8 +177,8 @@ public class TrackModel implements Serializable{
     * Allows viewing of the station map to other modules, implemented as a copy method
     * @return HashMap<String, ArrayList<Block>>
     */
-    public HashMap<String, ArrayList<Block>> viewStationMap(){
-        return new HashMap<String, ArrayList<Block>>(this.stationList);
+    public HashMap<String,HashMap<String, ArrayList<Block>>> viewStationMap(){
+        return new HashMap<String,HashMap<String, ArrayList<Block>>>(this.stationList);
     }
 
     /*
@@ -236,11 +236,14 @@ public class TrackModel implements Serializable{
     * @param stationName station to be added to the stationList
     * @param stationLocation the block location of an point where the station interacts with the block
     */
-    private void addStation(String stationName, Block stationLocation){
-        if (!this.stationList.containsKey(stationName)){
-            this.stationList.put(stationName, new ArrayList<Block>());
+    private void addStation(String line, String stationName, Block stationLocation){
+        if(!this.stationList.containsKey(line)){
+            this.stationList.put(line, new HashMap<String, ArrayList<Block>>());
         }
-        this.stationList.get(stationName).add(stationLocation);
+        if (!this.stationList.get(line).containsKey(stationName)){
+            this.stationList.get(line).put(stationName, new ArrayList<Block>());
+        }
+        this.stationList.get(line).get(stationName).add(stationLocation);
     }
 
     /**
@@ -342,11 +345,13 @@ public class TrackModel implements Serializable{
     * train model
     */
     private void buildBlockStationMap(){
-        for(String s : stationList.keySet()){
-            for(Block b : stationList.get(s))
-                if(!this.blockStationMap.containsKey(s)){
-                    this.blockStationMap.put(b, this.stationHostMap.get(s));
-                }
+        for(String l : stationList.keySet()){
+            for(String s : stationList.get(l).keySet()){
+                for(Block b : stationList.get(l).get(s))
+                    if(!this.blockStationMap.containsKey(s)){
+                        this.blockStationMap.put(b, this.stationHostMap.get(s));
+                    }
+            }
         }
     }
 
@@ -354,9 +359,11 @@ public class TrackModel implements Serializable{
     *Build the listing of the host station list for external consumption.
     */
     private void buildStationHostMap(){
-        for (String stationName : this.stationList.keySet()){
-            Station myStation = new Station(stationName, this.stationList.get(stationName));
-            this.stationHostMap.put(stationName, myStation);
+        for(String l : this.stationList.keySet()){
+            for (String stationName : this.stationList.get(l).keySet()){
+                Station myStation = new Station(stationName, this.stationList.get(l).get(stationName));
+                this.stationHostMap.put(stationName, myStation);
+            }
         }
     }
 
@@ -428,7 +435,7 @@ public class TrackModel implements Serializable{
                         this.addBlock(myBlock);
 
                         if (!stationName.equals("")){
-                            this.addStation(stationName, myBlock);
+                            this.addStation(blockLine, stationName, myBlock);
                         }
 
                         if(hasSwitch){
