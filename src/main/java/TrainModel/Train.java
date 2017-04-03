@@ -75,6 +75,18 @@ public class Train implements Serializable {
 		{
 			//to avoid division by zero
 			forceApp = newPower;
+		}else if (statusEB == 1 || statusSB == 1){
+			//if either brake is engaged 
+			Double brakeDeceleration = 0.0;
+			if (statusSB == 1)
+			{
+				brakeDeceleration = SBrate;
+			}else if(statusEB == 1)
+			{
+				brakeDeceleration = EBrate;
+			}
+			
+			forceApp = mass * brakeDeceleration;
 		}else{
 			forceApp = newPower / velocity;
 		}
@@ -111,14 +123,7 @@ public class Train implements Serializable {
 		if (acceleration > 0.5){
 			acceleration = 0.5;
 		}
-		if (statusSB == 1)
-		{
-			acceleration = SBrate;
-		}
-		if (statusEB == 1)
-		{
-			acceleration = EBrate;
-		}
+		
 		//compute new velocity based on old velocity and acceleration
 		velocity = velocity + acceleration;
 		if (velocity > 19.4444)              //70 kph in m/s (max velocity)
@@ -157,8 +162,9 @@ public class Train implements Serializable {
      * @return a Double which corresponds to the amount of distance required to stop the train using the service brake
      */
 	public Double getSafeBrakingDistSB(){
-		Double timeSB = timeToStop(SBrate);
-		Double SBD = distanceToStop(SBrate,timeSB);
+		Double decRate = deccelRate(SBrate);
+		Double timeSB = timeToStop(decRate);
+		Double SBD = distanceToStop(decRate,timeSB);
 		return SBD;
 	}
 
@@ -167,9 +173,25 @@ public class Train implements Serializable {
      * @return a Double which corresponds to the amount of distance required to stop the train using the emergency brake
      */
 	public Double getSafeBrakingDistEB(){
-		Double timeEB = timeToStop(EBrate);
-		Double SEBD = distanceToStop(EBrate,timeEB);
+		Double decRate = deccelRate(EBrate);
+		Double timeEB = timeToStop(decRate);
+		Double SEBD = distanceToStop(decRate,timeEB);
 		return SEBD;
+	}
+
+/**
+     * Method to calculate decceration rate based on brake rates and mass of train 
+     * @param a Double which corresponds to the deceleration rate of the brakes
+     * @return a Double which corresponds to the deceleration rate based on brakes and mass
+     */
+	private Double deccelRate(Double Drate){
+
+		Double forceApplied = mass * Drate;
+		Double Fs = mass * g * mySin(currGrade);
+		Double netF = forceApplied - Fs;
+		//compute acceleration based on net force and current mass
+		Double decceleration = netF / mass;
+		return decceleration; 				//deceleration rate based on brakes and mass
 	}
 	
 
@@ -204,14 +226,18 @@ public class Train implements Serializable {
 
 
 	/**
-     * Mutator to compute what block the train is in based on old current block and distance traveled in the last cycle
-     * @return a Block Object which denotes which block the train is currently in.
-     * @see distIntoBlock()
+     * Mutator to set the current Block that the train is on
+     * @param Block object to set curr block to
      */
-	public Block currentBlock(Double newDist){
-		//Block currBlock = new Block(null, brakeFailure, brakeFailure, newDist, newDist, newDist, newDist, messageBoard, messageBoard, messageBoard, messageBoard, numCars, brakeFailure, messageBoard);
-		Double extraDist = 0.0;
-		Double loc = distIntoBlock(extraDist);
+	public void setCurrBlock(Block newBlock){
+		currBlock = newBlock;
+	}
+	
+	/**
+     * Accessor to get the current Block that the train is on
+     * @return Block object to return curr block
+     */
+	public Block getCurrBlock(){
 		return currBlock;
 	}
 
