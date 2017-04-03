@@ -23,6 +23,7 @@ import java.io.IOException;
 import TrainControllerComps.*;
 import WaysideController.*;
 import TrackModel.*;
+import MBO.*;
 import CTC.*;
 
 /**
@@ -62,14 +63,12 @@ public class Launcher extends javax.swing.JFrame {
         // for now, we start in normal mode
         this.systemSpeed = 1000;
 
-
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
             Random rand = new Random();
             public void actionPerformed(ActionEvent e) {
 
                 updateDateAndTime();
                 // what should be called every tick
-
             }
         });
 
@@ -93,6 +92,10 @@ public class Launcher extends javax.swing.JFrame {
 
         // get time
         return sdf.format(cal.getTime());
+    }
+
+    public static long getCurrTime(){
+        return Calendar.getInstance().getTimeInMillis();
     }
 
         /**
@@ -414,6 +417,7 @@ public class Launcher extends javax.swing.JFrame {
      */
     private void openMBOandScheduler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMBOandScheduler
         // TODO add your handling code here:
+        MovingBlockOverlay mbo = new MovingBlockOverlay(generateTrack(), generateTrainManager());
     }//GEN-LAST:event_openMBOandScheduler
 
     private void createLogger(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createLogger
