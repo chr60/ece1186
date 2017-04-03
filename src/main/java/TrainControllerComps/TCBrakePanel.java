@@ -238,7 +238,8 @@ public class TCBrakePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_initateEmergencyBrake
   
     /**
-     * Initiates the service brake on the selected train.
+     * Initiates the service brake on the selected train. If the service brakes are 
+     * broken, the service brake won't trigger.
      * 
      * @param evt the send of the event, i.e., the 'Service Brake' button
      */
@@ -248,14 +249,16 @@ public class TCBrakePanel extends javax.swing.JPanel {
         
             this.logBook.add("Engage the service brakes!"); 
         
+            // make sure the train brakes are not broken
+            if (this.selectedTrain.getServiceBrake() != -1){
+                this.selectedTrain.setServiceBrake( 1 );
+                this.functionLabelService.setText("On");
+            
+                this.selectedTrain.setServiceBrake( 0 );
+                this.functionLabelService.setText("Off");
 
-            this.selectedTrain.setServiceBrake( 1 );
-            this.functionLabelService.setText("On");
-            this.selectedTrain.setServiceBrake( 0 );
-            this.functionLabelService.setText("Off");
-
-        
-            this.printLogs();
+                this.printLogs();
+            }
         }
     }//GEN-LAST:event_engageServiceBrake
 

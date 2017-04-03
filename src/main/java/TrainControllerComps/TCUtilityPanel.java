@@ -139,7 +139,12 @@ public class TCUtilityPanel extends javax.swing.JPanel {
         }
         
         // change the vital button to red if there is a power failure.         
-        if (this.isPowerFailure()){ this.vitalsButton.setForeground(Color.red); }
+        if (this.isPowerFailure()){ 
+            
+            this.vitalsButton.setForeground(Color.red);
+        
+            // 
+        }
         
         /**
          * @Bug When selected a train from a TCDispatchedTrainsFrame, a NullPointerException is thrown. 
@@ -157,13 +162,15 @@ public class TCUtilityPanel extends javax.swing.JPanel {
         // turn on lights if underground
         if (this.isUnderground()){ this.selectedTrain.setLights(1);}
 
-
         // open doors when at station
         // FIX ME: Open both doors for now, change later to open correct door
         if (this.canOpenDoors() && this.isAtStation()){ this.selectedTrain.setLeftDoor(1);}
         if (this.canOpenDoors() && this.isAtStation()){ this.selectedTrain.setRightDoor(1);}
 
-        // turn on and off ac/heat   
+        // set heat
+
+        //if (this.selectedTrain.getTemp() <= 50.0){ } // turn on heat
+        //else if (this.selectedTrain.getTemp() >= 80){ } // set thermostat to default temp 
     }
     
     /**
@@ -183,7 +190,8 @@ public class TCUtilityPanel extends javax.swing.JPanel {
     }
     
     /**
-     * Sets the UI elements that the user can interact with depending on the mode the Utility Panel is in. 
+     * Sets the UI elements that the user can interact with depending on the mode the system is in. 
+     * 
      */
     private void setModeUI(){
         
@@ -283,6 +291,12 @@ public class TCUtilityPanel extends javax.swing.JPanel {
         else{ return false; }
     }
     
+    /**
+     * Checks to see if it's safe to open the doors on the train. 
+     * This can occur when the train is not moving.
+     * 
+     * @return returns true if it's safe to open the doors of the train, false if its unsafe.
+     */
     private boolean canOpenDoors(){
     
         // if the train is stoped, we can open doors
