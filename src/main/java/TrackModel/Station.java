@@ -27,7 +27,7 @@ public class Station implements Comparable<Station>, Serializable{
   }
 
   /**
-  * Loads passengers from the waiting area to a train
+  * Loads passengers from the waiting area to a train.
   * @param maxPassengers maximum passengers to be added to a train
   * @return return value for a number of passengers
   */
@@ -43,7 +43,7 @@ public class Station implements Comparable<Station>, Serializable{
   }
 
   /**
-  * Adds departing passengers to the waiting area
+  * Adds departing passengers to the waiting area.
   * @param numPassengers number of passengers to add to the waiting area
   */
   public void addDepartingPassengers(Integer numPassengers){
@@ -51,7 +51,7 @@ public class Station implements Comparable<Station>, Serializable{
   }
 
   /**
-  * Implements comparable interface for a station based upon the name of a station
+  * Implements comparable interface for a station based upon the name of a station.
   * @param thatStation station to be compared to
   */
   @Override
