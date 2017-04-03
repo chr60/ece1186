@@ -159,6 +159,16 @@ public class TCSpeedController extends javax.swing.JPanel {
     }
     
     /**
+     * Sets the set speed that the train should go.
+     * 
+     * @param setSpeed the speed the train should go.
+     */
+    public void setSetSpeed(int setSpeed){
+        
+        this.setSpeed = setSpeed; 
+    }
+    
+    /**
      * Refreshes all the UI components in the SpeedController, and regulates the 
      * speed of the train if in Automatic mode.
      * 
@@ -415,7 +425,6 @@ public class TCSpeedController extends javax.swing.JPanel {
 
             printLogs();
         }
-
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

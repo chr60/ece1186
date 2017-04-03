@@ -46,6 +46,9 @@ public class TCBrakePanel extends javax.swing.JPanel {
      */
     private boolean inManualMode; 
     
+    
+    private TCSpeedController speedController; 
+    
     /**
      * Constructor for creating a TCBrakePanel object without a selected train. 
      * The selected train property must be passed in from the Train Controller class before being used. 
@@ -120,9 +123,45 @@ public class TCBrakePanel extends javax.swing.JPanel {
      * @return the emergency brake 
      */
     public JButton getEmgBrake(){
+        
         return this.emergencyBrake;
     }
-
+    
+    /**
+     * Checks if the train should come to a stop based on different criteria. 
+     * 
+     */
+    private boolean shouldStopTrainChecks(){
+            
+        // stop if 
+        
+        // there is a failure
+                
+        // approaching a station
+        
+        // train stopped ahead   
+        
+        // FIX ME: Change this based on if we should stop the train.
+        return true; 
+    }
+    
+    public void setSpeedController(TCSpeedController speedController){
+    
+        this.speedController = speedController;
+    }
+    
+    public void refreshUI(){
+        
+        // we need to stop the train
+        /**
+         * @bug The train needs to use the emergency brakes if there's an emergency and needs to slow down.
+         * Currently, this uses the service brakes.
+         * 
+         * FIX ME: Have it use the emergency brake to stop in a hurry.
+         */
+        if (this.shouldStopTrainChecks()){ this.speedController.setSetSpeed(0); }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

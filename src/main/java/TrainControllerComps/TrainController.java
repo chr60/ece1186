@@ -1,5 +1,6 @@
 package TrainControllerComps;
 
+import TrackModel.TrackModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
@@ -58,7 +59,12 @@ public class TrainController extends javax.swing.JFrame {
     
     public boolean detailedTrainWindowOpen;
     
+    
+    // TESTING
+        
     TrainModeUI trainUI; 
+    
+    TrackModel track = new TrackModel(); 
     
     // used to update GUI every millisecond (1 s)
     // FIX ME: This time should be set by the CTC can be 
@@ -117,9 +123,11 @@ public class TrainController extends javax.swing.JFrame {
     public TrainController() {
                        
         initComponents();
-        
+        String[] fNames = {"resources/redline.csv"};
+        this.track.readCSV(fNames);
+          
         //this.trains.add(train);
-        
+          
         this.initHashMaps();
         this.setTrainListComboBox();
         this.setMode("Manual", "Normal");
@@ -1159,7 +1167,9 @@ public class TrainController extends javax.swing.JFrame {
             // FIX ME: Right now, it's set at 80.0 for the purpose 
             // of getting the block speed to update
             this.speedController.setMaxSpeed(this.blockSpeed);
-            this.blockInfoPane.setBlockSpeed(this.blockSpeed);
+            
+            this.blockInfoPane.refreshUI();
+            //this.blockInfoPane.setBlockSpeed(this.blockSpeed);
             
             this.utilityPanel.setManualMode(this.manualMode);
             this.utilityPanel.setSelectedTrain(this.selectedTrain);

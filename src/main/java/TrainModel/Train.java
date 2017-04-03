@@ -131,7 +131,7 @@ public class Train implements Serializable {
 		}
 		
 		//using S = Vi(t) + (1/2)(a)(t^2)  to compute distance
-		distance = (oldVelocity) + (1/2)*acceleration; 
+		distance = (oldVelocity) + (0.5)*acceleration; 
 		
 
 		newCurrBlock(distance);

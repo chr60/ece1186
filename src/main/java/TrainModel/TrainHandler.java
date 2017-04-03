@@ -22,7 +22,7 @@ public class TrainHandler {
 		globalTrack = gTrack;
 		getYard();
 	}
-	
+        
 	/**
      * Accessor to return all trains in the system
      * @return an ArrayList of trains to the caller.

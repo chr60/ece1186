@@ -1,6 +1,0 @@
-poceed-((!nextkOccupied) && (!xtBlockBron) && (!nextBlocosed) && (!upcomingBlockOccupied) && (!upcomingBlockBroken) && (!upcomi
-switch-((!switchBlockOccupied) && (!destinationBlockOccupied) && (!switchBroken))
-maintenance-((!previousBlockOccupied) && (!closeBlockBlockOccupied))
-crossing-((!crossingBlockOccupied) && (!crossingBroken) && (crossingActivated))
-crossingactivate-((previousBlockOccupied || crossingBlockOccupied))
-monitor-((!nextBlockOccupied) && (!upcomingBlockOccupied))
