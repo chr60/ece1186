@@ -1,12 +1,22 @@
 package TrainModel;
 
+import java.util.ArrayList;
+
+import TrackModel.TrackModel;
+
 public class Launch {
 	static TrainModeUI gui = new TrainModeUI();
-	
+	static TrackModel gTrack;
+	TrainHandler trainH = new TrainHandler(gTrack);
 	public static void main(String [] args){
-		Train [] trains = {new Train(123), null, null};
+
+		
+		gTrack = generateTrack();
+		ArrayList<Train> trains = new ArrayList<Train>();
+		trains.add(new Train(123,gTrack));
 		gui.frmTrainModel.setVisible(true);
 		gui.setTrainArray(trains);
+		
 	}
 	
 	public void powerCommandToTrain(Double pow, Train currT)
@@ -18,6 +28,17 @@ public class Launch {
 			currT.powerCommand(pow);
 			gui.updateGUI(currT);
 		}
-		TrainHandler trainH = new TrainHandler();
 	}
+	
+	  /**
+     * Generates a "Dummy Track" and returns it.
+     * @return Dummy Track
+     * @bug REDLINE ONLY CURRENTLY
+     */
+    public static TrackModel generateTrack(){
+      String[] fNames = {"resources/redline.csv"};
+      TrackModel globalTrack = new TrackModel();
+  		globalTrack.readCSV(fNames);
+      return globalTrack;
+    }
 }

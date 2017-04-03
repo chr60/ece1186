@@ -57,7 +57,7 @@ public class TrainHandler {
 	
 
 	//method to search and return train object based on train ID
-	public Train findTrain(int id)
+	public Train findTrain(Integer id)
 	{
 		for(int i = 0; i < trains.size(); i++)
 		{
@@ -78,6 +78,6 @@ public class TrainHandler {
 	//method to search and return yard block
 	public void getYard()
 	{
-		yardBlock = globalTrack.viewStationMap().get("YARD").get(0);
+		//yardBlock = globalTrack.viewStationMap().get("YARD").get(0);
 	}
 }

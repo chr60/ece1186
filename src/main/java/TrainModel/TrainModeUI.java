@@ -22,6 +22,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 
@@ -58,7 +59,7 @@ public class TrainModeUI {
         JComboBox<String> comboBox = new JComboBox<String>();
 	JTextPane txtSpeed;
 	JTextPane txtAuthority;
-	Train [] trainArray;
+	ArrayList<Train> trainArray;
 	Train currTrain;
 	int stop;
 	private JTextField txtTestGrade;
@@ -71,16 +72,16 @@ public class TrainModeUI {
 	 * @throws ClassNotFoundException 
 	 */
 	
-	public void setTrainArray(Train [] trains){
+	public void setTrainArray(ArrayList<Train> trains){
 		trainArray = trains;
-                
-                if (this.comboBox.getItemCount() != 0){
-                    this.comboBox.removeAllItems();
-                }
-                
-                for (int i = 0; i < trains.length; i++){
-                    this.comboBox.addItem(Integer.toString( trains[i].getID()) );
-                }
+		this.comboBox.addItem("Select a Train:");
+        if (this.comboBox.getItemCount() != 0){
+            this.comboBox.removeAllItems();
+        }
+        this.comboBox.addItem("Select a Train:");
+        for (int i = 0; i < trains.size(); i++){
+            this.comboBox.addItem(Integer.toString( trains.get(i).getID()) );
+        }
                 
 	}
 	
@@ -623,12 +624,15 @@ public class TrainModeUI {
 				JComboBox<String> combo = (JComboBox<String>) arg0.getSource();
 		        String selectedTrain = (String) combo.getSelectedItem();
 		 
-		        if (selectedTrain.equals("Select Train")) {
-		           //no train selected clear all values
+		        if (comboBox.getItemCount() == 0) {
+		           //no trains exist.
 		        																								//CREATE CLEAR CLASS LATER
-		        } else if (selectedTrain.equals("123")) {
-		            //if train 123 is selected update info for this train
-		        	updateGUI(trainArray[0]);
+		        } else if (selectedTrain == "Select a Train:"){
+		        	//no train selected CLEAR ALL VALUES 
+		        }else{
+		            //if a train is selected update info for this train
+		        	
+		        	updateGUI(findTrain(Integer.parseInt(selectedTrain)));
 		        }
 			}
 
@@ -722,6 +726,19 @@ public class TrainModeUI {
             }                
             return null; 
         }
+        
+      //method to search and return train object based on train ID
+    	public Train findTrain(Integer id)
+    	{
+    		for(int i = 0; i < trainArray.size(); i++)
+    		{
+    			if (trainArray.get(i).getID() == id)
+    			{
+    				return trainArray.get(i);
+    			}
+    		}
+    		return null;
+    	}
         
         
         
