@@ -38,12 +38,13 @@ public class TrackModel implements Serializable{
     HashMap<String, Block> rootMap = new HashMap<String, Block>();
     HashMap<String, ArrayList<Block>> leafMap = new HashMap<String, ArrayList<Block>>();
     HashMap<String,HashMap<String, ArrayList<Block>>> stationList = new HashMap<String,HashMap<String, ArrayList<Block>>>();
-    HashMap<String, Station> stationHostMap = new HashMap<String, Station>();
+    HashMap<String,HashMap<String, Station>> stationHostMap = new HashMap<String,HashMap<String, Station>>();
     HashMap<Block, Station> blockStationMap = new HashMap<Block, Station>();
     HashMap<Block, Crossing> crossingMap = new HashMap<Block, Crossing>();
+    HashMap<Block, Lights> lightsMap = new HashMap<Block,Lights>();
 
     /**
-    * Simplicity wrapper to return a non-aliased block on the track given the parameters
+    * Simplicity wrapper to return a non-aliased block on the track given the parameters.
     * @param line Line of the block to be looked up
     * @param section Section of the block to be looked up
     * @param blockNum Number of the block to be looked up
@@ -84,6 +85,23 @@ public class TrackModel implements Serializable{
     }
 
     /**
+    * Returns the occupied blocks of the track
+    * @return an arraylist of the occupied blocks.
+    */
+    public ArrayList<Block> getOccupiedBlocks(){
+        ArrayList<Block> occupiedList = new ArrayList<Block>();
+        for(String line : this.trackList.keySet()){
+            for(String section : this.trackList.get(line).keySet()){
+                for(Integer blk : this.trackList.get(line).get(section).keySet()){
+                    if(this.trackList.get(line).get(section).get(blk).getOccupied()){
+                        occupiedList.add(this.trackList.get(line).get(section).get(blk));
+                    }
+                }
+            }
+        }
+        return occupiedList;
+    }
+    /**
     * Lateral lookup for tracks. Intended for use with dummyTrack->globalTrack and
     * vica-versa. Should be called on the object whose information is desired using
     * the source block.
@@ -112,7 +130,7 @@ public class TrackModel implements Serializable{
     }
 
     /**
-    * Allows viewing of the trackList to other modules, implemented as a copy method
+    * Allows viewing of the trackList to other modules, implemented as a copy method.
     * @return HashMap<String, HashMap<String,HashMap<Integer,Block>>>
     */
     public HashMap<String,HashMap<String,HashMap<Integer,Block>>> viewTrackList(){
@@ -182,7 +200,7 @@ public class TrackModel implements Serializable{
     }
 
     /*
-    * Allows viewing of the crossingMap from other modules, implemented as a copy method
+    * Allows viewing of the crossingMap from other modules, implemented as a copy method.
     * @return HashMap<Block, Crossing>
     */
     public HashMap<Block, Crossing> viewCrossingMap(){
@@ -190,7 +208,7 @@ public class TrackModel implements Serializable{
     }
 
     /**
-    * Allows viewing of leaf nodes of the switches to other modules
+    * Allows viewing of leaf nodes of the switches to other modules.
     * @return HashMap<String, ArrayList<Block>> of the leafmap
     */
     public HashMap<String, ArrayList<Block>> viewLeafMap(){
@@ -198,7 +216,7 @@ public class TrackModel implements Serializable{
     }
 
     /**
-    * Allows viewing of the blockStationMap by other modules
+    * Allows viewing of the blockStationMap by other modules.
     *
     * @return HashMap<Block, Station>
     */
@@ -207,7 +225,7 @@ public class TrackModel implements Serializable{
     }
 
     /**
-    * Allows viewing of the rootMap by other modules
+    * Allows viewing of the rootMap by other modules.
     *
     * @return Hash<String, Block>
     */
@@ -341,28 +359,42 @@ public class TrackModel implements Serializable{
     }
 
     /**
-    * Build a map for storing the blocks and station for use by the train controller and.
-    * train model
+    * Build a map for storing the blocks and station for use by the train controller and
+    * train model.
     */
     private void buildBlockStationMap(){
         for(String l : stationList.keySet()){
             for(String s : stationList.get(l).keySet()){
                 for(Block b : stationList.get(l).get(s))
                     if(!this.blockStationMap.containsKey(s)){
-                        this.blockStationMap.put(b, this.stationHostMap.get(s));
+                        this.blockStationMap.put(b, this.stationHostMap.get(l).get(s));
                     }
             }
         }
     }
 
     /**
+    * Builds the light map for usage by the wayside controller to modify the state of the lights.
+    */
+    private void buildLightsMap(){
+        for(String s : this.leafMap.keySet()){
+            for(int i=0; i<this.leafMap.get(s).size(); i++){
+                Lights light = new Lights(this, this.leafMap.get(s).get(i));
+                this.lightsMap.put(this.leafMap.get(s).get(i), light);
+            }
+        }
+    }
+    /**
     *Build the listing of the host station list for external consumption.
     */
     private void buildStationHostMap(){
         for(String l : this.stationList.keySet()){
+            if(!this.stationHostMap.containsKey(l)){
+                this.stationHostMap.put(l, new HashMap<String, Station>());
+            }
             for (String stationName : this.stationList.get(l).keySet()){
                 Station myStation = new Station(stationName, this.stationList.get(l).get(stationName));
-                this.stationHostMap.put(stationName, myStation);
+                this.stationHostMap.get(l).put(stationName, myStation);
             }
         }
     }
@@ -419,13 +451,14 @@ public class TrackModel implements Serializable{
                         Double speedLimit = Double.valueOf(str[5]);
                         String infrastructure = str[6];
                         Double elevation = Double.valueOf(str[7]);
+                        String crossing = str[8];
                         String switchBlock = str[9];
                         String arrowDirection = str[10];
                         String stationName = str[11];
 
                         Boolean isUnderground = infrastructure.contains("UNDERGROUND");
                         Boolean hasSwitch = infrastructure.contains("SWITCH");
-
+                        Boolean hasCrossing = infrastructure.contains("CROSSING");
 
                         //Initialize and add block
                         Block myBlock = new Block(this, defaultOccupied, isUnderground, blockLen, blockGrade,
@@ -446,6 +479,10 @@ public class TrackModel implements Serializable{
                             this.addSwitchLeaf(switchBlock, myBlock);
                         }
 
+                        if(hasCrossing){
+                            this.crossingMap.put(myBlock,new Crossing(this, myBlock));
+                        }
+
                     }
                     initLine = false;
                 }
@@ -457,5 +494,6 @@ public class TrackModel implements Serializable{
             this.handleSwitches();
             this.buildStationHostMap();
             this.buildBlockStationMap();
+            this.buildLightsMap();
         }
 }

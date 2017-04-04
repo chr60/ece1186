@@ -137,7 +137,7 @@ import org.junit.jupiter.api.Test;
   * Test the pathing functionality in a simple case expecting forward.
   */
   @DisplayName("Simple pathing test 1")
-  void testBlockToBlockSimpleForward() {
+  void testBlockToBlockSimpleForward(){
     Block startBlock = track.getBlock("Red", "H", new Integer(24));
     Block endBlock = track.getBlock("Red", "H", new Integer(25));
     ArrayList<ArrayList<Block>> paths = track.blockToBlock(startBlock, endBlock);
@@ -153,7 +153,7 @@ import org.junit.jupiter.api.Test;
   * Test the pathing functionality in a simple case expecting backward.
   */
   @DisplayName("Simple pathing test 2")
-  void testBlockToBlockSimpleBackward() {
+  void testBlockToBlockSimpleBackward(){
     Block startBlock = track.getBlock("Red", "H", new Integer(25));
     Block endBlock = track.getBlock("Red", "H", new Integer(24));
     ArrayList<ArrayList<Block>> paths = track.blockToBlock(startBlock, endBlock);
@@ -169,7 +169,7 @@ import org.junit.jupiter.api.Test;
   * Test the ability of the path planning to deal with switching conditions.
   */
   @DisplayName("Switching pathing test 1")
-  void testPathingSwitching() {
+  void testPathingSwitching(){
     Block startBlock = track.getBlock("Red","U",new Integer(77));
     Block endBlock  = track.getBlock("Red","C",new Integer(7));
     ArrayList<ArrayList<Block>> paths = track.blockToBlock(startBlock, endBlock);
@@ -180,7 +180,7 @@ import org.junit.jupiter.api.Test;
   * MBO pathing test 1
   */
   @DisplayName("MBO Pathing Test 1")
-  void testMBOOne() {
+  void testMBOOne(){
     Block startBlock = track.getBlock("Red", "C", new Integer(7));
     Block endBlock = track.getBlock("Red", "F", new Integer(16));
     ArrayList<ArrayList<Block>> paths = track.blockToBlock(startBlock, endBlock);
@@ -201,7 +201,7 @@ import org.junit.jupiter.api.Test;
   * MBO pathing test 2
   */
   @DisplayName("MBO Pathing Test 2")
-  void testMBOTwo() {
+  void testMBOTwo(){
     Block startBlock = track.getBlock("Red", "H", new Integer(25));
     Block endBlock = track.getBlock("Red", "H", new Integer(35));
     ArrayList<ArrayList<Block>> paths = track.blockToBlock(startBlock, endBlock);
@@ -228,7 +228,7 @@ import org.junit.jupiter.api.Test;
   * Validate no nulls after linking blocks.
   */
   @DisplayName("Test the presence of a nullptr in the track due to incorrect linking")
-  void testNullPtrExceptionDefault() {
+  void testNullPtrExceptionDefault(){
     for(String l : this.track.trackList.keySet()) {
       for(String s : this.track.trackList.get(l).keySet()) {
         for(Integer b : this.track.trackList.get(l).get(s).keySet()) {
@@ -244,12 +244,11 @@ import org.junit.jupiter.api.Test;
   * Validate no nulls after linking blocks and switching all switches.
   */
   @DisplayName("Test the presence of a nullptr in the track due to incorrect linking under switched condition")
-  void testNullPtrExceptionSwitched() {
+  void testNullPtrExceptionSwitched(){
     for(String s : this.track.viewRootMap().keySet()) {
       Integer falseInt = new Integer(0);
       this.track.viewRootMap().get(s).setSwitchState(falseInt);
     }
-
     for (String l : this.track.trackList.keySet()) {
       for (String s : this.track.trackList.get(l).keySet()) {
         for(Integer b : this.track.trackList.get(l).get(s).keySet()) {
@@ -265,7 +264,7 @@ import org.junit.jupiter.api.Test;
   * Test the functionality of the brokenList
   */
   @DisplayName("Broken List Test--expecting false")
-  void testBrokenListFalse() {
+  void testBrokenListFalse(){
     ArrayList<Block> brokenListTest = new ArrayList<Block>();
     Block first = this.track.getBlock("Red","A",new Integer(1));
     Block second = this.track.getBlock("Red","U",new Integer(77));
@@ -283,17 +282,56 @@ import org.junit.jupiter.api.Test;
   * Test the functionality of the brokenList
   */
   @DisplayName("Broken List Test--expecting true")
-  void testBrokenListTrue() {
+  void testBrokenListTrue(){
     ArrayList<Block> brokenListTest = new ArrayList<Block>();
     Block first = this.track.getBlock("Red","A",new Integer(1));
     Block second = this.track.getBlock("Red","U",new Integer(77));
     brokenListTest.add(first);
     brokenListTest.add(second);
 
-
     this.track.getBlock("Red","A",new Integer(1)).setBroken(true);
     this.track.getBlock("Red","U",new Integer(77)).setBroken(true);
     assertTrue(brokenListTest.equals(this.track.getBrokenBlocks("Red")));
+    }
+
+  @Test
+  /**
+  * Test the functionality of the occupiedList function
+  */
+  @DisplayName("Occupied List Test--expecting true")
+  void testOccupiedListTrue(){
+    ArrayList<Block> occupiedListTest = new ArrayList<Block>();
+    Block first = this.track.getBlock("Red","A",new Integer(1));
+    Block second = this.track.getBlock("Red","U",new Integer(77));
+    occupiedListTest.add(first);
+    occupiedListTest.add(second);
+
+    this.track.getBlock("Red","A",new Integer(1)).setOccupied(true);
+    this.track.getBlock("Red","U",new Integer(77)).setOccupied(true);
+    assertTrue(occupiedListTest.equals(this.track.getOccupiedBlocks()));
+    }
+
+    @Test
+    /**
+    * Test the proper implementation of a crossing
+    */
+    @DisplayName("RedLine crossing test")
+    void testCrossing(){
+      ArrayList<Block> crossingBlocks = new ArrayList<Block>();
+      for(Block blk : this.track.crossingMap.keySet()){
+        crossingBlocks.add(blk);
+      }
+      assertTrue(crossingBlocks.get(0).equals(this.track.getBlock("Red","I",new Integer(47))));
+    }
+
+    @Test 
+    /** 
+    * Test valid block getting via viewStationMap
+    */
+    @DisplayName("Test that we can yard blocks via external api")
+    void testLookup() {
+      Block yardBlock = this.track.viewStationMap().get("Red").get("YARD").get(0);
+      assertEquals(new Integer(77), yardBlock.blockNum());
     }
   }
 

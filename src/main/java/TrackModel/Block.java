@@ -100,19 +100,21 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   * Sets the suggested speed to a new speed.
   * @param new speed to set
   */
-  public void setSuggestedSpeed(double newSpeed){
-    this.suggestedSpeed = suggestedSpeed;
+  public void setSuggestedSpeed(Double newSpeed){
+    this.suggestedSpeed = newSpeed;
   }
 
   /**
   * Get the current suggested speed at this block.
+  * @return the current suggested speed of the block
   */
-  public double getSuggestedSpeed(){
+  public Double getSuggestedSpeed(){
     return this.suggestedSpeed;
   }
 
   /**
   * Gets the authority of this block.
+  * @return the block authority of the current block
   */
   public Block getAuthority(){
     return this.authority;
@@ -185,7 +187,7 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   public Boolean isUnderground(){
     return this.isUnderground;
   }
-  
+
   /**
   *   Returns the occupied state of a given block object.
   */
@@ -196,8 +198,8 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   /**
   * Sets the occupied state of the given block.
   */
-  public void setOccupied(){
-    this.occupied= (!this.occupied);
+  public void setOccupied(Boolean occupiedState){
+    this.occupied= occupiedState;
   }
 
   /**

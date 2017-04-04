@@ -1,4 +1,5 @@
 package TrainModel;
+import TrackModel.*;
 
 import java.util.ArrayList;
 
@@ -7,13 +8,16 @@ import TrackModel.TrackModel;
 public class Launch {
 	static TrainModeUI gui = new TrainModeUI();
 	static TrackModel gTrack;
-	TrainHandler trainH = new TrainHandler(gTrack);
+	static TrainHandler trainH; 
 	public static void main(String [] args){
 
 		
 		gTrack = generateTrack();
-		ArrayList<Train> trains = new ArrayList<Train>();
-		trains.add(new Train(123,gTrack));
+		trainH = new TrainHandler(gTrack);
+		Block yardBlockRed = gTrack.viewStationMap().get("Red").get("YARD").get(0);
+		trainH.setSpeedAndAuthority(-1,50.0,yardBlockRed.nextBlockForward(),yardBlockRed);
+		trainH.setSpeedAndAuthority(-1,50.0,yardBlockRed.nextBlockForward(),yardBlockRed);
+		ArrayList<Train> trains = trainH.getTrains();
 		gui.frmTrainModel.setVisible(true);
 		gui.setTrainArray(trains);
 		

@@ -1,7 +1,6 @@
 package TrainModel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import TrackModel.*;
 
@@ -50,16 +49,16 @@ public class TrainHandler {
 		}else{
 			currT = findTrain(trainID);
 		}
-		
+		trains.add(currT);
 		currT.setSpeed(Speed);
 		currT.setAuthority(goToBlock);
 		return trainID;
 	}
-	
+        
 	//method to return list of all train IDS
 	//return as strings (ArrayList) 
 	
-
+       
 	//method to search and return train object based on train ID
 	public Train findTrain(Integer id)
 	{
@@ -81,9 +80,8 @@ public class TrainHandler {
 		//check red line first
 		Double suggestedSpeed = yardBlockRed.getSuggestedSpeed();
 		
-		
-		yardBlockRed.setSuggestedSpeed(0);  //CHANGE THIS TO NULL ONCE SETSUGGESTED IS CHANGED TO DOUBLE (CAPITAL)
-		
+		yardBlockRed.setSuggestedSpeed(null); 
+
 		Block authorityBlock = yardBlockRed.getAuthority();
 		yardBlockRed.setAuthority(null);
 		
@@ -94,14 +92,17 @@ public class TrainHandler {
 				 //then this means a new train is being initialized.
 				 Integer ID = setSpeedAndAuthority(-1,suggestedSpeed,authorityBlock,yardBlockRed);
 				 yardBlockRed.setTrainId(ID);
+
+				 yardBlockRed.setOccupied(true);
 			 }
 		}
 		
+                
 		
 		//repeat for green line 
 		suggestedSpeed = yardBlockGreen.getSuggestedSpeed();
 		
-		yardBlockGreen.setSuggestedSpeed(0); //CHANGE THIS TO NULL ONCE SETSUGGESTED IS CHANGED TO DOUBLE (CAPITAL)
+		yardBlockGreen.setSuggestedSpeed(null); 
 		authorityBlock = yardBlockGreen.getAuthority();
 		
 		yardBlockGreen.setAuthority(null);
@@ -113,6 +114,8 @@ public class TrainHandler {
 				 //then this means a new train is being initialized.
 				 Integer ID = setSpeedAndAuthority(-1,suggestedSpeed,authorityBlock,yardBlockGreen);
 				 yardBlockGreen.setTrainId(ID);
+
+				 yardBlockGreen.setOccupied(true);
 			 }
 		}
 	}
@@ -122,7 +125,8 @@ public class TrainHandler {
 	{
 		//gets the exit yard blocks for both red and green line. each will be pulled to determine if there is a train ready to be added to the track.
 		yardBlockRed = globalTrack.viewStationMap().get("Red").get("YARD").get(0);
-		yardBlockGreen = globalTrack.viewStationMap().get("Green").get("YARD").get(1);
+
+		//yardBlockGreen = globalTrack.viewStationMap().get("Green").get("YARD").get(1);
 	}  
         
         

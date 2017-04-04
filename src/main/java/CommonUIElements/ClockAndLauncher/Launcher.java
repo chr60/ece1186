@@ -23,6 +23,8 @@ import java.io.IOException;
 import TrainControllerComps.*;
 import WaysideController.*;
 import TrackModel.*;
+import MBO.*;
+import CTC.*;
 
 /**
  * This class is responsible for refreshing the system on a given clock period as
@@ -38,6 +40,11 @@ public class Launcher extends javax.swing.JFrame {
      * The speed that the system is running in.
      */
     int systemSpeed;
+
+    /**
+     *  The trainManager is shared by MBO/CTC_gui
+     */
+    //private TrainManager tm = new TrainManager();
 
     /**
      * The timer used to refresh the modules during some given time period.
@@ -85,6 +92,10 @@ public class Launcher extends javax.swing.JFrame {
 
         // get time
         return sdf.format(cal.getTime());
+    }
+
+    public static long getCurrTime(){
+        return Calendar.getInstance().getTimeInMillis();
     }
 
         /**
@@ -363,7 +374,9 @@ public class Launcher extends javax.swing.JFrame {
      * @param evt
      */
     private void openCTC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openCTC
-        // TODO add your handling code here:
+        CTCgui ctc = new CTCgui(TManagers, generateTrack(), Waysides);
+        ctc.getFrame().setVisible(true);
+        ctc.getFrame().setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_openCTC
 
     /**
@@ -404,6 +417,7 @@ public class Launcher extends javax.swing.JFrame {
      */
     private void openMBOandScheduler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMBOandScheduler
         // TODO add your handling code here:
+        //MovingBlockOverlay mbo = new MovingBlockOverlay(generateTrack(), TManagers);
     }//GEN-LAST:event_openMBOandScheduler
 
     private void createLogger(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createLogger
@@ -424,6 +438,7 @@ public class Launcher extends javax.swing.JFrame {
   		globalTrack.readCSV(fNames);
       return globalTrack;
     }
+
 
     /**
      * @param args the command line arguments
@@ -461,6 +476,7 @@ public class Launcher extends javax.swing.JFrame {
                 for(String s : TRACK.trackList.keySet()){
                   WS ws = new WS("Red", TRACK);
                   Waysides.add(ws);
+                  TrainManager tm = new TrainManager("Red");
                 }
 
 
@@ -473,7 +489,7 @@ public class Launcher extends javax.swing.JFrame {
     //References to ACTIVE modules
     private static TrackModel TRACK;
     private static ArrayList<WS> Waysides = new ArrayList<WS>();
-
+    private static ArrayList<TrainManager> TManagers = new ArrayList<TrainManager>();
 
     //END ACTIVE MODULES
 

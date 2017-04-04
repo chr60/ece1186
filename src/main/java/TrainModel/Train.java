@@ -56,7 +56,7 @@ public class Train implements Serializable {
 		power = 0.0;
 		currGrade = 0.0;
 		globalTrack = gTrack;
-		//currBlock = 
+		trainLocation = new GPS();
 	}
 
 	
@@ -138,21 +138,39 @@ public class Train implements Serializable {
 		//using S = Vi(t) + (1/2)(a)(t^2)  to compute distance
 		distance = (oldVelocity) + (0.5)*acceleration; 
 		
-		newCurrBlock(distance);
-
-
-		
+		updateCurrBlock(distance);
+		updateSpeedAndAuthority();
 	}
 
 
 	/**
-     * Method to calculate time to stop based on brake rate, mass and velocity
-     * @param a Double which corresponds to the deceleration rate of the brakes
-     * @return a Double which corresponds to the amount of time required to stop the train using the brakes
+     * Method to determine what block the train is in now
+     * @param a Double which corresponds to the distance travelled by the train
      */
-	private void newCurrBlock(Double distTravelled){
+	private void updateCurrBlock(Double distTravelled){
+		Double distBlock = trainLocation.getDistIntoBlock();
+		Double dist = distBlock + distTravelled;
 		
+		//check if distance exceeds length of block (if so enter new block) if not update location
+		while (dist > trainLocation.getCurrBlock().getLen())
+		{
+			dist = getCurrBlock().getLen() - dist;
+			currBlock.setOccupied(false);
+			currBlock = currBlock.nextBlockForward();
+			currBlock.setOccupied(true);
+		}
+		trainLocation.setCurrBlock(currBlock);
+		trainLocation.setDistIntoBlock(dist);
 		
+	}
+	
+	/**
+     * Method to update speed and authority (and other block properties)
+     */
+	private void updateSpeedAndAuthority(){
+		setPointSpeed = currBlock.getSuggestedSpeed();
+		currAuthority = currBlock.getAuthority();
+		currGrade = currBlock.getGrade();
 	}
 	
 
@@ -230,7 +248,9 @@ public class Train implements Serializable {
      * @param Block object to set curr block to
      */
 	public void setCurrBlock(Block newBlock){
-		currBlock = newBlock;
+
+            this.trainLocation.setCurrBlock(currBlock);
+            this.trainLocation.setDistIntoBlock(0.0);
 	}
 	
 	/**

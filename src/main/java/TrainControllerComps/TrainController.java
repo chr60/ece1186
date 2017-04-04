@@ -51,7 +51,7 @@ public class TrainController extends javax.swing.JFrame {
     private boolean testingMode; // used to tell if the Train Controller is in Automatic mode
      
     // FOR TESTING!
-    ArrayList<Train> trains = new ArrayList<Train>();
+    //ArrayList<Train> trains = new ArrayList<Train>();
    
     double blockSpeed = 80.0; 
     private TCTestConsole testConsole = null; 
@@ -323,7 +323,7 @@ public class TrainController extends javax.swing.JFrame {
     private void initHashMaps(){
     
         // get the list of dispatched trains         
-        for (Train train : this.trains){
+        for (Train train : this.redLineHandler.getTrains()){
             // add them to the hashmaps
             this.trainList.put(Integer.toString(train.getID()), train );
         }
@@ -363,10 +363,12 @@ public class TrainController extends javax.swing.JFrame {
      */
     public void setTrainListComboBox(){
             
-        System.out.println(this.trains.size()); 
+        System.out.println(this.redLineHandler.getTrains().size()); 
+        
         this.dispatchedTrains.removeAllItems();
         this.dispatchedTrains.addItem("No Train Selected");
-        for (Train train : this.trains){
+        
+        for (Train train : this.redLineHandler.getTrains()){
         
             this.dispatchedTrains.addItem(Integer.toString(train.getID()) );       
         }
