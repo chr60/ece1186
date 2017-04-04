@@ -38,7 +38,7 @@ public class TrackModel implements Serializable{
     HashMap<String, Block> rootMap = new HashMap<String, Block>();
     HashMap<String, ArrayList<Block>> leafMap = new HashMap<String, ArrayList<Block>>();
     HashMap<String,HashMap<String, ArrayList<Block>>> stationList = new HashMap<String,HashMap<String, ArrayList<Block>>>();
-    HashMap<String, Station> stationHostMap = new HashMap<String, Station>();
+    HashMap<String,HashMap<String, Station>> stationHostMap = new HashMap<String,HashMap<String, Station>>();
     HashMap<Block, Station> blockStationMap = new HashMap<Block, Station>();
     HashMap<Block, Crossing> crossingMap = new HashMap<Block, Crossing>();
     HashMap<Block, Lights> lightsMap = new HashMap<Block,Lights>();
@@ -367,7 +367,7 @@ public class TrackModel implements Serializable{
             for(String s : stationList.get(l).keySet()){
                 for(Block b : stationList.get(l).get(s))
                     if(!this.blockStationMap.containsKey(s)){
-                        this.blockStationMap.put(b, this.stationHostMap.get(s));
+                        this.blockStationMap.put(b, this.stationHostMap.get(l).get(s));
                     }
             }
         }
@@ -379,8 +379,8 @@ public class TrackModel implements Serializable{
     private void buildLightsMap(){
         for(String s : this.leafMap.keySet()){
             for(int i=0; i<this.leafMap.get(s).size(); i++){
-                Lights l = new Lights(this, this.leafMap.get(s).get(i));
-                this.lightsMap.put(this.leafMap.get(s).get(i), l);
+                Lights light = new Lights(this, this.leafMap.get(s).get(i));
+                this.lightsMap.put(this.leafMap.get(s).get(i), light);
             }
         }
     }
@@ -389,9 +389,12 @@ public class TrackModel implements Serializable{
     */
     private void buildStationHostMap(){
         for(String l : this.stationList.keySet()){
+            if(!this.stationHostMap.containsKey(l)){
+                this.stationHostMap.put(l, new HashMap<String, Station>());
+            }
             for (String stationName : this.stationList.get(l).keySet()){
                 Station myStation = new Station(stationName, this.stationList.get(l).get(stationName));
-                this.stationHostMap.put(stationName, myStation);
+                this.stationHostMap.get(l).put(stationName, myStation);
             }
         }
     }
