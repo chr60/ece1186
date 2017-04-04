@@ -182,7 +182,6 @@ public class WaysideGUI {
   				}
   			}
   		});
-  		frame.setVisible(true);
   	    }
 
   	public void setSpeedAuth(Block block){
@@ -218,5 +217,8 @@ public class WaysideGUI {
   	public void printNotification(String toPrint){
       notifConsole.setText(notifConsole.getText()+ "\n" + toPrint);
   	}
+    public void update(){
+      printNotification("Update!");
+    }
 
 }

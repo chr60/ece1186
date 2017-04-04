@@ -34,7 +34,9 @@ public class WS {
 		this.line = line;
 		this.Track = track;
 	}
+	public void update(){
 
+	}
 	public void setSpeedAuth(ArrayList<Block> Blocks){
 		for(Block b : Blocks){
 			Block trackBlock = Track.lateralLookup(b);

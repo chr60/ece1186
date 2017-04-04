@@ -51,6 +51,12 @@ public class Launcher extends javax.swing.JFrame {
      */
     private Timer systemClock;
 
+    //References to ACTIVE modules
+    private TrackModel GlobalTrack;
+    private ArrayList<WS> Waysides = new ArrayList<WS>();
+    private WaysideGUI WaysideGui;
+    private static ArrayList<TrainManager> TManagers = new ArrayList<TrainManager>();
+
     /**
      * Constructor for creating a Launcher object. By default, the system begins operating
      * in normal speed, i.e., wall clock speed.
@@ -62,12 +68,22 @@ public class Launcher extends javax.swing.JFrame {
         this.normalSpeedRadioButton.setSelected(true);
         // for now, we start in normal mode
         this.systemSpeed = 1000;
+        GlobalTrack = new TrackModel();
+        String[] fNames = {"resources/redline.csv"};
+        GlobalTrack.readCSV(fNames);
+        for(String s : GlobalTrack.trackList.keySet()){
+          WS ws = new WS("Red", GlobalTrack);
+          Waysides.add(ws);
+          TManagers.add(new TrainManager(s));
+        }
+        WaysideGui = new WaysideGUI(GlobalTrack, Waysides);
 
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
             Random rand = new Random();
             public void actionPerformed(ActionEvent e) {
 
                 updateDateAndTime();
+                WaysideGui.update();
                 // what should be called every tick
             }
         });
@@ -394,11 +410,8 @@ public class Launcher extends javax.swing.JFrame {
      * @param evt
      */
     private void openTrackController(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTrackController
-
-          WaysideGUI ws = new WaysideGUI(TRACK, Waysides);
-
-          ws.getFrame().setVisible(true);
-          ws.getFrame().setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+          WaysideGui.getFrame().setVisible(true);
+          WaysideGui.getFrame().setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_openTrackController
 
     /**
@@ -470,28 +483,11 @@ public class Launcher extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                TRACK = new TrackModel();
-                String[] fNames = {"resources/redline.csv"};
-                TRACK.readCSV(fNames);
-                for(String s : TRACK.trackList.keySet()){
-                  WS ws = new WS("Red", TRACK);
-                  Waysides.add(ws);
-                  TrainManager tm = new TrainManager("Red");
-                }
-
-
                 new Launcher().setVisible(true);
             }
         });
     }
 
-
-    //References to ACTIVE modules
-    private static TrackModel TRACK;
-    private static ArrayList<WS> Waysides = new ArrayList<WS>();
-    private static ArrayList<TrainManager> TManagers = new ArrayList<TrainManager>();
-
-    //END ACTIVE MODULES
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel clockSpeedLabel;
