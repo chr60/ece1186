@@ -9,17 +9,29 @@ public class DummyTrain {
 	private Block position;
 	// path is a list of blocks that have the speed and authority that we want to set on train
 	private ArrayList<Block> path;
+	private Block lastStationVisited;
 
 	public DummyTrain(){
 		this.setID(id);
 		this.setPosition(position);
 		this.setPath(path);
+		this.setLastStation(lastStationVisited);
 	}
 
 	public DummyTrain(Block pos, ArrayList<Block> p){
 		id = -1;
 		position = pos;
 		path = p;
+		// sets last station to yard which is the block it is originally set on at creation
+		lastStationVisited = pos;
+	}
+
+	public Block getLastStation(){
+		return lastStationVisited;
+	}
+
+	public void setLastStation(Block lastStationVisited){
+		this.lastStationVisited = lastStationVisited;
 	}
 
 	public Integer getID(){

@@ -5,12 +5,18 @@ import java.util.*;
 
 public class TrainManager {
 
+	private String line;
 	private ArrayList<DummyTrain> trainList;
 	private ArrayList<Block> occupancyList;
 
-	public TrainManager(){
+	public TrainManager(String lineName){
+		line = lineName;
 		trainList = new ArrayList<DummyTrain>();
 		occupancyList = new ArrayList<Block>();
+	}
+
+	public String getLine(){
+		return line;
 	}
 
 	public ArrayList<DummyTrain> getTrainList(){

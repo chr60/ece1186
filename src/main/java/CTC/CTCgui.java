@@ -10,6 +10,7 @@ import java.awt.Font;
 import java.util.*;
 import java.awt.*;
 
+import MBO.*;
 import TrackModel.*;
 import WaysideController.*;
 
@@ -23,17 +24,17 @@ public class CTCgui {
 
 	ArrayList<WS> waysides;
 	TrackModel dummyTrack;
-	TrainManager tm;
+	ArrayList<TrainManager> tmanagers;
 	private Border grayline;
 
 
 	/**
 	 * Create the application.
 	 */
-	public CTCgui(TrainManager tm, TrackModel dummyTrack, ArrayList<WS> waysides) {
+	public CTCgui(ArrayList<TrainManager> tmanagers, TrackModel dummyTrack, ArrayList<WS> waysides) {
 		this.dummyTrack = dummyTrack;
 		this.waysides = waysides;
-		this.tm = tm;
+		this.tmanagers = tmanagers;
 
 		grayline = BorderFactory.createLineBorder(Color.gray);
 
@@ -122,20 +123,22 @@ public class CTCgui {
 		}
 	}
 
-//updating trainPositions from WS to trainManager
 
-		public ArrayList<DummyTrain> updateTrainPosition(){
+//updating trainPositions from WS to trainManager
+		public void updateTrainPosition(TrainManager tm){
+      ArrayList<DummyTrain> trainList = tm.getTrainList();
+      ArrayList<Block> occList = tm.getOccupancyList();
 	    for(int i=0; i<trainList.size(); i++){
-	      Integer posTrainI = trainList.get(i).getPositionInt();
-	      for(int k=0; k<occupancyList.size(); k++){
-	        Integer newOccBlockID = occupancyList.get(i);
-	        if(posTrainI != newOccBlockID){
+	      Block posTrainI = trainList.get(i).getPosition();
+	      for(int k=0; k<occList.size(); k++){
+	        Block newOccBlockID = occList.get(k);
+	        if(posTrainI newOccBlockID){
 	          trainList.get(i).setPostion(newOccBlockID);
 	        }
 	      }
 	    }
 		}
-	  */
+*/
 
 
 }

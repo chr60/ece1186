@@ -309,7 +309,6 @@ public class TrackPanel extends JPanel{
 		}
 		//update crossings
 
-
 		//update Switches
 		if(updatedBlock.hasSwitch() == true){
 			switch_yes.setSelected(true);
@@ -326,7 +325,7 @@ public class TrackPanel extends JPanel{
 			System.out.println(switchLeaf1);
 			System.out.println(switchLeaf2);
 			//get switch status if switch exists on root block
-/*Integer switchStatusWS = currWorkingWS.switchStatus(wsBlock);
+			Integer switchStatusWS = currWorkingWS.switchStatus(wsBlock);
 			//report switch swtichStatus
 			if(switchStatusWS == 1){
 				if(switchLeaf1<switchLeaf2){
@@ -345,7 +344,7 @@ public class TrackPanel extends JPanel{
 					switch_label_connect2.setSelected(false);
 				}
 			}
-	*/
+
 		}else{
 			switch_yes.setSelected(false);
 			switch_no.setSelected(true);
