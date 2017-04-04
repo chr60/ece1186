@@ -130,6 +130,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
     /**
      * Checks if the train should come to a stop based on different criteria. 
      * 
+     * @return returns true if the train needs to come to a complete stop, false if it doesn't.
      */
     private boolean shouldStopTrainChecks(){
             

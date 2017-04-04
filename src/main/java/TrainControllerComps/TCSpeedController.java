@@ -79,6 +79,12 @@ public class TCSpeedController extends javax.swing.JPanel {
      */
     private double error; 
     
+    private double vitalPwrCmdOne; 
+    
+    private double vitalPwrCmdTwo; 
+    
+    private double vitalPwrCmdThree; 
+    
 
     // MARK: - Constructors
    
@@ -411,18 +417,30 @@ public class TCSpeedController extends javax.swing.JPanel {
             this.brakePanel.getServiceBrake().doClick(); // apply brakes
         }else{
             this.logBook.add("Set Speed: " + this.setSpeed);
+                        
+            this.error = (this.setSpeed - this.selectedTrain.getVelocity()); // calculate the error 
             
-            this.error = this.setSpeed - this.selectedTrain.getVelocity(); // calculate the error 
-
-            this.logBook.add("Error: " + Double.toString( this.error) ); // log error
-
+            this.vitalPwrCmdOne = (this.setSpeed - this.selectedTrain.getVelocity());
+            this.vitalPwrCmdTwo = (this.setSpeed - this.selectedTrain.getVelocity());
+            this.vitalPwrCmdThree = (this.setSpeed - this.selectedTrain.getVelocity());
+            
+            //this.logBook.add("Error: " + Double.toString( this.error) ); // log error
             this.logBook.add(Double.toString( this.powerCommandOut) ); // log power command
 
             this.powerCommandOut = this.selectedTrain.getKp() * error + this.selectedTrain.getKi()*this.selectedTrain.getVelocity();
 
-            // send powerCommandOut to the train, which then changes its speed
-            this.selectedTrain.powerCommand(this.powerCommandOut); 
-
+            this.vitalPwrCmdOne = this.selectedTrain.getKp() * error + this.selectedTrain.getKi()*this.selectedTrain.getVelocity();
+            this.vitalPwrCmdTwo = this.selectedTrain.getKp() * error + this.selectedTrain.getKi()*this.selectedTrain.getVelocity();
+            this.vitalPwrCmdThree = this.selectedTrain.getKp() * error + this.selectedTrain.getKi()*this.selectedTrain.getVelocity();
+            
+            if (this.vitalPwrCmdOne == this.powerCommandOut){
+                if (this.vitalPwrCmdTwo == this.powerCommandOut){
+                    if (this.vitalPwrCmdThree == this.powerCommandOut){
+                        this.logBook.add("VITAL SYSTEM CHECK PASS!");
+                        this.selectedTrain.powerCommand(this.powerCommandOut);
+                    }
+                }
+            }
             printLogs();
         }
     }
