@@ -88,4 +88,50 @@ public class WaysideRedTest{
     redWS.manualSwitch(aBlock);
     assertTrue(redWS.switchStatus(aBlock) == 0);
   }
+
+  @Test
+  /**
+  * Test for making occupancy list for CTC
+  */
+  @DisplayName("Set Blocks A1 & U77 to Occupied, test in list")
+  void testOccList(){
+    this.track.getBlock("Red", "A", 1).setOccupied(true);
+    this.track.getBlock("Red", "U", 77).setOccupied(true);
+    ArrayList<Block> occupancyList = redWS.getOccupancy();
+    assertTrue(occupancyList.get(0).getOccupied()==true);
+    assertTrue(occupancyList.get(occupancyList.size()-1).getOccupied()==true);
+  }
+
+  @Test
+  /**
+  * Test for setting speed & authority of a block
+  */
+  @DisplayName("Set Speed and Auth of U77 to: 30 and to Block C9")
+  void testSetSpeedAuth(){
+    this.track.getBlock("Red", "U", 77).setSuggestedSpeed(new Double(30));
+    this.track.getBlock("Red", "U", 77).setAuthority(this.track.getBlock("Red", "C", 9));
+    assertTrue(this.track.getBlock("Red", "U", 77).getSuggestedSpeed() == 30);
+    assertTrue(this.track.getBlock("Red", "U", 77).getAuthority().equals(this.track.getBlock("Red", "C", 9)));
+  }
+
+  @Test
+  /**
+  * Test for setting speed & authority of a block list
+  */
+  @DisplayName("Set Speed and Auth List from dummy Blocks")
+  void testSetSpeedAuthList(){
+    //"Dummy" Creation
+    String[] fNames = {"src/test/resources/redline.csv"};
+    TrackModel dummyTrack= new TrackModel("dummy");
+    dummyTrack.readCSV(fNames);
+    dummyTrack.getBlock("Red", "U", 77).setSuggestedSpeed(new Double(30));
+    dummyTrack.getBlock("Red", "U", 77).setAuthority(this.track.getBlock("Red", "C", 9));
+    ArrayList<Block> listToSet = new ArrayList<Block>();
+    listToSet.add(dummyTrack.getBlock("Red", "U", 77));
+
+    //Send to WS
+    redWS.setSpeedAuth(listToSet);
+    assertTrue(this.track.getBlock("Red", "U", 77).getSuggestedSpeed() == 30);
+    assertTrue(this.track.getBlock("Red", "U", 77).getAuthority().equals(this.track.getBlock("Red", "C", 9)));
+  }
 }

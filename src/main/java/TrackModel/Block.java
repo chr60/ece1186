@@ -35,6 +35,7 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   Boolean lightState;
   TrackModel superTrackModel;
   Boolean maintenence;
+  Boolean hasLight;
   Double suggestedSpeed;
   Block authority;
   Integer trainId;
@@ -53,6 +54,7 @@ public class Block implements Comparable<Block>, java.io.Serializable{
     this.blockNum = blockNum;
     this.switchBlock = switchBlock;
     this.hasSwitch = hasSwitch;
+    this.hasLight = hasSwitch;
     this.blockLine = blockLine;
     this.blockSection = blockSection;
 
@@ -99,7 +101,7 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   * @param new speed to set
   */
   public void setSuggestedSpeed(Double newSpeed){
-    this.suggestedSpeed = suggestedSpeed;
+    this.suggestedSpeed = newSpeed;
   }
 
   /**
@@ -185,7 +187,7 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   public Boolean isUnderground(){
     return this.isUnderground;
   }
-  
+
   /**
   *   Returns the occupied state of a given block object.
   */
