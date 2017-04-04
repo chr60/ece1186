@@ -13,7 +13,7 @@ public class TrainHandler {
 	ArrayList<String> trainIDs;
 	TrackModel globalTrack;
 	Block yardBlockRed, yardBlockGreen;
-	
+
 	public TrainHandler(TrackModel gTrack)
 	{
 		trains = new ArrayList<Train>();
@@ -21,7 +21,7 @@ public class TrainHandler {
 		globalTrack = gTrack;
 		getYard();
 	}
-        
+
 	/**
      * Accessor to return all trains in the system
      * @return an ArrayList of trains to the caller.
@@ -30,8 +30,8 @@ public class TrainHandler {
 	{
 		return trains;
 	}
-	
-	//Communcation to and from CTC 
+
+	//Communcation to and from CTC
 	//this method will generate a new train by passing a trainID of -1
 	public int setSpeedAndAuthority(Integer trainID, Double Speed, Block goToBlock, Block startBlock)
 	{
@@ -54,10 +54,10 @@ public class TrainHandler {
 		currT.setAuthority(goToBlock);
 		return trainID;
 	}
-	
+
 	//method to return list of all train IDS
-	//return as strings (ArrayList) 
-	
+	//return as strings (ArrayList)
+
 
 	//method to search and return train object based on train ID
 	public Train findTrain(Integer id)
@@ -71,20 +71,20 @@ public class TrainHandler {
 		}
 		return null;
 	}
-	
-	//method to pull 
+
+	//method to pull
 	public void pullYard()
 	{
 		//pull both yards to see if a new train has been initialized.
-		
+
 		//check red line first
 		Double suggestedSpeed = yardBlockRed.getSuggestedSpeed();
-		
-		
-		yardBlockRed.setSuggestedSpeed(null); 
+
+
+		yardBlockRed.setSuggestedSpeed(null);
 		Block authorityBlock = yardBlockRed.getAuthority();
 		yardBlockRed.setAuthority(null);
-		
+
 		if (suggestedSpeed > 0.0){
 			//suggested speed is greater than 0
 			 if (authorityBlock != null && (authorityBlock.compareTo(yardBlockRed) != 1)){
@@ -95,16 +95,16 @@ public class TrainHandler {
 				 yardBlockRed.setOccupied(true);
 			 }
 		}
-		
-		
-		//repeat for green line 
+
+
+		//repeat for green line
 		suggestedSpeed = yardBlockGreen.getSuggestedSpeed();
-		
-		yardBlockGreen.setSuggestedSpeed(null); 
+
+		yardBlockGreen.setSuggestedSpeed(null);
 		authorityBlock = yardBlockGreen.getAuthority();
-		
+
 		yardBlockGreen.setAuthority(null);
-		
+
 		if (suggestedSpeed > 0.0){
 			//suggested speed is greater than 0
 			 if (authorityBlock != null && (authorityBlock.compareTo(yardBlockGreen) != 1)){
@@ -116,16 +116,16 @@ public class TrainHandler {
 			 }
 		}
 	}
-	
+
 	//method to search and return yard block
 	public void getYard()
 	{
 		//gets the exit yard blocks for both red and green line. each will be pulled to determine if there is a train ready to be added to the track.
 		yardBlockRed = globalTrack.viewStationMap().get("Red").get("YARD").get(0);
 		//yardBlockGreen = globalTrack.viewStationMap().get("Green").get("YARD").get(1);
-	}  
-        
-        
-        
+	}
+
+
+
 
 }

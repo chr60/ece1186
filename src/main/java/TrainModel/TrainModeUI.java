@@ -97,6 +97,11 @@ public class TrainModeUI {
 			}
 		});
 	}
+	
+	public Train getCurrT ()
+	{
+		return currTrain;
+	}
 
 	/**
 	 * Create the application.
@@ -633,6 +638,7 @@ public class TrainModeUI {
 		            //if a train is selected update info for this train
 		        	
 		        	updateGUI(findTrain(Integer.parseInt(selectedTrain)));
+					currTrain = findTrain(Integer.parseInt(selectedTrain));
 		        }
 			}
 

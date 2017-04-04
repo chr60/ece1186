@@ -25,6 +25,7 @@ import WaysideController.*;
 import TrackModel.*;
 import MBO.*;
 import CTC.*;
+import TrainModel.*;
 
 /**
  * This class is responsible for refreshing the system on a given clock period as
@@ -41,10 +42,7 @@ public class Launcher extends javax.swing.JFrame {
      */
     int systemSpeed;
 
-    /**
-     *  The trainManager is shared by MBO/CTC_gui
-     */
-    //private TrainManager tm = new TrainManager();
+
 
     /**
      * The timer used to refresh the modules during some given time period.
@@ -52,11 +50,17 @@ public class Launcher extends javax.swing.JFrame {
     private Timer systemClock;
 
     //References to ACTIVE modules
+    
+    //Track
     private TrackModel GlobalTrack;
+    //Wayside
     private ArrayList<WS> Waysides = new ArrayList<WS>();
     private WaysideGUI WaysideGui;
-    private static ArrayList<TrainManager> TManagers = new ArrayList<TrainManager>();
-
+    //Train
+    private TrainHandler trainH;
+    private TrainModeUI trainGUI;
+    //CTC
+    private ArrayList<TrainManager> TManagers = new ArrayList<TrainManager>();
     /**
      * Constructor for creating a Launcher object. By default, the system begins operating
      * in normal speed, i.e., wall clock speed.
@@ -68,15 +72,21 @@ public class Launcher extends javax.swing.JFrame {
         this.normalSpeedRadioButton.setSelected(true);
         // for now, we start in normal mode
         this.systemSpeed = 1000;
+
+        //Generate GlobalTrack
         GlobalTrack = new TrackModel();
         String[] fNames = {"resources/redline.csv"};
         GlobalTrack.readCSV(fNames);
+
+        //Cycle through number of lines and generate a WS and Train Manager for each line
         for(String s : GlobalTrack.trackList.keySet()){
           WS ws = new WS("Red", GlobalTrack);
           Waysides.add(ws);
           TManagers.add(new TrainManager(s));
         }
+
         WaysideGui = new WaysideGUI(GlobalTrack, Waysides);
+        this.trainH = new TrainHandler(GlobalTrack);
 
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
             Random rand = new Random();
@@ -85,6 +95,8 @@ public class Launcher extends javax.swing.JFrame {
                 updateDateAndTime();
                 WaysideGui.update();
                 // what should be called every tick
+				        // trainH.pollYard();
+				        trainGUI.updateGUI(trainGUI.getCurrT());
             }
         });
 
@@ -421,6 +433,9 @@ public class Launcher extends javax.swing.JFrame {
      */
     private void openTrain(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTrain
         // TODO add your handling code here:
+		trainGUI = new TrainModeUI();
+		trainGUI.frmTrainModel.setVisible(true);
+		trainGUI.setTrainArray(trainH.getTrains());
     }//GEN-LAST:event_openTrain
 
     /**
