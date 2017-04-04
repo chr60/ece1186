@@ -133,16 +133,46 @@ public class TCBrakePanel extends javax.swing.JPanel {
      */
     private boolean shouldStopTrainChecks(){
             
-        // stop if 
+        // stop if  
+        if (this.failureDetected()){ return true; } //failure detected
         
-        // there is a failure
-                
-        // approaching a station
+        if (this.approachingStation()){ return true; } // approaching a station
+             
+        if (this.trainAhead()){ return true; } // there's a train ahead
+ 
+        return false; 
+    }
+    
+    /**
+     * Determines if a there is any failure (Power, Signal, Engine) detected on the train. 
+     * 
+     * @return returns true if there is a failure, false otherwise.
+     */
+    private boolean failureDetected(){
+    
+        if (this.selectedTrain.isBrakeFailure() ||
+                this.selectedTrain.isEngineFailure() || this.selectedTrain.isSignalFailure()){
+       
+            return true; 
+        }
+        return false; 
+    }
+    
+    /**
+     * Determines if the train is approaching a station. 
+     * 
+     * @return returns true if the train is approaching a station, false otherwise. 
+     */
+    private boolean approachingStation(){
+    
+        System.out.println("Approaching Station is not currently implemented yet."); 
+        return false; 
+    }
+    
+    private boolean trainAhead(){
         
-        // train stopped ahead   
-        
-        // FIX ME: Change this based on if we should stop the train.
-        return true; 
+        System.out.println("Train Ahead is not currently implemented yet."); 
+        return false;    
     }
     
     public void setSpeedController(TCSpeedController speedController){
