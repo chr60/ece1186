@@ -7,8 +7,14 @@ import java.awt.event.ActionEvent;
 import java.util.*;
 import java.awt.*;
 
-public class TrainPanel extends JPanel{
+import MBO.*;
+import TrackModel.*;
+import WaysideController.*;
 
+public class TrainPanel extends JPanel{
+	ArrayList<WS> Waysides;
+	WS currWorkingWS;
+	TrackModel DummyTrack;
 	private JLabel set_speed_label;
 	private JLabel authority_label;
 	private JLabel speedNUM;
@@ -23,7 +29,10 @@ public class TrainPanel extends JPanel{
 	private JLabel trainWindowLabel;
 	private JButton buttonEditTrain;
 
-	public TrainPanel(){
+	public TrainPanel(ArrayList<TrainManager> tmanagers, TrackModel dummyTrack, ArrayList<WS> waysides){
+		this.Waysides = waysides;
+		this.currWorkingWS = waysides.get(0);
+		this.DummyTrack = dummyTrack;
 
 		set_speed_label = new JLabel("Speed");
 		set_speed_label.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -145,6 +154,10 @@ public class TrainPanel extends JPanel{
 	}
 
 
+	// MBO calls this method to give speed and authority for that clock tick for the entire trackList
+	public void updateSpeedAuthToWS(ArrayList<Block> path){
+		currWorkingWS.setSpeedAuth(path);
+	}
 
 
 

@@ -11,10 +11,10 @@ public class Schedule{
 	Global data for the train
 		Station names
 		Times between stations
-	
+
 	Hardcoded in for now
 	*/
-
+	private CTCgui CTC;
 	private String mode;
 	private TrackModel dummyTrack;
 	private TrainManager manager;
@@ -40,8 +40,8 @@ public class Schedule{
 	 * @param  stationTimes Array of times to travel between stations
 	 * @param  lineLoopTime Time it takes a train to complete a loop
 	 */
-	public Schedule(TrackModel dummyTrack, TrainManager manager, Block [] lineStops, 
-					String lineName, String [] stationNames, int [] stationTimes, int lineLoopTime){
+	public Schedule(TrackModel dummyTrack, TrainManager manager, Block [] lineStops,
+					String lineName, String [] stationNames, int [] stationTimes, int lineLoopTime, CTCgui ctc){
 		this.dummyTrack = dummyTrack;
 		this.manager = manager;
 		this.lineStops = lineStops;
@@ -49,6 +49,7 @@ public class Schedule{
 		this.stationNames = stationNames;
 		this.stationTimes = stationTimes;
 		this.lineLoopTime = lineLoopTime;
+		this.CTC = ctc;
 		//this.lineLoopTime = calcLoopTime(stationTimes);
 		yardBlock = manager.getYardBlock();
 	}
@@ -75,7 +76,7 @@ public class Schedule{
 	 * @param  secs Time in seconds from the start of the day
 	 * @return String time
 	 */
-	public static String convertTime(long secs){ 
+	public static String convertTime(long secs){
 
 		int secondsDisplay = (int) secs % 60;
 		long minutes = secs / 60;
@@ -122,7 +123,7 @@ public class Schedule{
 		return time;
 
 	}
-	
+
 	/**
 	 * Creates a simple schedule for the trains
 	 * @param  numLoops  					Number of loops the schedule should be calculated for
@@ -157,11 +158,11 @@ public class Schedule{
 	    		}
 	    	}
     	}
-
+			updateTrains();
     	//return stationArrivals;
 
 	}
-	
+
 
 	/**
 	 * Handles the switching of modes
@@ -177,7 +178,7 @@ public class Schedule{
 	 *
 	 * @bug Add in update for MBO mode
 	 */
-	private ArrayList<Block> updateTrains(){
+	private void updateTrains(){
 		ArrayList<DummyTrain> trainList = manager.getTrainList();
 		ArrayList<Block> newPaths = new ArrayList<Block>();
 		ArrayList<Block> tempPath;
@@ -204,8 +205,8 @@ public class Schedule{
 				}
 			}
 		}
-
-		return newPaths;
+		System.out.println(newPaths.get(0).getAuthority());
+		this.CTC.getTrainPanel().updateSpeedAuthToWS(newPaths);
 	}
 
 	private int getStopNum(Block lastStation){
@@ -302,7 +303,7 @@ public class Schedule{
 	 * @bug Check for null values
 	 */
 	private GPS findAuthority(ArrayList<Block> blockList, DummyTrain train){
-		
+
 		Block currBlock;
 		GPS nextTrain;
 
@@ -315,7 +316,7 @@ public class Schedule{
 			nextTrain = new GPS(nextOccupied(blockList, blockList.indexOf(currBlock)), null);
 		}
 
-		Block nextStation = nextStation(blockList, blockList.indexOf(currBlock)); 
+		Block nextStation = nextStation(blockList, blockList.indexOf(currBlock));
 		int comp = nextTrain.getCurrBlock().compareTo(nextStation);
 		GPS auth;
 
@@ -323,7 +324,7 @@ public class Schedule{
 			if("MBO".equals(mode)) auth = nextTrain;
 			else auth = new GPS(nextTrain.getCurrBlock(), null);
 		}
-		else auth = new GPS(nextStation, null); 
+		else auth = new GPS(nextStation, null);
 
 		return auth;
 	}
@@ -458,14 +459,14 @@ public class Schedule{
 		for(int i = 0; i <= speeds.length; i++){
 			speeds[i] = blockList.get(i).getSpeedLimit();
 		}
-		
+
 		return speeds;
 	}
 
 	/**
 	 * Gets the minimum speed limit from a list of blocks
 	 * @param  blockList list of blocks
-	 * @return double    minSpeed  
+	 * @return double    minSpeed
 	 *
 	 * @bug Change so it calculates the min speed from start onwards
 	 */
@@ -482,7 +483,7 @@ public class Schedule{
 	}
 
 	/**
-	 * Gets the index of the block with the maximum difference between 
+	 * Gets the index of the block with the maximum difference between
 	 * set speed and speed limit
 	 * @param  blockList list of blocks
 	 * @param  speeds    array of set speeds
@@ -512,7 +513,7 @@ public class Schedule{
 	 * @return int       index
 	 */
 	private int blockBelowSpeedLimit(ArrayList<Block> blockList, double[] speeds, int prevIndex){
-		
+
 		if(prevIndex > speeds.length) return 2*speeds.length;
 		if(prevIndex < 0) prevIndex = 0;
 		for(int i = prevIndex; i <= speeds.length; i++){
@@ -566,7 +567,7 @@ public class Schedule{
 		/*for(int i = 0; i < stationArrivals.size(); i++){
 			for(int j = 0; j < stationArrivals.get(0).size(); j++){
 				System.out.printf("(%d,%d)\n", i, j);
-				schedule.get(0).add(convertTime(stationArrivals.get(i).get(i)));		
+				schedule.get(0).add(convertTime(stationArrivals.get(i).get(i)));
 			}
 		}*/
 

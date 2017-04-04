@@ -30,10 +30,6 @@ import TrainModel.*;
 /**
  * This class is responsible for refreshing the system on a given clock period as
  * well as launch the various GUI for each of the models.
- *
- *
- *
- * @author Andrew Lendacky
  */
 public class Launcher extends javax.swing.JFrame {
 
@@ -41,8 +37,6 @@ public class Launcher extends javax.swing.JFrame {
      * The speed that the system is running in.
      */
     int systemSpeed;
-
-
 
     /**
      * The timer used to refresh the modules during some given time period.
@@ -52,15 +46,16 @@ public class Launcher extends javax.swing.JFrame {
     //References to ACTIVE modules
 
     //Track
-    private TrackModel GlobalTrack;
+    private TrackModel globalTrack;
     //Wayside
-    private ArrayList<WS> Waysides = new ArrayList<WS>();
+    private ArrayList<WS> waysideList = new ArrayList<WS>();
     private WaysideGUI WaysideGui;
     //Train
-    private TrainHandler trainH;
+    private TrainHandler trainHandler;
     private TrainModeUI trainGUI;
     //CTC
-    private ArrayList<TrainManager> TManagers = new ArrayList<TrainManager>();
+    private ArrayList<TrainManager> trainManagers = new ArrayList<TrainManager>();
+    private CTCgui ctc;
     //MBO
     private MovingBlockOverlay mbo;
     /**
@@ -75,27 +70,31 @@ public class Launcher extends javax.swing.JFrame {
         // for now, we start in normal mode
         this.systemSpeed = 1000;
 
-        //Generate GlobalTrack
-        GlobalTrack = new TrackModel("GlobalTrack");
+        //Generate globalTrack
+        this.globalTrack = new TrackModel("GlobalTrack");
         String[] fNames = {"resources/redline.csv"};
-        GlobalTrack.readCSV(fNames);
+        this.globalTrack.readCSV(fNames);
 
         //Cycle through number of lines and generate a WS and Train Manager for each line
-        for(String s : GlobalTrack.trackList.keySet()){
+        for(String s : this.globalTrack.trackList.keySet()){
           System.out.println(s);
-          WS ws = new WS(s, GlobalTrack);
-          Waysides.add(ws);
-          TManagers.add(new TrainManager(s, generateTrack("TrainManager - " + s)));
+          WS ws = new WS(s, this.globalTrack);
+          this.waysideList.add(ws);
+          trainManagers.add(new TrainManager(s, generateTrack("TrainManager - " + s)));
         }
 
         //Set Wayside GUI for WS's
-        this.WaysideGui = new WaysideGUI(GlobalTrack, Waysides);
-        for(WS ws: Waysides)
+        this.WaysideGui = new WaysideGUI(this.globalTrack, this.waysideList);
+        for(WS ws : this.waysideList)
           ws.setGUI(this.WaysideGui);
 
-        this.trainH = new TrainHandler(GlobalTrack);
+        this.trainHandler = new TrainHandler(globalTrack);
         this.trainGUI = new TrainModeUI();
-        this.mbo = new MovingBlockOverlay(generateTrack("MBO"), TManagers, trainH);
+        this.mbo = new MovingBlockOverlay(generateTrack("MBO"), trainManagers, this.trainHandler);
+        this.ctc = new CTCgui(trainManagers, generateTrack("CTC"), this.waysideList);
+        this.ctc.setMBO(this.mbo);
+        this.mbo.setCTC(this.ctc);
+
 
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
             Random rand = new Random();
@@ -104,7 +103,7 @@ public class Launcher extends javax.swing.JFrame {
                 updateDateAndTime();
                 //Update WaysideGui and WS's
                 WaysideGui.update();
-                for(WS ws: Waysides)
+                for(WS ws : waysideList)
                   ws.update();
 
                 // what should be called every tick
@@ -415,7 +414,6 @@ public class Launcher extends javax.swing.JFrame {
      * @param evt
      */
     private void openCTC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openCTC
-        CTCgui ctc = new CTCgui(TManagers, generateTrack("CTC"), Waysides);
         ctc.getFrame().setVisible(true);
         ctc.getFrame().setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_openCTC
@@ -447,7 +445,7 @@ public class Launcher extends javax.swing.JFrame {
     private void openTrain(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTrain
         // TODO add your handling code here:
 		trainGUI.frmTrainModel.setVisible(true);
-		trainGUI.setTrainArray(trainH.getTrains());
+		trainGUI.setTrainArray(this.trainHandler.getTrains());
     }//GEN-LAST:event_openTrain
 
     /**
@@ -475,7 +473,7 @@ public class Launcher extends javax.swing.JFrame {
     public TrackModel generateTrack(String module){
       String[] fNames = {"resources/redline.csv"};
       TrackModel globalTrack = new TrackModel(module);
-  		globalTrack.readCSV(fNames);
+  	  globalTrack.readCSV(fNames);
       return globalTrack;
     }
 

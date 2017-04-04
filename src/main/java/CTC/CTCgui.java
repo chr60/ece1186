@@ -22,11 +22,14 @@ public class CTCgui {
     return this.mainGUI;
   }
 
+  private MovingBlockOverlay MBO;
 	ArrayList<WS> waysides;
 	TrackModel dummyTrack;
 	ArrayList<TrainManager> tmanagers;
 	private Border grayline;
   int lastClickedButton;
+  TrainPanel trainPanel;
+
 
 	/**
 	 * Create the application.
@@ -54,7 +57,7 @@ public class CTCgui {
 
 
 // DISPATCH TRAIN PANEL
-		TrainPanel trainPanel = new TrainPanel();
+		trainPanel = new TrainPanel(tmanagers, dummyTrack, waysides);
 		trainPanel.setBounds(402, 229, 367, 98);
 		trainPanel.setBorder(grayline);
 		frame.getContentPane().add(trainPanel);
@@ -72,8 +75,11 @@ public class CTCgui {
 // Train manager panel
     TrainManagerPanel tmPanel = new TrainManagerPanel();
     tmPanel.setBounds(0, 0, 390, 511);
-
-
+/*
+// MBO SCHEDULE PANEL - appears in CTC
+    JPanel schedulePanel = MBOgui.getTrainSchedulePanel();
+    schedulePanel.setBounds(0, 0, 390, 511);
+*/
 // EVERYTHING ELSE PANEL
 		JPanel miscPanel = new JPanel();
 		miscPanel.setLayout(null);
@@ -97,12 +103,12 @@ public class CTCgui {
       public void actionPerformed(ActionEvent e){
         if(lastClickedButton == 2){ //train
           frame.getContentPane().remove(tmPanel);
-          //frame.getContentPane().add();
+          //frame.getContentPane().add(schedulePanel);
           frame.validate();
           frame.repaint();
         }else if(lastClickedButton == 0){  //pic
           frame.getContentPane().remove(panel);
-          //frame.getContentPane().add();
+          //frame.getContentPane().add(schedulePanel);
           frame.validate();
           frame.repaint();
         }else{
@@ -119,7 +125,7 @@ public class CTCgui {
           frame.validate();
           frame.repaint();
         }else if(lastClickedButton == 1){ //sched
-          //frame.getContentPane().remove();
+          //frame.getContentPane().remove(schedulePanel);
           frame.getContentPane().add(tmPanel);
           frame.validate();
           frame.repaint();
@@ -138,7 +144,7 @@ public class CTCgui {
           frame.repaint();
         }else if(lastClickedButton == 1){ //sched
           frame.getContentPane().remove(panel);
-          //frame.getContentPane().add();
+          //frame.getContentPane().add(schedulePanel);
           frame.validate();
           frame.repaint();
         }else{
@@ -229,6 +235,14 @@ public class CTCgui {
 	public String getMode(){
 		return null;
 	}
+
+  public void setMBO(MovingBlockOverlay mbo){
+    this.MBO = mbo;
+  }
+
+  public TrainPanel getTrainPanel(){
+    return trainPanel;
+  }
 
 //
 

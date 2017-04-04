@@ -16,10 +16,11 @@ public class MovingBlockOverlay{
 	private ArrayList<Schedule> schedules = new ArrayList<Schedule>();
 	MBO_gui gui;
 
-	private String [] redStationNames = {"Yard", "Shadyside", "Herron Ave", "Swissvale", "Penn Station", 
+	private String [] redStationNames = {"Yard", "Shadyside", "Herron Ave", "Swissvale", "Penn Station",
 		"Steel Plaza", "First Ave", "Station Square", "South Hills Junction"};
 	private int [] redStationTimes = {162, 78, 30, 48, 66, 66, 42, 78};
 	private int redLineLoopTime = 2040; //in seconds, includies dwell
+	private CTCgui CTC;
 
 	public MovingBlockOverlay(TrackModel dummyTrack, ArrayList<TrainManager> managers, TrainHandler handler){
 		this.dummyTrack = dummyTrack;
@@ -28,7 +29,9 @@ public class MovingBlockOverlay{
 		//initGUI();
 		createSchedules();
 	}
-
+	public void setCTC(CTCgui ctc){
+		this.CTC = ctc;
+	}
 	/*public static void main(String[] args){
 		try {
 			MBO_gui gui = new MBO_gui();
@@ -60,9 +63,9 @@ public class MovingBlockOverlay{
 			System.out.println(dummyTrack.viewStationMap().keySet());
 		}
 		*/
-	
+
 		schedules.add(new Schedule(dummyTrack, managers.get(0), hardCodeStops(), "Red",
-					 redStationNames, redStationTimes, redLineLoopTime));
+					 redStationNames, redStationTimes, redLineLoopTime, this.CTC));
 		//schedules.add(new Schedule(linekey, stationNames, stationTimes, lineLoopTime));
 	}
 
@@ -130,7 +133,7 @@ public class MovingBlockOverlay{
 	}
 
 	/**
-	 * Displays the variance between suggested and actual authority 
+	 * Displays the variance between suggested and actual authority
 	 * @param  train Train object
 	 * @return String diffAuthority
 	 */
