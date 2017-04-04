@@ -59,12 +59,11 @@ public class TrainController extends javax.swing.JFrame {
     
     public boolean detailedTrainWindowOpen;
     
-    
-    // TESTING
-        
     TrainModeUI trainUI; 
     
-    TrackModel track = new TrackModel(); 
+    // FOR TESTING:
+    TrackModel track;
+    TrainHandler redLineHandler;
     
     // used to update GUI every millisecond (1 s)
     // FIX ME: This time should be set by the CTC can be 
@@ -123,9 +122,14 @@ public class TrainController extends javax.swing.JFrame {
     public TrainController() {
                        
         initComponents();
-        String[] fNames = {"resources/redline.csv"};
-        this.track.readCSV(fNames);
           
+        // FIX ME: This is for testing purposes, and should be removed. 
+        String[] fNames = {"src/test/resources/redline.csv"};
+        this.track = new TrackModel("Test");
+        this.track.readCSV(fNames);
+        
+        this.redLineHandler = new TrainHandler(this.track); 
+        
         //this.trains.add(train);
           
         this.initHashMaps();
