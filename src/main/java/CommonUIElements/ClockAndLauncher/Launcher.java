@@ -19,12 +19,25 @@ import javax.swing.UnsupportedLookAndFeelException;
 import java.io.IOException;
 
 
+import sun.audio.*;
+
 // import modules here:
 import TrainControllerComps.*;
 import WaysideController.*;
 import TrackModel.*;
 import MBO.*;
 import CTC.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
  * This class is responsible for refreshing the system on a given clock period as
@@ -57,6 +70,23 @@ public class Launcher extends javax.swing.JFrame {
     private WaysideGUI WaysideGui;
     private static ArrayList<TrainManager> TManagers = new ArrayList<TrainManager>();
 
+    private void playSound(){
+    
+        try{
+            // Open an audio input stream.
+            File soundFile = new File("src/main/resources/soundclips/TrainWhistle.wav");
+            InputStream in = new FileInputStream(soundFile);
+            
+            AudioStream audioIn = new AudioStream(in); 
+            AudioPlayer.player.start(audioIn);
+        }catch(Exception e){
+        
+            
+            
+            System.out.println(e.getMessage()); 
+        }
+    }
+       
     /**
      * Constructor for creating a Launcher object. By default, the system begins operating
      * in normal speed, i.e., wall clock speed.
@@ -64,7 +94,8 @@ public class Launcher extends javax.swing.JFrame {
      */
     public Launcher() {
         initComponents();
-
+             
+        this.playSound();
         this.normalSpeedRadioButton.setSelected(true);
         // for now, we start in normal mode
         this.systemSpeed = 1000;

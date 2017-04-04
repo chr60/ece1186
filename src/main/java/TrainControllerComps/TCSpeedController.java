@@ -403,7 +403,7 @@ public class TCSpeedController extends javax.swing.JPanel {
     
     /**
      * Prints the stored logs to the operating log, then clears the logbook. 
-     * The JTextPane must be set from the TrainController class before being used. 
+     * The JTextArea must be set from the TrainController class before being used. 
      */
     public void printLogs(){
          
