@@ -82,6 +82,16 @@ public class TrainPanel extends JPanel{
 		dropdownTrains.setBounds(25, 40, 87, 23);
 		add(dropdownTrains);
 
+		JLabel lblthroughput = new JLabel("trains/hr");
+    lblthroughput.setBounds(80, 67, 119, 23);
+    add(lblthroughput);
+
+    JLabel return_throughput = new JLabel("#");
+    return_throughput.setHorizontalAlignment(SwingConstants.CENTER);
+    return_throughput.setBounds(25, 67, 87, 23);
+    add(return_throughput);
+
+		/*
 		updateBtn = new JButton("Update List");
 		updateBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -95,6 +105,7 @@ public class TrainPanel extends JPanel{
 		});
 		updateBtn.setBounds(25, 67, 87, 23);
 		add(updateBtn);
+		*/
 
 		buttonDispatchTrain = new JButton("Dispatch Train");
 		buttonDispatchTrain.addActionListener(new ActionListener(){

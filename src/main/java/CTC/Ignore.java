@@ -10,14 +10,14 @@ import java.awt.Font;
 import java.util.*;
 import java.awt.*;
 
-public class MiscPanel extends JPanel{
+public class Ignore extends JPanel{
 
 	private String mainMode;
 	private String autoMode;
 	private TrainPanel tPanel;
 	private CTCgui mainPanel;
 
-	public MiscPanel(){
+	public Ignore(){
 
 		this.setMainMode(mainMode);
 		this.setAutoMode(autoMode);
