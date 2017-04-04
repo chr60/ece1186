@@ -1023,7 +1023,7 @@ public class TCTestConsole extends javax.swing.JFrame {
             // FIX ME: Get this integrated with the Track model.
             this.trainController.trains.add(new Train( i, this.trainController.track) );
             this.dispatchedTrains++; 
-            this.trainController.redLineHandler.spawnTrainAtYard(i);
+            //this.trainController.redLineHandler.spawnTrainAtYard(i);
         }
         
         this.trainController.setTrainListComboBox();

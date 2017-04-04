@@ -7,6 +7,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import TrainModel.*;
+import javax.swing.JSlider;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -146,6 +147,21 @@ public class TCSpeedController extends javax.swing.JPanel {
 
         this.selectedTrain = train;  
         this.setSpeed = selectedTrain.getVelocity().intValue();
+    }
+    
+    /**
+     * Returns the selected train.
+     * 
+     * @return the selected train object.
+     */
+    public Train getTrain(){
+        
+        return this.selectedTrain;
+    }
+    
+    public JSlider getSpeedSlider(){
+    
+        return this.speedSlider; 
     }
     
     /**

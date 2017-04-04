@@ -239,6 +239,11 @@ public class TrainController extends javax.swing.JFrame {
         
         return this.speedController;
     }
+    
+    public TCBlockInfoPanel getBlockInfoPane(){
+    
+        return this.blockInfoPane; 
+    }
             
     // MARK: - Mode Setting and Getting
     
