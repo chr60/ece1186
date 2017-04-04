@@ -311,6 +311,19 @@ import org.junit.jupiter.api.Test;
     assertTrue(occupiedListTest.equals(this.track.getOccupiedBlocks()));
     }
 
+    @Test
+    /**
+    * Test the proper implementation of a crossing
+    */
+    @DisplayName("RedLine crossing test")
+    void testCrossing(){
+      ArrayList<Block> crossingBlocks = new ArrayList<Block>();
+      for(Block blk : this.track.crossingMap.keySet()){
+        crossingBlocks.add(blk);
+      }
+      assertTrue(crossingBlocks.get(0).equals(this.track.getBlock("Red","I",new Integer(47))));
+    }
+
     @Test 
     /** 
     * Test valid block getting via viewStationMap

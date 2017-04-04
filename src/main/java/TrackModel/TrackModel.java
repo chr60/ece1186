@@ -448,13 +448,14 @@ public class TrackModel implements Serializable{
                         Double speedLimit = Double.valueOf(str[5]);
                         String infrastructure = str[6];
                         Double elevation = Double.valueOf(str[7]);
+                        String crossing = str[8];
                         String switchBlock = str[9];
                         String arrowDirection = str[10];
                         String stationName = str[11];
 
                         Boolean isUnderground = infrastructure.contains("UNDERGROUND");
                         Boolean hasSwitch = infrastructure.contains("SWITCH");
-
+                        Boolean hasCrossing = infrastructure.contains("CROSSING");
 
                         //Initialize and add block
                         Block myBlock = new Block(this, defaultOccupied, isUnderground, blockLen, blockGrade,
@@ -473,6 +474,10 @@ public class TrackModel implements Serializable{
 
                         if(!hasSwitch && !switchBlock.equals("")){
                             this.addSwitchLeaf(switchBlock, myBlock);
+                        }
+
+                        if(hasCrossing){
+                            this.crossingMap.put(myBlock,new Crossing(this, myBlock));
                         }
 
                     }
