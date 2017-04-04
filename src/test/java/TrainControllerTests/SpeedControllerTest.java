@@ -16,7 +16,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- *
+ * Various tests for making sure the Speed Controller is working as intended. 
+ * 
  * @author Andrew Lendacky
  */
 public class SpeedControllerTest {
@@ -27,7 +28,7 @@ public class SpeedControllerTest {
     
   @BeforeEach
   /**
-  * Initialization of the trackmodel to be used for testing
+  * Initialization of the Train Controller to be used for testing
   */
   void init(){
     
