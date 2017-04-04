@@ -61,6 +61,8 @@ public class Launcher extends javax.swing.JFrame {
     private TrainModeUI trainGUI;
     //CTC
     private ArrayList<TrainManager> TManagers = new ArrayList<TrainManager>();
+    //MBO
+    private MovingBlockOverlay mbo;
     /**
      * Constructor for creating a Launcher object. By default, the system begins operating
      * in normal speed, i.e., wall clock speed.
@@ -82,11 +84,13 @@ public class Launcher extends javax.swing.JFrame {
         for(String s : GlobalTrack.trackList.keySet()){
           WS ws = new WS("Red", GlobalTrack);
           Waysides.add(ws);
-          TManagers.add(new TrainManager(s));
+          TManagers.add(new TrainManager(s, generateTrack()));
         }
 
         WaysideGui = new WaysideGUI(GlobalTrack, Waysides);
         this.trainH = new TrainHandler(GlobalTrack);
+        this.trainGUI = new TrainModeUI();
+        this.mbo = new MovingBlockOverlay(generateTrack(), TManagers, trainH);
 
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
             Random rand = new Random();
@@ -96,7 +100,7 @@ public class Launcher extends javax.swing.JFrame {
                 WaysideGui.update();
                 // what should be called every tick
 				        // trainH.pollYard();
-				        trainGUI.updateGUI(trainGUI.getCurrT());
+				        //trainGUI.updateGUI(trainGUI.getCurrT());
             }
         });
 
@@ -433,7 +437,6 @@ public class Launcher extends javax.swing.JFrame {
      */
     private void openTrain(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTrain
         // TODO add your handling code here:
-		trainGUI = new TrainModeUI();
 		trainGUI.frmTrainModel.setVisible(true);
 		trainGUI.setTrainArray(trainH.getTrains());
     }//GEN-LAST:event_openTrain
@@ -445,7 +448,7 @@ public class Launcher extends javax.swing.JFrame {
      */
     private void openMBOandScheduler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMBOandScheduler
         // TODO add your handling code here:
-        //MovingBlockOverlay mbo = new MovingBlockOverlay(generateTrack(), TManagers);
+        mbo.initGUI();
     }//GEN-LAST:event_openMBOandScheduler
 
     private void createLogger(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createLogger
@@ -502,7 +505,6 @@ public class Launcher extends javax.swing.JFrame {
             }
         });
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel clockSpeedLabel;

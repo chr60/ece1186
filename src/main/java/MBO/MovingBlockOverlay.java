@@ -10,7 +10,8 @@ public class MovingBlockOverlay{
 
 	public String mode;
 	private TrackModel dummyTrack;
-	private TrainManager manager;
+	private ArrayList<TrainManager> managers;
+	private TrainHandler handler;
 	private List<Train> trainList;
 	private ArrayList<Schedule> schedules = new ArrayList<Schedule>();
 	MBO_gui gui;
@@ -20,10 +21,11 @@ public class MovingBlockOverlay{
 	private int [] redStationTimes = {162, 78, 30, 48, 66, 66, 42, 78};
 	private int redLineLoopTime = 2040; //in seconds, includies dwell
 
-	public MovingBlockOverlay(TrackModel dummyTrack, TrainManager manager){
+	public MovingBlockOverlay(TrackModel dummyTrack, ArrayList<TrainManager> managers, TrainHandler handler){
 		this.dummyTrack = dummyTrack;
-		this.manager = manager;
-		initGUI();
+		this.managers = managers;
+		this.handler = handler;
+		//initGUI();
 		createSchedules();
 	}
 
@@ -59,7 +61,7 @@ public class MovingBlockOverlay{
 		}
 		*/
 	
-		schedules.add(new Schedule(dummyTrack, manager, hardCodeStops(), "Red",
+		schedules.add(new Schedule(dummyTrack, managers.get(0), hardCodeStops(), "Red",
 					 redStationNames, redStationTimes, redLineLoopTime));
 		//schedules.add(new Schedule(linekey, stationNames, stationTimes, lineLoopTime));
 	}

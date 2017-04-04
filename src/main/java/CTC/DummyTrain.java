@@ -26,6 +26,13 @@ public class DummyTrain {
 		lastStationVisited = pos;
 	}
 
+	public DummyTrain(Block pos){
+		id = -1;
+		position = pos;
+		// sets last station to yard which is the block it is originally set on at creation
+		lastStationVisited = pos;
+	}
+
 	public Block getLastStation(){
 		return lastStationVisited;
 	}
