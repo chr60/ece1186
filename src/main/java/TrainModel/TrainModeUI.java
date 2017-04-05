@@ -670,9 +670,10 @@ public class TrainModeUI {
 	public void updateGUI(Train currT) {
 		//method to update GUI based on selected train info
 		currTrain = currT;
-		txtSpeed.setText("\n   "+ currTrain.getVelocity().intValue()+" MPH");
-		txtPower.setText(currTrain.getPower().intValue()+" W");
-		txtMass.setText(currTrain.getMass().intValue()+" "); // +" lbs");
+		if (currTrain != null){
+				txtSpeed.setText("\n   "+ currTrain.getVelocity().intValue()+" MPH");
+				txtPower.setText(currTrain.getPower().intValue()+" W");
+				txtMass.setText(currTrain.getMass().intValue()+" "); // +" lbs");
                 
                 String status = ""; 
                 if (this.currTrain.getLeftDoor() == 1){
@@ -693,7 +694,8 @@ public class TrainModeUI {
                 this.txtServiceBrake.setText(this.getStatusOfTrainLightsAndBrakes(this.currTrain.getServiceBrake()));
                 this.txtEmergencyBrake.setText(this.getStatusOfTrainLightsAndBrakes(this.currTrain.getEmergencyBrake()));
                 
-                this.txtLights.setText(this.getStatusOfTrainLightsAndBrakes(this.currTrain.getLights()));           
+                this.txtLights.setText(this.getStatusOfTrainLightsAndBrakes(this.currTrain.getLights()));   
+            }   	     
 	}
         
         /**

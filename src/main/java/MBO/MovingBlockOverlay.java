@@ -16,22 +16,22 @@ public class MovingBlockOverlay{
 	private ArrayList<Schedule> schedules = new ArrayList<Schedule>();
 	MBO_gui gui;
 
-	private String [] redStationNames = {"Yard", "Shadyside", "Herron Ave", "Swissvale", "Penn Station",
-		"Steel Plaza", "First Ave", "Station Square", "South Hills Junction"};
+	private String [] redStationNames = {"YARD", "SHADYSIDE", "HERRON AVE", "SWISSVILLE", "PENN STATION", 
+									"STEEL PLAZA", "FIRST AVE", "STATION SQUARE", "SOUTH HILLS JUNCTION"};
 	private int [] redStationTimes = {162, 78, 30, 48, 66, 66, 42, 78};
 	private int redLineLoopTime = 2040; //in seconds, includies dwell
-	private CTCgui CTC;
+	private CTCgui ctc;
 
-	public MovingBlockOverlay(TrackModel dummyTrack, ArrayList<TrainManager> managers, TrainHandler handler){
+	public MovingBlockOverlay(TrackModel dummyTrack, ArrayList<TrainManager> managers, TrainHandler handler, CTCgui ctc){
 		this.dummyTrack = dummyTrack;
 		this.managers = managers;
 		this.handler = handler;
+		this.ctc = ctc;
 		//initGUI();
+		//this.redStationNames = dummyTrack.viewStationMap().keySet().toArray(new String[0]);
 		createSchedules();
 	}
-	public void setCTC(CTCgui ctc){
-		this.CTC = ctc;
-	}
+
 	/*public static void main(String[] args){
 		try {
 			MBO_gui gui = new MBO_gui();
@@ -65,7 +65,7 @@ public class MovingBlockOverlay{
 		*/
 
 		schedules.add(new Schedule(dummyTrack, managers.get(0), hardCodeStops(), "Red",
-					 redStationNames, redStationTimes, redLineLoopTime, this.CTC));
+					 redStationNames, redStationTimes, redLineLoopTime, this.ctc));
 		//schedules.add(new Schedule(linekey, stationNames, stationTimes, lineLoopTime));
 	}
 

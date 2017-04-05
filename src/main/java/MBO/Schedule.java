@@ -14,7 +14,7 @@ public class Schedule{
 
 	Hardcoded in for now
 	*/
-	private CTCgui CTC;
+	private CTCgui ctc;
 	private String mode;
 	private TrackModel dummyTrack;
 	private TrainManager manager;
@@ -49,7 +49,7 @@ public class Schedule{
 		this.stationNames = stationNames;
 		this.stationTimes = stationTimes;
 		this.lineLoopTime = lineLoopTime;
-		this.CTC = ctc;
+		this.ctc = ctc;
 		//this.lineLoopTime = calcLoopTime(stationTimes);
 		yardBlock = manager.getYardBlock();
 	}
@@ -65,7 +65,7 @@ public class Schedule{
 
 	private int getStationIndex(String s){
 		for(int i = 0; i < stationNames.length; i++){
-			if(stationNames[i].equals(s)) return i;
+			if(stationNames[i].equalsIgnoreCase(s)) return i;
 		}
 
 		return -1;
@@ -158,7 +158,9 @@ public class Schedule{
 	    		}
 	    	}
     	}
-			updateTrains();
+		
+		updateTrains();
+
     	//return stationArrivals;
 
 	}
@@ -187,7 +189,7 @@ public class Schedule{
 		if("MBO".equals(mode)){
 
 		}else{
-			if(numTrains < trainList.size()){
+			if(numTrains > trainList.size()){
 				DummyTrain newTrain = new DummyTrain(yardBlock);
 				manager.addTrain(newTrain);
 				tempPath = createRoute(newTrain, yardBlock, lineStops[0]);
@@ -197,6 +199,7 @@ public class Schedule{
 			for(int i = 0; i < trainList.size(); i++){
 				lastStation = trainList.get(i).getLastStation();
 				nextStop = lineStops[(getStopNum(lastStation) + 1) % lineStops.length];
+				System.out.println(lastStation.blockNum());
 				tempPath = createRoute(trainList.get(i), lastStation, nextStop);
 				manager.getTrain(trainList.get(i).getID()).setPath(tempPath);
 				newPaths.addAll(tempPath);
@@ -205,8 +208,9 @@ public class Schedule{
 				}
 			}
 		}
-		System.out.println(newPaths.get(0).getAuthority());
-		this.CTC.getTrainPanel().updateSpeedAuthToWS(newPaths);
+		if(null != ctc){
+			this.ctc.getTrainPanel().updateSpeedAuthToWS(newPaths);
+		}
 	}
 
 	private int getStopNum(Block lastStation){
@@ -239,7 +243,7 @@ public class Schedule{
 			currPos = new GPS(train.getPosition(), null);
 		}
 		double [] speeds = calcBlockSpeeds(path, currPos, schedArrival);
-		int start = path.indexOf(currPos.getCurrBlock());
+		int start = findBlockInList(currPos.getCurrBlock(), path);
 
 		if("MBO".equals(mode)){
 			for(int i = start; i < path.size(); i++){
@@ -253,6 +257,14 @@ public class Schedule{
 			}
 		}
 		return new ArrayList<Block> (path.subList(start, path.size()));
+	}
+
+	private int findBlockInList(Block block, ArrayList<Block> list){
+		int num = block.blockNum();
+		for(int i = 0; i < list.size(); i++){
+			if(num == list.get(i).blockNum()) return i;
+		}
+		return -1;
 	}
 
 	private ArrayList<Block> pathHardCoded(Block startBlock){
@@ -452,8 +464,8 @@ public class Schedule{
 
 		ArrayList<Block> occupied = manager.getOccupancyList();
 		int ind;
-
-		for(int i = start; i <= blockList.size(); i++){
+		if(null == occupied || start < 0 || start > blockList.size()) return null;
+		for(int i = start; i < blockList.size(); i++){
 			if(occupied.contains(blockList.get(i))) return blockList.get(i);
 		}
 
@@ -463,7 +475,7 @@ public class Schedule{
 	private Block nextStation(ArrayList<Block> blockList, int start){
 
 		if(start < 0 || start > blockList.size()) return null;
-		for(int i = start; i <= blockList.size(); i++){
+		for(int i = start; i < blockList.size(); i++){
 			if(blockList.get(i).getAssociatedStation() != null) return blockList.get(i);
 		}
 
@@ -487,21 +499,40 @@ public class Schedule{
 		if("MBO".equals(mode)){
 			Train tr = handler.findTrain(train.getID());
 			currBlock = tr.getGPS().getCurrBlock();
-			nextTrain = handler.findTrain(nextTrain(blockList, blockList.indexOf(currBlock)).getID()).getGPS();
+			nextTrain = handler.findTrain(nextTrain(blockList, findBlockInList(currBlock, blockList)).getID()).getGPS();
 		}else{
 			currBlock = train.getPosition();
-			nextTrain = new GPS(nextOccupied(blockList, blockList.indexOf(currBlock)), null);
+			nextTrain = new GPS(nextOccupied(blockList, findBlockInList(currBlock, blockList)), null);
 		}
 
-		Block nextStation = nextStation(blockList, blockList.indexOf(currBlock));
-		int comp = nextTrain.getCurrBlock().compareTo(nextStation);
-		GPS auth;
+		Block nextStation = nextStation(blockList, findBlockInList(currBlock, blockList));
+		GPS auth = null;
+		if(null == nextTrain && null == nextStation){
+			if("MBO" == mode){
 
-		if(comp <= 0){
-			if("MBO".equals(mode)) auth = nextTrain;
-			else auth = new GPS(nextTrain.getCurrBlock(), null);
+			}else{
+				auth = new GPS(blockList.get(blockList.size()), null);
+			}
+
+		}else if(null == nextStation){
+			if("MBO" == mode){
+
+			}else{
+				auth = nextTrain;
+			}
+		}else if(null == nextTrain || null == nextTrain.getCurrBlock()){
+			if("MBO" == mode){
+
+			}else{
+				auth = new GPS(nextStation, null);
+			}
+		}else{
+			int comp = nextTrain.getCurrBlock().compareTo(nextStation);
+			if(comp <= 0){
+				if("MBO".equals(mode)) auth = nextTrain;
+				else auth = new GPS(nextTrain.getCurrBlock(), null);
+			}else auth = new GPS(nextStation, null);
 		}
-		else auth = new GPS(nextStation, null);
 
 		return auth;
 	}
@@ -616,7 +647,7 @@ public class Schedule{
 		double[] speeds = new double[blockList.size()];
 		int firstSlowBlock = 0;
 
-		for(int i = 0; i <= speeds.length; i++){
+		for(int i = 0; i < speeds.length; i++){
 			speeds[i] = minSpeed;
 		}
 
@@ -625,7 +656,7 @@ public class Schedule{
 		while(true){
 			firstSlowBlock = blockBelowSpeedLimit(blockList, speeds, firstSlowBlock);
 			if(firstSlowBlock > speeds.length) break;
-			for(int i = firstSlowBlock; i <= speeds.length; i++){
+			for(int i = firstSlowBlock; i < speeds.length; i++){
 				if((speeds[i] + 1) <= blockList.get(i).getSpeedLimit()){
 					speeds[i]++;
 				}
@@ -633,7 +664,7 @@ public class Schedule{
 			if(arriveOnTime(blockList, speeds, currPos, eta)) return speeds;
 		}
 
-		for(int i = 0; i <= speeds.length; i++){
+		for(int i = 0; i < speeds.length; i++){
 			speeds[i] = blockList.get(i).getSpeedLimit();
 		}
 
@@ -651,7 +682,9 @@ public class Schedule{
 		double minSpeed = Double.MAX_VALUE;
 		double blockLimit;
 
-		for(int i = start; i <= blockList.size(); i++){
+		if(start < 0) start = 0;
+		else if(start > blockList.size()-1) start = blockList.size() - 1;
+		for(int i = start; i < blockList.size(); i++){
 			blockLimit = blockList.get(i).getSpeedLimit();
 			minSpeed = (blockLimit < minSpeed) ? blockLimit : minSpeed;
 		}
@@ -671,7 +704,7 @@ public class Schedule{
 		double maxDiff = Double.MIN_VALUE;
 		double currLimit;
 
-		for(int i = 0; i <= blockList.size(); i++){
+		for(int i = 0; i < blockList.size(); i++){
 			currLimit = blockList.get(i).getSpeedLimit() - speeds[i];
 			if(currLimit > maxDiff){
 				maxDiff = currLimit;
@@ -693,8 +726,8 @@ public class Schedule{
 
 		if(prevIndex > speeds.length) return 2*speeds.length;
 		if(prevIndex < 0) prevIndex = 0;
-		for(int i = prevIndex; i <= speeds.length; i++){
-			if((speeds[i] + 1) <= blockList.get(i).getSpeedLimit()){
+		for(int i = prevIndex; i < speeds.length; i++){
+			if((speeds[i] + 1) < blockList.get(i).getSpeedLimit()){
 				return i;
 			}
 		}
@@ -750,7 +783,6 @@ public class Schedule{
 
 		for(int station = 0; station < stationArrivals.size(); station++){
 			for(int time = 0; time < stationArrivals.get(0).size(); time++){
-				System.out.printf("(%d,%d)\n",station,time);
 				schedule.get(0).add(convertTime(stationArrivals.get(0).get(0)));
 			}
 		}
