@@ -30,7 +30,8 @@ public class CTCgui {
 	private Border grayline;
   int lastClickedButton;
   TrainPanel trainPanel;
-
+  TrainManagerPanel tmPanel;
+  TrackPanel blockPanel;
 
 	/**
 	 * Create the application.
@@ -51,7 +52,7 @@ public class CTCgui {
 		frame.getContentPane().setLayout(null);
 
 // TRACK SECTION OF GUI
-		TrackPanel blockPanel = new TrackPanel(dummyTrack, waysides);
+		blockPanel = new TrackPanel(dummyTrack, waysides);
 		blockPanel.setBounds(402, 0, 367, 229);
 		blockPanel.setBorder(grayline);
 		frame.getContentPane().add(blockPanel);
@@ -75,7 +76,7 @@ public class CTCgui {
 		panel.add(new JLabel(image), BorderLayout.CENTER);
 
 // Train manager panel
-    TrainManagerPanel tmPanel = new TrainManagerPanel(tmanager, dummyTrack);
+    tmPanel = new TrainManagerPanel(tmanager, dummyTrack);
     tmPanel.setBounds(0, 0, 390, 511);
 /*
 // MBO SCHEDULE PANEL - appears in CTC
@@ -246,6 +247,14 @@ public class CTCgui {
     return trainPanel;
   }
 
+  public TrackPanel getTrackPanel(){
+    return blockPanel;
+  }
+
+  public TrainManagerPanel getTrainManagerPanel(){
+    return tmPanel;
+  }
+
 //
 
 /*
@@ -262,21 +271,6 @@ public class CTCgui {
 		}
 	}
 
-
-//updating trainPositions from WS to trainManager
-		public void updateTrainPosition(TrainManager tm){
-      ArrayList<DummyTrain> trainList = tm.getTrainList();
-      ArrayList<Block> occList = tm.getOccupancyList();
-	    for(int i=0; i<trainList.size(); i++){
-	      Block posTrainI = trainList.get(i).getPosition();
-	      for(int k=0; k<occList.size(); k++){
-	        Block newOccBlockID = occList.get(k);
-	        if(posTrainI newOccBlockID){
-	          trainList.get(i).setPostion(newOccBlockID);
-	        }
-	      }
-	    }
-		}
 */
 
 
