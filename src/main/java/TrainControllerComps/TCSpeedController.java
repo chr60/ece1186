@@ -197,28 +197,36 @@ public class TCSpeedController extends javax.swing.JPanel {
      */
     public void refreshUI(){
        
-        this.maxSpeedSlider.setText(Double.toString(this.maxSpeed));
-        this.speedSlider.setMaximum((int) this.maxSpeed);
-        
+  
         if (this.inManualMode){ // manual mode
             this.setSpeedButton.setEnabled(true);
             this.speedSlider.setEnabled(true);
             
+            Block currBlock = this.selectedTrain.getGPS().getCurrBlock();
+            Double blockSpeedLimit = currBlock.getSpeedLimit();
+            
+            this.maxSpeedSlider.setText(Double.toString(blockSpeedLimit));
+            this.speedSlider.setMaximum(blockSpeedLimit.intValue());
+                  
+            if (this.setSpeed > blockSpeedLimit.intValue()){ this.setSpeed = blockSpeedLimit.intValue(); }
+            
         }else if (this.inManualMode == false){ // automatic mode
             this.setSpeedButton.setEnabled(false);
             this.speedSlider.setEnabled(false);
-            
 
             // Automatic speed control:
             // get the block the train is on, and the set suggested speed
             Block currBlock = this.selectedTrain.getGPS().getCurrBlock();
-            Double blockSuggestedSpeed = currBlock.getSuggestedSpeed()
-            System.out.println(currBlock.getSuggestedSpeed()); 
+            Double blockSuggestedSpeed = currBlock.getSuggestedSpeed();
+           
+            this.maxSpeedSlider.setText(Double.toString(blockSuggestedSpeed));
+            this.speedSlider.setMaximum(blockSuggestedSpeed.intValue());
+            
             if (blockSuggestedSpeed != null){
                 // if the train is going faster than the suggested block speed, 
                 // change the speed. 
             
-                //this.speedSlider.setValue(blockSuggestedSpeed.intValue());
+                this.speedSlider.setValue(blockSuggestedSpeed.intValue());
                 //this.setSpeedButton.doClick(); 
                 this.setSpeed = blockSuggestedSpeed.intValue();
 
