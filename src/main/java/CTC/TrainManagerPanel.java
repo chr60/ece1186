@@ -31,19 +31,7 @@ public class TrainManagerPanel extends JPanel {
 			public TrainManagerPanel(TrainManager tm, TrackModel dt) {
           this.dummyTrack = dt;
           this.trainManager = tm;
-          ArrayList<Block> blocks = new ArrayList<Block>();
-          Block position = dummyTrack.getBlock("Red", "H", new Integer(24));
-
-          blocks.add(dummyTrack.getBlock("Red", "H", new Integer(24)));
-          blocks.add(dummyTrack.getBlock("Red", "C", new Integer(9)));
-          blocks.add(dummyTrack.getBlock("Red", "C", new Integer(8)));
-          blocks.add(dummyTrack.getBlock("Red", "C", new Integer(7)));
-
-          DummyTrain testTrain = new DummyTrain(position, blocks);
-          trainManager.addTrain(testTrain);
-          for (DummyTrain d : trainManager.getTrainList())
-            System.out.println(d);
-
+          
 					setLayout(new BorderLayout());
 
 					JPanel options = new JPanel(new GridBagLayout());
@@ -65,9 +53,7 @@ public class TrainManagerPanel extends JPanel {
       		manager.setRowCount(50);
       		managerTable.setModel(manager);
 
-          System.out.println(trainManager.getTrainList().size());
       			for(int j = 0; j < trainManager.getTrainList().size(); j++){
-              System.out.println(trainManager.getTrainList().get(j).getID());
               managerTable.setValueAt(trainManager.getLine(),j, 0);
               managerTable.setValueAt(trainManager.getTrainList().get(j).getID(), j, 1);
               managerTable.setValueAt(trainManager.getTrainList().get(j).getPosition().blockNum(), j, 2);
