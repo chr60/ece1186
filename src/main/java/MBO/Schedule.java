@@ -189,17 +189,9 @@ public class Schedule{
 		if("MBO".equals(mode)){
 
 		}else{
-			if(numTrains > trainList.size()){
-				DummyTrain newTrain = new DummyTrain(yardBlock);
-				manager.addTrain(newTrain);
-				tempPath = createRoute(newTrain, yardBlock, lineStops[0]);
-				manager.getTrain(-1).setPath(tempPath);
-				newPaths.addAll(tempPath);
-			}
 			for(int i = 0; i < trainList.size(); i++){
 				lastStation = trainList.get(i).getLastStation();
 				nextStop = lineStops[(getStopNum(lastStation) + 1) % lineStops.length];
-				System.out.println(lastStation.blockNum());
 				tempPath = createRoute(trainList.get(i), lastStation, nextStop);
 				manager.getTrain(trainList.get(i).getID()).setPath(tempPath);
 				newPaths.addAll(tempPath);
@@ -207,9 +199,28 @@ public class Schedule{
 					manager.getTrain(trainList.get(i).getID()).setLastStation(nextStop);
 				}
 			}
+			if(numTrains > trainList.size()){
+				DummyTrain newTrain = new DummyTrain(yardBlock);
+				manager.addTrain(newTrain);
+				tempPath = createRoute(newTrain, yardBlock, lineStops[0]);
+				manager.getTrain(-1).setPath(tempPath);
+				newPaths.addAll(tempPath);
+			}
 		}
 		if(null != ctc){
 			this.ctc.getTrainPanel().updateSpeedAuthToWS(newPaths);
+		}
+	}
+
+	private void printPath(ArrayList<Block> list){
+		for(int i = 0; i < list.size(); i++){
+			System.out.println(list.get(i).blockNum() + "\t");
+		}
+	}
+
+	private void printAuth(ArrayList<Block> list){
+		for(int i = 0; i < list.size(); i++){
+			System.out.println(list.get(i).getAuthority().blockNum() + "\t");
 		}
 	}
 
@@ -256,7 +267,9 @@ public class Schedule{
 				path.get(i).setSuggestedSpeed(speeds[i]);
 			}
 		}
-		return new ArrayList<Block> (path.subList(start, path.size()));
+
+		path = new ArrayList<Block> (path.subList(start, path.size()));
+		return path;
 	}
 
 	private int findBlockInList(Block block, ArrayList<Block> list){
@@ -447,11 +460,13 @@ public class Schedule{
 	 * Gets the next train in front if there is one
 	 * @param  blocks    list of blocks
 	 * @return Train     nextTrain
+	 *
+	 * @bug Need to add MBO mode to nextTrain
 	 */
 	private DummyTrain nextTrain(ArrayList<Block> blockList, int start){
 
 		ArrayList<DummyTrain> trainList = manager.getTrainList();
-		blockList = new ArrayList<Block> (blockList.subList(start, blockList.size()));
+		blockList = new ArrayList<Block> (blockList.subList(start+1, blockList.size()));
 
 		for(int i = 0; i <= trainList.size(); i++){
 			if(blockList.contains(trainList.get(i).getPosition())) return trainList.get(i);
@@ -474,8 +489,8 @@ public class Schedule{
 
 	private Block nextStation(ArrayList<Block> blockList, int start){
 
-		if(start < 0 || start > blockList.size()) return null;
-		for(int i = start; i < blockList.size(); i++){
+		if(start < 0 || start+1 > blockList.size()) return null;
+		for(int i = start+1; i < blockList.size(); i++){
 			if(blockList.get(i).getAssociatedStation() != null) return blockList.get(i);
 		}
 
