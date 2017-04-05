@@ -25,7 +25,8 @@ public class CTCgui {
   private MovingBlockOverlay MBO;
 	ArrayList<WS> waysides;
 	TrackModel dummyTrack;
-	ArrayList<TrainManager> tmanagers;
+	ArrayList<TrainManager> managerList;
+  TrainManager tmanager;
 	private Border grayline;
   int lastClickedButton;
   TrainPanel trainPanel;
@@ -34,10 +35,11 @@ public class CTCgui {
 	/**
 	 * Create the application.
 	 */
-	public CTCgui(ArrayList<TrainManager> tmanagers, TrackModel dummyTrack, ArrayList<WS> waysides) {
-		this.dummyTrack = dummyTrack;
-		this.waysides = waysides;
-		this.tmanagers = tmanagers;
+	public CTCgui(ArrayList<TrainManager> tm, TrackModel dt, ArrayList<WS> ws) {
+		this.dummyTrack = dt;
+		this.waysides = ws;
+		this.managerList = tm;
+    this.tmanager = managerList.get(0);
     lastClickedButton = 0;
 
 		grayline = BorderFactory.createLineBorder(Color.gray);
@@ -57,7 +59,7 @@ public class CTCgui {
 
 
 // DISPATCH TRAIN PANEL
-		trainPanel = new TrainPanel(tmanagers, dummyTrack, waysides);
+		trainPanel = new TrainPanel(managerList, dummyTrack, waysides);
 		trainPanel.setBounds(402, 229, 367, 98);
 		trainPanel.setBorder(grayline);
 		frame.getContentPane().add(trainPanel);
@@ -73,7 +75,7 @@ public class CTCgui {
 		panel.add(new JLabel(image), BorderLayout.CENTER);
 
 // Train manager panel
-    TrainManagerPanel tmPanel = new TrainManagerPanel();
+    TrainManagerPanel tmPanel = new TrainManagerPanel(tmanager, dummyTrack);
     tmPanel.setBounds(0, 0, 390, 511);
 /*
 // MBO SCHEDULE PANEL - appears in CTC

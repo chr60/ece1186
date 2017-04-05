@@ -42,9 +42,10 @@ public class TrackPanel extends JPanel{
 	JToggleButton switch_label_connect2;
 
 
-	public TrackPanel(TrackModel dummyTrack, ArrayList<WS> waysides){
+	public TrackPanel(TrackModel dummyTrack, ArrayList<WS> ws){
+
+		this.waysides = ws;
 		this.currWorkingWS = waysides.get(0);
-		this.waysides = waysides;
 		this.dummyTrack = dummyTrack;
 
 		JLabel trackWindowLabel = new JLabel("TRACK");

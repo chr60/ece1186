@@ -117,7 +117,7 @@ public class Launcher extends javax.swing.JFrame {
                         if (trainHandler.getNumTrains() != 0){
                             trainGUI.updateGUI(trainGUI.getCurrT());
                         }
-				      
+
             }
         });
 
@@ -423,7 +423,6 @@ public class Launcher extends javax.swing.JFrame {
      * @param evt
      */
     private void openCTC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openCTC
-        CTCgui ctc = new CTCgui(trainManagers, generateTrack("CTC"), waysideList);
         ctc.getFrame().setVisible(true);
         ctc.getFrame().setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_openCTC
