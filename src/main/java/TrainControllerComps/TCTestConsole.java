@@ -1,5 +1,6 @@
 package TrainControllerComps;
 
+import TrackModel.Block;
 import TrainModel.Train;
 
 import java.awt.event.ActionEvent;
@@ -1023,7 +1024,9 @@ public class TCTestConsole extends javax.swing.JFrame {
             // FIX ME: Get this integrated with the Track model.
             //this.trainController.trains.add(new Train( i, this.trainController.track) );
             this.dispatchedTrains++; 
-            //this.trainController.redLineHandler.spawnTrainAtYard(i);
+            Block yardBlock = this.trainController.track.viewStationMap().get("Red").get("YARD").get(0);
+            Block endingBlock = yardBlock.
+            this.trainController.redLineHandler.setSpeedAndAuthority(-1,50,);
         }
         
         this.trainController.setTrainListComboBox();
