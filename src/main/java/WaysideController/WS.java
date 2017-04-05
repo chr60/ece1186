@@ -29,20 +29,21 @@ public class WS {
 	//WS ELEMENTS
 	public String line;
 	private PLC plc;
-	private TrackModel Track;
-	private WaysideGUI GUI;
-	private CTCgui CTC;
+	private TrackModel track;
+	private WaysideGUI waysideGui;
+	private CTCgui ctc;
 
 
-	public WS(String line, TrackModel track) {
+	public WS(String line, TrackModel trackIn) {
 		this.line = line;
-		this.Track = track;
+		this.track = trackIn;
 	}
 	public void setGUI(WaysideGUI gui){
-		this.GUI = gui;
+		this.waysideGui = gui;
+		this.track.getBlock("Red", "U", 77).setSwitchState(0);
 	}
-	public void setCTC(CTCgui ctc){
-		this.CTC = ctc;
+	public void setCTC(CTCgui ctcIn){
+		this.ctc = ctcIn;
 	}
 
 	/**
@@ -58,7 +59,7 @@ public class WS {
 	 */
 	public void setSpeedAuth(ArrayList<Block> Blocks){
 		for(Block b : Blocks){
-			Block trackBlock = Track.lateralLookup(b);
+			Block trackBlock = track.lateralLookup(b);
 			trackBlock.setSuggestedSpeed(b.getSuggestedSpeed());
 			trackBlock.setAuthority(b.getAuthority());
 		}
@@ -70,7 +71,7 @@ public class WS {
 	 * @return State of crossing associated with Block b, null if no crossing exists
 	 */
 	public Boolean getCrossing(Block b){
-		for(Block trackBlock: Track.viewCrossingMap().keySet()){
+		for(Block trackBlock: track.viewCrossingMap().keySet()){
 			if(b.equals(trackBlock))
 				return trackBlock.getAssociatedCrossing().viewCrossingState();
 		}
@@ -83,9 +84,9 @@ public class WS {
 	 */
 	public ArrayList<Block> getOccupancy(){
 		ArrayList<Block> occupancyList = new ArrayList<Block>();
-		for(String section : Track.viewTrackList().get(line).keySet()){
-			for(Integer blk : Track.viewTrackList().get(line).get(section).keySet()){
-				Block trackBlock = Track.getBlock(line, section, blk);
+		for(String section : track.viewTrackList().get(line).keySet()){
+			for(Integer blk : track.viewTrackList().get(line).get(section).keySet()){
+				Block trackBlock = track.getBlock(line, section, blk);
 				Block blockToAdd = new Block(null, null, null, null, null, null, null, null, null, null, null, trackBlock.blockNum(), null, null);
 				if(trackBlock.getOccupied())
 					blockToAdd.setOccupied(true);
@@ -128,12 +129,12 @@ public class WS {
 	}
 
 	public ArrayList<Block> checkForBroken(){
-		ArrayList<Block> brokenBlocks = Track.getBrokenBlocks(this.line);
+		ArrayList<Block> brokenBlocks = track.getBrokenBlocks(this.line);
 		if(brokenBlocks.size()>0){
 			//alert CTC
 			for(Block b: brokenBlocks){
-				if(this.GUI!=null)
-					this.GUI.printNotification("Broken Block detected - Block: " + b.blockNum());
+				if(this.waysideGui!=null)
+					this.waysideGui.printNotification("Broken Block detected - Block: " + b.blockNum());
 			}
 		}
 		return brokenBlocks;
@@ -145,7 +146,7 @@ public class WS {
 	 * @return  - Copy of block with select info defined.
 	 */
 	public Block getBlock(Block b) {
-		Block liveBlock = Track.lateralLookup(b);
+		Block liveBlock = track.lateralLookup(b);
 		Block toReturn = new Block(null, liveBlock.getOccupied(), null, null, null, null, liveBlock.getSpeedLimit(), liveBlock.getStationName(), null, liveBlock.getBlockLine(), liveBlock.getBlockSection(), liveBlock.blockNum(), liveBlock.hasSwitch(), liveBlock.getSwitchBlock());
 		return toReturn;
 	}
