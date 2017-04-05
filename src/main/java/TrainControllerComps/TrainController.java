@@ -1179,6 +1179,7 @@ public class TrainController extends javax.swing.JFrame {
             // of getting the block speed to update
             this.speedController.setMaxSpeed(this.blockSpeed);
             
+            this.blockInfoPane.setSelectedTrain(this.selectedTrain);
             this.blockInfoPane.refreshUI();
             //this.blockInfoPane.setBlockSpeed(this.blockSpeed);
             

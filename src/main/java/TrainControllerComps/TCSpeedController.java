@@ -212,16 +212,15 @@ public class TCSpeedController extends javax.swing.JPanel {
             // Automatic speed control:
             // get the block the train is on, and the set suggested speed
             Block currBlock = this.selectedTrain.getGPS().getCurrBlock();
-            Double blockSuggestedSpeed = currBlock.getSpeedLimit(); 
-            
+            Double blockSuggestedSpeed = currBlock.getSuggestedSpeed()
+            System.out.println(currBlock.getSuggestedSpeed()); 
             if (blockSuggestedSpeed != null){
                 // if the train is going faster than the suggested block speed, 
                 // change the speed. 
-                if (this.selectedTrain.getVelocity() > blockSuggestedSpeed){
             
-                    this.speedSlider.setValue(blockSuggestedSpeed.intValue());
-                    this.setSpeedButton.doClick(); 
-                }
+                //this.speedSlider.setValue(blockSuggestedSpeed.intValue());
+                //this.setSpeedButton.doClick(); 
+                this.setSpeed = blockSuggestedSpeed.intValue();
 
             }
         }     
@@ -454,6 +453,7 @@ public class TCSpeedController extends javax.swing.JPanel {
                     if (this.vitalPwrCmdThree == this.powerCommandOut){
                         this.logBook.add("VITAL SYSTEM CHECK PASS!");
                         this.selectedTrain.powerCommand(this.powerCommandOut);
+                        this.logBook.add("Dist:" + Double.toString( this.selectedTrain.getGPS().getDistIntoBlock()) );
                     }
                 }
             }

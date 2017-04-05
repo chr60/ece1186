@@ -25,23 +25,10 @@ public class PLCParse {
 		BufferedReader reader = new BufferedReader(new FileReader(PLCFile));
 		String line, proceedExpression = null, switchExpression = null, maintenanceExpression = null, crossingExpression = null, crossingStateExpression = null, monitorExpression = null;
 		 while((line = reader.readLine()) != null){
-             String[] expression = line.split("-");
-             String comp =expression[0].toLowerCase();
-                 if(comp.equals("proceed"))
-                     proceedExpression = expression[1];
-                 else if(comp.equals("switch"))
-                     switchExpression = expression[1];
-                 else if(comp.equals("maintenance"))
-                     maintenanceExpression = expression[1];
-                 else if(comp.equals("crossing"))
-                     crossingExpression = expression[1];
-                 else if(comp.equals("crossingactivate"))
-                     crossingStateExpression = expression[1];
-                 else if(comp.equals("monitor"))
-                     monitorExpression = expression[1];
-             }
+
+		 }
 		 reader.close();
-		 return new PLC(proceedExpression, switchExpression, maintenanceExpression, crossingExpression, crossingStateExpression, monitorExpression);
+		 return null;
      }
 
 }

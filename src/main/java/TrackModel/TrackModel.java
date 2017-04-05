@@ -22,13 +22,21 @@ import java.io.Serializable;
 public class TrackModel implements Serializable{
 
     public String trackScope;
+    private Boolean verbose;
 
     public TrackModel(String scope){
         this.trackScope = scope;
+        this.verbose=false;
+    }
+
+    public TrackModel(String scope, Boolean verbose){
+        this.trackScope = scope;
+        this.verbose = verbose;
     }
 
     @Deprecated public TrackModel(){
-        System.out.println("WARNING! This initializaaiton of a track model will be deprecated in the future.");
+        System.out.println("WARNING! This initializaaiton of a track model will be deprecated on 4/5/2017");
+        this.verbose=false;
     }
 
 
@@ -296,7 +304,6 @@ public class TrackModel implements Serializable{
         for (String lineKey : this.trackList.keySet()){
             System.out.print("Examining Line: ");
             System.out.println(lineKey);
-            //lineKey = "Red";
             Set<String> sectionKeySet = this.trackList.get(lineKey).keySet();
             ArrayList<String> sectionKeyList = new ArrayList(sectionKeySet);
             Collections.sort(sectionKeyList);
@@ -308,7 +315,12 @@ public class TrackModel implements Serializable{
                 Set<Integer> blockSet = this.trackList.get(lineKey).get(sectionKey).keySet();
 
                 for (Integer blockNum : blockSet){
-                    //System.out.println(this.trackList.get(lineKey).get(sectionKey).get(blockNum).nextBlockForward().blockNum);
+                    System.out.print("On block: ");
+                    System.out.println(this.trackList.get(lineKey).get(sectionKey).get(blockNum).blockNum);
+                    System.out.print("Next block forward: ");
+                    System.out.println(this.trackList.get(lineKey).get(sectionKey).get(blockNum).nextBlockForward().blockNum);
+                    System.out.print("Next block backward: ");
+                    //System.out.println(this.trackList.get(lineKey).get(sectionKey).get(blockNum).nextBlockBackward().blockNum);
                 }
 
             }
@@ -334,25 +346,26 @@ public class TrackModel implements Serializable{
                     Block minBlock = this.trackList.get(lineKey).get(sectionKey).get(min);
                     Block maxBlock = this.trackList.get(lineKey).get(sectionKey).get(max);
                     Block curBlock = this.trackList.get(lineKey).get(sectionKey).get(blk);
-                    if (prevBlock == null){
-                        prevBlock = maxBlock;
-                    }
-                    else {
-                        minBlock.setNextBlockBackward(prevBlock);
-                    }
+                    if((minBlock.arrowDirection.equals("Head") && maxBlock.arrowDirection.equals("Head")) || minBlock.arrowDirection.equals("Head/Head")){
+                        if (prevBlock == null){
+                            prevBlock = maxBlock;
+                        }
+                        else {
+                            minBlock.setNextBlockBackward(prevBlock);
+                        }
 
-                    if (curBlock.equals(maxBlock)){
-                        this.trackList.get(lineKey).get(sectionKey).get(blk).setNextBlockForward();
-                        this.trackList.get(lineKey).get(sectionKey).get(blk)
-                            .setNextBlockBackward(this.trackList.get(lineKey).get(sectionKey).get(blk-1));
-                        prevBlock.setNextBlockForward(minBlock);
-                        prevBlock = maxBlock;
+                        if (curBlock.equals(maxBlock)){
+                            this.trackList.get(lineKey).get(sectionKey).get(blk).setNextBlockForward();
+                            this.trackList.get(lineKey).get(sectionKey).get(blk)
+                                .setNextBlockBackward(this.trackList.get(lineKey).get(sectionKey).get(blk-1));
+                            prevBlock.setNextBlockForward(minBlock);
+                            prevBlock = maxBlock;
+                        }
+                        else if (!minBlock.equals(maxBlock)){
+                            curBlock.setNextBlockForward(this.trackList.get(lineKey).get(sectionKey).get(blk+1));
+                            curBlock.setNextBlockBackward(this.trackList.get(lineKey).get(sectionKey).get(blk-1));
+                        }
                     }
-                    else if (!minBlock.equals(maxBlock)){
-                        curBlock.setNextBlockForward(this.trackList.get(lineKey).get(sectionKey).get(blk+1));
-                        curBlock.setNextBlockBackward(this.trackList.get(lineKey).get(sectionKey).get(blk-1));
-                    }
-
                 }
             }
         }
@@ -369,9 +382,9 @@ public class TrackModel implements Serializable{
                     if(!this.blockStationMap.containsKey(s)){
                         this.blockStationMap.put(b, this.stationHostMap.get(l).get(s));
                     }
+                }
             }
         }
-    }
 
     /**
     * Builds the light map for usage by the wayside controller to modify the state of the lights.
@@ -404,22 +417,14 @@ public class TrackModel implements Serializable{
     private void handleSwitches(){
 
         for (String s : this.rootMap.keySet()){
-
-            if(this.rootMap.get(s).blockLine.equals("Red")){
                 this.rootMap.get(s).setNextBlockForward(this.leafMap.get(s).get(0), this.leafMap.get(s).get(1));
-            }
-
+                //System.out.print(this.rootMap.get(s).blockLine);
+                //System.out.println(this.rootMap.get(s).blockNum());
         }
 
         for (String s : this.leafMap.keySet()){
-
-            //It is safe to override red-line switches, so we do that first
-            if(this.leafMap.get(s).get(0).blockLine.equals("Red")){
-                this.leafMap.get(s).get(0).setRootBlock(this.rootMap.get(s));
-            }
-            if (this.leafMap.get(s).get(0).blockLine.equals("Red")){
-                this.leafMap.get(s).get(1).setRootBlock(this.rootMap.get(s));
-            }
+            this.leafMap.get(s).get(0).setRootBlock(this.rootMap.get(s));
+            this.leafMap.get(s).get(1).setRootBlock(this.rootMap.get(s));
         }
     }
 
@@ -487,7 +492,9 @@ public class TrackModel implements Serializable{
                     initLine = false;
                 }
             }catch(IOException|ArrayIndexOutOfBoundsException|NumberFormatException e){
-                    System.out.println("Finished Reading");
+                    if(this.verbose.equals(true)){
+                        System.out.println("Finished Reading");
+                    }
                 }
             }
             this.linkBlocks();
@@ -495,5 +502,8 @@ public class TrackModel implements Serializable{
             this.buildStationHostMap();
             this.buildBlockStationMap();
             this.buildLightsMap();
+            if(this.verbose){
+                //this.examineNext();
+            }
         }
 }

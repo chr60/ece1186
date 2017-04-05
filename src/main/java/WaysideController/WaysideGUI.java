@@ -23,6 +23,8 @@ import javax.swing.JTextField;
 //Modules
 import TrackModel.TrackModel;
 import TrackModel.Block;
+import CTC.TrackPanel;
+
 public class WaysideGUI {
 
   private JFrame MainFrame;
@@ -114,11 +116,10 @@ public class WaysideGUI {
   		});
 
   		//BLOCK CONSOLE
-  		JTextArea blockConsole = new JTextArea();
-  		blockConsole.setBackground(Color.LIGHT_GRAY);
-  		blockConsole.setBounds(10, 30, 428, 189);
-  		frame.add(blockConsole);
-  		blockConsole.setColumns(10);
+  		TrackPanel trackDetails = new TrackPanel(track, Waysides);
+  		trackDetails.setBackground(Color.LIGHT_GRAY);
+  		trackDetails.setBounds(10, 30, 428, 189);
+  		frame.add(trackDetails);
 
   		JLabel notificationsLabel = new JLabel("Notifications");
   		notificationsLabel.setBounds(448, 14, 92, 14);
@@ -177,7 +178,7 @@ public class WaysideGUI {
   		});
   		loadPLCBtn.setBounds(494, 483, 69, 23);
   		frame.getContentPane().add(loadPLCBtn);
-
+      
   		JLabel PLCLabel = new JLabel("Load PLC File");
   		PLCLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
   		PLCLabel.setBounds(264, 455, 115, 18);

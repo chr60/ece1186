@@ -46,6 +46,10 @@ import TrainModel.*;
 /**
  * This class is responsible for refreshing the system on a given clock period as
  * well as launch the various GUI for each of the models.
+ *
+ *
+ *
+ * @author Andrew Lendacky
  */
 public class Launcher extends javax.swing.JFrame {
 
@@ -53,6 +57,8 @@ public class Launcher extends javax.swing.JFrame {
      * The speed that the system is running in.
      */
     int systemSpeed;
+
+
 
     /**
      * The timer used to refresh the modules during some given time period.
@@ -126,11 +132,11 @@ public class Launcher extends javax.swing.JFrame {
 
         this.trainHandler = new TrainHandler(globalTrack);
         this.trainGUI = new TrainModeUI();
+
         this.mbo = new MovingBlockOverlay(generateTrack("MBO"), trainManagers, this.trainHandler);
         this.ctc = new CTCgui(trainManagers, generateTrack("CTC"), this.waysideList);
         this.ctc.setMBO(this.mbo);
         this.mbo.setCTC(this.ctc);
-
 
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
             Random rand = new Random();
@@ -143,8 +149,11 @@ public class Launcher extends javax.swing.JFrame {
                   ws.update();
 
                 // what should be called every tick
-				        // trainH.pollYard();
-				        //trainGUI.updateGUI(trainGUI.getCurrT());
+				        trainHandler.pollYard();
+                        if (trainHandler.getNumTrains() != 0){
+                            trainGUI.updateGUI(trainGUI.getCurrT());
+                        }
+
             }
         });
 
@@ -481,6 +490,7 @@ public class Launcher extends javax.swing.JFrame {
     private void openTrain(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTrain
         // TODO add your handling code here:
 		trainGUI.frmTrainModel.setVisible(true);
+        trainGUI.frmTrainModel.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		trainGUI.setTrainArray(this.trainHandler.getTrains());
     }//GEN-LAST:event_openTrain
 
