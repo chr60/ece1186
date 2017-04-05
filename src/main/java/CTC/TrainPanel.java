@@ -12,7 +12,9 @@ import TrackModel.*;
 import WaysideController.*;
 
 public class TrainPanel extends JPanel{
-	ArrayList<WS> Waysides;
+	ArrayList<WS> waysides;
+	ArrayList<TrainManager> trainManagers;
+	TrainManager currWorkingManager;
 	WS currWorkingWS;
 	TrackModel DummyTrack;
 	private JLabel set_speed_label;
@@ -29,10 +31,12 @@ public class TrainPanel extends JPanel{
 	private JLabel trainWindowLabel;
 	private JButton buttonEditTrain;
 
-	public TrainPanel(ArrayList<TrainManager> tmanagers, TrackModel dummyTrack, ArrayList<WS> waysides){
-		this.Waysides = waysides;
+	public TrainPanel(ArrayList<TrainManager> tm, TrackModel dt, ArrayList<WS> ws){
+		this.waysides = ws;
 		this.currWorkingWS = waysides.get(0);
-		this.DummyTrack = dummyTrack;
+		this.DummyTrack = dt;
+		this.trainManagers = tm;
+		this.currWorkingManager = trainManagers.get(0);
 
 		set_speed_label = new JLabel("Speed");
 		set_speed_label.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -159,6 +163,11 @@ public class TrainPanel extends JPanel{
 		currWorkingWS.setSpeedAuth(path);
 	}
 
+	// CTC calls this method
+	public void updateTrainPositionsToManager(TrainManager tm){
+		ArrayList<Block> trainPositions = currWorkingWS.getOccupancy();
+		tm.updateTrainPosition(trainPositions);
+	}
 
 
 }

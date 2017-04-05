@@ -158,7 +158,7 @@ public class Schedule{
 	    		}
 	    	}
     	}
-		
+
 		updateTrains();
 
     	//return stationArrivals;

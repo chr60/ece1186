@@ -70,18 +70,18 @@ public class TrainManager {
 
   }
 
-/*
-	public ArrayList<DummyTrain> updateTrainPosition(){
+
+	public void updateTrainPosition(ArrayList<Block> occList){
     for(int i=0; i<trainList.size(); i++){
-      Integer posTrainI = trainList.get(i).getPositionInt();
-      for(int k=0; k<occupancyList.size(); k++){
-        Integer newOccBlockID = occupancyList.get(i);
-        if(posTrainI != newOccBlockID){
-          trainList.get(i).setPostion(newOccBlockID);
+      Block posTrainI = trainList.get(i).getPosition();
+      for(int k=0; k<occList.size(); k++){
+        Block newOccBlockID = occList.get(i);
+        if(posTrainI.blockNum() != newOccBlockID.blockNum()){
+          trainList.get(i).setPosition(newOccBlockID);
         }
       }
     }
 	}
-  */
+
 
 }

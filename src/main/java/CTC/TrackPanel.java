@@ -17,6 +17,7 @@ public class TrackPanel extends JPanel{
 	ArrayList<WS> waysides;
 	WS currWorkingWS;
 	TrackModel dummyTrack;
+	Block savedBlock = null;
 	Block wsBlock;
 	String lineChoice = "";
 	String sectionChoice = "";
@@ -43,7 +44,6 @@ public class TrackPanel extends JPanel{
 
 
 	public TrackPanel(TrackModel dummyTrack, ArrayList<WS> ws){
-
 		this.waysides = ws;
 		this.currWorkingWS = waysides.get(0);
 		this.dummyTrack = dummyTrack;
@@ -230,6 +230,39 @@ public class TrackPanel extends JPanel{
 		switch_label_connect2.setBounds(310, 162, 45, 16);
 		add(switch_label_connect2);
 
+// initialize dropdowns to Red/A/1 at start up to avoid null pointer exception
+		dropdown_line.setSelectedItem(lineName[0]);
+		String l = (String) dropdown_line.getSelectedItem();
+		Set<String> segSet = dummyTrack.viewTrackList().get(l).keySet();
+		segName = segSet.toArray(new String[segSet.size()]);
+		dropdown_block.removeAllItems();
+		for (String item : segSet){
+			dropdown_segment.addItem(item);
+		}
+		dropdown_segment.setSelectedItem(segName[0]);
+		l = (String) dropdown_line.getSelectedItem();
+		String s = (String) dropdown_segment.getSelectedItem();
+		Set<Integer> blockSet = dummyTrack.viewTrackList().get(l).get(s).keySet();
+		Integer[] blockInt = blockSet.toArray(new Integer[blockSet.size()]);
+		dropdown_block.removeAllItems();
+		for (Integer item : blockSet){
+			dropdown_block.addItem(Integer.toString(item));
+		}
+		dropdown_block.setSelectedItem(blockInt[0]);
+		String b = (String)dropdown_block.getSelectedItem();
+		int blockNum;
+		try{
+			blockNum = Integer.parseInt(b);
+		}catch(NumberFormatException num){
+			blockNum = dummyTrack.getSection(l, s).keySet().toArray(new Integer [0])[0];
+		}
+
+
+		wsBlock = dummyTrack.getBlock(l, s, blockNum);
+		setBlockWS(wsBlock);
+		updateTrackInfo(wsBlock);
+
+
 // all action listeners
 		dropdown_line.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -277,6 +310,7 @@ public class TrackPanel extends JPanel{
 					}
 
 					wsBlock = dummyTrack.getBlock(line, section, blockNum);
+					setBlockWS(wsBlock);
 					updateTrackInfo(wsBlock);
 				}
 
@@ -284,6 +318,14 @@ public class TrackPanel extends JPanel{
 
 
 
+	}
+
+	public void setBlockWS(Block block){
+		this.savedBlock = block;
+	}
+
+	public Block getBlockWS(){
+		return savedBlock;
 	}
 
 	public void updateTrackInfo(Block wsBlock){
@@ -323,8 +365,6 @@ public class TrackPanel extends JPanel{
 			switch_label_connect2.setText(switchOption2.getBlockSection());
 			Integer switchLeaf1 = switchOption1.blockNum();
 			Integer switchLeaf2 = switchOption2.blockNum();
-			System.out.println(switchLeaf1);
-			System.out.println(switchLeaf2);
 			//get switch status if switch exists on root block
 			Integer switchStatusWS = currWorkingWS.switchStatus(wsBlock);
 			//report switch swtichStatus
