@@ -71,37 +71,24 @@ public class TrainController extends javax.swing.JFrame {
     private Timer systemRunSpeed = new Timer(1000, new ActionListener(){
         Random rand = new Random();
         public void actionPerformed(ActionEvent e) {
-            //blockSpeed = (int)(rand.nextDouble() * 100.0) % 100.0;
-          //  refreshComponents();
 
             if (detailedTrainWindowOpen == true){ trainUI.updateGUI(selectedTrain); }
 
-            if (selectedTrain != null && (selectedTrain.getKp() != null && selectedTrain.getKi() != null) ){
-                refreshComponents();
-                //speedController.powerControl();
-            }
+            if (selectedTrain != null && selectedTrain.powerConstantsSet() ){ refreshComponents(); }
 
             // Do specific things if in testing mode...
             if (testingMode == true){
 
-                // System.out.println("In Testing Mode");
-
                 if (testConsole != null){
-
                     // update test console
                     testConsole.setTrain(selectedTrain);
                 }
-
             }else if (normalMode == true){
                 // do things in normal mode
-
-
                 if (manualMode == true){
-                    // do manual mode things
-
+                    // do manual mode thing
                 }else if (automaticMode == true){
                     // automate things based on train stuff
-
                 }
             }
 
@@ -150,25 +137,23 @@ public class TrainController extends javax.swing.JFrame {
     public TrainController(Train train){
 
         initComponents();
-
-        //this.initHashMaps();
-        //this.setTrainListComboBox();
         this.setMode("Manual", "Normal");
 
         this.selectedTrain = train;
-        this.dispatchedTrains.setSelectedItem(this.selectedTrain.getID());
+
+        this.speedController.setOperatingLogs(this.operatingLogs);
+        this.utilityPanel.setVitalsButton(this.vitals);
+        this.detailedTrainWindowOpen = false;
 
         // check if kp/ki is set
-
-        if (this.selectedTrain.getKp() == null & this.selectedTrain.getKi() == null){
+        if (this.selectedTrain.powerConstantsSet()){
 
             TCEngineerPanel engPanel = new TCEngineerPanel(this.selectedTrain);
             engPanel.setVisible(true);
             engPanel.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         }
-        this.speedController.setOperatingLogs(this.operatingLogs);
+        
         systemRunSpeed.start();
-        System.out.println(this.selectedTrain);
     }
 
     /**

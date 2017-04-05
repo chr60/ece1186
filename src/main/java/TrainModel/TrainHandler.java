@@ -42,13 +42,14 @@ public class TrainHandler {
 			//train is a new train
 			currT = new Train(trainIDAssign, globalTrack);
 			trainID = trainIDAssign;
-			trainCount ++;
+			trainCount++;
 			trainIDAssign++;
 			currT.setSpeed(Speed);
 			currT.setAuthority(goToBlock);
 			currT.setCurrBlock(startBlock);
 			System.out.println(startBlock);
 			TrainController tc = new TrainController(currT);
+                        System.out.println("Hey!"); 
 			tc.setVisible(true);
 			tc.setDefaultCloseOperation(2);
 		}else{
