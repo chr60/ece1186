@@ -73,9 +73,7 @@ public class TrainController extends javax.swing.JFrame {
         public void actionPerformed(ActionEvent e) {
             //blockSpeed = (int)(rand.nextDouble() * 100.0) % 100.0;
             refreshComponents();    
-            
-
-        
+           
             if (detailedTrainWindowOpen == true){ trainUI.updateGUI(selectedTrain); }
                 
             if (selectedTrain != null && (selectedTrain.getKp() != null && selectedTrain.getKi() != null) ){
@@ -124,16 +122,16 @@ public class TrainController extends javax.swing.JFrame {
         initComponents();
           
         // FIX ME: This is for testing purposes, and should be removed. 
-        String[] fNames = {"src/test/resources/redline.csv"};
-        this.track = new TrackModel("Test");
-        this.track.readCSV(fNames);
+        //String[] fNames = {"src/test/resources/redline.csv"};
+        //this.track = new TrackModel("Test");
+        //this.track.readCSV(fNames);
         
-        this.redLineHandler = new TrainHandler(this.track); 
+        //this.redLineHandler = new TrainHandler(this.track); 
         
         //this.trains.add(train);
           
-        this.initHashMaps();
-        this.setTrainListComboBox();
+        //this.initHashMaps();
+        //this.setTrainListComboBox();
         this.setMode("Manual", "Normal");
         
       
@@ -155,8 +153,8 @@ public class TrainController extends javax.swing.JFrame {
         
         initComponents();
        
-        this.initHashMaps();
-        this.setTrainListComboBox();
+        //this.initHashMaps();
+        //this.setTrainListComboBox();
         this.setMode("Manual", "Normal");
          
         this.selectedTrain = train;   
@@ -1158,7 +1156,7 @@ public class TrainController extends javax.swing.JFrame {
             
         this.updateTime();
                 
-        this.initHashMaps();
+        //this.initHashMaps();
         
         if (this.NoTrainSelected() == false){
         
