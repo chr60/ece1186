@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Test;
   private static TreeSet<Integer> testExpectedStationBlockNums = new TreeSet<>(Arrays.asList(expectedStationBlockNums));
   private static TrackModel track;
   private static String[] fNames = {"src/test/resources/redline.csv"};
+  private Boolean verbose = false;
 
   @BeforeEach
   /**
@@ -31,7 +32,7 @@ import org.junit.jupiter.api.Test;
   */
   void init(){
     String[] fNames = {"src/test/resources/redline.csv"};
-    this.track = new TrackModel("Test");
+    this.track = new TrackModel("Test", verbose);
     this.track.readCSV(fNames);
   }
 
@@ -65,7 +66,7 @@ import org.junit.jupiter.api.Test;
   void testSwitchleaf(){
     TreeSet<Integer> treeSetTest = new TreeSet<Integer>();
     for(String blk : this.track.viewRootMap().keySet()){
-      assertTrue(this.track.viewLeafMap().get(blk).get(0).blockNum().compareTo(track.viewLeafMap().get(blk).get(1).blockNum())<0);
+      assertTrue(this.track.viewLeafMap().get(blk).get(0).blockNum().compareTo(this.track.viewLeafMap().get(blk).get(1).blockNum())<0);
     }
   }
 
@@ -149,6 +150,7 @@ import org.junit.jupiter.api.Test;
   }
 
   @Test
+
   /**
   * Test the pathing functionality in a simple case expecting backward.
   */
@@ -176,6 +178,7 @@ import org.junit.jupiter.api.Test;
     ArrayList<Block> testArr = new ArrayList<Block>();
   }
   @Test
+  
   /**
   * MBO pathing test 1
   */

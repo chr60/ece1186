@@ -14,11 +14,12 @@ import org.junit.jupiter.api.Test;
  public class ComparableTest{
 	private static String[] fNames = {"src/test/resources/redline.csv", "src/test/resources/greenline.csv"};
 	private static TrackModel track;
-
+	private boolean verbose = false;
+	
  	@BeforeEach
  	void init(){
  		String[] fNames = {"src/test/resources/redline.csv","src/test/resources/greenline.csv"};
- 		this.track = new TrackModel();
+ 		this.track = new TrackModel("Test",this.verbose);
  		this.track.readCSV(fNames);
  	}
 
