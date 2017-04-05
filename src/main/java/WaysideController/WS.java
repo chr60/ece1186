@@ -40,7 +40,7 @@ public class WS {
 	}
 	public void setGUI(WaysideGUI gui){
 		this.waysideGui = gui;
-		this.track.getBlock("Red", "U", 77).setSwitchState(0);
+		this.track.getBlock("Red", "C", 9).setSwitchState(0);
 	}
 	public void setCTC(CTCgui ctcIn){
 		this.ctc = ctcIn;
