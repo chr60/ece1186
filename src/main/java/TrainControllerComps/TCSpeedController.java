@@ -7,6 +7,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import TrainModel.*;
+import javax.swing.JSlider;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -79,6 +80,12 @@ public class TCSpeedController extends javax.swing.JPanel {
      */
     private double error; 
     
+    private double vitalPwrCmdOne; 
+    
+    private double vitalPwrCmdTwo; 
+    
+    private double vitalPwrCmdThree; 
+    
 
     // MARK: - Constructors
    
@@ -143,6 +150,21 @@ public class TCSpeedController extends javax.swing.JPanel {
     }
     
     /**
+     * Returns the selected train.
+     * 
+     * @return the selected train object.
+     */
+    public Train getTrain(){
+        
+        return this.selectedTrain;
+    }
+    
+    public JSlider getSpeedSlider(){
+    
+        return this.speedSlider; 
+    }
+    
+    /**
      * Sets the max speed the train is allowed to go, and then updates the UI 
      * so that the slider's max value is that of the maxSpeed and the correct speed 
      * is on the label.
@@ -175,31 +197,35 @@ public class TCSpeedController extends javax.swing.JPanel {
      */
     public void refreshUI(){
        
-        this.maxSpeedSlider.setText(Double.toString(this.maxSpeed));
-        this.speedSlider.setMaximum((int) this.maxSpeed);
-        
         if (this.inManualMode){ // manual mode
             this.setSpeedButton.setEnabled(true);
             this.speedSlider.setEnabled(true);
             
+            Block currBlock = this.selectedTrain.getGPS().getCurrBlock(); // get current block
+            Double blockSpeedLimit = currBlock.getSpeedLimit(); // get speed limit on block
+            
+            if (blockSpeedLimit != null){
+            
+                this.maxSpeedSlider.setText(Double.toString(blockSpeedLimit)); // update slider label
+                this.speedSlider.setMaximum(blockSpeedLimit.intValue()); //update max value of slider
+
+                // if we changed to manual mode from automatic mode, we need to adjust to meet block limit
+                if (this.setSpeed > blockSpeedLimit.intValue()){ this.setSpeed = blockSpeedLimit.intValue(); }
+            }
         }else if (this.inManualMode == false){ // automatic mode
             this.setSpeedButton.setEnabled(false);
             this.speedSlider.setEnabled(false);
             
-
-            // Automatic speed control:
             // get the block the train is on, and the set suggested speed
             Block currBlock = this.selectedTrain.getGPS().getCurrBlock();
-            Double blockSuggestedSpeed = currBlock.getSpeedLimit(); 
-            
+            Double blockSuggestedSpeed = currBlock.getSuggestedSpeed();
+                       
             if (blockSuggestedSpeed != null){
-                // if the train is going faster than the suggested block speed, 
-                // change the speed. 
-                if (this.selectedTrain.getVelocity() > blockSuggestedSpeed){
-            
-                    this.speedSlider.setValue(blockSuggestedSpeed.intValue());
-                    this.setSpeedButton.doClick(); 
-                }
+
+                this.maxSpeedSlider.setText(Double.toString(blockSuggestedSpeed));
+                this.speedSlider.setMaximum(blockSuggestedSpeed.intValue());
+                this.speedSlider.setValue(blockSuggestedSpeed.intValue());
+                this.setSpeed = blockSuggestedSpeed.intValue();
 
             }
         }     
@@ -381,7 +407,7 @@ public class TCSpeedController extends javax.swing.JPanel {
     
     /**
      * Prints the stored logs to the operating log, then clears the logbook. 
-     * The JTextPane must be set from the TrainController class before being used. 
+     * The JTextArea must be set from the TrainController class before being used. 
      */
     public void printLogs(){
          
@@ -411,18 +437,31 @@ public class TCSpeedController extends javax.swing.JPanel {
             this.brakePanel.getServiceBrake().doClick(); // apply brakes
         }else{
             this.logBook.add("Set Speed: " + this.setSpeed);
+                        
+            this.error = (this.setSpeed - this.selectedTrain.getVelocity()); // calculate the error 
             
-            this.error = this.setSpeed - this.selectedTrain.getVelocity(); // calculate the error 
-
-            this.logBook.add("Error: " + Double.toString( this.error) ); // log error
-
+            this.vitalPwrCmdOne = (this.setSpeed - this.selectedTrain.getVelocity());
+            this.vitalPwrCmdTwo = (this.setSpeed - this.selectedTrain.getVelocity());
+            this.vitalPwrCmdThree = (this.setSpeed - this.selectedTrain.getVelocity());
+            
+            //this.logBook.add("Error: " + Double.toString( this.error) ); // log error
             this.logBook.add(Double.toString( this.powerCommandOut) ); // log power command
 
             this.powerCommandOut = this.selectedTrain.getKp() * error + this.selectedTrain.getKi()*this.selectedTrain.getVelocity();
 
-            // send powerCommandOut to the train, which then changes its speed
-            this.selectedTrain.powerCommand(this.powerCommandOut); 
-
+            this.vitalPwrCmdOne = this.selectedTrain.getKp() * error + this.selectedTrain.getKi()*this.selectedTrain.getVelocity();
+            this.vitalPwrCmdTwo = this.selectedTrain.getKp() * error + this.selectedTrain.getKi()*this.selectedTrain.getVelocity();
+            this.vitalPwrCmdThree = this.selectedTrain.getKp() * error + this.selectedTrain.getKi()*this.selectedTrain.getVelocity();
+            
+            if (this.vitalPwrCmdOne == this.powerCommandOut){
+                if (this.vitalPwrCmdTwo == this.powerCommandOut){
+                    if (this.vitalPwrCmdThree == this.powerCommandOut){
+                        this.logBook.add("VITAL SYSTEM CHECK PASS!");
+                        this.selectedTrain.powerCommand(this.powerCommandOut);
+                        this.logBook.add("Dist:" + Double.toString( this.selectedTrain.getGPS().getDistIntoBlock()) );
+                    }
+                }
+            }
             printLogs();
         }
     }

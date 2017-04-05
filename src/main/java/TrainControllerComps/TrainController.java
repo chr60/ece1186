@@ -51,7 +51,7 @@ public class TrainController extends javax.swing.JFrame {
     private boolean testingMode; // used to tell if the Train Controller is in Automatic mode
      
     // FOR TESTING!
-    ArrayList<Train> trains = new ArrayList<Train>();
+    //ArrayList<Train> trains = new ArrayList<Train>();
    
     double blockSpeed = 80.0; 
     private TCTestConsole testConsole = null; 
@@ -73,9 +73,7 @@ public class TrainController extends javax.swing.JFrame {
         public void actionPerformed(ActionEvent e) {
             //blockSpeed = (int)(rand.nextDouble() * 100.0) % 100.0;
             refreshComponents();    
-            
-
-        
+           
             if (detailedTrainWindowOpen == true){ trainUI.updateGUI(selectedTrain); }
                 
             if (selectedTrain != null && (selectedTrain.getKp() != null && selectedTrain.getKi() != null) ){
@@ -124,16 +122,16 @@ public class TrainController extends javax.swing.JFrame {
         initComponents();
           
         // FIX ME: This is for testing purposes, and should be removed. 
-        String[] fNames = {"src/test/resources/redline.csv"};
-        this.track = new TrackModel("Test");
-        this.track.readCSV(fNames);
+        //String[] fNames = {"src/test/resources/redline.csv"};
+        //this.track = new TrackModel("Test");
+        //this.track.readCSV(fNames);
         
-        this.redLineHandler = new TrainHandler(this.track); 
+        //this.redLineHandler = new TrainHandler(this.track); 
         
         //this.trains.add(train);
           
-        this.initHashMaps();
-        this.setTrainListComboBox();
+        //this.initHashMaps();
+        //this.setTrainListComboBox();
         this.setMode("Manual", "Normal");
         
       
@@ -155,8 +153,8 @@ public class TrainController extends javax.swing.JFrame {
         
         initComponents();
        
-        this.initHashMaps();
-        this.setTrainListComboBox();
+        //this.initHashMaps();
+        //this.setTrainListComboBox();
         this.setMode("Manual", "Normal");
          
         this.selectedTrain = train;   
@@ -239,6 +237,11 @@ public class TrainController extends javax.swing.JFrame {
         
         return this.speedController;
     }
+    
+    public TCBlockInfoPanel getBlockInfoPane(){
+    
+        return this.blockInfoPane; 
+    }
             
     // MARK: - Mode Setting and Getting
     
@@ -318,7 +321,7 @@ public class TrainController extends javax.swing.JFrame {
     private void initHashMaps(){
     
         // get the list of dispatched trains         
-        for (Train train : this.trains){
+        for (Train train : this.redLineHandler.getTrains()){
             // add them to the hashmaps
             this.trainList.put(Integer.toString(train.getID()), train );
         }
@@ -358,10 +361,12 @@ public class TrainController extends javax.swing.JFrame {
      */
     public void setTrainListComboBox(){
             
-        System.out.println(this.trains.size()); 
+        System.out.println(this.redLineHandler.getTrains().size()); 
+        
         this.dispatchedTrains.removeAllItems();
         this.dispatchedTrains.addItem("No Train Selected");
-        for (Train train : this.trains){
+        
+        for (Train train : this.redLineHandler.getTrains()){
         
             this.dispatchedTrains.addItem(Integer.toString(train.getID()) );       
         }
@@ -1151,7 +1156,7 @@ public class TrainController extends javax.swing.JFrame {
             
         this.updateTime();
                 
-        this.initHashMaps();
+        //this.initHashMaps();
         
         if (this.NoTrainSelected() == false){
         
@@ -1172,6 +1177,7 @@ public class TrainController extends javax.swing.JFrame {
             // of getting the block speed to update
             this.speedController.setMaxSpeed(this.blockSpeed);
             
+            this.blockInfoPane.setSelectedTrain(this.selectedTrain);
             this.blockInfoPane.refreshUI();
             //this.blockInfoPane.setBlockSpeed(this.blockSpeed);
             

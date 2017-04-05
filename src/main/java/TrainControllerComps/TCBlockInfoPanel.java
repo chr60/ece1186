@@ -75,15 +75,14 @@ public class TCBlockInfoPanel extends javax.swing.JPanel {
      * 
      */
     public void refreshUI(){
-       
-        
+           
 //        if (this.selectedTrain.getGPS()!= null){
-//        
-//            if (this.selectedTrain.getGPS().getCurrBlock() != null){
-//            
-//                this.blockSpeed.setText(Double.toString( this.selectedTrain.getGPS().getCurrBlock().getSpeedLimit() ));
-//                this.currentBlock.setText(Integer.toString( this.selectedTrain.getGPS().getCurrBlock().blockNum() )); 
-//            }
+        
+            if (this.selectedTrain.getCurrBlock() != null){
+            
+                this.blockSpeed.setText(Double.toString( this.selectedTrain.getCurrBlock().getSpeedLimit()));
+                this.currentBlock.setText(Integer.toString( this.selectedTrain.getCurrBlock().blockNum())); 
+            }
 //        }
     }
     /** 

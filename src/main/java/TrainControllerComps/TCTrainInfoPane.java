@@ -138,7 +138,7 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
      */
     public void setAuthorityLabel(Integer blockNum){
     
-        this.authorityLabel.setText(Integer.toString(blockNum)); 
+        this.maxAuthority.setText(Integer.toString(blockNum)); 
     }
     
     /**
@@ -159,9 +159,7 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
         
         if (this.selectedTrain.getAuthority() != null){
         
-
-            //this.setAuthorityLabel(this.selectedTrain.getAuthority());
-
+            this.setAuthorityLabel(this.selectedTrain.getAuthority().blockNum());
         }
     }
     

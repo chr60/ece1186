@@ -1,5 +1,6 @@
 package TrainControllerComps;
 
+import TrackModel.Block;
 import TrainModel.Train;
 
 import java.awt.event.ActionEvent;
@@ -1021,9 +1022,13 @@ public class TCTestConsole extends javax.swing.JFrame {
         for (int i = 0; i < Integer.parseInt(value); i++){
         
             // FIX ME: Get this integrated with the Track model.
-            this.trainController.trains.add(new Train( i, this.trainController.track) );
+            //this.trainController.trains.add(new Train( i, this.trainController.track) );
             this.dispatchedTrains++; 
-            //this.trainController.redLineHandler.spawnTrainAtYard(i);
+            Block yardBlock = this.trainController.track.viewStationMap().get("Red").get("YARD").get(0);
+            yardBlock.setSuggestedSpeed(50.0);
+            Block endingBlock = yardBlock.nextBlockForward().nextBlockForward().nextBlockForward(); 
+            
+            this.trainController.redLineHandler.setSpeedAndAuthority(-1, 35.0, endingBlock, yardBlock);
         }
         
         this.trainController.setTrainListComboBox();

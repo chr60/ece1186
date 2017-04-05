@@ -94,6 +94,8 @@ public class Train implements Serializable {
 		power = newPower;
 		if(newPower >= maxPower){
 			//if power command is greater than or equal to max power do nothing
+                        power = maxPower; 
+                        changeSpeed(forceApp);
 		}else {
 			//if power command calls for increase of speed
 			changeSpeed(forceApp);
@@ -151,12 +153,14 @@ public class Train implements Serializable {
 		Double distBlock = trainLocation.getDistIntoBlock();
 		Double dist = distBlock + distTravelled;
 		
-		//check if distance exceeds length of block (if so enter new block) if not update location
+		//check if distance exceeds length of block (if so enter new block) if not update location                
 		while (dist > trainLocation.getCurrBlock().getLen())
 		{
 			dist = getCurrBlock().getLen() - dist;
 			currBlock.setOccupied(false);
 			currBlock = currBlock.nextBlockForward();
+                        System.out.println("Going to next block: " + currBlock.blockNum()); 
+                        System.out.println("Block length: " + currBlock.getLen()); 
 			currBlock.setOccupied(true);
 		}
 		trainLocation.setCurrBlock(currBlock);
@@ -168,10 +172,23 @@ public class Train implements Serializable {
      * Method to update speed and authority (and other block properties)
      */
 	private void updateSpeedAndAuthority(){
-		setPointSpeed = currBlock.getSuggestedSpeed();
-		currAuthority = currBlock.getAuthority();
-		currGrade = currBlock.getGrade();
-	}
+            
+            if (this.getCurrBlock() != null){
+                if (this.getCurrBlock().getSuggestedSpeed() != null){
+
+                    setPointSpeed = getCurrBlock().getSuggestedSpeed();
+                }
+
+                if (this.getCurrBlock().getAuthority() != null){
+
+                    currAuthority = getCurrBlock().getAuthority();
+                }
+
+                if (this.getCurrBlock().getGrade() != null){
+                    currGrade = getCurrBlock().getGrade();
+                }
+            }
+        }
 	
 
 
@@ -248,9 +265,10 @@ public class Train implements Serializable {
      * @param Block object to set curr block to
      */
 	public void setCurrBlock(Block newBlock){
-		currBlock = newBlock;
-		this.trainLocation.setCurrBlock(currBlock);
-		this.trainLocation.setDistIntoBlock(0.0);
+
+            this.trainLocation.setCurrBlock(newBlock);
+            this.trainLocation.setDistIntoBlock(0.0);
+            this.currBlock = newBlock; 
 	}
 	
 	/**
@@ -258,7 +276,7 @@ public class Train implements Serializable {
      * @return Block object to return curr block
      */
 	public Block getCurrBlock(){
-		return currBlock;
+		return this.currBlock;
 	}
 
 	/**
