@@ -73,7 +73,7 @@ public class TrainHandler {
 	}
 
 	//method to pull
-	public void pullYard()
+	public void pollYard()
 	{
 		//pull both yards to see if a new train has been initialized.
 
@@ -85,7 +85,7 @@ public class TrainHandler {
 		Block authorityBlock = yardBlockRed.getAuthority();
 		yardBlockRed.setAuthority(null);
 
-		if (suggestedSpeed > 0.0){
+		if (suggestedSpeed != null){
 			//suggested speed is greater than 0
 			 if (authorityBlock != null && (authorityBlock.compareTo(yardBlockRed) != 1)){
 				 //if authority is not null and authority is not the yard (returning train)
@@ -96,7 +96,7 @@ public class TrainHandler {
 			 }
 		}
 
-
+		/*
 		//repeat for green line
 		suggestedSpeed = yardBlockGreen.getSuggestedSpeed();
 
@@ -105,7 +105,7 @@ public class TrainHandler {
 
 		yardBlockGreen.setAuthority(null);
 
-		if (suggestedSpeed > 0.0){
+		if (suggestedSpeed != null){
 			//suggested speed is greater than 0
 			 if (authorityBlock != null && (authorityBlock.compareTo(yardBlockGreen) != 1)){
 				 //if authority is not null and authority is not the yard (returning train)
@@ -115,6 +115,7 @@ public class TrainHandler {
 				 yardBlockGreen.setOccupied(true);
 			 }
 		}
+		*/
 	}
 
 	//method to search and return yard block
@@ -123,6 +124,10 @@ public class TrainHandler {
 		//gets the exit yard blocks for both red and green line. each will be pulled to determine if there is a train ready to be added to the track.
 		yardBlockRed = globalTrack.viewStationMap().get("Red").get("YARD").get(0);
 		//yardBlockGreen = globalTrack.viewStationMap().get("Green").get("YARD").get(1);
+	}
+
+	public int getNumTrains(){
+		return trains.size();
 	}
 
 
