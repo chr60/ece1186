@@ -96,11 +96,11 @@ public class Launcher extends javax.swing.JFrame {
 
         this.trainHandler = new TrainHandler(globalTrack);
         this.trainGUI = new TrainModeUI();
+
         this.mbo = new MovingBlockOverlay(generateTrack("MBO"), trainManagers, this.trainHandler);
         this.ctc = new CTCgui(trainManagers, generateTrack("CTC"), this.waysideList);
         this.ctc.setMBO(this.mbo);
         this.mbo.setCTC(this.ctc);
-
 
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
             Random rand = new Random();
