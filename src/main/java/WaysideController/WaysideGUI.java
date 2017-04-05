@@ -34,7 +34,6 @@ public class WaysideGUI {
 
 
   public void update(){
-    printNotification("Update!");
   }
 
   public WaysideGUI(TrackModel track, ArrayList<WS> Waysides) {
@@ -127,10 +126,10 @@ public class WaysideGUI {
 
       notifConsole = new JTextArea(5, 20);
       notifConsole.setTabSize(8);
-  		notifConsole.setBounds(448, 30, 658, 405);
+  		notifConsole.setBounds(448, 30, 575, 405);
   		frame.add(notifConsole);
       JScrollPane Scroller = new JScrollPane(notifConsole);
-      Scroller.setBounds(448, 30, 658, 405);
+      Scroller.setBounds(448, 30, 575, 405);
       frame.add(Scroller);
 
 
@@ -178,7 +177,7 @@ public class WaysideGUI {
   		});
   		loadPLCBtn.setBounds(494, 483, 69, 23);
   		frame.getContentPane().add(loadPLCBtn);
-      
+
   		JLabel PLCLabel = new JLabel("Load PLC File");
   		PLCLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
   		PLCLabel.setBounds(264, 455, 115, 18);

@@ -218,6 +218,12 @@ public class Schedule{
 		}
 	}
 
+	private void printSandA(ArrayList<Block> list){
+		for(int i = 0; i < list.size(); i++){
+			System.out.println(list.get(i).blockNum() + "\t" + list.get(i).getSuggestedSpeed() + "\t" + list.get(i).getAuthority().blockNum());
+		}
+	}
+
 	private void printAuth(ArrayList<Block> list){
 		for(int i = 0; i < list.size(); i++){
 			System.out.println(list.get(i).getAuthority().blockNum() + "\t");
