@@ -153,7 +153,7 @@ public class Train implements Serializable {
 		
 		//check if distance exceeds length of block (if so enter new block) if not update location
                 System.out.println(trainLocation); 
-                System.out.println(trainLocation.getCurrBlock()); 
+                System.out.println("Hey:" + trainLocation.getCurrBlock()); 
                 //System.out.println(trainLocation.getCurrBlock().getLen()); 
                 
 		while (dist > trainLocation.getCurrBlock().getLen())
@@ -173,23 +173,23 @@ public class Train implements Serializable {
      */
 	private void updateSpeedAndAuthority(){
             
-            
-            System.out.println(this.getCurrBlock());
-            
-            if (this.getCurrBlock().getSuggestedSpeed() != null){
-            
-		setPointSpeed = getCurrBlock().getSuggestedSpeed();
+            System.out.println("Current Block:" + this.getCurrBlock());
+            if (this.getCurrBlock() != null){
+                if (this.getCurrBlock().getSuggestedSpeed() != null){
+
+                    setPointSpeed = getCurrBlock().getSuggestedSpeed();
+                }
+
+                if (this.getCurrBlock().getAuthority() != null){
+
+                    currAuthority = getCurrBlock().getAuthority();
+                }
+
+                if (this.getCurrBlock().getGrade() != null){
+                    currGrade = getCurrBlock().getGrade();
+                }
             }
-            
-            if (this.getCurrBlock().getAuthority() != null){
-            
-		currAuthority = getCurrBlock().getAuthority();
-            }
-            
-            if (this.getCurrBlock().getGrade() != null){
-		currGrade = getCurrBlock().getGrade();
-            }
-	}
+        }
 	
 
 

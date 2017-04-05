@@ -1026,6 +1026,8 @@ public class TCTestConsole extends javax.swing.JFrame {
             this.dispatchedTrains++; 
             Block yardBlock = this.trainController.track.viewStationMap().get("Red").get("YARD").get(0);
             
+            System.out.println("Yard: " + yardBlock.getGrade()); 
+            
             Block endingBlock = yardBlock.nextBlockForward().nextBlockForward().nextBlockForward(); 
             yardBlock.setAuthority(endingBlock);
             yardBlock.setSuggestedSpeed(70.0);  
