@@ -269,6 +269,7 @@ public class Train implements Serializable {
 
             this.trainLocation.setCurrBlock(newBlock);
             this.trainLocation.setDistIntoBlock(0.0);
+            this.currBlock = newBlock; 
 	}
 	
 	/**
