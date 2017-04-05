@@ -62,6 +62,7 @@ public class WS {
 			Block trackBlock = track.lateralLookup(b);
 			trackBlock.setSuggestedSpeed(b.getSuggestedSpeed());
 			trackBlock.setAuthority(b.getAuthority());
+			// this.waysideGui.printNotification("Speed: " + b.getSuggestedSpeed() + "\n Auth: " + b.getAuthority().blockNum() + "\n Set to Block: " + b.blockNum());
 		}
 	}
 
