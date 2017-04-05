@@ -14,149 +14,149 @@ import TrainModel.*;
  */
 
 /**
- * A component of the Train Controller responsible for displaying, and transmitting 
- * information and changes to the train corresponding to the Air Conditioning unit (AC), 
- * Heating unit, Left/Right Doors, and Lights. 
- * 
- * This class collaborates with a Train Model, and the TrainController class, which 
+ * A component of the Train Controller responsible for displaying, and transmitting
+ * information and changes to the train corresponding to the Air Conditioning unit (AC),
+ * Heating unit, Left/Right Doors, and Lights.
+ *
+ * This class collaborates with a Train Model, and the TrainController class, which
  * it is a sub-component of.
- * 
+ *
  * @author Andrew Lendacky
  */
 public class TCUtilityPanel extends javax.swing.JPanel {
 
     /**
-     * The train in which the UI should update from based on its values. 
+     * The train in which the UI should update from based on its values.
      * This object is passed from the parent Train Controller.
      */
-    private Train selectedTrain; 
-        
+    private Train selectedTrain;
+
     /**
      * A boolean used to determine if the component should operate in manual or automatic mode.
-     * This value gets set from the TrainController class. 
+     * This value gets set from the TrainController class.
      */
-    private boolean inManualMode; 
-    
+    private boolean inManualMode;
+
     /**
-     * Button used to display when a failure has occurred. 
-     * This button comes from the Train Controller. 
+     * Button used to display when a failure has occurred.
+     * This button comes from the Train Controller.
      */
-    private JButton vitalsButton; 
-    
+    private JButton vitalsButton;
+
     /**
      * Constructor for creating a new TCUtiltiyPanel object where the initial positions of the radio button
-     * are in the 'OFF' position, and there is no selected train. 
-     * 
+     * are in the 'OFF' position, and there is no selected train.
+     *
      * By default, this constructor sets the 'inManualMode' to false.
-     * Selected train must be set by the Train Controller before being used. 
+     * Selected train must be set by the Train Controller before being used.
      */
     public TCUtilityPanel() {
-             
+
         initComponents();
-              
+
         // FIX ME: this should be put in refreashUI() when the train model is complete
         this.acOffRadioButton.setSelected(true);
         this.heatOffRadioButton.setSelected(true);
         this.lightsOffRadioButton.setSelected(true);
         this.leftDoorsCloseRadioButton.setSelected(true);
         this.rightDoorsCloseRadioButton.setSelected(true);
-        
-        this.inManualMode = false; 
-        this.selectedTrain = null; 
-        
+
+        this.inManualMode = false;
+        this.selectedTrain = null;
+
         this.acFailureRadioButton.setEnabled(false);
         this.heatFailureRadioButton.setEnabled(false);
         this.leftDoorsFailureRadioButton.setEnabled(false);
         this.rightDoorsFailureRadioButton.setEnabled(false);
         this.lightsFailureRadioButton.setEnabled(false);
     }
-    
+
     /**
-     * Sets the train that this UtilityPanel should control. 
-     * This value should be set from the Train Controller class when a new train is selected. 
-     * 
-     * @param train the train controlled by the Train Controller. 
+     * Sets the train that this UtilityPanel should control.
+     * This value should be set from the Train Controller class when a new train is selected.
+     *
+     * @param train the train controlled by the Train Controller.
      */
     public void setSelectedTrain(Train train){
- 
-        this.selectedTrain = train; 
+
+        this.selectedTrain = train;
     }
-    
+
     /**
-     * Retrieves the train that the Utility Panel is controlling. 
-     * 
-     * @return returns the selected train. 
+     * Retrieves the train that the Utility Panel is controlling.
+     *
+     * @return returns the selected train.
      */
     public Train getSelectedTrain(){
-        
-        return this.selectedTrain; 
+
+        return this.selectedTrain;
     }
-    
+
     /**
-     * Sets the vital button. 
-     * This method should be called from the Train Controller. 
-     * 
+     * Sets the vital button.
+     * This method should be called from the Train Controller.
+     *
      * @param vitalsButton vital button from the Train Controller
      */
     public void setVitalsButton(JButton vitalsButton){
-    
-        this.vitalsButton = vitalsButton; 
+
+        this.vitalsButton = vitalsButton;
     }
-    
+
     /**
-     * Sets if the Utility Panel should run in Manual or Automatic mode. 
-     * This value is set from the Train Controller class depending on the states 
+     * Sets if the Utility Panel should run in Manual or Automatic mode.
+     * This value is set from the Train Controller class depending on the states
      * of the radio buttons, "Automatic" and "Manual".
-     * 
-     * @param b true if in manual mode, false if in automatic mode. 
+     *
+     * @param b true if in manual mode, false if in automatic mode.
      */
     public void setManualMode(boolean b){
-        
-        this.inManualMode = b; 
+
+        this.inManualMode = b;
     }
-    
+
     /**
-     * Updates the UI of the radio buttons (On, Off, Fail, etc..) of the 
-     * doors, lights, air conditioning, and heating unit depending on the values 
-     * from the selected train. 
+     * Updates the UI of the radio buttons (On, Off, Fail, etc..) of the
+     * doors, lights, air conditioning, and heating unit depending on the values
+     * from the selected train.
      *
      */
     public void refreshUI(){
-                
-        // disable/endable certain UI elements depending on mode   
+
+        // disable/endable certain UI elements depending on mode
         this.setModeUI();
-      
+
         // set utility stuff based on train information
         this.refreshAC();
         this.refreshHeat();
         this.refreshLights();
         this.refreshLeftDoors();
-        this.refreshRightDoors(); 
-        
+        this.refreshRightDoors();
+
         if (this.inManualMode == false){
-        
+
            this.automaticModeChecks();
         }
-        
-        // change the vital button to red if there is a power failure.         
-        if (this.isPowerFailure()){ 
-            
+
+        // change the vital button to red if there is a power failure.
+        if (this.isPowerFailure()){
+
             this.vitalsButton.setForeground(Color.red);
-        
-            // 
+
+            //
         }
-        
+
         /**
-         * @Bug When selected a train from a TCDispatchedTrainsFrame, a NullPointerException is thrown. 
-         * 
+         * @Bug When selected a train from a TCDispatchedTrainsFrame, a NullPointerException is thrown.
+         *
          */
-        else if (this.isPowerFailure() == false){this.vitalsButton.setForeground(new Color(0,0,0));}
+        //else if (this.isPowerFailure() == false){this.vitalsButton.setForeground(new Color(0,0,0));}
     }
-    
+
     /**
-     * Performs the checks to see if certain utilities need to be turned on/off, open/closed 
-     * when in Automatic mode. 
-     * 
+     * Performs the checks to see if certain utilities need to be turned on/off, open/closed
+     * when in Automatic mode.
+     *
      */
     private void automaticModeChecks(){
         // turn on lights if underground
@@ -170,108 +170,108 @@ public class TCUtilityPanel extends javax.swing.JPanel {
         // set heat
 
         //if (this.selectedTrain.getTemp() <= 50.0){ } // turn on heat
-        //else if (this.selectedTrain.getTemp() >= 80){ } // set thermostat to default temp 
+        //else if (this.selectedTrain.getTemp() >= 80){ } // set thermostat to default temp
     }
-    
+
     /**
-     * Determines if there is a failure in one of utilities. 
-     * 
-     * @return returns true if at least one of the utilities are in a failure state, false otherwise. 
+     * Determines if there is a failure in one of utilities.
+     *
+     * @return returns true if at least one of the utilities are in a failure state, false otherwise.
      */
     private boolean isPowerFailure(){
-    
-        if (this.acFailureRadioButton.isSelected() || 
+
+        if (this.acFailureRadioButton.isSelected() ||
                 this.heatFailureRadioButton.isSelected() || this.lightsFailureRadioButton.isSelected()
                 || this.leftDoorsFailureRadioButton.isSelected() || this.rightDoorsFailureRadioButton.isSelected()){
             return true; // there is a power failure..
         }
-        
+
         return false; // there isn't a power failure
     }
-    
+
     /**
-     * Sets the UI elements that the user can interact with depending on the mode the system is in. 
-     * 
+     * Sets the UI elements that the user can interact with depending on the mode the system is in.
+     *
      */
     private void setModeUI(){
-        
+
         // manual mode
         if (this.inManualMode == true){
-            
+
             // enable setting temp
             this.setAirCondBotton.setEnabled(true);
             this.setHeatButton.setEnabled(true);
 
             this.acTempTextField.setEditable(true);
             this.heatTempTextField.setEditable(true);
-            
+
             this.enableRadioButtons();
-            
+
         }
         // automatic mode stuff
         else if (this.inManualMode == false){
-        
+
             // disable setting temp
             this.setAirCondBotton.setEnabled(false);
             this.setHeatButton.setEnabled(false);
-            
+
             this.acTempTextField.setEditable(false);
             this.heatTempTextField.setEditable(false);
-            
-            this.disableRadioButtons();            
-        }  
+
+            this.disableRadioButtons();
+        }
     }
-       
+
     /**
-     * Disables the AC, Heat, Lights, Left/Right Doors radio buttons. 
-     * 
+     * Disables the AC, Heat, Lights, Left/Right Doors radio buttons.
+     *
      */
     private void disableRadioButtons(){
-    
+
         this.acOnRadioButton.setEnabled(false);
         this.acOffRadioButton.setEnabled(false);
-        
+
         this.heatOffRadioButton.setEnabled(false);
         this.heatOnRadioButton.setEnabled(false);
-        
+
         this.lightsOnRadioButton.setEnabled(false);
         this.lightsOffRadioButton.setEnabled(false);
-        
+
         this.leftDoorsOpenRadioButton.setEnabled(false);
         this.leftDoorsCloseRadioButton.setEnabled(false);
-        
+
         this.rightDoorsOpenRadioButton.setEnabled(false);
         this.rightDoorsCloseRadioButton.setEnabled(false);
     }
-    
+
     /**
      * Enables the AC, Heat, Lights, Left/Right Doors radio buttons.
-     * 
+     *
      */
     private void enableRadioButtons(){
-        
+
         this.acOnRadioButton.setEnabled(true);
         this.acOffRadioButton.setEnabled(true);
-        
+
         this.heatOffRadioButton.setEnabled(true);
         this.heatOnRadioButton.setEnabled(true);
-        
+
         this.lightsOnRadioButton.setEnabled(true);
         this.lightsOffRadioButton.setEnabled(true);
-        
+
         this.leftDoorsOpenRadioButton.setEnabled(true);
         this.leftDoorsCloseRadioButton.setEnabled(true);
-        
+
         this.rightDoorsOpenRadioButton.setEnabled(true);
         this.rightDoorsCloseRadioButton.setEnabled(true);
     }
-    
+
     /**
-     * Refreshes the Air Conditioning Radio Buttons based on the status of the train. 
-     * 
-     * This is called by the system timer every 'x' seconds. function is called a lot in 
-     * automatic to refresh the states of the train and have it reflected in the UI. 
-     * 
+     * Refreshes the Air Conditioning Radio Buttons based on the status of the train.
+     *
+     * This is called by the system timer every 'x' seconds. function is called a lot in
+     * automatic to refresh the states of the train and have it reflected in the UI.
+     *
      */
     private void refreshAC(){
 
@@ -279,38 +279,38 @@ public class TCUtilityPanel extends javax.swing.JPanel {
         else if (this.selectedTrain.getAC() == 0){ this.acOffRadioButton.setSelected(true); }
         else if (this.selectedTrain.getAC() == -1){ this.acFailureRadioButton.setSelected(true); }
     }
-      
+
     /**
      * Checks to see if the train is underground.
-     * 
+     *
      * @return returns true if the train is underground, false otherwise
      */
     private boolean isUnderground(){
-    
+
         if (this.selectedTrain.getGPS().getCurrBlock().isUnderground() == true){return true; }
         else{ return false; }
     }
-    
+
     /**
-     * Checks to see if it's safe to open the doors on the train. 
+     * Checks to see if it's safe to open the doors on the train.
      * This can occur when the train is not moving.
-     * 
+     *
      * @return returns true if it's safe to open the doors of the train, false if its unsafe.
      */
     private boolean canOpenDoors(){
-    
+
         // if the train is stoped, we can open doors
         if (this.selectedTrain.getVelocity() == 0.0){ return true; }
         else { return false; }
     }
-    
+
     /**
-     * Checks if the block the train is on has a station. 
-     * 
+     * Checks if the block the train is on has a station.
+     *
      * @return returns true if there is a station, false otherwise
      */
     private boolean isAtStation(){
-    
+
         if (this.selectedTrain.getGPS().getCurrBlock().getStationName() != null){return true; }
         else { return false; }
     }
@@ -319,42 +319,42 @@ public class TCUtilityPanel extends javax.swing.JPanel {
      * Refreshes the Heating Radio Buttons based on the status of the train.
      */
     private void refreshHeat(){
-    
+
         if (this.selectedTrain.getHeat() == 1){ this.heatOnRadioButton.setSelected(true); }
         else if (this.selectedTrain.getHeat() == 0){ this.heatOffRadioButton.setSelected(true);}
         else if (this.selectedTrain.getHeat() == -1){ this.heatFailureRadioButton.setSelected(true); }
     }
-    
+
     /**
      * Refreshes the Lights Radio Buttons based on the status of the train.
      */
     private void refreshLights(){
-    
+
         if (this.selectedTrain.getLights() == 1){ this.lightsOnRadioButton.setSelected(true); }
         else if (this.selectedTrain.getLights() == 0){ this.lightsOffRadioButton.setSelected(true); }
         else if (this.selectedTrain.getLights() == -1){ this.lightsFailureRadioButton.setSelected(true); }
     }
-    
+
     /**
      * Refreshes the Left Doors Radio Buttons based on the status of the train.
      */
     private void refreshLeftDoors(){
-    
+
         if (this.selectedTrain.getLeftDoor() == 1){ this.leftDoorsOpenRadioButton.setSelected(true); }
         else if (this.selectedTrain.getLeftDoor() == 0){ this.leftDoorsCloseRadioButton.setSelected(true); }
         else if (this.selectedTrain.getLeftDoor() == -1){ this.leftDoorsFailureRadioButton.setSelected(true); }
     }
-    
+
     /**
      * Refreshes the Right Doors Radio Buttons based on the status of the train.
      */
     private void refreshRightDoors(){
-    
+
         if (this.selectedTrain.getRightDoor() == 1){ this.rightDoorsOpenRadioButton.setSelected(true); }
         else if (this.selectedTrain.getRightDoor() == 0){ this.rightDoorsCloseRadioButton.setSelected(true); }
         else if (this.selectedTrain.getRightDoor() == -1) {this.rightDoorsFailureRadioButton.setSelected(true); }
     }
-   
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -676,180 +676,180 @@ public class TCUtilityPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Tells the selected train to turn off its Lights. 
-     * This occurs when the "OFF" radio button is clicked. 
-     * 
+     * Tells the selected train to turn off its Lights.
+     * This occurs when the "OFF" radio button is clicked.
+     *
      * @param evt the sender of the action, i.e., the "OFF" radio button.
      */
     private void turnOffLights(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOffLights
-        
-        System.out.println("Telling train to turn off lights."); 
+
+        System.out.println("Telling train to turn off lights.");
         // send signal to train
         this.selectedTrain.setLights( 0 );
     }//GEN-LAST:event_turnOffLights
 
     /**
      * Tells the selected train to turn on its Lights.
-     * 
+     *
      * @param evt the sender of the action, i.e., the "ON" radio button.
      */
     private void turnOnLights(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOnLights
-        
-        System.out.println("Telling train to turn on lights."); 
+
+        System.out.println("Telling train to turn on lights.");
         // send signal to train
-        this.selectedTrain.setLights(1); 
+        this.selectedTrain.setLights(1);
     }//GEN-LAST:event_turnOnLights
 
     /**
      * Tells the selected train to close its Left Doors.
-     * 
+     *
      * @param evt the sender of the action, i.e., the "CLOSE" radio button.
      */
     private void closeLeftDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeLeftDoors
-        
+
         System.out.println("Telling train to close left doors.");
         // send signal to train
-        this.selectedTrain.setLeftDoor( 0 );   
+        this.selectedTrain.setLeftDoor( 0 );
     }//GEN-LAST:event_closeLeftDoors
 
     /**
      * Tells the selected train to open its Left Doors.
-     * 
+     *
      * @param evt the sender of the action, i.e., the "OPEN" radio button.
      */
     private void openLeftDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openLeftDoors
-       
-        System.out.println("Telling train to open left doors."); 
+
+        System.out.println("Telling train to open left doors.");
         // send signal to train
-        this.selectedTrain.setLeftDoor( 1 ); 
+        this.selectedTrain.setLeftDoor( 1 );
     }//GEN-LAST:event_openLeftDoors
 
-    
+
     /**
      * Tells the selected train to close its Right Doors.
-     * 
+     *
      * @param evt the sender of the action, i.e., the "CLOSE" radio button.
      */
     private void closeRightDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeRightDoors
-        
-        System.out.println("Telling train to close right doors."); 
+
+        System.out.println("Telling train to close right doors.");
         // send signal to train
-        this.selectedTrain.setRightDoor( 0 ); 
+        this.selectedTrain.setRightDoor( 0 );
     }//GEN-LAST:event_closeRightDoors
 
-    
+
     /**
      * Tells the selected train to open its Right Doors.
-     * 
+     *
      * @param evt the sender of the action, i.e., the "OPEN" radio button.
      */
     private void openRightDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openRightDoors
-        
-        System.out.println("Telling train to open right doors."); 
+
+        System.out.println("Telling train to open right doors.");
         // send signal to train
         this.selectedTrain.setRightDoor( 1 );
     }//GEN-LAST:event_openRightDoors
 
     /**
      * Tells the selected train to turn off the Heating unit.
-     * 
+     *
      * @param evt the sender of the action, i.e., the "OFF" radio button.
      */
     private void turnOffHeat(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOffHeat
-       
-        System.out.println("Telling train to turn off heat.");  
+
+        System.out.println("Telling train to turn off heat.");
         // send signal to train
-        this.selectedTrain.setHeat( 0 ); 
+        this.selectedTrain.setHeat( 0 );
     }//GEN-LAST:event_turnOffHeat
 
     /**
-     * Tells the train to set its heating unit to the value set in the text box. 
-     * If the set temperature of over the threshold, an error will pop up stating that the value is too high. 
-     * 
+     * Tells the train to set its heating unit to the value set in the text box.
+     * If the set temperature of over the threshold, an error will pop up stating that the value is too high.
+     *
      * @param evt the sender of the action, i.e., "Set" button.
      */
     private void setHeatTemp(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setHeatTemp
-       
+
         String temp = this.heatTempTextField.getText();
-        
+
         if (Double.parseDouble(temp) < 60.0 || Double.parseDouble(temp) > 80.0 ){
-               
-            System.out.println("Error. Please set a temperature between 60.0 - 80.0"); 
-           
+
+            System.out.println("Error. Please set a temperature between 60.0 - 80.0");
+
         }else{
             // turn the heat on the train, this will cause the GUI to update on the next refreshGUI call.
             // turn on heat and transmit the temp
 
             if (this.selectedTrain.getHeat() == 0){
-                this.selectedTrain.setHeat( 1 ); 
-                
+                this.selectedTrain.setHeat( 1 );
+
                 this.selectedTrain.setThermostat(Double.parseDouble(temp));
                 System.out.println("Telling the train to set temperature to " + temp + " for Heating unit");
 
-            }                         
+            }
 
-        }        
+        }
     }//GEN-LAST:event_setHeatTemp
 
     /**
-     * Tells the train to set its air conditioning unit to the value set in the text box. 
-     * If the set temperature of over the threshold, an error will pop up stating that the value is too high. 
-     * 
+     * Tells the train to set its air conditioning unit to the value set in the text box.
+     * If the set temperature of over the threshold, an error will pop up stating that the value is too high.
+     *
      * @param evt the sender of the action, i.e., "Set" button.
      */
     private void setAirCondTemp(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setAirCondTemp
-       
+
         String temp = this.acTempTextField.getText();
-        
+
         // make sure the user doesnt set an unreasonable temp
         if (Double.parseDouble(temp) < 40.0 || Double.parseDouble(temp) > 60.0 ){
-            System.out.println("Error. Please set a temperature between 40.0 - 60.0"); 
-            
+            System.out.println("Error. Please set a temperature between 40.0 - 60.0");
+
         }else{
-                   
+
             // turn on the ac, and transmit the temp
             // if it's off turn it on
-     
 
-            if (this.selectedTrain.getAC() == 0){ 
-                this.selectedTrain.setAC( 1 ); 
+
+            if (this.selectedTrain.getAC() == 0){
+                this.selectedTrain.setAC( 1 );
                 this.selectedTrain.setThermostat(Double.parseDouble(temp));
-                System.out.println("Telling the train to set temperature to " + temp + " for Air Conditioning unit"); 
-            }                            
+                System.out.println("Telling the train to set temperature to " + temp + " for Air Conditioning unit");
+            }
 
-        }  
+        }
     }//GEN-LAST:event_setAirCondTemp
 
     /**
-     * @Bug Currently this function is called whenever the item (Radio Button) is selected. 
-     * This should be the code that sends the information to the train regarding the states of on the train. 
-     * 
-     * Clicking the 'Set' button causes the GUI to change to 'On', and 
-     * 
+     * @Bug Currently this function is called whenever the item (Radio Button) is selected.
+     * This should be the code that sends the information to the train regarding the states of on the train.
+     *
+     * Clicking the 'Set' button causes the GUI to change to 'On', and
+     *
      * FIXED!
-     * 
-     * @param evt 
+     *
+     * @param evt
      */
-    
+
     /**
-     * @Bug Clicking the 'On' button will set the temperature to the default temp instead of 
-     * resending the temp that was previously in the text field. 
-     * 
-     * Replicate by 
-     * 
+     * @Bug Clicking the 'On' button will set the temperature to the default temp instead of
+     * resending the temp that was previously in the text field.
+     *
+     * Replicate by
+     *
      */
-    
+
     /**
-     * Tells the train to turn on the Air Conditioning unit, and to turn off the heat if it's on. 
-     * If in Manual mode, the temperature sent to the train is the value in the text box. 
-     * If in Automatic mode, the temperature sent to the train is the default temperature.  
-     * 
+     * Tells the train to turn on the Air Conditioning unit, and to turn off the heat if it's on.
+     * If in Manual mode, the temperature sent to the train is the value in the text box.
+     * If in Automatic mode, the temperature sent to the train is the default temperature.
+     *
      * @param evt the sender of the event, i.e, the 'ON' radio button.
      */
     private void turnOnAirCond(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_turnOnAirCond
-       
+
         if (evt.getStateChange() == ItemEvent.SELECTED){
-            
+
             // manual vs automatic mode
             if (this.inManualMode){
                 // turn on ac and transmit temp
@@ -857,18 +857,18 @@ public class TCUtilityPanel extends javax.swing.JPanel {
                 Double temp = Double.parseDouble(this.acTempTextField.getText());
                 this.selectedTrain.setThermostat(temp);
             }else{
-            
-                // transmit default temp        
-                Double temp = 45.0; 
+
+                // transmit default temp
+                Double temp = 45.0;
                 this.selectedTrain.setAC( 1 );
                 // update the text on the gui
-                this.acTempTextField.setText(Double.toString(temp));  
+                this.acTempTextField.setText(Double.toString(temp));
                 this.selectedTrain.setThermostat(temp);
             }
-            
+
             // turn heat off if its on
-            if (this.heatOnRadioButton.isSelected() == true){ 
-                this.selectedTrain.setHeat( 0 ); 
+            if (this.heatOnRadioButton.isSelected() == true){
+                this.selectedTrain.setHeat( 0 );
 
             }
         }
@@ -876,33 +876,33 @@ public class TCUtilityPanel extends javax.swing.JPanel {
 
     /**
      * Tells the train to turn on the heat, and turn off the AC if it's on.
-     * If in Manual mode, the temperature sent to the train is the value in the text box. 
-     * If in Automatic mode, the temperature sent to the train is the default temperature. 
-     * 
-     * @param evt the sender of the event, i.e., the 'ON' radio button.  
+     * If in Manual mode, the temperature sent to the train is the value in the text box.
+     * If in Automatic mode, the temperature sent to the train is the default temperature.
+     *
+     * @param evt the sender of the event, i.e., the 'ON' radio button.
      */
     private void turnHeatOn(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_turnHeatOn
 
-        if (evt.getStateChange() == ItemEvent.SELECTED){            
+        if (evt.getStateChange() == ItemEvent.SELECTED){
             // manual vs automatic mode
             if (this.inManualMode){
-                // turn on heat and transmit temp             
+                // turn on heat and transmit temp
                 this.selectedTrain.setHeat( 1 );
                 Double temp = Double.parseDouble(this.heatTempTextField.getText());
                 System.out.println("Telling the train to set temperature to " + temp + " for Heating unit");
                 this.selectedTrain.setThermostat(temp);
             }else{
-                // transmit default temp        
-                Double temp = 65.0;     
+                // transmit default temp
+                Double temp = 65.0;
                 // update the text on the gui
                 this.selectedTrain.setHeat( 1 );
                 this.heatTempTextField.setText(Double.toString(temp));
                 System.out.println("Telling the train to set temperature to " + temp + " for Heating unit");
                 this.selectedTrain.setThermostat(temp);
             }
-            
+
             // turn off ac if its on
-            if (this.acOnRadioButton.isSelected() == true){ 
+            if (this.acOnRadioButton.isSelected() == true){
                 this.selectedTrain.setAC( 0 );
 
             }
@@ -911,23 +911,23 @@ public class TCUtilityPanel extends javax.swing.JPanel {
 
 
     private void turnOnAC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOnAC
-        
+
         this.selectedTrain.setAC( 1 );
-            
+
         // set train to default default temp
         this.acTempTextField.setText("40.0");
         this.selectedTrain.setThermostat(Double.parseDouble(this.acTempTextField.getText()));
     }//GEN-LAST:event_turnOnAC
 
     /**
-     * Tells the train to turn off the Air Conditioning unit. 
-     * 
+     * Tells the train to turn off the Air Conditioning unit.
+     *
      * @param evt the sender of the event, i.e., the 'OFF' radio button.
      */
     private void turnOffAirCond(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOffAirCond
-        
-        this.selectedTrain.setAC( 0 );         
-        System.out.println("Telling Air Conditioning unit to turn off."); 
+
+        this.selectedTrain.setAC( 0 );
+        System.out.println("Telling Air Conditioning unit to turn off.");
     }//GEN-LAST:event_turnOffAirCond
 
 

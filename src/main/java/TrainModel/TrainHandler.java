@@ -3,6 +3,7 @@ package TrainModel;
 import java.util.ArrayList;
 
 import TrackModel.*;
+import TrainControllerComps.*;
 
 // class designed to handle communcation between train model and other interfaces
 public class TrainHandler {
@@ -46,6 +47,10 @@ public class TrainHandler {
 			currT.setSpeed(Speed);
 			currT.setAuthority(goToBlock);
 			currT.setCurrBlock(startBlock);
+			System.out.println(startBlock);
+			TrainController tc = new TrainController(currT);
+			tc.setVisible(true);
+			tc.setDefaultCloseOperation(2);
 		}else{
 			currT = findTrain(trainID);
 		}
