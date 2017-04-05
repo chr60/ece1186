@@ -11,13 +11,16 @@ public class Schedule{
 	Global data for the train
 		Station names
 		Times between stations
-	
+
 	Hardcoded in for now
 	*/
-
+	private CTCgui CTC;
 	private String mode;
 	private TrackModel dummyTrack;
 	private TrainManager manager;
+	private TrainHandler handler;
+	private Block yardBlock;
+	private int numTrains = 0;
 	private Block [] lineStops;
 	private String lineName;
 	private String [] stationNames;
@@ -37,8 +40,8 @@ public class Schedule{
 	 * @param  stationTimes Array of times to travel between stations
 	 * @param  lineLoopTime Time it takes a train to complete a loop
 	 */
-	public Schedule(TrackModel dummyTrack, TrainManager manager, Block [] lineStops, 
-					String lineName, String [] stationNames, int [] stationTimes, int lineLoopTime){
+	public Schedule(TrackModel dummyTrack, TrainManager manager, Block [] lineStops,
+					String lineName, String [] stationNames, int [] stationTimes, int lineLoopTime, CTCgui ctc){
 		this.dummyTrack = dummyTrack;
 		this.manager = manager;
 		this.lineStops = lineStops;
@@ -46,8 +49,9 @@ public class Schedule{
 		this.stationNames = stationNames;
 		this.stationTimes = stationTimes;
 		this.lineLoopTime = lineLoopTime;
+		this.CTC = ctc;
 		//this.lineLoopTime = calcLoopTime(stationTimes);
-
+		yardBlock = manager.getYardBlock();
 	}
 
 	public static void main(String[] args){
@@ -72,7 +76,7 @@ public class Schedule{
 	 * @param  secs Time in seconds from the start of the day
 	 * @return String time
 	 */
-	public static String convertTime(long secs){ 
+	public static String convertTime(long secs){
 
 		int secondsDisplay = (int) secs % 60;
 		long minutes = secs / 60;
@@ -119,7 +123,7 @@ public class Schedule{
 		return time;
 
 	}
-	
+
 	/**
 	 * Creates a simple schedule for the trains
 	 * @param  numLoops  					Number of loops the schedule should be calculated for
@@ -130,6 +134,8 @@ public class Schedule{
 	 * @bug Switch from numTrains to trainList
 	 */
 	public void simpleSchedule(int numLoops, int start, int numTrains){
+
+		this.numTrains = numTrains;
 
 		int trainSpacing = lineLoopTime / numTrains;
 
@@ -152,11 +158,11 @@ public class Schedule{
 	    		}
 	    	}
     	}
-
+			updateTrains();
     	//return stationArrivals;
 
 	}
-	
+
 
 	/**
 	 * Handles the switching of modes
@@ -167,8 +173,47 @@ public class Schedule{
 
 	}
 
-	public void dispatchTrain(){
+	/**
+	 * Updates the list of trains with their new authority and speed
+	 *
+	 * @bug Add in update for MBO mode
+	 */
+	private void updateTrains(){
+		ArrayList<DummyTrain> trainList = manager.getTrainList();
+		ArrayList<Block> newPaths = new ArrayList<Block>();
+		ArrayList<Block> tempPath;
+		Block lastStation, nextStop;
 
+		if("MBO".equals(mode)){
+
+		}else{
+			if(numTrains < trainList.size()){
+				DummyTrain newTrain = new DummyTrain(yardBlock);
+				manager.addTrain(newTrain);
+				tempPath = createRoute(newTrain, yardBlock, lineStops[0]);
+				manager.getTrain(-1).setPath(tempPath);
+				newPaths.addAll(tempPath);
+			}
+			for(int i = 0; i < trainList.size(); i++){
+				lastStation = trainList.get(i).getLastStation();
+				nextStop = lineStops[(getStopNum(lastStation) + 1) % lineStops.length];
+				tempPath = createRoute(trainList.get(i), lastStation, nextStop);
+				manager.getTrain(trainList.get(i).getID()).setPath(tempPath);
+				newPaths.addAll(tempPath);
+				if(trainList.get(i).getPosition().compareTo(nextStop) == 0){
+					manager.getTrain(trainList.get(i).getID()).setLastStation(nextStop);
+				}
+			}
+		}
+		System.out.println(newPaths.get(0).getAuthority());
+		this.CTC.getTrainPanel().updateSpeedAuthToWS(newPaths);
+	}
+
+	private int getStopNum(Block lastStation){
+		for(int i = 0; i < lineStops.length; i++){
+			if(lastStation.compareTo(lineStops[i]) == 0) return i;
+		}
+		return -1;
 	}
 
 	/**
@@ -180,25 +225,25 @@ public class Schedule{
 	 * @bug Actually choose a path instead of just the first one
 	 * @bug Assosciate arrival time with train ID
 	 */
-	private ArrayList<Block> createRouteMBO(Train train, Block startBlock, Block stopBlock){
+	private ArrayList<Block> createRoute(DummyTrain train, Block startBlock, Block stopBlock){
 
 		ArrayList<Block> path = dummyTrack.blockToBlock(startBlock, stopBlock).get(0);
 		GPS auth = findAuthority(path, train);
 		int stationIndex = getStationIndex(stopBlock.getStationName());
 		long schedArrival = stationArrivals.get(stationIndex).get(0);
 		GPS currPos;
-		if("MBO" == mode){
-			currPos = train.getGPS();
+		if("MBO".equals(mode)){
+			currPos = handler.findTrain(train.getID()).getGPS();
 		}else{
-			currPos = null; //new GPS(manager.getTrain(train.getID()).getCurrBlock(), null);
+			currPos = new GPS(train.getPosition(), null);
 		}
 		double [] speeds = calcBlockSpeeds(path, currPos, schedArrival);
 		int start = path.indexOf(currPos.getCurrBlock());
 
-		if("MBO" == mode){
+		if("MBO".equals(mode)){
 			for(int i = start; i < path.size(); i++){
-				//train.setAuthority(auth);
-				train.setSpeed(speeds[i]);
+				//hander.findTrain(train.getID()).setAuthority(auth);
+				handler.findTrain(train.getID()).setSpeed(speeds[i]);
 			}
 		}else{
 			for(int i = start; i < path.size(); i++){
@@ -208,74 +253,19 @@ public class Schedule{
 		}
 		return new ArrayList<Block> (path.subList(start, path.size()));
 	}
-
-	/**
-	 * Creates a small route for a train from one station to another
-	 * @param train Train object
-	 * @param start Block train starts at
-	 * @param stop  Block train stops at
-	 *
-	 * @bug Actually choose a path instead of just the first one
-	 * @bug Assosciate arrival time with train ID
-	 */
-	private ArrayList<Block> createRouteFB(Train train, Block startBlock, Block stopBlock){
-
-		ArrayList<Block> path = dummyTrack.blockToBlock(startBlock, stopBlock).get(0);
-		GPS auth = findAuthority(path, train);
-		int stationIndex = getStationIndex(stopBlock.getStationName());
-		long schedArrival = stationArrivals.get(stationIndex).get(0);
-		GPS currPos = null; //new GPS(manager.getTrain(train.getID()).getCurrBlock(), null);
-		double [] speeds = calcBlockSpeeds(path, currPos, schedArrival);
-		int start = path.indexOf(currPos.getCurrBlock());
-
-		for(int i = start; i < path.size(); i++){
-			path.get(i).setAuthority(auth.getCurrBlock());
-			path.get(i).setSuggestedSpeed(speeds[i]);
-		}
-		
-		return new ArrayList<Block> (path.subList(start, path.size()));
-	}
-
-	/* Preserving original just in case
-		private ArrayList<Block> createRoute(Train train, Block startBlock, Block stopBlock){
-
-		ArrayList<Block> path = dummyTrack.blockToBlock(startBlock, stopBlock).get(0);
-		GPS auth = findAuthority(path, train);
-		int stationIndex = getStationIndex(stopBlock.getStationName());
-		long schedArrival = stationArrivals.get(stationIndex).get(0);
-		GPS currPos;
-		if("MBO" == mode){
-			currPos = train.getGPS();
-		}else{
-			currPos = null; //new GPS(manager.getTrain(train.getID()).getCurrBlock(), null);
-		}
-		double [] speeds = calcBlockSpeeds(path, currPos, schedArrival);
-		int start = path.indexOf(currPos.getCurrBlock());
-
-		if("MBO" == mode){
-			for(int i = start; i < path.size(); i++){
-				//train.setAuthority(auth);
-				train.setSpeed(speeds[i]);
-			}
-		}else{
-			for(int i = start; i < path.size(); i++){
-				path.get(i).setAuthority(auth.getCurrBlock());
-				path.get(i).setSuggestedSpeed(speeds[i]);
-			}
-		}
-		return new ArrayList<Block> (path.subList(start, path.size()));
-	}*/
 
 	/**
 	 * Gets the next train in front if there is one
 	 * @param  blocks    list of blocks
 	 * @return Train     nextTrain
 	 */
-	private Train nextTrain(ArrayList<Block> blockList, int start){
+	private DummyTrain nextTrain(ArrayList<Block> blockList, int start){
 
-		for(int i = start; i <= blockList.size(); i++){
-			if(blockList.get(i).getOccupied()) // return Train associated with Block 
-			;
+		ArrayList<DummyTrain> trainList = manager.getTrainList();
+		blockList = new ArrayList<Block> (blockList.subList(start, blockList.size()));
+
+		for(int i = 0; i <= trainList.size(); i++){
+			if(blockList.contains(trainList.get(i).getPosition())) return trainList.get(i);
 		}
 
 		return null;
@@ -283,7 +273,7 @@ public class Schedule{
 
 	private Block nextOccupied(ArrayList<Block> blockList, int start){
 
-		ArrayList<Block> occupied = new ArrayList<Block>(); //manager.getOccupancyList();
+		ArrayList<Block> occupied = manager.getOccupancyList();
 		int ind;
 
 		for(int i = start; i <= blockList.size(); i++){
@@ -312,29 +302,29 @@ public class Schedule{
 	 * @bug Get position of trains in fixed block mode
 	 * @bug Check for null values
 	 */
-	private GPS findAuthority(ArrayList<Block> blockList, Train train){
-		
+	private GPS findAuthority(ArrayList<Block> blockList, DummyTrain train){
+
 		Block currBlock;
 		GPS nextTrain;
 
-		if("MBO" == mode){
-			currBlock = train.getGPS().getCurrBlock();
-			nextTrain = nextTrain(blockList, blockList.indexOf(currBlock)).getGPS();
+		if("MBO".equals(mode)){
+			Train tr = handler.findTrain(train.getID());
+			currBlock = tr.getGPS().getCurrBlock();
+			nextTrain = handler.findTrain(nextTrain(blockList, blockList.indexOf(currBlock)).getID()).getGPS();
 		}else{
-			currBlock = null; //manager.getTrain(train.getID()).getCurrBlock();
+			currBlock = train.getPosition();
 			nextTrain = new GPS(nextOccupied(blockList, blockList.indexOf(currBlock)), null);
 		}
 
-		Block nextStation = nextStation(blockList, blockList.indexOf(currBlock)); 
-							//dummyTrack.getNextStation(currBlock, switches).getHostBlock();
+		Block nextStation = nextStation(blockList, blockList.indexOf(currBlock));
 		int comp = nextTrain.getCurrBlock().compareTo(nextStation);
 		GPS auth;
 
 		if(comp <= 0){
-			if("MBO" == mode) auth = nextTrain;
+			if("MBO".equals(mode)) auth = nextTrain;
 			else auth = new GPS(nextTrain.getCurrBlock(), null);
 		}
-		else auth = new GPS(nextStation, null); 
+		else auth = new GPS(nextStation, null);
 
 		return auth;
 	}
@@ -469,14 +459,14 @@ public class Schedule{
 		for(int i = 0; i <= speeds.length; i++){
 			speeds[i] = blockList.get(i).getSpeedLimit();
 		}
-		
+
 		return speeds;
 	}
 
 	/**
 	 * Gets the minimum speed limit from a list of blocks
 	 * @param  blockList list of blocks
-	 * @return double    minSpeed  
+	 * @return double    minSpeed
 	 *
 	 * @bug Change so it calculates the min speed from start onwards
 	 */
@@ -493,7 +483,7 @@ public class Schedule{
 	}
 
 	/**
-	 * Gets the index of the block with the maximum difference between 
+	 * Gets the index of the block with the maximum difference between
 	 * set speed and speed limit
 	 * @param  blockList list of blocks
 	 * @param  speeds    array of set speeds
@@ -523,7 +513,7 @@ public class Schedule{
 	 * @return int       index
 	 */
 	private int blockBelowSpeedLimit(ArrayList<Block> blockList, double[] speeds, int prevIndex){
-		
+
 		if(prevIndex > speeds.length) return 2*speeds.length;
 		if(prevIndex < 0) prevIndex = 0;
 		for(int i = prevIndex; i <= speeds.length; i++){
@@ -577,7 +567,7 @@ public class Schedule{
 		/*for(int i = 0; i < stationArrivals.size(); i++){
 			for(int j = 0; j < stationArrivals.get(0).size(); j++){
 				System.out.printf("(%d,%d)\n", i, j);
-				schedule.get(0).add(convertTime(stationArrivals.get(i).get(i)));		
+				schedule.get(0).add(convertTime(stationArrivals.get(i).get(i)));
 			}
 		}*/
 

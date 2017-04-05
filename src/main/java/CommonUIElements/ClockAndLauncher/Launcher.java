@@ -27,6 +27,7 @@ import WaysideController.*;
 import TrackModel.*;
 import MBO.*;
 import CTC.*;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -39,13 +40,12 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import TrainModel.*;
+
+
 /**
  * This class is responsible for refreshing the system on a given clock period as
  * well as launch the various GUI for each of the models.
- *
- *
- *
- * @author Andrew Lendacky
  */
 public class Launcher extends javax.swing.JFrame {
 
@@ -55,20 +55,11 @@ public class Launcher extends javax.swing.JFrame {
     int systemSpeed;
 
     /**
-     *  The trainManager is shared by MBO/CTC_gui
-     */
-    //private TrainManager tm = new TrainManager();
-
-    /**
      * The timer used to refresh the modules during some given time period.
      */
     private Timer systemClock;
 
     //References to ACTIVE modules
-    private TrackModel GlobalTrack;
-    private ArrayList<WS> Waysides = new ArrayList<WS>();
-    private WaysideGUI WaysideGui;
-    private static ArrayList<TrainManager> TManagers = new ArrayList<TrainManager>();
 
     private void playSound(){
     
@@ -87,6 +78,21 @@ public class Launcher extends javax.swing.JFrame {
         }
     }
        
+
+    //Track
+    private TrackModel globalTrack;
+    //Wayside
+    private ArrayList<WS> waysideList = new ArrayList<WS>();
+    private WaysideGUI WaysideGui;
+    //Train
+    private TrainHandler trainHandler;
+    private TrainModeUI trainGUI;
+    //CTC
+    private ArrayList<TrainManager> trainManagers = new ArrayList<TrainManager>();
+    private CTCgui ctc;
+    //MBO
+    private MovingBlockOverlay mbo;
+    
     /**
      * Constructor for creating a Launcher object. By default, the system begins operating
      * in normal speed, i.e., wall clock speed.
@@ -99,23 +105,46 @@ public class Launcher extends javax.swing.JFrame {
         this.normalSpeedRadioButton.setSelected(true);
         // for now, we start in normal mode
         this.systemSpeed = 1000;
-        GlobalTrack = new TrackModel();
+
+        //Generate globalTrack
+        this.globalTrack = new TrackModel("GlobalTrack");
         String[] fNames = {"resources/redline.csv"};
-        GlobalTrack.readCSV(fNames);
-        for(String s : GlobalTrack.trackList.keySet()){
-          WS ws = new WS("Red", GlobalTrack);
-          Waysides.add(ws);
-          TManagers.add(new TrainManager(s));
+        this.globalTrack.readCSV(fNames);
+
+        //Cycle through number of lines and generate a WS and Train Manager for each line
+        for(String s : this.globalTrack.trackList.keySet()){
+          System.out.println(s);
+          WS ws = new WS(s, this.globalTrack);
+          this.waysideList.add(ws);
+          trainManagers.add(new TrainManager(s, generateTrack("TrainManager - " + s)));
         }
-        WaysideGui = new WaysideGUI(GlobalTrack, Waysides);
+
+        //Set Wayside GUI for WS's
+        this.WaysideGui = new WaysideGUI(this.globalTrack, this.waysideList);
+        for(WS ws : this.waysideList)
+          ws.setGUI(this.WaysideGui);
+
+        this.trainHandler = new TrainHandler(globalTrack);
+        this.trainGUI = new TrainModeUI();
+        this.mbo = new MovingBlockOverlay(generateTrack("MBO"), trainManagers, this.trainHandler);
+        this.ctc = new CTCgui(trainManagers, generateTrack("CTC"), this.waysideList);
+        this.ctc.setMBO(this.mbo);
+        this.mbo.setCTC(this.ctc);
+
 
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
             Random rand = new Random();
             public void actionPerformed(ActionEvent e) {
 
                 updateDateAndTime();
+                //Update WaysideGui and WS's
                 WaysideGui.update();
+                for(WS ws : waysideList)
+                  ws.update();
+
                 // what should be called every tick
+				        // trainH.pollYard();
+				        //trainGUI.updateGUI(trainGUI.getCurrT());
             }
         });
 
@@ -421,7 +450,6 @@ public class Launcher extends javax.swing.JFrame {
      * @param evt
      */
     private void openCTC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openCTC
-        CTCgui ctc = new CTCgui(TManagers, generateTrack(), Waysides);
         ctc.getFrame().setVisible(true);
         ctc.getFrame().setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_openCTC
@@ -452,6 +480,8 @@ public class Launcher extends javax.swing.JFrame {
      */
     private void openTrain(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTrain
         // TODO add your handling code here:
+		trainGUI.frmTrainModel.setVisible(true);
+		trainGUI.setTrainArray(this.trainHandler.getTrains());
     }//GEN-LAST:event_openTrain
 
     /**
@@ -461,7 +491,7 @@ public class Launcher extends javax.swing.JFrame {
      */
     private void openMBOandScheduler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMBOandScheduler
         // TODO add your handling code here:
-        //MovingBlockOverlay mbo = new MovingBlockOverlay(generateTrack(), TManagers);
+        mbo.initGUI();
     }//GEN-LAST:event_openMBOandScheduler
 
     private void createLogger(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createLogger
@@ -476,10 +506,10 @@ public class Launcher extends javax.swing.JFrame {
      * @return Dummy Track
      * @bug REDLINE ONLY CURRENTLY
      */
-    public TrackModel generateTrack(){
+    public TrackModel generateTrack(String module){
       String[] fNames = {"resources/redline.csv"};
-      TrackModel globalTrack = new TrackModel();
-  		globalTrack.readCSV(fNames);
+      TrackModel globalTrack = new TrackModel(module);
+  	  globalTrack.readCSV(fNames);
       return globalTrack;
     }
 
@@ -518,7 +548,6 @@ public class Launcher extends javax.swing.JFrame {
             }
         });
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel clockSpeedLabel;

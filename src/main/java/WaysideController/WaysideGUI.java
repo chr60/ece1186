@@ -1,17 +1,28 @@
 package WaysideController;
 
-import TrackModel.*;
+//Imports
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.util.*;
 import java.util.ArrayList;
+import java.util.Set;
 import javax.script.ScriptException;
-import javax.swing.*;
-import javax.swing.JTextArea;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
+//Modules
+import TrackModel.TrackModel;
+import TrackModel.Block;
 public class WaysideGUI {
 
   private JFrame MainFrame;
@@ -20,8 +31,8 @@ public class WaysideGUI {
   TrackModel track;
 
 
-  public JFrame getFrame(){
-    return this.MainFrame;
+  public void update(){
+    printNotification("Update!");
   }
 
   public WaysideGUI(TrackModel track, ArrayList<WS> Waysides) {
@@ -113,9 +124,14 @@ public class WaysideGUI {
   		notificationsLabel.setBounds(448, 14, 92, 14);
   		frame.add(notificationsLabel);
 
-      notifConsole = new JTextArea();
+      notifConsole = new JTextArea(5, 20);
+      notifConsole.setTabSize(8);
   		notifConsole.setBounds(448, 30, 658, 405);
   		frame.add(notifConsole);
+      JScrollPane Scroller = new JScrollPane(notifConsole);
+      Scroller.setBounds(448, 30, 658, 405);
+      frame.add(Scroller);
+
 
   		JLabel lblMurphy = new JLabel("Murphy");
   		lblMurphy.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -217,8 +233,8 @@ public class WaysideGUI {
   	public void printNotification(String toPrint){
       notifConsole.setText(notifConsole.getText()+ "\n" + toPrint);
   	}
-    public void update(){
-      printNotification("Update!");
+    public JFrame getFrame(){
+      return this.MainFrame;
     }
 
 }

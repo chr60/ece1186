@@ -75,8 +75,7 @@ public class TCBlockInfoPanel extends javax.swing.JPanel {
      * 
      */
     public void refreshUI(){
-       
-        
+           
 //        if (this.selectedTrain.getGPS()!= null){
 //        
 //            if (this.selectedTrain.getGPS().getCurrBlock() != null){

@@ -1025,8 +1025,12 @@ public class TCTestConsole extends javax.swing.JFrame {
             //this.trainController.trains.add(new Train( i, this.trainController.track) );
             this.dispatchedTrains++; 
             Block yardBlock = this.trainController.track.viewStationMap().get("Red").get("YARD").get(0);
-            Block endingBlock = yardBlock.
-            this.trainController.redLineHandler.setSpeedAndAuthority(-1,50,);
+            
+            Block endingBlock = yardBlock.nextBlockForward().nextBlockForward().nextBlockForward(); 
+            yardBlock.setAuthority(endingBlock);
+            yardBlock.setSuggestedSpeed(70.0);  
+            
+            this.trainController.redLineHandler.setSpeedAndAuthority(-1, 50.0, endingBlock, yardBlock);
         }
         
         this.trainController.setTrainListComboBox();

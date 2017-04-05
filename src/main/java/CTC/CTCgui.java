@@ -22,10 +22,13 @@ public class CTCgui {
     return this.mainGUI;
   }
 
+  private MovingBlockOverlay MBO;
 	ArrayList<WS> waysides;
 	TrackModel dummyTrack;
 	ArrayList<TrainManager> tmanagers;
 	private Border grayline;
+  int lastClickedButton;
+  TrainPanel trainPanel;
 
 
 	/**
@@ -35,6 +38,7 @@ public class CTCgui {
 		this.dummyTrack = dummyTrack;
 		this.waysides = waysides;
 		this.tmanagers = tmanagers;
+    lastClickedButton = 0;
 
 		grayline = BorderFactory.createLineBorder(Color.gray);
 
@@ -53,19 +57,152 @@ public class CTCgui {
 
 
 // DISPATCH TRAIN PANEL
-		TrainPanel trainPanel = new TrainPanel();
+		trainPanel = new TrainPanel(tmanagers, dummyTrack, waysides);
 		trainPanel.setBounds(402, 229, 367, 98);
 		trainPanel.setBorder(grayline);
 		frame.getContentPane().add(trainPanel);
 		trainPanel.setLayout(null);
 
 
+// IMAGE
+		ImageIcon image = new ImageIcon(getClass().getResource("trackPicture.jpg"));
+		JPanel panel = new JPanel();
+    panel.setLayout(new BorderLayout());
+		panel.setBounds(0, 0, 390, 511);
+		frame.getContentPane().add(panel);
+		panel.add(new JLabel(image), BorderLayout.CENTER);
+
+// Train manager panel
+    TrainManagerPanel tmPanel = new TrainManagerPanel();
+    tmPanel.setBounds(0, 0, 390, 511);
+/*
+// MBO SCHEDULE PANEL - appears in CTC
+    JPanel schedulePanel = MBOgui.getTrainSchedulePanel();
+    schedulePanel.setBounds(0, 0, 390, 511);
+*/
 // EVERYTHING ELSE PANEL
-		MiscPanel miscPanel = new MiscPanel();
+		JPanel miscPanel = new JPanel();
 		miscPanel.setLayout(null);
 		miscPanel.setBorder(grayline);
 		miscPanel.setBounds(402, 326, 367, 85);
 		frame.getContentPane().add(miscPanel);
+
+    JButton buttonShowPicture = new JButton("Show Track Pic");
+    buttonShowPicture.setBounds(20, 11, 118, 23);
+    miscPanel.add(buttonShowPicture);
+
+    JButton buttonShowSchedule = new JButton("Show Schedule");
+    buttonShowSchedule.setBounds(20, 36, 118, 23);
+    miscPanel.add(buttonShowSchedule);
+
+    JButton buttonAllTrains = new JButton("Show All Trains");
+    buttonAllTrains.setBounds(20, 58, 118, 23);
+    miscPanel.add(buttonAllTrains);
+
+    buttonShowSchedule.addActionListener(new ActionListener(){
+      public void actionPerformed(ActionEvent e){
+        if(lastClickedButton == 2){ //train
+          frame.getContentPane().remove(tmPanel);
+          //frame.getContentPane().add(schedulePanel);
+          frame.validate();
+          frame.repaint();
+        }else if(lastClickedButton == 0){  //pic
+          frame.getContentPane().remove(panel);
+          //frame.getContentPane().add(schedulePanel);
+          frame.validate();
+          frame.repaint();
+        }else{
+          // do nothing - schedule already set
+        }
+        lastClickedButton = 1;
+      }
+    });
+    buttonAllTrains.addActionListener(new ActionListener(){
+      public void actionPerformed(ActionEvent e){
+        if(lastClickedButton == 0){ //pic
+          frame.getContentPane().remove(panel);
+          frame.getContentPane().add(tmPanel);
+          frame.validate();
+          frame.repaint();
+        }else if(lastClickedButton == 1){ //sched
+          //frame.getContentPane().remove(schedulePanel);
+          frame.getContentPane().add(tmPanel);
+          frame.validate();
+          frame.repaint();
+        }else{
+          // do nothing - picture already set
+        }
+        lastClickedButton = 2;
+      }
+    });
+    buttonShowPicture.addActionListener(new ActionListener(){
+      public void actionPerformed(ActionEvent e){
+        if(lastClickedButton == 2){  //train
+          frame.getContentPane().remove(tmPanel);
+          frame.getContentPane().add(panel);
+          frame.validate();
+          frame.repaint();
+        }else if(lastClickedButton == 1){ //sched
+          frame.getContentPane().remove(panel);
+          //frame.getContentPane().add(schedulePanel);
+          frame.validate();
+          frame.repaint();
+        }else{
+          // do nothing - picture already set
+        }
+        lastClickedButton = 0;
+      }
+    });
+
+    JLabel lblModes = new JLabel("MODES");
+    lblModes.setBounds(176, 11, 46, 14);
+    miscPanel.add(lblModes);
+    lblModes.setHorizontalAlignment(SwingConstants.LEFT);
+
+    JRadioButton radioAuto = new JRadioButton("Automatic");
+    radioAuto.setSelected(true);
+    radioAuto.setBounds(176, 29, 78, 23);
+    miscPanel.add(radioAuto);
+
+    JRadioButton radioManual = new JRadioButton("Manual");
+    radioManual.setBounds(255, 29, 73, 23);
+    miscPanel.add(radioManual);
+
+
+    JRadioButton radioFixed = new JRadioButton("Fixed Block");
+    radioFixed.setSelected(true);
+    radioFixed.setBounds(255, 61, 84, 23);
+    miscPanel.add(radioFixed);
+
+    JRadioButton radioMBO = new JRadioButton("MBO");
+    radioMBO.setBounds(176, 61, 65, 23);
+    miscPanel.add(radioMBO);
+
+    ButtonGroup scheduleGroup = new ButtonGroup();
+    scheduleGroup.add(radioFixed);
+    scheduleGroup.add(radioMBO);
+
+    ButtonGroup modeGroup = new ButtonGroup();
+    modeGroup.add(radioAuto);
+    modeGroup.add(radioManual);
+
+    radioAuto.addActionListener(new ActionListener(){
+      public void actionPerformed(ActionEvent e){
+        String mainMode = "auto";
+        radioFixed.setEnabled(true);
+        radioMBO.setEnabled(true);
+
+      }
+    });
+
+    radioManual.addActionListener(new ActionListener(){
+      public void actionPerformed(ActionEvent e){
+        String mainMode = "manual";
+        radioFixed.setEnabled(false);
+        radioMBO.setEnabled(false);
+
+      }
+    });
 
 
 // TESTING PANEL
@@ -84,16 +221,8 @@ public class CTCgui {
 		failurePanel.setLayout(null);
 
 
-
-// IMAGE
-		ImageIcon image = new ImageIcon(getClass().getResource("trackPicture.jpg"));
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 390, 511);
-		frame.getContentPane().add(panel);
-		panel.add(new JLabel(image));
-
 // connections between panels
-		miscPanel.setTrainPanel(trainPanel);
+		//miscPanel.setTrainPanel(trainPanel);
 
 
 	}
@@ -106,6 +235,14 @@ public class CTCgui {
 	public String getMode(){
 		return null;
 	}
+
+  public void setMBO(MovingBlockOverlay mbo){
+    this.MBO = mbo;
+  }
+
+  public TrainPanel getTrainPanel(){
+    return trainPanel;
+  }
 
 //
 

@@ -7,8 +7,14 @@ import java.awt.event.ActionEvent;
 import java.util.*;
 import java.awt.*;
 
-public class TrainPanel extends JPanel{
+import MBO.*;
+import TrackModel.*;
+import WaysideController.*;
 
+public class TrainPanel extends JPanel{
+	ArrayList<WS> Waysides;
+	WS currWorkingWS;
+	TrackModel DummyTrack;
 	private JLabel set_speed_label;
 	private JLabel authority_label;
 	private JLabel speedNUM;
@@ -23,7 +29,10 @@ public class TrainPanel extends JPanel{
 	private JLabel trainWindowLabel;
 	private JButton buttonEditTrain;
 
-	public TrainPanel(){
+	public TrainPanel(ArrayList<TrainManager> tmanagers, TrackModel dummyTrack, ArrayList<WS> waysides){
+		this.Waysides = waysides;
+		this.currWorkingWS = waysides.get(0);
+		this.DummyTrack = dummyTrack;
 
 		set_speed_label = new JLabel("Speed");
 		set_speed_label.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -82,6 +91,16 @@ public class TrainPanel extends JPanel{
 		dropdownTrains.setBounds(25, 40, 87, 23);
 		add(dropdownTrains);
 
+		JLabel lblthroughput = new JLabel("trains/hr");
+    lblthroughput.setBounds(80, 67, 119, 23);
+    add(lblthroughput);
+
+    JLabel return_throughput = new JLabel("#");
+    return_throughput.setHorizontalAlignment(SwingConstants.CENTER);
+    return_throughput.setBounds(25, 67, 87, 23);
+    add(return_throughput);
+
+		/*
 		updateBtn = new JButton("Update List");
 		updateBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -95,6 +114,7 @@ public class TrainPanel extends JPanel{
 		});
 		updateBtn.setBounds(25, 67, 87, 23);
 		add(updateBtn);
+		*/
 
 		buttonDispatchTrain = new JButton("Dispatch Train");
 		buttonDispatchTrain.addActionListener(new ActionListener(){
@@ -134,6 +154,10 @@ public class TrainPanel extends JPanel{
 	}
 
 
+	// MBO calls this method to give speed and authority for that clock tick for the entire trackList
+	public void updateSpeedAuthToWS(ArrayList<Block> path){
+		currWorkingWS.setSpeedAuth(path);
+	}
 
 
 

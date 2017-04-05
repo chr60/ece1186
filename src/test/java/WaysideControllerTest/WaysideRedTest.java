@@ -134,4 +134,18 @@ public class WaysideRedTest{
     assertTrue(this.track.getBlock("Red", "U", 77).getSuggestedSpeed() == 30);
     assertTrue(this.track.getBlock("Red", "U", 77).getAuthority().equals(this.track.getBlock("Red", "C", 9)));
   }
+
+  @Test
+  /**
+  * Test for getting Crossing status
+  */
+  @DisplayName("Set I47 to Active (false), check status with WS before and after")
+  void testCrossingStatus(){
+    Block crossingBlock = this.track.getBlock("Red","I",47);
+    assertTrue(this.track.viewCrossingMap().get(crossingBlock).viewCrossingState());
+    assertTrue(redWS.getCrossing(crossingBlock));
+    crossingBlock.getAssociatedCrossing().setCrossingState(false);
+    assertFalse(this.track.viewCrossingMap().get(crossingBlock).viewCrossingState());
+    assertFalse(redWS.getCrossing(crossingBlock));
+  }
 }

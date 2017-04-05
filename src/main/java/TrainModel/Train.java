@@ -152,6 +152,10 @@ public class Train implements Serializable {
 		Double dist = distBlock + distTravelled;
 		
 		//check if distance exceeds length of block (if so enter new block) if not update location
+                System.out.println(trainLocation); 
+                System.out.println(trainLocation.getCurrBlock()); 
+                //System.out.println(trainLocation.getCurrBlock().getLen()); 
+                
 		while (dist > trainLocation.getCurrBlock().getLen())
 		{
 			dist = getCurrBlock().getLen() - dist;
@@ -168,9 +172,23 @@ public class Train implements Serializable {
      * Method to update speed and authority (and other block properties)
      */
 	private void updateSpeedAndAuthority(){
-		setPointSpeed = currBlock.getSuggestedSpeed();
-		currAuthority = currBlock.getAuthority();
-		currGrade = currBlock.getGrade();
+            
+            
+            System.out.println(this.getCurrBlock());
+            
+            if (this.getCurrBlock().getSuggestedSpeed() != null){
+            
+		setPointSpeed = getCurrBlock().getSuggestedSpeed();
+            }
+            
+            if (this.getCurrBlock().getAuthority() != null){
+            
+		currAuthority = getCurrBlock().getAuthority();
+            }
+            
+            if (this.getCurrBlock().getGrade() != null){
+		currGrade = getCurrBlock().getGrade();
+            }
 	}
 	
 
@@ -249,7 +267,7 @@ public class Train implements Serializable {
      */
 	public void setCurrBlock(Block newBlock){
 
-            this.trainLocation.setCurrBlock(currBlock);
+            this.trainLocation.setCurrBlock(newBlock);
             this.trainLocation.setDistIntoBlock(0.0);
 	}
 	
