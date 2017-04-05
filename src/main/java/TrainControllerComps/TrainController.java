@@ -146,7 +146,7 @@ public class TrainController extends javax.swing.JFrame {
         this.detailedTrainWindowOpen = false;
 
         // check if kp/ki is set
-        if (this.selectedTrain.powerConstantsSet()){
+        if (this.selectedTrain.powerConstantsSet() == false){
 
             TCEngineerPanel engPanel = new TCEngineerPanel(this.selectedTrain);
             engPanel.setVisible(true);

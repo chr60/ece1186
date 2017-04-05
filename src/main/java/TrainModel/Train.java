@@ -40,6 +40,7 @@ public class Train implements Serializable {
 	String messageBoard;
 	GPS trainLocation;
 	TrackModel globalTrack;
+        Block prevBlock;
 
 
 	/**
@@ -95,9 +96,11 @@ public class Train implements Serializable {
 		if(newPower >= maxPower){
 			//if power command is greater than or equal to max power do nothing
                         power = maxPower; 
+                        System.out.println("Hey you!"); 
                         changeSpeed(forceApp);
 		}else {
 			//if power command calls for increase of speed
+                        System.out.println("Hey you!"); 
 			changeSpeed(forceApp);
 		}
 		
@@ -156,9 +159,46 @@ public class Train implements Serializable {
 		//check if distance exceeds length of block (if so enter new block) if not update location                
 		while (dist > trainLocation.getCurrBlock().getLen())
 		{
+                       // System.out.println("Next block forward" + currBlock.nextBlockForward().blockNum());
 			dist = getCurrBlock().getLen() - dist;
 			currBlock.setOccupied(false);
-			currBlock = currBlock.nextBlockForward();
+                        
+                        Block blockForward = currBlock.nextBlockForward();
+                        Block blockBackward = currBlock.nextBlockBackward();
+                        
+                        System.out.println("forward block: " + blockForward.blockNum()); 
+                        System.out.println("backward block: " + blockBackward.blockNum()); 
+                        if(blockForward != null && blockBackward != null){
+                            //theres both a forward and backward. go to the one that wasnt last visited
+                            if (blockBackward.compareTo(prevBlock) == 0)
+                            {
+                                //we were just in blockBackward so go forward
+                                prevBlock = currBlock;
+                                currBlock = currBlock.nextBlockForward(); 
+                            }else{
+                                //go backwards
+                                prevBlock = currBlock;
+                                currBlock = currBlock.nextBlockBackward();
+                            }
+                        }else if (blockForward == null)
+                        {
+                            //go backwards
+                            if (blockBackward != null )
+                            {
+                                prevBlock = currBlock;
+                                currBlock = currBlock.nextBlockBackward();
+                            }
+                        }else if(blockBackward == null)
+                        {
+                            //go forward 
+                            if (blockForward != null )
+                            {
+                                prevBlock = currBlock;
+                                currBlock = currBlock.nextBlockForward();
+                            }
+                            
+                        }
+                        
                         System.out.println("Going to next block: " + currBlock.blockNum()); 
                         System.out.println("Block length: " + currBlock.getLen()); 
 			currBlock.setOccupied(true);
@@ -269,6 +309,7 @@ public class Train implements Serializable {
             this.trainLocation.setCurrBlock(newBlock);
             this.trainLocation.setDistIntoBlock(0.0);
             this.currBlock = newBlock; 
+            this.prevBlock = currBlock;
 	}
 	
 	/**

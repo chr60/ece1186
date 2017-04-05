@@ -130,7 +130,8 @@ public class TrainHandler {
 	{
 		//gets the exit yard blocks for both red and green line. each will be pulled to determine if there is a train ready to be added to the track.
 		yardBlockRed = globalTrack.viewStationMap().get("Red").get("YARD").get(0);
-
+                yardBlockRed = globalTrack.lateralLookup(yardBlockRed);
+                assert(yardBlockRed.nextBlockForward() != null);
 		//yardBlockGreen = globalTrack.viewStationMap().get("Green").get("YARD").get(1);
 	}
 

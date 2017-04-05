@@ -146,7 +146,7 @@ public class TCSpeedController extends javax.swing.JPanel {
     public void setTrain(Train train){
 
         this.selectedTrain = train;
-        this.setSpeed = selectedTrain.getVelocity().intValue();
+        //this.setSpeed = 0; //selectedTrain.getVelocity().intValue();
     }
 
     /**
@@ -203,14 +203,14 @@ public class TCSpeedController extends javax.swing.JPanel {
             System.out.println(this.selectedTrain);
             Block currBlock = this.selectedTrain.getGPS().getCurrBlock(); // get current block
             Double blockSpeedLimit = currBlock.getSpeedLimit(); // get speed limit on block
-            System.out.println(currBlock);
+            System.out.println(currBlock.getSpeedLimit());
             if (blockSpeedLimit != null){
 
                 this.maxSpeedSlider.setText(Double.toString(blockSpeedLimit)); // update slider label
                 this.speedSlider.setMaximum(blockSpeedLimit.intValue()); //update max value of slider
 
                 // if we changed to manual mode from automatic mode, we need to adjust to meet block limit
-                if (this.setSpeed > blockSpeedLimit.intValue()){ this.setSpeed = blockSpeedLimit.intValue(); }
+                //if (this.setSpeed > blockSpeedLimit.intValue()){ this.setSpeed = blockSpeedLimit.intValue(); }
 
               this.powerControl();
             }
@@ -221,7 +221,7 @@ public class TCSpeedController extends javax.swing.JPanel {
             // get the block the train is on, and the set suggested speed
             Block currBlock = this.selectedTrain.getGPS().getCurrBlock();
             Double blockSuggestedSpeed = currBlock.getSuggestedSpeed();
-
+            System.out.println(currBlock.getSuggestedSpeed());
             if (blockSuggestedSpeed != null){
 
                 this.maxSpeedSlider.setText(Double.toString(blockSuggestedSpeed));
@@ -400,11 +400,11 @@ public class TCSpeedController extends javax.swing.JPanel {
     private void setSpeed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setSpeed
 
         String log;
-        this.setSpeed = speedSlider.getValue();
+        this.setSpeed = this.speedSlider.getValue();
 
 
-        log = "Telling train to set speed to " + setSpeed;
-        logBook.add(log);
+        log = "Telling train to set speed to " + this.setSpeed;
+        this.logBook.add(log);
         this.printLogs();
     }//GEN-LAST:event_setSpeed
 
