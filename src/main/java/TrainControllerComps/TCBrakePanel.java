@@ -141,6 +141,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
              
         if (this.trainAhead()){ return true; } // there's a train ahead
  
+        
         return false; 
     }
     
@@ -157,6 +158,29 @@ public class TCBrakePanel extends javax.swing.JPanel {
             return true; 
         }
         return false; 
+    }
+    
+    private void willExceedAuthority(){
+        
+        //this.logBook.add("Calling Will Exceed Authority"); 
+        
+        if ( this.selectedTrain.getCurrBlock().nextBlockBackward().blockNum().compareTo(7) == 0 ){
+               // || (this.selectedTrain.getCurrBlock().nextBlockForward().blockNum() == 7) ){
+        
+            this.logBook.add("Next Block is Authority!"); 
+            
+            double footprint = this.selectedTrain.getGPS().getDistIntoBlock() + this.selectedTrain.getSafeBrakingDistSB();
+            
+            if (footprint == this.selectedTrain.getGPS().getCurrBlock().getLen()){
+                this.logBook.add("Authority 1");
+                this.speedController.setSetSpeed(0);
+            }else if (footprint > this.selectedTrain.getGPS().getCurrBlock().getLen()){
+                this.logBook.add("Authority 2");
+                this.speedController.setSetSpeed(0);
+            }
+        }
+        
+        this.printLogs();
     }
     
     /**
@@ -190,7 +214,9 @@ public class TCBrakePanel extends javax.swing.JPanel {
          * 
          * FIX ME: Have it use the emergency brake to stop in a hurry.
          */
-        if (this.shouldStopTrainChecks()){ this.speedController.setSetSpeed(0); }
+        //if (this.shouldStopTrainChecks()){ this.speedController.setSetSpeed(0); }
+        
+        this.willExceedAuthority();
     }
     
     /**

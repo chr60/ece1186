@@ -1189,7 +1189,7 @@ public class TrainController extends javax.swing.JFrame {
             this.brakePanel.setSelectedTrain(this.selectedTrain);
             this.brakePanel.setOperatingLogs(this.operatingLogs);
             this.brakePanel.inManualMode(this.manualMode);
-
+            this.brakePanel.refreshUI();
 
             this.speedController.setBrakePanel(this.brakePanel);
         }
