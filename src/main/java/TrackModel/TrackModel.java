@@ -51,6 +51,7 @@ public class TrackModel implements Serializable{
     HashMap<Block, Crossing> crossingMap = new HashMap<Block, Crossing>();
     HashMap<Block, Lights> lightsMap = new HashMap<Block,Lights>();
     HashMap<Station, ArrayList<Lights>> stationLightsMap = new HashMap<Station, ArrayList<Lights>>();
+    HashMap<Block, Beacon> blockBeaconMap = new HashMap<Block, Beacon>();
 
     /**
     * Simplicity wrapper to return a non-aliased block on the track given the parameters.
@@ -422,7 +423,16 @@ public class TrackModel implements Serializable{
         }
     }
 
-    /** Helper function to link nextBlock for switches.
+    /**
+    * Helper function to handle the beacon mapping
+    */
+    private void handleBeacons(){
+        for(Block b : this.blockStationMap.keySet()){
+            this.blockBeaconMap.put(b, new Beacon(this, b, "Hello from beacon!"));
+        }
+    }
+    /** 
+    * Helper function to link nextBlock for switches.
     */
     private void handleSwitches(){
 
@@ -512,8 +522,6 @@ public class TrackModel implements Serializable{
             this.buildStationHostMap();
             this.buildBlockStationMap();
             this.buildLightsMap();
-            if(this.verbose){
-                //this.examineNext();
-            }
+            this.handleBeacons();
         }
 }

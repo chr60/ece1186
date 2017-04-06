@@ -58,6 +58,8 @@ public class TrackGUI {
   private JToggleButton toggleUpdate;
   private JLabel imageLabel;
   private final Double METERSMULT = 3.28084;
+  private JLabel lblBeaconMessage;
+  private JTextField textFieldBeaconMessage;
   /**
    * Create the application.
    */
@@ -82,7 +84,7 @@ public class TrackGUI {
     String[] lineStrings = lineSet.toArray(new String[lineSet.size()]);
 
     frame = new JFrame();
-    frame.setBounds(100, 100, 1204, 771);
+    frame.setBounds(100, 100, 863, 665);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.getContentPane().setLayout(null);
 
@@ -90,29 +92,29 @@ public class TrackGUI {
     imageLabel = new JLabel("Track", image, JLabel.CENTER);
     imageLabel.setVerticalTextPosition(JLabel.CENTER);
     imageLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    imageLabel.setBounds(030, 20, 400, 600);
+    imageLabel.setBounds(10, 11, 400, 600);
     frame.getContentPane().add(imageLabel);
 
     JComboBox dropdownLine = new JComboBox(lineStrings);
-    dropdownLine.setBounds(337, 22, 86, 23);
+    dropdownLine.setBounds(570, 22, 86, 23);
     frame.getContentPane().add(dropdownLine);
 
 
     String[] segmentStrings = {};
     JComboBox dropdownSegment = new JComboBox(segmentStrings);
-    dropdownSegment.setBounds(420, 22, 86, 23);
+    dropdownSegment.setBounds(653, 22, 86, 23);
     frame.getContentPane().add(dropdownSegment);
 
     String[] blockStrings = {};
     JComboBox dropdownBlock = new JComboBox(blockStrings);
-    dropdownBlock.setBounds(504, 22, 86, 23);
+    dropdownBlock.setBounds(737, 22, 86, 23);
     frame.getContentPane().add(dropdownBlock);
 
     //Length
     lengthField = new JTextField();
     lengthField.setHorizontalAlignment(SwingConstants.CENTER);
     lengthField.setText("#");
-    lengthField.setBounds(600, 58, 86, 23);
+    lengthField.setBounds(634, 56, 86, 23);
     frame.getContentPane().add(lengthField);
     lengthField.setColumns(10);
 
@@ -121,7 +123,7 @@ public class TrackGUI {
     gradeField.setHorizontalAlignment(SwingConstants.CENTER);
     gradeField.setText("#");
     gradeField.setColumns(10);
-    gradeField.setBounds(600, 81, 86, 23);
+    gradeField.setBounds(634, 79, 86, 23);
     frame.getContentPane().add(gradeField);
 
     //Elevation
@@ -129,7 +131,7 @@ public class TrackGUI {
     elevationField.setHorizontalAlignment(SwingConstants.CENTER);
     elevationField.setText("#");
     elevationField.setColumns(10);
-    elevationField.setBounds(600, 104, 86, 23);
+    elevationField.setBounds(634, 102, 86, 23);
     frame.getContentPane().add(elevationField);
 
     //Speed Limit
@@ -137,179 +139,220 @@ public class TrackGUI {
     speedField.setText("#");
     speedField.setHorizontalAlignment(SwingConstants.CENTER);
     speedField.setColumns(10);
-    speedField.setBounds(600, 127, 86, 23);
+    speedField.setBounds(634, 125, 86, 23);
     frame.getContentPane().add(speedField);
 
     lblBlockLength = new JLabel("Length");
     lblBlockLength.setFont(new Font("Tahoma", Font.PLAIN, 14));
     lblBlockLength.setHorizontalAlignment(SwingConstants.RIGHT);
-    lblBlockLength.setBounds(600, 58, 79, 23);
+    lblBlockLength.setBounds(529, 56, 79, 23);
     frame.getContentPane().add(lblBlockLength);
 
     lblBlockGrade = new JLabel("Grade");
     lblBlockGrade.setHorizontalAlignment(SwingConstants.RIGHT);
     lblBlockGrade.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblBlockGrade.setBounds(600, 81, 68, 23);
+    lblBlockGrade.setBounds(529, 79, 79, 23);
     frame.getContentPane().add(lblBlockGrade);
 
     lblElevation = new JLabel("Elevation");
     lblElevation.setHorizontalAlignment(SwingConstants.RIGHT);
     lblElevation.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblElevation.setBounds(667, 102, 79, 23);
+    lblElevation.setBounds(529, 100, 79, 23);
     frame.getContentPane().add(lblElevation);
 
     lblSpeedLimit = new JLabel("Speed Limit");
     lblSpeedLimit.setHorizontalAlignment(SwingConstants.RIGHT);
     lblSpeedLimit.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblSpeedLimit.setBounds(683, 125, 79, 23);
+    lblSpeedLimit.setBounds(529, 123, 79, 23);
     frame.getContentPane().add(lblSpeedLimit);
 
     lblLengthUnit = new JLabel("f");
     lblLengthUnit.setHorizontalAlignment(SwingConstants.LEFT);
     lblLengthUnit.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblLengthUnit.setBounds(538, 56, 38, 23);
+    lblLengthUnit.setBounds(733, 56, 38, 23);
     frame.getContentPane().add(lblLengthUnit);
 
     lblGradePercent = new JLabel("%");
     lblGradePercent.setHorizontalAlignment(SwingConstants.LEFT);
     lblGradePercent.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblGradePercent.setBounds(538, 81, 38, 23);
+    lblGradePercent.setBounds(733, 81, 38, 23);
     frame.getContentPane().add(lblGradePercent);
 
     lblElevationUnit = new JLabel("f");
     lblElevationUnit.setHorizontalAlignment(SwingConstants.LEFT);
     lblElevationUnit.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblElevationUnit.setBounds(538, 102, 38, 23);
+    lblElevationUnit.setBounds(733, 102, 38, 23);
     frame.getContentPane().add(lblElevationUnit);
 
     lblSpeedUnit = new JLabel("feet/s");
     lblSpeedUnit.setHorizontalAlignment(SwingConstants.LEFT);
     lblSpeedUnit.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblSpeedUnit.setBounds(538, 125, 38, 23);
+    lblSpeedUnit.setBounds(733, 125, 38, 23);
     frame.getContentPane().add(lblSpeedUnit);
 
     lblOccupied = new JLabel("Occupied");
     lblOccupied.setHorizontalAlignment(SwingConstants.LEFT);
     lblOccupied.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblOccupied.setBounds(690, 183, 79, 23);
+    lblOccupied.setBounds(550, 183, 79, 23);
     frame.getContentPane().add(lblOccupied);
 
     JToggleButton toggleOccupied = new JToggleButton("Y");
     toggleOccupied.setFont(new Font("Tahoma", Font.PLAIN, 11));
     toggleOccupied.setSelected(true);
-    toggleOccupied.setBounds(630, 185, 45, 23);
+    toggleOccupied.setBounds(632, 185, 45, 23);
     frame.getContentPane().add(toggleOccupied);
     toggleOccupied.setSelected(true);
 
     JLabel lblHeaters = new JLabel("Heaters ON?");
     lblHeaters.setHorizontalAlignment(SwingConstants.RIGHT);
     lblHeaters.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblHeaters.setBounds(690, 211, 79, 23);
+    lblHeaters.setBounds(527, 211, 79, 23);
     frame.getContentPane().add(lblHeaters);
 
     JToggleButton toggleHeatersOn = new JToggleButton("N");
     toggleHeatersOn.setFont(new Font("Tahoma", Font.PLAIN, 11));
-    toggleHeatersOn.setBounds(630, 211, 45, 23);
+    toggleHeatersOn.setBounds(632, 213, 45, 23);
     frame.getContentPane().add(toggleHeatersOn);
 
     JSeparator separator = new JSeparator();
     separator.setForeground(Color.BLACK);
     separator.setBackground(Color.BLACK);
-    separator.setBounds(337, 305, 253, 2);
+    separator.setBounds(507, 405, 316, 2);
     frame.getContentPane().add(separator);
 
     JLabel lblCrossing = new JLabel("Crossings?");
-    lblCrossing.setHorizontalAlignment(SwingConstants.LEFT);
+    lblCrossing.setHorizontalAlignment(SwingConstants.RIGHT);
     lblCrossing.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblCrossing.setBounds(690, 235, 79, 23);
+    lblCrossing.setBounds(527, 235, 79, 23);
     frame.getContentPane().add(lblCrossing);
 
     JToggleButton toggleCrossings = new JToggleButton("N/A");
     toggleCrossings.setFont(new Font("Tahoma", Font.PLAIN, 11));
-    toggleCrossings.setBounds(590, 235, 90, 23);
+    toggleCrossings.setBounds(632, 237, 90, 23);
     frame.getContentPane().add(toggleCrossings);
 
     JToggleButton toggleUpdate = new JToggleButton("Update");
     toggleUpdate.setFont(new Font("Tahoma", Font.PLAIN, 11));
-    toggleUpdate.setBounds(250, 22, 80, 23);
+    toggleUpdate.setBounds(483, 22, 80, 23);
     frame.getContentPane().add(toggleUpdate);
 
     lblCrossingsActive = new JLabel("Lights");
-    lblCrossingsActive.setHorizontalAlignment(SwingConstants.LEFT);
+    lblCrossingsActive.setHorizontalAlignment(SwingConstants.RIGHT);
     lblCrossingsActive.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblCrossingsActive.setBounds(690, 259, 99, 23);
+    lblCrossingsActive.setBounds(550, 259, 56, 23);
     frame.getContentPane().add(lblCrossingsActive);
 
     lblIsUnderground = new JLabel("Underground");
-    lblIsUnderground.setHorizontalAlignment(SwingConstants.LEFT);
+    lblIsUnderground.setHorizontalAlignment(SwingConstants.RIGHT);
     lblIsUnderground.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblIsUnderground.setBounds(690, 285, 99, 23);
+    lblIsUnderground.setBounds(507, 342, 99, 23);
     frame.getContentPane().add(lblIsUnderground);
 
     toggleSignals = new JToggleButton("N/A");
     toggleSignals.setFont(new Font("Tahoma", Font.PLAIN, 11));
-    toggleSignals.setBounds(630, 259, 45, 23);
+    toggleSignals.setBounds(632, 261, 90, 23);
     frame.getContentPane().add(toggleSignals);
 
     toggleIsUnderground = new JToggleButton("N");
     toggleIsUnderground.setFont(new Font("Tahoma", Font.PLAIN, 11));
-    toggleIsUnderground.setBounds(630,285,45,23);
+    toggleIsUnderground.setBounds(632,341,45,23);
     frame.getContentPane().add(toggleIsUnderground);
 
     lblStation = new JLabel("Station");
     lblStation.setHorizontalAlignment(SwingConstants.RIGHT);
     lblStation.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblStation.setBounds(657, 149, 79, 23);
+    lblStation.setBounds(529, 147, 79, 23);
     frame.getContentPane().add(lblStation);
 
     txtname = new JTextField();
     txtname.setText("(name)");
     txtname.setHorizontalAlignment(SwingConstants.CENTER);
     txtname.setColumns(10);
-    txtname.setBounds(600, 151, 86, 23);
+    txtname.setBounds(634, 149, 186, 23);
     frame.getContentPane().add(txtname);
 
     lblNewLabel = new JLabel("MURPHY");
     lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
     lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-    lblNewLabel.setBounds(590, 305, 105, 38);
+    lblNewLabel.setBounds(529, 406, 105, 38);
     frame.getContentPane().add(lblNewLabel);
 
     lblBrokenRail = new JLabel("Broken Rail");
-    lblBrokenRail.setHorizontalAlignment(SwingConstants.LEFT);
+    lblBrokenRail.setHorizontalAlignment(SwingConstants.RIGHT);
     lblBrokenRail.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblBrokenRail.setBounds(690, 336, 79, 23);
+    lblBrokenRail.setBounds(537, 442, 79, 23);
     frame.getContentPane().add(lblBrokenRail);
 
     toggleBroken = new JToggleButton("N");
     toggleBroken.setFont(new Font("Tahoma", Font.PLAIN, 11));
-    toggleBroken.setBounds(630, 338, 45, 23);
+    toggleBroken.setBounds(634, 444, 45, 23);
     frame.getContentPane().add(toggleBroken);
 
     toggleCircuitFailure = new JToggleButton("N");
     toggleCircuitFailure.setFont(new Font("Tahoma", Font.PLAIN, 11));
-    toggleCircuitFailure.setBounds(630, 364, 45, 23);
+    toggleCircuitFailure.setBounds(634, 470, 45, 23);
     frame.getContentPane().add(toggleCircuitFailure);
 
     lblCircuitFailure = new JLabel("Circuit Failure");
-    lblCircuitFailure.setHorizontalAlignment(SwingConstants.LEFT);
+    lblCircuitFailure.setHorizontalAlignment(SwingConstants.RIGHT);
     lblCircuitFailure.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblCircuitFailure.setBounds(690, 364, 99, 23);
+    lblCircuitFailure.setBounds(529, 470, 87, 23);
     frame.getContentPane().add(lblCircuitFailure);
 
     lblPowerFailure = new JLabel("Power Failure");
-    lblPowerFailure.setHorizontalAlignment(SwingConstants.LEFT);
+    lblPowerFailure.setHorizontalAlignment(SwingConstants.RIGHT);
     lblPowerFailure.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblPowerFailure.setBounds(690, 388, 99, 23);
+    lblPowerFailure.setBounds(529, 494, 87, 23);
     frame.getContentPane().add(lblPowerFailure);
 
     togglePowerFailure = new JToggleButton("N");
     togglePowerFailure.setFont(new Font("Tahoma", Font.PLAIN, 11));
-    togglePowerFailure.setBounds(630, 388, 45, 23);
+    togglePowerFailure.setBounds(634, 494, 45, 23);
     frame.getContentPane().add(togglePowerFailure);
 
     toggleOccupied.setSelected(false);
     toggleOccupied.setText("N");
+
+    JLabel lblStationLights = new JLabel("Station Lights");
+    lblStationLights.setHorizontalAlignment(SwingConstants.RIGHT);
+    lblStationLights.setFont(new Font("Tahoma", Font.PLAIN, 14));
+    lblStationLights.setBounds(520, 307, 86, 23);
+    frame.getContentPane().add(lblStationLights);
+
+    JToggleButton toggleStationLightsForward = new JToggleButton("N/A");
+    toggleStationLightsForward.setFont(new Font("Tahoma", Font.PLAIN, 11));
+    toggleStationLightsForward.setBounds(632, 309, 90, 23);
+    frame.getContentPane().add(toggleStationLightsForward);
+
+    JToggleButton toggleStationLightsBack = new JToggleButton("N/A");
+    toggleStationLightsBack.setFont(new Font("Tahoma", Font.PLAIN, 11));
+    toggleStationLightsBack.setBounds(731, 309, 90, 23);
+    frame.getContentPane().add(toggleStationLightsBack);
+
+    JLabel backlabel = new JLabel("Backward");
+    backlabel.setHorizontalAlignment(SwingConstants.CENTER);
+    backlabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+    backlabel.setBounds(731, 285, 90, 23);
+    frame.getContentPane().add(backlabel);
+
+    JLabel lblForward = new JLabel("Forward");
+    lblForward.setHorizontalAlignment(SwingConstants.CENTER);
+    lblForward.setFont(new Font("Tahoma", Font.PLAIN, 14));
+    lblForward.setBounds(632, 285, 90, 23);
+    frame.getContentPane().add(lblForward);
+
+    lblBeaconMessage = new JLabel("Beacon Message");
+    lblBeaconMessage.setHorizontalAlignment(SwingConstants.RIGHT);
+    lblBeaconMessage.setFont(new Font("Tahoma", Font.PLAIN, 14));
+    lblBeaconMessage.setBounds(494, 371, 112, 23);
+    frame.getContentPane().add(lblBeaconMessage);
+
+    textFieldBeaconMessage = new JTextField();
+    textFieldBeaconMessage.setText("N/A");
+    textFieldBeaconMessage.setHorizontalAlignment(SwingConstants.CENTER);
+    textFieldBeaconMessage.setColumns(10);
+    textFieldBeaconMessage.setBounds(632, 375, 189, 23);
+    frame.getContentPane().add(textFieldBeaconMessage);
 
     //Button handling
     dropdownLine.addActionListener(new ActionListener() {
@@ -336,9 +379,10 @@ public class TrackGUI {
         String s = (String) dropdownSegment.getSelectedItem();
 
         Set<Integer> blockSet = track.trackList.get(l).get(s).keySet();
-        //System.out.println(blockSet);
+        System.out.println(blockSet);
 
         dropdownBlock.removeAllItems();
+
         for (Integer item : blockSet){
           dropdownBlock.addItem(Integer.toString(item));
         }
@@ -361,7 +405,8 @@ public class TrackGUI {
     * buttons selected.
     */
     toggleUpdate.addActionListener(new ActionListener() {
-      @Override
+
+    	@Override
       public void actionPerformed(ActionEvent e){
 
         String block = (String) dropdownBlock.getSelectedItem();
@@ -385,11 +430,17 @@ public class TrackGUI {
         Boolean hasCrossing = track.crossingMap.keySet().contains(thisBlock);
         Boolean hasStation = track.blockStationMap.keySet().contains(thisBlock);
         Boolean hasLights = track.lightsMap.keySet().contains(thisBlock);
+        Boolean hasBeacon = track.blockBeaconMap.keySet().contains(thisBlock);
 
         toggleOccupied.setSelected(isOccupied);
         toggleBroken.setSelected(isBroken);
         toggleCircuitFailure.setSelected(isCircuitFailure);
         togglePowerFailure.setSelected(isPowerFailure);
+
+        if(hasBeacon){
+            System.out.println("SDFSDF");
+            textFieldBeaconMessage.setText(track.blockBeaconMap.get(thisBlock).getBeaconMessage());
+        }
 
         if (isOccupied){
           toggleOccupied.setText("Y");
@@ -455,18 +506,29 @@ public class TrackGUI {
           }
         }else{
             toggleCrossings.setText("N/A");
-            toggleCrossings.setSelected(false);  
+            toggleCrossings.setSelected(false);
         }
-        
+
         if(hasStation){
           if(track.blockStationMap.get(thisBlock).trackHeatersOn){
             toggleHeatersOn.setText("On");
             toggleHeatersOn.setSelected(true);
-          }
-          else{
+            }else{
             toggleHeatersOn.setText("Off");
             toggleHeatersOn.setSelected(false);
           }
+        if(track.blockStationMap.get(thisBlock).getForwardLights().viewLightsState()){
+            toggleStationLightsForward.setText("Green");
+        }else{
+            toggleStationLightsForward.setText("Red");
+        }
+        if(track.blockStationMap.get(thisBlock).getBackwardLights().viewLightsState()){
+            toggleStationLightsBack.setText("Green");
+        }else{
+            toggleStationLightsBack.setText("Red");
+        }
+          
+
         }else{
             toggleHeatersOn.setText("N/A");
             toggleHeatersOn.setSelected(false);
@@ -474,11 +536,11 @@ public class TrackGUI {
 
         if(hasLights){
           if(track.lightsMap.get(thisBlock).viewLightsState()){
-            toggleSignals.setText("On");
-            toggleSignals.setSelected(true);
+            toggleSignals.setText("Green");
+            toggleSignals.setSelected(false);
           }
           else{
-            toggleSignals.setText("Off");
+            toggleSignals.setText("Red");
             toggleSignals.setSelected(false);
           }
         }
