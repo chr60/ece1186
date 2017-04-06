@@ -91,7 +91,7 @@ public class TrackGUI {
     imageLabel.setVerticalTextPosition(JLabel.CENTER);
     imageLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
     imageLabel.setBounds(030, 20, 400, 600);
-    //frame.getContentPane().add(imageLabel);
+    frame.getContentPane().add(imageLabel);
 
     JComboBox dropdownLine = new JComboBox(lineStrings);
     dropdownLine.setBounds(337, 22, 86, 23);
@@ -189,27 +189,27 @@ public class TrackGUI {
     frame.getContentPane().add(lblSpeedUnit);
 
     lblOccupied = new JLabel("Occupied");
-    lblOccupied.setHorizontalAlignment(SwingConstants.RIGHT);
+    lblOccupied.setHorizontalAlignment(SwingConstants.LEFT);
     lblOccupied.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblOccupied.setBounds(367, 183, 79, 23);
+    lblOccupied.setBounds(690, 183, 79, 23);
     frame.getContentPane().add(lblOccupied);
 
     JToggleButton toggleOccupied = new JToggleButton("Y");
     toggleOccupied.setFont(new Font("Tahoma", Font.PLAIN, 11));
     toggleOccupied.setSelected(true);
-    toggleOccupied.setBounds(450, 185, 45, 23);
+    toggleOccupied.setBounds(630, 185, 45, 23);
     frame.getContentPane().add(toggleOccupied);
     toggleOccupied.setSelected(true);
 
     JLabel lblHeaters = new JLabel("Heaters ON?");
     lblHeaters.setHorizontalAlignment(SwingConstants.RIGHT);
     lblHeaters.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblHeaters.setBounds(367, 211, 79, 23);
+    lblHeaters.setBounds(690, 211, 79, 23);
     frame.getContentPane().add(lblHeaters);
 
     JToggleButton toggleHeatersOn = new JToggleButton("N");
     toggleHeatersOn.setFont(new Font("Tahoma", Font.PLAIN, 11));
-    toggleHeatersOn.setBounds(450, 211, 45, 23);
+    toggleHeatersOn.setBounds(630, 211, 45, 23);
     frame.getContentPane().add(toggleHeatersOn);
 
     JSeparator separator = new JSeparator();
@@ -219,14 +219,14 @@ public class TrackGUI {
     frame.getContentPane().add(separator);
 
     JLabel lblCrossing = new JLabel("Crossings?");
-    lblCrossing.setHorizontalAlignment(SwingConstants.RIGHT);
+    lblCrossing.setHorizontalAlignment(SwingConstants.LEFT);
     lblCrossing.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblCrossing.setBounds(367, 235, 79, 23);
+    lblCrossing.setBounds(690, 235, 79, 23);
     frame.getContentPane().add(lblCrossing);
 
     JToggleButton toggleCrossings = new JToggleButton("N/A");
     toggleCrossings.setFont(new Font("Tahoma", Font.PLAIN, 11));
-    toggleCrossings.setBounds(450, 235, 45, 23);
+    toggleCrossings.setBounds(590, 235, 90, 23);
     frame.getContentPane().add(toggleCrossings);
 
     JToggleButton toggleUpdate = new JToggleButton("Update");
@@ -234,26 +234,26 @@ public class TrackGUI {
     toggleUpdate.setBounds(250, 22, 80, 23);
     frame.getContentPane().add(toggleUpdate);
 
-    lblCrossingsActive = new JLabel("Signals ON?");
-    lblCrossingsActive.setHorizontalAlignment(SwingConstants.RIGHT);
+    lblCrossingsActive = new JLabel("Lights");
+    lblCrossingsActive.setHorizontalAlignment(SwingConstants.LEFT);
     lblCrossingsActive.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblCrossingsActive.setBounds(347, 259, 99, 23);
+    lblCrossingsActive.setBounds(690, 259, 99, 23);
     frame.getContentPane().add(lblCrossingsActive);
 
     lblIsUnderground = new JLabel("Underground");
-    lblIsUnderground.setHorizontalAlignment(SwingConstants.RIGHT);
+    lblIsUnderground.setHorizontalAlignment(SwingConstants.LEFT);
     lblIsUnderground.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblIsUnderground.setBounds(347, 285, 99, 23);
+    lblIsUnderground.setBounds(690, 285, 99, 23);
     frame.getContentPane().add(lblIsUnderground);
 
     toggleSignals = new JToggleButton("N/A");
     toggleSignals.setFont(new Font("Tahoma", Font.PLAIN, 11));
-    toggleSignals.setBounds(450, 259, 45, 23);
+    toggleSignals.setBounds(630, 259, 45, 23);
     frame.getContentPane().add(toggleSignals);
 
     toggleIsUnderground = new JToggleButton("N");
     toggleIsUnderground.setFont(new Font("Tahoma", Font.PLAIN, 11));
-    toggleIsUnderground.setBounds(450,285,45,23);
+    toggleIsUnderground.setBounds(630,285,45,23);
     frame.getContentPane().add(toggleIsUnderground);
 
     lblStation = new JLabel("Station");
@@ -272,40 +272,40 @@ public class TrackGUI {
     lblNewLabel = new JLabel("MURPHY");
     lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
     lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-    lblNewLabel.setBounds(430, 305, 105, 38);
+    lblNewLabel.setBounds(590, 305, 105, 38);
     frame.getContentPane().add(lblNewLabel);
 
     lblBrokenRail = new JLabel("Broken Rail");
-    lblBrokenRail.setHorizontalAlignment(SwingConstants.RIGHT);
+    lblBrokenRail.setHorizontalAlignment(SwingConstants.LEFT);
     lblBrokenRail.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblBrokenRail.setBounds(367, 336, 79, 23);
+    lblBrokenRail.setBounds(690, 336, 79, 23);
     frame.getContentPane().add(lblBrokenRail);
 
     toggleBroken = new JToggleButton("N");
     toggleBroken.setFont(new Font("Tahoma", Font.PLAIN, 11));
-    toggleBroken.setBounds(450, 338, 45, 23);
+    toggleBroken.setBounds(630, 338, 45, 23);
     frame.getContentPane().add(toggleBroken);
 
     toggleCircuitFailure = new JToggleButton("N");
     toggleCircuitFailure.setFont(new Font("Tahoma", Font.PLAIN, 11));
-    toggleCircuitFailure.setBounds(450, 364, 45, 23);
+    toggleCircuitFailure.setBounds(630, 364, 45, 23);
     frame.getContentPane().add(toggleCircuitFailure);
 
     lblCircuitFailure = new JLabel("Circuit Failure");
-    lblCircuitFailure.setHorizontalAlignment(SwingConstants.RIGHT);
+    lblCircuitFailure.setHorizontalAlignment(SwingConstants.LEFT);
     lblCircuitFailure.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblCircuitFailure.setBounds(347, 364, 99, 23);
+    lblCircuitFailure.setBounds(690, 364, 99, 23);
     frame.getContentPane().add(lblCircuitFailure);
 
     lblPowerFailure = new JLabel("Power Failure");
-    lblPowerFailure.setHorizontalAlignment(SwingConstants.RIGHT);
+    lblPowerFailure.setHorizontalAlignment(SwingConstants.LEFT);
     lblPowerFailure.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblPowerFailure.setBounds(347, 388, 99, 23);
+    lblPowerFailure.setBounds(690, 388, 99, 23);
     frame.getContentPane().add(lblPowerFailure);
 
     togglePowerFailure = new JToggleButton("N");
     togglePowerFailure.setFont(new Font("Tahoma", Font.PLAIN, 11));
-    togglePowerFailure.setBounds(450, 388, 45, 23);
+    togglePowerFailure.setBounds(630, 388, 45, 23);
     frame.getContentPane().add(togglePowerFailure);
 
     toggleOccupied.setSelected(false);
@@ -367,7 +367,7 @@ public class TrackGUI {
         String block = (String) dropdownBlock.getSelectedItem();
         String section = (String) dropdownSegment.getSelectedItem();
         String line = (String) dropdownLine.getSelectedItem();
-
+        Block thisBlock = track.getBlock(line,section,Integer.valueOf(block));
 
         lengthField.setText(String.valueOf(METERSMULT*track.trackList.get(line).get(section).get(Integer.valueOf(block)).getLen()));
         elevationField.setText(String.valueOf(METERSMULT*track.trackList.get(line).get(section).get(Integer.valueOf(block)).getElevation()));
@@ -382,6 +382,9 @@ public class TrackGUI {
         Boolean isPowerFailure = track.trackList.get(line).get(section).get(Integer.valueOf(block)).getPowerFailure();
         Boolean isUnderground = track.trackList.get(line).get(section).get(Integer.valueOf(block)).getUnderground();
         Boolean trackHeaters = track.trackList.get(line).get(section).get(Integer.valueOf(block)).getTrackHeaters();
+        Boolean hasCrossing = track.crossingMap.keySet().contains(thisBlock);
+        Boolean hasStation = track.blockStationMap.keySet().contains(thisBlock);
+        Boolean hasLights = track.lightsMap.keySet().contains(thisBlock);
 
         toggleOccupied.setSelected(isOccupied);
         toggleBroken.setSelected(isBroken);
@@ -441,6 +444,44 @@ public class TrackGUI {
           toggleHeatersOn.setSelected(false);
         }
 
+        if(hasCrossing){
+          if(track.crossingMap.get(thisBlock).crossingState){
+            toggleCrossings.setText("Down");
+            toggleCrossings.setSelected(true);
+          }
+          else{
+            toggleCrossings.setText("Up");
+            toggleCrossings.setSelected(false);
+          }
+        }else{
+            toggleCrossings.setText("N/A");
+            toggleCrossings.setSelected(false);  
+        }
+        
+        if(hasStation){
+          if(track.blockStationMap.get(thisBlock).trackHeatersOn){
+            toggleHeatersOn.setText("On");
+            toggleHeatersOn.setSelected(true);
+          }
+          else{
+            toggleHeatersOn.setText("Off");
+            toggleHeatersOn.setSelected(false);
+          }
+        }else{
+            toggleHeatersOn.setText("N/A");
+            toggleHeatersOn.setSelected(false);
+        }
+
+        if(hasLights){
+          if(track.lightsMap.get(thisBlock).viewLightsState()){
+            toggleSignals.setText("On");
+            toggleSignals.setSelected(true);
+          }
+          else{
+            toggleSignals.setText("Off");
+            toggleSignals.setSelected(false);
+          }
+        }
       }
     });
 
