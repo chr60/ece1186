@@ -56,6 +56,8 @@ public class TrainController extends javax.swing.JFrame {
     double blockSpeed = 80.0;
     private TCTestConsole testConsole = null;
 
+    
+    private TrainHandler trainHandler; 
 
     public boolean detailedTrainWindowOpen;
 
@@ -143,6 +145,7 @@ public class TrainController extends javax.swing.JFrame {
 
         this.speedController.setOperatingLogs(this.operatingLogs);
         this.utilityPanel.setVitalsButton(this.vitals);
+        this.utilityPanel.setAnnouncementsLog(this.annoucementLogs);
         this.brakePanel.setSpeedController(this.speedController);
         
         this.detailedTrainWindowOpen = false;
@@ -187,21 +190,32 @@ public class TrainController extends javax.swing.JFrame {
     public TrainController(Train train, String playMode, String testMode){
 
         initComponents();
-        this.initHashMaps();
-        this.setTrainListComboBox();
-        this.setMode(playMode, testMode);
-
         this.selectedTrain = train;
+        this.setMode(playMode, testMode);
+        
+        
+        this.speedController.setOperatingLogs(this.operatingLogs);
+        this.utilityPanel.setVitalsButton(this.vitals);
+        this.utilityPanel.setAnnouncementsLog(this.annoucementLogs);
+        this.brakePanel.setSpeedController(this.speedController);
+        
+        this.detailedTrainWindowOpen = false;
 
+        // check if kp/ki is set
         if (this.selectedTrain.powerConstantsSet() == false){
 
             TCEngineerPanel engPanel = new TCEngineerPanel(this.selectedTrain);
             engPanel.setVisible(true);
             engPanel.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         }
-
+        
         systemRunSpeed.start();
     }
+    
+    public void setTrainHandler(TrainHandler trainHandler){
+        
+        this.trainHandler = trainHandler; 
+    }   
 
     /**
      * Retrieves the TrainInfoPanel of the Train Controller.
@@ -237,7 +251,7 @@ public class TrainController extends javax.swing.JFrame {
      * @param playMode the mode (Manual or Automatic) that the Train Controller will launch in.
      * @param testMode the mode (Normal or Testing) that the Train Controller will launch in.
      */
-    private void setMode(String playMode, String testMode){
+    public void setMode(String playMode, String testMode){
 
         if (playMode.equals("Automatic")){
 
@@ -347,15 +361,18 @@ public class TrainController extends javax.swing.JFrame {
      */
     public void setTrainListComboBox(){
 
-        System.out.println(this.redLineHandler.getTrains().size());
-
         this.dispatchedTrains.removeAllItems();
         this.dispatchedTrains.addItem("No Train Selected");
 
-        for (Train train : this.redLineHandler.getTrains()){
+        for (Train train : this.trainHandler.getTrains()){
 
             this.dispatchedTrains.addItem(Integer.toString(train.getID()) );
         }
+    }
+    
+    public void setSelectedItem(int pos){
+    
+        this.dispatchedTrains.setSelectedIndex(pos);
     }
 
     /**
@@ -1155,9 +1172,6 @@ public class TrainController extends javax.swing.JFrame {
 //            // FIX ME: TrainInfoPanelStuff should be put in the refreshUI method in the
 //            // TrainInfoPanelClass
 //
-            // set the train info panels speed..
-            this.trainInfoPanel.refreshUI();
-
             // get the block speed from the train
             // FIX ME: Right now, it's set at 80.0 for the purpose
             // of getting the block speed to update
@@ -1165,26 +1179,13 @@ public class TrainController extends javax.swing.JFrame {
 
             this.blockInfoPane.setSelectedTrain(this.selectedTrain);
             this.blockInfoPane.refreshUI();
-            //this.blockInfoPane.setBlockSpeed(this.blockSpeed);
 
             this.utilityPanel.setManualMode(this.manualMode);
             this.utilityPanel.setSelectedTrain(this.selectedTrain);
             this.utilityPanel.refreshUI();
 
-            // disable buttons if in automatic mode..
-            if (this.automaticMode == true){
-
-                //this.brakePanel.getServiceBrake().setEnabled(false);
-                //this.makeAnnouncementButton.setEnabled(false);
-                //this.annoucementDropDown.setEnabled(false);
-            }else if (this.automaticMode == false){
-                //this.sBrake.setEnabled(true);
-                //this.brakePanel.getServiceBrake().setEnabled(true);
-                //this.makeAnnouncementButton.setEnabled(true);
-                //this.annoucementDropDown.setEnabled(true);
-            }
-
             this.speedController.setManualMode(this.manualMode);
+            this.speedController.setBrakePanel(this.brakePanel);
             this.speedController.refreshUI();
 
 
@@ -1193,7 +1194,7 @@ public class TrainController extends javax.swing.JFrame {
             this.brakePanel.inManualMode(this.manualMode);
             this.brakePanel.refreshUI();
 
-            this.speedController.setBrakePanel(this.brakePanel);
+   
         }
     }
 

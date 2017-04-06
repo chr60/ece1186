@@ -159,15 +159,15 @@ public class Train implements Serializable {
 		//check if distance exceeds length of block (if so enter new block) if not update location
 		while (dist > trainLocation.getCurrBlock().getLen())
 		{
-                       // System.out.println("Next block forward" + currBlock.nextBlockForward().blockNum());
+                        System.out.println("Next block forward" + currBlock.nextBlockForward().blockNum());
 			dist = getCurrBlock().getLen() - dist;
 			currBlock.setOccupied(false);
 
                         Block blockForward = currBlock.nextBlockForward();
                         Block blockBackward = currBlock.nextBlockBackward();
 
-                        // System.out.println("forward block: " + blockForward.blockNum());
-                        // System.out.println("backward block: " + blockBackward.blockNum());
+                        System.out.println("forward block: " + blockForward.blockNum());
+                        System.out.println("backward block: " + blockBackward.blockNum());
                         if(blockForward != null && blockBackward != null){
                             //theres both a forward and backward. go to the one that wasnt last visited
                             if (blockBackward.compareTo(prevBlock) == 0)
@@ -204,6 +204,7 @@ public class Train implements Serializable {
 			currBlock.setOccupied(true);
 		}
 		trainLocation.setCurrBlock(currBlock);
+                System.out.println("Dist: " + dist);
 		trainLocation.setDistIntoBlock(dist);
 
 	}
@@ -278,15 +279,14 @@ public class Train implements Serializable {
 	private Double timeToStop(Double Drate){
 		Double time = 0.0;
 		Double tempVelocity = velocity;
-                // System.out.println("In time to stop");
-                //System.out.println(tempVelocity);
+                
+                //System.out.println(tempVelocity); 
 		while (tempVelocity > 0.0)
-		{
-                        System.out.println(tempVelocity);
+		{    
 			tempVelocity = tempVelocity + Drate;
 			time++;
 		}
-                // System.out.println("About to return from time to stop");
+                
 		return time; 				//time required to stop the train in seconds
 	}
 

@@ -47,17 +47,25 @@ public class TrainHandler {
 			currT.setSpeed(Speed);
 			currT.setAuthority(goToBlock);
 			currT.setCurrBlock(startBlock);
-			System.out.println(startBlock);
-			TrainController tc = new TrainController(currT);
-                        System.out.println("Hey!"); 
+			// open a train controller
+			TrainController tc = new TrainController(currT, "Automatic", "Normal"); 
+                        tc.setTrainHandler(this);
 			tc.setVisible(true);
 			tc.setDefaultCloseOperation(2);
+                        
+                        trains.add(currT);
+                        tc.setTrainListComboBox(); // updat combo box in tc
+                        
+                        tc.setSelectedItem(trainIDAssign-1);
+                        
 		}else{
 			currT = findTrain(trainID);
+                        trains.add(currT);
 		}
-		trains.add(currT);
+		
 		currT.setSpeed(Speed);
 		currT.setAuthority(goToBlock);
+                
 		return trainID;
 	}
 

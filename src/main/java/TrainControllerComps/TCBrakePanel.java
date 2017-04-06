@@ -47,7 +47,20 @@ public class TCBrakePanel extends javax.swing.JPanel {
     private boolean inManualMode; 
     
     
+    /**
+     * The speed controller object used to communicate between.
+     */
     private TCSpeedController speedController; 
+    
+    /**
+     * Used to choose between ignoring the suggested speed on the track or following it.
+     */
+    public boolean ignoreSpeed; 
+    
+    /**
+     * Used to flag if there is an emergency, and we should use the emergency brake. 
+     */
+    public boolean isEmergency; 
     
     /**
      * Constructor for creating a TCBrakePanel object without a selected train. 
@@ -132,17 +145,17 @@ public class TCBrakePanel extends javax.swing.JPanel {
      * 
      * @return returns true if the train needs to come to a complete stop, false if it doesn't.
      */
-    private boolean shouldStopTrainChecks(){
+    private void shouldStopTrainChecks(){
             
         // stop if  
-        if (this.failureDetected()){ return true; } //failure detected
-        
-        if (this.approachingStation()){ return true; } // approaching a station
+        if (this.failureDetected()){ this.bringTrainToHalt(true); } //failure detected
              
-        if (this.trainAhead()){ return true; } // there's a train ahead
- 
+        if (this.approachingStation()){ this.bringTrainToHalt(false); } // approaching a station
+             
+        if (this.trainAhead()){ this.bringTrainToHalt(true); } // there's a train ahead
+
+        this.willExceedAuthority();
         
-        return false; 
     }
     
     /**
@@ -160,39 +173,36 @@ public class TCBrakePanel extends javax.swing.JPanel {
         return false; 
     }
     
+    /**
+     * Checks if the train is going to exceed authority, and stops the train if it will.
+     * 
+     */
     private void willExceedAuthority(){
-        
-        //this.logBook.add("Calling Will Exceed Authority"); 
-
-        //System.out.println(this.selectedTrain.getGPS().getCurrBlock().nextBlockForward().blockNum());
-        //System.out.println(this.selectedTrain.getGPS().getCurrBlock().nextBlockBackward().blockNum());
-        
-        System.out.println("Foward:" + this.selectedTrain.getGPS().getCurrBlock().nextBlockForward().compareTo(this.selectedTrain.getAuthority()));
-        System.out.println("Back: " + this.selectedTrain.getGPS().getCurrBlock().nextBlockBackward().compareTo(this.selectedTrain.getAuthority()));
-        
-        if ( (this.selectedTrain.getGPS().getCurrBlock().nextBlockForward().compareTo(this.selectedTrain.getAuthority()) == 0) || 
-                (this.selectedTrain.getGPS().getCurrBlock().nextBlockBackward().compareTo(this.selectedTrain.getAuthority()) == 0)){
-        
-            System.out.println("Next block");
-            //this.logBook.add("Next Block is Authority!"); 
+                
+        // were on our authority...
+        if ( this.selectedTrain.getGPS().getCurrBlock().compareTo(this.selectedTrain.getAuthority()) == 0){
             
             double footprintSB = this.selectedTrain.getGPS().getDistIntoBlock() + this.selectedTrain.getSafeBrakingDistSB();
             double footprintEB = this.selectedTrain.getGPS().getDistIntoBlock() + this.selectedTrain.getSafeBrakingDistEB();
-            
-            if (footprintSB == this.selectedTrain.getGPS().getCurrBlock().getLen()){
-                //this.logBook.add("Authority 1");
-                this.speedController.setSetSpeed(0);
-                System.out.println("1. Set speed to 0, must brake"); 
-            }else if (footprintEB > this.selectedTrain.getGPS().getCurrBlock().getLen()){
-                //this.logBook.add("Authority 2");
-                
-                this.selectedTrain.setEmergencyBrake(1);
-                this.speedController.setSetSpeed(0);
-                System.out.println("2. Set speed to 0, must brake"); 
-            }
+            // check if about to leave the block
+            if (footprintSB == this.selectedTrain.getGPS().getCurrBlock().getLen()){ this.bringTrainToHalt(false); }
+            else if (footprintEB > this.selectedTrain.getGPS().getCurrBlock().getLen()){ this.bringTrainToHalt(true); }
         }
         
         this.printLogs();
+    }
+    
+    
+    /**
+     * Brings a train to a stop using either the emergency brakes or the service brakes. 
+     * Sending true as the parameter, will use the emergency brakes to bring the train to a halt. 
+     * 
+     * @param isEmergency says if to stop the train using the emergency brakes or the service brakes.
+     */
+    private void bringTrainToHalt(boolean isEmergency){
+    
+        this.ignoreSpeed = true; 
+        this.isEmergency = isEmergency; 
     }
     
     /**
@@ -219,16 +229,8 @@ public class TCBrakePanel extends javax.swing.JPanel {
     
     public void refreshUI(){
         
-        // we need to stop the train
-        /**
-         * @bug The train needs to use the emergency brakes if there's an emergency and needs to slow down.
-         * Currently, this uses the service brakes.
-         * 
-         * FIX ME: Have it use the emergency brake to stop in a hurry.
-         */
-        //if (this.shouldStopTrainChecks()){ this.speedController.setSetSpeed(0); }
+        this.shouldStopTrainChecks(); // checks to see if the train has to stop
         
-        this.willExceedAuthority();
     }
     
     /**
@@ -325,8 +327,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
             if (this.inManualMode == true){ 
         
                 TCEmergencyFrame window = new TCEmergencyFrame(this.selectedTrain); 
-           
-
+          
                 window.setOperatingLog(this.operatingLogs);
                 window.setVisible(true);
                 window.setDefaultCloseOperation(DISPOSE_ON_CLOSE);

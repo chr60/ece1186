@@ -6,6 +6,8 @@ import java.awt.event.ItemEvent;
 import javax.swing.JButton;
 
 import TrainModel.*;
+import java.util.LinkedList;
+import javax.swing.JTextArea;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -42,7 +44,14 @@ public class TCUtilityPanel extends javax.swing.JPanel {
      * This button comes from the Train Controller.
      */
     private JButton vitalsButton;
+    
+    
+    private JTextArea announcements; 
 
+    
+    private LinkedList<String> logbook; 
+    
+    
     /**
      * Constructor for creating a new TCUtiltiyPanel object where the initial positions of the radio button
      * are in the 'OFF' position, and there is no selected train.
@@ -69,6 +78,8 @@ public class TCUtilityPanel extends javax.swing.JPanel {
         this.leftDoorsFailureRadioButton.setEnabled(false);
         this.rightDoorsFailureRadioButton.setEnabled(false);
         this.lightsFailureRadioButton.setEnabled(false);
+        
+        this.logbook = new LinkedList<String>(); 
     }
 
     /**
@@ -101,6 +112,28 @@ public class TCUtilityPanel extends javax.swing.JPanel {
     public void setVitalsButton(JButton vitalsButton){
 
         this.vitalsButton = vitalsButton;
+    }
+    
+    /**
+     * Sets the Announcements Log to print too.
+     * 
+     * @param annoucneLog the text area object.
+     */
+    public void setAnnouncementsLog(JTextArea annoucneLog){
+    
+        this.announcements = annoucneLog; 
+    }
+    
+    public void printLogs(){
+    
+        if (this.logbook.size() != 0){
+        
+            for (String log : this.logbook){
+                this.announcements.setText(this.announcements.getText() + log + "\n");
+            }
+        }
+        
+        this.logbook.clear();
     }
 
     /**
@@ -142,20 +175,21 @@ public class TCUtilityPanel extends javax.swing.JPanel {
         if (this.isPowerFailure()){
 
             this.vitalsButton.setForeground(Color.red);
-
-            //
         }
-
         /**
          * @Bug When selected a train from a TCDispatchedTrainsFrame, a NullPointerException is thrown.
          *
          */
-        //else if (this.isPowerFailure() == false){this.vitalsButton.setForeground(new Color(0,0,0));}
+        else if (this.isPowerFailure() == false){this.vitalsButton.setForeground(new Color(0,0,0));}
+        
+        // can't open doors if moving
+        if (this.selectedTrain.getVelocity() == 0.0){ this.enableOpeningDoors(); }
+        else{ this.disableOpeningDoors(); }
     }
 
     /**
      * Performs the checks to see if certain utilities need to be turned on/off, open/closed
-     * when in Automatic mode.
+     * when in Automatic mode based on train status.
      *
      */
     private void automaticModeChecks(){
@@ -164,13 +198,46 @@ public class TCUtilityPanel extends javax.swing.JPanel {
 
         // open doors when at station
         // FIX ME: Open both doors for now, change later to open correct door
-        if (this.canOpenDoors() && this.isAtStation()){ this.selectedTrain.setLeftDoor(1);}
+        if (this.canOpenDoors() && this.isAtStation()){ 
+            
+            this.selectedTrain.setLeftDoor(1);
+            if (this.selectedTrain.getGPS().getCurrBlock().getStationName() != null){
+                //this.logbook.add("Arriving at " + this.selectedTrain.getGPS().getCurrBlock().getStationName());
+            }
+        }
+        else{ this.selectedTrain.setLeftDoor(0); }
+        
         if (this.canOpenDoors() && this.isAtStation()){ this.selectedTrain.setRightDoor(1);}
+        else{ this.selectedTrain.setRightDoor(0); }
 
+        this.printLogs();
         // set heat
 
         //if (this.selectedTrain.getTemp() <= 50.0){ } // turn on heat
         //else if (this.selectedTrain.getTemp() >= 80){ } // set thermostat to default temp
+    }
+    
+    /**
+     * Disable the Radio buttons for opening the doors of the train. 
+     * This is probably done because the train is in motion, and opening the doors
+     * while in motion is not safe.
+     * 
+     */
+    private void disableOpeningDoors(){
+    
+        this.leftDoorsOpenRadioButton.setEnabled(false);
+        this.rightDoorsOpenRadioButton.setEnabled(false);
+    }
+     /**
+     * Enabled the Radio buttons for opening the doors of the train. 
+     * This is probably done because the train is not in motion, and can potentially open
+     * the doors. 
+     * 
+     */   
+    private void enableOpeningDoors(){
+    
+        this.leftDoorsOpenRadioButton.setEnabled(true);
+        this.rightDoorsOpenRadioButton.setEnabled(true);
     }
 
     /**
@@ -340,6 +407,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
      */
     private void refreshLeftDoors(){
 
+   
         if (this.selectedTrain.getLeftDoor() == 1){ this.leftDoorsOpenRadioButton.setSelected(true); }
         else if (this.selectedTrain.getLeftDoor() == 0){ this.leftDoorsCloseRadioButton.setSelected(true); }
         else if (this.selectedTrain.getLeftDoor() == -1){ this.leftDoorsFailureRadioButton.setSelected(true); }

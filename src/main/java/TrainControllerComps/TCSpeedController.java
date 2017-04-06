@@ -200,18 +200,20 @@ public class TCSpeedController extends javax.swing.JPanel {
         if (this.inManualMode){ // manual mode
             this.setSpeedButton.setEnabled(true);
             this.speedSlider.setEnabled(true);
-            //System.out.println(this.selectedTrain);
             Block currBlock = this.selectedTrain.getGPS().getCurrBlock(); // get current block
-            Double blockSpeedLimit = currBlock.getSpeedLimit(); // get speed limit on block
+            Double blockSpeedLimit = (.621371*currBlock.getSpeedLimit()); // get speed limit on block
 
+            
             if (blockSpeedLimit != null){
 
                 this.maxSpeedSlider.setText(Double.toString(blockSpeedLimit)); // update slider label
                 this.speedSlider.setMaximum(blockSpeedLimit.intValue()); //update max value of slider
 
                 // if we changed to manual mode from automatic mode, we need to adjust to meet block limit
-                //if (this.setSpeed > blockSpeedLimit.intValue()){ this.setSpeed = blockSpeedLimit.intValue(); }
+                if (this.setSpeed > blockSpeedLimit.intValue()){ this.setSpeed = blockSpeedLimit.intValue(); }
 
+                
+                
               this.powerControl();
             }else if (blockSpeedLimit == null){
                 //System.out.println("Go the same speed.");
@@ -221,17 +223,26 @@ public class TCSpeedController extends javax.swing.JPanel {
             this.setSpeedButton.setEnabled(false);
             this.speedSlider.setEnabled(false);
 
-            // get the block the train is on, and the set suggested speed
-            //Block currBlock = this.selectedTrain.getGPS().getCurrBlock();
 
-            Double blockSuggestedSpeed = this.selectedTrain.getSuggestedSpeed();
-            //System.out.println(currBlock.getSuggestedSpeed());
+            // get the block the train is on, and the set suggested speed
+
+            Double blockSuggestedSpeed = .621371*this.selectedTrain.getSuggestedSpeed();
+
             if (blockSuggestedSpeed != null){
 
                 this.maxSpeedSlider.setText(Double.toString(blockSuggestedSpeed));
                 this.speedSlider.setMaximum(blockSuggestedSpeed.intValue());
                 this.speedSlider.setValue(blockSuggestedSpeed.intValue());
-                this.setSpeed = blockSuggestedSpeed.intValue();
+                
+                // ignore the speed 
+                if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency){ 
+                    
+                    this.setSpeed = 0; 
+                    
+                }else{
+                    
+                    this.setSpeed = blockSuggestedSpeed.intValue();
+                }
                 this.powerControl();
 
             }else if (blockSuggestedSpeed == null){
@@ -408,8 +419,7 @@ public class TCSpeedController extends javax.swing.JPanel {
 
         String log;
         this.setSpeed = this.speedSlider.getValue();
-
-
+        
         log = "Telling train to set speed to " + this.setSpeed;
         this.logBook.add(log);
         this.printLogs();
@@ -440,11 +450,12 @@ public class TCSpeedController extends javax.swing.JPanel {
      *
      */
     public void powerControl(){
-      // System.out.println("Power Laww");
+
         // train is going too fast
         if (this.selectedTrain.getVelocity() > this.setSpeed){
-
-            this.brakePanel.getServiceBrake().doClick(); // apply brakes
+            
+            if (this.brakePanel.isEmergency == true){ this.brakePanel.getEmgBrake().doClick(); } // apply ebrakes
+            else{ this.brakePanel.getServiceBrake().doClick(); }
         }else{
             this.logBook.add("Set Speed: " + this.setSpeed);
 
@@ -453,10 +464,6 @@ public class TCSpeedController extends javax.swing.JPanel {
             this.vitalPwrCmdOne = (this.setSpeed - this.selectedTrain.getVelocity());
             this.vitalPwrCmdTwo = (this.setSpeed - this.selectedTrain.getVelocity());
             this.vitalPwrCmdThree = (this.setSpeed - this.selectedTrain.getVelocity());
-
-            //this.logBook.add("Error: " + Double.toString( this.error) ); // log error
-            this.logBook.add(Double.toString( this.powerCommandOut) ); // log power command
-            //System.out.println(this.selectedTrain);
 
             this.powerCommandOut = this.selectedTrain.getKp() * error + this.selectedTrain.getKi()*this.selectedTrain.getVelocity();
 
@@ -469,7 +476,6 @@ public class TCSpeedController extends javax.swing.JPanel {
                     if (this.vitalPwrCmdThree == this.powerCommandOut){
                         this.logBook.add("VITAL SYSTEM CHECK PASS!");
                         this.selectedTrain.powerCommand(this.powerCommandOut);
-                        this.logBook.add("Dist:" + Double.toString( this.selectedTrain.getGPS().getDistIntoBlock()) );
                     }
                 }
             }

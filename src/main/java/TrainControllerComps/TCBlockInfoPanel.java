@@ -80,7 +80,7 @@ public class TCBlockInfoPanel extends javax.swing.JPanel {
         
             if (this.selectedTrain.getCurrBlock() != null){
             
-                this.blockSpeed.setText(Double.toString( this.selectedTrain.getCurrBlock().getSpeedLimit()));
+                this.blockSpeed.setText(Double.toString( .621371*this.selectedTrain.getCurrBlock().getSpeedLimit()));
                 this.currentBlock.setText(Integer.toString( this.selectedTrain.getCurrBlock().blockNum())); 
             }
 //        }

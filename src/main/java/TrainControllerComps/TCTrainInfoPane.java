@@ -66,8 +66,8 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
      * @param suggSpeed the suggested speed for the train. 
      */
     public void setSuggestSpeedLabel(Double suggSpeed){
-    
-        this.suggestedSpeed.setText(String.format("%.2f", this.selectedTrain.getSuggestedSpeed()));
+        System.out.println(suggSpeed); 
+        this.suggestedSpeed.setText(String.format("%.2f", suggSpeed));
     }
     
     /**
@@ -153,8 +153,9 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
         this.setPowerLabel( this.selectedTrain.getPower() );
         
         if (this.selectedTrain.getSuggestedSpeed() != null){
-        
-            this.setSuggestSpeedLabel( this.selectedTrain.getSuggestedSpeed() );
+            
+            Double blockSuggestedSpeed = .621371*this.selectedTrain.getSuggestedSpeed();
+            this.setSuggestSpeedLabel( blockSuggestedSpeed );
         }
         
         if (this.selectedTrain.getAuthority() != null){
