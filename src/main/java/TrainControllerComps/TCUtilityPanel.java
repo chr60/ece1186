@@ -184,7 +184,11 @@ public class TCUtilityPanel extends javax.swing.JPanel {
         
         // can't open doors if moving
         if (this.selectedTrain.getVelocity() == 0.0){ this.enableOpeningDoors(); }
-        else{ this.disableOpeningDoors(); }
+        else{ // shut the doors if moving
+            this.disableOpeningDoors();
+            this.selectedTrain.setLeftDoor(0);
+            this.selectedTrain.setRightDoor(0);
+        }
     }
 
     /**
