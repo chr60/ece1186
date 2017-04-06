@@ -200,6 +200,14 @@ public class TrackModel implements Serializable{
     }
 
     /**
+    * Allows viewing of the lights map to other modules, implemented as a copy method
+    * @return HashMap<Block, Lights>
+    */
+    public HashMap<Block, Lights> viewLightsMap(){
+        return new HashMap<Block, Lights>(this.lightsMap);
+    }
+
+    /**
     * Allows viewing of the station map to other modules, implemented as a copy method
     * @return HashMap<String, ArrayList<Block>>
     */

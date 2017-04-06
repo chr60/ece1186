@@ -200,7 +200,7 @@ public class TCSpeedController extends javax.swing.JPanel {
         if (this.inManualMode){ // manual mode
             this.setSpeedButton.setEnabled(true);
             this.speedSlider.setEnabled(true);
-            System.out.println(this.selectedTrain);
+            //System.out.println(this.selectedTrain);
             Block currBlock = this.selectedTrain.getGPS().getCurrBlock(); // get current block
             Double blockSpeedLimit = currBlock.getSpeedLimit(); // get speed limit on block
 
@@ -214,7 +214,7 @@ public class TCSpeedController extends javax.swing.JPanel {
 
               this.powerControl();
             }else if (blockSpeedLimit == null){
-                System.out.println("Go the same speed."); 
+                //System.out.println("Go the same speed.");
                 this.powerControl();
             }
         }else if (this.inManualMode == false){ // automatic mode
@@ -223,7 +223,7 @@ public class TCSpeedController extends javax.swing.JPanel {
 
             // get the block the train is on, and the set suggested speed
             //Block currBlock = this.selectedTrain.getGPS().getCurrBlock();
-            
+
             Double blockSuggestedSpeed = this.selectedTrain.getSuggestedSpeed();
             //System.out.println(currBlock.getSuggestedSpeed());
             if (blockSuggestedSpeed != null){
@@ -235,7 +235,7 @@ public class TCSpeedController extends javax.swing.JPanel {
                 this.powerControl();
 
             }else if (blockSuggestedSpeed == null){
-                System.out.println("Go the same speed."); 
+                //System.out.println("Go the same speed.");
                 this.powerControl();
             }
         }
@@ -440,7 +440,7 @@ public class TCSpeedController extends javax.swing.JPanel {
      *
      */
     public void powerControl(){
-       System.out.println("Power Laww");
+      // System.out.println("Power Laww");
         // train is going too fast
         if (this.selectedTrain.getVelocity() > this.setSpeed){
 
@@ -456,7 +456,7 @@ public class TCSpeedController extends javax.swing.JPanel {
 
             //this.logBook.add("Error: " + Double.toString( this.error) ); // log error
             this.logBook.add(Double.toString( this.powerCommandOut) ); // log power command
-            System.out.println(this.selectedTrain);
+            //System.out.println(this.selectedTrain);
 
             this.powerCommandOut = this.selectedTrain.getKp() * error + this.selectedTrain.getKi()*this.selectedTrain.getVelocity();
 

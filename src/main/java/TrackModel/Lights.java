@@ -26,12 +26,12 @@ public class Lights implements java.io.Serializable{
     public void setLightsState(Boolean newLightsState) {
     	this.lightsState = newLightsState;
     }
-    
+
     /**
     * View the state of a lights.
     * @return the current state of the lights
     */
-    public Boolean viewCrossingState(){
+    public Boolean viewLightsState(){
     	return this.lightsState;
     }
 }

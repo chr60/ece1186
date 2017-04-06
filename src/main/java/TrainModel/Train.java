@@ -60,9 +60,9 @@ public class Train implements Serializable {
 		trainLocation = new GPS();
 	}
 
-	
 
-	
+
+
 
 	/**
      * Modifier to apply a new power command to the current train and adjust velocity accordingly
@@ -77,7 +77,7 @@ public class Train implements Serializable {
 			//to avoid division by zero
 			forceApp = newPower;
 		}else if (statusEB == 1 || statusSB == 1){
-			//if either brake is engaged 
+			//if either brake is engaged
 			Double brakeDeceleration = 0.0;
 			if (statusSB == 1)
 			{
@@ -86,7 +86,7 @@ public class Train implements Serializable {
 			{
 				brakeDeceleration = EBrate;
 			}
-			
+
 			forceApp = mass * brakeDeceleration;
 		}else{
 			forceApp = newPower / velocity;
@@ -95,18 +95,18 @@ public class Train implements Serializable {
 		power = newPower;
 		if(newPower >= maxPower){
 			//if power command is greater than or equal to max power do nothing
-                        power = maxPower; 
-                        System.out.println("Hey you!"); 
+                        power = maxPower;
+                        // System.out.println("Hey you!");
                         changeSpeed(forceApp);
 		}else {
 			//if power command calls for increase of speed
-                        System.out.println("Hey you!"); 
+                        // System.out.println("Hey you!");
 			changeSpeed(forceApp);
 		}
-		
+
 	}
-        
-        
+
+
 
 
 	/**
@@ -128,7 +128,7 @@ public class Train implements Serializable {
 		if (acceleration > 0.5){
 			acceleration = 0.5;
 		}
-		
+
 		//compute new velocity based on old velocity and acceleration
 		velocity = velocity + acceleration;
 		if (velocity > 19.4444)              //70 kph in m/s (max velocity)
@@ -139,10 +139,10 @@ public class Train implements Serializable {
 		{
 			velocity = 0.0;
 		}
-		
+
 		//using S = Vi(t) + (1/2)(a)(t^2)  to compute distance
-		distance = (oldVelocity) + (0.5)*acceleration; 
-		
+		distance = (oldVelocity) + (0.5)*acceleration;
+
 		updateCurrBlock(distance);
 		updateSpeedAndAuthority();
 	}
@@ -155,26 +155,26 @@ public class Train implements Serializable {
 	private void updateCurrBlock(Double distTravelled){
 		Double distBlock = trainLocation.getDistIntoBlock();
 		Double dist = distBlock + distTravelled;
-		
-		//check if distance exceeds length of block (if so enter new block) if not update location                
+
+		//check if distance exceeds length of block (if so enter new block) if not update location
 		while (dist > trainLocation.getCurrBlock().getLen())
 		{
                        // System.out.println("Next block forward" + currBlock.nextBlockForward().blockNum());
 			dist = getCurrBlock().getLen() - dist;
 			currBlock.setOccupied(false);
-                        
+
                         Block blockForward = currBlock.nextBlockForward();
                         Block blockBackward = currBlock.nextBlockBackward();
-                        
-                        System.out.println("forward block: " + blockForward.blockNum()); 
-                        System.out.println("backward block: " + blockBackward.blockNum()); 
+
+                        // System.out.println("forward block: " + blockForward.blockNum());
+                        // System.out.println("backward block: " + blockBackward.blockNum());
                         if(blockForward != null && blockBackward != null){
                             //theres both a forward and backward. go to the one that wasnt last visited
                             if (blockBackward.compareTo(prevBlock) == 0)
                             {
                                 //we were just in blockBackward so go forward
                                 prevBlock = currBlock;
-                                currBlock = currBlock.nextBlockForward(); 
+                                currBlock = currBlock.nextBlockForward();
                             }else{
                                 //go backwards
                                 prevBlock = currBlock;
@@ -190,29 +190,29 @@ public class Train implements Serializable {
                             }
                         }else if(blockBackward == null)
                         {
-                            //go forward 
+                            //go forward
                             if (blockForward != null )
                             {
                                 prevBlock = currBlock;
                                 currBlock = currBlock.nextBlockForward();
                             }
-                            
+
                         }
-                        
-                        System.out.println("Going to next block: " + currBlock.blockNum()); 
-                        System.out.println("Block length: " + currBlock.getLen()); 
+
+                        System.out.println("Going to next block: " + currBlock.blockNum());
+                        System.out.println("Block length: " + currBlock.getLen());
 			currBlock.setOccupied(true);
 		}
 		trainLocation.setCurrBlock(currBlock);
 		trainLocation.setDistIntoBlock(dist);
-		
+
 	}
-	
+
 	/**
      * Method to update speed and authority (and other block properties)
      */
 	private void updateSpeedAndAuthority(){
-            
+
             if (this.getCurrBlock() != null){
                 if (this.getCurrBlock().getSuggestedSpeed() != null){
 
@@ -229,7 +229,7 @@ public class Train implements Serializable {
                 }
             }
         }
-	
+
 
 
 	/**
@@ -255,7 +255,7 @@ public class Train implements Serializable {
 	}
 
 /**
-     * Method to calculate decceration rate based on brake rates and mass of train 
+     * Method to calculate decceration rate based on brake rates and mass of train
      * @param a Double which corresponds to the deceleration rate of the brakes
      * @return a Double which corresponds to the deceleration rate based on brakes and mass
      */
@@ -268,7 +268,7 @@ public class Train implements Serializable {
 		Double decceleration = netF / mass;
 		return decceleration; 				//deceleration rate based on brakes and mass
 	}
-	
+
 
 	/**
      * Method to calculate time to stop based on brake rate, mass and velocity
@@ -278,18 +278,18 @@ public class Train implements Serializable {
 	private Double timeToStop(Double Drate){
 		Double time = 0.0;
 		Double tempVelocity = velocity;
-                System.out.println("In time to stop"); 
-                //System.out.println(tempVelocity); 
+                // System.out.println("In time to stop");
+                //System.out.println(tempVelocity);
 		while (tempVelocity > 0.0)
 		{
-                        System.out.println(tempVelocity); 
+                        System.out.println(tempVelocity);
 			tempVelocity = tempVelocity + Drate;
 			time++;
 		}
-                System.out.println("About to return from time to stop"); 
+                // System.out.println("About to return from time to stop");
 		return time; 				//time required to stop the train in seconds
 	}
-	
+
 	/**
      * Method to calculate distance to stop based on brake rate, mass and velocity
      * @param a Double which corresponds to the deceleration rate of the brakes
@@ -298,7 +298,7 @@ public class Train implements Serializable {
      */
 	private Double distanceToStop(Double Drate, Double stopTime){
 		//using S = Vi(t) + (1/2)(a)(t^2)  to compute distance
-		Double stopDist = (velocity)*(stopTime) + (1/2)*(Drate)*(Math.pow(stopTime, 2));  
+		Double stopDist = (velocity)*(stopTime) + (1/2)*(Drate)*(Math.pow(stopTime, 2));
 		return stopDist; 				//time required to stop the train in seconds
 	}
 
@@ -311,10 +311,10 @@ public class Train implements Serializable {
 
             this.trainLocation.setCurrBlock(newBlock);
             this.trainLocation.setDistIntoBlock(0.0);
-            this.currBlock = newBlock; 
+            this.currBlock = newBlock;
             this.prevBlock = currBlock;
 	}
-	
+
 	/**
      * Accessor to get the current Block that the train is on
      * @return Block object to return curr block
@@ -340,9 +340,9 @@ public class Train implements Serializable {
 	public void updateTemp(){
 
 	}
-        
-    
-	
+
+
+
 
 
 	/* FUNCTIOSN TO INTEGRATE WITH TRACK MODEL GETTING PEOPLE ON AND OFF
@@ -351,16 +351,16 @@ public class Train implements Serializable {
 
 		public void addDepartingPassengers(Integer numPassengers)
 	 */
-	
-	
-	//CODE BELOW THIS LINE IS DONE. DO NOT TOUCH. 
+
+
+	//CODE BELOW THIS LINE IS DONE. DO NOT TOUCH.
 	//*************************************************************************************************************************************
 	//*************************************************************************************************************************************
 	//*************************************************************************************************************************************
 	//*************************************************************************************************************************************
 	//*************************************************************************************************************************************
-	
-	
+
+
     /**
      * Accessor to return current train's ID
 
@@ -394,7 +394,7 @@ public class Train implements Serializable {
 	public Double getVelocity(){
 		return (velocity * 2.23694);			//convert velocity to MPH from m/s
 	}
-	
+
 	/**
      * Accessor to return current train's mass
      * @return an Double object which corresponds to train's current mass. This value will be converted from kg to lbs prior to returning.
@@ -418,7 +418,7 @@ public class Train implements Serializable {
 	public Double getThermostat(){
 		return currThermostat;
 	}
-	
+
 	/**
      * Accessor to get engine failure status
      * @return a boolean which denotes whether or not there is a failure in the engines. False means no failure and true means failure.
@@ -426,7 +426,7 @@ public class Train implements Serializable {
 	public boolean isEngineFailure(){
 		return engineFailure;
 	}
-	
+
 	/**
      * Accessor to get signal failure status
      * @return a boolean which denotes whether or not there is a failure in the signaling system. False means no failure and true means failure.
@@ -434,7 +434,7 @@ public class Train implements Serializable {
 	public boolean isSignalFailure(){
 		return signalFailure;
 	}
-	
+
 	/**
      * Accessor to get brake failure status
      * @return a boolean which denotes whether or not there is a failure in the service brake. False means no failure and true means failure.
@@ -442,7 +442,7 @@ public class Train implements Serializable {
 	public boolean isBrakeFailure(){
 		return brakeFailure;
 	}
-	
+
 	/**
      * Accessor to get the current temperature onboard the train
      * @return a Double which denotes the temperature on board the train in Fahrenheit
@@ -450,7 +450,7 @@ public class Train implements Serializable {
 	public Double getTemp(){
 		return currTemp;
 	}
-	
+
 	/**
      *Accessor to get the status of the service brake of the train
      * @return an int which corresponds to the service brake's status. 1 means on, 0 means off, and -1 denotes a failure.
@@ -466,7 +466,7 @@ public class Train implements Serializable {
 	public int getEmergencyBrake(){
 		return statusEB; 		//1 = on, 0 = off
 	}
-	
+
 	/**
      * Accessor to get the max power the train can go.
      * @return a Double corresponding to the max power the train can go.
@@ -474,7 +474,7 @@ public class Train implements Serializable {
     public Double getMaxPower(){
         return this.maxPower;
     }
-    
+
     /**
      * Accessor to return current train's applied power
      * @return an Double object which corresponds to train's current power command.
@@ -482,7 +482,7 @@ public class Train implements Serializable {
 	public Double getPower() {
 		return power;
 	}
-	
+
 	/**
      * Accessor to get current train's Kp
      * @return an Double object which corresponds to the new Kp.
@@ -498,7 +498,7 @@ public class Train implements Serializable {
 	public Double getKi(){
 		return Ki;
 	}
-	
+
 	/**
      * accessor to get the status of the right doors.
      * @return int which corresponds to the right door's status. 1 means open, 0 means closed, and -1 denotes a failure.
@@ -506,7 +506,7 @@ public class Train implements Serializable {
     public int getRightDoor(){
         return this.statusRightDoor;
     }
-        
+
     /**
      * Accessor to get the status of the left door.
      * @return int which corresponds to the left door's status. 1 means open, 0 means closed, and -1 denotes a failure.
@@ -514,7 +514,7 @@ public class Train implements Serializable {
     public int getLeftDoor(){
         return this.statusLeftDoor;
     }
-   
+
 	/**
      * Accessor to get the status of the interior lights onboard the train
      * @return an int which corresponds to the light's status. 1 means on, 0 means off, and -1 denotes a failure.
@@ -522,29 +522,29 @@ public class Train implements Serializable {
 	public int getLights(){
 		return statusLights; 		//1 = on, 0 = off, -1 = failure
 	}
-	
+
 	/**
      * Accessor to get the status of the AC onboard the train
      * @return an int which corresponds to the AC's status. 1 means on, 0 means off, and -1 denotes a failure.
-     */ 
+     */
     public int getAC(){
         return this.statusAC;
     }
 
-	
+
     /**
      * Accessor to get the status of the Heat onboard the train
      * @return an int which corresponds to the Heat's status. 1 means on, 0 means off, and -1 denotes a failure.
-     */ 
+     */
     public int getHeat(){
         return this.statusHeater;
     }
-    
-    
 
-	
-	
-	
+
+
+
+
+
 	/**
      * Mutator to set current train's Authority
      * @param an Double object which corresponds to the new authority.
@@ -586,7 +586,7 @@ public class Train implements Serializable {
 	public void setRightDoor(int status){
 		statusRightDoor = status; 		//1 = open, 0 = closed, -1 = failure
 	}
-	
+
 	/**
      * Modifier to change the status of the left doors
      * @param an int which corresponds to the left door's status. 1 means open, 0 means closed, and -1 denotes a failure.
@@ -602,7 +602,7 @@ public class Train implements Serializable {
 	public void setLights(int status){
 		statusLights = status; 		//1 = on, 0 = off, -1 = failure
 	}
-	
+
 	/**
      * Modifier to change the status of the AC onboard the train
      * @param an int which corresponds to the AC's status. 1 means on, 0 means off, and -1 denotes a failure.
@@ -610,7 +610,7 @@ public class Train implements Serializable {
 	public void setAC(int status){
 		statusAC = status; 		//1 = on, 0 = off, -1 = failure
 	}
-	
+
 	/**
      * Modifier to change the status of the heater onboard the train
      * @param an int which corresponds to the heater's status. 1 means on, 0 means off, and -1 denotes a failure.
@@ -618,21 +618,21 @@ public class Train implements Serializable {
 	public void setHeat(int status){
 		statusHeater = status; 		//1 = on, 0 = off, -1 = failure
 	}
-	
+
 	/**
      * Mutator to set the current thermostat setting onboard the train
      * @param a Double argument which denotes the thermostat setting on board the train in Fahrenheit
      */
 	public void setThermostat(Double newThermostat){
 
-            
-            System.out.println("Set Thermostat Called."); 
+
+            System.out.println("Set Thermostat Called.");
 		currThermostat = newThermostat;
-                
+
                 this.updateTemp();
 
 	}
-	
+
 	/**
      * Mutator to set engine failure status
      * @param a boolean argument is passed to denote whether or not there is a failure in the engines. False means no failure and true means failure.
@@ -648,7 +648,7 @@ public class Train implements Serializable {
 	public void setSignalFailure(boolean signalFail){
 		signalFailure = signalFail;
 	}
-	
+
 	/**
      * Mutator to set brake failure status
      * @param a boolean argument is passed to denote whether or not there is a failure in the service brake. False means no failure and true means failure.
@@ -667,7 +667,7 @@ public class Train implements Serializable {
 		{
 			this.powerCommand(0.0);
 		}
-		
+
 	}
 
 	/**
@@ -681,7 +681,7 @@ public class Train implements Serializable {
 			this.powerCommand(0.0);
 		}
 	}
-	
+
 	/**
      * Modifier to change the amount of passengers onboard the train
      * @param an int which corresponds to the number of passengers to add or remove. To remove a negative number should be sent to the method
@@ -716,7 +716,7 @@ public class Train implements Serializable {
 	public void changeLength(Double length2) {
 		length = length + length2;
 	}
-	
+
 	/**
      * Mutator to set current train's setpoint speed
      * @param an Double object which corresponds to train's current suggested speed.
@@ -725,33 +725,33 @@ public class Train implements Serializable {
 		setPointSpeed = speed;
 	}
 
-        
+
         /**
          * Refreshes the temperature on the train.
-         * 
+         *
          */
         public void refreshTemp(){
-        
+
             this.updateTemp();
         }
 
-	
-	
-	
-	
+
+
+
+
 	/**
      * Checks to see if both the Kp and Ki are set.
      * @return returns true if they are both set, and false otherwise.
      */
     public boolean powerConstantsSet(){
-    
+
         if (this.Kp != null && this.Ki != null){
-            return true; 
+            return true;
         }else{
-            return false; 
+            return false;
         }
     }
-    
+
     /**
      * Method to calculate magnitude of vector based on X and Y components
      * @param a double argument to be used as x component of vector.

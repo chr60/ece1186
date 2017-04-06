@@ -32,11 +32,61 @@ public class WaysideGUI {
   ArrayList<WS> Waysides;
   JTextArea notifConsole;
   TrackModel track;
+  JComboBox<String> lineDropdown;
+  JComboBox<String> segmentDropdown;
+  JComboBox<String> blockDropdown;
 
 
+  JLabel occupiedLabel;
+  JLabel occupiedStatusLabel;
+  JLabel switchLabel;
+  JLabel crossingLabel;
+  JLabel lightsLabel;
+  JLabel switchStatusLabel;
+  JLabel crossingStatusLabel;
+  JLabel lightsStatusLabel;
+
+  /**
+   * Runs whenever launcher advances a clock tick.
+   */
   public void update(){
+    updateFields();
   }
 
+  /**
+   * Enables Block description fields to be updated by event of block dropdown selection or by clock updating.
+   */
+  public void updateFields(){
+    String block = (String) blockDropdown.getSelectedItem();
+    String section = (String) segmentDropdown.getSelectedItem();
+    String line = (String) lineDropdown.getSelectedItem();
+    if(blockDropdown.getSelectedItem() != null){
+      Block viewBlock = track.getBlock(line, section, Integer.parseInt(block));
+      occupiedStatusLabel.setText(viewBlock.getOccupied().toString());
+      if(viewBlock.hasSwitch())
+        switchStatusLabel.setText(viewBlock.setSwitchState(-1).toString());
+      else
+        switchStatusLabel.setText("N/A");
+
+      if(viewBlock.getAssociatedCrossing()!=null)
+        crossingStatusLabel.setText(viewBlock.getAssociatedCrossing().viewCrossingState().toString());
+      else
+        crossingStatusLabel.setText("N/A");
+
+      if(track.viewLightsMap().get(viewBlock)!=null)
+        lightsStatusLabel.setText(track.viewLightsMap().get(viewBlock).viewLightsState().toString());
+      else
+        lightsStatusLabel.setText("N/A");
+    }
+  }
+
+  /**
+   * Constructor for GUI of Wayside Controller(s).
+   * @param  TrackModel    track         [description]
+   * @param  ArrayList<WS> Waysides      [description]
+   * @return               [description]
+   * @bug Dropdowns not Automatically selecting value or displaying 'nice' fields in JLabels below
+   */
   public WaysideGUI(TrackModel track, ArrayList<WS> Waysides) {
     /*for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 			if ("Windows".equals(info.getName()))
@@ -49,7 +99,7 @@ public class WaysideGUI {
 
       JFrame frame = new JFrame();
       this.MainFrame = frame;
-      frame.setBounds(100, 100, 1050, 587);
+      frame.setBounds(100, 100, 789, 379);
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.getContentPane().setLayout(null);
 
@@ -59,20 +109,20 @@ public class WaysideGUI {
   		Set<String> lineSet = track.viewTrackList().keySet();
   		String[] lineStrings = lineSet.toArray(new String[lineSet.size()]);
 
-      JComboBox<String> lineDropdown = new JComboBox<String>();
+      this.lineDropdown = new JComboBox<String>();
   		lineDropdown.setModel(new DefaultComboBoxModel<String>(lineStrings));
   		lineDropdown.setToolTipText("");
   		lineDropdown.setBounds(10, 11, 137, 20);
   		frame.add(lineDropdown);
 
   		String[] segmentStrings = {};
-  		JComboBox<String> segmentDropdown = new JComboBox<String>();
+  		this.segmentDropdown = new JComboBox<String>();
   		segmentDropdown.setModel(new DefaultComboBoxModel<String>(segmentStrings));
   		segmentDropdown.setBounds(145, 11, 137, 20);
   		frame.add(segmentDropdown);
 
   		String[] blockStrings = {};
-  		JComboBox<String> blockDropdown = new JComboBox<String>();
+  		this.blockDropdown = new JComboBox<String>();
   		blockDropdown.setModel(new DefaultComboBoxModel<String>(blockStrings));
       blockDropdown.setBounds(281, 11, 130, 20);
   		frame.add(blockDropdown);
@@ -96,42 +146,68 @@ public class WaysideGUI {
   				String l = (String) lineDropdown.getSelectedItem();
   				String s = (String) segmentDropdown.getSelectedItem();
   				Set<Integer> blockSet = track.viewTrackList().get(l).get(s).keySet();
-  				System.out.println(blockSet);
   				blockDropdown.removeAllItems();
   				for (Integer item : blockSet)
   					blockDropdown.addItem(Integer.toString(item));
-
-  				System.out.println(blockDropdown.getItemCount());
   			}
   		});
 
-  		blockDropdown.addActionListener(new ActionListener() {
-  			@Override
-  			public void actionPerformed(ActionEvent e){
-  				System.out.println(blockDropdown.getItemCount());
-  				String block = (String) blockDropdown.getSelectedItem();
-  				String section = (String) segmentDropdown.getSelectedItem();
-  				String line = (String) lineDropdown.getSelectedItem();
-  			}
-  		});
 
-  		//BLOCK CONSOLE
-  		TrackPanel trackDetails = new TrackPanel(track, Waysides);
-  		trackDetails.setBackground(Color.LIGHT_GRAY);
-  		trackDetails.setBounds(10, 30, 428, 189);
-  		frame.add(trackDetails);
+      JButton btnSwitch = new JButton("Switch");
+      btnSwitch.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+        }
+      });
+      btnSwitch.setBounds(227, 93, 89, 23);
+      frame.getContentPane().add(btnSwitch);
+
+      this.occupiedLabel = new JLabel("Occupied: ");
+      occupiedLabel.setBounds(10, 61, 69, 20);
+      frame.getContentPane().add(occupiedLabel);
+
+      this.occupiedStatusLabel = new JLabel("N/A");
+      occupiedStatusLabel.setBounds(88, 61, 69, 20);
+      frame.getContentPane().add(occupiedStatusLabel);
+
+      this.switchLabel = new JLabel("Switch:");
+      switchLabel.setBounds(10, 94, 69, 20);
+      frame.getContentPane().add(switchLabel);
+
+      this.switchStatusLabel = new JLabel("N/A");
+      switchStatusLabel.setBounds(88, 94, 69, 20);
+      frame.getContentPane().add(switchStatusLabel);
+
+      this.crossingLabel = new JLabel("Crossing:");
+      crossingLabel.setBounds(10, 129, 69, 20);
+      frame.getContentPane().add(crossingLabel);
+
+      this.crossingStatusLabel = new JLabel("N/A");
+      crossingStatusLabel.setBounds(89, 129, 69, 20);
+      frame.getContentPane().add(crossingStatusLabel);
+
+      this.lightsLabel = new JLabel("Lights:");
+      lightsLabel.setBounds(10, 165, 69, 20);
+      frame.getContentPane().add(lightsLabel);
+
+      this.lightsStatusLabel = new JLabel("N/A");
+      lightsStatusLabel.setBounds(89, 165, 69, 20);
+      frame.getContentPane().add(lightsStatusLabel);
 
   		JLabel notificationsLabel = new JLabel("Notifications");
   		notificationsLabel.setBounds(448, 14, 92, 14);
   		frame.add(notificationsLabel);
 
-      notifConsole = new JTextArea(5, 20);
+      blockDropdown.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e){
+          updateFields();
+        }
+      });
+      notifConsole = new JTextArea();
+	    JScrollPane Scroller = new JScrollPane(notifConsole);
+	    Scroller.setBounds(421, 29, 339, 295);
+	    frame.getContentPane().add(Scroller);
+      notifConsole.setBounds(421, 29, 339, 295);
       notifConsole.setTabSize(8);
-  		notifConsole.setBounds(448, 30, 575, 405);
-  		frame.add(notifConsole);
-      JScrollPane Scroller = new JScrollPane(notifConsole);
-      Scroller.setBounds(448, 30, 575, 405);
-      frame.add(Scroller);
 
 
   		JLabel lblMurphy = new JLabel("Murphy");
@@ -141,14 +217,14 @@ public class WaysideGUI {
 
   		JComboBox<String> murphyDropdown = new JComboBox<String>();
   		murphyDropdown.setModel(new DefaultComboBoxModel<String>(new String[] {"Select", "Comm Failure with CTC", "Comm Failure with Track", "Wayside Failure"}));
-  		murphyDropdown.setBounds(10, 484, 143, 20);
+  		murphyDropdown.setBounds(10, 294, 143, 20);
   		frame.getContentPane().add(murphyDropdown);
 
       /*
         @bug Failure button doesn't print to Notifications console
        */
   		JButton failBtn = new JButton("Fail");
-  		failBtn.setBounds(163, 483, 60, 23);
+  		failBtn.setBounds(163, 293, 60, 23);
   		failBtn.addActionListener(new ActionListener(){
   			public void actionPerformed(ActionEvent e){
   				failBtn.setActionCommand(murphyDropdown.getSelectedItem().toString());
@@ -160,7 +236,7 @@ public class WaysideGUI {
 
   		JTextField txtEnterPlcFile = new JTextField();
   		txtEnterPlcFile.setText("Enter PLC file path here...");
-  		txtEnterPlcFile.setBounds(264, 484, 220, 20);
+  		txtEnterPlcFile.setBounds(10, 234, 220, 20);
   		frame.getContentPane().add(txtEnterPlcFile);
   		txtEnterPlcFile.setColumns(10);
 
@@ -176,16 +252,16 @@ public class WaysideGUI {
   				}
   			}
   		});
-  		loadPLCBtn.setBounds(494, 483, 69, 23);
+  		loadPLCBtn.setBounds(240, 233, 69, 23);
   		frame.getContentPane().add(loadPLCBtn);
 
   		JLabel PLCLabel = new JLabel("Load PLC File");
   		PLCLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-  		PLCLabel.setBounds(264, 455, 115, 18);
+  		PLCLabel.setBounds(10, 205, 115, 18);
   		frame.getContentPane().add(PLCLabel);
 
   		JButton button = new JButton("Browse");
-  		button.setBounds(563, 483, 79, 23);
+  		button.setBounds(311, 233, 79, 23);
   		frame.getContentPane().add(button);
   		button.addActionListener(new ActionListener() {
   			public void actionPerformed(ActionEvent e){
@@ -199,11 +275,10 @@ public class WaysideGUI {
   				}
   			}
   		});
-  	    }
 
-  	public void setSpeedAuth(Block block){
 
-   	}
+    }
+
 
   	/**
   	 * Tries to open give PLC file and checks for existence
@@ -217,6 +292,7 @@ public class WaysideGUI {
   		if(PLCFile.exists()){
         for(WS ws : Waysides){
           PLC plc = new PLC(track, PLCFile, ws.line);
+          plc.parse();
           ws.setPlc(plc);
         }
         printNotification("PLC Data loaded");
@@ -228,13 +304,18 @@ public class WaysideGUI {
   		}
   	}
 
-  	public void getStates(){
-
-  	}
-
+    /**
+     * Prints to nofication area
+     * @param String toPrint string to print out to notification area.
+     */
   	public void printNotification(String toPrint){
       notifConsole.setText(notifConsole.getText()+ "\n" + toPrint);
   	}
+
+    /**
+     * Gets frame to launch GUI from launcher.
+     * @return Frame of GUI class
+     */
     public JFrame getFrame(){
       return this.MainFrame;
     }
