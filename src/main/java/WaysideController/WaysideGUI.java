@@ -25,6 +25,7 @@ import TrackModel.TrackModel;
 import TrackModel.Block;
 import CTC.TrackPanel;
 
+
 public class WaysideGUI {
 
   private JFrame MainFrame;
@@ -214,9 +215,10 @@ public class WaysideGUI {
   	public boolean tryPLCFile(String filename) throws IOException, ScriptException{
   		File PLCFile= new File(filename);
   		if(PLCFile.exists()){
-  			PLC plc = PLCParse.parseLine(PLCFile);
-        for(WS ws : Waysides)
-          //ws.setPlc(plc);
+        for(WS ws : Waysides){
+          PLC plc = new PLC(track, PLCFile, ws.line);
+          ws.setPlc(plc);
+        }
         printNotification("PLC Data loaded");
   			return true;
   		}

@@ -203,14 +203,14 @@ public class TCSpeedController extends javax.swing.JPanel {
             System.out.println(this.selectedTrain);
             Block currBlock = this.selectedTrain.getGPS().getCurrBlock(); // get current block
             Double blockSpeedLimit = currBlock.getSpeedLimit(); // get speed limit on block
-            //System.out.println(currBlock.getSpeedLimit());
+
             if (blockSpeedLimit != null){
 
                 this.maxSpeedSlider.setText(Double.toString(blockSpeedLimit)); // update slider label
                 this.speedSlider.setMaximum(blockSpeedLimit.intValue()); //update max value of slider
 
                 // if we changed to manual mode from automatic mode, we need to adjust to meet block limit
-                if (this.setSpeed > blockSpeedLimit.intValue()){ this.setSpeed = blockSpeedLimit.intValue(); }
+                //if (this.setSpeed > blockSpeedLimit.intValue()){ this.setSpeed = blockSpeedLimit.intValue(); }
 
               this.powerControl();
             }else if (blockSpeedLimit == null){

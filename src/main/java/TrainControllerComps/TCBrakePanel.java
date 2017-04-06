@@ -163,6 +163,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
     private void willExceedAuthority(){
         
         //this.logBook.add("Calling Will Exceed Authority"); 
+
         //System.out.println(this.selectedTrain.getGPS().getCurrBlock().nextBlockForward().blockNum());
         //System.out.println(this.selectedTrain.getGPS().getCurrBlock().nextBlockBackward().blockNum());
         

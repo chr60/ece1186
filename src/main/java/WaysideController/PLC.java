@@ -39,11 +39,11 @@ public class PLC {
 			String line;
 			while((line = reader.readLine()) != null){
 				String[] expression = line.split("-");
-				String comp = expression[0].toLowerCase();
+				String comp = expression[0];
 				if(comp.equals("Switch")){
 					this.switchMap.put(expression[0] + " " + expression[1] , expression[2]);
 				}else if(comp.equals("Crossing")){
-					this.crossingMap.put(track.getBlock(line, expression[1], Integer.parseInt(expression[2])), expression[3]);
+					this.crossingMap.put(track.getBlock(this.line, expression[1], Integer.parseInt(expression[2])), expression[3]);
 				}
 			}
 			reader.close();
@@ -55,36 +55,37 @@ public class PLC {
 			int loc, loc2;
 
 			for(String s: this.track.viewRootMap().keySet()){
-				String evalString = new String(this.switchMap.get(s));
-				sb = new StringBuilder(evalString);
+				if(!switchMap.keySet().contains(s)) continue;
+					String evalString = new String(this.switchMap.get(s));
+					sb = new StringBuilder(evalString);
 
-				//replaces ALL "block_letter_number" with block occupancy
-				while((loc = sb.indexOf("block")) != -1){
-					loc2 = loc;
-					while(sb.charAt(loc2) != ')')
-						++loc2;
-					String [] toReplace = sb.substring(loc, loc2).split("_");
-					String section = toReplace[1];
-					Integer blockNum = Integer.parseInt(toReplace[2]);
-					sb.replace(loc, loc2, this.track.getBlock(this.line, section, blockNum).getOccupied().toString());
-				}
+					//replaces ALL "block_letter_number" with block occupancy
+					while((loc = sb.indexOf("block")) != -1){
+						loc2 = loc;
+						while(sb.charAt(loc2) != ')')
+							++loc2;
+						String [] toReplace = sb.substring(loc, loc2).split("_");
+						String section = toReplace[1];
+						Integer blockNum = Integer.parseInt(toReplace[2]);
+						sb.replace(loc, loc2, this.track.getBlock(this.line, section, blockNum).getOccupied().toString());
+					}
 
-				//replaces ALL "section_Letter" with section occupancy
-				while((loc = sb.indexOf("section")) != -1){
-					loc2 = loc;
-					while(sb.charAt(loc2) != ')')
-						++loc2;
-					String [] toReplace = sb.substring(loc, loc2).split("_");
-					String section = toReplace[1];
-					sb.replace(loc, loc2, this.track.sectionOccupancy(line, section).toString());
-				}
+					//replaces ALL "section_Letter" with section occupancy
+					while((loc = sb.indexOf("section")) != -1){
+						loc2 = loc;
+						while(sb.charAt(loc2) != ')')
+							++loc2;
+						String [] toReplace = sb.substring(loc, loc2).split("_");
+						String section = toReplace[1];
+						sb.replace(loc, loc2, this.track.sectionOccupancy(line, section).toString());
+					}
 
-				//evaluate logic and change switch accordingly
-				Object result = logicengine.eval(sb.toString());
-				if(Boolean.TRUE.equals(result))
-					this.track.viewRootMap().get(s).setSwitchState(1);
-				else
-					this.track.viewRootMap().get(s).setSwitchState(0);
+					//evaluate logic and change switch accordingly
+					Object result = logicengine.eval(sb.toString());
+					if(Boolean.TRUE.equals(result))
+						this.track.viewRootMap().get(s).setSwitchState(1);
+					else
+						this.track.viewRootMap().get(s).setSwitchState(0);
 			}
 		}//runSwitchPLC
 
@@ -95,34 +96,36 @@ public class PLC {
 			int loc, loc2;
 
 			for(Block b: this.track.viewCrossingMap().keySet()){
-				String evalString = new String(this.crossingMap.get(b));
-				sb = new StringBuilder(evalString);
+				if(!crossingMap.keySet().contains(b)) continue;
+					String evalString = new String(this.crossingMap.get(b));
+					sb = new StringBuilder(evalString);
 
-				//replaces ALL "block_letter_number" with block occupancy
-				while((loc = sb.indexOf("block")) != -1){
-					loc2 = loc;
-					while(sb.charAt(loc2) != ')')
-						++loc2;
-					String [] toReplace = sb.substring(loc, loc2).split("_");
-					String section = toReplace[1];
-					Integer blockNum = Integer.parseInt(toReplace[2]);
-					sb.replace(loc, loc2, this.track.getBlock(this.line, section, blockNum).getOccupied().toString());
-				}
+					//replaces ALL "block_letter_number" with block occupancy
+					while((loc = sb.indexOf("block")) != -1){
+						loc2 = loc;
+						while(sb.charAt(loc2) != ')')
+							++loc2;
+						String [] toReplace = sb.substring(loc, loc2).split("_");
+						String section = toReplace[1];
+						Integer blockNum = Integer.parseInt(toReplace[2]);
+						sb.replace(loc, loc2, this.track.getBlock(this.line, section, blockNum).getOccupied().toString());
+					}
 
-				//replaces ALL "section_Letter" with section occupancy
-				while((loc = sb.indexOf("section")) != -1){
-					loc2 = loc;
-					while(sb.charAt(loc2) != ')')
-						++loc2;
-					String [] toReplace = sb.substring(loc, loc2).split("_");
-					String section = toReplace[1];
-					sb.replace(loc, loc2, this.track.sectionOccupancy(line, section).toString());
-				}
-				Object result = logicengine.eval(sb.toString());
-				if(Boolean.TRUE.equals(result))
-					this.track.viewCrossingMap().get(b).setCrossingState(true);
-				else
-					this.track.viewCrossingMap().get(b).setCrossingState(false);
+					//replaces ALL "section_Letter" with section occupancy
+					while((loc = sb.indexOf("section")) != -1){
+						loc2 = loc;
+						while(sb.charAt(loc2) != ')')
+							++loc2;
+						String [] toReplace = sb.substring(loc, loc2).split("_");
+						String section = toReplace[1];
+						sb.replace(loc, loc2, this.track.sectionOccupancy(line, section).toString());
+					}
+					Object result = logicengine.eval(sb.toString());
+					System.out.println(Boolean.TRUE.equals(result));
+					if(Boolean.TRUE.equals(result))
+						this.track.viewCrossingMap().get(b).setCrossingState(true);
+					else
+						this.track.viewCrossingMap().get(b).setCrossingState(false);
 			}
 		}//runCrossingPLC
 
