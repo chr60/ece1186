@@ -278,12 +278,15 @@ public class Train implements Serializable {
 	private Double timeToStop(Double Drate){
 		Double time = 0.0;
 		Double tempVelocity = velocity;
-		while (tempVelocity != 0.0)
+                System.out.println("In time to stop"); 
+                //System.out.println(tempVelocity); 
+		while (tempVelocity > 0.0)
 		{
-			tempVelocity = tempVelocity - Drate;
+                        System.out.println(tempVelocity); 
+			tempVelocity = tempVelocity + Drate;
 			time++;
 		}
-
+                System.out.println("About to return from time to stop"); 
 		return time; 				//time required to stop the train in seconds
 	}
 	

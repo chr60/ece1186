@@ -143,6 +143,8 @@ public class TrainController extends javax.swing.JFrame {
 
         this.speedController.setOperatingLogs(this.operatingLogs);
         this.utilityPanel.setVitalsButton(this.vitals);
+        this.brakePanel.setSpeedController(this.speedController);
+        
         this.detailedTrainWindowOpen = false;
 
         // check if kp/ki is set

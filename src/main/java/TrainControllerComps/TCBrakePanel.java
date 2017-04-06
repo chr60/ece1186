@@ -163,25 +163,29 @@ public class TCBrakePanel extends javax.swing.JPanel {
     private void willExceedAuthority(){
         
         //this.logBook.add("Calling Will Exceed Authority"); 
-        System.out.println(this.selectedTrain.getGPS().getCurrBlock().nextBlockForward().blockNum());
-        System.out.println(this.selectedTrain.getGPS().getCurrBlock().nextBlockBackward().blockNum());
+        //System.out.println(this.selectedTrain.getGPS().getCurrBlock().nextBlockForward().blockNum());
+        //System.out.println(this.selectedTrain.getGPS().getCurrBlock().nextBlockBackward().blockNum());
         
-        //System.out.println(this.selectedTrain.getGPS().getCurrBlock().compareTo(this.selectedTrain.getAuthority())); 
+        System.out.println("Foward:" + this.selectedTrain.getGPS().getCurrBlock().nextBlockForward().compareTo(this.selectedTrain.getAuthority()));
+        System.out.println("Back: " + this.selectedTrain.getGPS().getCurrBlock().nextBlockBackward().compareTo(this.selectedTrain.getAuthority()));
         
         if ( (this.selectedTrain.getGPS().getCurrBlock().nextBlockForward().compareTo(this.selectedTrain.getAuthority()) == 0) || 
                 (this.selectedTrain.getGPS().getCurrBlock().nextBlockBackward().compareTo(this.selectedTrain.getAuthority()) == 0)){
         
-            this.logBook.add("Next Block is Authority!"); 
+            System.out.println("Next block");
+            //this.logBook.add("Next Block is Authority!"); 
             
             double footprintSB = this.selectedTrain.getGPS().getDistIntoBlock() + this.selectedTrain.getSafeBrakingDistSB();
             double footprintEB = this.selectedTrain.getGPS().getDistIntoBlock() + this.selectedTrain.getSafeBrakingDistEB();
             
             if (footprintSB == this.selectedTrain.getGPS().getCurrBlock().getLen()){
-                this.logBook.add("Authority 1");
+                //this.logBook.add("Authority 1");
                 this.speedController.setSetSpeed(0);
+                System.out.println("1. Set speed to 0, must brake"); 
             }else if (footprintEB > this.selectedTrain.getGPS().getCurrBlock().getLen()){
-                this.logBook.add("Authority 2");
+                //this.logBook.add("Authority 2");
                 this.speedController.setSetSpeed(0);
+                 System.out.println("2. Set speed to 0, must brake"); 
             }
         }
         
