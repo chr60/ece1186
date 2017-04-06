@@ -325,12 +325,11 @@ public class TCBrakePanel extends javax.swing.JPanel {
         if (this.selectedTrain != null){
         
             if (this.inManualMode == true){ 
-        
-                TCEmergencyFrame window = new TCEmergencyFrame(this.selectedTrain); 
-          
-                window.setOperatingLog(this.operatingLogs);
-                window.setVisible(true);
-                window.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                
+                    this.selectedTrain.setEmergencyBrake( 1 );
+                    this.functionLabelEmg.setText("On");
+                    this.selectedTrain.setEmergencyBrake( 0 );
+                    this.functionLabelEmg.setText("Off");
              }else if (this.inManualMode == false){
            
                 // if the emergency brake is broke, this can't happen

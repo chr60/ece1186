@@ -182,7 +182,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
          */
         else if (this.isPowerFailure() == false){this.vitalsButton.setForeground(new Color(0,0,0));}
         
-        // can't open doors if moving
+        // can't open doors if moving..
         if (this.selectedTrain.getVelocity() == 0.0){ this.enableOpeningDoors(); }
         else{ // shut the doors if moving
             this.disableOpeningDoors();
