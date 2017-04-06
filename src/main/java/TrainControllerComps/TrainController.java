@@ -1174,14 +1174,14 @@ public class TrainController extends javax.swing.JFrame {
             // disable buttons if in automatic mode..
             if (this.automaticMode == true){
 
-                this.brakePanel.getServiceBrake().setEnabled(false);
-                this.makeAnnouncementButton.setEnabled(false);
-                this.annoucementDropDown.setEnabled(false);
+                //this.brakePanel.getServiceBrake().setEnabled(false);
+                //this.makeAnnouncementButton.setEnabled(false);
+                //this.annoucementDropDown.setEnabled(false);
             }else if (this.automaticMode == false){
                 //this.sBrake.setEnabled(true);
-                this.brakePanel.getServiceBrake().setEnabled(true);
-                this.makeAnnouncementButton.setEnabled(true);
-                this.annoucementDropDown.setEnabled(true);
+                //this.brakePanel.getServiceBrake().setEnabled(true);
+                //this.makeAnnouncementButton.setEnabled(true);
+                //this.annoucementDropDown.setEnabled(true);
             }
 
             this.speedController.setManualMode(this.manualMode);

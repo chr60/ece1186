@@ -184,8 +184,10 @@ public class TCBrakePanel extends javax.swing.JPanel {
                 System.out.println("1. Set speed to 0, must brake"); 
             }else if (footprintEB > this.selectedTrain.getGPS().getCurrBlock().getLen()){
                 //this.logBook.add("Authority 2");
+                
+                this.selectedTrain.setEmergencyBrake(1);
                 this.speedController.setSetSpeed(0);
-                 System.out.println("2. Set speed to 0, must brake"); 
+                System.out.println("2. Set speed to 0, must brake"); 
             }
         }
         

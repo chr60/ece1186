@@ -203,25 +203,29 @@ public class TCSpeedController extends javax.swing.JPanel {
             System.out.println(this.selectedTrain);
             Block currBlock = this.selectedTrain.getGPS().getCurrBlock(); // get current block
             Double blockSpeedLimit = currBlock.getSpeedLimit(); // get speed limit on block
-            System.out.println(currBlock.getSpeedLimit());
+            //System.out.println(currBlock.getSpeedLimit());
             if (blockSpeedLimit != null){
 
                 this.maxSpeedSlider.setText(Double.toString(blockSpeedLimit)); // update slider label
                 this.speedSlider.setMaximum(blockSpeedLimit.intValue()); //update max value of slider
 
                 // if we changed to manual mode from automatic mode, we need to adjust to meet block limit
-                //if (this.setSpeed > blockSpeedLimit.intValue()){ this.setSpeed = blockSpeedLimit.intValue(); }
+                if (this.setSpeed > blockSpeedLimit.intValue()){ this.setSpeed = blockSpeedLimit.intValue(); }
 
               this.powerControl();
+            }else if (blockSpeedLimit == null){
+                System.out.println("Go the same speed."); 
+                this.powerControl();
             }
         }else if (this.inManualMode == false){ // automatic mode
             this.setSpeedButton.setEnabled(false);
             this.speedSlider.setEnabled(false);
 
             // get the block the train is on, and the set suggested speed
-            Block currBlock = this.selectedTrain.getGPS().getCurrBlock();
-            Double blockSuggestedSpeed = currBlock.getSuggestedSpeed();
-            System.out.println(currBlock.getSuggestedSpeed());
+            //Block currBlock = this.selectedTrain.getGPS().getCurrBlock();
+            
+            Double blockSuggestedSpeed = this.selectedTrain.getSuggestedSpeed();
+            //System.out.println(currBlock.getSuggestedSpeed());
             if (blockSuggestedSpeed != null){
 
                 this.maxSpeedSlider.setText(Double.toString(blockSuggestedSpeed));
@@ -230,6 +234,9 @@ public class TCSpeedController extends javax.swing.JPanel {
                 this.setSpeed = blockSuggestedSpeed.intValue();
                 this.powerControl();
 
+            }else if (blockSuggestedSpeed == null){
+                System.out.println("Go the same speed."); 
+                this.powerControl();
             }
         }
     }
