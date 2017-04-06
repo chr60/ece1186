@@ -31,9 +31,7 @@ public class PLC {
 			this.plcFile = file;
 			this.line = line;
 		}
-		public void decode(){
 
-		}
 		public void parse() throws IOException{
 			BufferedReader reader = new BufferedReader(new FileReader(plcFile));
 			String line;
@@ -55,7 +53,7 @@ public class PLC {
 			int loc, loc2;
 
 			for(String s: this.track.viewRootMap().keySet()){
-				if(!switchMap.keySet().contains(s)) continue;
+				if(switchMap.keySet().contains(s)){
 					String evalString = new String(this.switchMap.get(s));
 					sb = new StringBuilder(evalString);
 
@@ -63,7 +61,7 @@ public class PLC {
 					while((loc = sb.indexOf("block")) != -1){
 						loc2 = loc;
 						while(sb.charAt(loc2) != ')')
-							++loc2;
+						++loc2;
 						String [] toReplace = sb.substring(loc, loc2).split("_");
 						String section = toReplace[1];
 						Integer blockNum = Integer.parseInt(toReplace[2]);
@@ -74,7 +72,7 @@ public class PLC {
 					while((loc = sb.indexOf("section")) != -1){
 						loc2 = loc;
 						while(sb.charAt(loc2) != ')')
-							++loc2;
+						++loc2;
 						String [] toReplace = sb.substring(loc, loc2).split("_");
 						String section = toReplace[1];
 						sb.replace(loc, loc2, this.track.sectionOccupancy(line, section).toString());
@@ -83,9 +81,10 @@ public class PLC {
 					//evaluate logic and change switch accordingly
 					Object result = logicengine.eval(sb.toString());
 					if(Boolean.TRUE.equals(result))
-						this.track.viewRootMap().get(s).setSwitchState(1);
+					this.track.viewRootMap().get(s).setSwitchState(1);
 					else
-						this.track.viewRootMap().get(s).setSwitchState(0);
+					this.track.viewRootMap().get(s).setSwitchState(0);
+				}
 			}
 		}//runSwitchPLC
 
@@ -121,7 +120,6 @@ public class PLC {
 						sb.replace(loc, loc2, this.track.sectionOccupancy(line, section).toString());
 					}
 					Object result = logicengine.eval(sb.toString());
-					System.out.println(Boolean.TRUE.equals(result));
 					if(Boolean.TRUE.equals(result))
 						this.track.viewCrossingMap().get(b).setCrossingState(true);
 					else

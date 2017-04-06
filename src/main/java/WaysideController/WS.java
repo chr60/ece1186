@@ -40,7 +40,6 @@ public class WS {
 	}
 	public void setGUI(WaysideGUI gui){
 		this.waysideGui = gui;
-		this.track.getBlock("Red", "C", 9).setSwitchState(0);
 	}
 	public void setCTC(CTCgui ctcIn){
 		this.ctc = ctcIn;
@@ -51,8 +50,9 @@ public class WS {
 	 */
 	public void update() throws ScriptException{
 		checkForBroken();
-		if(this.plc!=null)
+		if(this.plc!=null){
 			runPLC();
+		}
 	}
 
 	/**

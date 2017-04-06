@@ -1,4 +1,4 @@
 Switch-12-(!(block_U_77))
-Switch-11-((section_J) && !(section_N))
-Switch_6-((section_A) && !(section_F))
+Switch-11-((section_J) || !(section_N))
+Switch-6-!((section_A) && !(section_F))
 Crossing-I-47-(!section_I)
