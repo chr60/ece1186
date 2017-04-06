@@ -24,7 +24,8 @@ import sun.audio.*;
 // import modules here:
 import TrainControllerComps.*;
 import WaysideController.*;
-import TrackModel.*;
+import TrackModel.TrackModel;
+import TrackModel.TrackGUI;
 import MBO.*;
 import CTC.*;
 
@@ -88,6 +89,7 @@ public class Launcher extends javax.swing.JFrame {
 
     //Track
     private TrackModel globalTrack;
+    private TrackGUI trackGUI;
     //Wayside
     private ArrayList<WS> waysideList = new ArrayList<WS>();
     private WaysideGUI WaysideGui;
@@ -117,6 +119,7 @@ public class Launcher extends javax.swing.JFrame {
         this.globalTrack = new TrackModel("GlobalTrack");
         String[] fNames = {"resources/redline.csv"};
         this.globalTrack.readCSV(fNames);
+        this.trackGUI = new TrackGUI(globalTrack);
 
         //Cycle through number of lines and generate a WS and Train Manager for each line
         for(String s : this.globalTrack.trackList.keySet()){
@@ -483,7 +486,7 @@ public class Launcher extends javax.swing.JFrame {
      * @param evt
      */
     private void openTrack(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTrack
-        // TODO add your handling code here:
+        this.trackGUI.getFrame().setVisible(true);
     }//GEN-LAST:event_openTrack
 
     /**
