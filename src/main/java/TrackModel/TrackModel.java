@@ -50,6 +50,7 @@ public class TrackModel implements Serializable{
     HashMap<Block, Station> blockStationMap = new HashMap<Block, Station>();
     HashMap<Block, Crossing> crossingMap = new HashMap<Block, Crossing>();
     HashMap<Block, Lights> lightsMap = new HashMap<Block,Lights>();
+    HashMap<Station, ArrayList<Lights>> stationLightsMap = new HashMap<Station, ArrayList<Lights>>();
 
     /**
     * Simplicity wrapper to return a non-aliased block on the track given the parameters.
@@ -200,14 +201,6 @@ public class TrackModel implements Serializable{
     }
 
     /**
-    * Allows viewing of the lights map to other modules, implemented as a copy method
-    * @return HashMap<Block, Lights>
-    */
-    public HashMap<Block, Lights> viewLightsMap(){
-        return new HashMap<Block, Lights>(this.lightsMap);
-    }
-
-    /**
     * Allows viewing of the station map to other modules, implemented as a copy method
     * @return HashMap<String, ArrayList<Block>>
     */
@@ -215,7 +208,7 @@ public class TrackModel implements Serializable{
         return new HashMap<String,HashMap<String, ArrayList<Block>>>(this.stationList);
     }
 
-    /*
+    /**
     * Allows viewing of the crossingMap from other modules, implemented as a copy method.
     * @return HashMap<Block, Crossing>
     */
@@ -229,6 +222,14 @@ public class TrackModel implements Serializable{
     */
     public HashMap<String, ArrayList<Block>> viewLeafMap(){
         return new HashMap<String, ArrayList<Block>>(this.leafMap);
+    }
+    
+    /**
+    * Allows viewing of the lights map to other modules, implemented as a copy method
+    * @return HashMap<Block, Lights>
+    */
+    public HashMap<Block, Lights> viewLightsMap(){
+        return new HashMap<Block, Lights>(this.lightsMap);
     }
 
     /**
@@ -405,6 +406,7 @@ public class TrackModel implements Serializable{
             }
         }
     }
+
     /**
     *Build the listing of the host station list for external consumption.
     */
@@ -414,7 +416,7 @@ public class TrackModel implements Serializable{
                 this.stationHostMap.put(l, new HashMap<String, Station>());
             }
             for (String stationName : this.stationList.get(l).keySet()){
-                Station myStation = new Station(stationName, this.stationList.get(l).get(stationName));
+                Station myStation = new Station(this, stationName, this.stationList.get(l).get(stationName));
                 this.stationHostMap.get(l).put(stationName, myStation);
             }
         }

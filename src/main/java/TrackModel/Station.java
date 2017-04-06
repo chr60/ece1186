@@ -17,13 +17,18 @@ public class Station implements Comparable<Station>, Serializable{
   public TrackModel superTrackModel;
   private Random rand;
   private Integer numLoaded;
+  private Lights forwardStationLights;
+  private Lights backWardStationLights;
 
-  public Station(String stationName, ArrayList<Block> hostBlocks){
+  public Station(TrackModel superTrackModel, String stationName, ArrayList<Block> hostBlocks){
+    this.superTrackModel = superTrackModel;
     this.hostBlocks = hostBlocks;
     this.stationName = stationName;
     this.stationTemp = new Integer(20);
     this.trackHeatersOn = false;
     this.passengersWaiting = new Integer(0);
+    this.forwardStationLights = new Lights(this.superTrackModel);
+    this.backWardStationLights = new Lights(this.superTrackModel);
   }
 
   /**
@@ -50,6 +55,14 @@ public class Station implements Comparable<Station>, Serializable{
     this.passengersWaiting = this.passengersWaiting + numPassengers;
   }
 
+  public Lights getForwardLights(){
+    return this.forwardStationLights;
+  }
+
+  public Lights getBackwardLights(){
+    return this.backWardStationLights;
+  }
+  
   /**
   * Implements comparable interface for a station based upon the name of a station.
   * @param thatStation station to be compared to
