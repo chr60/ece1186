@@ -17,6 +17,7 @@ public class TrainPanel extends JPanel{
 	TrainManager currWorkingManager;
 	WS currWorkingWS;
 	TrackModel DummyTrack;
+	TrackModel realTrack;
 	private JLabel set_speed_label;
 	private JLabel authority_label;
 	private JLabel speedNUM;
@@ -31,12 +32,13 @@ public class TrainPanel extends JPanel{
 	private JLabel trainWindowLabel;
 	private JButton buttonEditTrain;
 
-	public TrainPanel(ArrayList<TrainManager> tm, TrackModel dt, ArrayList<WS> ws){
+	public TrainPanel(ArrayList<TrainManager> tm, TrackModel dt, ArrayList<WS> ws, TrackModel globalTrack){
 		this.waysides = ws;
 		this.currWorkingWS = waysides.get(0);
 		this.DummyTrack = dt;
 		this.trainManagers = tm;
 		this.currWorkingManager = trainManagers.get(0);
+		this.realTrack = globalTrack;
 
 		set_speed_label = new JLabel("Speed");
 		set_speed_label.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -163,10 +165,17 @@ public class TrainPanel extends JPanel{
 		currWorkingWS.setSpeedAuth(path);
 	}
 
-	// CTC calls this method
+	// CTC calls this method to update occupancy from WS
 	public void updateTrainPositionsToManager(TrainManager tm){
 		ArrayList<Block> trainPositions = currWorkingWS.getOccupancy();
 		tm.updateTrainPosition(trainPositions);
+	}
+
+	// CTC calls this method to update train id
+	public void updateTrainIDinList(TrainManager tm, TrackModel realTrack){
+		Integer updatedID = realTrack.getBlock("Red", "U", 77).getTrainId();
+		ArrayList<DummyTrain> trainList = tm.getTrainList();
+		tm.updateTrainId(updatedID);
 	}
 
 

@@ -137,7 +137,7 @@ public class Launcher extends javax.swing.JFrame {
         this.trainHandler = new TrainHandler(globalTrack);
         this.trainGUI = new TrainModeUI();
 
-        this.ctc = new CTCgui(trainManagers, generateTrack("CTC"), this.waysideList);
+        this.ctc = new CTCgui(trainManagers, generateTrack("CTC"), this.waysideList, globalTrack);
         this.mbo = new MovingBlockOverlay(generateTrack("MBO"), trainManagers, this.trainHandler, this.ctc);
         this.ctc.setMBO(this.mbo);
 
@@ -169,6 +169,9 @@ public class Launcher extends javax.swing.JFrame {
                 if(trainHandler.getNumTrains() != 0){
                   trainGUI.updateGUI(trainGUI.getCurrT());
                 }
+
+                // CTC - ask track for trainId
+                ctc.getTrainPanel().updateTrainIDinList(trainManagers.get(0), globalTrack);
 
 
             }

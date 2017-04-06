@@ -330,6 +330,11 @@ public class TrackPanel extends JPanel{
 
 	public void updateTrackInfo(Block wsBlock){
 		Block updatedBlock = currWorkingWS.getBlock(wsBlock);
+		if(updatedBlock.getOccupied() == true){
+			System.out.println("occupied");
+		}else{
+			System.out.println("NOT occupied");
+		}
 		// update station info
 		if(updatedBlock.getStationName().equals("")){
 			station_no.setSelected(true);
@@ -341,7 +346,10 @@ public class TrackPanel extends JPanel{
 			return_stn_name.setText(updatedBlock.getStationName());
 		}
 		//update speed limit
-		return_speed_limit.setText(updatedBlock.getSpeedLimit().toString());
+		String speedLimitStr = updatedBlock.getSpeedLimit().toString();
+		Double speedLimitDouble = Double.parseDouble(speedLimitStr);
+		speedLimitDouble = speedLimitDouble*(0.621371);
+		return_speed_limit.setText(speedLimitDouble.toString());
 		//update occupied
 		if(updatedBlock.getOccupied() == true){
 			occupancy_yes.setSelected(true);

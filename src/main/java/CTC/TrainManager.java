@@ -83,5 +83,14 @@ public class TrainManager {
     }
 	}
 
+	public void updateTrainId(Integer updatedID){
+		for(int i=0; i<trainList.size(); i++){
+			DummyTrain lookAtTrain = trainList.get(i);
+			if(lookAtTrain.getID() == -1){
+				lookAtTrain.setID(updatedID);
+			}
+		}
+	}
+
 
 }

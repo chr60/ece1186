@@ -32,15 +32,17 @@ public class CTCgui {
   TrainPanel trainPanel;
   TrainManagerPanel tmPanel;
   TrackPanel blockPanel;
+  TrackModel realTrack;
 
 	/**
 	 * Create the application.
 	 */
-	public CTCgui(ArrayList<TrainManager> tm, TrackModel dt, ArrayList<WS> ws) {
+	public CTCgui(ArrayList<TrainManager> tm, TrackModel dt, ArrayList<WS> ws, TrackModel globalTrack) {
 		this.dummyTrack = dt;
 		this.waysides = ws;
 		this.managerList = tm;
     this.tmanager = managerList.get(0);
+    this.realTrack = globalTrack;
     lastClickedButton = 0;
 
 		grayline = BorderFactory.createLineBorder(Color.gray);
@@ -60,7 +62,7 @@ public class CTCgui {
 
 
 // DISPATCH TRAIN PANEL
-		trainPanel = new TrainPanel(managerList, dummyTrack, waysides);
+		trainPanel = new TrainPanel(managerList, dummyTrack, waysides, realTrack);
 		trainPanel.setBounds(402, 229, 367, 98);
 		trainPanel.setBorder(grayline);
 		frame.getContentPane().add(trainPanel);
