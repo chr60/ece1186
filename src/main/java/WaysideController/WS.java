@@ -49,8 +49,10 @@ public class WS {
 	/**
 	 * Called from launcher to update by clock tick
 	 */
-	public void update(){
+	public void update() throws ScriptException{
 		checkForBroken();
+		if(this.plc!=null)
+			runPLC();
 	}
 
 	/**
@@ -157,9 +159,9 @@ public class WS {
 
 	}
 
-	public boolean[] runPLC(){
-
-		return null;
+	public void runPLC() throws ScriptException{
+		this.plc.runSwitchPLC();
+		this.plc.runCrossingPLC();
 	}
 
 	public PLC getPlc() {

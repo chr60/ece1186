@@ -34,6 +34,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.script.ScriptException;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -68,22 +69,22 @@ public class Launcher extends javax.swing.JFrame {
     //References to ACTIVE modules
 
     private void playSound(){
-    
+
         try{
             // Open an audio input stream.
             File soundFile = new File("src/main/resources/soundclips/TrainWhistle.wav");
             InputStream in = new FileInputStream(soundFile);
-            
-            AudioStream audioIn = new AudioStream(in); 
+
+            AudioStream audioIn = new AudioStream(in);
             AudioPlayer.player.start(audioIn);
         }catch(Exception e){
-        
-            
-            
-            System.out.println(e.getMessage()); 
+
+
+
+            System.out.println(e.getMessage());
         }
     }
-       
+
 
     //Track
     private TrackModel globalTrack;
@@ -98,7 +99,7 @@ public class Launcher extends javax.swing.JFrame {
     private CTCgui ctc;
     //MBO
     private MovingBlockOverlay mbo;
-    
+
     /**
      * Constructor for creating a Launcher object. By default, the system begins operating
      * in normal speed, i.e., wall clock speed.
@@ -106,7 +107,7 @@ public class Launcher extends javax.swing.JFrame {
      */
     public Launcher() {
         initComponents();
-             
+
         this.playSound();
         this.normalSpeedRadioButton.setSelected(true);
         // for now, we start in normal mode
@@ -142,10 +143,14 @@ public class Launcher extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 updateDateAndTime();
+
                 //Update WaysideGui and WS's
                 WaysideGui.update();
-                for(WS ws : waysideList)
-                  ws.update();
+                for(WS ws : waysideList){
+                  try{
+                    ws.update();
+                  }catch(ScriptException ex){}
+                }
 
                 // what should be called every tick
 
@@ -158,9 +163,10 @@ public class Launcher extends javax.swing.JFrame {
 
 
 				        trainHandler.pollYard();
-                        if (trainHandler.getNumTrains() != 0){
-                            trainGUI.updateGUI(trainGUI.getCurrT());
-                        }
+                if(trainHandler.getNumTrains() != 0){
+                  trainGUI.updateGUI(trainGUI.getCurrT());
+                }
+
 
             }
         });
