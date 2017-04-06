@@ -331,9 +331,9 @@ public class TrackPanel extends JPanel{
 	public void updateTrackInfo(Block wsBlock){
 		Block updatedBlock = currWorkingWS.getBlock(wsBlock);
 		if(updatedBlock.getOccupied() == true){
-			System.out.println("occupied");
+			//System.out.println("occupied");
 		}else{
-			System.out.println("NOT occupied");
+			//System.out.println("NOT occupied");
 		}
 		// update station info
 		if(updatedBlock.getStationName().equals("")){

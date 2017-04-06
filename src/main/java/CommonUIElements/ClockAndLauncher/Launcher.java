@@ -164,8 +164,9 @@ public class Launcher extends javax.swing.JFrame {
                 // CTC - prints active list of trains from train manager to GUI
                 ctc.getTrainManagerPanel().updateTable(trainManagers.get(0));
 
+                mbo.updateTrains();
 
-				        trainHandler.pollYard();
+                        trainHandler.pollYard();
                 if(trainHandler.getNumTrains() != 0){
                   trainGUI.updateGUI(trainGUI.getCurrT());
                 }
@@ -200,7 +201,7 @@ public class Launcher extends javax.swing.JFrame {
     }
 
     public static long getCurrTime(){
-        return Calendar.getInstance().getTimeInMillis();
+        return Calendar.getInstance().getTimeInMillis() / 1000;
     }
 
         /**

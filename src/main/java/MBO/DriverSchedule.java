@@ -6,11 +6,17 @@ import java.util.HashMap;
 public class DriverSchedule{
 
 	private HashMap<Integer, Driver> driverSchedule;
+	private final long START_TO_BREAK = 14400;
+	private final long BREAK_LEN = 1800;
+	private long runTime;
+	private int numTrains;
 
 	/**
 	 * Constructor to create driver schedule object
 	 */
-	public DriverSchedule(){
+	public DriverSchedule(long runTime, int numTrains){
+		this.runTime = runTime;
+		this.numTrains = numTrains;
 		driverSchedule = new HashMap<Integer, Driver>();
 	}
 
@@ -35,11 +41,13 @@ public class DriverSchedule{
 	 * @param  breakEnd   Time the driver's break ends
 	 * @param  status     String stating what the driver is currently doing
 	 */
-	public void addDriver(String firstName, String lastName, int employeeID, int trainID, 
-		long shiftStart, long shiftEnd, long breakStart, long breakEnd, String status){
+	public void addDriver(int employeeID, int trainID, long shiftStart, long shiftEnd, 
+							long breakStart, long breakEnd, String status){
+
+		if(employeeID == -1) employeeID = driverSchedule.size();
 		
-		driverSchedule.put(employeeID, new Driver(firstName, lastName, employeeID, trainID, 
-			shiftStart, shiftEnd, breakStart, breakEnd, status));
+		driverSchedule.put(employeeID, new Driver(employeeID, trainID, shiftStart, 
+										shiftEnd, breakStart, breakEnd, status));
 	}
 
 	/**

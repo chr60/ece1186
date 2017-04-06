@@ -177,7 +177,12 @@ public class MBO_gui {
                 Schedule test = mbo.getSched().get(0);
 
                 int loops = Integer.parseInt(numLoopsTextField.getText());
-	    		int start = Integer.parseInt(startTextField.getText());
+	    		int start;
+	    		try{
+	    			start = Integer.parseInt(startTextField.getText());
+	    		}catch(NumberFormatException n){
+	    			start = (int) CommonUIElements.ClockAndLauncher.Launcher.getCurrTime();
+	    		}
 	    		int trains = Integer.parseInt(numTrainTextField.getText());
 
 	    		test.simpleSchedule(loops, start, trains);

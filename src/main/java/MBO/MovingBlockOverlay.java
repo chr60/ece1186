@@ -69,6 +69,12 @@ public class MovingBlockOverlay{
 		//schedules.add(new Schedule(linekey, stationNames, stationTimes, lineLoopTime));
 	}
 
+	public void updateTrains(){
+		for(int i = 0; i < schedules.size(); i++){
+			schedules.get(i).updateTrains();
+		}
+	}
+
 	public ArrayList<Schedule> getSched(){
 		return schedules;
 	}

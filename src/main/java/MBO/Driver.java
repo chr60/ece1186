@@ -4,11 +4,11 @@ import TrackModel.*;
 
 public class Driver{
 
-	private final String firstName;
-	private final String lastName;
 	private final int employeeID;
 	private int trainID;
 	private long shiftStart;
+	private final long START_TO_BREAK = 14400;
+	private final long BREAK_LEN = 1800;
 	private long shiftEnd;
 	private long breakStart;
 	private long breakEnd;
@@ -16,14 +16,10 @@ public class Driver{
 
 	/**
 	 * Bare-bones constructor of Driver object
-	 * @param  firstName  Driver's first name
-	 * @param  lastName   Driver's last name
 	 * @param  employeeID Driver's employee ID
 	 */
-	public Driver(String firstName, String lastName, int employeeID){
-		
-		this.firstName = firstName;
-		this.lastName = lastName;
+	public Driver(int employeeID){
+
 		this.employeeID = employeeID;
 
 		trainID = -1;
@@ -36,8 +32,6 @@ public class Driver{
 
 	/**
 	 * Full fledged constructor for Driver object
-	 * @param  firstName  Driver's first name
-	 * @param  lastName   Driver's last name
 	 * @param  employeeID Driver's employee ID
 	 * @param  trainID    Driver's current train's ID	
 	 * @param  shiftStart Time the driver's shift begins
@@ -46,11 +40,9 @@ public class Driver{
 	 * @param  breakEnd   Time the driver's break ends
 	 * @param  status     String stating what the driver is currently doing
 	 */
-	public Driver(String firstName, String lastName, int employeeID, int trainID, 
-		long shiftStart, long shiftEnd, long breakStart, long breakEnd, String status){
-		
-		this.firstName = firstName;
-		this.lastName = lastName;
+	public Driver(int employeeID, int trainID, long shiftStart, long shiftEnd, 
+								long breakStart, long breakEnd, String status){
+
 		this.employeeID = employeeID;
 		this.trainID = trainID;
 		this.shiftStart = shiftStart;
@@ -58,38 +50,6 @@ public class Driver{
 		this.breakStart = breakStart;
 		this.breakEnd = breakEnd;
 		this.status = status;
-	}
-
-	/**
-	 * Gets the driver's first name
-	 * @return String firstName
-	 */
-	public String getFirstName(){
-		return firstName;
-	}
-
-	/**
-	 * Gets the driver's last name
-	 * @return String lastName
-	 */
-	public String getLastName(){
-		return lastName;
-	}
-
-	/**
-	 * Gets the driver's full name
-	 * @return String fullName
-	 */
-	public String getName(){
-		return firstName + " " + lastName;
-	}
-
-	/**
-	 * Gets the driver's name in last, first format
-	 * @return String fullName
-	 */
-	public String getLastFirst(){
-		return lastName + ", " + firstName;
 	}
 
 	/**
@@ -142,6 +102,16 @@ public class Driver{
 		this.shiftEnd = shiftEnd;
 	}
 
+	public void setShiftEnd(){
+		if(breakEnd >= 0){
+			shiftEnd = breakEnd + START_TO_BREAK;
+		}else if(breakStart >= 0){
+			shiftEnd = breakStart + BREAK_LEN + START_TO_BREAK;
+		}else{
+			shiftEnd = shiftStart + 2 * START_TO_BREAK + BREAK_LEN;
+		}
+	}
+
 	/**
 	 * Gets the time the driver ends their shift
 	 * @return long shiftEnd
@@ -159,6 +129,10 @@ public class Driver{
 		this.breakStart = breakStart;
 	}
 
+	public void setBreakStart(){
+		breakStart = shiftStart + START_TO_BREAK;
+	}
+
 	/**
 	 * Gets the time the driver starts their break
 	 * @return long breakStart
@@ -174,6 +148,14 @@ public class Driver{
 	 */
 	public void setBreakEnd(long breakEnd){
 		this.breakEnd = breakEnd;
+	}
+
+	public void setBreakEnd(){
+		if(breakStart >= 0){
+			breakEnd = breakStart + BREAK_LEN;
+		}else{
+			breakEnd = shiftStart + START_TO_BREAK + BREAK_LEN;
+		}
 	}
 
 	/**

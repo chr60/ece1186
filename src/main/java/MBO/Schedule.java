@@ -30,8 +30,6 @@ public class Schedule{
 	private int lineLoopTime; //in seconds, includies dwell
 	private ArrayList<ArrayList<Integer>> stationArrivals;
 	private List<List<String>> schedule;
-	private final long START_TO_BREAK = 14400;
-	private final long BREAK_LEN = 1800;
 
 	/**
 	 * Constructor for the schedule
@@ -161,8 +159,11 @@ public class Schedule{
 
 		updateTrains();
 
-    	//return stationArrivals;
+	}
 
+	private void driverSchedule(int numLoops){
+
+		long scheduleLength = lineLoopTime * numLoops;
 	}
 
 
@@ -180,7 +181,7 @@ public class Schedule{
 	 *
 	 * @bug Add in update for MBO mode
 	 */
-	private void updateTrains(){
+	public void updateTrains(){
 		ArrayList<DummyTrain> trainList = manager.getTrainList();
 		ArrayList<Block> newPaths = new ArrayList<Block>();
 		ArrayList<Block> tempPath;
@@ -197,6 +198,7 @@ public class Schedule{
 				newPaths.addAll(tempPath);
 				if(trainList.get(i).getPosition().compareTo(nextStop) == 0){
 					manager.getTrain(trainList.get(i).getID()).setLastStation(nextStop);
+					System.out.println("\n\nLast Station: " + trainList.get(i).getLastStation().blockNum());
 				}
 			}
 			if(numTrains > trainList.size()){
@@ -207,6 +209,7 @@ public class Schedule{
 				newPaths.addAll(tempPath);
 			}
 		}
+
 		if(null != ctc){
 			this.ctc.getTrainPanel().updateSpeedAuthToWS(newPaths);
 		}
@@ -262,6 +265,9 @@ public class Schedule{
 		double [] speeds = calcBlockSpeeds(path, currPos, schedArrival);
 		int start = findBlockInList(currPos.getCurrBlock(), path);
 
+		// Hard code fix
+		if(currPos != null && yardBlock.compareTo(currPos.getCurrBlock()) == 0 && manager.getTrainList().size() > 1) start = 1;
+
 		if("MBO".equals(mode)){
 			for(int i = start; i < path.size(); i++){
 				//handler.findTrain(train.getID()).setAuthority(auth);
@@ -274,8 +280,7 @@ public class Schedule{
 			}
 		}
 
-		path = new ArrayList<Block> (path.subList(start, path.size()));
-		return path;
+		return new ArrayList<Block> (path.subList(start, path.size()));
 	}
 
 	private int findBlockInList(Block block, ArrayList<Block> list){
@@ -442,7 +447,7 @@ public class Schedule{
 			blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(16)));
 		}
 
-		else if(startBlock.compareTo(lineStops[13]) == 0){
+		/*else if(startBlock.compareTo(lineStops[13]) == 0){
 			blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(16)));
 		    blocks.add(dummyTrack.getBlock("Red", "E", new Integer(15)));
 		    blocks.add(dummyTrack.getBlock("Red", "E", new Integer(14)));
@@ -453,6 +458,20 @@ public class Schedule{
 			blocks.add(dummyTrack.getBlock("Red", "C", new Integer(9)));
 			blocks.add(dummyTrack.getBlock("Red", "C", new Integer(8)));
 			blocks.add(dummyTrack.getBlock("Red", "C", new Integer(7)));
+		}*/
+
+		else if(startBlock.compareTo(lineStops[13]) == 0){
+			blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(16)));
+		    blocks.add(dummyTrack.getBlock("Red", "A", new Integer(1)));
+		    blocks.add(dummyTrack.getBlock("Red", "A", new Integer(2)));
+		    blocks.add(dummyTrack.getBlock("Red", "A", new Integer(3)));
+		    blocks.add(dummyTrack.getBlock("Red", "B", new Integer(4)));
+		    blocks.add(dummyTrack.getBlock("Red", "B", new Integer(5)));
+		    blocks.add(dummyTrack.getBlock("Red", "B", new Integer(6)));
+		    blocks.add(dummyTrack.getBlock("Red", "C", new Integer(7)));
+			blocks.add(dummyTrack.getBlock("Red", "C", new Integer(8)));
+			blocks.add(dummyTrack.getBlock("Red", "C", new Integer(9)));
+		    blocks.add(dummyTrack.getBlock(lineName, "U", new Integer(77)));
 		}
 
 		else{

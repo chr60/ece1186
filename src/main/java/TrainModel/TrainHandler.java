@@ -96,8 +96,8 @@ public class TrainHandler {
 		yardBlockRed.setSuggestedSpeed(null);
 		Block authorityBlock = yardBlockRed.getAuthority();
 		yardBlockRed.setAuthority(null);
-
-		if (suggestedSpeed != null){
+		if(yardBlockRed.getOccupied() == false){
+			if (suggestedSpeed != null){
 			//suggested speed is greater than 0
 			 if (authorityBlock != null && (authorityBlock.compareTo(yardBlockRed) != 1)){
 				 //if authority is not null and authority is not the yard (returning train)
@@ -108,6 +108,8 @@ public class TrainHandler {
 				 yardBlockRed.setOccupied(true);
 			 }
 		}
+		}
+		
 
 		/*
 
