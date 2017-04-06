@@ -6,6 +6,7 @@ package TrackModel;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JComboBox;
 import java.awt.Choice;
@@ -55,7 +56,8 @@ public class TrackGUI {
   private JToggleButton togglePowerFailure;
   private JToggleButton toggleIsUnderground;
   private JToggleButton toggleUpdate;
-
+  private JLabel imageLabel;
+  private final Double METERSMULT = 3.28084;
   /**
    * Create the application.
    */
@@ -80,10 +82,16 @@ public class TrackGUI {
     String[] lineStrings = lineSet.toArray(new String[lineSet.size()]);
 
     frame = new JFrame();
-    frame.setBounds(100, 100, 604, 471);
+    frame.setBounds(100, 100, 1204, 771);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.getContentPane().setLayout(null);
 
+    ImageIcon image = new ImageIcon(getClass().getResource("trackPicture.jpg"));
+    imageLabel = new JLabel("Track", image, JLabel.CENTER);
+    imageLabel.setVerticalTextPosition(JLabel.CENTER);
+    imageLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+    imageLabel.setBounds(030, 20, 400, 600);
+    //frame.getContentPane().add(imageLabel);
 
     JComboBox dropdownLine = new JComboBox(lineStrings);
     dropdownLine.setBounds(337, 22, 86, 23);
@@ -104,7 +112,7 @@ public class TrackGUI {
     lengthField = new JTextField();
     lengthField.setHorizontalAlignment(SwingConstants.CENTER);
     lengthField.setText("#");
-    lengthField.setBounds(450, 58, 86, 23);
+    lengthField.setBounds(600, 58, 86, 23);
     frame.getContentPane().add(lengthField);
     lengthField.setColumns(10);
 
@@ -113,7 +121,7 @@ public class TrackGUI {
     gradeField.setHorizontalAlignment(SwingConstants.CENTER);
     gradeField.setText("#");
     gradeField.setColumns(10);
-    gradeField.setBounds(450, 81, 86, 23);
+    gradeField.setBounds(600, 81, 86, 23);
     frame.getContentPane().add(gradeField);
 
     //Elevation
@@ -121,7 +129,7 @@ public class TrackGUI {
     elevationField.setHorizontalAlignment(SwingConstants.CENTER);
     elevationField.setText("#");
     elevationField.setColumns(10);
-    elevationField.setBounds(450, 104, 86, 23);
+    elevationField.setBounds(600, 104, 86, 23);
     frame.getContentPane().add(elevationField);
 
     //Speed Limit
@@ -129,31 +137,31 @@ public class TrackGUI {
     speedField.setText("#");
     speedField.setHorizontalAlignment(SwingConstants.CENTER);
     speedField.setColumns(10);
-    speedField.setBounds(450, 127, 86, 23);
+    speedField.setBounds(600, 127, 86, 23);
     frame.getContentPane().add(speedField);
 
     lblBlockLength = new JLabel("Length");
     lblBlockLength.setFont(new Font("Tahoma", Font.PLAIN, 14));
     lblBlockLength.setHorizontalAlignment(SwingConstants.RIGHT);
-    lblBlockLength.setBounds(367, 58, 79, 23);
+    lblBlockLength.setBounds(600, 58, 79, 23);
     frame.getContentPane().add(lblBlockLength);
 
     lblBlockGrade = new JLabel("Grade");
     lblBlockGrade.setHorizontalAlignment(SwingConstants.RIGHT);
     lblBlockGrade.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblBlockGrade.setBounds(378, 81, 68, 23);
+    lblBlockGrade.setBounds(600, 81, 68, 23);
     frame.getContentPane().add(lblBlockGrade);
 
     lblElevation = new JLabel("Elevation");
     lblElevation.setHorizontalAlignment(SwingConstants.RIGHT);
     lblElevation.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblElevation.setBounds(367, 102, 79, 23);
+    lblElevation.setBounds(667, 102, 79, 23);
     frame.getContentPane().add(lblElevation);
 
     lblSpeedLimit = new JLabel("Speed Limit");
     lblSpeedLimit.setHorizontalAlignment(SwingConstants.RIGHT);
     lblSpeedLimit.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblSpeedLimit.setBounds(367, 125, 79, 23);
+    lblSpeedLimit.setBounds(683, 125, 79, 23);
     frame.getContentPane().add(lblSpeedLimit);
 
     lblLengthUnit = new JLabel("f");
@@ -251,14 +259,14 @@ public class TrackGUI {
     lblStation = new JLabel("Station");
     lblStation.setHorizontalAlignment(SwingConstants.RIGHT);
     lblStation.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblStation.setBounds(367, 149, 79, 23);
+    lblStation.setBounds(657, 149, 79, 23);
     frame.getContentPane().add(lblStation);
 
     txtname = new JTextField();
     txtname.setText("(name)");
     txtname.setHorizontalAlignment(SwingConstants.CENTER);
     txtname.setColumns(10);
-    txtname.setBounds(450, 151, 86, 23);
+    txtname.setBounds(600, 151, 86, 23);
     frame.getContentPane().add(txtname);
 
     lblNewLabel = new JLabel("MURPHY");
@@ -328,21 +336,21 @@ public class TrackGUI {
         String s = (String) dropdownSegment.getSelectedItem();
 
         Set<Integer> blockSet = track.trackList.get(l).get(s).keySet();
-        System.out.println(blockSet);
+        //System.out.println(blockSet);
 
         dropdownBlock.removeAllItems();
         for (Integer item : blockSet){
           dropdownBlock.addItem(Integer.toString(item));
         }
 
-        System.out.println(dropdownBlock.getItemCount());
+        //System.out.println(dropdownBlock.getItemCount());
       }
     });
 
     dropdownBlock.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e){
-        System.out.println(dropdownBlock.getItemCount());
+        //System.out.println(dropdownBlock.getItemCount());
         String block = (String) dropdownBlock.getSelectedItem();
         String section = (String) dropdownSegment.getSelectedItem();
         String line = (String) dropdownLine.getSelectedItem();
@@ -361,9 +369,9 @@ public class TrackGUI {
         String line = (String) dropdownLine.getSelectedItem();
 
 
-        lengthField.setText(String.valueOf(track.trackList.get(line).get(section).get(Integer.valueOf(block)).getLen()));
-        elevationField.setText(String.valueOf(track.trackList.get(line).get(section).get(Integer.valueOf(block)).getElevation()));
-        speedField.setText(String.valueOf(track.trackList.get(line).get(section).get(Integer.valueOf(block)).getSpeedLimit()));
+        lengthField.setText(String.valueOf(METERSMULT*track.trackList.get(line).get(section).get(Integer.valueOf(block)).getLen()));
+        elevationField.setText(String.valueOf(METERSMULT*track.trackList.get(line).get(section).get(Integer.valueOf(block)).getElevation()));
+        speedField.setText(String.valueOf(METERSMULT*track.trackList.get(line).get(section).get(Integer.valueOf(block)).getSpeedLimit()));
         gradeField.setText(String.valueOf(track.trackList.get(line).get(section).get(Integer.valueOf(block)).getGrade()));
         txtname.setText(track.trackList.get(line).get(section).get(Integer.valueOf(block)).getStationName());
 
