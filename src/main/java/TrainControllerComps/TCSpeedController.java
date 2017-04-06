@@ -421,6 +421,8 @@ public class TCSpeedController extends javax.swing.JPanel {
         this.setSpeed = this.speedSlider.getValue();
         
         log = "Telling train to set speed to " + this.setSpeed;
+        this.brakePanel.isEmergency = false; // reset the flags
+        this.brakePanel.ignoreSpeed = false;
         this.logBook.add(log);
         this.printLogs();
     }//GEN-LAST:event_setSpeed
