@@ -35,7 +35,7 @@ public class WaysideGUI {
   JComboBox<String> lineDropdown;
   JComboBox<String> segmentDropdown;
   JComboBox<String> blockDropdown;
-
+  Block activeBlock;
 
   JLabel occupiedLabel;
   JLabel occupiedStatusLabel;
@@ -62,6 +62,7 @@ public class WaysideGUI {
     String line = (String) lineDropdown.getSelectedItem();
     if(blockDropdown.getSelectedItem() != null){
       Block viewBlock = track.getBlock(line, section, Integer.parseInt(block));
+      this.activeBlock = viewBlock;
       occupiedStatusLabel.setText(viewBlock.getOccupied().toString());
       if(viewBlock.hasSwitch())
         switchStatusLabel.setText(viewBlock.setSwitchState(-1).toString());
@@ -156,8 +157,16 @@ public class WaysideGUI {
       JButton btnSwitch = new JButton("Switch");
       btnSwitch.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
+          if(activeBlock.hasSwitch()){
+            Boolean currState = activeBlock.setSwitchState(-1);
+            if(currState==true)
+              activeBlock.setSwitchState(0);
+            else
+              activeBlock.setSwitchState(1);
+          }
         }
       });
+
       btnSwitch.setBounds(227, 93, 89, 23);
       frame.getContentPane().add(btnSwitch);
 

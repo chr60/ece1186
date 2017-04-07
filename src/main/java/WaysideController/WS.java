@@ -151,8 +151,8 @@ public class WS {
 	 */
 	public Block getBlock(Block b) {
 		Block liveBlock = track.lateralLookup(b);
-		Block toReturn = new Block(null, liveBlock.getOccupied(), null, null, null, null, liveBlock.getSpeedLimit(), liveBlock.getStationName(), null, liveBlock.getBlockLine(), liveBlock.getBlockSection(), liveBlock.blockNum(), liveBlock.hasSwitch(), liveBlock.getSwitchBlock());
-		return toReturn;
+		// Block toReturn = new Block(null, liveBlock.getOccupied(), null, null, null, null, liveBlock.getSpeedLimit(), liveBlock.getStationName(), null, liveBlock.getBlockLine(), liveBlock.getBlockSection(), liveBlock.blockNum(), liveBlock.hasSwitch(), liveBlock.getSwitchBlock());
+		return liveBlock;
 	}
 
 	public void updateInputs(TrackModel updatedTrack){

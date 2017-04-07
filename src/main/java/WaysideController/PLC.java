@@ -1,15 +1,18 @@
 package WaysideController;
 
-import java.io.IOException;
-import java.io.File;
+import TrackModel.Block;
+import TrackModel.TrackModel;
+import TrackModel.Lights;
+
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import TrackModel.TrackModel;
-import TrackModel.Block;
 
 public class PLC {
 
@@ -80,10 +83,12 @@ public class PLC {
 
 					//evaluate logic and change switch accordingly
 					Object result = logicengine.eval(sb.toString());
-					if(Boolean.TRUE.equals(result))
-					this.track.viewRootMap().get(s).setSwitchState(1);
-					else
-					this.track.viewRootMap().get(s).setSwitchState(0);
+					if(this.track.viewRootMap().get(s).getOccupied()==false){	//cannot changea switch if switch block is occupied
+						if(Boolean.TRUE.equals(result))
+							this.track.viewRootMap().get(s).setSwitchState(1);
+						else
+							this.track.viewRootMap().get(s).setSwitchState(0);
+					}
 				}
 			}
 		}//runSwitchPLC
@@ -126,5 +131,17 @@ public class PLC {
 						this.track.viewCrossingMap().get(b).setCrossingState(false);
 			}
 		}//runCrossingPLC
+		public void lightsPLC(){
+			HashMap<String, ArrayList<Block>> leafMap = this.track.viewLeafMap();
+			HashMap<Block, Lights> lightsMap = this.track.viewLightsMap();
+			for(String s : leafMap.keySet()){
+				ArrayList<Block> leaves = leafMap.get(s);
+				for(Block b : leaves){
 
+				}
+
+			}
+
+
+		}
 }

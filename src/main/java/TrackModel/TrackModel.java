@@ -224,7 +224,7 @@ public class TrackModel implements Serializable{
     public HashMap<String, ArrayList<Block>> viewLeafMap(){
         return new HashMap<String, ArrayList<Block>>(this.leafMap);
     }
-    
+
     /**
     * Allows viewing of the lights map to other modules, implemented as a copy method
     * @return HashMap<Block, Lights>

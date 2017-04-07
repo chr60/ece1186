@@ -491,6 +491,7 @@ public class Launcher extends javax.swing.JFrame {
      */
     private void openTrack(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTrack
         this.trackGUI.getFrame().setVisible(true);
+        this.trackGUI.getFrame().setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_openTrack
 
     /**
