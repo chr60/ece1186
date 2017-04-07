@@ -9,29 +9,29 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.io.Serializable;
 
-public class Crossing implements java.io.Serializable{
-    Block hostBlock;
-    TrackModel superTrackModel;
-    Boolean crossingState;
+public class Crossing implements java.io.Serializable {
+  Block hostBlock;
+  TrackModel superTrackModel;
+  Boolean crossingState;
 
-    public Crossing(TrackModel superTrackModel, Block hostBlock){
-        this.superTrackModel = superTrackModel;
-        this.hostBlock = hostBlock;
-        this.crossingState = true;
-    }
+  public Crossing(TrackModel superTrackModel, Block hostBlock) {
+    this.superTrackModel = superTrackModel;
+    this.hostBlock = hostBlock;
+    this.crossingState = true;
+  }
 
-    /**
-    * Sets the crossing state of a crossing.
-    * @param the new crossing state
-    */
-    public void setCrossingState(Boolean newCrossingState) {
-    	this.crossingState = newCrossingState;
-    }
+  /**
+  * Sets the crossing state of a crossing.
+  * @param the new crossing state
+  */
+  public void setCrossingState(Boolean newCrossingState) {
+    this.crossingState = newCrossingState;
+  }
     
-    /**
-    * View the state of a crossing
-    */
-    public Boolean viewCrossingState(){
-    	return this.crossingState;
-    }
+  /**
+  * View the state of a crossing
+  */
+  public Boolean viewCrossingState() {
+    return this.crossingState;
+  }
 }

@@ -7,21 +7,22 @@ package TrackModel;
 import java.util.Random;
 import java.io.Serializable;
 
-public class Beacon implements java.io.Serializable{
-    Block hostBlock;
-    TrackModel superTrackModel;
-    String beaconMessage;
+public class Beacon implements java.io.Serializable {
+  Block hostBlock;
+  TrackModel superTrackModel;
+  String beaconMessage;
 
-    public Beacon(TrackModel superTrackModel, Block hostBlock, String message){
-        this.superTrackModel = superTrackModel;
-        this.hostBlock = hostBlock;
-        this.beaconMessage = message;
-    }
+  public Beacon(TrackModel superTrackModel, Block hostBlock, String message) {
+    this.superTrackModel = superTrackModel;
+    this.hostBlock = hostBlock;
+    this.beaconMessage = message;
+  }
 
-    /**
-    * Returns the beacon message.
-    */
-    public String getBeaconMessage() {
-      return this.beaconMessage;
-    }
+  /**
+  * Returns the beacon message.
+  * @return the message stored in the beacon
+  */
+  public String getBeaconMessage() {
+    return this.beaconMessage;
+  }
 }

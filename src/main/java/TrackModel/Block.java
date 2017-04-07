@@ -8,7 +8,7 @@ package TrackModel;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Block implements Comparable<Block>, java.io.Serializable{
+public class Block implements Comparable<Block>, java.io.Serializable {
   Double blockLen;
   Boolean occupied;
   Double speedLimit;
@@ -76,7 +76,7 @@ public class Block implements Comparable<Block>, java.io.Serializable{
    * Returns the switch name (if it exists) on a block
    * @return the name of the switch on a block
    */
-  public String getSwitchBlock(){
+  public String getSwitchBlock() {
     return this.switchBlock;
   }
 
@@ -84,7 +84,7 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   * Returns the broken status of a given block.
   * @return the boolean state of the broken rail
   */
-  public Boolean getBroken(){
+  public Boolean getBroken() {
     return this.brokenRail;
   }
 
@@ -100,7 +100,7 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   * Sets the suggested speed to a new speed.
   * @param new speed to set
   */
-  public void setSuggestedSpeed(Double newSpeed){
+  public void setSuggestedSpeed(Double newSpeed) {
     this.suggestedSpeed = newSpeed;
   }
 
@@ -108,7 +108,7 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   * Get the current suggested speed at this block.
   * @return the current suggested speed of the block
   */
-  public Double getSuggestedSpeed(){
+  public Double getSuggestedSpeed() {
     return this.suggestedSpeed;
   }
 
@@ -116,7 +116,7 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   * Gets the authority of this block.
   * @return the block authority of the current block
   */
-  public Block getAuthority(){
+  public Block getAuthority() {
     return this.authority;
   }
 
@@ -124,7 +124,7 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   * Sets the new authority of a block.
   * @param the new authority at this block
   */
-  public void setAuthority(Block newAuthority){
+  public void setAuthority(Block newAuthority) {
     this.authority = newAuthority;
   }
 
@@ -132,7 +132,7 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   * Gets the train ID that occupies the block.
   * @param the new trainId
   */
-  public Integer getTrainId(){
+  public Integer getTrainId() {
     return this.trainId;
   }
 
@@ -140,7 +140,7 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   * Sets the occupied train id.
   * @param thew new id to be assigned to the block
   */
-  public void setTrainId(Integer newId){
+  public void setTrainId(Integer newId) {
     this.trainId = newId;
   }
   /**
@@ -149,14 +149,14 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   * @param setInt integer for the switch state to be set to
   * @todo Add strict value assertions that setInt is either 0 or 1
   */
-  public Boolean setLightState(Integer setInt){
+  public Boolean setLightState(Integer setInt) {
     //condition check for having a switch
     assert(this.lightState != null);
 
-    if(setInt.equals(1)){
+    if(setInt.equals(1)) {
       this.lightState = true;
     }
-    else if(setInt.equals(0)){
+    else if(setInt.equals(0)) {
       this.lightState = false;
     }
     return this.lightState;
@@ -165,18 +165,18 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   /**
   * Returns the length of a block object.
   */
-  public Double getLen(){
+  public Double getLen() {
     return this.blockLen;
   }
 
   /**
   * Returns if a track block is open or not based upon the state of the breakages of a block.
   */
-  public Boolean getOpen(){
-    if (this.brokenRail || this.powerFailure || this.occupied || this.maintenence){
+  public Boolean getOpen() {
+    if (this.brokenRail || this.powerFailure || this.occupied || this.maintenence) {
       return false;
     }
-    else{
+    else {
       return true;
     }
   }
@@ -184,94 +184,94 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   /**
   * Returns the underground status of a block.
   */
-  public Boolean isUnderground(){
+  public Boolean isUnderground() {
     return this.isUnderground;
   }
 
   /**
   *   Returns the occupied state of a given block object.
   */
-  public Boolean getOccupied(){
+  public Boolean getOccupied() {
     return this.occupied;
   }
 
   /**
   * Sets the occupied state of the given block.
   */
-  public void setOccupied(Boolean occupiedState){
+  public void setOccupied(Boolean occupiedState) {
     this.occupied= occupiedState;
   }
 
   /**
   * Returns the speed limit of a given block.
   */
-  public Double getSpeedLimit(){
+  public Double getSpeedLimit() {
     return this.speedLimit;
   }
 
   /**
   * Returns the cumulative elevation of a given blcok.
   */
-  public Double getElevation(){
+  public Double getElevation() {
     return this.blockElevation;
   }
 
   /**
   * Returns the grade of a given block.
   */
-  public Double getGrade(){
+  public Double getGrade() {
     return this.blockGrade;
   }
 
   /**
   * Returns the status of a circuit failure at a given block.
   */
-  public Boolean getCircuitFailure(){
+  public Boolean getCircuitFailure() {
     return this.circuitFailure;
   }
 
-  public Boolean getPowerFailure(){
+  public Boolean getPowerFailure() {
     return this.powerFailure;
   }
 
-  public Boolean getUnderground(){
+  public Boolean getUnderground() {
     return this.isUnderground;
   }
 
-  public String getStationName(){
+  public String getStationName() {
     return this.stationName;
   }
 
-  public Boolean getTrackHeaters(){
+  public Boolean getTrackHeaters() {
     return this.trackHeaters;
   }
 
-  public void setNextBlockForward(){
+  public void setNextBlockForward() {
     this.nextBlockForward = this;
   }
 
-  public void setNextBlockForward(Block setBlock){
+  public void setNextBlockForward(Block setBlock) {
     this.nextBlockForward = setBlock;
   }
 
   /**
   * Returns the number of a given block.
   */
-  public Integer blockNum(){
+  public Integer blockNum() {
     return this.blockNum;
   }
 
   /**
   * Returns the section a block is on.
   */
-  public String getBlockSection(){
+  public String getBlockSection() {
     return this.blockSection;
   }
 
   /**
   * Returns the line a block is on
   */
-  public String getBlockLine(){
+  public String getBlockLine() {
     return this.blockLine;
   }
 
@@ -279,7 +279,7 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   *   By default, initializes the switch to the lower block (as determined by blockNum)
   *   to be destination when the this.switchState = true
   */
-  public void setNextBlockForward(Block lowBlock, Block highBlock){
+  public void setNextBlockForward(Block lowBlock, Block highBlock) {
     this.nextBlockForward = lowBlock;
     this.switchNextBlockForward = highBlock;
     this.switchState = true;
@@ -289,7 +289,7 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   * Sets the next block in the "reverse" direction. Does not handle switch conditions
   * @param setBlock the block to set the default backwards block to
   */
-  public void setNextBlockBackward(Block setBlock){
+  public void setNextBlockBackward(Block setBlock) {
     this.nextBlockBackward = setBlock;
   }
 
@@ -297,23 +297,23 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   * Sets the root block in the "reverse" direction to deal with switch conditions
   * @param rootBlock the root block backwards of a switch block
   */
-  public void setRootBlock(Block rootBlock){
+  public void setRootBlock(Block rootBlock) {
     this.rootBlock = rootBlock;
   }
 
   /** Gets the next block forward along based upon the current switch state. If there is no
   * switch, it returns the next block
   */
-  public Block nextBlockForward(){
-    if(this.switchState != null){
-      if (this.switchState.equals(true)){
+  public Block nextBlockForward() {
+    if(this.switchState != null) {
+      if (this.switchState.equals(true)) {
         return this.nextBlockForward;
         }
-      else{
+      else {
         return this.switchNextBlockForward;
         }
       }
-    else{
+    else {
       return this.nextBlockForward;
     }
   }
@@ -322,16 +322,16 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   * Returns the next block backward given a current switch state.
   * @return the nextBlock in the backward direction given a blocks switch state.
   */
-  public Block nextBlockBackward(){
-    if(this.rootBlock != null){
-      if (this.rootBlock.nextBlockForward().equals(this)){
+  public Block nextBlockBackward() {
+    if(this.rootBlock != null) {
+      if (this.rootBlock.nextBlockForward().equals(this)) {
           return this.rootBlock;
         }
-        else{
+        else {
           return this;
         }
       }
-    else{
+    else {
       return this.nextBlockBackward;
     }
   }
@@ -342,14 +342,14 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   * @param setInt integer for the switch state to be set to
   * @todo Add strict value assertions that setInt is either 0 or 1
   */
-  public Boolean setSwitchState(Integer setInt){
+  public Boolean setSwitchState(Integer setInt) {
     //condition check for having a switch
     assert(this.switchState != null);
 
-    if(setInt.equals(1)){
+    if(setInt.equals(1)) {
         this.switchState = true;
     }
-    else if(setInt.equals(0)){
+    else if(setInt.equals(0)) {
         this.switchState = false;
     }
     return this.switchState;
@@ -359,7 +359,7 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   * Returns the switch state of a given block.
   * @param the switch state
   */
-  public Boolean hasSwitch(){
+  public Boolean hasSwitch() {
     return this.hasSwitch;
   }
 
@@ -367,11 +367,11 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   * Returns the associated station of the block.
   * @return the Station object of the associated block
   */
-  public Station getAssociatedStation(){
+  public Station getAssociatedStation() {
     return this.superTrackModel.blockStationMap.get(this);
   }
 
-  public Crossing getAssociatedCrossing(){
+  public Crossing getAssociatedCrossing() {
     return this.superTrackModel.crossingMap.get(this);
   }
 
@@ -379,7 +379,7 @@ public class Block implements Comparable<Block>, java.io.Serializable{
   * At this time, this implementation does not verify that blocks are the same across lines.
   */
   @Override
-  public int compareTo(Block thatBlock){
+  public int compareTo(Block thatBlock) {
     return Integer.compare(this.blockNum, thatBlock.blockNum)+ this.blockLine.compareTo(thatBlock.blockLine);
   }
 }

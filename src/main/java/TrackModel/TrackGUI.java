@@ -60,6 +60,7 @@ public class TrackGUI {
   private final Double METERSMULT = 3.28084;
   private JLabel lblBeaconMessage;
   private JTextField textFieldBeaconMessage;
+  
   /**
    * Create the application.
    */
@@ -73,6 +74,7 @@ public class TrackGUI {
   public JFrame getFrame(){
     return this.frame;
   }
+
   /**
    * Initialize the contents of the frame.
    */

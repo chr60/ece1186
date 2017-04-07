@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.io.Serializable;
 
-public class Station implements Comparable<Station>, Serializable{
+public class Station implements Comparable<Station>, Serializable {
   public String stationName;
   public Integer stationTemp;
   public Boolean trackHeatersOn;
@@ -20,7 +20,7 @@ public class Station implements Comparable<Station>, Serializable{
   private Lights forwardStationLights;
   private Lights backWardStationLights;
 
-  public Station(TrackModel superTrackModel, String stationName, ArrayList<Block> hostBlocks){
+  public Station(TrackModel superTrackModel, String stationName, ArrayList<Block> hostBlocks) {
     this.superTrackModel = superTrackModel;
     this.hostBlocks = hostBlocks;
     this.stationName = stationName;
@@ -36,11 +36,11 @@ public class Station implements Comparable<Station>, Serializable{
   * @param maxPassengers maximum passengers to be added to a train
   * @return return value for a number of passengers
   */
-  public Integer loadPassengers(Integer maxPassengers){
-    if (maxPassengers > this.passengersWaiting){
+  public Integer loadPassengers(Integer maxPassengers) {
+    if (maxPassengers > this.passengersWaiting) {
       numLoaded = this.rand.nextInt(this.passengersWaiting);
       }
-    else{
+    else {
       numLoaded = this.rand.nextInt(maxPassengers);
       }
     this.passengersWaiting = this.passengersWaiting - numLoaded;
@@ -51,15 +51,15 @@ public class Station implements Comparable<Station>, Serializable{
   * Adds departing passengers to the waiting area.
   * @param numPassengers number of passengers to add to the waiting area
   */
-  public void addDepartingPassengers(Integer numPassengers){
+  public void addDepartingPassengers(Integer numPassengers) {
     this.passengersWaiting = this.passengersWaiting + numPassengers;
   }
 
-  public Lights getForwardLights(){
+  public Lights getForwardLights() {
     return this.forwardStationLights;
   }
 
-  public Lights getBackwardLights(){
+  public Lights getBackwardLights() {
     return this.backWardStationLights;
   }
   
@@ -68,11 +68,10 @@ public class Station implements Comparable<Station>, Serializable{
   * @param thatStation station to be compared to
   */
   @Override
-  public int compareTo(Station thatStation){
-    if (thatStation.stationName.equals(stationName)){
+  public int compareTo(Station thatStation) {
+    if (thatStation.stationName.equals(stationName)) {
       return 1;
-      }
-    else{
+      } else {
       return 0;
     }
   }
