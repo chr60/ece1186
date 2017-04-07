@@ -69,6 +69,10 @@ public class Launcher extends javax.swing.JFrame {
 
     //References to ACTIVE modules
 
+    /**
+     * Plays train sounds when opening
+     * @bug WARNING WARNING WARNING WARNING ON AUDIO CRAP
+     */
     private void playSound(){
 
         try{

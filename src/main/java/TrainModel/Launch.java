@@ -8,10 +8,10 @@ import TrackModel.TrackModel;
 public class Launch {
 	static TrainModeUI gui = new TrainModeUI();
 	static TrackModel gTrack;
-	static TrainHandler trainH; 
+	static TrainHandler trainH;
 	public static void main(String [] args){
 
-		
+
 		gTrack = generateTrack();
 		trainH = new TrainHandler(gTrack);
 		Block yardBlockRed = gTrack.viewStationMap().get("Red").get("YARD").get(0);
@@ -20,9 +20,9 @@ public class Launch {
 		ArrayList<Train> trains = trainH.getTrains();
 		gui.frmTrainModel.setVisible(true);
 		gui.setTrainArray(trains);
-		
+
 	}
-	
+
 	public void powerCommandToTrain(Double pow, Train currT)
 	{
 		currT.updateTemp();
@@ -33,7 +33,7 @@ public class Launch {
 			gui.updateGUI(currT);
 		}
 	}
-	
+
 	  /**
      * Generates a "Dummy Track" and returns it.
      * @return Dummy Track
@@ -41,7 +41,7 @@ public class Launch {
      */
     public static TrackModel generateTrack(){
       String[] fNames = {"resources/redline.csv"};
-      TrackModel globalTrack = new TrackModel();
+      TrackModel globalTrack = new TrackModel("GlobalTrack");
   		globalTrack.readCSV(fNames);
       return globalTrack;
     }

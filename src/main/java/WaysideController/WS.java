@@ -1,10 +1,14 @@
 package WaysideController;
 
-//Imports
+import CTC.CTCgui;
+import TrackModel.Block;
+import TrackModel.TrackModel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Set;
 import javax.script.ScriptException;
 import javax.sound.midi.Track;
 import javax.swing.Box;
@@ -15,14 +19,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import java.util.ArrayList;
-import java.util.Set;
 
+//Imports
 //Train Packages
-import TrackModel.Block;
-import TrackModel.TrackModel;
-import CTC.CTCgui;
-
 public class WS {
 
 
@@ -46,7 +45,8 @@ public class WS {
 	}
 
 	/**
-	 * Called from launcher to update by clock tick
+	 * Called every clock tick from launcher
+	 * @throws ScriptException B/C of PLC code call
 	 */
 	public void update() throws ScriptException{
 		checkForBroken();
@@ -132,6 +132,10 @@ public class WS {
 		return -1;
 	}
 
+  /**
+   * Queries track and checks for broken blocks
+   * @return List of broken blocks (if any)
+   */
 	public ArrayList<Block> checkForBroken(){
 		ArrayList<Block> brokenBlocks = track.getBrokenBlocks(this.line);
 		if(brokenBlocks.size()>0){
@@ -155,21 +159,21 @@ public class WS {
 		return liveBlock;
 	}
 
-	public void updateInputs(TrackModel updatedTrack){
 
-	}
+  /**
+  * Runs code of PLC file that is loaded
+  * @throws ScriptException
+  */
+  public void runPLC() throws ScriptException{
+    this.plc.runSwitchPLC();
+    this.plc.runCrossingPLC();
+  }
 
-	public void runPLC() throws ScriptException{
-		this.plc.runSwitchPLC();
-		this.plc.runCrossingPLC();
-	}
-
-	public PLC getPlc() {
-		return plc;
-	}
-
-	public boolean setPlc(PLC plc) {
+  /**
+   * Sets PLC file of the WS unit.
+   * @param  PLC PLC file to be set to WS
+   */
+	public void setPlc(PLC plc) {
 		this.plc = plc;
-		return true;
 	}
 }
