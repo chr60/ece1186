@@ -1,12 +1,24 @@
 dist: trusty
 language: java
 sudo: true
+
 before_install:
-#- sudo add-apt-repository ppa:jonathonf/texlive-2016 -y
-- sudo apt-get update
-- gem install dpl
+  - sudo apt-get update
+  - gem install dpl
+  - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
+  
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
 jdk:
-- oraclejdk8
+  - oraclejdk8
 script:
-- sudo apt-get install doxygen;sudo apt-get install graphviz; sudo apt-get install rdfind;
-- mvn test -B
+  - sudo apt-get install doxygen;sudo apt-get install graphviz; sudo apt-get install rdfind;
+  - mvn test -B
+addons:
+  apt:
+    packages:
+      - Xvfb
+install:
+  - export DISPLAY=':99.0'
+  - nohup /usr/bin/Xvfb :2 –screen 0 1024x768x24 > /dev/null 2>&1 &

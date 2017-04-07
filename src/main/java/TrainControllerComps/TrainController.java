@@ -49,7 +49,7 @@ public class TrainController extends javax.swing.JFrame {
 
     private boolean normalMode; // used to tell if the Train Controller is in Manual mode
     private boolean testingMode; // used to tell if the Train Controller is in Automatic mode
-
+    
     // FOR TESTING!
     //ArrayList<Train> trains = new ArrayList<Train>();
 
@@ -161,6 +161,35 @@ public class TrainController extends javax.swing.JFrame {
         systemRunSpeed.start();
     }
 
+    /**
+     * Constructor that creates a Train Controller for a give train in Manual and Normal mode.
+     *
+     * @param train the train the controller will launch with.
+     */
+    public TrainController(Train train, Boolean test){
+
+        initComponents();
+        this.setMode("Manual", "Normal");
+
+        this.selectedTrain = train;
+
+        this.speedController.setOperatingLogs(this.operatingLogs);
+        this.utilityPanel.setVitalsButton(this.vitals);
+        this.utilityPanel.setAnnouncementsLog(this.annoucementLogs);
+        this.brakePanel.setSpeedController(this.speedController);
+        
+        this.detailedTrainWindowOpen = false;
+
+        // check if kp/ki is set
+        if (this.selectedTrain.powerConstantsSet() == false && test == false){
+
+            TCEngineerPanel engPanel = new TCEngineerPanel(this.selectedTrain);
+            engPanel.setVisible(true);
+            engPanel.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        }
+        
+        systemRunSpeed.start();
+    }
     /**
      * Constructor that creates a Train Controller in a given mode.
      *

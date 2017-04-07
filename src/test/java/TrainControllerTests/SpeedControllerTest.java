@@ -27,15 +27,13 @@ public class SpeedControllerTest {
   private TrainController tc;
   TrackModel track = new TrackModel("Testing");
   String[] fNames = {"src/test/resources/redline.csv"};
-    
+  
   @BeforeEach
   /**
   * Initialization of the Train Controller to be used for testing
   */
-  void init(){
-    
-    //tc = new TrainController();  
-    //rack.readCSV(fNames);
+  void init(){  
+    track.readCSV(fNames);
   }
     
     
@@ -46,16 +44,14 @@ public class SpeedControllerTest {
   @DisplayName("Validate that the right train is being passed to the Train Controller")
   void testTrain(){
     
-//      Train train; 
-//      
-//      for (int i = 0; i < 10; i++){
-//          train = new Train(i + 1, track); 
-//          
-//          tc = new TrainController(train); 
-//          
-//          assertTrue(tc.getTrain() != null); // there was a train passed in
-//          assertTrue(train.getID() == tc.getTrain().getID()); // the ids match  
-//      }
+    Train train; 
+      
+    for (int i = 0; i < 10; i++){
+      train = new Train(i + 1, track); 
+      tc = new TrainController(train, true); 
+      assertTrue(tc.getTrain() != null); // there was a train passed in
+      assertTrue(train.getID() == tc.getTrain().getID()); // the ids match  
+    }
   }
   
   @Test
@@ -64,8 +60,6 @@ public class SpeedControllerTest {
   */
   @DisplayName("Validate that the set speed is not greater than the block speed")
   void speedNGThanBlockSpeed(){
-    
-      
   }
   
   @Test
