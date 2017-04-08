@@ -48,10 +48,6 @@ import TrainModel.*;
 /**
  * This class is responsible for refreshing the system on a given clock period as
  * well as launch the various GUI for each of the models.
- *
- *
- *
- * @author Andrew Lendacky
  */
 public class Launcher extends javax.swing.JFrame {
 
@@ -77,7 +73,7 @@ public class Launcher extends javax.swing.JFrame {
 
         try{
             // Open an audio input stream.
-            File soundFile = new File("src/main/resources/soundclips/TrainWhistle.wav");
+            File soundFile = new File("classes/soundclips/TrainWhistle.wav");
             InputStream in = new FileInputStream(soundFile);
 
             AudioStream audioIn = new AudioStream(in);
@@ -121,7 +117,10 @@ public class Launcher extends javax.swing.JFrame {
 
         //Generate globalTrack
         this.globalTrack = new TrackModel("GlobalTrack");
-        String[] fNames = {"resources/redline.csv"};
+        String path = "test-classes/redline.csv";
+        String[] fNames = {path};
+        File redline = new File(path);
+        
         this.globalTrack.readCSV(fNames);
         this.trackGUI = new TrackGUI(globalTrack);
 

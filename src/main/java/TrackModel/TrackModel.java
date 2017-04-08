@@ -1,23 +1,22 @@
 package TrackModel;
 
-/** Class model and some associated utility functions for storing the TrackModel
+/** Class model and some associated utility functions for storing the TrackModel.
 * @author Michael
 */
-import java.lang.NumberFormatException;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.Collections;
+import java.io.IOException;
+import java.io.Serializable;
+import java.lang.NumberFormatException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.io.Serializable;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class TrackModel implements Serializable {
 
@@ -26,7 +25,7 @@ public class TrackModel implements Serializable {
 
   public TrackModel(String scope) {
     this.trackScope = scope;
-    this.verbose=false;
+    this.verbose = false;
   }
 
   public TrackModel(String scope, Boolean verbose) {
@@ -34,19 +33,15 @@ public class TrackModel implements Serializable {
     this.verbose = verbose;
   }
 
-  @Deprecated public TrackModel() {
-    System.out.println("WARNING! This initializaaiton of a track model will be deprecated on 4/5/2017");
-    this.verbose=false;
-  }
-
-
   public HashMap<String,HashMap<String, HashMap<Integer, Block>>> trackList =
-    new HashMap<String,HashMap<String, HashMap<Integer, Block>>>();
+      new HashMap<String,HashMap<String, HashMap<Integer, Block>>>();
 
   HashMap<String, Block> rootMap = new HashMap<String, Block>();
   HashMap<String, ArrayList<Block>> leafMap = new HashMap<String, ArrayList<Block>>();
-  HashMap<String,HashMap<String, ArrayList<Block>>> stationList = new HashMap<String,HashMap<String, ArrayList<Block>>>();
-  HashMap<String,HashMap<String, Station>> stationHostMap = new HashMap<String,HashMap<String, Station>>();
+  HashMap<String,HashMap<String, ArrayList<Block>>> stationList 
+      = new HashMap<String,HashMap<String, ArrayList<Block>>>();
+  HashMap<String,HashMap<String, Station>> stationHostMap 
+      = new HashMap<String,HashMap<String, Station>>();
   HashMap<Block, Station> blockStationMap = new HashMap<Block, Station>();
   HashMap<Block, Crossing> crossingMap = new HashMap<Block, Crossing>();
   HashMap<Block, Lights> lightsMap = new HashMap<Block,Lights>();
@@ -65,12 +60,10 @@ public class TrackModel implements Serializable {
 
   /**
   * Returns the occupancy of a section on a given line.
-  * @param the line to be searched
-  * @param the section to be searched
   */
   public Boolean sectionOccupancy(String line, String section) {
     for (Integer b : this.trackList.get(line).get(section).keySet()) {
-      if(this.trackList.get(line).get(section).get(b).getOccupied()){
+      if(this.trackList.get(line).get(section).get(b).getOccupied()) {
         return true;
       }
     }
@@ -508,7 +501,7 @@ public class TrackModel implements Serializable {
             initLine = false;
           }
         }catch(IOException|ArrayIndexOutOfBoundsException|NumberFormatException e) {
-          if(this.verbose.equals(true)){
+          if (this.verbose.equals(true)) {
             System.out.println("Finished Reading");
           }
         }

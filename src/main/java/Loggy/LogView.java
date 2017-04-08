@@ -413,8 +413,9 @@ public class LogView {
 				Boolean isCircuitFailure = track.trackList.get(line).get(section).get(Integer.valueOf(block)).getCircuitFailure();
 				Boolean isPowerFailure = track.trackList.get(line).get(section).get(Integer.valueOf(block)).getPowerFailure();
 				Boolean isUnderground = track.trackList.get(line).get(section).get(Integer.valueOf(block)).getUnderground();
-				Boolean trackHeaters = track.trackList.get(line).get(section).get(Integer.valueOf(block)).getTrackHeaters();
-
+				//Boolean trackHeaters = track.trackList.get(line).get(section).get(Integer.valueOf(block)).getTrackHeaters();
+				Boolean trackHeaters = false;
+				
 				toggleOccupied.setSelected(isOccupied);
 				toggleBroken.setSelected(isBroken);
 				toggleCircuitFailure.setSelected(isCircuitFailure);

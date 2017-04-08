@@ -24,6 +24,7 @@ import java.util.Properties;
 import java.io.FileInputStream;
 import java.nio.charset.Charset;
 import java.io.InputStreamReader;
+import java.io.File;
 
 public class TrackGUI {
 
@@ -90,17 +91,23 @@ public class TrackGUI {
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.getContentPane().setLayout(null);
 
-    ImageIcon image = new ImageIcon(getClass().getResource("trackPicture.jpg"));
+    String fName = ("classes/images/trackPicture.jpg");
+    File imageFile = new File(fName);
+    System.out.println(imageFile.exists());
+
+    /*ImageIcon image = new ImageIcon(getClass().getResource(fName));
+    ImageIcon image = new ImageIcon(this.getClass().getResource(fName));
+    System.out.println(image);
+
     imageLabel = new JLabel("Track", image, JLabel.CENTER);
     imageLabel.setVerticalTextPosition(JLabel.CENTER);
     imageLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
     imageLabel.setBounds(10, 11, 400, 600);
     frame.getContentPane().add(imageLabel);
-
+    */
     JComboBox dropdownLine = new JComboBox(lineStrings);
     dropdownLine.setBounds(570, 22, 86, 23);
     frame.getContentPane().add(dropdownLine);
-
 
     String[] segmentStrings = {};
     JComboBox dropdownSegment = new JComboBox(segmentStrings);
@@ -428,7 +435,8 @@ public class TrackGUI {
         Boolean isCircuitFailure = track.trackList.get(line).get(section).get(Integer.valueOf(block)).getCircuitFailure();
         Boolean isPowerFailure = track.trackList.get(line).get(section).get(Integer.valueOf(block)).getPowerFailure();
         Boolean isUnderground = track.trackList.get(line).get(section).get(Integer.valueOf(block)).getUnderground();
-        Boolean trackHeaters = track.trackList.get(line).get(section).get(Integer.valueOf(block)).getTrackHeaters();
+        //Boolean trackHeaters = track.trackList.get(line).get(section).get(Integer.valueOf(block)).getTrackHeaters();
+        Boolean trackHeaters = false;
         Boolean hasCrossing = track.crossingMap.keySet().contains(thisBlock);
         Boolean hasStation = track.blockStationMap.keySet().contains(thisBlock);
         Boolean hasLights = track.lightsMap.keySet().contains(thisBlock);
@@ -440,7 +448,6 @@ public class TrackGUI {
         togglePowerFailure.setSelected(isPowerFailure);
 
         if(hasBeacon){
-            System.out.println("SDFSDF");
             textFieldBeaconMessage.setText(track.blockBeaconMap.get(thisBlock).getBeaconMessage());
         }
 
