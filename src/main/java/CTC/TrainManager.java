@@ -27,6 +27,10 @@ public class TrainManager {
     trainList.add(train);
   }
 
+  public int size(){
+    return trainList.size();
+  }
+
   private void setYardBlock(){
     
     ArrayList<Block> yards = dummyTrack.viewStationMap().get(line).get("YARD");

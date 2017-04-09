@@ -18,6 +18,10 @@ public class DummyTrain {
 		this.setLastStation(lastStationVisited);
 	}
 
+	public DummyTrain(int id){
+		this.id = id;
+	}
+
 	public DummyTrain(Block pos, ArrayList<Block> p){
 		id = -1;
 		position = pos;
