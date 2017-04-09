@@ -69,13 +69,13 @@ public class CTCgui {
 		trainPanel.setLayout(null);
 
 
-// IMAGE
-		ImageIcon image = new ImageIcon(getClass().getResource("trackPicture.jpg"));
+    // IMAGE
+		//ImageIcon image = new ImageIcon(getClass().getResource("trackPicture.jpg"));
 		JPanel panel = new JPanel();
     panel.setLayout(new BorderLayout());
 		panel.setBounds(0, 0, 390, 511);
 		frame.getContentPane().add(panel);
-		panel.add(new JLabel(image), BorderLayout.CENTER);
+		//panel.add(new JLabel(image), BorderLayout.CENTER);
 
 // Train manager panel
     tmPanel = new TrainManagerPanel(tmanager, dummyTrack);

@@ -45,6 +45,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import TrainModel.*;
 
 
+
 /**
  * This class is responsible for refreshing the system on a given clock period as
  * well as launch the various GUI for each of the models.
@@ -542,7 +543,8 @@ public class Launcher extends javax.swing.JFrame {
      * @bug REDLINE ONLY CURRENTLY
      */
     public TrackModel generateTrack(String module){
-      String[] fNames = {"resources/redline.csv"};
+      String[] fNames = {"test-classes/redline.csv"};
+
       TrackModel globalTrack = new TrackModel(module);
   	  globalTrack.readCSV(fNames);
       return globalTrack;

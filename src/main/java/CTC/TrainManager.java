@@ -28,7 +28,7 @@ public class TrainManager {
   }
 
   private void setYardBlock(){
-
+    
     ArrayList<Block> yards = dummyTrack.viewStationMap().get(line).get("YARD");
     int max = 0;
 
