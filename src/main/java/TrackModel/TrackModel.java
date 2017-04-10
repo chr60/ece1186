@@ -139,9 +139,16 @@ public class TrackModel implements Serializable {
   * @return HashMap<String, HashMap<String,HashMap<Integer,Block>>>
   */
   public HashMap<String,HashMap<String,HashMap<Integer,Block>>> viewTrackList() {
-    return new HashMap<String,HashMap<String,HashMap<Integer,Block>>>(trackList);
+    return new HashMap<String,HashMap<String,HashMap<Integer,Block>>>(this.trackList);
   }
 
+  /**
+  * Allows viewing of the beacon map by other modules. Implemented as a copy method.
+  * @return HashMap<Block, Beacon>
+  */
+  public HashMap<Block, Beacon> viewBeaconMap() {
+    return new HashMap<Block, Beacon>(this.beaconMap);
+  }
   /**
   * Returns a block-to-block list of lists that details the possible paths from a block to block. Does not permit
   * revisiting a block from within this function
