@@ -147,7 +147,7 @@ public class TrackModel implements Serializable {
   * @return HashMap<Block, Beacon>
   */
   public HashMap<Block, Beacon> viewBeaconMap() {
-    return new HashMap<Block, Beacon>(this.beaconMap);
+    return new HashMap<Block, Beacon>(this.blockBeaconMap);
   }
   /**
   * Returns a block-to-block list of lists that details the possible paths from a block to block. Does not permit
