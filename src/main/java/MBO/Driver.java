@@ -2,7 +2,7 @@ package MBO;
 
 public class Driver{
 
-  private final int employeeID;
+  private int employeeID;
   private int trainID;
   private long shiftStart;
   private final long START_TO_BREAK = 14400;
@@ -56,6 +56,10 @@ public class Driver{
    */
   public int getEmployeeID() {
     return employeeID;
+  }
+
+  public void setEmployeeID(int employeeID) {
+    this.employeeID = employeeID;
   }
 
   /**

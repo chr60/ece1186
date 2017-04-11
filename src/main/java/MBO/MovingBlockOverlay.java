@@ -83,13 +83,6 @@ public class MovingBlockOverlay{
     }
   }
 
-  public void updateTrains2() {
-    for (int i = 0; i < schedules.size(); i++) {
-      schedules.get(i).updateTrains2();
-    }
-  }
-
-
   public ArrayList<Schedule> getSched() {
     return schedules;
   }

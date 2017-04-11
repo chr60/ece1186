@@ -173,12 +173,13 @@ public class MBO_gui {
           start = Integer.parseInt(startTextField.getText());
         } catch (NumberFormatException n) {
           start = (int) CommonUIElements.ClockAndLauncher.Launcher.getCurrTime();
+          // To account for time zones
+          start -= 4 * 60 * 60; 
         }
         int trains = Integer.parseInt(numTrainTextField.getText());
 
         test.createSchedule(loops, start, trains);
-        //scheduleToGUI(loops * trains, test.getSched());
-        scheduleToGUI2(trains, test.getSched2());
+        scheduleToGUI2(trains, test.getSched());
       }
     });
 

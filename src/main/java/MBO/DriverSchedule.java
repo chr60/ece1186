@@ -49,6 +49,17 @@ public class DriverSchedule{
                     shiftEnd, breakStart, breakEnd, status));
   }
 
+  public void addDriver(int employeeID, Driver driver) {
+    
+    if (-1 == employeeID) {
+      employeeID = driverSchedule.size();
+    } else {
+      driver.setEmployeeID(employeeID);
+    }
+
+    driverSchedule.put(employeeID, driver);
+  }
+
   /**
    * Gets a driver from their employee ID
    * @param  employeeID ID of the driver

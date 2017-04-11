@@ -28,7 +28,6 @@ public class Schedule{
   private TrainManager manager;
   private TrainHandler handler;
   private ArrayList<TrainSchedule> schedules = new ArrayList<TrainSchedule>();
-  private ArrayList<ArrayList<Integer>> stationArrivals;
   private Block yardBlock;
   private int numTrains = 0;
   private Block [] lineStops;
@@ -151,7 +150,6 @@ public class Schedule{
    * @param  numTrains          Number of trains on the line
    * @return ArrayList<List<Integer>>     stationArrivals
    *
-   * @bug Start times are off
    */
   public void createSchedule(int numLoops, int start, int numTrains) {
 
@@ -188,48 +186,19 @@ public class Schedule{
         }
       }
     }
-  
-    updateTrains2();
-
-  }
-
-  
-  public void simpleSchedule(int numLoops, int start, int numTrains) {
-
-    this.numTrains = numTrains;
-
-    int trainSpacing = lineLoopTime / numTrains;
-    int temp;
-
-    stationArrivals = new ArrayList<ArrayList<Integer>>(stationNames.length);
-    for (int i = 0; i < stationNames.length; i++) {
-      stationArrivals.add(new ArrayList<Integer>());
-    }
-
-    int sum = start;
-    for (int loop = 0; loop < numLoops; loop++) {
-      sum = loop * lineLoopTime + start;
-      for (int i = 0; i < stationNames.length - 1; i++) {
-        sum += stationTimes[i];
-        stationArrivals.get(i).add(sum + i * dwellTime);
-      }
-
-      for (int i = 0; i < stationNames.length; i++) {
-        for (int j = 1; j < numTrains; j++) {
-          temp = stationArrivals.get(i).get(stationArrivals.get(i).size() - 1) + trainSpacing;
-          stationArrivals.get(i).add(temp);
-        }
-      }
-    }
-
     updateTrains();
-
   }
 
-
-  private void driverSchedule(int numLoops) {
+  private void driverSchedule(int start, int numLoops) {
 
     long scheduleLength = lineLoopTime * numLoops;
+
+    for(int sched = 0; sched < schedules.size(); sched++){
+      TrainSchedule train = schedules.get(sched);
+      ArrayList<ArrayList<Integer>> list = train.getList();
+      ArrayList<Integer> arr = list.get(list.size() - 1);
+      Integer lastTime = arr.get(arr.size() - 1);
+    }
   }
 
 
@@ -263,52 +232,18 @@ public class Schedule{
         tempPath = createRoute(trainList.get(i), lastStation, nextStop);
         manager.getTrain(trainList.get(i).getID()).setPath(tempPath);
         newPaths.addAll(tempPath);
-        if (trainList.get(i).getPosition().compareTo(nextStop) == 0) {
-          manager.getTrain(trainList.get(i).getID()).setLastStation(nextStop);
-        }
-      }
-      if (numTrains > trainList.size()) {
-        DummyTrain newTrain = new DummyTrain(yardBlock);
-        manager.addTrain(newTrain);
-        tempPath = createRoute(newTrain, yardBlock, lineStops[0]);
-        manager.getTrain(-1).setPath(tempPath);
-        newPaths.addAll(tempPath);
-      }
-    }
-
-    if (null != ctc) {
-      this.ctc.getTrainPanel().updateSpeedAuthToWS(newPaths);
-    }
-  }
-
-  public void updateTrains2() {
-    ArrayList<DummyTrain> trainList = manager.getTrainList();
-    ArrayList<Block> newPaths = new ArrayList<Block>();
-    ArrayList<Block> tempPath;
-    Block lastStation;
-    Block nextStop;
-
-    if ("MBO".equals(mode)) {
-
-    } else {
-      for (int i = 0; i < trainList.size(); i++) {
-        lastStation = trainList.get(i).getLastStation();
-        nextStop = lineStops[(getStopNum(lastStation) + 1) % lineStops.length];
-        tempPath = createRoute2(trainList.get(i), lastStation, nextStop);
-        manager.getTrain(trainList.get(i).getID()).setPath(tempPath);
-        newPaths.addAll(tempPath);
+        
         if (null != trainList.get(i).getPosition()) {
           if (trainList.get(i).getPosition().compareTo(nextStop) == 0) {
             manager.getTrain(trainList.get(i).getID()).setLastStation(nextStop);
           }
+        } else {
+          DummyTrain newTrain = trainList.get(i);
+          newTrain.setPosition(yardBlock);
+          tempPath = createRoute(newTrain, yardBlock, lineStops[0]);
+          newTrain.setPath(tempPath);
+          newPaths.addAll(tempPath);
         }
-      }
-      if (numTrains > trainList.size()) {
-        DummyTrain newTrain = new DummyTrain(yardBlock);
-        manager.addTrain(newTrain);
-        tempPath = createRoute(newTrain, yardBlock, lineStops[0]);
-        manager.getTrain(-1).setPath(tempPath);
-        newPaths.addAll(tempPath);
       }
     }
 
@@ -365,44 +300,6 @@ public class Schedule{
    * @bug Assosciate arrival time with train ID
    */
   private ArrayList<Block> createRoute(DummyTrain train, Block startBlock, Block stopBlock) {
-
-    ArrayList<Block> path = pathHardCoded(startBlock);
-                //dummyTrack.blockToBlock(startBlock, stopBlock).get(0);
-    GPS auth = findAuthority(path, train);
-    int stationIndex = getStationIndex(stopBlock.getStationName());
-    long schedArrival = stationArrivals.get(stationIndex).get(0);
-    GPS currPos;
-    if ("MBO".equals(mode)) {
-      currPos = handler.findTrain(train.getID()).getGPS();
-    } else {
-      currPos = new GPS(train.getPosition(), null);
-    }
-    double [] speeds = calcBlockSpeeds(path, currPos, schedArrival);
-    int start = findBlockInList(currPos.getCurrBlock(), path);
-
-    // Hard code fix
-    if (currPos != null && yardBlock.compareTo(currPos.getCurrBlock()) == 0) {
-      if (manager.getTrainList().size() > 1) {
-        start = 1;
-      }
-    }
-
-    if ("MBO".equals(mode)) {
-      for (int i = start; i < path.size(); i++) {
-        //handler.findTrain(train.getID()).setAuthority(auth);
-        handler.findTrain(train.getID()).setSpeed(speeds[i]);
-      }
-    } else {
-      for (int i = start; i < path.size(); i++) {
-        path.get(i).setAuthority(auth.getCurrBlock());
-        path.get(i).setSuggestedSpeed(speeds[i]);
-      }
-    }
-
-    return new ArrayList<Block>(path.subList(start, path.size()));
-  }
-
-  private ArrayList<Block> createRoute2(DummyTrain train, Block startBlock, Block stopBlock) {
 
     ArrayList<Block> path = pathHardCoded(startBlock);
                 //dummyTrack.blockToBlock(startBlock, stopBlock).get(0);
@@ -982,27 +879,7 @@ public class Schedule{
     return null;
   }
 
-  /**
-   * Gets a formatted schedule
-   * @return ArrayList<ArrayList<String>> schedule
-   */
-  public ArrayList<ArrayList<String>> getSchedule() {
-    int size = stationArrivals.size();
-    ArrayList<ArrayList<String>> schedule = new ArrayList<ArrayList<String>>(size);
-
-    for (int station = 0; station < size; station++) {
-      for (int time = 0; time < stationArrivals.get(0).size(); time++) {
-        schedule.get(0).add(convertTime(stationArrivals.get(0).get(0)));
-      }
-    }
-    return schedule;
-  }
-
-  public ArrayList<ArrayList<Integer>> getSched() {
-    return stationArrivals;
-  }
-
-  public ArrayList<TrainSchedule> getSched2() {
+  public ArrayList<TrainSchedule> getSched() {
     return schedules;
   }
 

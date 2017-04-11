@@ -158,6 +158,8 @@ public class Launcher extends javax.swing.JFrame {
                     ws.update();
                   }catch(ScriptException ex){}
                 }
+                
+                mbo.updateTrains();
 
                 // what should be called every tick
 
@@ -167,8 +169,6 @@ public class Launcher extends javax.swing.JFrame {
                 ctc.getTrainPanel().updateTrainPositionsToManager(trainManagers.get(0));
                 // CTC - prints active list of trains from train manager to GUI
                 //ctc.getTrainManagerPanel().updateTable(trainManagers.get(0));
-
-                mbo.updateTrains2();
 
                         trainHandler.pollYard();
                 if(trainHandler.getNumTrains() != 0){
