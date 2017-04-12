@@ -18,7 +18,6 @@ script:
 - doxygen Doxygen
 - git add .
 - git commit -m "Travis-CI docs"
-- git push origin master
 addons:
   apt:
     packages:
