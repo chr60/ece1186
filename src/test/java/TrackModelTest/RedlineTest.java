@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
- public class RedlineTest{
+public class RedlineTest{
   private static String line = "Red";
   private static String[] stationNames={"YARD","SHADYSIDE","HERRON AVE","SWISSVILLE","PENN STATION",
                 "STEEL PLAZA","FIRST AVE","STATION SQUARE","SOUTH HILLS JUNCTION","YARD"};
@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 
   @BeforeEach
   /**
-  * Initialization of the trackmodel to be used for testing
+  * Initialization of the trackmodel to be used for testing.
   */
   void init(){
     String[] fNames = {"src/test/resources/redline.csv"};
@@ -67,55 +67,6 @@ import org.junit.jupiter.api.Test;
     TreeSet<Integer> treeSetTest = new TreeSet<Integer>();
     for(String blk : this.track.viewRootMap().keySet()){
       assertTrue(this.track.viewLeafMap().get(blk).get(0).blockNum().compareTo(this.track.viewLeafMap().get(blk).get(1).blockNum())<0);
-    }
-  }
-
-  @Test
-  /**
-  * Check proper funcitonality of nextBlockForward by switch state on the red line.
-  */
-  @DisplayName("Validate the nextBlockForward through a switch")
-  void testSwitchNextBlockForward(){
-    for (String blk : this.track.viewRootMap().keySet()){
-      Block switchTrue = this.track.viewRootMap().get(blk).nextBlockForward();
-      //Since it's true by default, we simply set to false
-      Integer falseInteger = new Integer(0);
-      this.track.viewRootMap().get(blk).setSwitchState(falseInteger);
-      Block switchFalse = this.track.viewRootMap().get(blk).nextBlockForward();
-      assertFalse(switchTrue.equals(switchFalse));
-    }
-  }
-
-  @Test
-  /**
-  * Check testing of next block backward on the redline. For a "true" (default switch state),
-  * the nexBlockBackward should return the rootBlock for the lower indexed block.
-  */
-  @DisplayName("Validate switching and nextBlockBackward default switch state")
-  void testNextBlockBackwardDefaultSwitch(){
-    //For the case where we don't toggle switches
-    for (String s : this.track.viewLeafMap().keySet()){
-      assertTrue(this.track.viewLeafMap().get(s).get(0).nextBlockBackward().equals(track.viewRootMap().get(s)));
-      assertTrue(this.track.viewLeafMap().get(s).get(1).nextBlockBackward().equals(track.viewLeafMap().get(s).get(1)));
-    }
-  }
-
-  @Test
-  /**
-  * Check testing of next block backwards on the redline. For a "false" (non-default switch state),
-  * the nextBlockBackward should return the rootBlock for the higher indexed block.
-  */
-  @DisplayName("Validate Switching and nextBlockBackward functionality")
-  void testNextBlockBackwardFalseSwitch(){
-    //Toggle all the switches
-    for (String s : this.track.viewRootMap().keySet()){
-      Integer falseInteger = new Integer(0);
-      this.track.viewRootMap().get(s).setSwitchState(falseInteger);
-    }
-
-    for (String s : this.track.viewLeafMap().keySet()){
-      assertTrue(this.track.viewLeafMap().get(s).get(0).nextBlockBackward().equals(track.viewLeafMap().get(s).get(0)));
-      assertTrue(this.track.viewLeafMap().get(s).get(1).nextBlockBackward().equals(track.viewRootMap().get(s)));
     }
   }
 
@@ -178,9 +129,9 @@ import org.junit.jupiter.api.Test;
     ArrayList<Block> testArr = new ArrayList<Block>();
   }
   @Test
-  
+
   /**
-  * MBO pathing test 1
+  * MBO pathing test 1.
   */
   @DisplayName("MBO Pathing Test 1")
   void testMBOOne(){
@@ -201,7 +152,7 @@ import org.junit.jupiter.api.Test;
 
   //@Test
   /**
-  * MBO pathing test 2
+  * MBO pathing test 2.
   */
   @DisplayName("MBO Pathing Test 2")
   void testMBOTwo(){
@@ -264,7 +215,7 @@ import org.junit.jupiter.api.Test;
 
   @Test
   /**
-  * Test the functionality of the brokenList
+  * Test the functionality of the brokenList.
   */
   @DisplayName("Broken List Test--expecting false")
   void testBrokenListFalse(){
@@ -277,12 +228,11 @@ import org.junit.jupiter.api.Test;
 
     this.track.getBlock("Red","A",new Integer(1)).setBroken(true);
     this.track.getBlock("Red","U",new Integer(77)).setBroken(true);
-
   }
 
   @Test
   /**
-  * Test the functionality of the brokenList
+  * Test the functionality of the brokenList.
   */
   @DisplayName("Broken List Test--expecting true")
   void testBrokenListTrue(){
@@ -295,11 +245,11 @@ import org.junit.jupiter.api.Test;
     this.track.getBlock("Red","A",new Integer(1)).setBroken(true);
     this.track.getBlock("Red","U",new Integer(77)).setBroken(true);
     assertTrue(brokenListTest.equals(this.track.getBrokenBlocks("Red")));
-    }
+  }
 
   @Test
   /**
-  * Test the functionality of the occupiedList function
+  * Test the functionality of the occupiedList function.
   */
   @DisplayName("Occupied List Test--expecting true")
   void testOccupiedListTrue(){
@@ -314,27 +264,177 @@ import org.junit.jupiter.api.Test;
     assertTrue(occupiedListTest.equals(this.track.getOccupiedBlocks()));
     }
 
-    @Test
-    /**
-    * Test the proper implementation of a crossing
-    */
-    @DisplayName("RedLine crossing test")
-    void testCrossing(){
-      ArrayList<Block> crossingBlocks = new ArrayList<Block>();
-      for(Block blk : this.track.crossingMap.keySet()){
-        crossingBlocks.add(blk);
-      }
-      assertTrue(crossingBlocks.get(0).equals(this.track.getBlock("Red","I",new Integer(47))));
+  @Test
+  /**
+  * Test the proper implementation of a crossing.
+  */
+  @DisplayName("RedLine crossing test")
+  void testCrossing(){
+    ArrayList<Block> crossingBlocks = new ArrayList<Block>();
+    for(Block blk : this.track.crossingMap.keySet()){
+      crossingBlocks.add(blk);
     }
-
-    @Test 
-    /** 
-    * Test valid block getting via viewStationMap
-    */
-    @DisplayName("Test that we can yard blocks via external api")
-    void testLookup() {
-      Block yardBlock = this.track.viewStationMap().get("Red").get("YARD").get(0);
-      assertEquals(new Integer(77), yardBlock.blockNum());
-    }
+    assertTrue(crossingBlocks.get(0).equals(this.track.getBlock("Red","I",new Integer(47))));
   }
 
+  @Test
+  /**
+  * Test valid block getting via viewStationMap.
+  */
+  @DisplayName("Test that we can yard blocks via external api")
+  void testLookup() {
+    Block yardBlock = this.track.viewStationMap().get("Red").get("YARD").get(0);
+    assertEquals(new Integer(77), yardBlock.blockNum());
+  }
+
+  @Test
+  /**
+  * Test valid linking of blocks at/on switches.
+  */
+  @DisplayName("Test Switch 6")
+  void switch6Test() {
+    Block defaultLeafBlock = this.track.getBlock("Red", "A", 1);
+    Block altLeafBlock = this.track.getBlock("Red", "E", 15);
+    Block rootBlock = this.track.getBlock("Red", "F", 16);
+    Block rootBlockForward = this.track.getBlock("Red", "F", 17);
+
+    //TEST SWITCH BLOCK F/B ASSIGNMENTS
+    assertTrue(rootBlock.setSwitchState(-1));
+    rootBlock.setSwitchState(1);
+    assertTrue(rootBlock.nextBlockForward().equals(rootBlockForward));
+    assertTrue(rootBlock.nextBlockBackward().equals(defaultLeafBlock));
+
+    rootBlock.setSwitchState(0);
+    assertFalse(rootBlock.setSwitchState(-1));
+    assertTrue(rootBlock.nextBlockForward().equals(rootBlockForward));
+    assertTrue(rootBlock.nextBlockBackward().equals(altLeafBlock));
+  }
+
+
+  @Test
+  /**
+  * Test valid linking of blocks at/on switches.
+  */
+  @DisplayName("Test Switch 8")
+  void switch8Test() {
+    Block defaultLeafBlock = this.track.getBlock("Red", "H", 32);
+    Block altLeafBlock = this.track.getBlock("Red", "R", 72);
+    Block rootBlock = this.track.getBlock("Red", "H", 33);
+    Block rootBlockForward = this.track.getBlock("Red", "H", 34);
+
+    assertTrue(rootBlock.setSwitchState(-1));
+    assertTrue(rootBlock.nextBlockForward().equals(rootBlockForward));
+    assertTrue(rootBlock.nextBlockBackward().equals(defaultLeafBlock));
+
+    rootBlock.setSwitchState(0);
+    assertFalse(rootBlock.setSwitchState(-1));
+    assertTrue(rootBlock.nextBlockForward().equals(altLeafBlock));
+    assertTrue(rootBlock.nextBlockBackward().equals(defaultLeafBlock));
+  }
+
+  @Test
+  /**
+   * Test valid linking of blocks at/on switches.
+   */
+  @DisplayName("Test Switch 10")
+  void switch10Test() {
+    Block defaultLeafBlock = this.track.getBlock("Red", "H", 43);
+    Block altLeafBlock = this.track.getBlock("Red", "O", 67);
+    Block rootBlock = this.track.getBlock("Red", "H", 44);
+    Block rootBlockForward = this.track.getBlock("Red", "H", 45);
+
+    assertTrue(rootBlock.setSwitchState(-1));
+    assertTrue(rootBlock.nextBlockForward().equals(rootBlockForward));
+    assertTrue(rootBlock.nextBlockBackward().equals(defaultLeafBlock));
+
+    rootBlock.setSwitchState(0);
+    assertFalse(rootBlock.setSwitchState(-1));
+    assertTrue(rootBlock.nextBlockForward().equals(altLeafBlock));
+    assertTrue(rootBlock.nextBlockBackward().equals(defaultLeafBlock));
+  }
+
+  @Test
+  /**
+  * Test valid linking of blocks at/on switches.
+  */
+  @DisplayName("Test Switch 7")
+  void switch7Test() {
+    Block defaultLeafBlock = this.track.getBlock("Red", "H", 28);
+    Block altLeafBlock = this.track.getBlock("Red", "T", 76);
+    Block rootBlock = this.track.getBlock("Red", "H", 27);
+    Block rootBlockBackward = this.track.getBlock("Red", "H", 26);
+
+    assertTrue(rootBlock.setSwitchState(-1));
+    rootBlock.setSwitchState(1);
+    assertTrue(rootBlock.nextBlockBackward().equals(rootBlockBackward));
+    assertTrue(rootBlock.nextBlockForward().equals(defaultLeafBlock));
+
+    rootBlock.setSwitchState(0);
+    assertFalse(rootBlock.setSwitchState(-1));
+    assertTrue(rootBlock.nextBlockBackward().equals(rootBlockBackward));
+    assertTrue(rootBlock.nextBlockForward().equals(altLeafBlock));
+  }
+
+  @Test
+  /**
+  * Test valid linking of blocks at/on switches.
+  */
+  @DisplayName("Test Switch 9")
+  void switch9Test() {
+    Block defaultLeafBlock = this.track.getBlock("Red", "H", 39);
+    Block altLeafBlock = this.track.getBlock("Red", "Q", 71);
+    Block rootBlock = this.track.getBlock("Red", "H", 38);
+    Block rootBlockBackward = this.track.getBlock("Red", "H", 37);
+
+    assertTrue(rootBlock.setSwitchState(-1));
+    assertTrue(rootBlock.nextBlockBackward().equals(rootBlockBackward));
+    assertTrue(rootBlock.nextBlockForward().equals(defaultLeafBlock));
+  
+    rootBlock.setSwitchState(0);
+    assertFalse(rootBlock.setSwitchState(-1));
+    assertTrue(rootBlock.nextBlockBackward().equals(rootBlockBackward));
+    assertTrue(rootBlock.nextBlockForward().equals(altLeafBlock));
+  }
+
+  @Test
+  /**
+  * Test valid linking of blocks at/on switches.
+  */
+  @DisplayName("Test Switch 11")
+  void switch11Test() {
+    Block defaultLeafBlock = this.track.getBlock("Red", "J", 53);
+    Block altLeafBlock = this.track.getBlock("Red", "N", 66);
+    Block rootBlock = this.track.getBlock("Red", "J", 52);
+    Block rootBlockBackward = this.track.getBlock("Red", "J", 51);
+
+    assertTrue(rootBlock.setSwitchState(-1));
+    assertTrue(rootBlock.nextBlockBackward().equals(rootBlockBackward));
+    assertTrue(rootBlock.nextBlockForward().equals(defaultLeafBlock));
+
+    rootBlock.setSwitchState(0);
+    assertFalse(rootBlock.setSwitchState(-1));
+    assertTrue(rootBlock.nextBlockBackward().equals(rootBlockBackward));
+    assertTrue(rootBlock.nextBlockForward().equals(altLeafBlock));
+  }
+
+  @Test
+  /**
+  * Test switch 12 valid connections.
+  */
+  @DisplayName("Test switch 12")
+  void switch12Test() {
+    Block rootBlock = this.track.getBlock("Red", "C", 9);
+    Block defaultLeafBlock = this.track.getBlock("Red", "D", 10);
+    Block altLeafBlock = this.track.getBlock("Red", "U", 77);
+    Block rootBlockBackward = this.track.getBlock("Red", "C", 8);
+
+    assertTrue(rootBlock.setSwitchState(-1));
+    assertTrue(rootBlock.nextBlockBackward().equals(rootBlockBackward));
+    assertTrue(rootBlock.nextBlockForward().equals(defaultLeafBlock));
+
+    rootBlock.setSwitchState(0);
+    assertFalse(rootBlock.setSwitchState(-1));
+    assertTrue(rootBlock.nextBlockBackward().equals(rootBlockBackward));
+    assertTrue(rootBlock.nextBlockForward().equals(altLeafBlock));
+  }
+}

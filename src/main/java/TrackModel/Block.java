@@ -30,6 +30,7 @@ public class Block implements Comparable<Block>, java.io.Serializable {
   Block nextBlockForward;
   Block switchNextBlockForward;
   Block nextBlockBackward;
+  Block switchNextBlockBackward;
   Block rootBlock;
   Boolean lightState;
   TrackModel superTrackModel;
@@ -272,19 +273,48 @@ public class Block implements Comparable<Block>, java.io.Serializable {
   }
 
   /**
+  * Sets the nextBlockBackward to this block in the case travel in that direction is not valid.
+  */
+  public void setNextBlockBackward() {
+    this.nextBlockBackward = this;
+  }
+
+  /**
   * Sets the next block forward given a block. 
   */
   public void setNextBlockForward(Block setBlock) {
     this.nextBlockForward = setBlock;
   }
 
-  /** Setter for the next block forward in the condition for a switch is present.
-  *   By default, initializes the switch to the lower block (as determined by blockNum).
-  *   to be destination when the this.switchState = true.
+  /**
+  * Sets the next block in the "reverse" direction. Does not handle switch conditions.
+  * @param setBlock the block to set the default backwards block to
+  */
+  public void setNextBlockBackward(Block setBlock) {
+    this.nextBlockBackward = setBlock;
+  }
+
+  /** 
+  * Setter for the next block forward in the condition for a switch is present.
+  * By default, initializes the switch to the lower block (as determined by blockNum).
+  * to be destination when the this.switchState = true.
+  * @param the low block for forward
+  * @param the high block for forward  
   */
   public void setNextBlockForward(Block lowBlock, Block highBlock) {
     this.nextBlockForward = lowBlock;
     this.switchNextBlockForward = highBlock;
+    this.switchState = true;
+  }
+
+  /**
+  * Handles the switch conditions for the condition where the blocknums ofleaf0<\leaf1<\root
+  * @param the lower leaf block (leaf0)
+  * @param the higher leaf block (leaf1)
+  */
+  public void setNextBlockBackward(Block lowBlock, Block highBlock) {
+    this.nextBlockBackward = lowBlock;
+    this.switchNextBlockBackward = highBlock;
     this.switchState = true;
   }
 
@@ -309,13 +339,7 @@ public class Block implements Comparable<Block>, java.io.Serializable {
     return this.blockLine;
   }
 
-  /**
-  * Sets the next block in the "reverse" direction. Does not handle switch conditions.
-  * @param setBlock the block to set the default backwards block to
-  */
-  public void setNextBlockBackward(Block setBlock) {
-    this.nextBlockBackward = setBlock;
-  }
+
 
   /**
   * Sets the root block in the "reverse" direction to deal with switch conditions.
@@ -330,13 +354,24 @@ public class Block implements Comparable<Block>, java.io.Serializable {
   * switch, it returns the next block
   */
   public Block nextBlockForward() {
-    if (this.switchState != null) {
+    if (this.switchState != null && this.switchNextBlockForward != null) {
       if (this.switchState.equals(true)) {
         return this.nextBlockForward;
       } else {
-        return this.switchNextBlockForward;
+        if(this.switchNextBlockForward != null) {
+          return this.switchNextBlockForward;
+        } else {
+          return this.nextBlockForward;
+        }
       }
     } else {
+      if (this.rootBlock != null) {
+        if (this.rootBlock.nextBlockBackward != this) {
+          return this;
+        } else {
+          return this.rootBlock;
+        }
+      }
       return this.nextBlockForward;
     }
   }
@@ -346,6 +381,13 @@ public class Block implements Comparable<Block>, java.io.Serializable {
   * @return the nextBlock in the backward direction given a blocks switch state.
   */
   public Block nextBlockBackward() {
+    if (this.switchState != null && this.switchNextBlockBackward != null) {
+      if(this.switchState.equals(true)) {
+        return this.nextBlockBackward;
+      } else {
+        return this.switchNextBlockBackward;
+      }
+    }
     if (this.rootBlock != null) {
       if (this.rootBlock.nextBlockForward().equals(this)) {
         return this.rootBlock;

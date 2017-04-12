@@ -195,7 +195,7 @@ public class TrackModel implements Serializable {
       //System.out.println(possiblePaths.size());
       possiblePaths = blockPath(possiblePaths, new ArrayList<Block>(visited), currBlock.nextBlockForward(), endBlock);
     }
-        return possiblePaths;
+    return possiblePaths;
     }
 
     /**
@@ -433,20 +433,27 @@ public class TrackModel implements Serializable {
     */
     private void handleSwitches() {
       for (String s : this.rootMap.keySet()) {
-        this.rootMap.get(s).setNextBlockForward(this.leafMap.get(s).get(0), this.leafMap.get(s).get(1));
-        //System.out.print(this.rootMap.get(s).blockLine);
-        //System.out.println(this.rootMap.get(s).blockNum());
-      }
-
-      for (String s : this.leafMap.keySet()) {
-        this.leafMap.get(s).get(0).setRootBlock(this.rootMap.get(s));
-        this.leafMap.get(s).get(1).setRootBlock(this.rootMap.get(s));
+        //case 1: root.blockNum < leaf0.blockNum < leaf1.blockNum: uses switchNextBlockForward
+        //case 2: leaf0.blockNum < root.blockNum < leaf1.blockNum: uses switchNextBlockFoward
+        //case 3: leaf0.blockNum < leaf1.blockNum < root.blockNum: uses switchNextBlockBackward
+        if(this.rootMap.get(s).blockNum() < this.leafMap.get(s).get(0).blockNum()) {
+          this.rootMap.get(s).setNextBlockForward(this.leafMap.get(s).get(0), this.leafMap.get(s).get(1));
+          this.leafMap.get(s).get(0).setRootBlock(this.rootMap.get(s));
+          this.leafMap.get(s).get(1).setRootBlock(this.rootMap.get(s));          
+        } else if(this.rootMap.get(s).blockNum() < this.leafMap.get(s).get(1).blockNum()) {
+          this.rootMap.get(s).setNextBlockForward(this.rootMap.get(s).nextBlockForward, this.leafMap.get(s).get(1));
+          this.leafMap.get(s).get(0).setRootBlock(this.rootMap.get(s));
+          this.leafMap.get(s).get(1).setRootBlock(this.rootMap.get(s));            
+        } else if (this.rootMap.get(s).blockNum() > this.leafMap.get(s).get(1).blockNum()) {
+          this.rootMap.get(s).setNextBlockBackward(this.leafMap.get(s).get(0), this.leafMap.get(s).get(1));
+          this.leafMap.get(s).get(0).setRootBlock(this.rootMap.get(s));
+          this.leafMap.get(s).get(1).setRootBlock(this.rootMap.get(s));
+        }
       }
     }
 
     /**
     * Helper function for reading the information from the excel-dumped CSV
-    *
     * @param fNames: filenames of the csv's of to read in
     */
     public void readCSV(String[] fNames) {
