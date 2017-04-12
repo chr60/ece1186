@@ -25,10 +25,3 @@ addons:
 install:
 - export DISPLAY=':99.0'
 - nohup /usr/bin/Xvfb :2 –screen 0 1024x768x24 > /dev/null 2>&1 &
-deploy:
-  provider: releases
-  api_key:
-    secure: h2Gp0s5GJDk0vEzapsnvb6qRg5bDZYw4Y5iPCqvyXpwBWj7Y0gHVUuSPLyVxqdqwLA2qb4qiT6Z5vp6kI2ofhKWMF4RX9s31d0K4DzaSMDqHA8MUCsjnkIQlEm2Ppg6a9kUNG6RyMYsZKpz3GTPHKhtDbjOJKUGIdi73so0z3x2YVv4pucJ4kyW4cv860WoMZDSfdo6CSQnd1UkOMpj0S0DcIh6gxGxRFOarvf5JfjQPuHwBUe45PIxRuidWi+29P7Up7f8ASBe33HJh0Zi9EVuSQliANtEzhc775USNN7YdDAsUN6SY+ZPoJY0PeumTBZbsHoAvzooCoPscGvCKt0h2Bvqn/24bf4GCnCBoKu/fsmHXEw2IQ6WhDMIeHXXFAras9pHpKl8Bcvqzq/ATybMdn3uwplPKHIgxkmI39shpyc6QgwSHHyZfcG8ohCpaZaAHgKTRtWJb5gP6Qwv2R3GvPFbSMxDtt6hVMldStCKU8HUl2Wb8OlSChgo5M12cFFOUeA/J/W88G2i5kYlAPZCRjTaRytRwMEK3YFG+wzNgvcZz4AFP75smDLtUdMrZjd4h5bRlHUICChI3rMwHEe5QzDu7wCkAZ535Ylw3T+IILmFY4FDCDJeKgazhQYpP+Hb9HmOlLqUXgTuJDzOP5cnX9+5SiMmQpdRNQg1nkrA=
-  file: docs/html/
-  on:
-    repo: michaelghaben/ece1186
