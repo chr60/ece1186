@@ -1,0 +1,10 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node2" href="$classTrackModel_1_1Station.html" title="TrackModel.Station" alt="" coords="159,107,294,133"/>
+<area shape="rect" id="node3" href="$classTrackModel_1_1TrackModel.html" title="TrackModel.TrackModel" alt="" coords="145,5,308,32"/>
+<area shape="rect" id="node4" href="$classTrainModel_1_1Train.html" title="a normal member taking two arguments and returning an integer value. " alt="" coords="167,56,286,83"/>
+<area shape="rect" id="node6" href="$classTrackModel_1_1Block.html" title="TrackModel.Block" alt="" coords="163,157,290,184"/>
+<area shape="rect" id="node8" href="$classLoggy_1_1Loggy.html" title="Loggy.Loggy" alt="" coords="179,208,275,235"/>
+<area shape="rect" id="node9" href="$classTrackModel_1_1Beacon.html" title="TrackModel.Beacon" alt="" coords="157,259,296,285"/>
+<area shape="rect" id="node10" href="$classTrackModel_1_1Crossing.html" title="TrackModel.Crossing" alt="" coords="153,309,300,336"/>
+<area shape="rect" id="node11" href="$classTrackModel_1_1Lights.html" title="TrackModel.Lights" alt="" coords="162,360,291,387"/>
+</map>
