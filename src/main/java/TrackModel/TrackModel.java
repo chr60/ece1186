@@ -47,6 +47,7 @@ public class TrackModel implements Serializable {
   HashMap<Block, Lights> lightsMap = new HashMap<Block,Lights>();
   HashMap<Station, ArrayList<Lights>> stationLightsMap = new HashMap<Station, ArrayList<Lights>>();
   HashMap<Block, Beacon> blockBeaconMap = new HashMap<Block, Beacon>();
+  HashMap<String, ArrayList<Block>> flatList = new HashMap<String, ArrayList<Block>>();
 
   /**
   * Simplicity wrapper to return a non-aliased block on the track given the parameters.
@@ -196,7 +197,7 @@ public class TrackModel implements Serializable {
       possiblePaths = blockPath(possiblePaths, new ArrayList<Block>(visited), currBlock.nextBlockForward(), endBlock);
     }
     return possiblePaths;
-    }
+  }
 
     /**
     * Allows viewing of the station map to other modules, implemented as a copy method
@@ -260,6 +261,12 @@ public class TrackModel implements Serializable {
       if (!this.trackList.get(block.blockLine).containsKey(block.blockSection)) {
         this.trackList.get(block.blockLine).put(block.blockSection, new HashMap<Integer, Block>());
       }
+
+      if (!this.flatList.containsKey(block.blockLine)) {
+        this.flatList.put(block.blockLine, new ArrayList<Block>());
+      }
+
+      this.flatList.get(block.blockLine).add(block);
       this.trackList.get(block.blockLine).get(block.blockSection).put(block.blockNum, block);
     }
 
@@ -306,7 +313,7 @@ public class TrackModel implements Serializable {
     /**
     * A small function to view the next and previous blocks of a track model.
     */
-    private void examineNext() {
+    void examineNext() {
       for (String lineKey : this.trackList.keySet()) {
         System.out.print("Examining Line: ");
         System.out.println(lineKey);
@@ -326,7 +333,7 @@ public class TrackModel implements Serializable {
             System.out.print("Next block forward: ");
             System.out.println(this.trackList.get(lineKey).get(sectionKey).get(blockNum).nextBlockForward().blockNum);
             System.out.print("Next block backward: ");
-            //System.out.println(this.trackList.get(lineKey).get(sectionKey).get(blockNum).nextBlockBackward().blockNum);
+            System.out.println(this.trackList.get(lineKey).get(sectionKey).get(blockNum).nextBlockBackward().blockNum);
           }
         }
       }
@@ -334,6 +341,7 @@ public class TrackModel implements Serializable {
 
     /**
     *   Links blocks across block and sections.
+    *   @todo refactor. :(
     */
     private void linkBlocks() {
       for (String lineKey : this.trackList.keySet()) {
@@ -341,36 +349,28 @@ public class TrackModel implements Serializable {
         Set<String> sectionKeySet = this.trackList.get(lineKey).keySet();
         ArrayList<String> sortedSectionKeyList = new ArrayList(sectionKeySet);
         Collections.sort(sortedSectionKeyList);
+        ArrayList<Block> storeList = new ArrayList<Block>();
 
         for (String sectionKey : sortedSectionKeyList) {
-          for(Integer blk : this.trackList.get(lineKey).get(sectionKey).keySet()) {
+          for (Integer blkNum : this.trackList.get(lineKey).get(sectionKey).keySet()) {
+            storeList.add(this.trackList.get(lineKey).get(sectionKey).get(blkNum));
+          }
+        }
 
-            Integer max = Collections.max(this.trackList.get(lineKey).get(sectionKey).keySet());
-            Integer min = Collections.min(this.trackList.get(lineKey).get(sectionKey).keySet());
+        Collections.sort(storeList);
+        Block storeBlock = null;
+        for (int i = 0; i < storeList.size(); i ++) {
+          storeList.get(i).setNextBlockForward();
 
-            Block minBlock = this.trackList.get(lineKey).get(sectionKey).get(min);
-            Block maxBlock = this.trackList.get(lineKey).get(sectionKey).get(max);
-            Block curBlock = this.trackList.get(lineKey).get(sectionKey).get(blk);
-            if((minBlock.arrowDirection.equals("Head") && maxBlock.arrowDirection.equals("Head")) || minBlock.arrowDirection.equals("Head/Head")) {
-              if (prevBlock == null) {
-                prevBlock = maxBlock;
-              }
-              else {
-                minBlock.setNextBlockBackward(prevBlock);
-              }
-
-              if (curBlock.equals(maxBlock)) {
-                this.trackList.get(lineKey).get(sectionKey).get(blk).setNextBlockForward();
-                this.trackList.get(lineKey).get(sectionKey).get(blk)
-                  .setNextBlockBackward(this.trackList.get(lineKey).get(sectionKey).get(blk-1));
-                prevBlock.setNextBlockForward(minBlock);
-                prevBlock = maxBlock;
-              }
-              else if (!minBlock.equals(maxBlock)) {
-                curBlock.setNextBlockForward(this.trackList.get(lineKey).get(sectionKey).get(blk+1));
-                curBlock.setNextBlockBackward(this.trackList.get(lineKey).get(sectionKey).get(blk-1));
-              }
-            }
+          if(i != storeList.size()-1) {
+            storeList.get(i).setNextBlockForward(storeList.get(i+1));
+          }
+          storeList.get(i).setNextBlockBackward();
+          System.out.println("On block: " + (i+1)  + " -> " + storeList.get(i).nextBlockForward().blockNum());
+          if(i != 0) { 
+            storeList.get(i).setNextBlockBackward(storeList.get(i-1));
+          } else {
+            storeList.get(i).setNextBlockBackward();
           }
         }
       }
@@ -521,6 +521,7 @@ public class TrackModel implements Serializable {
         }
     }
     this.linkBlocks();
+    this.examineNext();
     this.handleSwitches();
     this.buildStationHostMap();
     this.buildBlockStationMap();

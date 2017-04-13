@@ -450,7 +450,7 @@ public class Launcher extends javax.swing.JFrame {
     private void playFastSpeed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playFastSpeed
 
         // set the system speed
-        this.systemSpeed = 100;
+        this.systemSpeed = 1;
         System.out.println("System should play in x10 speed.");
 
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
