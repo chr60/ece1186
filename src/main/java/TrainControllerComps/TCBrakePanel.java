@@ -5,12 +5,16 @@
  */
 package TrainControllerComps;
 
+import TrackModel.Beacon;
+import TrackModel.Block;
 import java.util.LinkedList;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
 import TrainModel.*;
+import java.util.HashMap;
+import java.util.Set;
 
 /**
  * This class is responsible for applying and managing the use of a train's braking 
@@ -82,6 +86,11 @@ public class TCBrakePanel extends javax.swing.JPanel {
         this.selectedTrain = selectedTrain; 
     }
     
+    public Train getSelectedTrain(){
+    
+        return this.selectedTrain; 
+    }
+        
     /**
      * Sets the text field to be used for the operating logs. 
      * 
@@ -148,11 +157,11 @@ public class TCBrakePanel extends javax.swing.JPanel {
     private void shouldStopTrainChecks(){
             
         // stop if  
-        if (this.failureDetected()){ this.bringTrainToHalt(true); } //failure detected
+        //if (this.failureDetected()){ this.bringTrainToHalt(true); } //failure detected
              
         if (this.approachingStation()){ this.bringTrainToHalt(false); } // approaching a station
              
-        if (this.trainAhead()){ this.bringTrainToHalt(true); } // there's a train ahead
+        //if (this.trainAhead()){ this.bringTrainToHalt(true); } // there's a train ahead
 
         this.willExceedAuthority();
         
@@ -180,6 +189,8 @@ public class TCBrakePanel extends javax.swing.JPanel {
     private void willExceedAuthority(){
                 
         // were on our authority...
+        System.out.println(this.selectedTrain.getAuthority().blockNum()); 
+        
         if ( this.selectedTrain.getGPS().getCurrBlock().compareTo(this.selectedTrain.getAuthority()) == 0){
             
             double footprintSB = this.selectedTrain.getGPS().getDistIntoBlock() + this.selectedTrain.getSafeBrakingDistSB();
@@ -188,8 +199,6 @@ public class TCBrakePanel extends javax.swing.JPanel {
             if (footprintSB == this.selectedTrain.getGPS().getCurrBlock().getLen()){ this.bringTrainToHalt(false); }
             else if (footprintEB > this.selectedTrain.getGPS().getCurrBlock().getLen()){ this.bringTrainToHalt(true); }
         }
-        
-        this.printLogs();
     }
     
     
@@ -204,29 +213,78 @@ public class TCBrakePanel extends javax.swing.JPanel {
         this.ignoreSpeed = true; 
         this.isEmergency = isEmergency; 
     }
-    
+     
     /**
      * Determines if the train is approaching a station. 
      * 
      * @return returns true if the train is approaching a station, false otherwise. 
      */
     private boolean approachingStation(){
-    
-        System.out.println("Approaching Station is not currently implemented yet."); 
+        
+        Block currBlock = this.selectedTrain.getGPS().getCurrBlock();
+     
+        String distStr = this.getDistanceFromStation();
+
+        if (distStr != null){ // start calculating safe breaking distance
+            //double dist = Double.parseDouble(distStr);
+            
+            /**
+             * FIX ME: This message should be able to be parsed into a number
+             */
+            this.logBook.add("Beacon Message: " + distStr);
+            
+            // determine when to begin braking the train
+//            double footprint = this.selectedTrain.getGPS().getDistIntoBlock() + this.selectedTrain.getSafeBrakingDistSB(); 
+//            
+////            if (footprint >= dist){ return true; }
+////            else{ return false; } 
+        }
         return false; 
     }
     
+    /**
+     * Reads the message from the beacon from the current block the train is on,
+     * and returns the distance to the next station.
+     * 
+     * @return returns the distance from the beacon to the station, -1 if there is no beacon.
+     */
+    private String getDistanceFromStation(){
+        
+        // get the distance from the beacon
+        HashMap<Block, Beacon> beacons = this.selectedTrain.getBeacons(); 
+        
+        for (Block b : beacons.keySet()){
+            
+            //System.out.println("Block Number: " + b.blockNum()); 
+            
+            if (this.selectedTrain.getGPS().getCurrBlock().compareTo(b) == 0){
+                //System.out.println("We are on a block with a Beacon");
+                return beacons.get(b).getBeaconMessage(); // return the message on the beacon
+            }
+        }
+          return null;
+    }
+        
     private boolean trainAhead(){
         
-        System.out.println("Train Ahead is not currently implemented yet."); 
+        //System.out.println("Train Ahead is not currently implemented yet."); 
         return false;    
     }
     
+    /**
+     * Sets the speed controller object to use.
+     * 
+     * @param speedController the Speed Controller object 
+     */
     public void setSpeedController(TCSpeedController speedController){
     
         this.speedController = speedController;
     }
     
+    /**
+     * Refreshes the brake panel to determine if the train should stop for any reason. 
+     * 
+     */
     public void refreshUI(){
         
         this.shouldStopTrainChecks(); // checks to see if the train has to stop
@@ -325,12 +383,11 @@ public class TCBrakePanel extends javax.swing.JPanel {
         if (this.selectedTrain != null){
         
             if (this.inManualMode == true){ 
-        
-                TCEmergencyFrame window = new TCEmergencyFrame(this.selectedTrain); 
-          
-                window.setOperatingLog(this.operatingLogs);
-                window.setVisible(true);
-                window.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                
+                    this.selectedTrain.setEmergencyBrake( 1 );
+                    this.functionLabelEmg.setText("On");
+                    this.selectedTrain.setEmergencyBrake( 0 );
+                    this.functionLabelEmg.setText("Off");
              }else if (this.inManualMode == false){
            
                 // if the emergency brake is broke, this can't happen

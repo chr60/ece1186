@@ -427,7 +427,7 @@ public class TrackModel implements Serializable {
         this.blockBeaconMap.put(b, new Beacon(this, b, "Hello from beacon!"));
       }
     }
-
+    
     /** 
     * Helper function to link nextBlock for switches.
     */

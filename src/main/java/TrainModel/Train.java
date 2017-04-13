@@ -1,6 +1,8 @@
 package TrainModel;
 import TrackModel.*;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Set;
 
 //doxygen comment format below!
 /**
@@ -159,15 +161,15 @@ public class Train implements Serializable {
 		//check if distance exceeds length of block (if so enter new block) if not update location
 		while (dist > trainLocation.getCurrBlock().getLen())
 		{
-                        System.out.println("Next block forward" + currBlock.nextBlockForward().blockNum());
+                        //System.out.println("Next block forward" + currBlock.nextBlockForward().blockNum());
 			dist = getCurrBlock().getLen() - dist;
 			currBlock.setOccupied(false);
 
                         Block blockForward = currBlock.nextBlockForward();
                         Block blockBackward = currBlock.nextBlockBackward();
 
-                        System.out.println("forward block: " + blockForward.blockNum());
-                        System.out.println("backward block: " + blockBackward.blockNum());
+                        //System.out.println("forward block: " + blockForward.blockNum());
+                        //System.out.println("backward block: " + blockBackward.blockNum());
                         if(blockForward != null && blockBackward != null){
                             //theres both a forward and backward. go to the one that wasnt last visited
                             if (blockBackward.compareTo(prevBlock) == 0)
@@ -199,12 +201,12 @@ public class Train implements Serializable {
 
                         }
 
-                        System.out.println("Going to next block: " + currBlock.blockNum());
-                        System.out.println("Block length: " + currBlock.getLen());
+                        //System.out.println("Going to next block: " + currBlock.blockNum());
+                        //System.out.println("Block length: " + currBlock.getLen());
 			currBlock.setOccupied(true);
 		}
 		trainLocation.setCurrBlock(currBlock);
-                System.out.println("Dist: " + dist);
+                //System.out.println("Dist: " + dist);
 		trainLocation.setDistIntoBlock(dist);
 
 	}
@@ -669,6 +671,11 @@ public class Train implements Serializable {
 		}
 
 	}
+         
+        public HashMap<Block, Beacon> getBeacons(){
+        
+            return this.globalTrack.viewBeaconMap();
+        }
 
 	/**
      * Modifier to change the status of the Emergency brake of the train

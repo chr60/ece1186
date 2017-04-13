@@ -181,13 +181,27 @@ public class TCSpeedController extends javax.swing.JPanel {
     }
 
     /**
-     * Sets the set speed that the train should go.
+     * Sets the set speed that the train should go. 
+     * 
+     * In manual mode, if the set speed if greater than the 
+     * suggested speed, the speed of the train is set to the block speed. 
+     * 
+     * In Automatic mode, if the set speed is greater than the suggested speed, 
+     * the speed of the train is set to the suggested speed. 
      *
      * @param setSpeed the speed the train should go.
      */
     public void setSetSpeed(int setSpeed){
-
-        this.setSpeed = setSpeed;
+   
+        if (this.inManualMode){ // in manual mode
+            if (setSpeed > this.selectedTrain.getSuggestedSpeed()){
+                this.setSpeed = this.selectedTrain.getSuggestedSpeed().intValue();
+            }else{ this.setSpeed = setSpeed; }
+        }else{ // in automatic mode
+            if (setSpeed > this.selectedTrain.getSuggestedSpeed()){
+                this.setSpeed = this.selectedTrain.getSuggestedSpeed().intValue();
+            }else{ this.setSpeed = setSpeed; }
+        }
     }
 
     /**
@@ -227,24 +241,31 @@ public class TCSpeedController extends javax.swing.JPanel {
             // get the block the train is on, and the set suggested speed
 
             Double blockSuggestedSpeed = .621371*this.selectedTrain.getSuggestedSpeed();
-
+            //System.out.println(blockSuggestedSpeed); 
             if (blockSuggestedSpeed != null){
 
-                this.maxSpeedSlider.setText(Double.toString(blockSuggestedSpeed));
-                this.speedSlider.setMaximum(blockSuggestedSpeed.intValue());
-                this.speedSlider.setValue(blockSuggestedSpeed.intValue());
+                // FOR TESTING
+                if (blockSuggestedSpeed == 0.0){
                 
-                // ignore the speed 
-                if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency){ 
+                    this.maxSpeedSlider.setText(Double.toString(blockSuggestedSpeed));
+                    this.speedSlider.setMaximum(blockSuggestedSpeed.intValue());
+                    this.speedSlider.setValue(blockSuggestedSpeed.intValue());
                     
-                    this.setSpeed = 0; 
+                    // ignore the speed 
+                    if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency){ this.setSpeed = 0; }
+                    else{ this.setSpeed = this.setSpeed; }
                     
                 }else{
-                    
-                    this.setSpeed = blockSuggestedSpeed.intValue();
+
+                    this.maxSpeedSlider.setText(Double.toString(blockSuggestedSpeed));
+                    this.speedSlider.setMaximum(blockSuggestedSpeed.intValue());
+                    this.speedSlider.setValue(blockSuggestedSpeed.intValue());
+                
+                     // ignore the speed 
+                    if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency){ this.setSpeed = 0; }
+                    else{ this.setSpeed = blockSuggestedSpeed.intValue(); }
                 }
                 this.powerControl();
-
             }else if (blockSuggestedSpeed == null){
                 //System.out.println("Go the same speed.");
                 this.powerControl();
@@ -259,7 +280,7 @@ public class TCSpeedController extends javax.swing.JPanel {
      */
     public int getSetSpeed(){
 
-        return this.speedSlider.getValue();
+        return this.setSpeed;
     }
 
     /**
@@ -421,6 +442,8 @@ public class TCSpeedController extends javax.swing.JPanel {
         this.setSpeed = this.speedSlider.getValue();
         
         log = "Telling train to set speed to " + this.setSpeed;
+        this.brakePanel.isEmergency = false; // reset the flags
+        this.brakePanel.ignoreSpeed = false;
         this.logBook.add(log);
         this.printLogs();
     }//GEN-LAST:event_setSpeed

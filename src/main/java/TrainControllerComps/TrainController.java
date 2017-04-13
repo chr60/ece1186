@@ -1,6 +1,7 @@
 package TrainControllerComps;
 
 import TrackModel.TrackModel;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
@@ -51,13 +52,13 @@ public class TrainController extends javax.swing.JFrame {
     private boolean testingMode; // used to tell if the Train Controller is in Automatic mode
     
     // FOR TESTING!
-    //ArrayList<Train> trains = new ArrayList<Train>();
+    ArrayList<Train> trains = new ArrayList<Train>();
 
     double blockSpeed = 80.0;
     private TCTestConsole testConsole = null;
 
     
-    private TrainHandler trainHandler; 
+    TrainHandler trainHandler; 
 
     public boolean detailedTrainWindowOpen;
 
@@ -65,34 +66,38 @@ public class TrainController extends javax.swing.JFrame {
 
     // FOR TESTING:
     TrackModel track;
-    TrainHandler redLineHandler;
+    
+    
+    boolean testWindowOpen;
 
     // used to update GUI every millisecond (1 s)
     // FIX ME: This time should be set by the CTC can be
     // wall speed or 10x faster ()
     private Timer systemRunSpeed = new Timer(1000, new ActionListener(){
-        Random rand = new Random();
+
         public void actionPerformed(ActionEvent e) {
 
+            if (testWindowOpen){ testConsole.refreshUI(); }
+            
             if (detailedTrainWindowOpen == true){ trainUI.updateGUI(selectedTrain); }
 
             if (selectedTrain != null && selectedTrain.powerConstantsSet() ){ refreshComponents(); }
 
-            // Do specific things if in testing mode...
-            if (testingMode == true){
-
-                if (testConsole != null){
-                    // update test console
-                    testConsole.setTrain(selectedTrain);
-                }
-            }else if (normalMode == true){
-                // do things in normal mode
-                if (manualMode == true){
-                    // do manual mode thing
-                }else if (automaticMode == true){
-                    // automate things based on train stuff
-                }
-            }
+//            // Do specific things if in testing mode...
+//            if (testingMode == true){
+//
+//                if (testConsole != null){
+//                    // update test console
+//                    testConsole.setTrain(selectedTrain);
+//                }
+//            }else if (normalMode == true){
+//                // do things in normal mode
+//                if (manualMode == true){
+//                    // do manual mode thing
+//                }else if (automaticMode == true){
+//                    // automate things based on train stuff
+//                }
+//            }
 
             }
         });
@@ -109,16 +114,17 @@ public class TrainController extends javax.swing.JFrame {
         initComponents();
 
         // FIX ME: This is for testing purposes, and should be removed.
-        //String[] fNames = {"src/test/resources/redline.csv"};
-        //this.track = new TrackModel("Test");
-        //this.track.readCSV(fNames);
+        String[] fNames = {"test-classes/redline.csv"};
+        this.track = new TrackModel("Test");
+        this.track.readCSV(fNames);
 
-        //this.redLineHandler = new TrainHandler(this.track);
+        this.trainHandler = new TrainHandler(this.track);
 
+        
         //this.trains.add(train);
 
-        //this.initHashMaps();
-        //this.setTrainListComboBox();
+        this.initHashMaps();
+        this.setTrainListComboBox();
         this.setMode("Manual", "Normal");
 
 
@@ -222,7 +228,7 @@ public class TrainController extends javax.swing.JFrame {
         this.selectedTrain = train;
         this.setMode(playMode, testMode);
         
-        
+        this.testWindowOpen = false; 
         this.speedController.setOperatingLogs(this.operatingLogs);
         this.utilityPanel.setVitalsButton(this.vitals);
         this.utilityPanel.setAnnouncementsLog(this.annoucementLogs);
@@ -230,6 +236,9 @@ public class TrainController extends javax.swing.JFrame {
         
         this.detailedTrainWindowOpen = false;
 
+        // set kp and ki to some default value if in automatic mode
+        if (this.automaticMode == true){ train.setKpAndKi(400000.0, 20000.0); }
+          
         // check if kp/ki is set
         if (this.selectedTrain.powerConstantsSet() == false){
 
@@ -258,8 +267,7 @@ public class TrainController extends javax.swing.JFrame {
 
     /**
      * Retrieves the SpeedController component of the Train Controller.
-     *
-     *
+     * 
      * @return returns the Speed Controller panel.
      */
     public TCSpeedController getSpeedController(){
@@ -270,6 +278,11 @@ public class TrainController extends javax.swing.JFrame {
     public TCBlockInfoPanel getBlockInfoPane(){
 
         return this.blockInfoPane;
+    }
+    
+    public TCBrakePanel getBrakePanel(){
+        
+        return this.brakePanel;
     }
 
     // MARK: - Mode Setting and Getting
@@ -350,7 +363,7 @@ public class TrainController extends javax.swing.JFrame {
     private void initHashMaps(){
 
         // get the list of dispatched trains
-        for (Train train : this.redLineHandler.getTrains()){
+        for (Train train : this.trainHandler.getTrains()){
             // add them to the hashmaps
             this.trainList.put(Integer.toString(train.getID()), train );
         }
@@ -393,6 +406,8 @@ public class TrainController extends javax.swing.JFrame {
         this.dispatchedTrains.removeAllItems();
         this.dispatchedTrains.addItem("No Train Selected");
 
+        if (this.trainHandler != null){ this.initHashMaps(); }
+        
         for (Train train : this.trainHandler.getTrains()){
 
             this.dispatchedTrains.addItem(Integer.toString(train.getID()) );
@@ -417,7 +432,6 @@ public class TrainController extends javax.swing.JFrame {
         normal_testGroup = new javax.swing.ButtonGroup();
         trainInfoTitle = new javax.swing.JLabel();
         trainSelectionTitle = new javax.swing.JLabel();
-        brakesTitle = new javax.swing.JLabel();
         uiSeparatorThree = new javax.swing.JSeparator();
         uiSeparatorTwo = new javax.swing.JSeparator();
         timeLabel = new javax.swing.JLabel();
@@ -432,14 +446,10 @@ public class TrainController extends javax.swing.JFrame {
         manualModeRadioButton = new javax.swing.JRadioButton();
         normalModeRadioButton = new javax.swing.JRadioButton();
         testingModeRadioButton = new javax.swing.JRadioButton();
-        blockInfoTitle = new javax.swing.JLabel();
         notificationsTitle = new javax.swing.JLabel();
         utilitiesTitle = new javax.swing.JLabel();
-        speedControllerTitle = new javax.swing.JLabel();
         uiSeparatorFive = new javax.swing.JSeparator();
         uiSeparatorSix = new javax.swing.JSeparator();
-        announcementScrollPane = new javax.swing.JScrollPane();
-        annoucementLogs = new javax.swing.JTextArea();
         operatingLogsScrollPane = new javax.swing.JScrollPane();
         operatingLogs = new javax.swing.JTextArea();
         errorLogsLabel = new javax.swing.JLabel();
@@ -448,19 +458,24 @@ public class TrainController extends javax.swing.JFrame {
         annoucementDropDown = new javax.swing.JComboBox<>();
         chooseAnnouncementLabel = new javax.swing.JLabel();
         makeAnnouncementButton = new javax.swing.JButton();
-        date = new javax.swing.JLabel();
-        time = new javax.swing.JLabel();
         uiSeparatorFour = new javax.swing.JSeparator();
-        speedController = new TrainControllerComps.TCSpeedController();
-        errorLogScrollPane = new javax.swing.JScrollPane();
-        errorLogs = new javax.swing.JTextPane();
         clearOperatingLog = new javax.swing.JButton();
         clearErrorLog = new javax.swing.JButton();
         clearAnnouncements = new javax.swing.JButton();
         trainInfoPanel = new TrainControllerComps.TCTrainInfoPane();
         utilityPanel = new TrainControllerComps.TCUtilityPanel();
+        announcementScrollPane1 = new javax.swing.JScrollPane();
+        annoucementLogs = new javax.swing.JTextArea();
         brakePanel = new TrainControllerComps.TCBrakePanel();
+        speedController = new TrainControllerComps.TCSpeedController();
         blockInfoPane = new TrainControllerComps.TCBlockInfoPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        errorLogs = new javax.swing.JTextPane();
+        time = new javax.swing.JLabel();
+        date = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         viewMenu = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -476,15 +491,12 @@ public class TrainController extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        trainInfoTitle.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
+        trainInfoTitle.setFont(new java.awt.Font("Lucida Grande", 1, 22)); // NOI18N
         trainInfoTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         trainInfoTitle.setText("Train Info");
 
         trainSelectionTitle.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         trainSelectionTitle.setText("Train Selection");
-
-        brakesTitle.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
-        brakesTitle.setText("Brakes");
 
         uiSeparatorThree.setForeground(new java.awt.Color(0, 0, 0));
 
@@ -555,9 +567,6 @@ public class TrainController extends javax.swing.JFrame {
             }
         });
 
-        blockInfoTitle.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
-        blockInfoTitle.setText("Block Info");
-
         notificationsTitle.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         notificationsTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         notificationsTitle.setText("Notifications");
@@ -565,19 +574,11 @@ public class TrainController extends javax.swing.JFrame {
         utilitiesTitle.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         utilitiesTitle.setText("Utilities");
 
-        speedControllerTitle.setFont(new java.awt.Font("Lucida Grande", 1, 20)); // NOI18N
-        speedControllerTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        speedControllerTitle.setText("Speed Controller");
-
         uiSeparatorFive.setForeground(new java.awt.Color(0, 0, 0));
         uiSeparatorFive.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         uiSeparatorSix.setForeground(new java.awt.Color(0, 0, 0));
         uiSeparatorSix.setOrientation(javax.swing.SwingConstants.VERTICAL);
-
-        annoucementLogs.setColumns(20);
-        annoucementLogs.setRows(5);
-        announcementScrollPane.setViewportView(annoucementLogs);
 
         operatingLogs.setColumns(20);
         operatingLogs.setRows(5);
@@ -605,13 +606,8 @@ public class TrainController extends javax.swing.JFrame {
             }
         });
 
-        date.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-
         uiSeparatorFour.setForeground(new java.awt.Color(0, 0, 0));
         uiSeparatorFour.setOrientation(javax.swing.SwingConstants.VERTICAL);
-
-        errorLogs.setEditable(false);
-        errorLogScrollPane.setViewportView(errorLogs);
 
         clearOperatingLog.setText("Clear");
         clearOperatingLog.addActionListener(new java.awt.event.ActionListener() {
@@ -633,6 +629,30 @@ public class TrainController extends javax.swing.JFrame {
                 clearAnnouncements(evt);
             }
         });
+
+        annoucementLogs.setColumns(20);
+        annoucementLogs.setRows(5);
+        announcementScrollPane1.setViewportView(annoucementLogs);
+
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 22)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Speed Controller");
+
+        jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 22)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Brakes");
+
+        jLabel4.setFont(new java.awt.Font("Lucida Grande", 1, 22)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Block Info");
+
+        jScrollPane1.setViewportView(errorLogs);
+
+        time.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        time.setText("0");
+
+        date.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        date.setText("0");
 
         viewMenu.setText("View");
 
@@ -698,218 +718,203 @@ public class TrainController extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(104, 104, 104)
-                                .addComponent(utilitiesTitle))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(utilityPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(uiSeparatorFive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(errorLogsLabel)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(clearErrorLog, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(errorLogScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(11, 11, 11)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(operatingLogsLabel)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(clearOperatingLog, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(chooseAnnouncementLabel)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(announcementsLabel)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(clearAnnouncements, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addComponent(annoucementDropDown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(announcementScrollPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(operatingLogsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
-                                    .addComponent(makeAnnouncementButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(12, 12, 12))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(51, 51, 51)
-                                .addComponent(notificationsTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addComponent(uiSeparatorSix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(64, 64, 64)
-                                .addComponent(blockInfoTitle))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(blockInfoPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(speedControllerTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-                                        .addComponent(speedController, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(normalModeRadioButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(automaticModeRadioButton))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(manualModeRadioButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(testingModeRadioButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(20, 20, 20))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(vitals, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(setKpAndKi, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(switchTrains, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
-                                            .addComponent(dispatchedTrains, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(uiSeparatorOne))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(74, 74, 74)
-                                                .addComponent(modeSelectionTitle))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(51, 51, 51)
-                                                .addComponent(trainSelectionTitle)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addComponent(uiSeparatorTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(92, 92, 92)
-                                        .addComponent(trainInfoTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(68, 68, 68)
+                                    .addComponent(utilitiesTitle)
+                                    .addGap(89, 89, 89))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(utilityPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                            .addComponent(uiSeparatorFive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(operatingLogsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(operatingLogsLabel)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(clearOperatingLog, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(trainInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(timeLabel)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(time, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(182, 182, 182)
-                                                .addComponent(dateLabel)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                .addGap(18, 18, 18)
-                                .addComponent(uiSeparatorFour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(annoucementDropDown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(makeAnnouncementButton, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(6, 6, 6)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addComponent(errorLogsLabel)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(clearErrorLog, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addComponent(announcementsLabel)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(clearAnnouncements, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(announcementScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
+                                                .addComponent(chooseAnnouncementLabel)
+                                                .addComponent(jScrollPane1)))))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(54, 54, 54)
+                                    .addComponent(notificationsTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(uiSeparatorSix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(speedController, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(blockInfoPane, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(1, 1, 1)
+                                    .addComponent(uiSeparatorFour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(brakePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(normalModeRadioButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(automaticModeRadioButton))
+                                    .addComponent(dispatchedTrains, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(84, 84, 84)
-                                        .addComponent(brakesTitle))
-                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(vitals, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(brakePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(uiSeparatorThree, javax.swing.GroupLayout.Alignment.TRAILING))))
+                                        .addComponent(setKpAndKi, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(switchTrains, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(manualModeRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(testingModeRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(28, 28, 28)
+                                    .addComponent(modeSelectionTitle))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(24, 24, 24)
+                                    .addComponent(trainSelectionTitle))
+                                .addComponent(uiSeparatorOne, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
+                            .addComponent(uiSeparatorTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(12, 12, 12)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(timeLabel)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(time, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(trainInfoTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(37, 37, 37)
+                                    .addComponent(dateLabel)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(trainInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(uiSeparatorThree, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1006, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(uiSeparatorTwo, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(trainSelectionTitle)
-                        .addGap(18, 18, 18)
-                        .addComponent(dispatchedTrains, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(vitals, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(setKpAndKi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(switchTrains, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(uiSeparatorOne, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(modeSelectionTitle)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(automaticModeRadioButton)
-                            .addComponent(manualModeRadioButton))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(normalModeRadioButton)
-                            .addComponent(testingModeRadioButton))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(trainInfoTitle)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(uiSeparatorFour, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(trainInfoTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(18, 18, 18))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(timeLabel)
+                                                .addComponent(dateLabel)
+                                                .addComponent(time)
+                                                .addComponent(date))
+                                            .addGap(3, 3, 3)))
+                                    .addComponent(trainInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(brakePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(trainSelectionTitle)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(dispatchedTrains, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(switchTrains)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(timeLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(dateLabel)
-                                        .addComponent(date)
-                                        .addComponent(time)))
-                                .addGap(6, 6, 6)
-                                .addComponent(trainInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(uiSeparatorTwo, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(uiSeparatorFour, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(brakesTitle)
+                                    .addComponent(vitals, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(setKpAndKi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(brakePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(uiSeparatorOne, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(modeSelectionTitle)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(automaticModeRadioButton)
+                                    .addComponent(manualModeRadioButton))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(normalModeRadioButton)
+                                    .addComponent(testingModeRadioButton))))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(uiSeparatorThree, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(utilitiesTitle)
-                        .addGap(18, 18, 18)
-                        .addComponent(utilityPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(uiSeparatorFive)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(notificationsTitle)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(utilitiesTitle)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(utilityPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(errorLogsLabel)
-                            .addComponent(operatingLogsLabel)
-                            .addComponent(clearOperatingLog, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(clearErrorLog, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel4)
+                            .addComponent(notificationsTitle))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(operatingLogsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(operatingLogsLabel)
+                                    .addComponent(clearOperatingLog, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(errorLogsLabel)
+                                    .addComponent(clearErrorLog, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(announcementsLabel)
                                     .addComponent(clearAnnouncements, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(announcementScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(announcementScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(chooseAnnouncementLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(annoucementDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(makeAnnouncementButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(errorLogScrollPane)))
-                    .addComponent(uiSeparatorSix)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(blockInfoPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel2)
+                                .addGap(10, 10, 10)
+                                .addComponent(speedController, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(blockInfoTitle)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(blockInfoPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
-                        .addComponent(speedControllerTitle)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(speedController, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)))
-                .addContainerGap(11, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(operatingLogsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(uiSeparatorSix))
+                .addContainerGap())
         );
 
         pack();
@@ -1040,7 +1045,7 @@ public class TrainController extends javax.swing.JFrame {
      * @param evt the sender of the action, i.e., the "Clear" button.
      */
     private void clearAnnouncements(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearAnnouncements
-        this.annoucementLogs.setText("");
+        this.errorLogs.setText("");
     }//GEN-LAST:event_clearAnnouncements
 
     /**
@@ -1065,7 +1070,7 @@ public class TrainController extends javax.swing.JFrame {
         String time = this.getTime();
         String dropDownText = (String) this.annoucementDropDown.getSelectedItem();
         this.annoucementLogs.setEditable(true);
-        this.annoucementLogs.setText(this.annoucementLogs.getText() + dropDownText + " - " + time + "\n");
+        this.annoucementLogs.setText(this.errorLogs.getText() + dropDownText + " - " + time + "\n");
         this.annoucementLogs.setEditable(false);
     }//GEN-LAST:event_makeAnnouncement
 
@@ -1083,6 +1088,7 @@ public class TrainController extends javax.swing.JFrame {
             testConsole.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             this.testingMode = true;
             this.normalMode = false;
+            this.testWindowOpen = true; 
             System.out.println("Normal Mode: " + this.normalMode + " Testing Mode: " + this.testingMode);
         }else{
 
@@ -1174,6 +1180,16 @@ public class TrainController extends javax.swing.JFrame {
             return false;
         }
     }
+    
+    /**
+     * Returns the Utility Panel object contained in the Train Controller. 
+     * 
+     * @return the TCUtilityPanel object used by the Train Controller class.
+     */
+    public TCUtilityPanel getUtilityPane(){
+    
+        return this.utilityPanel;
+    }
 
     /**
      * Populates the other components of the Train Controller with the information
@@ -1195,16 +1211,21 @@ public class TrainController extends javax.swing.JFrame {
             // assign other componets the selected train
 
             this.speedController.setTrain(this.selectedTrain);
-
+            this.speedController.setManualMode(this.manualMode);
+            this.speedController.setBrakePanel(this.brakePanel);
+            this.speedController.refreshUI();
+            this.speedController.setMaxSpeed(this.blockSpeed);
+            
             this.trainInfoPanel.setSelectedTrain(this.selectedTrain);
             this.trainInfoPanel.refreshUI();
+            
 //            // FIX ME: TrainInfoPanelStuff should be put in the refreshUI method in the
 //            // TrainInfoPanelClass
 //
             // get the block speed from the train
             // FIX ME: Right now, it's set at 80.0 for the purpose
             // of getting the block speed to update
-            this.speedController.setMaxSpeed(this.blockSpeed);
+            //this.speedController.setMaxSpeed(this.blockSpeed);
 
             this.blockInfoPane.setSelectedTrain(this.selectedTrain);
             this.blockInfoPane.refreshUI();
@@ -1212,12 +1233,7 @@ public class TrainController extends javax.swing.JFrame {
             this.utilityPanel.setManualMode(this.manualMode);
             this.utilityPanel.setSelectedTrain(this.selectedTrain);
             this.utilityPanel.refreshUI();
-
-            this.speedController.setManualMode(this.manualMode);
-            this.speedController.setBrakePanel(this.brakePanel);
-            this.speedController.refreshUI();
-
-
+                    
             this.brakePanel.setSelectedTrain(this.selectedTrain);
             this.brakePanel.setOperatingLogs(this.operatingLogs);
             this.brakePanel.inManualMode(this.manualMode);
@@ -1226,7 +1242,7 @@ public class TrainController extends javax.swing.JFrame {
    
         }
     }
-
+    
     /**
      * Updates the time and date label of the Train Controller. This method is called
      * every second via the Timer object, t.
@@ -1276,14 +1292,12 @@ public class TrainController extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> annoucementDropDown;
     private javax.swing.JTextArea annoucementLogs;
-    private javax.swing.JScrollPane announcementScrollPane;
+    private javax.swing.JScrollPane announcementScrollPane1;
     private javax.swing.JLabel announcementsLabel;
     private javax.swing.ButtonGroup auto_manGroup;
     private javax.swing.JRadioButton automaticModeRadioButton;
     private TrainControllerComps.TCBlockInfoPanel blockInfoPane;
-    private javax.swing.JLabel blockInfoTitle;
     private TrainControllerComps.TCBrakePanel brakePanel;
-    private javax.swing.JLabel brakesTitle;
     private javax.swing.JLabel chooseAnnouncementLabel;
     private javax.swing.JButton clearAnnouncements;
     private javax.swing.JButton clearErrorLog;
@@ -1292,11 +1306,13 @@ public class TrainController extends javax.swing.JFrame {
     private javax.swing.JLabel dateLabel;
     private javax.swing.JComboBox<String> dispatchedTrains;
     private javax.swing.JMenu editMenu;
-    private javax.swing.JScrollPane errorLogScrollPane;
     private javax.swing.JTextPane errorLogs;
     private javax.swing.JLabel errorLogsLabel;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
@@ -1304,6 +1320,7 @@ public class TrainController extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton makeAnnouncementButton;
     private javax.swing.JRadioButton manualModeRadioButton;
     private javax.swing.JMenuBar menuBar;
@@ -1316,7 +1333,6 @@ public class TrainController extends javax.swing.JFrame {
     private javax.swing.JScrollPane operatingLogsScrollPane;
     private javax.swing.JButton setKpAndKi;
     private TrainControllerComps.TCSpeedController speedController;
-    private javax.swing.JLabel speedControllerTitle;
     private javax.swing.JButton switchTrains;
     private javax.swing.JRadioButton testingModeRadioButton;
     private javax.swing.JLabel time;

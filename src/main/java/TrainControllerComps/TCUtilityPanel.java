@@ -182,9 +182,13 @@ public class TCUtilityPanel extends javax.swing.JPanel {
          */
         else if (this.isPowerFailure() == false){this.vitalsButton.setForeground(new Color(0,0,0));}
         
-        // can't open doors if moving
+        // can't open doors if moving..
         if (this.selectedTrain.getVelocity() == 0.0){ this.enableOpeningDoors(); }
-        else{ this.disableOpeningDoors(); }
+        else{ // shut the doors if moving
+            this.disableOpeningDoors();
+            this.selectedTrain.setLeftDoor(0);
+            this.selectedTrain.setRightDoor(0);
+        }
     }
 
     /**
@@ -353,7 +357,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
      * @return returns true if the train is underground, false otherwise
      */
     private boolean isUnderground(){
-
+        
         if (this.selectedTrain.getGPS().getCurrBlock().isUnderground() == true){return true; }
         else{ return false; }
     }
@@ -572,6 +576,11 @@ public class TCUtilityPanel extends javax.swing.JPanel {
 
         heatButtonGroup.add(heatFailureRadioButton);
         heatFailureRadioButton.setText("FAIL");
+        heatFailureRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                heatFailureRadioButtonActionPerformed(evt);
+            }
+        });
 
         setAirCondBotton.setText("Set");
         setAirCondBotton.setToolTipText("Set the A/C to the specified temperature");
@@ -623,64 +632,59 @@ public class TCUtilityPanel extends javax.swing.JPanel {
                     .addComponent(uiSeparatorFour)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lightsLabel)
-                            .addComponent(leftDoorsLabel))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(acTempTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(acTempDegrees, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(setAirCondBotton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                                .addComponent(acOffRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addComponent(acOnRadioButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(acOffRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(acFailureRadioButton))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(leftDoorsOpenRadioButton)
-                                .addGap(18, 18, 18)
-                                .addComponent(leftDoorsCloseRadioButton)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lightsLabel)
+                                    .addComponent(leftDoorsLabel)
+                                    .addComponent(rightDoorsLabel)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(rightDoorsOpenRadioButton)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(rightDoorsCloseRadioButton))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(leftDoorsOpenRadioButton)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(leftDoorsCloseRadioButton))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lightsOnRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(29, 29, 29)
+                                        .addComponent(lightsOffRadioButton, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lightsFailureRadioButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(leftDoorsFailureRadioButton)
+                                        .addComponent(rightDoorsFailureRadioButton, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(heatOnRadioButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(leftDoorsFailureRadioButton))
+                                .addComponent(heatOffRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(heatFailureRadioButton))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
+                                        .addComponent(heatLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(heatTempTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(heatTempDegrees, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(setHeatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lightsOnRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(lightsOffRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(heatOffRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lightsFailureRadioButton, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(heatFailureRadioButton, javax.swing.GroupLayout.Alignment.TRAILING)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(rightDoorsLabel)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(rightDoorsOpenRadioButton)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(rightDoorsCloseRadioButton)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(rightDoorsFailureRadioButton))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
                                         .addComponent(acLabel)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(acOnRadioButton))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(heatLabel)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(heatOnRadioButton)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(acTempTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(acTempDegrees, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(setAirCondBotton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
@@ -690,56 +694,60 @@ public class TCUtilityPanel extends javax.swing.JPanel {
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(acLabel)
-                    .addComponent(acOnRadioButton))
-                .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(acTempTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(acTempDegrees)
-                    .addComponent(acOffRadioButton)
-                    .addComponent(acFailureRadioButton)
                     .addComponent(setAirCondBotton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(acOnRadioButton)
+                    .addComponent(acOffRadioButton)
+                    .addComponent(acFailureRadioButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(uiSeparatorOne, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(heatLabel)
-                    .addComponent(heatOnRadioButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(heatTempDegrees)
                     .addComponent(heatTempTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(heatFailureRadioButton)
-                    .addComponent(heatOffRadioButton)
                     .addComponent(setHeatButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(heatOnRadioButton)
+                    .addComponent(heatFailureRadioButton)
+                    .addComponent(heatOffRadioButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(uiSeparatorTwo, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
-                .addComponent(lightsLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lightsOnRadioButton)
-                    .addComponent(lightsOffRadioButton)
-                    .addComponent(lightsFailureRadioButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(uiSeparatorThree, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
-                .addComponent(leftDoorsLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(leftDoorsFailureRadioButton)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(leftDoorsOpenRadioButton)
-                        .addComponent(leftDoorsCloseRadioButton)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-                .addComponent(uiSeparatorFour, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rightDoorsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rightDoorsCloseRadioButton)
-                    .addComponent(rightDoorsFailureRadioButton)
-                    .addComponent(rightDoorsOpenRadioButton))
-                .addContainerGap(13, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(lightsLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lightsOnRadioButton)
+                            .addComponent(lightsOffRadioButton)
+                            .addComponent(lightsFailureRadioButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(uiSeparatorThree, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(7, 7, 7)
+                        .addComponent(leftDoorsLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(leftDoorsOpenRadioButton)
+                            .addComponent(leftDoorsCloseRadioButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(uiSeparatorFour, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rightDoorsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(rightDoorsCloseRadioButton)
+                            .addComponent(rightDoorsOpenRadioButton)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(leftDoorsFailureRadioButton)
+                        .addGap(70, 70, 70)
+                        .addComponent(rightDoorsFailureRadioButton)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -877,8 +885,6 @@ public class TCUtilityPanel extends javax.swing.JPanel {
 
             // turn on the ac, and transmit the temp
             // if it's off turn it on
-
-
             if (this.selectedTrain.getAC() == 0){
                 this.selectedTrain.setAC( 1 );
                 this.selectedTrain.setThermostat(Double.parseDouble(temp));
@@ -955,36 +961,42 @@ public class TCUtilityPanel extends javax.swing.JPanel {
             // manual vs automatic mode
             if (this.inManualMode){
                 // turn on heat and transmit temp
-                this.selectedTrain.setHeat( 1 );
-                Double temp = Double.parseDouble(this.heatTempTextField.getText());
-                System.out.println("Telling the train to set temperature to " + temp + " for Heating unit");
-                this.selectedTrain.setThermostat(temp);
+                this.turnOnHeat();
+//                Double temp = Double.parseDouble(this.heatTempTextField.getText());
+//                System.out.println("Telling the train to set temperature to " + temp + " for Heating unit");
+//                this.selectedTrain.setThermostat(temp);
             }else{
                 // transmit default temp
                 Double temp = 65.0;
                 // update the text on the gui
-                this.selectedTrain.setHeat( 1 );
-                this.heatTempTextField.setText(Double.toString(temp));
-                System.out.println("Telling the train to set temperature to " + temp + " for Heating unit");
-                this.selectedTrain.setThermostat(temp);
-            }
-
-            // turn off ac if its on
-            if (this.acOnRadioButton.isSelected() == true){
-                this.selectedTrain.setAC( 0 );
-
+                this.turnOnHeat();
+//                this.heatTempTextField.setText(Double.toString(temp));
+//                System.out.println("Telling the train to set temperature to " + temp + " for Heating unit");
+//                this.selectedTrain.setThermostat(temp);
             }
         }
     }//GEN-LAST:event_turnHeatOn
 
 
-    private void turnOnAC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOnAC
-
-        this.selectedTrain.setAC( 1 );
-
-        // set train to default default temp
+    public void turnOnAC(){
+    
+        this.selectedTrain.setAC(1);
+        
+        this.selectedTrain.setHeat(0);  
+        
         this.acTempTextField.setText("40.0");
         this.selectedTrain.setThermostat(Double.parseDouble(this.acTempTextField.getText()));
+    }
+    
+    public void turnOnHeat(){
+    
+        this.selectedTrain.setHeat(1);
+        this.selectedTrain.setAC(0);
+    }
+    
+    private void turnOnAC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOnAC
+
+        this.turnOnAC();
     }//GEN-LAST:event_turnOnAC
 
     /**
@@ -997,6 +1009,10 @@ public class TCUtilityPanel extends javax.swing.JPanel {
         this.selectedTrain.setAC( 0 );
         System.out.println("Telling Air Conditioning unit to turn off.");
     }//GEN-LAST:event_turnOffAirCond
+
+    private void heatFailureRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_heatFailureRadioButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_heatFailureRadioButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

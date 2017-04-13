@@ -41,6 +41,16 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
     }
     
     /**
+     * Returns the train that the train info panel is using.
+     * 
+     * @return the train object
+     */
+    public Train getSelectedTrain(){
+    
+        return this.selectedTrain;
+    }
+    
+    /**
      * Sets the speed the train is currently going. 
      * 
      * @param speed the speed the train is going. 
@@ -50,6 +60,7 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
         this.currentSpeed.setText(String.format("%.2f", this.selectedTrain.getVelocity()));
     }
     
+
     /**
      * Sets the power the train is currently producing in kW. 
      * 

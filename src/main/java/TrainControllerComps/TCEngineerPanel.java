@@ -80,6 +80,16 @@ public class TCEngineerPanel extends javax.swing.JFrame {
         
         this.selectedTrain = train;
     }
+    
+    /**
+     * Returns the train that the Engineering Panel is using. 
+     * 
+     * @return the train object
+     */
+    public Train getTrain(){
+    
+        return this.selectedTrain; 
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
