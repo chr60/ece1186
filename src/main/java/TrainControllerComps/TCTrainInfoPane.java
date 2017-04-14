@@ -77,7 +77,7 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
      * @param suggSpeed the suggested speed for the train. 
      */
     public void setSuggestSpeedLabel(Double suggSpeed){
-        System.out.println(suggSpeed); 
+        
         this.suggestedSpeed.setText(String.format("%.2f", suggSpeed));
     }
     

@@ -43,6 +43,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import TrainModel.*;
+import java.util.LinkedList;
 
 
 
@@ -56,8 +57,6 @@ public class Launcher extends javax.swing.JFrame {
      * The speed that the system is running in.
      */
     int systemSpeed;
-
-
 
     /**
      * The timer used to refresh the modules during some given time period.
@@ -111,7 +110,7 @@ public class Launcher extends javax.swing.JFrame {
     public Launcher() {
         initComponents();
 
-        this.playSound();
+        this.playSound();        
         this.normalSpeedRadioButton.setSelected(true);
         // for now, we start in normal mode
         this.systemSpeed = 1000;
@@ -139,6 +138,8 @@ public class Launcher extends javax.swing.JFrame {
           ws.setGUI(this.WaysideGui);
 
         this.trainHandler = new TrainHandler(globalTrack);
+        this.trainHandler.setClockSpeed(this.systemSpeed);
+        
         this.trainGUI = new TrainModeUI();
 
         this.ctc = new CTCgui(trainManagers, generateTrack("CTC"), this.waysideList, globalTrack);
@@ -170,7 +171,8 @@ public class Launcher extends javax.swing.JFrame {
                 // CTC - prints active list of trains from train manager to GUI
                 //ctc.getTrainManagerPanel().updateTable(trainManagers.get(0));
 
-                        trainHandler.pollYard();
+                trainHandler.pollYard();
+                
                 if(trainHandler.getNumTrains() != 0){
                   trainGUI.updateGUI(trainGUI.getCurrT());
                 }
@@ -272,6 +274,9 @@ public class Launcher extends javax.swing.JFrame {
         time = new javax.swing.JLabel();
         date = new javax.swing.JLabel();
         launchMBOandScheduleButton1 = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -349,6 +354,20 @@ public class Launcher extends javax.swing.JFrame {
                 createLogger(evt);
             }
         });
+
+        jMenu1.setText("Testing");
+
+        jMenuItem1.setText("TrainController Test Console");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openTrainControllerTestConsole(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -428,7 +447,15 @@ public class Launcher extends javax.swing.JFrame {
     private void playNormalSpeed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playNormalSpeed
 
         this.systemSpeed = 1000;
+        this.trainHandler.setClockSpeed(this.systemSpeed);
         System.out.println("System should play in x1 speed.");
+        
+        System.out.println(this.trainHandler.openTrainControllers);
+        // change the timer delay for all open train controllers
+        for (TrainController tc : this.trainHandler.openTrainControllers){
+        
+            tc.playNormal();
+        }
 
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
             Random rand = new Random();
@@ -450,9 +477,14 @@ public class Launcher extends javax.swing.JFrame {
     private void playFastSpeed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playFastSpeed
 
         // set the system speed
-        this.systemSpeed = 1;
-        System.out.println("System should play in x10 speed.");
-
+        this.systemSpeed = 100;
+        this.trainHandler.setClockSpeed(this.systemSpeed);
+        // change the timer delay for all open train controllers
+        for (TrainController tc : this.trainHandler.openTrainControllers){
+        
+            tc.playFast();
+        }
+        
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
             Random rand = new Random();
             public void actionPerformed(ActionEvent e) {
@@ -476,6 +508,8 @@ public class Launcher extends javax.swing.JFrame {
         TrainController tc = new TrainController();
         tc.setVisible(true);
         tc.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
+        this.trainHandler.openTrainControllers.add(tc);
     }//GEN-LAST:event_openTrainController
 
     /**
@@ -537,6 +571,14 @@ public class Launcher extends javax.swing.JFrame {
 
     }//GEN-LAST:event_createLogger
 
+    private void openTrainControllerTestConsole(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTrainControllerTestConsole
+        
+
+        TCTestConsole tcTestConsole = new TCTestConsole();
+        tcTestConsole.setVisible(true);
+        tcTestConsole.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_openTrainControllerTestConsole
+
     /**
      * Generates a "Dummy Track" and returns it.
      * @return Dummy Track
@@ -591,6 +633,9 @@ public class Launcher extends javax.swing.JFrame {
     private javax.swing.JLabel date;
     private javax.swing.JLabel dateLabel;
     private javax.swing.JRadioButton fastSpeedRadioButton;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JButton launchCTCButton;
     private javax.swing.JButton launchMBOandScheduleButton;

@@ -2,7 +2,9 @@ package TrainControllerComps;
 
 import CTC.TrainManager;
 import TrackModel.Block;
+import TrackModel.TrackModel;
 import TrainModel.Train;
+import TrainModel.TrainHandler;
 import WaysideController.PLC;
 import WaysideController.WS;
 
@@ -11,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.Random;
+import javax.sound.midi.Track;
 import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -41,63 +44,114 @@ public class TCTestConsole extends javax.swing.JFrame {
      */
     private TrainController trainController; 
         
-  
     /**
      * The number of dispatched trains in the system
      */
     private int dispatchedTrains; 
     
     
+    private TrainHandler trainHandler; 
+    
     WS ws; 
     TrainManager tm; 
     Block yardBlock; 
-    Block endingBlock; 
-            
+    Block endingBlock;   
+    TrackModel track; 
+    
     /**
      * Constructor for creating a TCTestConsole object with no Train Controller and no 
      * selected train. 
      */
-    public TCTestConsole(TrainController trainCont) {
+    public TCTestConsole() {
         initComponents();
         
+        this.track = new TrackModel("Testing"); 
+        String[] fnames = {"test-classes/redline.csv"}; 
+        track.readCSV(fnames);
         this.dispatchedTrains = 0; 
         this.selectedTrain = null; 
-        this.trainController = trainCont; 
+        this.trainController = null; 
              
+        this.trainHandler = new TrainHandler(this.track); 
+        
+        this.setupRadioButtons();
+        
         this.setupTestScenario();  
     }
-        
+    
+//    /**
+//     * Constructor for creating a TCTestConsole object with no Train Controller and no 
+//     * selected train. 
+//     */
+//    public TCTestConsole(TrainController trainCont) {
+//        initComponents();
+//        
+//        this.dispatchedTrains = 0; 
+//        this.selectedTrain = null; 
+//        this.trainController = trainCont; 
+//             
+//        
+//        this.setupRadioButtons();
+//        this.setupTestScenario();  
+//    }
+     
+//    /**
+//     * Creates new form TCTestConsole
+//     */
+//    public TCTestConsole(Train train, TrainController trainCont) {
+//        initComponents();
+//        
+//        this.dispatchedTrains = 0; 
+//        this.selectedTrain = train; 
+//        this.trainController = trainCont; 
+//       
+//        
+//        this.setupRadioButtons();
+//        this.setupTestScenario();
+//    }
+    
     /**
-     * Creates new form TCTestConsole
+     * Sets up a testing scenario to allow a train to move around the track.
      */
-    public TCTestConsole(Train train, TrainController trainCont) {
-        initComponents();
-        
-        this.dispatchedTrains = 0; 
-        this.selectedTrain = train; 
-        this.trainController = trainCont; 
-       
-        this.setupTestScenario();
-    }
-    
-    
     private void setupTestScenario(){
         
         // create dummy data
-        ws = new WS("Red", this.trainController.track);
-        tm = new TrainManager("Red", this.trainController.track);
+        ws = new WS("Red", this.track);
+        tm = new TrainManager("Red", this.track);
         
-        yardBlock = this.trainController.track.getBlock("Red", "U", new Integer(77));
+        yardBlock = this.track.getBlock("Red", "U", new Integer(77));
         yardBlock.setSuggestedSpeed(35.0);
         
-        this.trainController.track.getBlock("Red", "C", new Integer(9)).setSwitchState(0);
-        endingBlock = this.trainController.track.getBlock("Red", "B", new Integer(6));          
+        this.track.getBlock("Red", "C", new Integer(9)).setSwitchState(0);
+        endingBlock = this.track.getBlock("Red", "B", new Integer(6));          
+    }
+    
+    /**
+     * Sets the states of the radio buttons to a default setting.
+     */
+    private void setupRadioButtons(){
+        
+        this.fixACMurphy.setSelected(true);
+        this.fixHeatMurphy.setSelected(true);
+        this.fixLeftDoorsMurphy.setSelected(true);
+        this.fixRightDoorsMurphy.setSelected(true);
+        this.fixLightsMurphy.setSelected(true);
+        
+        this.fixEngineRadioButton.setSelected(true);
+        this.fixSignalRadioButton.setSelected(true);
+        this.fixBrakeRadioButton.setSelected(true);
+        
+        this.acOffRadioButton.setSelected(true);
+        this.heatOffRadioButton.setSelected(true);
+        this.leftDoorsCloseRadioButton.setSelected(true);
+        this.rightDoorsCloseRadioButton.setSelected(true);
+        this.lightsOffRadioButton.setSelected(true);
     }
          
     /**
+     * Sets the Train Controller that the Test Console should use.
      * 
-     * 
-     * @param trainCont 
+     * @param trainCont the train controller object.
      */
     private void setTrainController(TrainController trainCont){
     
@@ -105,9 +159,9 @@ public class TCTestConsole extends javax.swing.JFrame {
     }
     
     /**
+     * Sets the train that the Test Console should control.
      * 
-     * 
-     * @param train 
+     * @param train the train object to have the test console control.
      */
     public void setTrain(Train train){
     
@@ -115,20 +169,16 @@ public class TCTestConsole extends javax.swing.JFrame {
     }
     
     /**
-     * 
-     * 
-     * 
+     * Refreshes the UI elements of the Test Console with the train information.
      */
     public void refreshUI(){
     
        if (this.selectedTrain != null){
             // update labels
             this.trainSpeed.setText(Double.toString(this.selectedTrain.getVelocity()));
-            
-            double powerKW = this.selectedTrain.getPower()/1000; 
-            this.trainPower.setText(Double.toString(powerKW));
-            this.setSpeed.setText(Double.toString(this.trainController.getSpeedController().getSetSpeed())); 
-            // 
+            this.trainPower.setText(Double.toString(this.selectedTrain.getPower()/1000));
+            this.suggestedSpeed.setText(Double.toString(this.selectedTrain.getSuggestedSpeed()));          
+            this.authority.setText(Double.toString(this.selectedTrain.getAuthority().blockNum()));
        } 
     }
 
@@ -151,10 +201,13 @@ public class TCTestConsole extends javax.swing.JFrame {
         lightsButtonGroup = new javax.swing.ButtonGroup();
         leftDoorsButtonGroup = new javax.swing.ButtonGroup();
         rightDoorsButtonGroups = new javax.swing.ButtonGroup();
+        engineButtonGroup = new javax.swing.ButtonGroup();
+        signalButtonGroup = new javax.swing.ButtonGroup();
+        brakeButtonGroup = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         trainSpeedLabel = new javax.swing.JLabel();
         trainPowerLabel = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        suggestedSpeedLabel = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -183,22 +236,35 @@ public class TCTestConsole extends javax.swing.JFrame {
         lightsLabel = new javax.swing.JLabel();
         rightDoorsLabel = new javax.swing.JLabel();
         leftDoorsLabel = new javax.swing.JLabel();
-        jRadioButton11 = new javax.swing.JRadioButton();
-        jRadioButton12 = new javax.swing.JRadioButton();
-        jRadioButton13 = new javax.swing.JRadioButton();
-        jRadioButton14 = new javax.swing.JRadioButton();
-        jRadioButton15 = new javax.swing.JRadioButton();
-        jRadioButton16 = new javax.swing.JRadioButton();
-        jRadioButton17 = new javax.swing.JRadioButton();
-        jRadioButton18 = new javax.swing.JRadioButton();
-        jRadioButton19 = new javax.swing.JRadioButton();
-        jRadioButton20 = new javax.swing.JRadioButton();
+        acOnRadioButton = new javax.swing.JRadioButton();
+        acOffRadioButton = new javax.swing.JRadioButton();
+        heatOffRadioButton = new javax.swing.JRadioButton();
+        heatOnRadioButton = new javax.swing.JRadioButton();
+        lightsOnRadioButton = new javax.swing.JRadioButton();
+        lightsOffRadioButton = new javax.swing.JRadioButton();
+        leftDoorsOpenRadioButton = new javax.swing.JRadioButton();
+        leftDoorsCloseRadioButton = new javax.swing.JRadioButton();
+        rightDoorsOpenRadioButton = new javax.swing.JRadioButton();
+        rightDoorsCloseRadioButton = new javax.swing.JRadioButton();
         trainSpeed = new javax.swing.JLabel();
         trainPower = new javax.swing.JLabel();
-        setSpeed = new javax.swing.JLabel();
-        jLabel34 = new javax.swing.JLabel();
+        suggestedSpeed = new javax.swing.JLabel();
+        authority = new javax.swing.JLabel();
         dispatchTrainsButton = new javax.swing.JButton();
-        numDispatchedTrains = new javax.swing.JComboBox<>();
+        engineFailureLabel = new javax.swing.JLabel();
+        brakeFailureLabel = new javax.swing.JLabel();
+        signalFailureLabel = new javax.swing.JLabel();
+        breakEnginerMurphy = new javax.swing.JRadioButton();
+        fixEngineRadioButton = new javax.swing.JRadioButton();
+        breakSignalMurphy = new javax.swing.JRadioButton();
+        fixSignalRadioButton = new javax.swing.JRadioButton();
+        breakBrakeMurphy = new javax.swing.JRadioButton();
+        fixBrakeRadioButton = new javax.swing.JRadioButton();
+        fixFailureButton = new javax.swing.JButton();
+        requestFixButton = new javax.swing.JButton();
+        playNormalSpeedButton = new javax.swing.JButton();
+        playFastSpeedButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -208,7 +274,7 @@ public class TCTestConsole extends javax.swing.JFrame {
 
         trainPowerLabel.setText("Power:");
 
-        jLabel5.setText("Set Speed: ");
+        suggestedSpeedLabel.setText("Suggested Speed:");
 
         jLabel6.setText("Authority (Block Id):");
 
@@ -329,81 +395,81 @@ public class TCTestConsole extends javax.swing.JFrame {
 
         leftDoorsLabel.setText("Left Door:");
 
-        acButtonGroup.add(jRadioButton11);
-        jRadioButton11.setText("ON");
-        jRadioButton11.addActionListener(new java.awt.event.ActionListener() {
+        acButtonGroup.add(acOnRadioButton);
+        acOnRadioButton.setText("ON");
+        acOnRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 turnOnAC(evt);
             }
         });
 
-        acButtonGroup.add(jRadioButton12);
-        jRadioButton12.setText("OFF");
-        jRadioButton12.addActionListener(new java.awt.event.ActionListener() {
+        acButtonGroup.add(acOffRadioButton);
+        acOffRadioButton.setText("OFF");
+        acOffRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 turnOffAC(evt);
             }
         });
 
-        heatButtonGroup.add(jRadioButton13);
-        jRadioButton13.setText("OFF");
-        jRadioButton13.addActionListener(new java.awt.event.ActionListener() {
+        heatButtonGroup.add(heatOffRadioButton);
+        heatOffRadioButton.setText("OFF");
+        heatOffRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 turnOffHeat(evt);
             }
         });
 
-        heatButtonGroup.add(jRadioButton14);
-        jRadioButton14.setText("ON");
-        jRadioButton14.addActionListener(new java.awt.event.ActionListener() {
+        heatButtonGroup.add(heatOnRadioButton);
+        heatOnRadioButton.setText("ON");
+        heatOnRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 turnOnHeat(evt);
             }
         });
 
-        lightsButtonGroup.add(jRadioButton15);
-        jRadioButton15.setText("ON");
-        jRadioButton15.addActionListener(new java.awt.event.ActionListener() {
+        lightsButtonGroup.add(lightsOnRadioButton);
+        lightsOnRadioButton.setText("ON");
+        lightsOnRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 turnOnLights(evt);
             }
         });
 
-        lightsButtonGroup.add(jRadioButton16);
-        jRadioButton16.setText("OFF");
-        jRadioButton16.addActionListener(new java.awt.event.ActionListener() {
+        lightsButtonGroup.add(lightsOffRadioButton);
+        lightsOffRadioButton.setText("OFF");
+        lightsOffRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 turnOffLights(evt);
             }
         });
 
-        leftDoorsButtonGroup.add(jRadioButton17);
-        jRadioButton17.setText("OPEN");
-        jRadioButton17.addActionListener(new java.awt.event.ActionListener() {
+        leftDoorsButtonGroup.add(leftDoorsOpenRadioButton);
+        leftDoorsOpenRadioButton.setText("OPEN");
+        leftDoorsOpenRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 openLeftDoors(evt);
             }
         });
 
-        leftDoorsButtonGroup.add(jRadioButton18);
-        jRadioButton18.setText("CLOSE");
-        jRadioButton18.addActionListener(new java.awt.event.ActionListener() {
+        leftDoorsButtonGroup.add(leftDoorsCloseRadioButton);
+        leftDoorsCloseRadioButton.setText("CLOSE");
+        leftDoorsCloseRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeLeftDoors(evt);
             }
         });
 
-        rightDoorsButtonGroups.add(jRadioButton19);
-        jRadioButton19.setText("OPEN");
-        jRadioButton19.addActionListener(new java.awt.event.ActionListener() {
+        rightDoorsButtonGroups.add(rightDoorsOpenRadioButton);
+        rightDoorsOpenRadioButton.setText("OPEN");
+        rightDoorsOpenRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 openRightDoors(evt);
             }
         });
 
-        rightDoorsButtonGroups.add(jRadioButton20);
-        jRadioButton20.setText("CLOSE");
-        jRadioButton20.addActionListener(new java.awt.event.ActionListener() {
+        rightDoorsButtonGroups.add(rightDoorsCloseRadioButton);
+        rightDoorsCloseRadioButton.setText("CLOSE");
+        rightDoorsCloseRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeRightDoors(evt);
             }
@@ -415,20 +481,103 @@ public class TCTestConsole extends javax.swing.JFrame {
         trainPower.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         trainPower.setText("0");
 
-        setSpeed.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        setSpeed.setText("0");
+        suggestedSpeed.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        suggestedSpeed.setText("0");
 
-        jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel34.setText("0");
+        authority.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        authority.setText("0");
 
-        dispatchTrainsButton.setText("Dispatch 'x' Trains");
+        dispatchTrainsButton.setText("Dispatch Train");
         dispatchTrainsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dispatchTrains(evt);
             }
         });
 
-        numDispatchedTrains.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+        engineFailureLabel.setText("Engine:");
+
+        brakeFailureLabel.setText("Brake:");
+
+        signalFailureLabel.setText("Signal:");
+
+        engineButtonGroup.add(breakEnginerMurphy);
+        breakEnginerMurphy.setText("Break");
+        breakEnginerMurphy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                breakEnginerMurphybreakRightDoors(evt);
+            }
+        });
+
+        engineButtonGroup.add(fixEngineRadioButton);
+        fixEngineRadioButton.setText("Unbreak");
+        fixEngineRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fixEngineRadioButtonfixRightDoors(evt);
+            }
+        });
+
+        signalButtonGroup.add(breakSignalMurphy);
+        breakSignalMurphy.setText("Break");
+        breakSignalMurphy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                breakSignalMurphybreakRightDoors(evt);
+            }
+        });
+
+        signalButtonGroup.add(fixSignalRadioButton);
+        fixSignalRadioButton.setText("Unbreak");
+        fixSignalRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fixSignalRadioButtonfixRightDoors(evt);
+            }
+        });
+
+        brakeButtonGroup.add(breakBrakeMurphy);
+        breakBrakeMurphy.setText("Break");
+        breakBrakeMurphy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                failBrakes(evt);
+            }
+        });
+
+        brakeButtonGroup.add(fixBrakeRadioButton);
+        fixBrakeRadioButton.setText("Unbreak");
+        fixBrakeRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fixBrakes(evt);
+            }
+        });
+
+        fixFailureButton.setText("Fix");
+        fixFailureButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fixFailures(evt);
+            }
+        });
+
+        requestFixButton.setText("Request Fix");
+        requestFixButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                requestFix(evt);
+            }
+        });
+
+        playNormalSpeedButton.setText("Normal Speed");
+        playNormalSpeedButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playNormalSpeed(evt);
+            }
+        });
+
+        playFastSpeedButton.setText("Fast Speed");
+        playFastSpeedButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playFastSpeed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jLabel1.setText("Utilities");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -452,87 +601,116 @@ public class TCTestConsole extends javax.swing.JFrame {
                                 .addComponent(trainSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel7)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(suggestedSpeedLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(33, 33, 33)
+                                .addComponent(authority, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(36, 36, 36)
-                                .addComponent(setSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(suggestedSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel9))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel15)
-                                        .addGap(15, 15, 15)
-                                        .addComponent(breakLeftDoorsMurphy))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel16)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(breakRightDoorsMurphy))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel15)
+                                            .addGap(15, 15, 15)
+                                            .addComponent(breakLeftDoorsMurphy))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel16)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(breakRightDoorsMurphy))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel12)
+                                                .addComponent(jLabel14)
+                                                .addComponent(jLabel13))
+                                            .addGap(35, 35, 35)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(breakHeatMurphy)
+                                                .addComponent(breakACMurphy)
+                                                .addComponent(breakLightsMurphy))))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(fixLeftDoorsMurphy)
+                                        .addComponent(fixRightDoorsMurphy)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel12)
-                                            .addComponent(jLabel14)
-                                            .addComponent(jLabel13))
-                                        .addGap(35, 35, 35)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(breakHeatMurphy)
-                                            .addComponent(breakACMurphy)
-                                            .addComponent(breakLightsMurphy))))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(fixLeftDoorsMurphy)
-                                    .addComponent(fixRightDoorsMurphy)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(fixHeatMurphy)
-                                        .addComponent(fixACMurphy)
-                                        .addComponent(fixLightsMurphy))))
+                                            .addComponent(fixHeatMurphy)
+                                            .addComponent(fixACMurphy)
+                                            .addComponent(fixLightsMurphy))))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(89, 89, 89)
+                                    .addComponent(jLabel11)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(89, 89, 89)
-                                .addComponent(jLabel11)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(engineFailureLabel)
+                                    .addComponent(signalFailureLabel)
+                                    .addComponent(brakeFailureLabel))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(breakSignalMurphy)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(fixSignalRadioButton))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(breakEnginerMurphy)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(fixEngineRadioButton))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(breakBrakeMurphy)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(fixBrakeRadioButton)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(acLabel)
+                                .addComponent(heatLabel)
+                                .addComponent(lightsLabel)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(fixFailureButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(playNormalSpeedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(leftDoorsLabel)
+                                        .addComponent(rightDoorsLabel))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(rightDoorsOpenRadioButton)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(rightDoorsCloseRadioButton))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(leftDoorsOpenRadioButton)
+                                                .addComponent(jLabel1)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(heatOnRadioButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(acOnRadioButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(lightsOnRadioButton)))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(lightsOffRadioButton)
+                                                .addComponent(leftDoorsCloseRadioButton)
+                                                .addComponent(heatOffRadioButton)
+                                                .addComponent(acOffRadioButton)))))
+                                .addComponent(dispatchTrainsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(dispatchTrainsButton)
+                                .addComponent(requestFixButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(numDispatchedTrains, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(acLabel)
-                            .addComponent(heatLabel)
-                            .addComponent(lightsLabel)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(leftDoorsLabel)
-                                    .addComponent(rightDoorsLabel))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jRadioButton19)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jRadioButton20))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jRadioButton17)
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(jRadioButton14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jRadioButton11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jRadioButton15)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jRadioButton16)
-                                            .addComponent(jRadioButton18)
-                                            .addComponent(jRadioButton13)
-                                            .addComponent(jRadioButton12))))))))
+                                .addComponent(playFastSpeedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -541,40 +719,43 @@ public class TCTestConsole extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(17, 17, 17)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(trainSpeedLabel)
-                                .addComponent(trainSpeed)))
+                        .addComponent(trainSpeedLabel)
                         .addGap(18, 18, 18)
                         .addComponent(trainPowerLabel))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
+                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel9)
-                                    .addComponent(setSpeed))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel34)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(34, 34, 34)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel8)
-                                    .addComponent(trainPower))))))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(trainSpeed))
+                                    .addGap(34, 34, 34))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addGap(34, 34, 34)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel8)
+                                        .addComponent(trainPower))))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(suggestedSpeedLabel)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jLabel6))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel9)
+                                        .addComponent(suggestedSpeed))
+                                    .addGap(18, 18, 18)
+                                    .addComponent(authority))))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11)
-                            .addComponent(dispatchTrainsButton)
-                            .addComponent(numDispatchedTrains, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -614,50 +795,81 @@ public class TCTestConsole extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(acLabel)
-                                            .addComponent(jRadioButton12))
+                                            .addComponent(acOffRadioButton))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jRadioButton13)
+                                            .addComponent(heatOffRadioButton)
                                             .addComponent(heatLabel)))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jRadioButton11)
+                                        .addComponent(acOnRadioButton)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jRadioButton14)))
+                                        .addComponent(heatOnRadioButton)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jRadioButton15)
+                                    .addComponent(lightsOnRadioButton)
                                     .addComponent(lightsLabel)
-                                    .addComponent(jRadioButton16))
+                                    .addComponent(lightsOffRadioButton))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jRadioButton17)
-                                    .addComponent(jRadioButton18)
+                                    .addComponent(leftDoorsOpenRadioButton)
+                                    .addComponent(leftDoorsCloseRadioButton)
                                     .addComponent(leftDoorsLabel))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jRadioButton19)
-                                        .addComponent(jRadioButton20))
-                                    .addComponent(rightDoorsLabel)))))
-                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                                        .addComponent(rightDoorsOpenRadioButton)
+                                        .addComponent(rightDoorsCloseRadioButton))
+                                    .addComponent(rightDoorsLabel))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(breakEnginerMurphy)
+                                        .addComponent(engineFailureLabel))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(fixEngineRadioButton)
+                                        .addComponent(dispatchTrainsButton)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(breakSignalMurphy)
+                                        .addComponent(signalFailureLabel))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(fixSignalRadioButton)
+                                        .addComponent(fixFailureButton)
+                                        .addComponent(playNormalSpeedButton)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(breakBrakeMurphy)
+                                        .addComponent(brakeFailureLabel))
+                                    .addComponent(fixBrakeRadioButton)))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(requestFixButton)
+                                .addComponent(playFastSpeedButton)))
+                        .addGap(0, 1, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jSeparator3)))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -758,27 +970,89 @@ public class TCTestConsole extends javax.swing.JFrame {
         this.selectedTrain.setRightDoor( 0 );
     }//GEN-LAST:event_closeRightDoors
 
+    /**
+     * Dispatches a train, opening a new TrainController. 
+     * 
+     * @param evt the button
+     */
     private void dispatchTrains(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dispatchTrains
        
-        // get value from combo box
-   
-        String value = (String) this.numDispatchedTrains.getSelectedItem();
+        this.dispatchedTrains++;             
+        this.trainHandler.setSpeedAndAuthority(-1, 35.0, this.endingBlock, this.yardBlock);
+
+        this.selectedTrain = this.trainHandler.findTrain(this.dispatchedTrains);
         
-        // add to the list of dispatched trains 
-        System.out.println("Dispatching " + value + " trains."); 
-               
-        for (int i = 0; i < Integer.parseInt(value); i++){
-            
-            // FIX ME: Get this integrated with the Track model.
-            //this.trainController.trains.add(new Train( i, this.trainController.track) );
-            this.dispatchedTrains++;             
-            this.trainController.trainHandler.setSpeedAndAuthority(-1, 35.0, this.endingBlock, this.yardBlock);
-           
-            this.selectedTrain = this.trainController.trainHandler.findTrain(this.dispatchedTrains);
-        }
+        TrainController tc = this.trainHandler.getOpenTrainControllers().get(this.dispatchedTrains-1);
+        tc.setTestConsole(this);
+        tc.testWindowOpen = true; 
         
-        this.trainController.setTrainListComboBox();
+        if (this.trainController != null){ this.trainController.setTrainListComboBox(); }
     }//GEN-LAST:event_dispatchTrains
+
+    private void breakEnginerMurphybreakRightDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakEnginerMurphybreakRightDoors
+        // TODO add your handling code here:
+    }//GEN-LAST:event_breakEnginerMurphybreakRightDoors
+
+    private void fixEngineRadioButtonfixRightDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixEngineRadioButtonfixRightDoors
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fixEngineRadioButtonfixRightDoors
+
+    private void breakSignalMurphybreakRightDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakSignalMurphybreakRightDoors
+        // TODO add your handling code here:
+    }//GEN-LAST:event_breakSignalMurphybreakRightDoors
+
+    private void fixSignalRadioButtonfixRightDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixSignalRadioButtonfixRightDoors
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fixSignalRadioButtonfixRightDoors
+
+    private void fixFailures(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixFailures
+        
+        // reset failures
+        this.selectedTrain.setBrakeFailure(false);
+        this.selectedTrain.setSignalFailure(false);
+        this.selectedTrain.setEngineFailure(false);
+    }//GEN-LAST:event_fixFailures
+
+    private void failBrakes(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_failBrakes
+      
+        this.selectedTrain.setBrakeFailure(true);
+    }//GEN-LAST:event_failBrakes
+
+    /**
+     * Fixes the brakes on the selected train.
+     * 
+     * @param evt 
+     */
+    private void fixBrakes(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixBrakes
+       
+        this.selectedTrain.setBrakeFailure(false);
+    }//GEN-LAST:event_fixBrakes
+
+    /**
+     * Tells the train to put 
+     * 
+     * @param evt 
+     */
+    private void requestFix(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestFix
+       
+        this.selectedTrain.requestFix(true);
+    }//GEN-LAST:event_requestFix
+
+    private void playNormalSpeed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playNormalSpeed
+        
+        for (TrainController tc : this.trainHandler.openTrainControllers){
+        
+            tc.playNormal();
+        }  
+    }//GEN-LAST:event_playNormalSpeed
+
+    private void playFastSpeed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playFastSpeed
+        
+        for (TrainController tc : this.trainHandler.openTrainControllers){
+        
+            tc.playFast();
+        }        
+    }//GEN-LAST:event_playFastSpeed
 
     /**
      * @param args the command line arguments
@@ -819,57 +1093,73 @@ public class TCTestConsole extends javax.swing.JFrame {
     private javax.swing.ButtonGroup acButtonGroup;
     private javax.swing.ButtonGroup acButtonGroupMurphy;
     private javax.swing.JLabel acLabel;
+    private javax.swing.JRadioButton acOffRadioButton;
+    private javax.swing.JRadioButton acOnRadioButton;
+    private javax.swing.JLabel authority;
+    private javax.swing.ButtonGroup brakeButtonGroup;
+    private javax.swing.JLabel brakeFailureLabel;
     private javax.swing.JRadioButton breakACMurphy;
+    private javax.swing.JRadioButton breakBrakeMurphy;
+    private javax.swing.JRadioButton breakEnginerMurphy;
     private javax.swing.JRadioButton breakHeatMurphy;
     private javax.swing.JRadioButton breakLeftDoorsMurphy;
     private javax.swing.JRadioButton breakLightsMurphy;
     private javax.swing.JRadioButton breakRightDoorsMurphy;
+    private javax.swing.JRadioButton breakSignalMurphy;
     private javax.swing.JButton dispatchTrainsButton;
+    private javax.swing.ButtonGroup engineButtonGroup;
+    private javax.swing.JLabel engineFailureLabel;
     private javax.swing.JRadioButton fixACMurphy;
+    private javax.swing.JRadioButton fixBrakeRadioButton;
+    private javax.swing.JRadioButton fixEngineRadioButton;
+    private javax.swing.JButton fixFailureButton;
     private javax.swing.JRadioButton fixHeatMurphy;
     private javax.swing.JRadioButton fixLeftDoorsMurphy;
     private javax.swing.JRadioButton fixLightsMurphy;
     private javax.swing.JRadioButton fixRightDoorsMurphy;
+    private javax.swing.JRadioButton fixSignalRadioButton;
     private javax.swing.ButtonGroup heatButtonGroup;
     private javax.swing.ButtonGroup heatButtonGroupMurphy;
     private javax.swing.JLabel heatLabel;
+    private javax.swing.JRadioButton heatOffRadioButton;
+    private javax.swing.JRadioButton heatOnRadioButton;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton11;
-    private javax.swing.JRadioButton jRadioButton12;
-    private javax.swing.JRadioButton jRadioButton13;
-    private javax.swing.JRadioButton jRadioButton14;
-    private javax.swing.JRadioButton jRadioButton15;
-    private javax.swing.JRadioButton jRadioButton16;
-    private javax.swing.JRadioButton jRadioButton17;
-    private javax.swing.JRadioButton jRadioButton18;
-    private javax.swing.JRadioButton jRadioButton19;
-    private javax.swing.JRadioButton jRadioButton20;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.ButtonGroup leftDoorsButtonGroup;
     private javax.swing.ButtonGroup leftDoorsButtonGroupMurphy;
+    private javax.swing.JRadioButton leftDoorsCloseRadioButton;
     private javax.swing.JLabel leftDoorsLabel;
+    private javax.swing.JRadioButton leftDoorsOpenRadioButton;
     private javax.swing.ButtonGroup lightsButtonGroup;
     private javax.swing.ButtonGroup lightsButtonGroupMurphy;
     private javax.swing.JLabel lightsLabel;
-    private javax.swing.JComboBox<String> numDispatchedTrains;
+    private javax.swing.JRadioButton lightsOffRadioButton;
+    private javax.swing.JRadioButton lightsOnRadioButton;
+    private javax.swing.JButton playFastSpeedButton;
+    private javax.swing.JButton playNormalSpeedButton;
+    private javax.swing.JButton requestFixButton;
     private javax.swing.ButtonGroup rightDoorsButtonGroupMurphy;
     private javax.swing.ButtonGroup rightDoorsButtonGroups;
+    private javax.swing.JRadioButton rightDoorsCloseRadioButton;
     private javax.swing.JLabel rightDoorsLabel;
-    private javax.swing.JLabel setSpeed;
+    private javax.swing.JRadioButton rightDoorsOpenRadioButton;
+    private javax.swing.ButtonGroup signalButtonGroup;
+    private javax.swing.JLabel signalFailureLabel;
+    private javax.swing.JLabel suggestedSpeed;
+    private javax.swing.JLabel suggestedSpeedLabel;
     private javax.swing.JLabel trainPower;
     private javax.swing.JLabel trainPowerLabel;
     private javax.swing.JLabel trainSpeed;

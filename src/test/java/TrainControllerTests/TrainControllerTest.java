@@ -105,5 +105,28 @@ public class TrainControllerTest {
       tc.setMode("Manual", "Testing");
        
       assertTrue(tc.getTestMode().equals("Testing"));
-  }    
+  }   
+  
+  @Test
+  /**
+  * Test that the system is put in normal speed.
+  */ 
+  @DisplayName("Validate that the system plays at normal speed")  
+  static void inNormalSpeed(){
+  
+      tc.playNormal();
+      
+      assertTrue(tc.clock.getDelay() == 1000);    
+  }
+  
+  @Test
+  /**
+  * Test that the system is put in fast speed.
+  */
+  @DisplayName("Validate that the system plays at fast speed")  
+  static void inFastSpeed(){
+      tc.playFast();
+     
+      assertTrue(tc.clock.getDelay() == 100);    
+  }
 }

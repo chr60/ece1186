@@ -65,43 +65,13 @@ public class TrainController extends javax.swing.JFrame {
     TrainModeUI trainUI;
 
     // FOR TESTING:
-    TrackModel track;
+    //TrackModel track;
     
     
     boolean testWindowOpen;
-
-    // used to update GUI every millisecond (1 s)
-    // FIX ME: This time should be set by the CTC can be
-    // wall speed or 10x faster ()
-    private Timer systemRunSpeed = new Timer(1000, new ActionListener(){
-
-        public void actionPerformed(ActionEvent e) {
-
-            if (testWindowOpen){ testConsole.refreshUI(); }
-            
-            if (detailedTrainWindowOpen == true){ trainUI.updateGUI(selectedTrain); }
-
-            if (selectedTrain != null && selectedTrain.powerConstantsSet() ){ refreshComponents(); }
-
-//            // Do specific things if in testing mode...
-//            if (testingMode == true){
-//
-//                if (testConsole != null){
-//                    // update test console
-//                    testConsole.setTrain(selectedTrain);
-//                }
-//            }else if (normalMode == true){
-//                // do things in normal mode
-//                if (manualMode == true){
-//                    // do manual mode thing
-//                }else if (automaticMode == true){
-//                    // automate things based on train stuff
-//                }
-//            }
-
-            }
-        });
-
+        
+    public Timer clock;    
+    
     // MARK: - Constructors
 
     /**
@@ -114,11 +84,11 @@ public class TrainController extends javax.swing.JFrame {
         initComponents();
 
         // FIX ME: This is for testing purposes, and should be removed.
-        String[] fNames = {"test-classes/redline.csv"};
-        this.track = new TrackModel("Test");
-        this.track.readCSV(fNames);
+        //String[] fNames = {"test-classes/redline.csv"};
+        //this.track = new TrackModel("Test");
+        //this.track.readCSV(fNames);
 
-        this.trainHandler = new TrainHandler(this.track);
+        //this.trainHandler = new TrainHandler(this.track);
 
         
         //this.trains.add(train);
@@ -127,14 +97,14 @@ public class TrainController extends javax.swing.JFrame {
         this.setTrainListComboBox();
         this.setMode("Manual", "Normal");
 
-
         this.speedController.setOperatingLogs(this.operatingLogs);
-        this.selectedTrain = null;
-
         this.utilityPanel.setVitalsButton(this.vitals);
+        this.utilityPanel.setAnnouncementsLog(this.annoucementLogs);
+        this.brakePanel.setSpeedController(this.speedController);
+        
         this.detailedTrainWindowOpen = false;
-        systemRunSpeed.start();
 
+        this.playNormal();
     }
 
     /**
@@ -152,7 +122,9 @@ public class TrainController extends javax.swing.JFrame {
         this.speedController.setOperatingLogs(this.operatingLogs);
         this.utilityPanel.setVitalsButton(this.vitals);
         this.utilityPanel.setAnnouncementsLog(this.annoucementLogs);
+        
         this.brakePanel.setSpeedController(this.speedController);
+        this.brakePanel.setAnnouncementLogs(this.annoucementLogs);
         
         this.detailedTrainWindowOpen = false;
 
@@ -164,7 +136,7 @@ public class TrainController extends javax.swing.JFrame {
             engPanel.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         }
         
-        systemRunSpeed.start();
+        this.playNormal();
     }
 
     /**
@@ -194,26 +166,26 @@ public class TrainController extends javax.swing.JFrame {
             engPanel.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         }
         
-        systemRunSpeed.start();
+         this.playNormal();
     }
-    /**
-     * Constructor that creates a Train Controller in a given mode.
-     *
-     * @param playMode the mode (Manual or Automatic) that the Train Controller will launch in.
-     * @param testMode the mode (Normal or Testing) that the Train Controller will launch in.
-     */
-    public TrainController(String playMode, String testMode){
-
-        initComponents();
-
-        this.initHashMaps();
-        this.setTrainListComboBox();
-        this.setMode(playMode, testMode);
-
-        this.selectedTrain = null;
-
-        systemRunSpeed.start();
-    }
+//    /**
+//     * Constructor that creates a Train Controller in a given mode.
+//     *
+//     * @param playMode the mode (Manual or Automatic) that the Train Controller will launch in.
+//     * @param testMode the mode (Normal or Testing) that the Train Controller will launch in.
+//     */
+//    public TrainController(String playMode, String testMode){
+//
+//        initComponents();
+//
+//        this.initHashMaps();
+//        this.setTrainListComboBox();
+//        this.setMode(playMode, testMode);
+//
+//        this.selectedTrain = null;
+//
+//        this.playNormal();
+//    }
 
     /**
      * Constructor that creates a Train Controller in a given Test and Play mode with a given train.
@@ -233,6 +205,7 @@ public class TrainController extends javax.swing.JFrame {
         this.utilityPanel.setVitalsButton(this.vitals);
         this.utilityPanel.setAnnouncementsLog(this.annoucementLogs);
         this.brakePanel.setSpeedController(this.speedController);
+        this.brakePanel.setAnnouncementLogs(this.annoucementLogs);
         
         this.detailedTrainWindowOpen = false;
 
@@ -247,9 +220,64 @@ public class TrainController extends javax.swing.JFrame {
             engPanel.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         }
         
-        systemRunSpeed.start();
+        this.playNormal();
     }
     
+    /**
+     * Changes the rate at which the TrainController clock is called to 1/10 s.  
+     */
+    public void playFast(){
+        
+        if (this.clock != null){this.clock.stop();}
+        
+        this.clock = new Timer(100, new ActionListener(){
+
+            public void actionPerformed(ActionEvent e) {
+                    
+                if (selectedTrain != null && selectedTrain.powerConstantsSet() ){ refreshComponents(); }
+
+                if (testWindowOpen){ testConsole.refreshUI(); }
+                
+                if (detailedTrainWindowOpen == true){ trainUI.updateGUI(selectedTrain); }
+
+            }
+        }); 
+        this.clock.start();  
+    }
+    
+    /**
+     * Changes the rate at which the TrainController clock is called to 1 s.
+     */
+    public void playNormal(){
+   
+        if (this.clock != null){this.clock.stop();}
+        
+        this.clock = new Timer(1000, new ActionListener(){
+
+            public void actionPerformed(ActionEvent e) {
+                                    
+                if (selectedTrain != null && selectedTrain.powerConstantsSet() ){ refreshComponents(); }
+
+                if (testWindowOpen){ testConsole.refreshUI(); }
+                
+                if (detailedTrainWindowOpen == true){ trainUI.updateGUI(selectedTrain); }
+                
+            }
+        }); 
+        this.clock.start();  
+    }
+    
+    public void setTestConsole(TCTestConsole testConsole){
+    
+        this.testConsole = testConsole; 
+    }
+    
+    /**
+     * 
+     * 
+     * 
+     * @param trainHandler 
+     */
     public void setTrainHandler(TrainHandler trainHandler){
         
         this.trainHandler = trainHandler; 
@@ -362,10 +390,13 @@ public class TrainController extends javax.swing.JFrame {
      */
     private void initHashMaps(){
 
-        // get the list of dispatched trains
-        for (Train train : this.trainHandler.getTrains()){
-            // add them to the hashmaps
-            this.trainList.put(Integer.toString(train.getID()), train );
+        if (this.trainHandler != null){
+        
+            // get the list of dispatched trains
+            for (Train train : this.trainHandler.getTrains()){
+                // add them to the hashmaps
+                this.trainList.put(Integer.toString(train.getID()), train );
+            }
         }
     }
 
@@ -406,11 +437,14 @@ public class TrainController extends javax.swing.JFrame {
         this.dispatchedTrains.removeAllItems();
         this.dispatchedTrains.addItem("No Train Selected");
 
-        if (this.trainHandler != null){ this.initHashMaps(); }
-        
-        for (Train train : this.trainHandler.getTrains()){
+        if (this.trainHandler != null){ 
+            
+            this.initHashMaps(); 
+            System.out.println(this.trainHandler.getNumTrains()); 
+            for (Train train : this.trainHandler.getTrains()){
 
-            this.dispatchedTrains.addItem(Integer.toString(train.getID()) );
+                this.dispatchedTrains.addItem(Integer.toString(train.getID()) );
+            }
         }
     }
     
@@ -1081,22 +1115,10 @@ public class TrainController extends javax.swing.JFrame {
      */
     private void testModeSelected(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testModeSelected
 
-        if (this.NoTrainSelected() == false){
-
-            TCTestConsole testConsole = new TCTestConsole(this.selectedTrain, this);
-            testConsole.setVisible(true);
-            testConsole.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            this.testingMode = true;
-            this.normalMode = false;
-            this.testWindowOpen = true; 
-            System.out.println("Normal Mode: " + this.normalMode + " Testing Mode: " + this.testingMode);
-        }else{
-
-            TCTestConsole testConsole = new TCTestConsole(this);
-            testConsole.setVisible(true);
-            testConsole.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        }
-
+        if (this.testWindowOpen == true && this.selectedTrain != null){
+        
+            this.testConsole.setTrain(this.selectedTrain);
+        }        
     }//GEN-LAST:event_testModeSelected
 
     private void normalModeSelected(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_normalModeSelected

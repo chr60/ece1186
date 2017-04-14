@@ -252,8 +252,8 @@ public class TCSpeedController extends javax.swing.JPanel {
                     this.speedSlider.setValue(blockSuggestedSpeed.intValue());
                     
                     // ignore the speed 
-                    if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency){ this.setSpeed = 0; }
-                    else{ this.setSpeed = this.setSpeed; }
+                    if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == true){ this.setSpeed = 0; }
+                    else{ this.setSpeed = (int)(.621371*this.selectedTrain.getGPS().getCurrBlock().getSpeedLimit()); }
                     
                 }else{
 
@@ -262,7 +262,7 @@ public class TCSpeedController extends javax.swing.JPanel {
                     this.speedSlider.setValue(blockSuggestedSpeed.intValue());
                 
                      // ignore the speed 
-                    if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency){ this.setSpeed = 0; }
+                    if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == true){ this.setSpeed = 0; }
                     else{ this.setSpeed = blockSuggestedSpeed.intValue(); }
                 }
                 this.powerControl();
@@ -442,8 +442,7 @@ public class TCSpeedController extends javax.swing.JPanel {
         this.setSpeed = this.speedSlider.getValue();
         
         log = "Telling train to set speed to " + this.setSpeed;
-        this.brakePanel.isEmergency = false; // reset the flags
-        this.brakePanel.ignoreSpeed = false;
+        this.brakePanel.resetBrakingConditions();
         this.logBook.add(log);
         this.printLogs();
     }//GEN-LAST:event_setSpeed

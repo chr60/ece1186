@@ -14,12 +14,18 @@ public class TrainHandler {
 	ArrayList<String> trainIDs;
 	TrackModel globalTrack;
 	Block yardBlockRed, yardBlockGreen;
+        
+        int clockSpeed; 
+        
+        public ArrayList<TrainController> openTrainControllers; 
 
 	public TrainHandler(TrackModel gTrack)
 	{
 		trains = new ArrayList<Train>();
 		trainIDs = new ArrayList<String>();
 		globalTrack = gTrack;
+                
+                openTrainControllers = new ArrayList<TrainController>(); 
 		getYard();
 	}
 
@@ -31,6 +37,16 @@ public class TrainHandler {
 	{
 		return trains;
 	}
+        
+        /**
+         * Sets the speed at which the system should run.
+         * 
+         * @param speed the speed in ms. 
+         */
+        public void setClockSpeed(int speed){
+        
+            this.clockSpeed = speed; 
+        }
 
 	//Communcation to and from CTC
 	//this method will generate a new train by passing a trainID of -1
@@ -47,17 +63,25 @@ public class TrainHandler {
 			currT.setSpeed(Speed);
 			currT.setAuthority(goToBlock);
 			currT.setCurrBlock(startBlock);
+                        trains.add(currT);
 			// open a train controller
 			TrainController tc = new TrainController(currT, "Automatic", "Normal"); 
-                        tc.setTrainHandler(this);
+                              
+                        if (this.clockSpeed == 100){ tc.playFast(); }
+                        else if(this.clockSpeed == 1000){ tc.playNormal();}
+                        
+                        this.openTrainControllers.add(tc);
+                        tc.setTrainHandler(this); 
+                        
+                        for (TrainController trainCont : this.openTrainControllers){
+                            Integer trainNum = trainCont.getTrain().getID();  
+                            trainCont.setTrainListComboBox();
+                            trainCont.setSelectedItem(trainNum);
+                        }
+                        
 			tc.setVisible(true);
 			tc.setDefaultCloseOperation(2);
-                        
-                        trains.add(currT);
-                        tc.setTrainListComboBox(); // updat combo box in tc
-                        
-                        tc.setSelectedItem(trainIDAssign-1);
-                        
+                        //tc.setSelectedItem(currT.getID());
 		}else{
 			currT = findTrain(trainID);
                         trains.add(currT);
@@ -68,6 +92,12 @@ public class TrainHandler {
                 
 		return trainID;
 	}
+        
+        
+        public ArrayList<TrainController> getOpenTrainControllers(){
+            
+            return this.openTrainControllers;
+        }
 
 	//method to return list of all train IDS
 	//return as strings (ArrayList)
@@ -106,6 +136,7 @@ public class TrainHandler {
 				 yardBlockRed.setTrainId(ID);
 
 				 yardBlockRed.setOccupied(true);
+                                 
 			 }
 		}
 		}

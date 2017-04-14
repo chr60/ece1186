@@ -44,7 +44,8 @@ public class Train implements Serializable {
 	TrackModel globalTrack;
         Block prevBlock;
 
-
+        
+        
 	/**
      * Constructor to create a new Train object based on Assigned ID
      * @param a an integer argument to assign to Trains new ID.
@@ -444,6 +445,17 @@ public class Train implements Serializable {
 	public boolean isBrakeFailure(){
 		return brakeFailure;
 	}
+        
+        /**
+         * Puts a message on the current block signaling that the train needs to be repaired.
+         * 
+         * @param needsMaint 
+         */
+        public void requestFix(boolean needsMaint){
+            
+            // put on the current block we are broken..
+            this.getCurrBlock().setBroken(true);
+        }
 
 	/**
      * Accessor to get the current temperature onboard the train
