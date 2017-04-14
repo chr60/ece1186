@@ -148,4 +148,17 @@ public class WaysideRedTest{
     assertFalse(this.track.viewCrossingMap().get(crossingBlock).viewCrossingState());
     assertFalse(redWS.getCrossing(crossingBlock));
   }
+
+  @Test
+  /**
+   * Test for making sure a switch is not occupied before manually switching
+   */
+  @DisplayName("Make sure switch is not occupied before switching it")
+  void occupiedSwitchTest(){
+    Block switchBlock = this.track.getBlock("Red", "F", 16);
+    assertTrue(switchBlock.setSwitchState(-1));
+    switchBlock.setOccupied(true);
+    this.redWS.manualSwitch(switchBlock);
+    assertTrue(switchBlock.setSwitchState(-1));
+  }
 }

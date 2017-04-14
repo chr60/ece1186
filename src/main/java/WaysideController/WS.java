@@ -106,7 +106,7 @@ public class WS {
 	 * @return true if switch successfully switched, false if !b.hasSwitch()
 	 */
 	public boolean manualSwitch(Block b){
-		if(b.hasSwitch()){
+		if(b.hasSwitch() && !b.getOccupied()){
 			if(b.setSwitchState(-1)==true)
 				b.setSwitchState(0);
 			else if(b.setSwitchState(-1)==false)
@@ -139,8 +139,8 @@ public class WS {
 	public ArrayList<Block> checkForBroken(){
 		ArrayList<Block> brokenBlocks = track.getBrokenBlocks(this.line);
 		if(brokenBlocks.size()>0){
-			//alert CTC
 			for(Block b: brokenBlocks){
+        b.setOccupied(true);  //Set occupied so it is 'unavailable'
 				if(this.waysideGui!=null)
 					this.waysideGui.printNotification("Broken Block detected - Block: " + b.blockNum());
 			}
@@ -159,6 +159,14 @@ public class WS {
 		return liveBlock;
 	}
 
+  /**
+   * Manipulates track when CTC sends Maintenance.
+   * @param Block b - block to be fixed.
+   */
+  public void transferMaintenance(Block b){
+    b.setBroken(false);
+    b.setOccupied(false);
+  }
 
   /**
   * Runs code of PLC file that is loaded

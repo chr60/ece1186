@@ -78,4 +78,17 @@ public class PLCRedTest{
     assertFalse(this.track.getBlock("Red", "I", 47).getAssociatedCrossing().viewCrossingState());
   }
 
+  @Test
+  /**
+  * Test PLC for not changing switch while block is occupied
+  */
+  @DisplayName("C9 occupied, attempt to change switch block")
+  void testOccSwitch() throws IOException, ScriptException{
+    Block switchBlock = this.track.getBlock("Red", "C", 9);
+    Block yardBlock = this.track.getBlock("Red", "U", 77);
+    switchBlock.setOccupied(true);
+    this.plc.runSwitchPLC();
+    assertTrue(switchBlock.setSwitchState(-1));
+  }
+
 }

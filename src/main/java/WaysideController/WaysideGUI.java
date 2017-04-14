@@ -165,7 +165,7 @@ public class WaysideGUI {
       }
     });
 
-    btnSwitch.setBounds(227, 93, 89, 23);
+    btnSwitch.setBounds(270, 93, 89, 23);
     frame.getContentPane().add(btnSwitch);
 
     this.occupiedLabel = new JLabel("Occupied: ");

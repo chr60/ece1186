@@ -44,8 +44,12 @@ public class PLC {
   }
 
   public void runSwitchPLC() throws ScriptException{
+    //FOR VITAL TMR CALCULATION
     ScriptEngineManager manager = new ScriptEngineManager();
-    ScriptEngine logicengine = manager.getEngineByName("js");
+    ScriptEngine logicengine1 = manager.getEngineByName("js");
+    ScriptEngine logicengine2 = manager.getEngineByName("js");
+    ScriptEngine logicengine3 = manager.getEngineByName("js");
+
     StringBuilder sb;
     int loc, loc2;
 
@@ -75,13 +79,21 @@ public class PLC {
           sb.replace(loc, loc2, this.track.sectionOccupancy(line, section).toString());
         }
 
-        //evaluate logic and change switch accordingly
-        Object result = logicengine.eval(sb.toString());
+        //evaluate TMR logic and change switch accordingly
+        Object result1 = logicengine1.eval(sb.toString());
+        Object result2 = logicengine2.eval(sb.toString());
+        Object result3 = logicengine3.eval(sb.toString());
+
         if(this.track.viewRootMap().get(s).getOccupied()==false){	//cannot changea switch if switch block is occupied
-          if(Boolean.TRUE.equals(result))
-          this.track.viewRootMap().get(s).setSwitchState(1);
-          else
-          this.track.viewRootMap().get(s).setSwitchState(0);
+          //'VOTING'
+          if ((Boolean.TRUE.equals(result1) && Boolean.TRUE.equals(result2)) ||
+              (Boolean.TRUE.equals(result1) && Boolean.TRUE.equals(result3)) ||
+              (Boolean.TRUE.equals(result2) && Boolean.TRUE.equals(result3)) )
+                this.track.viewRootMap().get(s).setSwitchState(1);
+          else if((Boolean.FALSE.equals(result1) && Boolean.FALSE.equals(result2)) ||
+                  (Boolean.FALSE.equals(result1) && Boolean.FALSE.equals(result3)) ||
+                  (Boolean.FALSE.equals(result2) && Boolean.FALSE.equals(result3)) )
+                this.track.viewRootMap().get(s).setSwitchState(0);
         }
       }
     }
@@ -89,7 +101,9 @@ public class PLC {
 
   public void runCrossingPLC() throws ScriptException{
     ScriptEngineManager manager = new ScriptEngineManager();
-    ScriptEngine logicengine = manager.getEngineByName("js");
+    ScriptEngine logicengine1 = manager.getEngineByName("js");
+    ScriptEngine logicengine2 = manager.getEngineByName("js");
+    ScriptEngine logicengine3 = manager.getEngineByName("js");
     StringBuilder sb;
     int loc, loc2;
 
@@ -118,12 +132,21 @@ public class PLC {
         String section = toReplace[1];
         sb.replace(loc, loc2, this.track.sectionOccupancy(line, section).toString());
       }
-      Object result = logicengine.eval(sb.toString());
-      if(Boolean.TRUE.equals(result))
-      this.track.viewCrossingMap().get(b).setCrossingState(true);
-      else
-      this.track.viewCrossingMap().get(b).setCrossingState(false);
-    }
+
+      Object result1 = logicengine1.eval(sb.toString());
+      Object result2 = logicengine2.eval(sb.toString());
+      Object result3 = logicengine3.eval(sb.toString());
+      
+        //'VOTING'
+        if ((Boolean.TRUE.equals(result1) && Boolean.TRUE.equals(result2)) ||
+            (Boolean.TRUE.equals(result1) && Boolean.TRUE.equals(result3)) ||
+            (Boolean.TRUE.equals(result2) && Boolean.TRUE.equals(result3)) )
+            this.track.viewCrossingMap().get(b).setCrossingState(true);
+        else if((Boolean.FALSE.equals(result1) && Boolean.FALSE.equals(result2)) ||
+                (Boolean.FALSE.equals(result1) && Boolean.FALSE.equals(result3)) ||
+                (Boolean.FALSE.equals(result2) && Boolean.FALSE.equals(result3)) )
+            this.track.viewCrossingMap().get(b).setCrossingState(false);
+      }
   }//runCrossingPLC
 
   public void lightsPLC(){
