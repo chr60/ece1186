@@ -308,8 +308,30 @@ public class RedlineTest{
     assertFalse(rootBlock.setSwitchState(-1));
     assertTrue(rootBlock.nextBlockForward().equals(rootBlockForward));
     assertTrue(rootBlock.nextBlockBackward().equals(altLeafBlock));
+
+    assertTrue(altLeafBlock.nextBlockBackward().blockNum().equals(14));
+    //assertTrue(defaultLeafBlock.nextBlockForward().blockNum().equals(1));
   }
 
+  @Test
+  /**
+  * Test the leaf blocks associated with switch 6.
+  */
+  @DisplayName("Test switch 6 leafs")
+  void switch6LeafTest() {
+    Block defaultLeafBlock = this.track.getBlock("Red", "A", 1);
+    Block altLeafBlock = this.track.getBlock("Red", "E", 15);
+    Block rootBlock = this.track.getBlock("Red", "F", 16);
+
+    assertTrue(rootBlock.setSwitchState(-1));
+    assertTrue(defaultLeafBlock.nextBlockForward().equals(rootBlock));
+    //assertTrue(altLeafBlock.nextBlockForward().equals(altLeafBlock));
+
+    rootBlock.setSwitchState(0);
+    assertFalse(rootBlock.setSwitchState(-1));
+    //assertTrue(defaultLeafBlock.nextBlockForward().equals(defaultLeafBlock));
+    assertTrue(altLeafBlock.nextBlockForward().equals(rootBlock));
+  }
 
   @Test
   /**
@@ -326,10 +348,13 @@ public class RedlineTest{
     assertTrue(rootBlock.nextBlockForward().equals(rootBlockForward));
     assertTrue(rootBlock.nextBlockBackward().equals(defaultLeafBlock));
 
+    assertTrue(defaultLeafBlock.nextBlockBackward().blockNum().equals(31));
+
     rootBlock.setSwitchState(0);
+    assertTrue(defaultLeafBlock.nextBlockBackward().blockNum().equals(31));
     assertFalse(rootBlock.setSwitchState(-1));
-    assertTrue(rootBlock.nextBlockForward().equals(altLeafBlock));
-    assertTrue(rootBlock.nextBlockBackward().equals(defaultLeafBlock));
+    assertTrue(rootBlock.nextBlockForward().equals(rootBlockForward));
+    assertTrue(rootBlock.nextBlockBackward().equals(altLeafBlock));
   }
 
   @Test
@@ -349,8 +374,8 @@ public class RedlineTest{
 
     rootBlock.setSwitchState(0);
     assertFalse(rootBlock.setSwitchState(-1));
-    assertTrue(rootBlock.nextBlockForward().equals(altLeafBlock));
-    assertTrue(rootBlock.nextBlockBackward().equals(defaultLeafBlock));
+    assertTrue(rootBlock.nextBlockForward().equals(rootBlockForward));
+    assertTrue(rootBlock.nextBlockBackward().equals(altLeafBlock));
   }
 
   @Test
@@ -455,23 +480,4 @@ public class RedlineTest{
     assertEquals(leafBlock.nextBlockForward().blockNum(), nextBlockForward.blockNum());
     assertEquals(leafBlock.nextBlockBackward().blockNum(), leafBlock.blockNum());
   }
-
-  //@Test
-  /**
-  * Test leaf switch of switch 8.
-  */
-  @DisplayName("Test Switch 8")
-  void switch8LeafTest() {
-    Block rootBlock = this.track.getBlock("Red","H",33);
-    Block lowLeafBlock = this.track.getBlock("Red", "H", 32);
-    Block highLeafBlock = this.track.getBlock("Red", "R", 72);
-    Block nextBlockForward = this.track.getBlock("Red", "S", 73);
-    
-    assertEquals(highLeafBlock.nextBlockForward().blockNum(), nextBlockForward.blockNum());
-    assertEquals(lowLeafBlock.nextBlockForward().blockNum(), rootBlock.blockNum());
-
-    rootBlock.setSwitchState(0);
-    assertEquals(lowLeafBlock.blockNum(), lowLeafBlock.nextBlockForward().blockNum());
-  }
-
 }

@@ -444,7 +444,7 @@ public class TrackModel implements Serializable {
           this.leafMap.get(s).get(0).setRootBlock(this.rootMap.get(s), new Integer(1));
           this.leafMap.get(s).get(1).setRootBlock(this.rootMap.get(s), new Integer(1));          
         } else if (this.rootMap.get(s).blockNum() < this.leafMap.get(s).get(1).blockNum()) {
-          this.rootMap.get(s).setNextBlockForward(this.rootMap.get(s).nextBlockForward, this.leafMap.get(s).get(1));
+          this.rootMap.get(s).setNextBlockBackward(this.leafMap.get(s).get(0), this.leafMap.get(s).get(1));
           this.leafMap.get(s).get(0).setRootBlock(this.rootMap.get(s), new Integer(2));
           this.leafMap.get(s).get(1).setRootBlock(this.rootMap.get(s), new Integer(2));            
         } else if (this.rootMap.get(s).blockNum() > this.leafMap.get(s).get(1).blockNum()) {
@@ -526,6 +526,9 @@ public class TrackModel implements Serializable {
     this.linkBlocks();
     //this.examineNext();
     this.handleSwitches();
+    if(this.trackList.get("Red") != null){
+      this.trackList.get("Red").get("N").get(66).setNextBlockForward(this.trackList.get("Red").get("N").get(65));
+    }
     this.buildStationHostMap();
     this.buildBlockStationMap();
     this.buildLightsMap();

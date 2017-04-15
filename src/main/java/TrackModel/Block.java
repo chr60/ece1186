@@ -368,7 +368,7 @@ public class Block implements Comparable<Block>, java.io.Serializable {
       }
     } else {
       if (this.rootBlock != null && (this.switchCase.equals(3))) {
-        if (this.rootBlock.nextBlockForward().blockNum == this.blockNum) {
+        if (this.rootBlock.nextBlockForward().equals(this)) {
           return this;
         } else {
           return this.rootBlock;
@@ -397,10 +397,20 @@ public class Block implements Comparable<Block>, java.io.Serializable {
       }
     }
     if (this.rootBlock != null) {
-      if (this.rootBlock.nextBlockForward().equals(this)) {
-        return this.rootBlock;
+      if (this.switchCase.equals(1)){
+        if (this.rootBlock.nextBlockForward().equals(this)) {
+          return this.rootBlock;
+        } else {
+          return this;
+        }
+      } else if (this.switchCase.equals(2)){
+        return this.nextBlockBackward;
       } else {
-        return this;
+        if(this.nextBlockBackward.blockNum < this.blockNum) {
+          return this.nextBlockBackward;
+        } else {
+          return this.nextBlockForward;
+        }
       }
     } else {
       return this.nextBlockBackward;
