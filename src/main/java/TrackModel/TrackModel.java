@@ -359,18 +359,21 @@ public class TrackModel implements Serializable {
 
         Collections.sort(storeList);
         Block storeBlock = null;
-        for (int i = 0; i < storeList.size(); i ++) {
-          storeList.get(i).setNextBlockForward();
+        
+        if(lineKey.equals("Red")) {
+          for (int i = 0; i < storeList.size(); i ++) {
+            storeList.get(i).setNextBlockForward();
 
-          if(i != storeList.size()-1) {
-            storeList.get(i).setNextBlockForward(storeList.get(i+1));
-          }
-          storeList.get(i).setNextBlockBackward();
-          System.out.println("On block: " + (i+1)  + " -> " + storeList.get(i).nextBlockForward().blockNum());
-          if(i != 0) { 
-            storeList.get(i).setNextBlockBackward(storeList.get(i-1));
-          } else {
+            if(i != storeList.size()-1) {
+              storeList.get(i).setNextBlockForward(storeList.get(i+1));
+            }
             storeList.get(i).setNextBlockBackward();
+            //System.out.println("On block: " + (i+1)  + " -> " + storeList.get(i).nextBlockForward().blockNum());
+            if(i != 0) { 
+              storeList.get(i).setNextBlockBackward(storeList.get(i-1));
+            } else {
+              storeList.get(i).setNextBlockBackward();
+            }
           }
         }
       }
@@ -436,18 +439,18 @@ public class TrackModel implements Serializable {
         //case 1: root.blockNum < leaf0.blockNum < leaf1.blockNum: uses switchNextBlockForward
         //case 2: leaf0.blockNum < root.blockNum < leaf1.blockNum: uses switchNextBlockFoward
         //case 3: leaf0.blockNum < leaf1.blockNum < root.blockNum: uses switchNextBlockBackward
-        if(this.rootMap.get(s).blockNum() < this.leafMap.get(s).get(0).blockNum()) {
+        if (this.rootMap.get(s).blockNum() < this.leafMap.get(s).get(0).blockNum()) {
           this.rootMap.get(s).setNextBlockForward(this.leafMap.get(s).get(0), this.leafMap.get(s).get(1));
-          this.leafMap.get(s).get(0).setRootBlock(this.rootMap.get(s));
-          this.leafMap.get(s).get(1).setRootBlock(this.rootMap.get(s));          
-        } else if(this.rootMap.get(s).blockNum() < this.leafMap.get(s).get(1).blockNum()) {
+          this.leafMap.get(s).get(0).setRootBlock(this.rootMap.get(s), new Integer(1));
+          this.leafMap.get(s).get(1).setRootBlock(this.rootMap.get(s), new Integer(1));          
+        } else if (this.rootMap.get(s).blockNum() < this.leafMap.get(s).get(1).blockNum()) {
           this.rootMap.get(s).setNextBlockForward(this.rootMap.get(s).nextBlockForward, this.leafMap.get(s).get(1));
-          this.leafMap.get(s).get(0).setRootBlock(this.rootMap.get(s));
-          this.leafMap.get(s).get(1).setRootBlock(this.rootMap.get(s));            
+          this.leafMap.get(s).get(0).setRootBlock(this.rootMap.get(s), new Integer(2));
+          this.leafMap.get(s).get(1).setRootBlock(this.rootMap.get(s), new Integer(2));            
         } else if (this.rootMap.get(s).blockNum() > this.leafMap.get(s).get(1).blockNum()) {
           this.rootMap.get(s).setNextBlockBackward(this.leafMap.get(s).get(0), this.leafMap.get(s).get(1));
-          this.leafMap.get(s).get(0).setRootBlock(this.rootMap.get(s));
-          this.leafMap.get(s).get(1).setRootBlock(this.rootMap.get(s));
+          this.leafMap.get(s).get(0).setRootBlock(this.rootMap.get(s), new Integer(3));
+          this.leafMap.get(s).get(1).setRootBlock(this.rootMap.get(s), new Integer(3));
         }
       }
     }
@@ -521,7 +524,7 @@ public class TrackModel implements Serializable {
         }
     }
     this.linkBlocks();
-    this.examineNext();
+    //this.examineNext();
     this.handleSwitches();
     this.buildStationHostMap();
     this.buildBlockStationMap();

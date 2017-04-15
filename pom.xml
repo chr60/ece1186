@@ -4,7 +4,7 @@
   <groupId>com.mycompany.app</groupId>
   <artifactId>train-station</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <name>train-station</name>
   <url>http://maven.apache.org</url>
   <dependencies>

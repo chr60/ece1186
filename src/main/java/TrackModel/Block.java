@@ -39,6 +39,7 @@ public class Block implements Comparable<Block>, java.io.Serializable {
   Double suggestedSpeed;
   Block authority;
   Integer trainId;
+  Integer switchCase;
 
   /**
   * Constructor for the block class.
@@ -345,8 +346,9 @@ public class Block implements Comparable<Block>, java.io.Serializable {
   * Sets the root block in the "reverse" direction to deal with switch conditions.
   * @param rootBlock the root block backwards of a switch block
   */
-  public void setRootBlock(Block rootBlock) {
+  public void setRootBlock(Block rootBlock, Integer switchCase) {
     this.rootBlock = rootBlock;
+    this.switchCase = switchCase;
   }
 
   /** 
@@ -365,11 +367,17 @@ public class Block implements Comparable<Block>, java.io.Serializable {
         }
       }
     } else {
-      if (this.rootBlock != null) {
-        if (this.rootBlock.nextBlockBackward != this) {
+      if (this.rootBlock != null && (this.switchCase.equals(3))) {
+        if (this.rootBlock.nextBlockForward().blockNum == this.blockNum) {
           return this;
         } else {
           return this.rootBlock;
+        }
+      } else if (this.rootBlock != null && (this.switchCase.equals(2))) {
+        if (this.rootBlock.nextBlockBackward().blockNum() == this.blockNum()) {
+          return this.rootBlock;
+        } else {
+          return this;
         }
       }
       return this.nextBlockForward;

@@ -44,6 +44,7 @@ public class TrackGUI {
   private JLabel lblOccupied;
   private JLabel lblCrossingsActive;
   private JLabel lblIsUnderground;
+  private JLabel lblNextBlock;
   private JToggleButton toggleSignals;
   private JLabel lblStation;
   private JTextField txtname;
@@ -56,6 +57,8 @@ public class TrackGUI {
   private JLabel lblToggleUpdate;
   private JToggleButton togglePowerFailure;
   private JToggleButton toggleIsUnderground;
+  private JToggleButton toggleNextBlockBackward;
+  private JToggleButton toggleNextBlockForward;
   private JToggleButton toggleUpdate;
   private JLabel imageLabel;
   private final Double METERSMULT = 3.28084;
@@ -251,10 +254,16 @@ public class TrackGUI {
     lblCrossingsActive.setBounds(550, 259, 56, 23);
     frame.getContentPane().add(lblCrossingsActive);
 
+    lblNextBlock = new JLabel("Next Block: ");
+    lblNextBlock.setHorizontalAlignment(SwingConstants.RIGHT);
+    lblNextBlock.setFont(new Font("Tahoma", Font.PLAIN, 14));
+    lblNextBlock.setBounds(507, 332, 99, 23);
+    frame.getContentPane().add(lblNextBlock);
+
     lblIsUnderground = new JLabel("Underground");
     lblIsUnderground.setHorizontalAlignment(SwingConstants.RIGHT);
     lblIsUnderground.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblIsUnderground.setBounds(507, 342, 99, 23);
+    lblIsUnderground.setBounds(507, 352, 99, 23);
     frame.getContentPane().add(lblIsUnderground);
 
     toggleSignals = new JToggleButton("N/A");
@@ -262,9 +271,19 @@ public class TrackGUI {
     toggleSignals.setBounds(632, 261, 90, 23);
     frame.getContentPane().add(toggleSignals);
 
+    toggleNextBlockBackward = new JToggleButton("NBB");
+    toggleNextBlockBackward.setFont(new Font("Tahoma", Font.PLAIN, 11));
+    toggleNextBlockBackward.setBounds(731, 330, 45, 23);
+    frame.getContentPane().add(toggleNextBlockBackward);
+    
+    toggleNextBlockForward = new JToggleButton("NBF");
+    toggleNextBlockForward.setFont(new Font("Tahoma", Font.PLAIN, 11));
+    toggleNextBlockForward.setBounds(632, 330, 45, 23);
+    frame.getContentPane().add(toggleNextBlockForward);
+
     toggleIsUnderground = new JToggleButton("N");
     toggleIsUnderground.setFont(new Font("Tahoma", Font.PLAIN, 11));
-    toggleIsUnderground.setBounds(632,341,45,23);
+    toggleIsUnderground.setBounds(632,351,45,23);
     frame.getContentPane().add(toggleIsUnderground);
 
     lblStation = new JLabel("Station");
@@ -430,125 +449,127 @@ public class TrackGUI {
         txtname.setText(track.trackList.get(line).get(section).get(Integer.valueOf(block)).getStationName());
 
         //Probably a better way to template this.
-        Boolean isOccupied = track.trackList.get(line).get(section).get(Integer.valueOf(block)).getOccupied();
-        Boolean isBroken = track.trackList.get(line).get(section).get(Integer.valueOf(block)).getBroken();
-        Boolean isCircuitFailure = track.trackList.get(line).get(section).get(Integer.valueOf(block)).getCircuitFailure();
-        Boolean isPowerFailure = track.trackList.get(line).get(section).get(Integer.valueOf(block)).getPowerFailure();
-        Boolean isUnderground = track.trackList.get(line).get(section).get(Integer.valueOf(block)).getUnderground();
+        Boolean isOccupied = thisBlock.getOccupied();
+        Boolean isBroken = thisBlock.getBroken();
+        Boolean isCircuitFailure = thisBlock.getCircuitFailure();
+        Boolean isPowerFailure = thisBlock.getPowerFailure();
+        Boolean isUnderground = thisBlock.getUnderground();
         //Boolean trackHeaters = track.trackList.get(line).get(section).get(Integer.valueOf(block)).getTrackHeaters();
+
         Boolean trackHeaters = false;
         Boolean hasCrossing = track.crossingMap.keySet().contains(thisBlock);
         Boolean hasStation = track.blockStationMap.keySet().contains(thisBlock);
         Boolean hasLights = track.lightsMap.keySet().contains(thisBlock);
         Boolean hasBeacon = track.blockBeaconMap.keySet().contains(thisBlock);
+        String strNextBlockForward = String.valueOf(thisBlock.nextBlockForward().blockNum());
+        String strNextBlockBackward = String.valueOf(thisBlock.nextBlockBackward().blockNum());
 
         toggleOccupied.setSelected(isOccupied);
         toggleBroken.setSelected(isBroken);
         toggleCircuitFailure.setSelected(isCircuitFailure);
         togglePowerFailure.setSelected(isPowerFailure);
 
-        if(hasBeacon){
+        toggleNextBlockBackward.setText(strNextBlockBackward);
+        toggleNextBlockForward.setText(strNextBlockForward);
+
+        if (hasBeacon) {
             textFieldBeaconMessage.setText(track.blockBeaconMap.get(thisBlock).getBeaconMessage());
+        } else {
+            textFieldBeaconMessage.setText("");
         }
 
-        if (isOccupied){
+        if (isOccupied) {
           toggleOccupied.setText("Y");
           toggleOccupied.setSelected(true);
-        }
-        else{
+        } else {
           toggleOccupied.setText("N");
           toggleOccupied.setSelected(false);
         }
 
-        if (isBroken){
+        if (isBroken) {
           toggleBroken.setText("Y");
           toggleBroken.setSelected(true);
-        }
-        else{
+        } else{
           toggleBroken.setText("N");
           toggleBroken.setSelected(false);
         }
-        if (isCircuitFailure){
+
+        if (isCircuitFailure) {
           toggleCircuitFailure.setText("Y");
           toggleCircuitFailure.setSelected(true);
-        }
-        else{
+        } else {
           toggleCircuitFailure.setText("N");
           toggleCircuitFailure.setSelected(false);
         }
 
-        if (isPowerFailure){
+        if (isPowerFailure) {
           togglePowerFailure.setText("Y");
           togglePowerFailure.setSelected(true);
-        }
-        else{
+        } else {
           togglePowerFailure.setText("N");
           togglePowerFailure.setSelected(false);
         }
 
-        if(isUnderground){
+        if (isUnderground) {
           toggleIsUnderground.setText("Y");
           toggleIsUnderground.setSelected(true);
-        }
-        else{
+        } else {
           toggleIsUnderground.setText("N");
           toggleIsUnderground.setSelected(false);
         }
 
-        if(trackHeaters){
+        if (trackHeaters) {
           toggleHeatersOn.setText("Y");
           toggleHeatersOn.setSelected(true);
-        }
-        else{
+        } else {
           toggleHeatersOn.setText("N");
           toggleHeatersOn.setSelected(false);
         }
 
-        if(hasCrossing){
-          if(track.crossingMap.get(thisBlock).crossingState){
+        if (hasCrossing) {
+          if (track.crossingMap.get(thisBlock).crossingState) {
             toggleCrossings.setText("Down");
             toggleCrossings.setSelected(true);
           }
-          else{
+          else {
             toggleCrossings.setText("Up");
             toggleCrossings.setSelected(false);
           }
-        }else{
+        } else {
             toggleCrossings.setText("N/A");
             toggleCrossings.setSelected(false);
         }
 
-        if(hasStation){
-          if(track.blockStationMap.get(thisBlock).trackHeatersOn){
+        if (hasStation) {
+          if (track.blockStationMap.get(thisBlock).trackHeatersOn) {
             toggleHeatersOn.setText("On");
             toggleHeatersOn.setSelected(true);
-            }else{
+            } else {
             toggleHeatersOn.setText("Off");
             toggleHeatersOn.setSelected(false);
           }
-        if(track.blockStationMap.get(thisBlock).getForwardLights().viewLightsState()){
+        if(track.blockStationMap.get(thisBlock).getForwardLights().viewLightsState()) {
             toggleStationLightsForward.setText("Green");
-        }else{
+        } else {
             toggleStationLightsForward.setText("Red");
         }
-        if(track.blockStationMap.get(thisBlock).getBackwardLights().viewLightsState()){
+        if (track.blockStationMap.get(thisBlock).getBackwardLights().viewLightsState()) {
             toggleStationLightsBack.setText("Green");
-        }else{
+        } else{
             toggleStationLightsBack.setText("Red");
         }
           
 
-        }else{
+        } else{
             toggleHeatersOn.setText("N/A");
             toggleHeatersOn.setSelected(false);
         }
 
-        if(hasLights){
-          if(track.lightsMap.get(thisBlock).viewLightsState()){
+        if (hasLights) {
+          if (track.lightsMap.get(thisBlock).viewLightsState()) {
             toggleSignals.setText("Green");
             toggleSignals.setSelected(false);
-          }
-          else{
+          } else {
             toggleSignals.setText("Red");
             toggleSignals.setSelected(false);
           }
