@@ -374,7 +374,8 @@ public class TrackPanel extends JPanel{
 			Integer switchLeaf1 = switchOption1.blockNum();
 			Integer switchLeaf2 = switchOption2.blockNum();
 			//get switch status if switch exists on root block
-			Boolean switchStatusWS = updatedBlock.setSwitchState(-1);
+			//System.out.println(updatedBlock.setSwitchState(-1).equals(null));
+			Boolean switchStatusWS = updatedBlock.viewSwitchState();
 			//report switch swtichStatus
 			if(switchStatusWS == true){
 				if(switchLeaf1<switchLeaf2){

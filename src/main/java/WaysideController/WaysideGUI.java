@@ -2,6 +2,7 @@ package WaysideController;
 
 import CTC.TrackPanel;
 import TrackModel.Block;
+import TrackModel.Switch;
 import TrackModel.TrackModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

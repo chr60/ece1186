@@ -1,4 +1,4 @@
-package TrackModel;
+package TrackModelTest;
 
 import TrackModel.TrackModel;
 import TrackModel.Block;
@@ -48,7 +48,7 @@ public class GreenlineTest{
   void testSwitchRoot(){
     TreeSet<Integer> treeSetTest = new TreeSet<Integer>();
     for(String blk : this.track.viewRootMap().keySet()){
-      treeSetTest.add(track.viewRootMap().get(blk).blockNum);
+      treeSetTest.add(track.viewRootMap().get(blk).blockNum());
     }
     assertEquals(treeSetTest,testBlocksRoot);
   }
@@ -61,7 +61,7 @@ public class GreenlineTest{
   void testSwitchleaf(){
     TreeSet<Integer> treeSetTest = new TreeSet<Integer>();
     for(String blk : track.viewRootMap().keySet()){
-      assertTrue(this.track.viewLeafMap().get(blk).get(0).blockNum.compareTo(this.track.viewLeafMap().get(blk).get(1).blockNum)<0);
+      assertTrue(this.track.viewLeafMap().get(blk).get(0).blockNum().compareTo(this.track.viewLeafMap().get(blk).get(1).blockNum())<0);
     }
   }
 
@@ -73,7 +73,7 @@ public class GreenlineTest{
   void testBlockStationMap(){
     TreeSet<Integer> blockNums = new TreeSet<Integer>();
     for (Block b : track.viewBlockStationMap().keySet()){
-      blockNums.add(b.blockNum);
+      blockNums.add(b.blockNum());
     }
     assertEquals(testExpectedStationBlockNums, blockNums);
   }
@@ -87,8 +87,8 @@ public class GreenlineTest{
     for(String l : this.track.trackList.keySet()) {
       for(String s : this.track.trackList.get(l).keySet()) {
         for(Integer b : this.track.trackList.get(l).get(s).keySet()) {
-          assertNotEquals(this.track.trackList.get(l).get(s).get(b).nextBlockForward().blockNum,null);
-          assertNotEquals(this.track.trackList.get(l).get(s).get(b).nextBlockBackward().blockNum,null);
+          assertNotEquals(this.track.trackList.get(l).get(s).get(b).nextBlockForward().blockNum(),null);
+          assertNotEquals(this.track.trackList.get(l).get(s).get(b).nextBlockBackward().blockNum(),null);
         }
       }
     }

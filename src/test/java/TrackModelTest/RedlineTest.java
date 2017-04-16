@@ -1,7 +1,8 @@
-package TrackModel;
+package TrackModelTest;
 
-import TrackModel.TrackModel;
 import TrackModel.Block;
+import TrackModel.Switch;
+import TrackModel.TrackModel;
 import java.util.TreeSet;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -12,16 +13,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class RedlineTest{
+public class RedlineTest {
+  
   private static String line = "Red";
   private static String[] stationNames={"YARD","SHADYSIDE","HERRON AVE","SWISSVILLE","PENN STATION",
                 "STEEL PLAZA","FIRST AVE","STATION SQUARE","SOUTH HILLS JUNCTION","YARD"};
   private static Integer[] rootBlocksNum={16,27,33,38,44,52,9};
   private static Integer[] expectedStationBlockNums={7,16,21,25,35,45,48,60,77};
   //Move to a Set based interface for easy comparables
-  private static TreeSet<Integer> testBlocksRoot = new TreeSet<>(Arrays.asList(rootBlocksNum));
-  private static TreeSet<String> testNamesSet = new TreeSet<>(Arrays.asList(stationNames));
-  private static TreeSet<Integer> testExpectedStationBlockNums = new TreeSet<>(Arrays.asList(expectedStationBlockNums));
+  private static TreeSet<Integer> testBlocksRoot = new TreeSet<Integer>(Arrays.asList(rootBlocksNum));
+  private static TreeSet<String> testNamesSet = new TreeSet<String>(Arrays.asList(stationNames));
+  private static TreeSet<Integer> testExpectedStationBlockNums = new TreeSet<Integer>(Arrays.asList(expectedStationBlockNums));
   private static TrackModel track;
   private static String[] fNames = {"src/test/resources/redline.csv"};
   private Boolean verbose = false;
@@ -128,8 +130,8 @@ public class RedlineTest{
     ArrayList<ArrayList<Block>> paths = track.blockToBlock(startBlock, endBlock);
     ArrayList<Block> testArr = new ArrayList<Block>();
   }
-  @Test
 
+  //@Test
   /**
   * MBO pathing test 1.
   */
@@ -186,8 +188,8 @@ public class RedlineTest{
     for(String l : this.track.trackList.keySet()) {
       for(String s : this.track.trackList.get(l).keySet()) {
         for(Integer b : this.track.trackList.get(l).get(s).keySet()) {
-          assertNotEquals(this.track.trackList.get(l).get(s).get(b).nextBlockForward().blockNum,null);
-          assertNotEquals(this.track.trackList.get(l).get(s).get(b).nextBlockBackward().blockNum,null);
+          assertNotEquals(this.track.trackList.get(l).get(s).get(b).nextBlockForward().blockNum(),null);
+          assertNotEquals(this.track.trackList.get(l).get(s).get(b).nextBlockBackward().blockNum(),null);
         }
       }
     }
@@ -206,8 +208,8 @@ public class RedlineTest{
     for (String l : this.track.trackList.keySet()) {
       for (String s : this.track.trackList.get(l).keySet()) {
         for(Integer b : this.track.trackList.get(l).get(s).keySet()) {
-          assertNotEquals(this.track.trackList.get(l).get(s).get(b).nextBlockForward().blockNum,null);
-          assertNotEquals(this.track.trackList.get(l).get(s).get(b).nextBlockBackward().blockNum,null);
+          assertNotEquals(this.track.trackList.get(l).get(s).get(b).nextBlockForward().blockNum(),null);
+          assertNotEquals(this.track.trackList.get(l).get(s).get(b).nextBlockBackward().blockNum(),null);
         }
       }
     }
@@ -271,7 +273,7 @@ public class RedlineTest{
   @DisplayName("RedLine crossing test")
   void testCrossing(){
     ArrayList<Block> crossingBlocks = new ArrayList<Block>();
-    for(Block blk : this.track.crossingMap.keySet()){
+    for(Block blk : this.track.viewCrossingMap().keySet()){
       crossingBlocks.add(blk);
     }
     assertTrue(crossingBlocks.get(0).equals(this.track.getBlock("Red","I",new Integer(47))));
@@ -310,7 +312,8 @@ public class RedlineTest{
     assertTrue(rootBlock.nextBlockBackward().equals(altLeafBlock));
 
     assertTrue(altLeafBlock.nextBlockBackward().blockNum().equals(14));
-    //assertTrue(defaultLeafBlock.nextBlockForward().blockNum().equals(1));
+    //The condition below should be checked.
+    assertTrue(defaultLeafBlock.nextBlockForward().blockNum().equals(2));
   }
 
   @Test
@@ -322,14 +325,18 @@ public class RedlineTest{
     Block defaultLeafBlock = this.track.getBlock("Red", "A", 1);
     Block altLeafBlock = this.track.getBlock("Red", "E", 15);
     Block rootBlock = this.track.getBlock("Red", "F", 16);
+    Switch trackSwitch = this.track.viewSwitchMap().get(rootBlock.getSwitchBlock());
 
     assertTrue(rootBlock.setSwitchState(-1));
-    assertTrue(defaultLeafBlock.nextBlockForward().equals(rootBlock));
-    //assertTrue(altLeafBlock.nextBlockForward().equals(altLeafBlock));
+    assertTrue(trackSwitch.nextBlock(defaultLeafBlock).equals(rootBlock));
+    assertTrue(defaultLeafBlock.nextBlockBackward().equals(rootBlock));
+    assertTrue(altLeafBlock.nextBlockForward().equals(altLeafBlock));
+    assertTrue(altLeafBlock.nextBlockBackward().equals(this.track.getBlock("Red","E",14)));
 
     rootBlock.setSwitchState(0);
     assertFalse(rootBlock.setSwitchState(-1));
-    //assertTrue(defaultLeafBlock.nextBlockForward().equals(defaultLeafBlock));
+
+    assertTrue(defaultLeafBlock.nextBlockForward().equals(this.track.getBlock("Red", "A", 2)));
     assertTrue(altLeafBlock.nextBlockForward().equals(rootBlock));
   }
 
@@ -355,6 +362,7 @@ public class RedlineTest{
     assertFalse(rootBlock.setSwitchState(-1));
     assertTrue(rootBlock.nextBlockForward().equals(rootBlockForward));
     assertTrue(rootBlock.nextBlockBackward().equals(altLeafBlock));
+    assertTrue(altLeafBlock.nextBlockForward().blockNum().equals(73));
   }
 
   @Test
@@ -376,6 +384,7 @@ public class RedlineTest{
     assertFalse(rootBlock.setSwitchState(-1));
     assertTrue(rootBlock.nextBlockForward().equals(rootBlockForward));
     assertTrue(rootBlock.nextBlockBackward().equals(altLeafBlock));
+    assertTrue(altLeafBlock.nextBlockForward().blockNum().equals(68));
   }
 
   @Test
@@ -435,11 +444,33 @@ public class RedlineTest{
     assertTrue(rootBlock.setSwitchState(-1));
     assertTrue(rootBlock.nextBlockBackward().equals(rootBlockBackward));
     assertTrue(rootBlock.nextBlockForward().equals(defaultLeafBlock));
+    assertTrue(defaultLeafBlock.nextBlockBackward().equals(rootBlock));
+    assertTrue(defaultLeafBlock.nextBlockForward().equals(this.track.getBlock("Red", "J", 54)));
 
     rootBlock.setSwitchState(0);
     assertFalse(rootBlock.setSwitchState(-1));
     assertTrue(rootBlock.nextBlockBackward().equals(rootBlockBackward));
     assertTrue(rootBlock.nextBlockForward().equals(altLeafBlock));
+  }
+
+  @Test
+  /**
+  * Test the leaves of switch 7.
+  */
+  @DisplayName("Test Switch 11")
+  void switch11LeafTest() {
+    Block defaultLeafBlock = this.track.getBlock("Red", "J", 53);
+    Block altLeafBlock = this.track.getBlock("Red", "N", 66);
+    Block rootBlock = this.track.getBlock("Red", "J", 52);
+    Block rootBlockBackward = this.track.getBlock("Red", "J", 51);
+
+    assertTrue(rootBlock.setSwitchState(-1));
+    assertTrue(defaultLeafBlock.nextBlockForward().equals(this.track.getBlock("Red", "J", 54)));
+    assertTrue(altLeafBlock.nextBlockForward().equals(this.track.getBlock("Red", "N", 65)));
+    
+    rootBlock.setSwitchState(0);
+    assertTrue(defaultLeafBlock.nextBlockForward().equals(this.track.getBlock("Red", "J", 54)));
+
   }
 
   @Test
@@ -472,8 +503,9 @@ public class RedlineTest{
     Block rootBlock = this.track.getBlock("Red", "H", 27);
     Block leafBlock = this.track.getBlock("Red", "H", 28);
     Block nextBlockForward = this.track.getBlock("Red", "H", 29);
+    Switch trackSwitch = this.track.viewSwitchMap().get(rootBlock.getSwitchBlock());
 
-    assertEquals(leafBlock.nextBlockForward().blockNum, nextBlockForward.blockNum);
+    assertEquals(leafBlock.nextBlockForward().blockNum(), nextBlockForward.blockNum());
     assertEquals(leafBlock.nextBlockBackward(), rootBlock);
 
     rootBlock.setSwitchState(0);

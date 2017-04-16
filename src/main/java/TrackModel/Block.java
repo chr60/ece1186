@@ -28,9 +28,9 @@ public class Block implements Comparable<Block>, java.io.Serializable {
   String blockLine;
   String blockSection;
   Block nextBlockForward;
-  Block switchNextBlockForward;
   Block nextBlockBackward;
-  Block switchNextBlockBackward;
+  Boolean switchNextBlockForward;
+  Boolean switchNextBlockBackward;
   Block rootBlock;
   Boolean lightState;
   TrackModel superTrackModel;
@@ -39,7 +39,6 @@ public class Block implements Comparable<Block>, java.io.Serializable {
   Double suggestedSpeed;
   Block authority;
   Integer trainId;
-  Integer switchCase;
 
   /**
   * Constructor for the block class.
@@ -304,7 +303,8 @@ public class Block implements Comparable<Block>, java.io.Serializable {
   */
   public void setNextBlockForward(Block lowBlock, Block highBlock) {
     this.nextBlockForward = lowBlock;
-    this.switchNextBlockForward = highBlock;
+    this.switchNextBlockForward = true;
+    this.switchNextBlockBackward = false;
     this.switchState = true;
   }
 
@@ -315,7 +315,8 @@ public class Block implements Comparable<Block>, java.io.Serializable {
   */
   public void setNextBlockBackward(Block lowBlock, Block highBlock) {
     this.nextBlockBackward = lowBlock;
-    this.switchNextBlockBackward = highBlock;
+    this.switchNextBlockForward = false;
+    this.switchNextBlockBackward = true;
     this.switchState = true;
   }
 
@@ -340,15 +341,27 @@ public class Block implements Comparable<Block>, java.io.Serializable {
     return this.blockLine;
   }
 
-
-
   /**
   * Sets the root block in the "reverse" direction to deal with switch conditions.
   * @param rootBlock the root block backwards of a switch block
   */
-  public void setRootBlock(Block rootBlock, Integer switchCase) {
+  public void setRootBlock(Block rootBlock) {
     this.rootBlock = rootBlock;
-    this.switchCase = switchCase;
+    this.hasSwitch = true;
+    if (this.rootBlock.blockNum() > this.blockNum()) {
+      this.switchNextBlockForward = true;
+      this.switchNextBlockBackward = false;
+    } else {
+      this.switchNextBlockBackward = true;
+      this.switchNextBlockForward = false;
+    }
+  }
+
+  public void setRootBlock(Block rootBlock, Boolean switchNextBlockForwardOverride, Boolean switchNextBlockBackwardOverride) {
+    this.rootBlock = rootBlock;
+    this.hasSwitch = true;
+    this.switchNextBlockForward = switchNextBlockForwardOverride;
+    this.switchNextBlockBackward = switchNextBlockBackwardOverride;
   }
 
   /** 
@@ -356,30 +369,10 @@ public class Block implements Comparable<Block>, java.io.Serializable {
   * switch, it returns the next block
   */
   public Block nextBlockForward() {
-    if (this.switchState != null && this.switchNextBlockForward != null) {
-      if (this.switchState.equals(true)) {
-        return this.nextBlockForward;
-      } else {
-        if(this.switchNextBlockForward != null) {
-          return this.switchNextBlockForward;
-        } else {
-          return this.nextBlockForward;
-        }
-      }
-    } else {
-      if (this.rootBlock != null && (this.switchCase.equals(3))) {
-        if (this.rootBlock.nextBlockForward().equals(this)) {
-          return this;
-        } else {
-          return this.rootBlock;
-        }
-      } else if (this.rootBlock != null && (this.switchCase.equals(2))) {
-        if (this.rootBlock.nextBlockBackward().blockNum() == this.blockNum()) {
-          return this.rootBlock;
-        } else {
-          return this;
-        }
-      }
+    if (this.hasSwitch == true && this.switchNextBlockForward == true) {
+      return this.superTrackModel.switchMap.get(this.switchBlock).nextBlock(this);
+    } 
+    else {
       return this.nextBlockForward;
     }
   }
@@ -389,30 +382,10 @@ public class Block implements Comparable<Block>, java.io.Serializable {
   * @return the nextBlock in the backward direction given a blocks switch state.
   */
   public Block nextBlockBackward() {
-    if (this.switchState != null && this.switchNextBlockBackward != null) {
-      if(this.switchState.equals(true)) {
-        return this.nextBlockBackward;
-      } else {
-        return this.switchNextBlockBackward;
-      }
+    if (this.hasSwitch == true && this.switchNextBlockBackward == true) {
+        return this.superTrackModel.switchMap.get(this.switchBlock).nextBlock(this);
     }
-    if (this.rootBlock != null) {
-      if (this.switchCase.equals(1)){
-        if (this.rootBlock.nextBlockForward().equals(this)) {
-          return this.rootBlock;
-        } else {
-          return this;
-        }
-      } else if (this.switchCase.equals(2)){
-        return this.nextBlockBackward;
-      } else {
-        if(this.nextBlockBackward.blockNum < this.blockNum) {
-          return this.nextBlockBackward;
-        } else {
-          return this.nextBlockForward;
-        }
-      }
-    } else {
+     else {
       return this.nextBlockBackward;
     }
   }
@@ -423,16 +396,28 @@ public class Block implements Comparable<Block>, java.io.Serializable {
   * @param setInt integer for the switch state to be set to
   * @todo Add strict value assertions that setInt is either 0 or 1
   */
-  public Boolean setSwitchState(Integer setInt) {
+  @Deprecated public Boolean setSwitchState(Integer setInt) {
+    //System.out.println("Currently using setSwitchState on a block object. Please use it on the associated TrackModel switch block instead.");
     //condition check for having a switch
     assert (this.switchState != null);
 
     if (setInt.equals(1)) {
-      this.switchState = true;
+      this.superTrackModel.switchMap.get(this.switchBlock).setSwitchState(true);
+      this.switchState = this.superTrackModel.switchMap.get(this.switchBlock).switchState();
     } else if (setInt.equals(0)) {
-      this.switchState = false;
+      this.superTrackModel.switchMap.get(this.switchBlock).setSwitchState(false);
+      this.switchState = this.superTrackModel.switchMap.get(this.switchBlock).switchState();
     }
-    return this.switchState;
+
+    return this.superTrackModel.switchMap.get(this.switchBlock).switchState();
+  }
+
+  /**
+  * Return the status of the associated switch, if one exists.
+  */
+  public Boolean viewSwitchState() {
+    assert(this.superTrackModel.switchMap.containsKey(this.switchBlock));
+    return this.superTrackModel.switchMap.get(this.switchBlock).switchState();
   }
 
   /**
@@ -449,6 +434,13 @@ public class Block implements Comparable<Block>, java.io.Serializable {
   */
   public Station getAssociatedStation() {
     return this.superTrackModel.blockStationMap.get(this);
+  }
+
+  /**
+  * Returns the associated Switch object of the block.
+  */
+  public Switch getAssociatedSwitch() {
+    return this.superTrackModel.switchMap.get(this);
   }
 
   /**

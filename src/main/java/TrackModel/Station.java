@@ -19,6 +19,7 @@ public class Station implements Comparable<Station>, Serializable {
   private Integer numLoaded;
   private Lights forwardStationLights;
   private Lights backWardStationLights;
+  private String nextArrivalTime;
 
   public Station(TrackModel superTrackModel, String stationName, ArrayList<Block> hostBlocks) {
     this.superTrackModel = superTrackModel;
@@ -55,12 +56,25 @@ public class Station implements Comparable<Station>, Serializable {
     this.passengersWaiting = this.passengersWaiting + numPassengers;
   }
 
+  /**
+  * Returns the lights visible when travelling from the "forward" direction.
+  */
   public Lights getForwardLights() {
     return this.forwardStationLights;
   }
 
+  /**
+  * Returns the lights visible when travelling from the "backward" direction.
+  */
   public Lights getBackwardLights() {
     return this.backWardStationLights;
+  }
+
+  /**
+  * Allows for setting the time of arrival of the next train by the MBO.
+  */
+  public void setArrivalTime(String arrivalTime) {
+    this.nextArrivalTime = arrivalTime;
   }
   
   /**
