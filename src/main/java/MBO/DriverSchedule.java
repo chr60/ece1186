@@ -7,6 +7,7 @@ public class DriverSchedule{
   private HashMap<Integer, Driver> driverSchedule;
   private final long START_TO_BREAK = 14400;
   private final long BREAK_LEN = 1800;
+  private long freeAt = 0;
   private long runTime;
   private int numTrains;
 
@@ -67,6 +68,14 @@ public class DriverSchedule{
    */
   public Driver getDriver(int employeeID) {
     return driverSchedule.get(employeeID);
+  }
+
+  public long getFree() {
+    return freeAt;
+  }
+
+  public void setFree(long freeAt) {
+    this.freeAt = freeAt;
   }
 
   /**

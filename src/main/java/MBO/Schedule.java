@@ -152,7 +152,6 @@ public class Schedule{
    *
    */
   public void createSchedule(int numLoops, int start, int numTrains) {
-
     
     this.numTrains = numTrains;
 
@@ -189,6 +188,7 @@ public class Schedule{
     updateTrains();
   }
 
+
   private void driverSchedule(int start, int numLoops) {
 
     long scheduleLength = lineLoopTime * numLoops;
@@ -201,13 +201,28 @@ public class Schedule{
     }
   }
 
+  public void testBlockToBlock() {
+    for (int i = 0; i < lineStops.length - 1; i++) {
+      Block startBlock = lineStops[i];
+      Block stopBlock = lineStops[i + 1];
+
+      ArrayList<Block> path = dummyTrack.blockToBlock(startBlock, stopBlock).get(0);
+
+      System.out.printf("\n\n");
+      printPath(path);
+      System.out.printf("\n\n");
+    }
+  }
 
   /**
    * Handles the switching of modes
-   * @param curr Current mode of operation
-   * @param next Next mode of operation
+   * @param nextMode Next mode of operation
    */
-  private void switchModes(String curr, String next) {
+  private void switchModes(String nextMode) {
+
+    if ("MBO".equals(nextMode) || "FB".equals(nextMode)) {
+      mode = nextMode;
+    }
 
   }
 
@@ -302,7 +317,8 @@ public class Schedule{
   private ArrayList<Block> createRoute(DummyTrain train, Block startBlock, Block stopBlock) {
 
     ArrayList<Block> path = pathHardCoded(startBlock);
-                //dummyTrack.blockToBlock(startBlock, stopBlock).get(0);
+    //ArrayList<Block> path = dummyTrack.blockToBlock(startBlock, stopBlock).get(0);
+
     GPS auth = findAuthority(path, train);
     int stationIndex = getStationIndex(stopBlock.getStationName());
     long schedArrival = schedules.get(findScheduleIndex(train.getID())).getTime(0, stationIndex);
