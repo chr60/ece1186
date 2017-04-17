@@ -44,9 +44,9 @@ public class Block implements Comparable<Block>, java.io.Serializable {
   /**
   * Constructor for the block class.
   */
-  public Block(TrackModel track, Boolean occupied, Boolean isUnderground, 
-               Double blockLen, Double blockGrade, Double elevation, 
-               Double speedLimit, String stationName, String arrowDirection, String blockLine, 
+  public Block(TrackModel track, Boolean occupied, Boolean isUnderground,
+               Double blockLen, Double blockGrade, Double elevation,
+               Double speedLimit, String stationName, String arrowDirection, String blockLine,
                String blockSection, Integer blockNum, Boolean hasSwitch, String switchBlock) {
 
     this.superTrackModel = track;
@@ -187,7 +187,7 @@ public class Block implements Comparable<Block>, java.io.Serializable {
   * @return the boolean state of the openness of the block
   */
   public Boolean getOpen() {
-    if (this.brokenRail || this.powerFailure || this.occupied || this.maintenence) {      
+    if (this.brokenRail || this.powerFailure || this.occupied || this.maintenence) {
       return false;
     } else {
       return true;
@@ -289,7 +289,7 @@ public class Block implements Comparable<Block>, java.io.Serializable {
   }
 
   /**
-  * Sets the next block forward given a block. 
+  * Sets the next block forward given a block.
   */
   public void setNextBlockForward(Block setBlock) {
     this.nextBlockForward = setBlock;
@@ -303,12 +303,12 @@ public class Block implements Comparable<Block>, java.io.Serializable {
     this.nextBlockBackward = setBlock;
   }
 
-  /** 
+  /**
   * Setter for the next block forward in the condition for a switch is present.
   * By default, initializes the switch to the lower block (as determined by blockNum).
   * to be destination when the this.switchState = true.
   * @param the low block for forward
-  * @param the high block for forward  
+  * @param the high block for forward
   */
   public void setNextBlockForward(Block lowBlock, Block highBlock) {
     this.nextBlockForward = lowBlock;
@@ -373,14 +373,14 @@ public class Block implements Comparable<Block>, java.io.Serializable {
     this.switchNextBlockBackward = switchNextBlockBackwardOverride;
   }
 
-  /** 
+  /**
   * Gets the next block forward along based upon the current switch state. If there is no
   * switch, it returns the next block
   */
   public Block nextBlockForward() {
     if (this.hasSwitch == true && this.switchNextBlockForward == true) {
       return this.superTrackModel.switchMap.get(this.switchBlock).nextBlock(this);
-    } 
+    }
     else {
       return this.nextBlockForward;
     }
@@ -456,7 +456,7 @@ public class Block implements Comparable<Block>, java.io.Serializable {
   }
 
   /**
-  * Allows for viewing of the beacon associated with a block. Asserts that 
+  * Allows for viewing of the beacon associated with a block. Asserts that
   * the associated track model contains a beacon on this block.
   * @return the associated beacon
   */
@@ -469,7 +469,7 @@ public class Block implements Comparable<Block>, java.io.Serializable {
   * Returns the associated Switch object of the block.
   */
   public Switch getAssociatedSwitch() {
-    return this.superTrackModel.switchMap.get(this);
+    return this.superTrackModel.switchMap.get(this.switchBlock);
   }
 
   /**
@@ -480,14 +480,14 @@ public class Block implements Comparable<Block>, java.io.Serializable {
     return this.superTrackModel.crossingMap.get(this);
   }
 
-  /** 
+  /**
   * Implements the comparable interface for blocks via the associalted blockNum of a given block.
   * At this time, this implementation does not verify that blocks are the same across lines.
   * @return 1 if equivalent, 0 if false
   */
   @Override
   public int compareTo(Block thatBlock) {
-    return Integer.compare(this.blockNum, thatBlock.blockNum) 
+    return Integer.compare(this.blockNum, thatBlock.blockNum)
                           + this.blockLine.compareTo(thatBlock.blockLine);
   }
 }

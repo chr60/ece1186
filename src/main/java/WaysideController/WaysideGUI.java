@@ -66,7 +66,7 @@ public class WaysideGUI {
       this.activeBlock = viewBlock;
       occupiedStatusLabel.setText(viewBlock.getOccupied().toString());
       if(viewBlock.hasSwitch())
-        switchStatusLabel.setText(viewBlock.setSwitchState(-1).toString());
+        switchStatusLabel.setText(viewBlock.viewSwitchState().toString());
       else
         switchStatusLabel.setText("N/A");
 
@@ -157,11 +157,11 @@ public class WaysideGUI {
     btnSwitch.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         if(activeBlock.hasSwitch()){
-          Boolean currState = activeBlock.setSwitchState(-1);
+          Boolean currState = activeBlock.viewSwitchState();
           if(currState==true)
-          activeBlock.setSwitchState(0);
+            activeBlock.getAssociatedSwitch().setSwitchState(false);
           else
-          activeBlock.setSwitchState(1);
+            activeBlock.getAssociatedSwitch().setSwitchState(true);
         }
       }
     });

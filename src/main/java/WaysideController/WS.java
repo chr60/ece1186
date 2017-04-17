@@ -31,18 +31,35 @@ public class WS {
 	private TrackModel track;
 	private WaysideGUI waysideGui;
 	private CTCgui ctc;
+  private ArrayList<Block> blockJurisdiction;
 
 
 	public WS(String line, TrackModel trackIn) {
 		this.line = line;
 		this.track = trackIn;
-	}
+  }
 	public void setGUI(WaysideGUI gui){
 		this.waysideGui = gui;
 	}
 	public void setCTC(CTCgui ctcIn){
 		this.ctc = ctcIn;
 	}
+
+  /**
+  * Returns value of blockJurisdiction
+  * @return
+  */
+  public ArrayList<Block> getBlockJurisdiction() {
+    return blockJurisdiction;
+  }
+
+  /**
+  * Sets new value of blockJurisdiction
+  * @param blockJurisdiction
+  */
+  public void setBlockJurisdiction(ArrayList<Block> blockJurisdiction) {
+    this.blockJurisdiction = blockJurisdiction;
+  }
 
 	/**
 	 * Called every clock tick from launcher

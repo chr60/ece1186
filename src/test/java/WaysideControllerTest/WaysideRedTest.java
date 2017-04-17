@@ -3,6 +3,7 @@ package WaysideController;
 //Module Imports
 import TrackModel.TrackModel;
 import TrackModel.Block;
+import TrackModel.Switch;
 import WaysideController.WS;
 
 //Test Imports
@@ -38,9 +39,9 @@ public class WaysideRedTest{
   @DisplayName("Validate redline switching to yard")
   void testRedYardSwitch(){
     Block yardSwitchBlock = this.track.getBlock("Red", "C", 9);
-    assertTrue(yardSwitchBlock.setSwitchState(-1));
+    assertTrue(yardSwitchBlock.viewSwitchState());
     this.redWS.manualSwitch(yardSwitchBlock);
-    assertFalse(yardSwitchBlock.setSwitchState(-1));
+    assertFalse(yardSwitchBlock.viewSwitchState());
   }
 
   @Test
@@ -156,9 +157,9 @@ public class WaysideRedTest{
   @DisplayName("Make sure switch is not occupied before switching it")
   void occupiedSwitchTest(){
     Block switchBlock = this.track.getBlock("Red", "F", 16);
-    assertTrue(switchBlock.setSwitchState(-1));
+    assertTrue(switchBlock.viewSwitchState());
     switchBlock.setOccupied(true);
     this.redWS.manualSwitch(switchBlock);
-    assertTrue(switchBlock.setSwitchState(-1));
+    assertTrue(switchBlock.viewSwitchState());
   }
 }

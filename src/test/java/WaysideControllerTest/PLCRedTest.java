@@ -44,11 +44,11 @@ public class PLCRedTest{
   */
   @DisplayName("Validate Yard Block Occupied, setSwitchState to 0")
   void testRedYardSwitch() throws IOException, ScriptException{
-    assertTrue(this.track.getBlock("Red", "C", 9).setSwitchState(-1));
+    assertTrue(this.track.getBlock("Red", "C", 9).viewSwitchState());
     this.track.getBlock("Red", "U", 77).setOccupied(true);
     this.plc.parse();
     this.plc.runSwitchPLC();
-    assertFalse(this.track.getBlock("Red", "C", 9).setSwitchState(-1));
+    assertFalse(this.track.getBlock("Red", "C", 9).viewSwitchState());
   }
 
   @Test
@@ -57,11 +57,11 @@ public class PLCRedTest{
   */
   @DisplayName("Validate N Section Occupied, setSwitchState to 0")
   void testRedBottomLoopSwitch() throws IOException, ScriptException{
-    assertTrue(this.track.getBlock("Red", "J", 52).setSwitchState(-1));
+    assertTrue(this.track.getBlock("Red", "J", 52).viewSwitchState());
     this.track.getBlock("Red", "N", 64).setOccupied(true);
     this.plc.parse();
     this.plc.runSwitchPLC();
-    assertFalse(this.track.getBlock("Red", "J", 52).setSwitchState(-1));
+    assertFalse(this.track.getBlock("Red", "J", 52).viewSwitchState());
   }
 
   @Test
@@ -88,7 +88,7 @@ public class PLCRedTest{
     Block yardBlock = this.track.getBlock("Red", "U", 77);
     switchBlock.setOccupied(true);
     this.plc.runSwitchPLC();
-    assertTrue(switchBlock.setSwitchState(-1));
+    assertTrue(switchBlock.viewSwitchState());
   }
 
 }

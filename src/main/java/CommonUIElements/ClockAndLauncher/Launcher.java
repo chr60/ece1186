@@ -26,6 +26,7 @@ import TrainControllerComps.*;
 import WaysideController.*;
 import TrackModel.TrackModel;
 import TrackModel.TrackGUI;
+import TrackModel.Block;
 import MBO.*;
 import CTC.*;
 
@@ -110,7 +111,7 @@ public class Launcher extends javax.swing.JFrame {
     public Launcher() {
         initComponents();
 
-        this.playSound();        
+        this.playSound();
         this.normalSpeedRadioButton.setSelected(true);
         // for now, we start in normal mode
         this.systemSpeed = 1000;
@@ -118,17 +119,27 @@ public class Launcher extends javax.swing.JFrame {
         //Generate globalTrack
         String path = "test-classes/redline.csv";
         String[] fNames = {path};
+
         String override = "test-clases/redlinelink.csv";
         String[] overrideNames = {override};
 
         this.globalTrack = this.generateTrack("GlobalTrack", fNames, overrideNames);
         this.trackGUI = new TrackGUI(globalTrack);
 
-        //Cycle through number of lines and generate a WS and Train Manager for each line
+        //Cycle through number of lines and generate 2 WS's and a Train Manager for each line
         for(String s : this.globalTrack.trackList.keySet()){
-          //System.out.println(s);
-          WS ws = new WS(s, this.globalTrack);
-          this.waysideList.add(ws);
+          int lineSize = this.globalTrack.trackList.get(s).keySet().size();
+
+          //Wayside Operations
+          ArrayList<Block> set1 = new ArrayList<Block>();
+          ArrayList<Block> set2 = new ArrayList<Block>();
+
+          WS ws1 = new WS(s, this.globalTrack);
+          WS ws2 = new WS(s, this.globalTrack);
+          this.waysideList.add(ws1);
+          this.waysideList.add(ws2);
+
+          //TrainManager Operations
           trainManagers.add(new TrainManager(s, generateTrack("TrainManager - " + s)));
         }
 
@@ -139,7 +150,7 @@ public class Launcher extends javax.swing.JFrame {
 
         this.trainHandler = new TrainHandler(globalTrack);
         this.trainHandler.setClockSpeed(this.systemSpeed);
-        
+
         this.trainGUI = new TrainModeUI();
 
         this.ctc = new CTCgui(trainManagers, generateTrack("CTC"), this.waysideList, globalTrack);
@@ -159,7 +170,7 @@ public class Launcher extends javax.swing.JFrame {
                     ws.update();
                   }catch(ScriptException ex){}
                 }
-                
+
                 mbo.updateTrains();
 
                 // what should be called every tick
@@ -172,7 +183,7 @@ public class Launcher extends javax.swing.JFrame {
                 ctc.getTrainManagerPanel().updateTable(trainManagers.get(0));
 
                 trainHandler.pollYard();
-                
+
                 if(trainHandler.getNumTrains() != 0){
                   trainGUI.updateGUI(trainGUI.getCurrT());
                 }
@@ -449,11 +460,11 @@ public class Launcher extends javax.swing.JFrame {
         this.systemSpeed = 1000;
         this.trainHandler.setClockSpeed(this.systemSpeed);
         System.out.println("System should play in x1 speed.");
-        
+
         System.out.println(this.trainHandler.openTrainControllers);
         // change the timer delay for all open train controllers
         for (TrainController tc : this.trainHandler.openTrainControllers){
-        
+
             tc.playNormal();
         }
 
@@ -481,10 +492,10 @@ public class Launcher extends javax.swing.JFrame {
         this.trainHandler.setClockSpeed(this.systemSpeed);
         // change the timer delay for all open train controllers
         for (TrainController tc : this.trainHandler.openTrainControllers){
-        
+
             tc.playFast();
         }
-        
+
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
             Random rand = new Random();
             public void actionPerformed(ActionEvent e) {
@@ -508,7 +519,7 @@ public class Launcher extends javax.swing.JFrame {
         TrainController tc = new TrainController();
         tc.setVisible(true);
         tc.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        
+
         this.trainHandler.openTrainControllers.add(tc);
     }//GEN-LAST:event_openTrainController
 
@@ -572,7 +583,7 @@ public class Launcher extends javax.swing.JFrame {
     }//GEN-LAST:event_createLogger
 
     private void openTrainControllerTestConsole(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTrainControllerTestConsole
-        
+
 
         TCTestConsole tcTestConsole = new TCTestConsole();
         tcTestConsole.setVisible(true);

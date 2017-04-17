@@ -3,6 +3,7 @@ package WaysideController;
 import TrackModel.Block;
 import TrackModel.Lights;
 import TrackModel.TrackModel;
+import TrackModel.Switch;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -89,11 +90,11 @@ public class PLC {
           if ((Boolean.TRUE.equals(result1) && Boolean.TRUE.equals(result2)) ||
               (Boolean.TRUE.equals(result1) && Boolean.TRUE.equals(result3)) ||
               (Boolean.TRUE.equals(result2) && Boolean.TRUE.equals(result3)) )
-                this.track.viewRootMap().get(s).setSwitchState(1);
+                this.track.viewRootMap().get(s).getAssociatedSwitch().setSwitchState(true);
           else if((Boolean.FALSE.equals(result1) && Boolean.FALSE.equals(result2)) ||
                   (Boolean.FALSE.equals(result1) && Boolean.FALSE.equals(result3)) ||
                   (Boolean.FALSE.equals(result2) && Boolean.FALSE.equals(result3)) )
-                this.track.viewRootMap().get(s).setSwitchState(0);
+                this.track.viewRootMap().get(s).getAssociatedSwitch().setSwitchState(false);
         }
       }
     }
@@ -136,7 +137,7 @@ public class PLC {
       Object result1 = logicengine1.eval(sb.toString());
       Object result2 = logicengine2.eval(sb.toString());
       Object result3 = logicengine3.eval(sb.toString());
-      
+
         //'VOTING'
         if ((Boolean.TRUE.equals(result1) && Boolean.TRUE.equals(result2)) ||
             (Boolean.TRUE.equals(result1) && Boolean.TRUE.equals(result3)) ||

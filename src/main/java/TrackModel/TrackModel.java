@@ -38,9 +38,9 @@ public class TrackModel implements Serializable {
 
   HashMap<String, Block> rootMap = new HashMap<String, Block>();
   HashMap<String, ArrayList<Block>> leafMap = new HashMap<String, ArrayList<Block>>();
-  HashMap<String,HashMap<String, ArrayList<Block>>> stationList 
+  HashMap<String,HashMap<String, ArrayList<Block>>> stationList
       = new HashMap<String,HashMap<String, ArrayList<Block>>>();
-  HashMap<String,HashMap<String, Station>> stationHostMap 
+  HashMap<String,HashMap<String, Station>> stationHostMap
       = new HashMap<String,HashMap<String, Station>>();
   HashMap<Block, Station> blockStationMap = new HashMap<Block, Station>();
   HashMap<Block, Crossing> crossingMap = new HashMap<Block, Crossing>();
@@ -50,6 +50,14 @@ public class TrackModel implements Serializable {
   HashMap<String, ArrayList<Block>> flatList = new HashMap<String, ArrayList<Block>>();
   HashMap<String, Switch> switchMap = new HashMap<String, Switch>();
   
+  /**
+   * Returns flatList
+   * @return flatList
+   */
+  public HashMap<String, ArrayList<Block>> getFlatList() {
+    return this.flatList;
+  }
+
   /**
   * Simplicity wrapper to return a non-aliased block on the track given the parameters.
   * @param line Line of the block to be looked up
@@ -366,17 +374,18 @@ public class TrackModel implements Serializable {
 
         Collections.sort(storeList);
         Block storeBlock = null;
-        
+
         if(lineKey.equals("Red")) {
           for (int i = 0; i < storeList.size(); i ++) {
             storeList.get(i).setNextBlockForward();
+
 
             if(i != storeList.size()-1) {
               storeList.get(i).setNextBlockForward(storeList.get(i+1));
             }
             storeList.get(i).setNextBlockBackward();
             //System.out.println("On block: " + (i+1)  + " -> " + storeList.get(i).nextBlockForward().blockNum());
-            if(i != 0) { 
+            if(i != 0) {
               storeList.get(i).setNextBlockBackward(storeList.get(i-1));
             } else {
               storeList.get(i).setNextBlockBackward();
@@ -434,6 +443,7 @@ public class TrackModel implements Serializable {
       }
     }
 
+
     /** 
     * Helper function to link nextBlock for switches.
     */
@@ -449,6 +459,7 @@ public class TrackModel implements Serializable {
           Switch trackSwitch = new Switch(this, s, this.rootMap.get(s), this.leafMap.get(s));
           this.switchMap.put(s, trackSwitch);
           this.rootMap.get(s).setNextBlockForward(this.leafMap.get(s).get(0), this.leafMap.get(s).get(1));
+
           this.leafMap.get(s).get(0).setRootBlock(this.rootMap.get(s));
           this.leafMap.get(s).get(1).setRootBlock(this.rootMap.get(s));       
         } else if (this.rootMap.get(s).blockNum() < this.leafMap.get(s).get(1).blockNum()) {
