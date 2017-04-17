@@ -13,15 +13,18 @@ import org.junit.jupiter.api.Test;
  
  public class ComparableTest{
 	private static String[] fNames = {"src/test/resources/redline.csv", "src/test/resources/greenline.csv"};
+	private static String[] fOverrideNames = {"test-classes/redlinelink.csv"};
 	private static TrackModel track;
 	private boolean verbose = false;
 	
- 	@BeforeEach
- 	void init(){
- 		String[] fNames = {"src/test/resources/redline.csv","src/test/resources/greenline.csv"};
- 		this.track = new TrackModel("Test",this.verbose);
- 		this.track.readCSV(fNames);
- 	}
+  @BeforeEach
+  /**
+  * Initialization of the trackmodel to be used for testing.
+  */
+  void init(){
+    this.track = new TrackModel("Test", verbose);
+    this.track.readCSV(this.fNames, this.fOverrideNames);
+  }
 
  	@Test
  	/**

@@ -386,6 +386,11 @@ public class TrackModel implements Serializable {
       }
     }
 
+    private void linkCSVOverride(String[] fNames) {
+      String line = "";
+      String delimiter = ",";
+    }
+
     /**
     * Build a map for storing the blocks and station for use by the train controller and
     * train model.
@@ -466,8 +471,8 @@ public class TrackModel implements Serializable {
     * Helper function for reading the information from the excel-dumped CSV
     * @param fNames: filenames of the csv's of to read in
     */
-    public void readCSV(String[] fNames) {
-
+    @Deprecated public void readCSV(String[] fNames) {
+      System.out.println("WARNING. You are using an unsafe function to read the track model. Use the updated constructor.");
       String line = "";
       String delimiter = ",";
       Boolean defaultOccupied = false;
@@ -530,14 +535,95 @@ public class TrackModel implements Serializable {
           }
         }
     }
+
     this.linkBlocks();
     //this.examineNext();
     this.handleSwitches();
     if(this.trackList.get("Red") != null){
       this.trackList.get("Red").get("N").get(66).setNextBlockForward(this.trackList.get("Red").get("N").get(65));
     }
+    this.linkCSVOverride(fNames);
     this.buildStationHostMap();
     this.buildBlockStationMap();
     this.buildLightsMap();
   }
+
+  /**
+  * Helper function for reading the information from the excel-dumped CSV
+  * @param fNames: filenames of the csv's of to read in
+  * @param fOverrideNames: filenames of the corresponding linkage overrides csvs
+  */
+  public void readCSV(String[] fNames, String[] fOverrideNames) {
+
+    String line = "";
+    String delimiter = ",";
+    Boolean defaultOccupied = false;
+    for (String s : fNames) {
+      Boolean initLine = true; //Allows for graceful failure of reading multiple csv's without exiting
+      try (BufferedReader reader = new BufferedReader(new FileReader(s))) {
+        while ((line = reader.readLine()) != null) {
+          String[] str = line.split(delimiter,-1);
+
+          //For safety when parsing headers; first line will result in incorrect info
+          if (initLine.equals(false)){
+
+            String blockLine = str[0];
+            String blockSection = str[1];
+            Integer blockNum = Integer.valueOf(str[2]);
+            Double blockLen = Double.valueOf(str[3]);
+            Double blockGrade = Double.valueOf(str[4]);
+            Double speedLimit = Double.valueOf(str[5]);
+            String infrastructure = str[6];
+            Double elevation = Double.valueOf(str[7]);
+            String crossing = str[8];
+            String switchBlock = str[9];
+            String arrowDirection = str[10];
+            String stationName = str[11];
+
+            Boolean isUnderground = infrastructure.contains("UNDERGROUND");
+            Boolean hasSwitch = infrastructure.contains("SWITCH");
+            Boolean hasCrossing = infrastructure.contains("CROSSING");
+
+            //Initialize and add block
+            Block myBlock = new Block(this, defaultOccupied, isUnderground, blockLen, blockGrade,
+                elevation, speedLimit, stationName, arrowDirection, blockLine,
+                blockSection, blockNum, hasSwitch, switchBlock);
+            this.addBlock(myBlock);
+
+            if (!stationName.equals("")) {
+              this.addStation(blockLine, stationName, myBlock);
+            }
+
+            if(hasSwitch) {
+              this.addSwitchRoot(switchBlock, myBlock);
+            }
+
+            if(!hasSwitch && !switchBlock.equals("")) {
+              this.addSwitchLeaf(switchBlock, myBlock);
+            }
+            if(hasCrossing) {
+              this.crossingMap.put(myBlock,new Crossing(this, myBlock));
+            }
+          }
+          initLine = false;
+        }
+      }catch(IOException|ArrayIndexOutOfBoundsException|NumberFormatException e) {
+        if (this.verbose.equals(true)) {
+          System.out.println("Finished Reading");
+        }
+      }
+    }
+
+    this.linkBlocks();
+    //this.examineNext();
+    this.handleSwitches();
+    if(this.trackList.get("Red") != null){
+      this.trackList.get("Red").get("N").get(66).setNextBlockForward(this.trackList.get("Red").get("N").get(65));
+    }
+    this.linkCSVOverride(fNames);
+    this.buildStationHostMap();
+    this.buildBlockStationMap();
+    this.buildLightsMap();
+  }
+
 }

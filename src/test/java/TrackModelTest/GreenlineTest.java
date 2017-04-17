@@ -23,11 +23,13 @@ public class GreenlineTest{
   private static TreeSet<Integer> testExpectedStationBlockNums = new TreeSet<>(Arrays.asList(expectedStationBlockNums));
   private static TrackModel track;
   private static String[] fNames = {"src/test/resources/greenline.csv"};
+  private static String[] fOverrideNames = {"test-classes/redlinelink.csv"};
   private Boolean verbose = true;
+  
   @BeforeEach
   void init(){
     String[] fNames = {"src/test/resources/greenline.csv"};
-    this.track = new TrackModel("Test", this.verbose);
+    this.track = new TrackModel("Test");
     this.track.readCSV(fNames);
   }
 

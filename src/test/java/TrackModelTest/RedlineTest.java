@@ -26,6 +26,7 @@ public class RedlineTest {
   private static TreeSet<Integer> testExpectedStationBlockNums = new TreeSet<Integer>(Arrays.asList(expectedStationBlockNums));
   private static TrackModel track;
   private static String[] fNames = {"src/test/resources/redline.csv"};
+  private static String[] fOverrideNames = {"test-classes/redlinelink.csv"};
   private Boolean verbose = false;
 
   @BeforeEach
@@ -33,9 +34,8 @@ public class RedlineTest {
   * Initialization of the trackmodel to be used for testing.
   */
   void init(){
-    String[] fNames = {"src/test/resources/redline.csv"};
     this.track = new TrackModel("Test", verbose);
-    this.track.readCSV(fNames);
+    this.track.readCSV(this.fNames, this.fOverrideNames);
   }
 
   @Test

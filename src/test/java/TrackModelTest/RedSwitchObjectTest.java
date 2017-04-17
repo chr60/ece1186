@@ -15,15 +15,15 @@ public class RedSwitchObjectTest {
 
   private static TrackModel track;
   private static String[] fNames = {"src/test/resources/redline.csv"};
+  private static String[] fOverrideNames = {"test-classes/redlinelink.csv"};
     
   @BeforeEach
   /**
-  * Initialize the track model.
+  * Initialization of the trackmodel to be used for testing.
   */
-  void init() {
-    String[] fNames = {"src/test/resources/redline.csv"};
+  void init(){
     this.track = new TrackModel("Test");
-    this.track.readCSV(fNames);
+    this.track.readCSV(this.fNames, this.fOverrideNames);
   }
 
 

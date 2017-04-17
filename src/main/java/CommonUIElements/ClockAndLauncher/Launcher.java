@@ -116,12 +116,12 @@ public class Launcher extends javax.swing.JFrame {
         this.systemSpeed = 1000;
 
         //Generate globalTrack
-        this.globalTrack = new TrackModel("GlobalTrack");
         String path = "test-classes/redline.csv";
         String[] fNames = {path};
-        File redline = new File(path);
-        
-        this.globalTrack.readCSV(fNames);
+        String override = "test-clases/redlinelink.csv";
+        String[] overrideNames = {override};
+
+        this.globalTrack = this.generateTrack("GlobalTrack", fNames, overrideNames);
         this.trackGUI = new TrackGUI(globalTrack);
 
         //Cycle through number of lines and generate a WS and Train Manager for each line
@@ -584,7 +584,8 @@ public class Launcher extends javax.swing.JFrame {
      * @return Dummy Track
      * @bug REDLINE ONLY CURRENTLY
      */
-    public TrackModel generateTrack(String module){
+    @Deprecated public TrackModel generateTrack(String module){
+      System.out.println("WARNING. THIS METHOD OF GENERATING A TRACK IS BROKEN. FROM LAUNCHER LINE 588.");
       String[] fNames = {"test-classes/redline.csv"};
 
       TrackModel globalTrack = new TrackModel(module);
@@ -592,6 +593,14 @@ public class Launcher extends javax.swing.JFrame {
       return globalTrack;
     }
 
+    /**
+    * Returns a generated track given overrides, module and the names of the track.
+    */
+    public TrackModel generateTrack(String module, String[] fNames, String[] fOverridenames){
+        TrackModel newTrack = new TrackModel(module);
+        newTrack.readCSV(fNames, fOverridenames);
+        return newTrack;
+    }
 
     /**
      * @param args the command line arguments
