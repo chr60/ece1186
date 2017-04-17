@@ -72,7 +72,7 @@ public class MovingBlockOverlay{
     }
     */
 
-    schedules.add(new Schedule(dummyTrack, managers.get(0), hardCodeStops(), "Red",
+    schedules.add(new Schedule(dummyTrack, managers.get(0), handler, hardCodeStops("Red"), "Red",
            redStationNames, redStationOrder, redStationTimes, redLineLoopTime, this.ctc));
     //schedules.add(new Schedule(linekey, stationNames, stationTimes, lineLoopTime));
   }
@@ -96,24 +96,27 @@ public class MovingBlockOverlay{
     return null;
   }
 
-  private Block[] hardCodeStops() {
+  private Block[] hardCodeStops(String line) {
     ArrayList<Block> blocks = new ArrayList<Block>();
-    String line = "Red";
 
-    blocks.add(dummyTrack.getBlock(line, "C", new Integer(7)));
-    blocks.add(dummyTrack.getBlock(line, "F", new Integer(16)));
-    blocks.add(dummyTrack.getBlock(line, "G", new Integer(21)));
-    blocks.add(dummyTrack.getBlock(line, "H", new Integer(25)));
-    blocks.add(dummyTrack.getBlock(line, "H", new Integer(35)));
-    blocks.add(dummyTrack.getBlock(line, "H", new Integer(45)));
-    blocks.add(dummyTrack.getBlock(line, "I", new Integer(48)));
-    blocks.add(dummyTrack.getBlock(line, "L", new Integer(60)));
-    blocks.add(dummyTrack.getBlock(line, "I", new Integer(48)));
-    blocks.add(dummyTrack.getBlock(line, "H", new Integer(45)));
-    blocks.add(dummyTrack.getBlock(line, "H", new Integer(35)));
-    blocks.add(dummyTrack.getBlock(line, "H", new Integer(25)));
-    blocks.add(dummyTrack.getBlock(line, "G", new Integer(21)));
-    blocks.add(dummyTrack.getBlock(line, "F", new Integer(16)));
+    if ("Red".equals(line)) {
+      blocks.add(dummyTrack.getBlock(line, "C", new Integer(7)));
+      blocks.add(dummyTrack.getBlock(line, "F", new Integer(16)));
+      blocks.add(dummyTrack.getBlock(line, "G", new Integer(21)));
+      blocks.add(dummyTrack.getBlock(line, "H", new Integer(25)));
+      blocks.add(dummyTrack.getBlock(line, "H", new Integer(35)));
+      blocks.add(dummyTrack.getBlock(line, "H", new Integer(45)));
+      blocks.add(dummyTrack.getBlock(line, "I", new Integer(48)));
+      blocks.add(dummyTrack.getBlock(line, "L", new Integer(60)));
+      blocks.add(dummyTrack.getBlock(line, "I", new Integer(48)));
+      blocks.add(dummyTrack.getBlock(line, "H", new Integer(45)));
+      blocks.add(dummyTrack.getBlock(line, "H", new Integer(35)));
+      blocks.add(dummyTrack.getBlock(line, "H", new Integer(25)));
+      blocks.add(dummyTrack.getBlock(line, "G", new Integer(21)));
+      blocks.add(dummyTrack.getBlock(line, "F", new Integer(16)));
+    } else if ("Green".equals(line)) {
+      
+    }
 
     return blocks.toArray(new Block [0]);
   }

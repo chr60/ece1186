@@ -57,6 +57,10 @@ public class TrainManager {
 		return trainList;
 	}
 
+  public int getNumTrains() {
+    return trainList.size();
+  }
+
 	public ArrayList<Block> getOccupancyList(){
 		return occupancyList;
 	}

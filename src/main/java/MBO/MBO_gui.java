@@ -122,67 +122,6 @@ public class MBO_gui {
     antennaFailYes.setFont(new Font("Tahoma", Font.PLAIN, 11));
     testPanel.add(antennaFailYes);
 
-    JLabel testLabel = new JLabel("TESTING");
-    testLabel.setHorizontalAlignment(SwingConstants.CENTER);
-    testLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
-    testLabel.setBounds(0, 142, 113, 16);
-    testPanel.add(testLabel);
-
-    JLabel startLabel = new JLabel("start time");
-    startLabel.setHorizontalAlignment(SwingConstants.LEFT);
-    startLabel.setBounds(65, 172, 48, 14);
-    testPanel.add(startLabel);
-
-    startTextField = new JTextField();
-    startTextField.setBounds(10, 169, 48, 20);
-    testPanel.add(startTextField);
-    startTextField.setColumns(10);
-
-    numTrainTextField = new JTextField();
-    numTrainTextField.setColumns(10);
-    numTrainTextField.setBounds(10, 197, 48, 20);
-    testPanel.add(numTrainTextField);
-
-    JLabel trainsLabel = new JLabel("trains");
-    trainsLabel.setHorizontalAlignment(SwingConstants.LEFT);
-    trainsLabel.setBounds(65, 200, 48, 14);
-    testPanel.add(trainsLabel);
-
-    JLabel loopsLabel = new JLabel("loops");
-    loopsLabel.setHorizontalAlignment(SwingConstants.LEFT);
-    loopsLabel.setBounds(65, 228, 48, 14);
-    testPanel.add(loopsLabel);
-
-    numLoopsTextField = new JTextField();
-    numLoopsTextField.setBounds(10, 225, 48, 20);
-    testPanel.add(numLoopsTextField);
-    numLoopsTextField.setColumns(10);
-
-    JButton testButton = new JButton("TEST");
-    testButton.setBounds(12, 250, 89, 23);
-    testPanel.add(testButton);
-    
-    testButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        Schedule test = mbo.getSched().get(0);
-
-        int loops = Integer.parseInt(numLoopsTextField.getText());
-        int start;
-        try {
-          start = Integer.parseInt(startTextField.getText());
-        } catch (NumberFormatException n) {
-          start = (int) CommonUIElements.ClockAndLauncher.Launcher.getCurrTime();
-          // To account for time zones
-          start -= 4 * 60 * 60; 
-        }
-        int trains = Integer.parseInt(numTrainTextField.getText());
-
-        test.createSchedule(loops, start, trains);
-        scheduleToGUI2(trains, test.getSched());
-      }
-    });
-
     JPanel choicePanel = new JPanel();
     choicePanel.setLayout(null);
     choicePanel.setBounds(473, 0, 113, 378);
@@ -260,6 +199,77 @@ public class MBO_gui {
     driverSchedPanel.setBounds(0, 193, 473, 185);
     driverSchedPanel.setBorder(grayline);
     frame.getContentPane().add(driverSchedPanel);
+
+        JLabel testLabel = new JLabel("TESTING");
+    testLabel.setHorizontalAlignment(SwingConstants.CENTER);
+    testLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
+    testLabel.setBounds(0, 142, 113, 16);
+    testPanel.add(testLabel);
+
+    JLabel startLabel = new JLabel("start time");
+    startLabel.setHorizontalAlignment(SwingConstants.LEFT);
+    startLabel.setBounds(65, 172, 48, 14);
+    testPanel.add(startLabel);
+
+    startTextField = new JTextField();
+    startTextField.setBounds(10, 169, 48, 20);
+    testPanel.add(startTextField);
+    startTextField.setColumns(10);
+
+    numTrainTextField = new JTextField();
+    numTrainTextField.setColumns(10);
+    numTrainTextField.setBounds(10, 197, 48, 20);
+    testPanel.add(numTrainTextField);
+
+    JLabel trainsLabel = new JLabel("trains");
+    trainsLabel.setHorizontalAlignment(SwingConstants.LEFT);
+    trainsLabel.setBounds(65, 200, 48, 14);
+    testPanel.add(trainsLabel);
+
+    JLabel loopsLabel = new JLabel("loops");
+    loopsLabel.setHorizontalAlignment(SwingConstants.LEFT);
+    loopsLabel.setBounds(65, 228, 48, 14);
+    testPanel.add(loopsLabel);
+
+    numLoopsTextField = new JTextField();
+    numLoopsTextField.setBounds(10, 225, 48, 20);
+    testPanel.add(numLoopsTextField);
+    numLoopsTextField.setColumns(10);
+
+    JButton testButton = new JButton("TEST");
+    testButton.setBounds(12, 250, 89, 23);
+    testPanel.add(testButton);
+    
+    testButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+
+        int index = 0;
+        Schedule sched;
+        String selected = (String) lineSpinner.getValue();
+
+        for (int i = 0; i < mbo.getSched().size(); i++) {
+          if (selected.equals(mbo.getSched().get(i).getLineName())) {
+            index = i;
+          }
+        }
+        sched = mbo.getSched().get(index);
+
+        int loops = Integer.parseInt(numLoopsTextField.getText());
+        int start;
+        try {
+          start = Integer.parseInt(startTextField.getText());
+        } catch (NumberFormatException n) {
+          start = (int) CommonUIElements.ClockAndLauncher.Launcher.getCurrTime();
+          // To account for time zones
+          start -= 4 * 60 * 60; 
+        }
+        int trains = Integer.parseInt(numTrainTextField.getText());
+
+        sched.createSchedule(loops, start, trains);
+        scheduleToGUI2(trains, sched.getSched());
+      }
+    });
 
     frame.setVisible(true);
   }
