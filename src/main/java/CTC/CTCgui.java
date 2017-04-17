@@ -33,6 +33,12 @@ public class CTCgui {
   TrainManagerPanel tmPanel;
   TrackPanel blockPanel;
   TrackModel realTrack;
+  ArrayList<Block> brokenList;
+  ArrayList<String> setDropdownFailure;
+  JPanel failurePanel;
+  JButton btnNoFailure;
+  int blockNum;
+  boolean failureDetected;
 
 	/**
 	 * Create the application.
@@ -44,9 +50,13 @@ public class CTCgui {
     this.tmanager = managerList.get(0);
     this.realTrack = globalTrack;
     lastClickedButton = 0;
+    this.brokenList = new ArrayList<Block>();
+    this.setDropdownFailure = new ArrayList<String>();
+    failureDetected = false;
 
 		grayline = BorderFactory.createLineBorder(Color.gray);
 
+// overall frame of gui
 		JFrame frame = new JFrame();
 		this.mainGUI = frame;
 		frame.setBounds(100, 100, 790, 555);
@@ -54,7 +64,7 @@ public class CTCgui {
 		frame.getContentPane().setLayout(null);
 
 // TRACK SECTION OF GUI
-		blockPanel = new TrackPanel(dummyTrack, waysides);
+		blockPanel = new TrackPanel(dummyTrack, waysides, failureDetected, brokenList);
 		blockPanel.setBounds(402, 0, 367, 229);
 		blockPanel.setBorder(grayline);
 		frame.getContentPane().add(blockPanel);
@@ -219,16 +229,37 @@ public class CTCgui {
 
 
 //FAILURE PANEL
-		FailurePanel failurePanel = new FailurePanel();
+		failurePanel = new JPanel();
 		failurePanel.setBackground(new Color(34, 139, 34));
 		failurePanel.setBounds(525, 413, 245, 98);
 		frame.getContentPane().add(failurePanel);
 		failurePanel.setLayout(null);
 
+    btnNoFailure = new JButton("No Failure");
+    btnNoFailure.setBounds(77, 38, 89, 23);
+    failurePanel.add(btnNoFailure);
 
-// connections between panels
-		//miscPanel.setTrainPanel(trainPanel);
 
+    btnNoFailure.addActionListener(new ActionListener(){
+      public void actionPerformed(ActionEvent e){
+        if(btnNoFailure.getText().equals("No Failure")){
+          // do nothing
+        }else{
+          // case for when a failure occurs
+
+          blockPanel.dropdown_line.setSelectedItem(setDropdownFailure.get(0));
+          blockPanel.dropdown_segment.setSelectedItem(setDropdownFailure.get(1));
+          blockPanel.dropdown_block.setSelectedItem(setDropdownFailure.get(2));
+          try{
+            blockNum = Integer.parseInt(setDropdownFailure.get(2));
+          }catch(NumberFormatException num){
+            blockNum = dummyTrack.getSection(setDropdownFailure.get(0), setDropdownFailure.get(1)).keySet().toArray(new Integer [0])[0];
+          }
+
+          blockPanel.setBlockWS(dummyTrack, setDropdownFailure.get(0), setDropdownFailure.get(1), blockNum);
+        }
+      }
+    });
 
 	}
 
@@ -257,7 +288,70 @@ public class CTCgui {
     return tmPanel;
   }
 
-//
+  public JPanel getFailurePanel(){
+    return failurePanel;
+  }
+
+  public ArrayList<Block> getBrokenList(){
+    return brokenList;
+  }
+
+  public ArrayList<String> getDropdownFailList(){
+    return setDropdownFailure;
+  }
+
+  public JButton getFailureButton(){
+    return btnNoFailure;
+  }
+
+  public ArrayList<WS> getWSList(){
+    return waysides;
+  }
+
+  public void getTrackFailuresWS(){
+    int numWaysides = waysides.size();
+    ArrayList<Block> listFromWS = new ArrayList<Block>();
+    for(int x=0; x<numWaysides; x++){
+      listFromWS = waysides.get(x).checkForBroken();
+      if(listFromWS.size()>0){
+        for(int y=0; y<listFromWS.size(); y++){
+          brokenList.add(listFromWS.get(y));
+        }
+        failureDetected = true;
+
+      }
+      setFailureBackground();
+      setDropdownFailure = setFailureButton();
+    }
+
+
+  }
+
+  private void setFailureBackground(){
+    if(brokenList.size() > 0){
+      failurePanel.setBackground(new Color(255, 0, 0));
+    }else{
+      failurePanel.setBackground(new Color(34, 139, 34));
+    }
+  }
+
+  private ArrayList<String> setFailureButton(){
+    ArrayList<String> brokenBlockText = new ArrayList<String>();
+    if(brokenList.size() > 0){
+      String blockLine = brokenList.get(0).getBlockLine();
+      brokenBlockText.add(blockLine);
+      String blockSection = brokenList.get(0).getBlockSection();
+      brokenBlockText.add(blockSection);
+      Integer blockNumber = brokenList.get(0).blockNum();
+      brokenBlockText.add(blockNumber.toString());
+      btnNoFailure.setText(blockLine + ", " + blockSection + ", " + blockNumber.toString());
+    }else{
+      btnNoFailure.setText("No Failure");
+    }
+
+    return brokenBlockText;
+  }
+
 
 /*
 	public void checkMode(String mode, TrainPanel panel){
@@ -274,6 +368,7 @@ public class CTCgui {
 	}
 
 */
+
 
 
 }

@@ -235,6 +235,10 @@ public class WaysideGUI {
     failBtn.setBounds(163, 293, 60, 23);
     failBtn.addActionListener(new ActionListener(){
       public void actionPerformed(ActionEvent e){
+        Block brokenBlock1 = track.getBlock("Red", "C", 8);
+        brokenBlock1.setBroken(true);
+        Block brokenBlock2 = track.getBlock("Red", "H", 25);
+        brokenBlock2.setBroken(true);
         failBtn.setActionCommand(murphyDropdown.getSelectedItem().toString());
         if(!failBtn.getActionCommand().equals("Select"))
         printNotification(failBtn.getActionCommand() + "!!!");

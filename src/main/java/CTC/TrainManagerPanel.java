@@ -50,7 +50,7 @@ public class TrainManagerPanel extends JPanel {
 					manager.setColumnIdentifiers(headers);
 					manager.setColumnCount(headers.length);
 
-      		manager.setRowCount(50);
+      		manager.setRowCount(trainManager.getTrainList().size());
       		managerTable.setModel(manager);
 
           updateTable(trainManager);
