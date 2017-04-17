@@ -33,7 +33,9 @@ public class PLCRedTest{
   void init(){
     String[] fNames = {"src/test/resources/redline.csv"};
     this.track = new TrackModel("WaysideRedTest");
-    this.track.readCSV(fNames);
+    String override = "test-clases/redlinelink.csv";
+    String[] overrideNames = {override};
+    this.track.readCSV(fNames, overrideNames);
     //this.redWS = new WS("Red", this.track);
     this.plc = new PLC(this.track, new File("src/test/resources/redline.plc"), new String("Red"));
   }

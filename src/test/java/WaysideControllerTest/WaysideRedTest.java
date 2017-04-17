@@ -27,9 +27,10 @@ public class WaysideRedTest{
   void init(){
     String[] fNames = {"src/test/resources/redline.csv"};
     this.track = new TrackModel("WaysideRedTest");
-    this.track.readCSV(fNames);
+    String override = "test-clases/redlinelink.csv";
+    String[] overrideNames = {override};
+    this.track.readCSV(fNames, overrideNames);
     this.redWS = new WS("Red", this.track);
-
   }
 
   @Test
@@ -124,7 +125,9 @@ public class WaysideRedTest{
     //"Dummy" Creation
     String[] fNames = {"src/test/resources/redline.csv"};
     TrackModel dummyTrack= new TrackModel("dummy");
-    dummyTrack.readCSV(fNames);
+    String override = "test-clases/redlinelink.csv";
+    String[] overrideNames = {override};
+    dummyTrack.readCSV(fNames, overrideNames);
     dummyTrack.getBlock("Red", "U", 77).setSuggestedSpeed(new Double(30));
     dummyTrack.getBlock("Red", "U", 77).setAuthority(this.track.getBlock("Red", "C", 9));
     ArrayList<Block> listToSet = new ArrayList<Block>();

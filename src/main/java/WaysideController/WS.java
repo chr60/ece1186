@@ -46,6 +46,14 @@ public class WS {
 	}
 
   /**
+   * Closes a block on the track for Maintenance (FOR CTC)
+   * @param Block b - Block to be closed
+   */
+  public void closeBlock(Block b){
+    this.track.lateralLookup(b).setClosed(true);
+  }
+
+  /**
   * Returns value of blockJurisdiction
   * @return
   */
@@ -183,6 +191,7 @@ public class WS {
   public void transferMaintenance(Block b){
     b.setBroken(false);
     b.setOccupied(false);
+    b.setClosed(false);
   }
 
   /**
