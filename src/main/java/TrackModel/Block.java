@@ -447,10 +447,22 @@ public class Block implements Comparable<Block>, java.io.Serializable {
 
   /**
   * Method for adding a beacon to a given track.
+  * @param the string of the message to be stored in the beacon
+  * @param the distance of the beacon to be put into the block
   */
   public void addBeacon(String message, Double distance) {
     Beacon b = new Beacon(this.superTrackModel, this, message, distance);
     this.superTrackModel.blockBeaconMap.put(this,b);
+  }
+
+  /**
+  * Allows for viewing of the beacon associated with a block. Asserts that 
+  * the associated track model contains a beacon on this block.
+  * @return the associated beacon
+  */
+  public Beacon getAssociatedBeacon() {
+    assert(this.superTrackModel.blockBeaconMap.keySet().contains(this));
+    return this.superTrackModel.blockBeaconMap.get(this);
   }
 
   /**
