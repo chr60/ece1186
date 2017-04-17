@@ -429,15 +429,6 @@ public class TrackModel implements Serializable {
       }
     }
 
-    /**
-    * Helper function to handle the beacon mapping
-    */
-    private void handleBeacons() {
-      for(Block b : this.blockStationMap.keySet()) {
-        this.blockBeaconMap.put(b, new Beacon(this, b, "Hello from beacon!"));
-      }
-    }
-    
     /** 
     * Helper function to link nextBlock for switches.
     */
@@ -548,6 +539,5 @@ public class TrackModel implements Serializable {
     this.buildStationHostMap();
     this.buildBlockStationMap();
     this.buildLightsMap();
-    this.handleBeacons();
   }
 }

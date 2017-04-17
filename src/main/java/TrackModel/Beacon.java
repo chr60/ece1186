@@ -11,11 +11,13 @@ public class Beacon implements java.io.Serializable {
   Block hostBlock;
   TrackModel superTrackModel;
   String beaconMessage;
+  Double distance;
 
-  public Beacon(TrackModel superTrackModel, Block hostBlock, String message) {
+  public Beacon(TrackModel superTrackModel, Block hostBlock, String message, Double distance) {
     this.superTrackModel = superTrackModel;
     this.hostBlock = hostBlock;
     this.beaconMessage = message;
+    this.distance = distance;
   }
 
   /**
@@ -24,5 +26,9 @@ public class Beacon implements java.io.Serializable {
   */
   public String getBeaconMessage() {
     return this.beaconMessage;
+  }
+
+  public Double getDistance() {
+    return this.distance;
   }
 }

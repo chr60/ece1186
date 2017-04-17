@@ -39,6 +39,7 @@ public class Block implements Comparable<Block>, java.io.Serializable {
   Double suggestedSpeed;
   Block authority;
   Integer trainId;
+  Boolean blockClosed;
 
   /**
   * Constructor for the block class.
@@ -73,7 +74,7 @@ public class Block implements Comparable<Block>, java.io.Serializable {
     this.maintenence = false;
     this.authority = null;
     this.trainId = new Integer(-1);
-
+    this.blockClosed = false;
   }
 
   /**
@@ -98,6 +99,14 @@ public class Block implements Comparable<Block>, java.io.Serializable {
   */
   public void setBroken(Boolean brokenState) {
     this.brokenRail = brokenState;
+  }
+
+  /**
+  * Allows for setting a block to be closed
+  * @param the new state of the blocks closed status
+  */
+  public void setClosed(Boolean newState) {
+    this.blockClosed = newState;
   }
 
   /**
@@ -434,6 +443,14 @@ public class Block implements Comparable<Block>, java.io.Serializable {
   */
   public Station getAssociatedStation() {
     return this.superTrackModel.blockStationMap.get(this);
+  }
+
+  /**
+  * Method for adding a beacon to a given track.
+  */
+  public void addBeacon(String message, Double distance) {
+    Beacon b = new Beacon(this.superTrackModel, this, message, distance);
+    this.superTrackModel.blockBeaconMap.put(this,b);
   }
 
   /**
