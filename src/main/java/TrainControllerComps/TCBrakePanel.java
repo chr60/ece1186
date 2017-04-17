@@ -278,7 +278,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
     private boolean willExceedAuthority(){
                 
         // were on our authority...        
-        if ( this.selectedTrain.getGPS().getCurrBlock().compareTo(this.selectedTrain.getAuthority()) == 0){
+        if ( this.selectedTrain.getGPS().getCurrBlock().compareTo(this.selectedTrain.getAuthority().getCurrBlock()) == 0){
             
             double footprintSB = this.selectedTrain.getGPS().getDistIntoBlock() + this.selectedTrain.getSafeBrakingDistSB();
             double footprintEB = this.selectedTrain.getGPS().getDistIntoBlock() + this.selectedTrain.getSafeBrakingDistEB();

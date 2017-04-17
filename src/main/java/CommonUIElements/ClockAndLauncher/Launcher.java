@@ -29,6 +29,7 @@ import TrackModel.TrackGUI;
 import TrackModel.Block;
 import MBO.*;
 import CTC.*;
+import TrainModel.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -62,9 +63,11 @@ public class Launcher extends javax.swing.JFrame {
     /**
      * The timer used to refresh the modules during some given time period.
      */
+
     private Timer systemClock;
 
     //References to ACTIVE modules
+
 
     /**
      * Plays train sounds when opening
@@ -115,6 +118,7 @@ public class Launcher extends javax.swing.JFrame {
         this.normalSpeedRadioButton.setSelected(true);
         // for now, we start in normal mode
         this.systemSpeed = 1000;
+
 
         //Generate globalTrack
         String path = "test-classes/redline.csv";
@@ -175,6 +179,7 @@ public class Launcher extends javax.swing.JFrame {
 
                 // what should be called every tick
 
+
                 // CTC - update track panel on gui w/ info from WS
                 ctc.getTrackPanel().updateTrackInfo(ctc.getTrackPanel().getBlockWS());
                 // CTC - calls wayside to get updated list of track occupancy
@@ -190,7 +195,6 @@ public class Launcher extends javax.swing.JFrame {
 
                 // CTC - ask track for trainId
                 ctc.getTrainPanel().updateTrainIDinList(trainManagers.get(0), globalTrack);
-
 
             }
         });
@@ -560,9 +564,11 @@ public class Launcher extends javax.swing.JFrame {
      */
     private void openTrain(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTrain
         // TODO add your handling code here:
+
 		trainGUI.frmTrainModel.setVisible(true);
         trainGUI.frmTrainModel.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		trainGUI.setTrainArray(this.trainHandler.getTrains());
+
     }//GEN-LAST:event_openTrain
 
     /**
@@ -643,6 +649,7 @@ public class Launcher extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+
                 new Launcher().setVisible(true);
             }
         });

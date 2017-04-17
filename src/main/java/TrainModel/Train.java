@@ -18,17 +18,13 @@ import java.util.Set;
 public class Train implements Serializable {
 
 	//variables for train values.
-	Block currAuthority;
+	GPS currAuthority;
 	Block currBlock;
 	Double mass, length, velocity, oldVelocity, power, currGrade;
 	Double netForce;
 	Double currTemp, currThermostat, distance, setPointSpeed;
 	Double acceleration;
-	Double maxPower = 120000.00; 		//maximum power is 120 kW
-	Double Height, Width;
 	Double Kp, Ki;
-	Double weightPass, weightCar;
-	Double lengthCar = 8.69;			//length of one car in feet
 	Double safeDistSB, safeDistEB;
 	Double startTime;
 	Double frictionC = 0.16; 			//coefficient of friction of steel wheels on lubricated steel rails
@@ -42,16 +38,38 @@ public class Train implements Serializable {
 	String messageBoard;
 	GPS trainLocation;
 	TrackModel globalTrack;
-        Block prevBlock;
+    Block prevBlock;
+	
+	//train data
+	Double maxPower = 120000.00; 		//maximum power is 120 kW
+	Double maxVelocity = 19.4444; 		//maximum velocity is 70 kph or 19.444 m/s
+	Double maxGrade = Math.toDegrees(Math.atan2(-5, 100));;		//maximum grade on the track is going to be -5
+	Double Height = 3.42;				//height of train in m
+	Double Width = 2.65;				//width of train in m
+	int maxPassengers = 222; 		//max number of passengers that can fit on train
+	Double weightPass = 75.0; 				//mass of single passenger in kg
+	Double weightCar =40.9 * 907.185;  	//mass of empty car in kg;
+	Double maxWeight = weightCar + (maxPassengers * weightPass) + weightPass; //maximum weight of a car 
+	Double lengthCar = 8.69;			//length of one car in feet
+	
+	
+	
 
-        
+        /**
+     * Default Constructor to create a new Train object based on Assigned ID
+     */
+	public Train(){
+		
+	}
         
 	/**
      * Constructor to create a new Train object based on Assigned ID
      * @param a an integer argument to assign to Trains new ID.
      */
 	public Train(Integer ID, TrackModel gTrack){
-		mass = 40.9 * 907.185;  		//mass of empty car in kg
+		mass = weightCar;  		//mass of empty car in kg
+		mass = mass + weightPass;
+		numCrew = 1;
 		velocity = 0.01;
 		velocity =0.0;
 		//Vx = 0.0;
@@ -61,6 +79,7 @@ public class Train implements Serializable {
 		currGrade = 0.0;
 		globalTrack = gTrack;
 		trainLocation = new GPS();
+		currAuthority = new GPS();
 	}
 
 
@@ -158,12 +177,12 @@ public class Train implements Serializable {
 	private void updateCurrBlock(Double distTravelled){
 		Double distBlock = trainLocation.getDistIntoBlock();
 		Double dist = distBlock + distTravelled;
-
+		currBlock.setOccupied(true);
 		//check if distance exceeds length of block (if so enter new block) if not update location
 		while (dist > trainLocation.getCurrBlock().getLen())
 		{
                         //System.out.println("Next block forward" + currBlock.nextBlockForward().blockNum());
-			dist = getCurrBlock().getLen() - dist;
+			dist = dist - getCurrBlock().getLen();
 			currBlock.setOccupied(false);
 
                         Block blockForward = currBlock.nextBlockForward();
@@ -225,7 +244,8 @@ public class Train implements Serializable {
 
                 if (this.getCurrBlock().getAuthority() != null){
 
-                    currAuthority = getCurrBlock().getAuthority();
+                    currAuthority.setCurrBlock(getCurrBlock().getAuthority());
+					currAuthority.setDistIntoBlock(null);
                 }
 
                 if (this.getCurrBlock().getGrade() != null){
@@ -235,7 +255,38 @@ public class Train implements Serializable {
         }
 
 
-
+	/**
+	 * Method to calculate maximum possible safe Braking Distance of train based on its current velocity and mass using service brake
+	 * @return a Double which corresponds to the maximum amount of distance required to stop the train using the service brake
+	 */
+	public Double getMaxSafeBrakingDistSB(){
+		Train dummyTrain = new Train();
+		dummyTrain.setMaxConditions();
+		Double maxSBD = dummyTrain.getSafeBrakingDistSB();
+		return maxSBD;
+	}
+	
+		/**
+	 * Method to calculate maximum possible safe Braking Distance of train based on its current velocity and mass using emergency brake
+	 * @return a Double which corresponds to the maximum amount of distance required to stop the train using the service brake
+	 */
+	public Double getMaxSafeBrakingDistEB(){
+		Train dummyTrain = new Train();
+		dummyTrain.setMaxConditions();
+		Double maxEBD = dummyTrain.getSafeBrakingDistEB();
+		return maxEBD;
+	}
+	
+		/**
+	 * Method to set test train to maximum conditions. this will be used for the maximum safe braking distance method
+	 */
+	public void setMaxConditions(){
+		velocity = maxVelocity;
+		mass = 2 * maxWeight;
+		currGrade = maxGrade;
+	}
+		
+		
 	/**
      * Method to calculate safe Braking Distance of train based on its current velocity and mass
      * @return a Double which corresponds to the amount of distance required to stop the train using the service brake
@@ -384,9 +435,9 @@ public class Train implements Serializable {
 
 	/**
      * Accessor to return current train's Authority
-     * @return an Block object which corresponds to train's current authority.
+     * @return an GPS object which corresponds to train's current authority.
      */
-	public Block getAuthority(){
+	public GPS getAuthority(){
 		return currAuthority;
 	}
 
@@ -564,7 +615,8 @@ public class Train implements Serializable {
      * @param an Double object which corresponds to the new authority.
      */
 	public void setAuthority(Block goToBlock){
-		currAuthority = goToBlock;
+		currAuthority.setCurrBlock(goToBlock);
+		currAuthority.setDistIntoBlock(null);
 	}
 
 	/**

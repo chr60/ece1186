@@ -63,7 +63,7 @@ public class TrainInfoTest {
       assertTrue(tc.getTrainInfoPane().getPowerLabel().equals(Double.toString(tc.getTrainInfoPane().getSelectedTrain().getPower()))); 
       assertTrue(tc.getTrainInfoPane().getSpeedLabel().equals(Double.toString(tc.getTrainInfoPane().getSelectedTrain().getVelocity()))); 
       assertTrue(tc.getTrainInfoPane().getSuggestedSpeedLabel().equals(Double.toString(tc.getTrainInfoPane().getSelectedTrain().getSuggestedSpeed()))); 
-      assertTrue(tc.getTrainInfoPane().getAuthorityLabel().equals(Double.toString(tc.getTrainInfoPane().getSelectedTrain().getAuthority().blockNum()))); 
+      assertTrue(tc.getTrainInfoPane().getAuthorityLabel().equals(Double.toString(tc.getTrainInfoPane().getSelectedTrain().getAuthority().getCurrBlock().blockNum()))); 
   }
   
   

@@ -169,9 +169,9 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
             this.setSuggestSpeedLabel( blockSuggestedSpeed );
         }
         
-        if (this.selectedTrain.getAuthority() != null){
+        if (this.selectedTrain.getAuthority().getCurrBlock() != null){
         
-            this.setAuthorityLabel(this.selectedTrain.getAuthority().blockNum());
+            this.setAuthorityLabel(this.selectedTrain.getAuthority().getCurrBlock().blockNum());
         }
     }
     

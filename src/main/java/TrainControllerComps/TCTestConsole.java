@@ -178,7 +178,7 @@ public class TCTestConsole extends javax.swing.JFrame {
             this.trainSpeed.setText(Double.toString(this.selectedTrain.getVelocity()));
             this.trainPower.setText(Double.toString(this.selectedTrain.getPower()/1000));
             this.suggestedSpeed.setText(Double.toString(this.selectedTrain.getSuggestedSpeed()));          
-            this.authority.setText(Double.toString(this.selectedTrain.getAuthority().blockNum()));
+            this.authority.setText(Double.toString(this.selectedTrain.getAuthority().getCurrBlock().blockNum()));
        } 
     }
 
