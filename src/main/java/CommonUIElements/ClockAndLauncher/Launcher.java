@@ -124,12 +124,10 @@ public class Launcher extends javax.swing.JFrame {
         String path = "test-classes/redline.csv";
         String[] fNames = {path};
 
-
         String override = "test-clases/redlinelink.csv";
         String[] overrideNames = {override};
 
         this.globalTrack = this.generateTrack("GlobalTrack", fNames, overrideNames);
-
         this.trackGUI = new TrackGUI(globalTrack);
 
         //Cycle through number of lines and generate 2 WS's and a Train Manager for each line
@@ -182,8 +180,6 @@ public class Launcher extends javax.swing.JFrame {
                 // what should be called every tick
 
 
-                // CTC - calls for list of broken blocks from WS
-                ctc.getTrackFailuresWS();
                 // CTC - update track panel on gui w/ info from WS
                 ctc.getTrackPanel().updateTrackInfo(ctc.getTrackPanel().getBlockWS());
                 // CTC - calls wayside to get updated list of track occupancy

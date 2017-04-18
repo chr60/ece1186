@@ -41,20 +41,12 @@ public class TrackPanel extends JPanel{
 	JToggleButton switch_no;
 	JToggleButton switch_label_connect1;
 	JToggleButton switch_label_connect2;
-	JComboBox<String> dropdown_line;
-	JComboBox<String> dropdown_segment;
-	JComboBox<String> dropdown_block;
-	boolean failure;
-	boolean trackClosed;
 
 
-
-	public TrackPanel(TrackModel dummyTrack, ArrayList<WS> ws, boolean failureDetected, ArrayList<Block> brokenList){
+	public TrackPanel(TrackModel dummyTrack, ArrayList<WS> ws){
 		this.waysides = ws;
 		this.currWorkingWS = waysides.get(0);
 		this.dummyTrack = dummyTrack;
-		this.failure = failureDetected;
-		this.trackClosed = false;
 
 		JLabel trackWindowLabel = new JLabel("TRACK");
 		trackWindowLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -68,32 +60,32 @@ public class TrackPanel extends JPanel{
 		Set<String> lineSet = dummyTrack.viewTrackList().keySet();
 
 		String[] lineName = lineSet.toArray(new String[lineSet.size()]);
-		dropdown_line = new JComboBox<>();
+		JComboBox<String> dropdown_line = new JComboBox<>();
 		dropdown_line.setModel(new DefaultComboBoxModel<String>(lineName));
 		dropdown_line.setBounds(121, 6, 72, 20);
 		add(dropdown_line);
 		dropdown_line.setToolTipText("LINE");
 
 		String[] segName = {};
-		dropdown_segment = new JComboBox<String>();
+		JComboBox<String> dropdown_segment = new JComboBox<String>();
 		dropdown_segment.setModel(new DefaultComboBoxModel<String>(segName));
 		dropdown_segment.setBounds(203, 6, 72, 20);
 		add(dropdown_segment);
 		dropdown_segment.setToolTipText("SEGMENT");
 
 		String[] blockName = {};
-		dropdown_block = new JComboBox<>();
+		JComboBox<String> dropdown_block = new JComboBox<>();
 		dropdown_block.setModel(new DefaultComboBoxModel<String>(blockName));
 		dropdown_block.setBounds(285, 6, 72, 20);
 		add(dropdown_block);
 		dropdown_block.setToolTipText("BLOCK");
+
 
 		JButton btnCloseTrack = new JButton("Close Track");
 		btnCloseTrack.setBounds(77, 195, 87, 23);
 		add(btnCloseTrack);
 		btnCloseTrack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				trackClosed = true;
 			}
 		});
 
@@ -101,16 +93,6 @@ public class TrackPanel extends JPanel{
 		JButton btnPerformMaintenance = new JButton("Maintenance");
 		btnPerformMaintenance.setBounds(194, 195, 93, 23);
 		add(btnPerformMaintenance);
-		btnPerformMaintenance.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(trackClosed == true){
-					currWorkingWS.transferMaintenance(brokenList.get(0));
-					brokenList.remove(0);
-					System.out.println(brokenList.get(0).blockNum());
-					trackClosed = false;
-				}
-			}
-		});
 
 		JLabel station_label = new JLabel("Station?");
 		station_label.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -276,9 +258,9 @@ public class TrackPanel extends JPanel{
 		}
 
 
-		//wsBlock = dummyTrack.getBlock(l, s, blockNum);
-		setBlockWS(dummyTrack, l, s, blockNum);
-		updateTrackInfo(getBlockWS());
+		wsBlock = dummyTrack.getBlock(l, s, blockNum);
+		setBlockWS(wsBlock);
+		updateTrackInfo(wsBlock);
 
 
 // all action listeners
@@ -327,9 +309,9 @@ public class TrackPanel extends JPanel{
 						blockNum = dummyTrack.getSection(line, section).keySet().toArray(new Integer [0])[0];
 					}
 
-					//wsBlock = dummyTrack.getBlock(line, section, blockNum);
-					setBlockWS(dummyTrack, line, section, blockNum);
-					updateTrackInfo(getBlockWS());
+					wsBlock = dummyTrack.getBlock(line, section, blockNum);
+					setBlockWS(wsBlock);
+					updateTrackInfo(wsBlock);
 				}
 
 		});
@@ -338,8 +320,7 @@ public class TrackPanel extends JPanel{
 
 	}
 
-	public void setBlockWS(TrackModel dummyTrack, String line, String section, Integer bl){
-		Block block = dummyTrack.getBlock(line, section, bl);
+	public void setBlockWS(Block block){
 		this.savedBlock = block;
 	}
 
