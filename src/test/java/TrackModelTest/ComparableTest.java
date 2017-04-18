@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
   /**
   * Initialization of the trackmodel to be used for testing.
   */
-  void init(){
+  void init() {
     this.track = new TrackModel("Test", verbose);
     this.track.readCSV(this.fNames, this.fOverrideNames);
   }
@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
  	/**
  	* Test the comparable interface for a true result
  	*/
- 	void testComparableTrue(){
+ 	void testComparableTrue() {
  		assertTrue(this.track.viewTrackList().get("Red").get("A").get(1).equals(this.track.getBlock("Red","A",1)));
  	}
 
@@ -38,7 +38,7 @@ import org.junit.jupiter.api.Test;
  	/**
  	* Test comparable false on the same line
  	*/
- 	void testComparableFalseSameTrack(){
+ 	void testComparableFalseSameTrack() {
  		assertFalse(this.track.viewTrackList().get("Red").get("A").get(1).equals(this.track.getBlock("Red","A",2)));
  	}
 
@@ -46,7 +46,7 @@ import org.junit.jupiter.api.Test;
  	/**
  	* Test comparable different tracks, same block+section
  	*/
- 	void testComparableDifferentTrack(){
+ 	void testComparableDifferentTrack() {
  		assertFalse(this.track.viewTrackList().get("Green").get("A").get(1).equals(this.track.getBlock("Red","A",1)));
  	}
  }

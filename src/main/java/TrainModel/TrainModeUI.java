@@ -1,6 +1,7 @@
 package TrainModel;
 
 import java.awt.EventQueue;
+import TrackModel.*;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -48,6 +49,8 @@ public class TrainModeUI {
 	private JTextField txtTestPower;
 	private JTextField txtTestAddPassengers;
 	private JTextField txtTestAuthority;
+	private JTextPane txtCurrBlock;
+	private JTextPane txtDistIntoBlock;
 	private final ButtonGroup engineFailureBG = new ButtonGroup();
 	private final ButtonGroup signalFailureBG = new ButtonGroup();
 	private final ButtonGroup brakeFailureBG = new ButtonGroup();
@@ -56,6 +59,23 @@ public class TrainModeUI {
 	private final ButtonGroup serviceBrakeBG = new ButtonGroup();
 	private final ButtonGroup emergencyBrakeBG = new ButtonGroup();
 	private final ButtonGroup leftDoorBG = new ButtonGroup();
+	private	JRadioButton rdbtnEngineOn;
+	private JRadioButton rdbtnSignalOn;
+	private JRadioButton rdbtnBrakeOn;
+	private	JRadioButton rdbtnEngineOff;
+	private	JRadioButton rdbtnSignalOff;
+	private	JRadioButton rdbtnBrakeOff;
+	private	JRadioButton rdbtnRightDoorOpen;
+	private	JRadioButton rdbtnLeftDoorOpen;
+	private	JRadioButton rdbtnLeftDoorClosed;
+	private	JRadioButton rdbtnLightsOn;
+	private	JRadioButton rdbtnLightsOff;
+	private	JRadioButton rdbtnServiceBrakeOn;
+	private	JRadioButton rdbtnServiceBrakeOff;
+	private	JRadioButton rdbtnEmergencyBrakeOn;
+	private	JRadioButton rdbtnEmergencyBrakeOff;
+	private	JRadioButton rdbtnRightDoorClosed;
+	
         JComboBox<String> comboBox = new JComboBox<String>();
 	JTextPane txtSpeed;
 	JTextPane txtAuthority;
@@ -381,44 +401,66 @@ public class TrainModeUI {
 		lblBrakeFailure.setBounds(16, 419, 99, 33);
 		frmTrainModel.getContentPane().add(lblBrakeFailure);
 		
-		JRadioButton rdbtnEngineOn = new JRadioButton("ON");
+		rdbtnEngineOn = new JRadioButton("ON");
 		engineFailureBG.add(rdbtnEngineOn);
 		rdbtnEngineOn.setBounds(112, 369, 46, 23);
 		frmTrainModel.getContentPane().add(rdbtnEngineOn);
 		
-		JRadioButton rdbtnSignalOn = new JRadioButton("ON");
+		rdbtnSignalOn	= new JRadioButton("ON");
 		signalFailureBG.add(rdbtnSignalOn);
 		rdbtnSignalOn.setBounds(112, 397, 46, 23);
 		frmTrainModel.getContentPane().add(rdbtnSignalOn);
 		
-		JRadioButton rdbtnBrakeOn = new JRadioButton("ON");
+		rdbtnBrakeOn = new JRadioButton("ON");
 		brakeFailureBG.add(rdbtnBrakeOn);
 		rdbtnBrakeOn.setSelected(true);
 		rdbtnBrakeOn.setBounds(112, 429, 46, 23);
 		frmTrainModel.getContentPane().add(rdbtnBrakeOn);
 		
-		JRadioButton rdbtnEngineOff = new JRadioButton("OFF");
+		rdbtnEngineOff = new JRadioButton("OFF");
 		engineFailureBG.add(rdbtnEngineOff);
 		rdbtnEngineOff.setSelected(true);
 		rdbtnEngineOff.setBounds(156, 369, 46, 23);
 		frmTrainModel.getContentPane().add(rdbtnEngineOff);
 		
-		JRadioButton rdbtnSignalOff = new JRadioButton("OFF");
+		rdbtnSignalOff = new JRadioButton("OFF");
 		signalFailureBG.add(rdbtnSignalOff);
 		rdbtnSignalOff.setSelected(true);
 		rdbtnSignalOff.setBounds(156, 397, 46, 23);
 		frmTrainModel.getContentPane().add(rdbtnSignalOff);
 		
-		JRadioButton rdbtnBrakeOff = new JRadioButton("OFF");
+		
+		rdbtnBrakeOff = new JRadioButton("OFF");
 		brakeFailureBG.add(rdbtnBrakeOff);
 		rdbtnBrakeOff.setBounds(156, 429, 46, 23);
 		frmTrainModel.getContentPane().add(rdbtnBrakeOff);
 		
-		JTextPane txtMessageBoard = new JTextPane();
-		txtMessageBoard.setEditable(false);
-		txtMessageBoard.setText("\tMessage Board\r\nPower Command of 5,000 Recieved.\r\nCurrent Speed 65 MPH\r\nSERVICE BRAKE FAILURE!\r\nCurrent Speed Dropping.");
-		txtMessageBoard.setBounds(229, 186, 232, 85);
-		frmTrainModel.getContentPane().add(txtMessageBoard);
+		JLabel lblGpsLocation = new JLabel("GPS Location");
+		lblGpsLocation.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblGpsLocation.setBounds(285, 139, 99, 20);
+		frmTrainModel.getContentPane().add(lblGpsLocation);
+		
+		txtCurrBlock = new JTextPane();
+		txtCurrBlock.setText("\r\nBlock 77\r\n");
+		txtCurrBlock.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtCurrBlock.setBounds(229, 188, 77, 67);
+		frmTrainModel.getContentPane().add(txtCurrBlock);
+		
+		JLabel lblCurrentBlock = new JLabel("Current Block");
+		lblCurrentBlock.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblCurrentBlock.setBounds(212, 162, 99, 20);
+		frmTrainModel.getContentPane().add(lblCurrentBlock);
+		
+		JLabel lblDistanceIntoBlock = new JLabel("Distance Into Block");
+		lblDistanceIntoBlock.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblDistanceIntoBlock.setBounds(328, 162, 150, 20);
+		frmTrainModel.getContentPane().add(lblDistanceIntoBlock);
+		
+		txtDistIntoBlock = new JTextPane();
+		txtDistIntoBlock.setText("\r\n   32 m");
+		txtDistIntoBlock.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtDistIntoBlock.setBounds(351, 188, 77, 67);
+		frmTrainModel.getContentPane().add(txtDistIntoBlock);
 		
 		txtSpeed = new JTextPane();
 		txtSpeed.setEditable(false);
@@ -429,7 +471,7 @@ public class TrainModeUI {
 
 		txtAuthority = new JTextPane();
 		txtAuthority.setEditable(false);
-		txtAuthority.setText("             3 mi");
+		txtAuthority.setText("Block 77");
 		txtAuthority.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		txtAuthority.setBounds(351, 71, 77, 67);
 		frmTrainModel.getContentPane().add(txtAuthority);
@@ -465,18 +507,18 @@ public class TrainModeUI {
 		lblRightDoor_1.setBounds(245, 361, 60, 33);
 		frmTrainModel.getContentPane().add(lblRightDoor_1);
 		
-		JRadioButton rdbtnRightDoorOpen = new JRadioButton("OPEN");
+		rdbtnRightDoorOpen = new JRadioButton("OPEN");
 		rightDoorBG.add(rdbtnRightDoorOpen);
 		rdbtnRightDoorOpen.setSelected(true);
 		rdbtnRightDoorOpen.setBounds(328, 360, 71, 23);
 		frmTrainModel.getContentPane().add(rdbtnRightDoorOpen);
 		
-		JRadioButton rdbtnLeftDoorOpen = new JRadioButton("OPEN");
+		rdbtnLeftDoorOpen = new JRadioButton("OPEN");
 		leftDoorBG.add(rdbtnLeftDoorOpen);
 		rdbtnLeftDoorOpen.setBounds(559, 325, 64, 23);
 		frmTrainModel.getContentPane().add(rdbtnLeftDoorOpen);
-		
-		JRadioButton rdbtnLeftDoorClosed = new JRadioButton("CLOSED");
+
+		rdbtnLeftDoorClosed = new JRadioButton("CLOSED");
 		leftDoorBG.add(rdbtnLeftDoorClosed);
 		rdbtnLeftDoorClosed.setSelected(true);
 		rdbtnLeftDoorClosed.setBounds(625, 325, 73, 23);
@@ -486,13 +528,14 @@ public class TrainModeUI {
 		lblLights_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblLights_1.setBounds(245, 383, 61, 33);
 		frmTrainModel.getContentPane().add(lblLights_1);
-		
-		JRadioButton rdbtnLightsOn = new JRadioButton("ON");
+
+		rdbtnLightsOn = new JRadioButton("ON");
 		lightsBG.add(rdbtnLightsOn);
 		rdbtnLightsOn.setBounds(328, 388, 46, 23);
 		frmTrainModel.getContentPane().add(rdbtnLightsOn);
-		
-		JRadioButton rdbtnLightsOff = new JRadioButton("OFF");
+
+
+		rdbtnLightsOff = new JRadioButton("OFF");
 		lightsBG.add(rdbtnLightsOff);
 		rdbtnLightsOff.setSelected(true);
 		rdbtnLightsOff.setBounds(377, 386, 46, 23);
@@ -514,12 +557,13 @@ public class TrainModeUI {
 		lblServiceBrake_1.setBounds(245, 405, 70, 33);
 		frmTrainModel.getContentPane().add(lblServiceBrake_1);
 		
-		JRadioButton rdbtnServiceBrakeOn = new JRadioButton("ON");
+		
+		rdbtnServiceBrakeOn = new JRadioButton("ON");
 		serviceBrakeBG.add(rdbtnServiceBrakeOn);
 		rdbtnServiceBrakeOn.setBounds(328, 410, 46, 23);
 		frmTrainModel.getContentPane().add(rdbtnServiceBrakeOn);
 		
-		JRadioButton rdbtnServiceBrakeOff = new JRadioButton("OFF");
+		rdbtnServiceBrakeOff = new JRadioButton("OFF");
 		serviceBrakeBG.add(rdbtnServiceBrakeOff);
 		rdbtnServiceBrakeOff.setSelected(true);
 		rdbtnServiceBrakeOff.setBounds(377, 410, 46, 23);
@@ -530,13 +574,14 @@ public class TrainModeUI {
 		lblEmergencyBrake_1.setBounds(245, 430, 86, 33);
 		frmTrainModel.getContentPane().add(lblEmergencyBrake_1);
 		
-		JRadioButton rdbtnEmergencyBrakeOn = new JRadioButton("ON");
+
+		rdbtnEmergencyBrakeOn = new JRadioButton("ON");
 		emergencyBrakeBG.add(rdbtnEmergencyBrakeOn);
 		rdbtnEmergencyBrakeOn.setSelected(true);
 		rdbtnEmergencyBrakeOn.setBounds(328, 436, 46, 23);
 		frmTrainModel.getContentPane().add(rdbtnEmergencyBrakeOn);
 		
-		JRadioButton rdbtnEmergencyBrakeOff = new JRadioButton("OFF");
+		rdbtnEmergencyBrakeOff = new JRadioButton("OFF");
 		emergencyBrakeBG.add(rdbtnEmergencyBrakeOff);
 		rdbtnEmergencyBrakeOff.setBounds(377, 436, 46, 23);
 		frmTrainModel.getContentPane().add(rdbtnEmergencyBrakeOff);
@@ -581,7 +626,7 @@ public class TrainModeUI {
 		comboBox.setBounds(10, 9, 118, 23);
 		frmTrainModel.getContentPane().add(comboBox);
 		
-		JRadioButton rdbtnRightDoorClosed = new JRadioButton("CLOSED");
+		rdbtnRightDoorClosed = new JRadioButton("CLOSED");
 		rightDoorBG.add(rdbtnRightDoorClosed);
 		rdbtnRightDoorClosed.setBounds(401, 359, 86, 23);
 		frmTrainModel.getContentPane().add(rdbtnRightDoorClosed);
@@ -649,10 +694,9 @@ public class TrainModeUI {
 				//action button to apply changes made to test console once pressed all pertinent values will be updated based on the component values
 				//for prototype first thing to update is velocity based on power command
 					String pwrCmdStr = txtTestPower.getText();
-					String gradeStr = txtTestGrade.getText();
-					Double grade = Double.parseDouble(gradeStr);
 					Double pwrCmd = Double.parseDouble(pwrCmdStr);
-					currTrain.setGrade(grade);
+					
+					currTrain.setGrade(Double.parseDouble(txtTestGrade.getText()));
 					new Launch().powerCommandToTrain(pwrCmd,currTrain);					
 				
 			}
@@ -671,21 +715,18 @@ public class TrainModeUI {
 		//method to update GUI based on selected train info
 		currTrain = currT;
 		if (currTrain != null){
-				txtSpeed.setText("\n   "+ currTrain.getVelocity().intValue()+" MPH");
+				txtSpeed.setText("\n   "+ currTrain.getVelocity().toString()+" MPH");
+				txtAuthority.setText("Block "+currTrain.getAuthority().getCurrBlock().blockNum().toString());
+				txtTemperature.setText(currTrain.getTemp().toString());
+				txtThermostat.setText(currTrain.getThermostat().toString());
+				txtPass.setText(String.valueOf(currTrain.getNumPassengers()));
+				txtCar.setText(String.valueOf(currTrain.getNumCars()));
 				txtPower.setText(currTrain.getPower().intValue()+" W");
-				txtMass.setText(currTrain.getMass().intValue()+" "); // +" lbs");
-                
-                String status = ""; 
-                if (this.currTrain.getLeftDoor() == 1){
-                    // open 
-                    status = "OPEN";
-                }else if (this.currTrain.getLeftDoor() == 0){
-                    // close
-                    status = "CLOSED";
-                }else if (this.currTrain.getLeftDoor() == -1){
-                    // failure
-                    status = "FAILURE";
-                }
+				txtMass.setText(currTrain.getMass().intValue()+" lbs");
+				txtLength.setText(currTrain.getLength().toString());
+				txtCurrBlock.setText("\r\nBlock "+currTrain.getGPS().getCurrBlock().blockNum().toString()+"\r\n");
+				txtDistIntoBlock.setText("\r\n   "+currTrain.getGPS().getDistIntoBlock().toString()+" m\r\n");
+			
                 
                 // set labels of status
                 this.txtLeftDoor.setText(this.getStatusOfTrainDoors(this.currTrain.getLeftDoor()));

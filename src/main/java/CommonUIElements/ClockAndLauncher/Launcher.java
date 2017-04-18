@@ -144,7 +144,7 @@ public class Launcher extends javax.swing.JFrame {
           this.waysideList.add(ws2);
 
           //TrainManager Operations
-          trainManagers.add(new TrainManager(s, generateTrack("TrainManager - " + s)));
+          this.trainManagers.add(new TrainManager(s, generateTrack("TrainManager - " + s)));
         }
 
         //Set Wayside GUI for WS's
@@ -157,8 +157,8 @@ public class Launcher extends javax.swing.JFrame {
 
         this.trainGUI = new TrainModeUI();
 
-        this.ctc = new CTCgui(trainManagers, generateTrack("CTC"), this.waysideList, globalTrack);
-        this.mbo = new MovingBlockOverlay(generateTrack("MBO", fNames, overrideNames), trainManagers, this.trainHandler, this.ctc);
+        this.ctc = new CTCgui(this.trainManagers, generateTrack("CTC"), this.waysideList, globalTrack);
+        this.mbo = new MovingBlockOverlay(generateTrack("MBO", fNames, overrideNames), this.trainManagers, this.trainHandler, this.ctc);
         this.ctc.setMBO(this.mbo);
 
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
@@ -183,9 +183,9 @@ public class Launcher extends javax.swing.JFrame {
                 // CTC - update track panel on gui w/ info from WS
                 ctc.getTrackPanel().updateTrackInfo(ctc.getTrackPanel().getBlockWS());
                 // CTC - calls wayside to get updated list of track occupancy
-                ctc.getTrainPanel().updateTrainPositionsToManager(trainManagers.get(0));
+                ctc.getTrainPanel().updateTrainPositionsToManager(trainManagers);
                 // CTC - prints active list of trains from train manager to GUI
-                ctc.getTrainManagerPanel().updateTable(trainManagers.get(0));
+                //ctc.getTrainManagerPanel().updateTable(trainManagers);
 
                 trainHandler.pollYard();
 
@@ -460,7 +460,7 @@ public class Launcher extends javax.swing.JFrame {
      * @param evt the event that triggered the action, i.e., the x1 radio button.
      */
     private void playNormalSpeed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playNormalSpeed
-
+        System.out.println("Playing!");
         this.systemSpeed = 1000;
         this.trainHandler.setClockSpeed(this.systemSpeed);
         System.out.println("System should play in x1 speed.");
@@ -496,7 +496,6 @@ public class Launcher extends javax.swing.JFrame {
         this.trainHandler.setClockSpeed(this.systemSpeed);
         // change the timer delay for all open train controllers
         for (TrainController tc : this.trainHandler.openTrainControllers){
-
             tc.playFast();
         }
 

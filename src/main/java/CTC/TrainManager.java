@@ -78,7 +78,6 @@ public class TrainManager {
 
   }
 
-
 	public void updateTrainPosition(ArrayList<Block> occList){
     for(int i=0; i<trainList.size(); i++){
       Block posTrainI = trainList.get(i).getPosition();

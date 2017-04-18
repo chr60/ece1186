@@ -23,37 +23,35 @@ import org.junit.jupiter.api.Test;
 public class TrainControllerTest {
     
     // Track Info 
-    TrackModel track;
-    String[] fNames = {"src/test/resources/redline.csv"};
-    Train testTrain;
+  private static TrackModel track;
+  private static String[] fNames = {"src/test/resources/redline.csv"};
+  private static String[] fOverrideNames = {"test-classes/redlinelink.csv"};
+  private static Boolean verbose = false;
+  private static Train testTrain;
 
-    // Train Controller
-    TrainController tc;
+  // Train Controller
+  private static TrainController tc;
     
   @BeforeEach
   /**
   * Initialization of the TrainController to be used for testing
   */
   void init(){
-    track.readCSV(fNames); 
-    this.testTrain = new Train(0, new TrackModel("Test")); 
     this.track = new TrackModel("Testing");
-    this.track.readCSV(fNames);
+    this.track.readCSV(fNames); 
+    this.testTrain = new Train(0, this.track); 
     this.tc = new TrainController(this.testTrain);
   }
-  
-  
+
+
   @Test
   /**
   * Test to make sure that the Train Controller is getting the right train.
   */
   @DisplayName("Validate that the system is controlling the correct train")
   void switchToCorrectTrain(){
-
       Train newTrain = new Train(10202, track); 
-      
       tc.setTrains(newTrain);
-      
       assertTrue(tc.getTrain() == newTrain); 
   }
   

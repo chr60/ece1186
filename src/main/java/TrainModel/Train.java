@@ -39,6 +39,8 @@ public class Train implements Serializable {
 	GPS trainLocation;
 	TrackModel globalTrack;
     Block prevBlock;
+	Antenna trainAntenna;
+
 	
 	//train data
 	Double maxPower = 120000.00; 		//maximum power is 120 kW
@@ -69,17 +71,23 @@ public class Train implements Serializable {
 	public Train(Integer ID, TrackModel gTrack){
 		mass = weightCar;  		//mass of empty car in kg
 		mass = mass + weightPass;
+		trainAntenna = new Antenna();
 		numCrew = 1;
-		velocity = 0.01;
-		velocity =0.0;
-		//Vx = 0.0;
-		//Vy = 0.0;
+		velocity = 0.0;
+		trainAntenna.setCurrVelocity(velocity);
+		oldVelocity =0.0;
+
 		trainID = ID;
 		power = 0.0;
 		currGrade = 0.0;
 		globalTrack = gTrack;
 		trainLocation = new GPS();
 		currAuthority = new GPS();
+		statusEB =0;
+		statusSB =0;
+		currTemp = 60.0;
+		currThermostat = 60.0;
+
 	}
 
 
@@ -117,10 +125,12 @@ public class Train implements Serializable {
 		power = newPower;
 		if(newPower >= maxPower){
 			//if power command is greater than or equal to max power do nothing
-                        power = maxPower;
-                        // System.out.println("Hey you!");
-                        changeSpeed(forceApp);
-		}else {
+			power = maxPower;
+			// System.out.println("Hey you!");
+			changeSpeed(forceApp);
+		}else if (newPower < 0.0){
+			//invalid power command so nothing will happen
+		}else{
 			//if power command calls for increase of speed
                         // System.out.println("Hey you!");
 			changeSpeed(forceApp);
@@ -167,9 +177,20 @@ public class Train implements Serializable {
 
 		updateCurrBlock(distance);
 		updateSpeedAndAuthority();
+		updateSafeBrakingDist();
+		trainAntenna.setCurrVelocity(velocity);
 	}
 
-
+/**
+     * Method to update safeBraking Distance of train
+     */
+	private void updateSafeBrakingDist(){
+		safeDistSB = getSafeBrakingDistSB();
+		safeDistEB = getSafeBrakingDistEB();
+	}
+	
+	
+	
 	/**
      * Method to determine what block the train is in now
      * @param a Double which corresponds to the distance travelled by the train
@@ -228,6 +249,7 @@ public class Train implements Serializable {
 		trainLocation.setCurrBlock(currBlock);
                 //System.out.println("Dist: " + dist);
 		trainLocation.setDistIntoBlock(dist);
+		trainAntenna.setGPS(trainLocation);
 
 	}
 
@@ -235,7 +257,6 @@ public class Train implements Serializable {
      * Method to update speed and authority (and other block properties)
      */
 	private void updateSpeedAndAuthority(){
-
             if (this.getCurrBlock() != null){
                 if (this.getCurrBlock().getSuggestedSpeed() != null){
 
@@ -252,6 +273,7 @@ public class Train implements Serializable {
                     currGrade = getCurrBlock().getGrade();
                 }
             }
+			
         }
 
 
@@ -285,6 +307,16 @@ public class Train implements Serializable {
 		mass = 2 * maxWeight;
 		currGrade = maxGrade;
 	}
+	
+		/**
+	 * Method to set velocity for test train
+	 */
+	public void setVelocity(Double newV){
+		
+		velocity = newV * 0.447;				//convert MPH to m/s
+		trainAntenna.setCurrVelocity(velocity);
+	}
+
 		
 		
 	/**
@@ -295,6 +327,7 @@ public class Train implements Serializable {
 		Double decRate = deccelRate(SBrate);
 		Double timeSB = timeToStop(decRate);
 		Double SBD = distanceToStop(decRate,timeSB);
+		trainAntenna.setSafeBrakingDistSB(SBD);
 		return SBD;
 	}
 
@@ -306,6 +339,7 @@ public class Train implements Serializable {
 		Double decRate = deccelRate(EBrate);
 		Double timeEB = timeToStop(decRate);
 		Double SEBD = distanceToStop(decRate,timeEB);
+		trainAntenna.setSafeBrakingDistEB(SEBD);
 		return SEBD;
 	}
 
@@ -365,6 +399,7 @@ public class Train implements Serializable {
 
             this.trainLocation.setCurrBlock(newBlock);
             this.trainLocation.setDistIntoBlock(0.0);
+			trainAntenna.setGPS(trainLocation);
             this.currBlock = newBlock;
             this.prevBlock = currBlock;
 	}
@@ -376,14 +411,13 @@ public class Train implements Serializable {
 	public Block getCurrBlock(){
 		return this.currBlock;
 	}
-
+	
 	/**
-     * Mutator to compute how far into the block a train has traveled to more accurately provide location to the MBO
-     * @return a Double which denotes how far into the block the train currently is
+     * Accessor to get the train Antenna of the train
+     * @return Antenna object onboard the train
      */
-	public Double distIntoBlock(Double dist){
-		Double location=0.0;
-		return location;
+	public Antenna getAntenna(){
+		return trainAntenna;
 	}
 
 
@@ -392,7 +426,16 @@ public class Train implements Serializable {
      * Method to update temperature based on current temp and thermostat setting. This method will be called periodically at each cycle of the system
      */
 	public void updateTemp(){
-
+		//Using Newtons Law of cooling 
+		//T(t) = Ta + (To - Ta)e^(-kt)
+		//where T(t) is new temperature
+		//Ta is current Temperature of train
+		//and To is temperature of thermostat
+		Double k = 0.054 * 60; 		//k is 0.054 per minute (convert to seconds)
+		if (statusAC == 1 || statusHeater == 1){
+			currTemp = currTemp + (currThermostat - currTemp)* Math.exp((-1*k)*1);
+		}
+		
 	}
 
 
@@ -446,7 +489,7 @@ public class Train implements Serializable {
      * @return an Double object which corresponds to train's current velocity. This value will be converted from m/s to MPH prior to returning.
      */
 	public Double getVelocity(){
-		return (velocity * 2.23694);			//convert velocity to MPH from m/s
+		return (velocity * 2.236);			//convert velocity to MPH from m/s
 	}
 
 	/**
@@ -454,7 +497,7 @@ public class Train implements Serializable {
      * @return an Double object which corresponds to train's current mass. This value will be converted from kg to lbs prior to returning.
      */
 	public Double getMass(){
-		return ((mass) * 2.20462);				//convert mass from Kg to lbs before display
+		return ((mass) * 2.204);				//convert mass from Kg to lbs before display
 	}
 
 	/**
@@ -690,13 +733,8 @@ public class Train implements Serializable {
      * @param a Double argument which denotes the thermostat setting on board the train in Fahrenheit
      */
 	public void setThermostat(Double newThermostat){
-
-
-            System.out.println("Set Thermostat Called.");
 		currThermostat = newThermostat;
-
-                this.updateTemp();
-
+		this.updateTemp();
 	}
 
 	/**
@@ -764,6 +802,15 @@ public class Train implements Serializable {
 		Double massPass = pass * weightPass;
 		changeMass(massPass);
 	}
+	
+	/**
+     * Accessor to see how many passengers are on the Train
+	 * @return a int corresponding to number of passengers on board the train
+     */
+	public int getNumPassengers()
+	{
+		return numPassengers;
+	}
 
 	/**
      * Modifier to change the amount of cars connected to the train
@@ -779,13 +826,31 @@ public class Train implements Serializable {
 		Double carLength = car * lengthCar;
 		changeLength(carLength);
 	}
-
+	
+/**
+     * Accessor to get number of cars on train
+	 * @return a int corresponding to number of cars
+     */
+	public int getNumCars()
+	{
+		return numCars;
+	}
+	
 	/**
      * Modifier to change the current length of the train
      * @param an Double object which corresponds to the change in length to apply. To decrease length a negative number should be passed to this method.
      */
 	public void changeLength(Double length2) {
 		length = length + length2;
+	}
+	
+	/**
+     * Accessor to get length of train
+	 * @return a Double corresponding to length of train
+     */
+	public Double getLength()
+	{
+		return length;
 	}
 
 	/**
@@ -795,17 +860,6 @@ public class Train implements Serializable {
 	public void setSpeed(Double speed) {
 		setPointSpeed = speed;
 	}
-
-
-        /**
-         * Refreshes the temperature on the train.
-         *
-         */
-        public void refreshTemp(){
-
-            this.updateTemp();
-        }
-
 
 
 

@@ -11,14 +11,10 @@ import TrainControllerComps.TrainController;
 import TrainModel.Train;
 import TrainModel.TrainHandler;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-/**
- *
- * @author Andrew
- */
 public class TrainInfoTest {
     
     static TrackModel track = new TrackModel("Testing"); 
@@ -31,18 +27,15 @@ public class TrainInfoTest {
     
     static TrainHandler trainhandler;
     
-  @BeforeAll
+  @BeforeEach
   /**
   * Initialization of the TrainController to be used for testing
   */
-  static void init(){
-    
-    track.readCSV(fNames);   
-    testTrain  = new Train(1, track);   
-    tc.getBlockInfoPane().setBlockSpeed(yardBlock.getSpeedLimit()); 
-    trainhandler = new TrainHandler(track); 
-    
-    
+  void init(){
+    this.track.readCSV(fNames);   
+    this.testTrain  = new Train(1, this.track);   
+    tc.getBlockInfoPane().setBlockSpeed(this.yardBlock.getSpeedLimit()); 
+    trainhandler = new TrainHandler(this.track); 
   }
   
   @Test
@@ -72,7 +65,7 @@ public class TrainInfoTest {
    * Test to make the utility panel is receiving the correct train.
    */
   @DisplayName("Check to make the utility panel is receiving the correct train") 
-  static void passedCorrectTrain(){
+  void passedCorrectTrain(){
   
       Train tcTrain = tc.getTrain(); 
       tc.getTrainInfoPane().setSelectedTrain(tcTrain);
@@ -86,7 +79,7 @@ public class TrainInfoTest {
    * Test to make the speed picked up from the train is converted correctly.
    */
   @DisplayName("Check to make the speed picked up from the train is converted correctly") 
-  static void convertSpeedCorrectly(){
+  void convertSpeedCorrectly(){
   
     testTrain.powerCommand(100.0);
     testTrain.setAuthority(endBlock);

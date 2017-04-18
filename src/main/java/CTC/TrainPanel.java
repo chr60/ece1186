@@ -1,4 +1,5 @@
 package CTC;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 
@@ -166,9 +167,12 @@ public class TrainPanel extends JPanel{
 	}
 
 	// CTC calls this method to update occupancy from WS
-	public void updateTrainPositionsToManager(TrainManager tm){
+	public void updateTrainPositionsToManager(ArrayList<TrainManager> trainManagerList){
 		ArrayList<Block> trainPositions = currWorkingWS.getOccupancy();
-		tm.updateTrainPosition(trainPositions);
+		for (TrainManager tm : trainManagerList) {
+			tm.updateTrainPosition(trainPositions);
+		}
+		
 	}
 
 	// CTC calls this method to update train id
