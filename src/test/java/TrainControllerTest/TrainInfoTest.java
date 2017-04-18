@@ -9,6 +9,7 @@ import TrackModel.Block;
 import TrackModel.TrackModel;
 import TrainControllerComps.TrainController;
 import TrainModel.Train;
+import TrainModel.GPS;
 import TrainModel.TrainHandler;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,7 +47,8 @@ public class TrainInfoTest {
   static void hasCorrectInfo(){
   
       testTrain.powerCommand(100.0);
-      testTrain.setAuthority(endBlock);
+	  GPS auth = new GPS(endBlock,null);
+      testTrain.setAuthority(auth);
       yardBlock.setSuggestedSpeed(50.0);
       
       tc.getTrainInfoPane().setSelectedTrain(testTrain);
@@ -82,7 +84,9 @@ public class TrainInfoTest {
   void convertSpeedCorrectly(){
   
     testTrain.powerCommand(100.0);
-    testTrain.setAuthority(endBlock);
+	GPS auth = new GPS(endBlock,null);
+    testTrain.setAuthority(auth);
+    testTrain.setAuthority(auth);
     yardBlock.setSuggestedSpeed(50.0);
       
     tc.getTrainInfoPane().setSelectedTrain(testTrain);

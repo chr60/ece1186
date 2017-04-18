@@ -737,8 +737,7 @@ public class TrainModeUI {
                 
                 this.txtLights.setText(this.getStatusOfTrainLightsAndBrakes(this.currTrain.getLights()));   
 				
-				//check murphy failure buttons 
-				if (engineFailureBG.)
+				
             }   	     
 	}
         
