@@ -128,8 +128,3 @@ public class TrainControllerTest {
       assertTrue(tc.clock.getDelay() == 100);    
   }
 }
-    tc.playFast();
-     
-      assertTrue(tc.clock.getDelay() == 100);    
-  }
-}
