@@ -30,6 +30,7 @@ public class Station implements Comparable<Station>, Serializable {
     this.passengersWaiting = new Integer(0);
     this.forwardStationLights = new Lights(this.superTrackModel);
     this.backWardStationLights = new Lights(this.superTrackModel);
+    this.nextArrivalTime = "0:00";
   }
 
   /**
@@ -77,6 +78,13 @@ public class Station implements Comparable<Station>, Serializable {
     this.nextArrivalTime = arrivalTime;
   }
   
+  /** 
+  * Allows for viewing of the next arrival time.
+  */
+  public String nextArrivalTime() {
+    return this.nextArrivalTime;
+  }
+
   /**
   * Implements comparable interface for a station based upon the name of a station.
   * @param thatStation station to be compared to

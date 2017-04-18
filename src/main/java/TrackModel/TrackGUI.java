@@ -47,7 +47,8 @@ public class TrackGUI {
   private JLabel lblNextBlock;
   private JToggleButton toggleSignals;
   private JLabel lblStation;
-  private JTextField txtname;
+  private JTextField stationName;
+  private JTextField stationArrivalTime;
   private JLabel lblNewLabel;
   private JLabel lblBrokenRail;
   private JToggleButton toggleBroken;
@@ -205,13 +206,13 @@ public class TrackGUI {
     lblOccupied = new JLabel("Occupied");
     lblOccupied.setHorizontalAlignment(SwingConstants.LEFT);
     lblOccupied.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    lblOccupied.setBounds(550, 183, 79, 23);
+    lblOccupied.setBounds(550, 192, 79, 23);
     frame.getContentPane().add(lblOccupied);
 
     JToggleButton toggleOccupied = new JToggleButton("Y");
     toggleOccupied.setFont(new Font("Tahoma", Font.PLAIN, 11));
     toggleOccupied.setSelected(true);
-    toggleOccupied.setBounds(632, 185, 45, 23);
+    toggleOccupied.setBounds(632, 192, 45, 23);
     frame.getContentPane().add(toggleOccupied);
     toggleOccupied.setSelected(true);
 
@@ -292,12 +293,19 @@ public class TrackGUI {
     lblStation.setBounds(529, 147, 79, 23);
     frame.getContentPane().add(lblStation);
 
-    txtname = new JTextField();
-    txtname.setText("(name)");
-    txtname.setHorizontalAlignment(SwingConstants.CENTER);
-    txtname.setColumns(10);
-    txtname.setBounds(634, 149, 186, 23);
-    frame.getContentPane().add(txtname);
+    stationName = new JTextField();
+    stationName.setText("(name)");
+    stationName.setHorizontalAlignment(SwingConstants.CENTER);
+    stationName.setColumns(10);
+    stationName.setBounds(634, 149, 186, 23);
+    frame.getContentPane().add(stationName);
+
+    stationArrivalTime = new JTextField();
+    stationArrivalTime.setText("(time)");
+    stationArrivalTime.setHorizontalAlignment(SwingConstants.CENTER);
+    stationArrivalTime.setColumns(10);
+    stationArrivalTime.setBounds(634, 169, 186, 23);
+    frame.getContentPane().add(stationArrivalTime);
 
     lblNewLabel = new JLabel("MURPHY");
     lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -446,7 +454,7 @@ public class TrackGUI {
         elevationField.setText(String.valueOf(METERSMULT*track.trackList.get(line).get(section).get(Integer.valueOf(block)).getElevation()));
         speedField.setText(String.valueOf(METERSMULT*track.trackList.get(line).get(section).get(Integer.valueOf(block)).getSpeedLimit()));
         gradeField.setText(String.valueOf(track.trackList.get(line).get(section).get(Integer.valueOf(block)).getGrade()));
-        txtname.setText(track.trackList.get(line).get(section).get(Integer.valueOf(block)).getStationName());
+        stationName.setText(track.trackList.get(line).get(section).get(Integer.valueOf(block)).getStationName());
 
         //Probably a better way to template this.
         Boolean isOccupied = thisBlock.getOccupied();
@@ -548,6 +556,7 @@ public class TrackGUI {
             toggleHeatersOn.setText("Off");
             toggleHeatersOn.setSelected(false);
           }
+
         if(track.blockStationMap.get(thisBlock).getForwardLights().viewLightsState()) {
             toggleStationLightsForward.setText("Green");
         } else {
@@ -558,8 +567,10 @@ public class TrackGUI {
         } else{
             toggleStationLightsBack.setText("Red");
         }
-          
-
+        
+        String nextArrivalTime = track.blockStationMap.get(thisBlock).nextArrivalTime();
+        stationArrivalTime.setText(nextArrivalTime);
+        
         } else{
             toggleHeatersOn.setText("N/A");
             toggleHeatersOn.setSelected(false);
