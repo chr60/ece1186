@@ -115,6 +115,18 @@ public class TrainHandler {
 		return null;
 	}
 	
+	//method to search and return train on a given block
+	public Train getTrainOn(Block onBlock) {
+		for(int i = 0; i < trains.size(); i++)
+		{
+			if (trains.get(i).getCurrBlock().compareTo(onBlock) == 1 )
+			{
+				return trains.get(i);
+			}
+		}
+		return null;
+	}
+	
 	//method to search and return train object based on train ID
 	public Antenna getTrainAntenna(Integer id)
 	{
@@ -133,27 +145,35 @@ public class TrainHandler {
 
 		//check red line first
 		Double suggestedSpeed = yardBlockRed.getSuggestedSpeed();
-
 		yardBlockRed.setSuggestedSpeed(null);
 		Block authorityBlock = yardBlockRed.getAuthority();
 		yardBlockRed.setAuthority(null);
 		if(yardBlockRed.getOccupied() == false){
 			if (suggestedSpeed != null){
-			//suggested speed is greater than 0
-			 if (authorityBlock != null && (authorityBlock.compareTo(yardBlockRed) != 1)){
-				 //if authority is not null and authority is not the yard (returning train)
-				 //then this means a new train is being initialized.
-				 GPS authority = new GPS();
-				 authority.setCurrBlock(authorityBlock);
-				 authority.setDistIntoBlock(null);
-				 Integer ID = setSpeedAndAuthority(-1,suggestedSpeed,authority,yardBlockRed);
-				 yardBlockRed.setTrainId(ID);
+			//suggested speed is greater than 0.compareTo(yardBlockRed) != 1
+				 if (authorityBlock != null && (authorityBlock.compareTo(yardBlockRed) != 1)){
+					 //if authority is not null and authority is not the yard (returning train)
+					 //then this means a new train is being initialized.
+					 GPS authority = new GPS();
+					 authority.setCurrBlock(authorityBlock);
+					 authority.setDistIntoBlock(null);
+					 Integer ID = setSpeedAndAuthority(-1,suggestedSpeed,authority,yardBlockRed);
+					 yardBlockRed.setTrainId(ID);
 
-				 yardBlockRed.setOccupied(true);
-                                 
-			 }
+					 yardBlockRed.setOccupied(true);
+									 
+				 }
+			}
+		}else if (yardBlockRed.getOccupied() == true) {
+			//if there is a train on the block and its authority is returning to the yard then remove it from the system
+			Train returningTrain = getTrainOn(yardBlockRed);
+			if (returningTrain.getAuthority().getCurrBlock().compareTo(yardBlockRed) == 1) {
+				trains.remove(returningTrain);
+			}
+			
+			
 		}
-		}
+		
 		
 
 		/*

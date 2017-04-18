@@ -3,6 +3,7 @@ import TrackModel.*;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.Random;
 
 //doxygen comment format below!
 /**
@@ -19,6 +20,7 @@ public class Train implements Serializable {
 
 	//variables for train values.
 	GPS currAuthority;
+	Random rand;
 	Block currBlock;
 	Double mass, length, velocity, oldVelocity, power, currGrade;
 	Double netForce;
@@ -442,12 +444,40 @@ public class Train implements Serializable {
 
 
 
-	/* FUNCTIOSN TO INTEGRATE WITH TRACK MODEL GETTING PEOPLE ON AND OFF
+	/* functions to integrate with track. adding and removing people
+	
 	 * Public Integer loadPassengers (Integer maxPassengers)
 		return random numeber
 
 		public void addDepartingPassengers(Integer numPassengers)
 	 */
+	  /**
+     * Method to update number of passengers on board train. this will be called once train stops at a station
+     */
+	 public void updatePassengerCount() {
+		 //get station that the train is stopped at
+		 Station currStation = currBlock.getAssociatedStation();
+		 //allow people to get off at station
+		 //random amount will leave based on current amount on board train
+		 Integer numUnboarding = passengersUnboarding();
+		 changePassengers(-1*numUnboarding);
+		 currStation.addDepartingPassengers(numUnboarding);
+		 
+		 //allow people to get on train
+		 Integer spaceLeft = maxPassengers - numPassengers;
+		 Integer numBoarding = currStation.loadPassengers(spaceLeft);
+		 changePassengers(numBoarding);
+	 }
+	 
+	 /**
+     * Method to update temperature based on current temp and thermostat setting. This method will be called periodically at each cycle of the system
+     */
+	public int passengersUnboarding(){
+		//random number selected between number of people on train.
+		return rand.nextInt(numPassengers);
+	}
+	 
+	 
 
 
 	//CODE BELOW THIS LINE IS DONE. DO NOT TOUCH.
@@ -647,11 +677,6 @@ public class Train implements Serializable {
     public int getHeat(){
         return this.statusHeater;
     }
-
-
-
-
-
 
 	/**
      * Mutator to set current train's Authority
@@ -859,8 +884,6 @@ public class Train implements Serializable {
 	public void setSpeed(Double speed) {
 		setPointSpeed = speed;
 	}
-
-
 
 
 	/**
