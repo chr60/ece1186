@@ -114,6 +114,17 @@ public class TrainHandler {
 		}
 		return null;
 	}
+	
+	//method to search and return train object based on train ID
+	public Antenna getTrainAntenna(Integer id)
+	{
+		Train currT = findTrain(id);
+		if (currT != null)
+		{
+			return currT.getAntenna();
+		}
+		return null;
+	}
 
 	//method to pull
 	public void pollYard()
