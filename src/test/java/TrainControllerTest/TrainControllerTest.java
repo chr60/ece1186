@@ -10,7 +10,7 @@ import TrackModel.TrackModel;
 import TrainControllerComps.TrainController;
 import TrainModel.Train;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,25 +23,23 @@ import org.junit.jupiter.api.Test;
 public class TrainControllerTest {
     
     // Track Info 
-    static TrackModel track = new TrackModel("Testing");
-    static String[] fNames = {"src/test/resources/redline.csv"};
-    
-    // Train Info
-    static Train testTrain = new Train(0, new TrackModel("Test")); 
-    
-    // Yard Block 
-    static Block yardBlock; 
-    
+    TrackModel track;
+    String[] fNames = {"src/test/resources/redline.csv"};
+    Train testTrain;
+
     // Train Controller
-    static TrainController tc = new TrainController(testTrain);
+    TrainController tc;
     
-  @BeforeAll
+  @BeforeEach
   /**
   * Initialization of the TrainController to be used for testing
   */
-  static void init(){
-    
+  void init(){
     track.readCSV(fNames); 
+    this.testTrain = new Train(0, new TrackModel("Test")); 
+    this.track = new TrackModel("Testing");
+    this.track.readCSV(fNames);
+    this.tc = new TrainController(this.testTrain);
   }
   
   
@@ -50,7 +48,7 @@ public class TrainControllerTest {
   * Test to make sure that the Train Controller is getting the right train.
   */
   @DisplayName("Validate that the system is controlling the correct train")
-  static void switchToCorrectTrain(){
+  void switchToCorrectTrain(){
 
       Train newTrain = new Train(10202, track); 
       
@@ -64,7 +62,7 @@ public class TrainControllerTest {
   * Test to make sure that the system in in automatic mode.
   */
   @DisplayName("Validate that the system is put into Automatic mode")
-  static void inAutomaticMode(){
+  void inAutomaticMode(){
 
       tc.setMode("Automatic", "Normal");
       
@@ -76,7 +74,7 @@ public class TrainControllerTest {
   * Test to make sure that the system in in manual mode.
   */
   @DisplayName("Validate that the system is put into manual mode")
-  static void inManualMode(){
+  void inManualMode(){
 
       tc.setMode("Manual", "Normal");
       
@@ -88,7 +86,7 @@ public class TrainControllerTest {
   * Test that the system in in normal mode.
   */
   @DisplayName("Validate that the system is in normal mode")
-  static void inNormalMode(){
+  void inNormalMode(){
 
       tc.setMode("Automatic", "Normal");
       
@@ -100,7 +98,7 @@ public class TrainControllerTest {
   * Test that the system is in testing mode.
   */
   @DisplayName("Validate that the system is in testing mode")
-  static void inTestingMode(){
+  void inTestingMode(){
 
       tc.setMode("Manual", "Testing");
        
@@ -112,7 +110,7 @@ public class TrainControllerTest {
   * Test that the system is put in normal speed.
   */ 
   @DisplayName("Validate that the system plays at normal speed")  
-  static void inNormalSpeed(){
+  void inNormalSpeed(){
   
       tc.playNormal();
       
@@ -124,8 +122,13 @@ public class TrainControllerTest {
   * Test that the system is put in fast speed.
   */
   @DisplayName("Validate that the system plays at fast speed")  
-  static void inFastSpeed(){
+  void inFastSpeed(){
       tc.playFast();
+     
+      assertTrue(tc.clock.getDelay() == 100);    
+  }
+}
+    tc.playFast();
      
       assertTrue(tc.clock.getDelay() == 100);    
   }
