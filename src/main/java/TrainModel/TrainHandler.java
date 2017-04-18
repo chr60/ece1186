@@ -50,10 +50,10 @@ public class TrainHandler {
 
 	//Communcation to and from CTC
 	//this method will generate a new train by passing a trainID of -1
-	public int setSpeedAndAuthority(Integer trainID, Double Speed, Block goToBlock, Block startBlock)
+	public int setSpeedAndAuthority(Integer trainID, Double Speed, GPS goToBlock, Block startBlock)
 	{
 		Train currT;
-		if(trainID == -1)
+		if (trainID == -1)
 		{
 			//train is a new train
 			currT = new Train(trainIDAssign, globalTrack);
@@ -143,7 +143,10 @@ public class TrainHandler {
 			 if (authorityBlock != null && (authorityBlock.compareTo(yardBlockRed) != 1)){
 				 //if authority is not null and authority is not the yard (returning train)
 				 //then this means a new train is being initialized.
-				 Integer ID = setSpeedAndAuthority(-1,suggestedSpeed,authorityBlock,yardBlockRed);
+				 GPS authority = new GPS();
+				 authority.setCurrBlock(authorityBlock);
+				 authority.setDistIntoBlock(null);
+				 Integer ID = setSpeedAndAuthority(-1,suggestedSpeed,authority,yardBlockRed);
 				 yardBlockRed.setTrainId(ID);
 
 				 yardBlockRed.setOccupied(true);

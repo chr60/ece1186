@@ -657,9 +657,8 @@ public class Train implements Serializable {
      * Mutator to set current train's Authority
      * @param an Double object which corresponds to the new authority.
      */
-	public void setAuthority(Block goToBlock){
-		currAuthority.setCurrBlock(goToBlock);
-		currAuthority.setDistIntoBlock(null);
+	public void setAuthority(GPS goToBlock){
+		currAuthority = goToBlock;
 	}
 
 	/**
