@@ -24,10 +24,12 @@ public class Schedule{
   */
   private CTCgui ctc;
   private String mode;
+  private MovingBlockOverlay mbo;
   private TrackModel dummyTrack;
   private TrainManager manager;
   private TrainHandler handler;
   private ArrayList<TrainSchedule> schedules = new ArrayList<TrainSchedule>();
+  private DriverSchedule drivers;
   private Block yardBlock;
   private int numTrains = 0;
   private Block [] lineStops;
@@ -38,6 +40,8 @@ public class Schedule{
   private int [] stationTimes;
   private int dwellTime = 60; // default time to dwell at a station is 60 seconds
   private int lineLoopTime; //in seconds, includies dwell
+  private int startTime;
+  private int numLoops;
 
   /**
    * Constructor for the schedule
@@ -157,7 +161,9 @@ public class Schedule{
    *
    */
   public void createSchedule(int numLoops, int start, int numTrains) {
-    
+
+    this.numLoops = numLoops;
+    this.startTime = start;
     this.numTrains = numTrains;
 
     int trainSpacing = lineLoopTime / numTrains;
@@ -190,19 +196,24 @@ public class Schedule{
         }
       }
     }
+    driverSchedule();
     updateTrains();
   }
 
 
-  private void driverSchedule(int start, int numLoops) {
+  private void driverSchedule() {
 
     long scheduleLength = lineLoopTime * numLoops;
+
+    drivers = new DriverSchedule(scheduleLength, schedules.size());
 
     for(int sched = 0; sched < schedules.size(); sched++){
       TrainSchedule train = schedules.get(sched);
       ArrayList<ArrayList<Integer>> list = train.getList();
       ArrayList<Integer> arr = list.get(list.size() - 1);
       Integer lastTime = arr.get(arr.size() - 1);
+
+      drivers.addDriver(-1, train.getTrainID(), startTime, "TBD");
     }
   }
 
@@ -255,7 +266,6 @@ public class Schedule{
 
         if (null != trainList.get(i).getPosition()) {
           if (trainList.get(i).getPosition().blockNum() == nextStop.blockNum()) {
-            //System.out.println("\nTHEY'RE EQUAL!!");
             manager.getTrain(trainList.get(i).getID()).setLastStation(nextStop);
           }
         } else {
@@ -648,46 +658,6 @@ public class Schedule{
   }
 
   /**
-   * Checks to see if a collision between two trains will occur
-   * @param  back   Train in the back
-   * @param  front  Train in the front
-   * @return int    collision
-   *
-   * @bug take into account that the trains will change speeds as they change blocks
-   *       change over from getMinSpeedLimit to calcBlockSpeeds to increase throughput
-   * @bug implement whole function as authority calculation
-   */
-  //private int collisionCheck(Train back, Train front) {
-    /*
-    0: No braking necessary
-    -1: Apply service brakes
-    -2: Apply emergency brakes
-    else: Speed the front train needs to go to avoid collision
-     */
-  /*  int collision;
-    double distBetween = getDistBetween(front, back);
-    double safeBrake = MovingBlockOverlay.findStopDist(back);
-    int timeToBrake = MovingBlockOverlay.timeToBrake(back);
-    double emgBrake = MovingBlockOverlay.findEmgStopDist(back);
-    int timeToEmgBrake = MovingBlockOverlay.timeToEmgBrake(back);
-    double speedDifference = front.getVelocity() - back.getVelocity();
-
-    if (speedDifference >= 0) {
-      collision = 0;
-    }
-    else if (distBetween + timeToBrake * speedDifference > safeBrake) {
-      collision = -1;
-    }
-    else if (distBetween + timeToEmgBrake * speedDifference > emgBrake) {
-      collision = -2;
-    }
-    else {
-    }
-
-    return collision;
-  }*/
-
-  /**
    * Gets the distance in meters between two trains
    * @param  front   Train in front
    * @param  back    Train in back
@@ -909,6 +879,10 @@ public class Schedule{
 
   public ArrayList<TrainSchedule> getSched() {
     return schedules;
+  }
+
+  public DriverSchedule getDrivers() {
+    return drivers;
   }
 
 }

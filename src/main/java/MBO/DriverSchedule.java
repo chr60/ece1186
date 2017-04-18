@@ -1,10 +1,10 @@
 package MBO;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class DriverSchedule{
 
-  private HashMap<Integer, Driver> driverSchedule;
+  private ArrayList<Driver> driverSchedule;
   private final long START_TO_BREAK = 14400;
   private final long BREAK_LEN = 1800;
   private long freeAt = 0;
@@ -17,15 +17,15 @@ public class DriverSchedule{
   public DriverSchedule(long runTime, int numTrains) {
     this.runTime = runTime;
     this.numTrains = numTrains;
-    driverSchedule = new HashMap<Integer, Driver>();
+    driverSchedule = new ArrayList<Driver>();
   }
 
   /**
    * Creates a list of drivers by parsing a csv file
    * @param   fileName                  CSV file location
-   * @return  HashMap<Integer, Driver>  driveSchedule
+   * @return  ArrayList<Driver>  driveSchedule
    */
-  public HashMap<Integer, Driver> updateDrivers(String fileName) {
+  public ArrayList<Driver> updateDrivers(String fileName) {
     return null;
   }
 
@@ -46,7 +46,7 @@ public class DriverSchedule{
       employeeID = driverSchedule.size();
     }
     
-    driverSchedule.put(employeeID, new Driver(employeeID, trainID, shiftStart, 
+    driverSchedule.add(new Driver(employeeID, trainID, shiftStart, 
                     shiftEnd, breakStart, breakEnd, status));
   }
 
@@ -58,7 +58,34 @@ public class DriverSchedule{
       driver.setEmployeeID(employeeID);
     }
 
-    driverSchedule.put(employeeID, driver);
+    driverSchedule.add(driver);
+  }
+
+  public void addDriver(int employeeID, int trainID, long shiftStart, String status) {
+
+    if (employeeID == -1) { 
+      employeeID = driverSchedule.size();
+    }
+
+    long breakStart, breakEnd, shiftEnd;
+
+    breakStart = shiftStart + START_TO_BREAK;
+    breakEnd = breakStart + BREAK_LEN;
+    shiftEnd = breakEnd + START_TO_BREAK;
+
+    if (breakStart > shiftStart + runTime) {
+      breakStart = shiftStart + runTime;
+      breakEnd = breakStart;
+      shiftEnd = breakEnd;
+    } else if (breakEnd > shiftStart + runTime) {
+      breakEnd = shiftStart + runTime;
+      shiftEnd = breakEnd;
+    } else if (shiftEnd > shiftStart + runTime) {
+      shiftEnd = shiftStart + runTime;
+    }
+
+    driverSchedule.add(new Driver(employeeID, trainID, shiftStart, 
+                    shiftEnd, breakStart, breakEnd, status));
   }
 
   /**
@@ -68,6 +95,10 @@ public class DriverSchedule{
    */
   public Driver getDriver(int employeeID) {
     return driverSchedule.get(employeeID);
+  }
+
+  public Driver get(int i) {
+    return driverSchedule.get(i);
   }
 
   public long getFree() {
@@ -88,9 +119,9 @@ public class DriverSchedule{
 
   /**
    * Gets the schedule
-   * @return HashMap<Integer, Driver> driverSchedule
+   * @return ArrayList<Driver> driverSchedule
    */
-  public HashMap<Integer, Driver> getSchedule() {
+  public ArrayList<Driver> getSchedule() {
     return driverSchedule;
   }
 

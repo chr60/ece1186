@@ -39,8 +39,12 @@ public class MBO_gui {
   private JTextField numThruputTextfield;
   String [] redLineNames = {"Train ID", "Shadyside", "Herron Ave", "Swissvale", "Penn Station",
     "Steel Plaza", "First Ave", "Station Square", "South Hills Junction"};
+  String [] driverColumns = {"Employee ID", "Train ID", "Shift Start", "Break Start", 
+    "Break End", "Shift End", "Status"};
   private JTable trainTable = new JTable();
   private DefaultTableModel trainModel = new DefaultTableModel();
+  private JTable driverTable = new JTable();
+  private DefaultTableModel driverModel = new DefaultTableModel();
   private MovingBlockOverlay mbo;
   private CTCgui ctc;
 
@@ -256,18 +260,12 @@ public class MBO_gui {
         sched = mbo.getSched().get(index);
 
         int loops = Integer.parseInt(numLoopsTextField.getText());
-        int start;
-        try {
-          start = Integer.parseInt(startTextField.getText());
-        } catch (NumberFormatException n) {
-          start = (int) CommonUIElements.ClockAndLauncher.Launcher.getCurrTime();
-          // To account for time zones
-          start -= 4 * 60 * 60; 
-        }
+        int start = getTimeEntered();
         int trains = Integer.parseInt(numTrainTextField.getText());
 
         sched.createSchedule(loops, start, trains);
-        scheduleToGUI2(trains, sched.getSched());
+        scheduleToGUI(trains, sched.getSched());
+        driversToGUI(sched.getDrivers());
       }
     });
 
@@ -281,18 +279,7 @@ public class MBO_gui {
    *
    * @bug Compare to current time
    */
-  private void scheduleToGUI(int rows, ArrayList<ArrayList<Integer>> arrivals) {
-    trainModel.setRowCount(rows);
-    trainTable.setModel(trainModel);
-
-    for (int i = 0; i < arrivals.size() - 1; i++) {
-      for (int j = 0; j < arrivals.get(0).size(); j++) {
-        trainTable.setValueAt(Schedule.convertTime(arrivals.get(i).get(j)), j, i);
-      }
-    }
-  }
-
-  private void scheduleToGUI2(int rows, ArrayList<TrainSchedule> schedules) {
+  private void scheduleToGUI(int rows, ArrayList<TrainSchedule> schedules) {
     trainModel.setRowCount(rows);
     trainTable.setModel(trainModel);
 
@@ -302,6 +289,33 @@ public class MBO_gui {
         trainTable.setValueAt(Schedule.convertTime(schedules.get(i).getTime(0,j - 1)), i, j);
       }
     }
+  }
+
+  private void driversToGUI(DriverSchedule drivers) {
+    driverModel.setRowCount(drivers.size());
+    driverTable.setModel(driverModel);
+
+    for (int i = 0; i < drivers.size(); i++) {
+      driverTable.setValueAt(drivers.get(i).getEmployeeID(), i, 0);
+      driverTable.setValueAt(drivers.get(i).getTrainID(), i, 1);
+      driverTable.setValueAt(Schedule.convertTime(drivers.get(i).getShiftStart()), i, 2);
+      driverTable.setValueAt(Schedule.convertTime(drivers.get(i).getBreakStart()), i, 3);
+      driverTable.setValueAt(Schedule.convertTime(drivers.get(i).getBreakEnd()), i, 4);
+      driverTable.setValueAt(Schedule.convertTime(drivers.get(i).getShiftEnd()), i, 5);
+      driverTable.setValueAt(drivers.get(i).getStatus(), i, 6);
+    }
+  }
+
+  public int getTimeEntered() {
+    int start;
+    try {
+      start = Integer.parseInt(startTextField.getText());
+    } catch (NumberFormatException n) {
+      start = (int) CommonUIElements.ClockAndLauncher.Launcher.getCurrTime();
+      // To account for time zones
+      start -= 4 * 60 * 60; 
+    }
+    return start;
   }
 
   public class TrainSchedPanel extends JPanel {
@@ -343,20 +357,21 @@ public class MBO_gui {
 
       setLayout(new BorderLayout());
 
-      model = new DefaultTableModel();
-      table = new JTable();
+      driverModel = new DefaultTableModel();
+      driverTable = new JTable();
       
       JPanel options = new JPanel(new GridBagLayout());
-      add(new JScrollPane(table));
+      add(new JScrollPane(driverTable));
       add(options, BorderLayout.NORTH);
 
-      table.setAutoCreateColumnsFromModel(true);
+      driverTable.setAutoCreateColumnsFromModel(true);
 
-      model.setColumnCount(10);
-      model.setRowCount(50);
+      driverModel.setColumnIdentifiers(driverColumns);
+      driverModel.setColumnCount(driverColumns.length);
+      driverModel.setRowCount(50);
 
       // Replace model
-      table.setModel(model);
+      driverTable.setModel(driverModel);
 
     }
   }
