@@ -114,7 +114,7 @@ public class Launcher extends javax.swing.JFrame {
     public Launcher() {
         initComponents();
 
-        this.playSound();
+        //this.playSound();
         this.normalSpeedRadioButton.setSelected(true);
         // for now, we start in normal mode
         this.systemSpeed = 1000;
