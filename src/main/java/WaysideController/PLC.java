@@ -21,14 +21,25 @@ public class PLC {
   private String line;
   private HashMap<String, String> switchMap = new HashMap<String, String>();	//Key is Switch label (Switch #), return val is expression
   private HashMap<Block, String> crossingMap = new HashMap<Block, String>();	//Block # isblock, return val is expression
+  private ArrayList<Block> previousOccupancy;
 
-
+  /**
+   * Constructor for PLC
+   * @param  TrackModel track - global track
+   * @param  File       file - PLC file containing boolean expressions
+   * @param  String     line - Line PLC is responsible for
+   * @return            new PLC
+   */
   public PLC(TrackModel track, File file, String line){
 			this.track = track;
 			this.plcFile = file;
 			this.line = line;
 		}
 
+  /**
+   * Called at init of PLC, parses and sets maps for Boolean expressions
+   * @throws IOException [description]
+   */
   public void parse() throws IOException{
 		BufferedReader reader = new BufferedReader(new FileReader(plcFile));
     String line;
@@ -44,6 +55,17 @@ public class PLC {
     reader.close();
   }
 
+  /**
+   * Updates previous occupancy list of track
+   */
+  public void updateOccupancy(){
+    ArrayList<Block> previousOccupancy = this.track.getOccupiedBlocks(this.line);
+  }
+
+  /**
+   * Runs scripted PLC code for setting switch state
+   * @throws ScriptException [description]
+   */
   public void runSwitchPLC() throws ScriptException{
     //FOR VITAL TMR CALCULATION
     ScriptEngineManager manager = new ScriptEngineManager();
@@ -100,6 +122,10 @@ public class PLC {
     }
   }//runSwitchPLC
 
+  /**
+   * Runs scripted PLC code for setting crossing state
+   * @throws ScriptException [description]
+   */
   public void runCrossingPLC() throws ScriptException{
     ScriptEngineManager manager = new ScriptEngineManager();
     ScriptEngine logicengine1 = manager.getEngineByName("js");

@@ -49,7 +49,7 @@ public class TrackModel implements Serializable {
   HashMap<Block, Beacon> blockBeaconMap = new HashMap<Block, Beacon>();
   HashMap<String, ArrayList<Block>> flatList = new HashMap<String, ArrayList<Block>>();
   HashMap<String, Switch> switchMap = new HashMap<String, Switch>();
-  
+
   /**
    * Returns flatList
    * @return flatList
@@ -96,6 +96,22 @@ public class TrackModel implements Serializable {
       }
     }
     return brokenList;
+  }
+
+  /**
+  * Returns the occupied blocks of the track for a given line
+  * @return an arraylist of the occupied blocks.
+  */
+  public ArrayList<Block> getOccupiedBlocks(String line) {
+    ArrayList<Block> occupiedList = new ArrayList<Block>();
+    for(String section : this.trackList.get(line).keySet()) {
+      for(Integer blk : this.trackList.get(line).get(section).keySet()) {
+        if(this.trackList.get(line).get(section).get(blk).getOccupied()) {
+          occupiedList.add(this.trackList.get(line).get(section).get(blk));
+        }
+      }
+    }
+    return occupiedList;
   }
 
   /**
@@ -356,7 +372,7 @@ public class TrackModel implements Serializable {
 
     /**
     *   Links blocks across block and sections.
-    *   @todo refactor. 
+    *   @todo refactor.
     */
     private void linkBlocks() {
       for (String lineKey : this.trackList.keySet()) {
@@ -444,30 +460,30 @@ public class TrackModel implements Serializable {
     }
 
 
-    /** 
+    /**
     * Helper function to link nextBlock for switches.
     */
     private void handleSwitches() {
       for (String s : this.rootMap.keySet()) {
-        
+
         //case 1: root.blockNum < leaf0.blockNum < leaf1.blockNum: uses switchNextBlockForward
         //case 2: leaf0.blockNum < root.blockNum < leaf1.blockNum: uses switchNextBlockBackward
         //case 3: leaf0.blockNum < leaf1.blockNum < root.blockNum: uses switchNextBlockBackward
 
         if (this.rootMap.get(s).blockNum() < this.leafMap.get(s).get(0).blockNum()) {
-          
+
           Switch trackSwitch = new Switch(this, s, this.rootMap.get(s), this.leafMap.get(s));
           this.switchMap.put(s, trackSwitch);
           this.rootMap.get(s).setNextBlockForward(this.leafMap.get(s).get(0), this.leafMap.get(s).get(1));
 
           this.leafMap.get(s).get(0).setRootBlock(this.rootMap.get(s));
-          this.leafMap.get(s).get(1).setRootBlock(this.rootMap.get(s));       
+          this.leafMap.get(s).get(1).setRootBlock(this.rootMap.get(s));
         } else if (this.rootMap.get(s).blockNum() < this.leafMap.get(s).get(1).blockNum()) {
           Switch trackSwitch = new Switch(this, s, this.rootMap.get(s), this.leafMap.get(s));
-          this.switchMap.put(s, trackSwitch);          
+          this.switchMap.put(s, trackSwitch);
           this.rootMap.get(s).setNextBlockBackward(this.leafMap.get(s).get(0), this.leafMap.get(s).get(1));
           this.leafMap.get(s).get(0).setRootBlock(this.rootMap.get(s));
-          this.leafMap.get(s).get(1).setRootBlock(this.rootMap.get(s));    
+          this.leafMap.get(s).get(1).setRootBlock(this.rootMap.get(s));
         } else if (this.rootMap.get(s).blockNum() > this.leafMap.get(s).get(1).blockNum()) {
           Switch trackSwitch = new Switch(this, s, this.rootMap.get(s), this.leafMap.get(s));
           this.switchMap.put(s, trackSwitch);
