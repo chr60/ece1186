@@ -97,20 +97,15 @@ public class TrackGUI {
     frame.getContentPane().setLayout(null);
 
     String fName = ("classes/images/trackPicture.jpg");
-    File imageFile = new File(fName);
-    System.out.println(imageFile.exists());
-
-    /*
-    ImageIcon image = new ImageIcon(getClass().getResource(fName));
-    ImageIcon image = new ImageIcon(this.getClass().getResource(fName));
-    System.out.println(image);
+    ImageIcon image = new ImageIcon(fName);
 
     imageLabel = new JLabel("Track", image, JLabel.CENTER);
     imageLabel.setVerticalTextPosition(JLabel.CENTER);
     imageLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
     imageLabel.setBounds(10, 11, 400, 600);
     frame.getContentPane().add(imageLabel);
-    */
+    
+
     JComboBox dropdownLine = new JComboBox(lineStrings);
     dropdownLine.setBounds(570, 22, 86, 23);
     frame.getContentPane().add(dropdownLine);
