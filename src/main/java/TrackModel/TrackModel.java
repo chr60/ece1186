@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -66,6 +67,24 @@ public class TrackModel implements Serializable {
   */
   public Block getBlock(String line, String section, Integer blockNum) {
     return this.trackList.get(line).get(section).get(blockNum);
+  }
+
+  /**
+  * Allows for lookup of a block via only its blocknum.
+  * @param the blockNum of the block
+  * @return the Block object associated with that blocknum
+  */
+  private Block getBlock(String line, Integer blockNum) throws NoSuchElementException{
+    for (String section : this.trackList.get(line).keySet()) {
+      for (Integer currBlock : this.trackList.get(line).get(section).keySet()) {
+        if (currBlock.equals(blockNum)) {
+          return this.trackList.get(line).get(section).get(currBlock);
+        }
+      }
+    }
+    NoSuchElementException e = new NoSuchElementException();
+    e.printStackTrace();
+    throw e;
   }
 
   /**
@@ -204,16 +223,12 @@ public class TrackModel implements Serializable {
     visited.add(currBlock);
 
     if(currBlock.equals(endBlock)) {
-      //System.out.println("DONE");
       possiblePaths.add(visited);
       return possiblePaths;
     }
 
     possiblePaths = blockPath(possiblePaths, new ArrayList<Block>(visited), currBlock.nextBlockBackward(), endBlock);
-    //System.out.println(possiblePaths.size());
     possiblePaths = blockPath(possiblePaths, new ArrayList<Block>(visited), currBlock.nextBlockForward(), endBlock);
-    //System.out.println(possiblePaths.size());
-    //path logic
     if(!currBlock.switchBlock.equals("") && this.leafMap.get(currBlock.switchBlock).contains(currBlock)) {
       Block switchBlock = this.rootMap.get(currBlock.switchBlock);
       switchBlock.setSwitchState(1);
@@ -411,11 +426,6 @@ public class TrackModel implements Serializable {
       }
     }
 
-    private void linkCSVOverride(String[] fNames) {
-      String line = "";
-      String delimiter = ",";
-    }
-
     /**
     * Build a map for storing the blocks and station for use by the train controller and
     * train model.
@@ -459,7 +469,6 @@ public class TrackModel implements Serializable {
       }
     }
 
-
     /**
     * Helper function to link nextBlock for switches.
     */
@@ -469,7 +478,6 @@ public class TrackModel implements Serializable {
         //case 1: root.blockNum < leaf0.blockNum < leaf1.blockNum: uses switchNextBlockForward
         //case 2: leaf0.blockNum < root.blockNum < leaf1.blockNum: uses switchNextBlockBackward
         //case 3: leaf0.blockNum < leaf1.blockNum < root.blockNum: uses switchNextBlockBackward
-
         if (this.rootMap.get(s).blockNum() < this.leafMap.get(s).get(0).blockNum()) {
 
           Switch trackSwitch = new Switch(this, s, this.rootMap.get(s), this.leafMap.get(s));
@@ -490,6 +498,58 @@ public class TrackModel implements Serializable {
           this.rootMap.get(s).setNextBlockBackward(this.leafMap.get(s).get(0), this.leafMap.get(s).get(1));
           this.leafMap.get(s).get(0).setRootBlock(this.rootMap.get(s), false, true);
           this.leafMap.get(s).get(1).setRootBlock(this.rootMap.get(s), true, false);
+        }
+      }
+    }
+
+    public void linkCSVOverride(String[] fNames) {
+      String line = "";
+      String delimiter = ",";
+      for (String s : fNames){
+        System.out.println("Reading "+s);
+        Boolean initLine = true;
+        try (BufferedReader reader = new BufferedReader(new FileReader(s))) {
+          while ((line = reader.readLine()) != null) {
+            if (initLine.equals(false)) {            
+              String[] str = line.split(delimiter, -1);
+              String sourceLine = str[0];
+              String targetLine = str[0];
+              String sourceSection = str[1];
+              int sourceBlockNum = Integer.parseInt(str[2]);
+              String forwardTargetSection = str[3];
+              String backwardTargetSection = str[5];
+
+              if (forwardTargetSection != "" && str[4] != "") {
+                int forwardTargetBlockNum = Integer.parseInt(str[4]);
+                Block sourceBlock = this.getBlock(sourceLine, sourceSection, sourceBlockNum);
+                Block nextBlockForwardOverride = this.trackList.get(targetLine).get(forwardTargetSection).get(forwardTargetBlockNum);
+                sourceBlock.setNextBlockForward(nextBlockForwardOverride);
+              }
+              System.out.println(str[6]);
+              System.out.println("ASDF");
+              
+              if (!backwardTargetSection.equals("") && !str[6].equals("")) {
+
+                int backwardTargetBlockNum = Integer.parseInt(str[6]);
+                System.out.println("DSAF");
+                System.out.println(backwardTargetBlockNum);
+                Block sourceBlock = this.getBlock(sourceLine, sourceSection, sourceBlockNum);
+                System.out.println(sourceBlock);
+                Block nextBlockBackwardOverride = this.trackList.get(targetLine).get(backwardTargetSection).get(backwardTargetBlockNum);
+                System.out.print("SB num: ");
+                System.out.println(sourceBlock.blockNum());
+                System.out.print("NBB num: ");
+                System.out.println(nextBlockBackwardOverride.blockNum());
+                sourceBlock.setNextBlockBackward(nextBlockBackwardOverride);
+                System.out.print("NBB source: ");
+                System.out.println(sourceBlock.nextBlockBackward().blockNum());
+              }
+              
+            }
+            initLine = false;
+          }
+        } catch(IOException|ArrayIndexOutOfBoundsException|NumberFormatException e) {
+          System.out.println("Finished reading override!");
         }
       }
     }
@@ -564,12 +624,7 @@ public class TrackModel implements Serializable {
     }
 
     this.linkBlocks();
-    //this.examineNext();
     this.handleSwitches();
-    if(this.trackList.get("Red") != null){
-      this.trackList.get("Red").get("N").get(66).setNextBlockForward(this.trackList.get("Red").get("N").get(65));
-    }
-    this.linkCSVOverride(fNames);
     this.buildStationHostMap();
     this.buildBlockStationMap();
     this.buildLightsMap();
@@ -581,7 +636,7 @@ public class TrackModel implements Serializable {
   * @param fOverrideNames: filenames of the corresponding linkage overrides csvs
   */
   public void readCSV(String[] fNames, String[] fOverrideNames) {
-
+    System.out.println(fOverrideNames);
     String line = "";
     String delimiter = ",";
     Boolean defaultOccupied = false;
@@ -642,12 +697,8 @@ public class TrackModel implements Serializable {
     }
 
     this.linkBlocks();
-    //this.examineNext();
     this.handleSwitches();
-    if(this.trackList.get("Red") != null){
-      this.trackList.get("Red").get("N").get(66).setNextBlockForward(this.trackList.get("Red").get("N").get(65));
-    }
-    this.linkCSVOverride(fNames);
+    this.linkCSVOverride(fOverrideNames);
     this.buildStationHostMap();
     this.buildBlockStationMap();
     this.buildLightsMap();

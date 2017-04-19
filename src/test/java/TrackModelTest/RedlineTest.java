@@ -26,7 +26,7 @@ public class RedlineTest {
   private static TreeSet<Integer> testExpectedStationBlockNums = new TreeSet<Integer>(Arrays.asList(expectedStationBlockNums));
   private static TrackModel track;
   private static String[] fNames = {"src/test/resources/redline.csv"};
-  private static String[] fOverrideNames = {"test-classes/redlinelink.csv"};
+  private static String[] fOverrideNames = {"src/test/resources/redlinelink.csv"};
   private Boolean verbose = false;
 
   @BeforeEach
