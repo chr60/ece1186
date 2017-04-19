@@ -12,8 +12,7 @@ public class Antenna {
 	/**
      * Constructor to create a new Antenna object for current train.
      */
-	public Antenna()
-	{
+	public Antenna() {
 		suggSpeed = null;
 		trainAuthority = null;
 	}
@@ -22,8 +21,7 @@ public class Antenna {
      * Mutator to set current GPS location
      * @param a GPS argument is passed to set the new  location of the train
      */
-	public void setGPS(GPS newLoc)
-	{
+	public void setGPS(GPS newLoc) {
 		trainLoc = newLoc;
 	}
 	
@@ -31,7 +29,7 @@ public class Antenna {
      * Accessor to get current GPS of train
      * @return a GPS argument is returned to set the new block location of the train
      */
-	public GPS getGPS(){
+	public GPS getGPS() {
 		return trainLoc;
 	}
 	
@@ -39,8 +37,7 @@ public class Antenna {
      * Mutator to set current velocity of train
      * @param a Double argument is passed to set the velocity
      */
-	public void setCurrVelocity(Double newV)
-	{
+	public void setCurrVelocity(Double newV) {
 		currVelocity = newV;
 	}
 	
@@ -48,7 +45,7 @@ public class Antenna {
      * Accessor to get current velocity of train
      * @return a Double argument is passed to get the velocity
      */
-	public Double getCurrVelocity(){
+	public Double getCurrVelocity() {
 		return currVelocity;
 	}
 	
@@ -56,8 +53,7 @@ public class Antenna {
      * Mutator to set suggested speed of train
      * @param a Double argument is passed to set suggested speed of train
      */
-	public void setSuggestedSpeed(Double newSS)
-	{
+	public void setSuggestedSpeed(Double newSS) {
 		suggSpeed = newSS;
 	}
 	
@@ -65,7 +61,7 @@ public class Antenna {
      * Accessor to get suggested speed of train
      * @return a Double argument is passed to get the suggested speed of train
      */
-	public Double getSuggestedSpeed(){
+	public Double getSuggestedSpeed() {
 		return suggSpeed;
 	}
 	
@@ -73,8 +69,7 @@ public class Antenna {
      * Mutator to set Authority
      * @param a Double argument is passed to set the Authority
      */
-	public void setCurrAuthority(GPS newA)
-	{
+	public void setCurrAuthority(GPS newA) {
 		trainAuthority = newA;
 	}
 	
@@ -82,7 +77,7 @@ public class Antenna {
      * Accessor to get current Authority of train
      * @return a Double argument is passed to get the Authority
      */
-	public GPS getCurrAuthority(){
+	public GPS getCurrAuthority() {
 		return trainAuthority;
 	}
 	
@@ -90,8 +85,7 @@ public class Antenna {
      * Mutator to set safe braking distance of train based on SB
      * @param a Double argument is passed to set safe braking distance using SB
      */
-	public void setSafeBrakingDistSB(Double newSBD)
-	{
+	public void setSafeBrakingDistSB(Double newSBD) {
 		SBD = newSBD;
 	}
 	
@@ -99,7 +93,7 @@ public class Antenna {
      * Accessor to get safe braking distance of train based on SB
      * @return a Double argument is passed to set safe braking distance using SB
      */
-	public Double getSafeBrakingDistSB(){
+	public Double getSafeBrakingDistSB() {
 		return SBD;
 	}
 	
@@ -107,8 +101,7 @@ public class Antenna {
      * Mutator to set get safe braking distance of train based on EB
      * @param a Double argument is passed to get safe braking distance of train based on EB
      */
-	public void setSafeBrakingDistEB(Double newEBD)
-	{
+	public void setSafeBrakingDistEB(Double newEBD) {
 		EBD = newEBD;
 	}
 	
@@ -116,7 +109,7 @@ public class Antenna {
      * Accessor to get safe braking distance of train based on EB
      * @return a Double argument is passed to get safe braking distance of train based on EB
      */
-	public Double getSafeBrakingDistEB(){
+	public Double getSafeBrakingDistEB() {
 		return EBD;
 	}
 	

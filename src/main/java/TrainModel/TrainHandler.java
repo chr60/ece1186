@@ -8,7 +8,6 @@ import TrainControllerComps.*;
 // class designed to handle communcation between train model and other interfaces
 public class TrainHandler {
 
-	int trainCount = 0;
 	Integer trainIDAssign = 1;
 	ArrayList<Train> trains;
 	ArrayList<String> trainIDs;
@@ -50,15 +49,14 @@ public class TrainHandler {
 
 	//Communcation to and from CTC
 	//this method will generate a new train by passing a trainID of -1
-	public int setSpeedAndAuthority(Integer trainID, Double Speed, Block goToBlock, Block startBlock)
+	public int setSpeedAndAuthority(Integer trainID, Double Speed, GPS goToBlock, Block startBlock)
 	{
 		Train currT;
-		if(trainID == -1)
+		if (trainID == -1)
 		{
 			//train is a new train
 			currT = new Train(trainIDAssign, globalTrack);
 			trainID = trainIDAssign;
-			trainCount++;
 			trainIDAssign++;
 			currT.setSpeed(Speed);
 			currT.setAuthority(goToBlock);
@@ -114,6 +112,29 @@ public class TrainHandler {
 		}
 		return null;
 	}
+	
+	//method to search and return train on a given block
+	public Train getTrainOn(Block onBlock) {
+		for(int i = 0; i < trains.size(); i++)
+		{
+			if (trains.get(i).getCurrBlock().compareTo(onBlock) == 1 )
+			{
+				return trains.get(i);
+			}
+		}
+		return null;
+	}
+	
+	//method to search and return train object based on train ID
+	public Antenna getTrainAntenna(Integer id)
+	{
+		Train currT = findTrain(id);
+		if (currT != null)
+		{
+			return currT.getAntenna();
+		}
+		return null;
+	}
 
 	//method to pull
 	public void pollYard()
@@ -122,24 +143,35 @@ public class TrainHandler {
 
 		//check red line first
 		Double suggestedSpeed = yardBlockRed.getSuggestedSpeed();
-
 		yardBlockRed.setSuggestedSpeed(null);
 		Block authorityBlock = yardBlockRed.getAuthority();
 		yardBlockRed.setAuthority(null);
 		if(yardBlockRed.getOccupied() == false){
 			if (suggestedSpeed != null){
-			//suggested speed is greater than 0
-			 if (authorityBlock != null && (authorityBlock.compareTo(yardBlockRed) != 1)){
-				 //if authority is not null and authority is not the yard (returning train)
-				 //then this means a new train is being initialized.
-				 Integer ID = setSpeedAndAuthority(-1,suggestedSpeed,authorityBlock,yardBlockRed);
-				 yardBlockRed.setTrainId(ID);
+			//suggested speed is greater than 0.compareTo(yardBlockRed) != 1
+				 if (authorityBlock != null && (authorityBlock.compareTo(yardBlockRed) != 1)){
+					 //if authority is not null and authority is not the yard (returning train)
+					 //then this means a new train is being initialized.
+					 GPS authority = new GPS();
+					 authority.setCurrBlock(authorityBlock);
+					 authority.setDistIntoBlock(null);
+					 Integer ID = setSpeedAndAuthority(-1,suggestedSpeed,authority,yardBlockRed);
+					 yardBlockRed.setTrainId(ID);
 
-				 yardBlockRed.setOccupied(true);
-                                 
-			 }
+					 yardBlockRed.setOccupied(true);
+									 
+				 }
+			}
+		}else if (yardBlockRed.getOccupied() == true) {
+			//if there is a train on the block and its authority is returning to the yard then remove it from the system
+			Train returningTrain = getTrainOn(yardBlockRed);
+			if (returningTrain.getAuthority().getCurrBlock().compareTo(yardBlockRed) == 1) {
+				trains.remove(returningTrain);
+			}
+			
+			
 		}
-		}
+		
 		
 
 		/*

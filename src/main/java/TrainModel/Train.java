@@ -3,6 +3,7 @@ import TrackModel.*;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.Random;
 
 //doxygen comment format below!
 /**
@@ -19,6 +20,7 @@ public class Train implements Serializable {
 
 	//variables for train values.
 	GPS currAuthority;
+	Random rand;
 	Block currBlock;
 	Double mass, length, velocity, oldVelocity, power, currGrade;
 	Double netForce;
@@ -76,7 +78,7 @@ public class Train implements Serializable {
 		velocity = 0.0;
 		trainAntenna.setCurrVelocity(velocity);
 		oldVelocity =0.0;
-
+		length = lengthCar;
 		trainID = ID;
 		power = 0.0;
 		currGrade = 0.0;
@@ -87,6 +89,18 @@ public class Train implements Serializable {
 		statusSB =0;
 		currTemp = 60.0;
 		currThermostat = 60.0;
+		numPassengers =0;
+		numCars =0;
+		statusAC = 0;
+		statusHeater =0;
+		statusEB =0;
+		statusSB = 0;
+		statusLeftDoor = 0;
+		statusRightDoor =0;
+		statusLights =0 ;
+		engineFailure = false;
+		brakeFailure = false;
+		signalFailure = false;
 
 	}
 
@@ -247,7 +261,10 @@ public class Train implements Serializable {
 			currBlock.setOccupied(true);
 		}
 		trainLocation.setCurrBlock(currBlock);
-                //System.out.println("Dist: " + dist);
+		if (this.getCurrBlock().getGrade() != null){
+			currGrade = getCurrBlock().getGrade();
+		}
+        //System.out.println("Dist: " + dist);
 		trainLocation.setDistIntoBlock(dist);
 		trainAntenna.setGPS(trainLocation);
 
@@ -257,7 +274,16 @@ public class Train implements Serializable {
      * Method to update speed and authority (and other block properties)
      */
 	private void updateSpeedAndAuthority(){
-            if (this.getCurrBlock() != null){
+		
+			//check antenna for MBO speed and Authority, if not there check block for fixed block speed and authority
+			GPS authMBO = trainAntenna.getCurrAuthority();
+			if (authMBO != null){
+				Double speedMBO = trainAntenna.getSuggestedSpeed();
+				if(speedMBO != null){
+					setPointSpeed = speedMBO;
+				}
+				currAuthority = authMBO;
+			}else if (this.getCurrBlock() != null){
                 if (this.getCurrBlock().getSuggestedSpeed() != null){
 
                     setPointSpeed = getCurrBlock().getSuggestedSpeed();
@@ -267,11 +293,7 @@ public class Train implements Serializable {
 
                     currAuthority.setCurrBlock(getCurrBlock().getAuthority());
 					currAuthority.setDistIntoBlock(null);
-                }
-
-                if (this.getCurrBlock().getGrade() != null){
-                    currGrade = getCurrBlock().getGrade();
-                }
+				}
             }
 			
         }
@@ -402,6 +424,9 @@ public class Train implements Serializable {
 			trainAntenna.setGPS(trainLocation);
             this.currBlock = newBlock;
             this.prevBlock = currBlock;
+			currBlock.setOccupied(true);
+			
+			
 	}
 
 	/**
@@ -442,12 +467,40 @@ public class Train implements Serializable {
 
 
 
-	/* FUNCTIOSN TO INTEGRATE WITH TRACK MODEL GETTING PEOPLE ON AND OFF
+	/* functions to integrate with track. adding and removing people
+	
 	 * Public Integer loadPassengers (Integer maxPassengers)
 		return random numeber
 
 		public void addDepartingPassengers(Integer numPassengers)
 	 */
+	  /**
+     * Method to update number of passengers on board train. this will be called once train stops at a station
+     */
+	 public void updatePassengerCount() {
+		 //get station that the train is stopped at
+		 Station currStation = currBlock.getAssociatedStation();
+		 //allow people to get off at station
+		 //random amount will leave based on current amount on board train
+		 Integer numUnboarding = passengersUnboarding();
+		 changePassengers(-1*numUnboarding);
+		 currStation.addDepartingPassengers(numUnboarding);
+		 
+		 //allow people to get on train
+		 Integer spaceLeft = maxPassengers - numPassengers;
+		 Integer numBoarding = currStation.loadPassengers(spaceLeft);
+		 changePassengers(numBoarding);
+	 }
+	 
+	 /**
+     * Method to update temperature based on current temp and thermostat setting. This method will be called periodically at each cycle of the system
+     */
+	public int passengersUnboarding(){
+		//random number selected between number of people on train.
+		return rand.nextInt(numPassengers);
+	}
+	 
+	 
 
 
 	//CODE BELOW THIS LINE IS DONE. DO NOT TOUCH.
@@ -648,18 +701,12 @@ public class Train implements Serializable {
         return this.statusHeater;
     }
 
-
-
-
-
-
 	/**
      * Mutator to set current train's Authority
      * @param an Double object which corresponds to the new authority.
      */
-	public void setAuthority(Block goToBlock){
-		currAuthority.setCurrBlock(goToBlock);
-		currAuthority.setDistIntoBlock(null);
+	public void setAuthority(GPS goToBlock){
+		currAuthority = goToBlock;
 	}
 
 	/**
@@ -860,8 +907,6 @@ public class Train implements Serializable {
 	public void setSpeed(Double speed) {
 		setPointSpeed = speed;
 	}
-
-
 
 
 	/**

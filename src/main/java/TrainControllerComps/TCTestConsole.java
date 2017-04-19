@@ -4,6 +4,7 @@ import CTC.TrainManager;
 import TrackModel.Block;
 import TrackModel.TrackModel;
 import TrainModel.Train;
+import TrainModel.GPS;
 import TrainModel.TrainHandler;
 import WaysideController.PLC;
 import WaysideController.WS;
@@ -977,8 +978,11 @@ public class TCTestConsole extends javax.swing.JFrame {
      */
     private void dispatchTrains(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dispatchTrains
        
-        this.dispatchedTrains++;             
-        this.trainHandler.setSpeedAndAuthority(-1, 35.0, this.endingBlock, this.yardBlock);
+        this.dispatchedTrains++;         
+		GPS newA = new GPS();
+		newA.setCurrBlock(this.endingBlock);
+		newA.setDistIntoBlock(null);
+        this.trainHandler.setSpeedAndAuthority(-1, 35.0, newA, this.yardBlock);
 
         this.selectedTrain = this.trainHandler.findTrain(this.dispatchedTrains);
         

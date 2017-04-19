@@ -15,8 +15,11 @@ public class Launch {
 		gTrack = generateTrack();
 		trainH = new TrainHandler(gTrack);
 		Block yardBlockRed = gTrack.viewStationMap().get("Red").get("YARD").get(0);
-		trainH.setSpeedAndAuthority(-1,50.0,yardBlockRed.nextBlockForward(),yardBlockRed);
-		trainH.setSpeedAndAuthority(-1,50.0,yardBlockRed.nextBlockForward(),yardBlockRed);
+		
+		GPS newA = new GPS();
+		newA.setCurrBlock(yardBlockRed.nextBlockForward());
+		newA.setDistIntoBlock(null);
+		trainH.setSpeedAndAuthority(-1,50.0,newA,yardBlockRed);
 		ArrayList<Train> trains = trainH.getTrains();
 		gui.frmTrainModel.setVisible(true);
 		gui.setTrainArray(trains);

@@ -286,7 +286,7 @@ public class TrainModeUI {
 		txtRightDoor = new JTextField();
 		txtRightDoor.setBackground(Color.WHITE);
 		txtRightDoor.setEditable(false);
-		txtRightDoor.setText("OPEN");
+		txtRightDoor.setText("CLOSED");
 		txtRightDoor.setColumns(10);
 		txtRightDoor.setBounds(584, 71, 86, 20);
 		frmTrainModel.getContentPane().add(txtRightDoor);
@@ -413,7 +413,7 @@ public class TrainModeUI {
 		
 		rdbtnBrakeOn = new JRadioButton("ON");
 		brakeFailureBG.add(rdbtnBrakeOn);
-		rdbtnBrakeOn.setSelected(true);
+		rdbtnBrakeOn.setSelected(false);
 		rdbtnBrakeOn.setBounds(112, 429, 46, 23);
 		frmTrainModel.getContentPane().add(rdbtnBrakeOn);
 		
@@ -432,6 +432,7 @@ public class TrainModeUI {
 		
 		rdbtnBrakeOff = new JRadioButton("OFF");
 		brakeFailureBG.add(rdbtnBrakeOff);
+		rdbtnBrakeOff.setSelected(true);
 		rdbtnBrakeOff.setBounds(156, 429, 46, 23);
 		frmTrainModel.getContentPane().add(rdbtnBrakeOff);
 		
@@ -477,7 +478,7 @@ public class TrainModeUI {
 		frmTrainModel.getContentPane().add(txtAuthority);
 		
 		JLabel lblPowerCommand = new JLabel("Power Command");
-		lblPowerCommand.setBounds(237, 161, 100, 14);
+		lblPowerCommand.setBounds(237, 271, 100, 14);
 		frmTrainModel.getContentPane().add(lblPowerCommand);
 		
 		txtPower = new JTextField();
@@ -486,7 +487,7 @@ public class TrainModeUI {
 		txtPower.setText("5,000 W");
 		txtPower.setForeground(Color.BLACK);
 		txtPower.setColumns(10);
-		txtPower.setBounds(351, 154, 86, 20);
+		txtPower.setBounds(351, 264, 86, 20);
 		frmTrainModel.getContentPane().add(txtPower);
 		
 		JSeparator separator_3 = new JSeparator();
@@ -509,7 +510,7 @@ public class TrainModeUI {
 		
 		rdbtnRightDoorOpen = new JRadioButton("OPEN");
 		rightDoorBG.add(rdbtnRightDoorOpen);
-		rdbtnRightDoorOpen.setSelected(true);
+		rdbtnRightDoorOpen.setSelected(false);
 		rdbtnRightDoorOpen.setBounds(328, 360, 71, 23);
 		frmTrainModel.getContentPane().add(rdbtnRightDoorOpen);
 		
@@ -577,12 +578,13 @@ public class TrainModeUI {
 
 		rdbtnEmergencyBrakeOn = new JRadioButton("ON");
 		emergencyBrakeBG.add(rdbtnEmergencyBrakeOn);
-		rdbtnEmergencyBrakeOn.setSelected(true);
+		rdbtnEmergencyBrakeOn.setSelected(false);
 		rdbtnEmergencyBrakeOn.setBounds(328, 436, 46, 23);
 		frmTrainModel.getContentPane().add(rdbtnEmergencyBrakeOn);
 		
 		rdbtnEmergencyBrakeOff = new JRadioButton("OFF");
 		emergencyBrakeBG.add(rdbtnEmergencyBrakeOff);
+		rdbtnEmergencyBrakeOff.setSelected(true);
 		rdbtnEmergencyBrakeOff.setBounds(377, 436, 46, 23);
 		frmTrainModel.getContentPane().add(rdbtnEmergencyBrakeOff);
 		
@@ -628,6 +630,7 @@ public class TrainModeUI {
 		
 		rdbtnRightDoorClosed = new JRadioButton("CLOSED");
 		rightDoorBG.add(rdbtnRightDoorClosed);
+		rdbtnRightDoorClosed.setSelected(true);
 		rdbtnRightDoorClosed.setBounds(401, 359, 86, 23);
 		frmTrainModel.getContentPane().add(rdbtnRightDoorClosed);
 		
@@ -695,10 +698,48 @@ public class TrainModeUI {
 				//for prototype first thing to update is velocity based on power command
 					String pwrCmdStr = txtTestPower.getText();
 					Double pwrCmd = Double.parseDouble(pwrCmdStr);
-					
+					String newPassStr = txtTestAddPassengers.getText();
+					int newPass = Integer.parseInt(newPassStr);
+					currTrain.changePassengers(newPass);
 					currTrain.setGrade(Double.parseDouble(txtTestGrade.getText()));
-					new Launch().powerCommandToTrain(pwrCmd,currTrain);					
-				
+					new Launch().powerCommandToTrain(pwrCmd,currTrain);	
+					
+					//check radio buttons
+					//left door
+					if (rdbtnLeftDoorOpen.isSelected()) {
+						currTrain.setLeftDoor(1);
+					}else if(rdbtnLeftDoorClosed.isSelected()) {
+						currTrain.setLeftDoor(0);
+					}
+					
+					//right door
+					if (rdbtnRightDoorOpen.isSelected()) {
+						currTrain.setRightDoor(1);
+					}else if(rdbtnRightDoorClosed.isSelected()) {
+						currTrain.setRightDoor(0);
+					}
+					
+					//Lights
+					if (rdbtnLightsOn.isSelected()) {
+						currTrain.setLights(1);
+					}else if(rdbtnLightsOff.isSelected()) {
+						currTrain.setLights(0);
+					}
+					
+					//Service Brake
+					if (rdbtnServiceBrakeOn.isSelected()) {
+						currTrain.setServiceBrake(1);
+					}else if(rdbtnServiceBrakeOff.isSelected()) {
+						currTrain.setServiceBrake(0);
+					}
+					
+					//Emergency Brake
+					if (rdbtnEmergencyBrakeOn.isSelected()) {
+						currTrain.setEmergencyBrake(1);
+					}else if(rdbtnEmergencyBrakeOff.isSelected()) {
+						currTrain.setEmergencyBrake(0);
+					}
+	
 			}
 		});
 		
@@ -715,10 +756,10 @@ public class TrainModeUI {
 		//method to update GUI based on selected train info
 		currTrain = currT;
 		if (currTrain != null){
-				txtSpeed.setText("\n   "+ currTrain.getVelocity().toString()+" MPH");
+				txtSpeed.setText("\n   "+ String.format("%.2f", currTrain.getVelocity())+" MPH");
 				txtAuthority.setText("Block "+currTrain.getAuthority().getCurrBlock().blockNum().toString());
-				txtTemperature.setText(currTrain.getTemp().toString());
-				txtThermostat.setText(currTrain.getThermostat().toString());
+				txtTemperature.setText(currTrain.getTemp().toString()+" F");
+				txtThermostat.setText(currTrain.getThermostat().toString()+" F");
 				txtPass.setText(String.valueOf(currTrain.getNumPassengers()));
 				txtCar.setText(String.valueOf(currTrain.getNumCars()));
 				txtPower.setText(currTrain.getPower().intValue()+" W");
@@ -736,6 +777,34 @@ public class TrainModeUI {
                 this.txtEmergencyBrake.setText(this.getStatusOfTrainLightsAndBrakes(this.currTrain.getEmergencyBrake()));
                 
                 this.txtLights.setText(this.getStatusOfTrainLightsAndBrakes(this.currTrain.getLights()));   
+				
+				//check murphy console for failures
+				//check engine failure
+				if (rdbtnEngineOn.isSelected()) {
+					//there is a failure in the engine
+					currTrain.setEngineFailure(true);
+				}else if (rdbtnEngineOff.isSelected()){
+					//no failure in engines
+					currTrain.setEngineFailure(false);
+				}
+				
+				//check signal failure
+				if (rdbtnSignalOn.isSelected()) {
+					//there is a failure in the Signal
+					currTrain.setSignalFailure(true);
+				}else if (rdbtnSignalOff.isSelected()){
+					//no failure in Signal
+					currTrain.setSignalFailure(false);
+				}
+				
+				//check brake Failure
+				if (rdbtnBrakeOn.isSelected()) {
+					//there is a failure in the Brakes
+					currTrain.setBrakeFailure(true);
+				}else if (rdbtnBrakeOff.isSelected()){
+					//no failure in Brakes
+					currTrain.setBrakeFailure(false);
+				}
             }   	     
 	}
         

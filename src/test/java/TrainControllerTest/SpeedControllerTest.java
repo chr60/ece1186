@@ -9,6 +9,7 @@ import TrackModel.Block;
 import TrackModel.TrackModel;
 import TrainControllerComps.TrainController;
 import TrainModel.Train;
+import TrainModel.GPS;
 import TrainModel.TrainHandler;
 import java.util.LinkedList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -49,8 +50,9 @@ public class SpeedControllerTest {
     // spawn a train at the yard
     yardBlock = track.viewStationMap().get("Red").get("YARD").get(0);
     Block endingBlock = yardBlock.nextBlockForward();
+    GPS auth = new GPS(endingBlock,null);
+    trainhandler.setSpeedAndAuthority(-1, suggSpeed, auth , yardBlock);
 
-    trainhandler.setSpeedAndAuthority(-1, suggSpeed, endingBlock , yardBlock);
     Train train = trainhandler.findTrain(1);
     train.setKpAndKi(40000.0, 20000.0);
     tc.setTrains(train);
