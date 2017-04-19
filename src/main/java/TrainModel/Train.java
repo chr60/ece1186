@@ -78,7 +78,7 @@ public class Train implements Serializable {
 		velocity = 0.0;
 		trainAntenna.setCurrVelocity(velocity);
 		oldVelocity =0.0;
-
+		length = lengthCar;
 		trainID = ID;
 		power = 0.0;
 		currGrade = 0.0;
@@ -89,6 +89,18 @@ public class Train implements Serializable {
 		statusSB =0;
 		currTemp = 60.0;
 		currThermostat = 60.0;
+		numPassengers =0;
+		numCars =0;
+		statusAC = 0;
+		statusHeater =0;
+		statusEB =0;
+		statusSB = 0;
+		statusLeftDoor = 0;
+		statusRightDoor =0;
+		statusLights =0 ;
+		engineFailure = false;
+		brakeFailure = false;
+		signalFailure = false;
 
 	}
 
