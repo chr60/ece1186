@@ -66,7 +66,10 @@ public class TrackModel implements Serializable {
   * @param blockNum Number of the block to be looked up
   */
   public Block getBlock(String line, String section, Integer blockNum) {
-    return this.trackList.get(line).get(section).get(blockNum);
+    assert(this.trackList.containsKey(line));
+    assert(this.trackList.get(line).containsKey(section));
+    assert(this.trackList.get(line).get(section).containsKey(blockNum));
+    return(this.trackList.get(line).get(section).get(blockNum));
   }
 
   /**

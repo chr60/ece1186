@@ -392,9 +392,9 @@ public class TrackGUI {
       @Override
       public void actionPerformed(ActionEvent e){
         String l = (String) dropdownLine.getSelectedItem();
-
+        
         Set<String> segmentStrings = track.trackList.get(l).keySet();
-
+        
         dropdownBlock.removeAllItems();
 
         for (String item : segmentStrings){
@@ -445,6 +445,7 @@ public class TrackGUI {
         String block = (String) dropdownBlock.getSelectedItem();
         String section = (String) dropdownSegment.getSelectedItem();
         String line = (String) dropdownLine.getSelectedItem();
+
         Block thisBlock = track.getBlock(line,section,Integer.valueOf(block));
 
         lengthField.setText(String.valueOf(METERSMULT*track.trackList.get(line).get(section).get(Integer.valueOf(block)).getLen()));
