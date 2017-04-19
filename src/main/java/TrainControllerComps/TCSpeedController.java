@@ -208,62 +208,87 @@ public class TCSpeedController extends javax.swing.JPanel {
         Block currBlock = this.selectedTrain.getCurrBlock(); // get current block
         
         if (currBlock != null){
-        
-            Double blockSpeedLimit = (.621371*currBlock.getSpeedLimit()); // get speed limit on block
-
-            Double speedLimit = .621371*this.selectedTrain.getGPS().getCurrBlock().getSpeedLimit(); 
-
+            
+            Double speedLimit = .621371*this.selectedTrain.getGPS().getCurrBlock().getSpeedLimit();             
             this.setMaxSpeed(speedLimit);
+            
+            if (this.inManualMode){ this.manualModeChecks(); } // manual mode
+            else if (this.inManualMode == false){ this.automaticModeChecks(); } // automatic mode
+        }
+    }
+    
+    public void automaticModeChecks(){
+        
+        Block currBlock = this.selectedTrain.getGPS().getCurrBlock();
+        Double blockSpeedLimit = (.621371*currBlock.getSpeedLimit()); // get speed limit on block
+        Double speedLimit = .621371*this.selectedTrain.getGPS().getCurrBlock().getSpeedLimit(); 
+        
+        // disable UI elements
+        this.setSpeedButton.setEnabled(false);
+        this.speedSlider.setEnabled(false);
 
-            if (this.inManualMode){ // manual mode
-                this.setSpeedButton.setEnabled(true);
-                this.speedSlider.setEnabled(true);
+        // get the block the train is on, and the set suggested speed
 
-                if (blockSpeedLimit != null){
+        Double blockSuggestedSpeed = .621371*this.selectedTrain.getSuggestedSpeed();
 
-                    // if we changed to manual mode from automatic mode, we need to adjust to meet block limit
-                    if (this.setSpeed > blockSpeedLimit){ this.setSpeed = blockSpeedLimit; }
+        if (blockSuggestedSpeed != null){
 
-                  this.powerControl();
+            // FOR TESTING
+            if (blockSuggestedSpeed == 0.0){
 
-                }else if (blockSpeedLimit == null){ this.powerControl(); }
+                this.speedSlider.setValue(speedLimit.intValue());
 
-            }else if (this.inManualMode == false){ // automatic mode
-                this.setSpeedButton.setEnabled(false);
-                this.speedSlider.setEnabled(false);
+                // ignore the speed 
+                this.ignoreSpeedChecks();
+                
+            }else{ // !!= 0.0 THIS MAY BE A PROBLEM LATER
 
-                // get the block the train is on, and the set suggested speed
+                this.speedSlider.setValue(speedLimit.intValue());
 
-                Double blockSuggestedSpeed = .621371*this.selectedTrain.getSuggestedSpeed();
-
-                if (blockSuggestedSpeed != null){
-
-                    // FOR TESTING
-                    if (blockSuggestedSpeed == 0.0){
-
-                        this.speedSlider.setValue(speedLimit.intValue());
-
-                        // ignore the speed 
-                        if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == true){ this.setSpeed = 0.0; }
-                        else if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == false){ this.setSpeed = 0.0; }
-                        else{ this.setSpeed = (.621371*this.selectedTrain.getGPS().getCurrBlock().getSpeedLimit()); }
-
-                    }else{
-
-                        this.speedSlider.setValue(speedLimit.intValue());
-
-                         // ignore the speed 
-                        if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == true){ System.out.println("Here 0"); this.setSpeed = 0.0; }
-                        else if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == false){ this.setSpeed = 0.0; }
-                        else{ this.setSpeed = blockSuggestedSpeed; }
-                    }
-                    this.powerControl();
-                }else if (blockSuggestedSpeed == null){
-
-                    this.speedSlider.setValue(speedLimit.intValue());
-                    this.powerControl();
-                }
+                // ignore the speed 
+                this.ignoreSpeedChecks();
             }
+            this.powerControl();
+        }else if (blockSuggestedSpeed == null){
+
+            this.speedSlider.setValue(speedLimit.intValue());
+            this.powerControl();
+        }      
+    }
+    
+    public void manualModeChecks(){
+        
+        // enable ui elements
+        this.setSpeedButton.setEnabled(true);
+        this.speedSlider.setEnabled(true);
+
+        Block currBlock = this.selectedTrain.getGPS().getCurrBlock();
+        Double blockSpeedLimit = (.621371*currBlock.getSpeedLimit()); // get speed limit on block
+                
+        if (blockSpeedLimit != null){
+
+            // if we changed to manual mode from automatic mode, we need to adjust to meet block limit
+            if (this.setSpeed > blockSpeedLimit){ this.setSpeed = blockSpeedLimit; }
+
+            // ignore the speed 
+            this.ignoreSpeedChecks();
+                 
+        }else if (blockSpeedLimit == null){ this.ignoreSpeedChecks(); }
+                                 
+        this.powerControl();
+    }
+    
+    /**
+     * Checks to see if the train has to ignore the suggested speed placed on the track. 
+     * This is mainly done when needing to come to stop the train to a halt using the brakes. 
+     */
+    private void ignoreSpeedChecks(){
+           
+        Double speedLimit = .621371*this.selectedTrain.getGPS().getCurrBlock().getSpeedLimit(); 
+        if (speedLimit != null){
+            if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == true){ this.setSpeed = 0.0; }
+            else if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == false){ this.setSpeed = 0.0; }
+            else{ this.setSpeed = (.621371*this.selectedTrain.getGPS().getCurrBlock().getSpeedLimit()); }   
         }
     }
 
@@ -468,7 +493,7 @@ public class TCSpeedController extends javax.swing.JPanel {
     public void powerControl(){
 
         // train is going too fast
-        if (this.selectedTrain.getVelocity() > this.setSpeed){
+        if (this.selectedTrain.getVelocity() >= this.setSpeed){
             
             if (this.brakePanel.isEmergency == true){ this.brakePanel.getEmgBrake().doClick(); } // apply ebrakes
             else{ this.brakePanel.getServiceBrake().doClick(); }
@@ -491,7 +516,7 @@ public class TCSpeedController extends javax.swing.JPanel {
             if (this.vitalPwrCmdOne == this.powerCommandOut){
                 if (this.vitalPwrCmdTwo == this.powerCommandOut){
                     if (this.vitalPwrCmdThree == this.powerCommandOut){
-                        this.logBook.add("VITAL SYSTEM CHECK PASS!");
+                        //this.logBook.add("VITAL SYSTEM CHECK PASS!");
                         this.selectedTrain.powerCommand(this.powerCommandOut);
                     }
                 }

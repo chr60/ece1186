@@ -783,7 +783,7 @@ public class Train implements Serializable {
 		currThermostat = newThermostat;
 		this.updateTemp();
 	}
-
+        
 	/**
      * Mutator to set engine failure status
      * @param a boolean argument is passed to denote whether or not there is a failure in the engines. False means no failure and true means failure.

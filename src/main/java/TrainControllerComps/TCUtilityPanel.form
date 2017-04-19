@@ -379,9 +379,6 @@
         </Property>
         <Property name="text" type="java.lang.String" value="FAIL"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="heatFailureRadioButtonActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="setAirCondBotton">
       <Properties>
@@ -416,10 +413,6 @@
         </Property>
         <Property name="text" type="java.lang.String" value="ON"/>
       </Properties>
-      <Events>
-        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="turnOnAirCond"/>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="turnOnAC"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="heatOnRadioButton">
       <Properties>
@@ -428,9 +421,6 @@
         </Property>
         <Property name="text" type="java.lang.String" value="ON"/>
       </Properties>
-      <Events>
-        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="turnHeatOn"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -760,8 +760,8 @@ public class TrainModeUI {
 
 				txtAuthority.setText("\r\nBlock "+currTrain.getAuthority().getCurrBlock().blockNum().toString()+"\r\n");
 
-				txtTemperature.setText(currTrain.getTemp().toString()+" F");
-				txtThermostat.setText(currTrain.getThermostat().toString()+" F");
+				txtTemperature.setText(String.format("%.2f", currTrain.getTemp())+ " F");
+				txtThermostat.setText(String.format("%.2f", currTrain.getThermostat())+ " F");
 				txtPass.setText(String.valueOf(currTrain.getNumPassengers()));
 				txtCar.setText(String.valueOf(currTrain.getNumCars()));
 				txtPower.setText(currTrain.getPower().intValue()+" W");
