@@ -22,45 +22,45 @@ import org.junit.jupiter.api.Test;
  */
 public class BrakePanelTest {
     
-   
+
   static TrackModel track = new TrackModel("Testing");
   static String[] fNames = {"src/test/resources/redline.csv"};
-  
+
   static Train testTrain;
-  
+
   static TrainController tc;
-  
+
   static TrainHandler trainhandler;
-  
+
   static Block yardBlock;
   static Block endingBlock;
-  
+
   @BeforeAll
   /**
   * Initialization of the TrainController to be used for testing
   */
   static void init(){
-    
+
     track.readCSV(fNames);
-    
-    testTrain = new Train(1, track); 
+
+    testTrain = new Train(1, track);
     tc = new TrainController(testTrain, "Automatic", "Normal");
-    
-    trainhandler = new TrainHandler(track); 
-  } 
-   
-  @Test
+
+    trainhandler = new TrainHandler(track);
+  }
+
+  // // @Test
   /**
   * Test for proper station names reading.
   */
   @DisplayName("Validate that Speed Controller gets passed in the same train as the Train Controller")
   void passedCorrectTrain(){
 
-      Train tcTrain = tc.getTrain(); 
-    
+      Train tcTrain = tc.getTrain();
+
       tc.getBrakePanel().setSelectedTrain(tcTrain);
-      
-      assertTrue(tcTrain == tc.getBrakePanel().getSelectedTrain()); 
-  } 
-    
+
+      assertTrue(tcTrain == tc.getBrakePanel().getSelectedTrain());
+  }
+
 }

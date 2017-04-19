@@ -46,6 +46,10 @@ public class WaysideGUI {
   JLabel switchStatusLabel;
   JLabel crossingStatusLabel;
   JLabel lightsStatusLabel;
+  JLabel fwdBlockNum;
+  JLabel backBlockNum;
+  JComboBox<String> wsSelectDropdown;;
+
 
   /**
    * Runs whenever launcher advances a clock tick.
@@ -58,27 +62,33 @@ public class WaysideGUI {
    * Enables Block description fields to be updated by event of block dropdown selection or by clock updating.
    */
   public void updateFields(){
-    String block = (String) blockDropdown.getSelectedItem();
-    String section = (String) segmentDropdown.getSelectedItem();
-    String line = (String) lineDropdown.getSelectedItem();
     if(blockDropdown.getSelectedItem() != null){
-      Block viewBlock = track.getBlock(line, section, Integer.parseInt(block));
-      this.activeBlock = viewBlock;
-      occupiedStatusLabel.setText(viewBlock.getOccupied().toString());
-      if(viewBlock.hasSwitch())
-        switchStatusLabel.setText(viewBlock.viewSwitchState().toString());
+      String block = (String) this.blockDropdown.getSelectedItem();
+      String section = (String) this.segmentDropdown.getSelectedItem();
+      String line = (String) this.lineDropdown.getSelectedItem();
+      this.activeBlock = track.getBlock(line, section, Integer.parseInt(block));
+
+      occupiedStatusLabel.setText("");
+      occupiedStatusLabel.setText(this.activeBlock.getOccupied().toString());
+
+      if(this.activeBlock.hasSwitch())
+        switchStatusLabel.setText(this.activeBlock.viewSwitchState().toString());
       else
         switchStatusLabel.setText("N/A");
 
-      if(viewBlock.getAssociatedCrossing()!=null)
-        crossingStatusLabel.setText(viewBlock.getAssociatedCrossing().viewCrossingState().toString());
+      if(this.activeBlock.getAssociatedCrossing()!=null)
+        crossingStatusLabel.setText(this.activeBlock.getAssociatedCrossing().viewCrossingState().toString());
       else
         crossingStatusLabel.setText("N/A");
 
-      if(track.viewLightsMap().get(viewBlock)!=null)
-        lightsStatusLabel.setText(track.viewLightsMap().get(viewBlock).viewLightsState().toString());
+      if(track.viewLightsMap().get(this.activeBlock)!=null)
+        lightsStatusLabel.setText(track.viewLightsMap().get(this.activeBlock).viewLightsState().toString());
       else
         lightsStatusLabel.setText("N/A");
+
+      fwdBlockNum.setText(this.activeBlock.nextBlockForward().blockNum().toString());
+      backBlockNum.setText(this.activeBlock.nextBlockBackward().blockNum().toString());
+
     }
   }
 
@@ -152,6 +162,11 @@ public class WaysideGUI {
       }
     });
 
+    blockDropdown.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e){
+        // updateFields();
+      }
+    });
 
     JButton btnSwitch = new JButton("Switch");
     btnSwitch.addActionListener(new ActionListener() {
@@ -174,42 +189,38 @@ public class WaysideGUI {
     frame.getContentPane().add(occupiedLabel);
 
     this.occupiedStatusLabel = new JLabel("N/A");
-    occupiedStatusLabel.setBounds(88, 61, 69, 20);
+    occupiedStatusLabel.setBounds(77, 61, 53, 20);
     frame.getContentPane().add(occupiedStatusLabel);
 
     this.switchLabel = new JLabel("Switch:");
-    switchLabel.setBounds(10, 94, 69, 20);
+    switchLabel.setBounds(10, 93, 69, 20);
     frame.getContentPane().add(switchLabel);
 
     this.switchStatusLabel = new JLabel("N/A");
-    switchStatusLabel.setBounds(88, 94, 69, 20);
+    switchStatusLabel.setBounds(78, 93, 69, 20);
     frame.getContentPane().add(switchStatusLabel);
 
     this.crossingLabel = new JLabel("Crossing:");
-    crossingLabel.setBounds(10, 129, 69, 20);
+    crossingLabel.setBounds(10, 128, 69, 20);
     frame.getContentPane().add(crossingLabel);
 
     this.crossingStatusLabel = new JLabel("N/A");
-    crossingStatusLabel.setBounds(89, 129, 69, 20);
+    crossingStatusLabel.setBounds(77, 128, 69, 20);
     frame.getContentPane().add(crossingStatusLabel);
 
     this.lightsLabel = new JLabel("Lights:");
-    lightsLabel.setBounds(10, 165, 69, 20);
+    lightsLabel.setBounds(10, 159, 69, 20);
     frame.getContentPane().add(lightsLabel);
 
     this.lightsStatusLabel = new JLabel("N/A");
-    lightsStatusLabel.setBounds(89, 165, 69, 20);
+    lightsStatusLabel.setBounds(76, 159, 69, 20);
     frame.getContentPane().add(lightsStatusLabel);
 
     JLabel notificationsLabel = new JLabel("Notifications");
     notificationsLabel.setBounds(448, 14, 92, 14);
     frame.add(notificationsLabel);
 
-    blockDropdown.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e){
-        updateFields();
-      }
-    });
+
     notifConsole = new JTextArea();
     JScrollPane Scroller = new JScrollPane(notifConsole);
     Scroller.setBounds(421, 29, 339, 295);
@@ -244,7 +255,7 @@ public class WaysideGUI {
 
     JTextField txtEnterPlcFile = new JTextField();
     txtEnterPlcFile.setText("Enter PLC file path here...");
-    txtEnterPlcFile.setBounds(10, 234, 220, 20);
+    txtEnterPlcFile.setBounds(10, 237, 220, 20);
     frame.getContentPane().add(txtEnterPlcFile);
     txtEnterPlcFile.setColumns(10);
 
@@ -265,12 +276,42 @@ public class WaysideGUI {
 
     JLabel PLCLabel = new JLabel("Load PLC File");
     PLCLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    PLCLabel.setBounds(10, 205, 115, 18);
+    PLCLabel.setBounds(10, 190, 115, 18);
     frame.getContentPane().add(PLCLabel);
 
     JButton button = new JButton("Browse");
     button.setBounds(311, 233, 79, 23);
     frame.getContentPane().add(button);
+
+    ArrayList<String> names = new ArrayList<String>();
+    String [] namesArray = new String [Waysides.size()];
+    for(WS ws : this.Waysides)
+      names.add(ws.line + " " + ws.number);
+    this.wsSelectDropdown = new JComboBox<String>();
+    wsSelectDropdown.setModel(new DefaultComboBoxModel<String>(names.toArray(namesArray)));
+    wsSelectDropdown.setBounds(30, 213, 89, 20);
+    frame.getContentPane().add(wsSelectDropdown);
+
+    JLabel wsSelectLabel = new JLabel("WS");
+    wsSelectLabel.setBounds(10, 213, 26, 20);
+    frame.getContentPane().add(wsSelectLabel);
+
+    this.fwdBlockNum = new JLabel("N/A");
+    fwdBlockNum.setBounds(145, 64, 46, 14);
+    frame.getContentPane().add(fwdBlockNum);
+
+    JLabel fwdLabel = new JLabel("Forward");
+    fwdLabel.setBounds(145, 42, 46, 14);
+    frame.getContentPane().add(fwdLabel);
+
+    this.backBlockNum = new JLabel("N/A");
+    backBlockNum.setBounds(220, 64, 46, 14);
+    frame.getContentPane().add(backBlockNum);
+
+    JLabel backLabel = new JLabel("Backward");
+    backLabel.setBounds(220, 42, 46, 14);
+    frame.getContentPane().add(backLabel);
+
     button.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e){
         //open file browser

@@ -27,6 +27,7 @@ public class WS {
 
 	//WS ELEMENTS
 	public String line;
+  public String number;
 	private PLC plc;
 	private TrackModel track;
 	private WaysideGUI waysideGui;
@@ -132,10 +133,10 @@ public class WS {
 	 */
 	public boolean manualSwitch(Block b){
 		if(b.hasSwitch() && !b.getOccupied()){
-			if(b.setSwitchState(-1)==true)
-				b.setSwitchState(0);
-			else if(b.setSwitchState(-1)==false)
-				b.setSwitchState(1);
+			if(b.viewSwitchState()==true)
+				b.getAssociatedSwitch().setSwitchState(false);
+			else if(b.viewSwitchState()==false)
+				b.getAssociatedSwitch().setSwitchState(true);
 			return true;
 		}
 		return false;
@@ -148,7 +149,7 @@ public class WS {
 	 */
 	public Integer switchStatus(Block b){
 		if(b.hasSwitch()){
-			boolean result = b.setSwitchState(-1);
+			boolean result = b.viewSwitchState();
 			if(result == true)
 				return 1;	//default position, root connected to lower block num
 			else if(result == false)
@@ -201,6 +202,7 @@ public class WS {
   public void runPLC() throws ScriptException{
     this.plc.runSwitchPLC();
     this.plc.runCrossingPLC();
+    this.plc.updateOccupancy();
   }
 
   /**
@@ -210,4 +212,11 @@ public class WS {
 	public void setPlc(PLC plc) {
 		this.plc = plc;
 	}
+  /**
+   * Sets ID number of WS
+   * @param String num - ID number of WS
+   */
+  public void setNum(String num){
+    this.number = num;
+  }
 }

@@ -96,7 +96,7 @@ public class Launcher extends javax.swing.JFrame {
     private TrackGUI trackGUI;
     //Wayside
     private ArrayList<WS> waysideList = new ArrayList<WS>();
-    private WaysideGUI WaysideGui;
+    private WaysideGUI waysideGui;
     //Train
     private TrainHandler trainHandler;
     private TrainModeUI trainGUI;
@@ -139,7 +139,9 @@ public class Launcher extends javax.swing.JFrame {
           ArrayList<Block> set2 = new ArrayList<Block>();
 
           WS ws1 = new WS(s, this.globalTrack);
+          ws1.setNum("1");
           WS ws2 = new WS(s, this.globalTrack);
+          ws2.setNum("2");
           this.waysideList.add(ws1);
           this.waysideList.add(ws2);
 
@@ -148,9 +150,9 @@ public class Launcher extends javax.swing.JFrame {
         }
 
         //Set Wayside GUI for WS's
-        this.WaysideGui = new WaysideGUI(this.globalTrack, this.waysideList);
+        this.waysideGui = new WaysideGUI(this.globalTrack, this.waysideList);
         for(WS ws : this.waysideList)
-          ws.setGUI(this.WaysideGui);
+          ws.setGUI(this.waysideGui);
 
         this.trainHandler = new TrainHandler(globalTrack);
         this.trainHandler.setClockSpeed(this.systemSpeed);
@@ -164,16 +166,17 @@ public class Launcher extends javax.swing.JFrame {
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
             Random rand = new Random();
             public void actionPerformed(ActionEvent e) {
-
                 updateDateAndTime();
 
-                //Update WaysideGui and WS's
-                WaysideGui.update();
                 for(WS ws : waysideList){
                   try{
                     ws.update();
-                  }catch(ScriptException ex){}
+                  }catch(ScriptException ex){
+                    System.out.println("Script Exception");
+                  }
                 }
+                if(waysideGui != null)
+                  waysideGui.update();
 
                 mbo.updateTrains();
 
@@ -552,8 +555,8 @@ public class Launcher extends javax.swing.JFrame {
      * @param evt
      */
     private void openTrackController(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTrackController
-          WaysideGui.getFrame().setVisible(true);
-          WaysideGui.getFrame().setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+          this.waysideGui.getFrame().setVisible(true);
+          this.waysideGui.getFrame().setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_openTrackController
 
     /**

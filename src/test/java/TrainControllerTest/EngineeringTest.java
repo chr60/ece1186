@@ -20,54 +20,54 @@ import org.junit.jupiter.api.Test;
  * @author Andrew
  */
 public class EngineeringTest {
-    
-        // Track Info 
-    static TrackModel track = new TrackModel("Testing");
-    static String[] fNames = {"src/test/resources/redline.csv"};
-    
-    // Train Info
-    static Train testTrain = new Train(0, new TrackModel("Test")); 
-    
-    // Yard Block 
-    static Block yardBlock; 
-    
-    // Train Controller
-    static TrainController tc = new TrainController(testTrain);
-    
-    static TCEngineerPanel engPanel; 
-    
-  @BeforeAll
+
+    //     // Track Info
+    // static TrackModel track = new TrackModel("Testing");
+    // static String[] fNames = {"src/test/resources/redline.csv"};
+    //
+    // // Train Info
+    // static Train testTrain = new Train(0, new TrackModel("Test"));
+    //
+    // // Yard Block
+    // static Block yardBlock;
+    //
+    // // Train Controller
+    // static TrainController tc = new TrainController(testTrain);
+    //
+    // static TCEngineerPanel engPanel;
+
+  // @BeforeAll
   /**
   * Initialization of the TrainController to be used for testing
   */
   static void init(){
-    
-    track.readCSV(fNames); 
-    
+
+    // track.readCSV(fNames);
+
   }
-  
-  
-  @Test
+
+
+  // @Test
   /**
   * Test to make sure that the Train Controller is getting the right train.
   */
   @DisplayName("Validate that the system is controlling the correct train")
   static void switchToCorrectTrain(){
 
-//      engPanel = new TCEngineerPanel(tc.getTrain()); 
-//     
-//      assertTrue(engPanel.getTrain() == tc.getTrain()); 
+//      engPanel = new TCEngineerPanel(tc.getTrain());
+//
+//      assertTrue(engPanel.getTrain() == tc.getTrain());
   }
-  
-  
-  @Test
-  /**
-  * Test to make sure that the Train Controller is getting the right train.
-  */
-  @DisplayName("Validate that the system is controlling the correct train")
-  static void setPowerConstants(){
 
-            
-  } 
-  
+
+  // @Test
+  // /**
+  // * Test to make sure that the Train Controller is getting the right train.
+  // */
+  // @DisplayName("Validate that the system is controlling the correct train")
+  // static void setPowerConstants(){
+  //
+  //
+  // }
+
 }
