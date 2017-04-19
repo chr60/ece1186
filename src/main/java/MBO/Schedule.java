@@ -24,7 +24,7 @@ public class Schedule{
   Hardcoded in for now
   */
   private CTCgui ctc;
-  private String mode = "MBO";
+  private String mode = "FB";
   private MovingBlockOverlay mbo;
   private TrackModel dummyTrack;
   private TrainManager manager;
@@ -219,32 +219,57 @@ public class Schedule{
   }
 
   public void testBlockToBlock() {
+
+    ArrayList<Block> path;// = dummyTrack.blockToBlock(yardBlock, dummyTrack.getBlock(lineName, "C", new Integer(7))).get(0);
+/*    System.out.printf("\n\n");
+    printPath(path);
+    System.out.printf("\n\n");
+*/
     for (int i = 0; i < lineStops.length - 1; i++) {
       Block startBlock = lineStops[i];
       Block stopBlock = lineStops[i + 1];
 
-      ArrayList<Block> path = dummyTrack.blockToBlock(startBlock, stopBlock).get(0);
+      if (7 == i)  {
+        path = dummyTrack.blockToBlock(startBlock, stopBlock).get(1);
+      } else {
+        path = dummyTrack.blockToBlock(startBlock, stopBlock).get(0);
+      }
 
       System.out.printf("\n\n");
       printPath(path);
       System.out.printf("\n\n");
     }
+
+    /*path = dummyTrack.blockToBlock(dummyTrack.getBlock(lineName, "F", new Integer(16)), yardBlock).get(0);
+    System.out.printf("\n\n");
+    printPath(path);
+    System.out.printf("\n\n");
+    */
+    path = dummyTrack.blockToBlock(dummyTrack.getBlock(lineName, "F", new Integer(16)), dummyTrack.getBlock(lineName, "C", new Integer(7))).get(1);
+    System.out.printf("\n\n");
+    printPath(path);
+    System.out.printf("\n\n");
+
   }
 
   /**
    * Handles the switching of modes
    * @param nextMode Next mode of operation
    */
-  public void switchModes(String nextMode) {
+  public void setMode(String nextMode) {
 
-    if ("MBO".equals(nextMode) || "FB".equals(nextMode)) {
+    if ("MBO".equals(nextMode) || "FB".equals(nextMode) || "MAN".equals(nextMode)) {
       mode = nextMode;
+    } else {
+      mode = "FB";
     }
 
   }
 
   /**
    * Updates the list of trains with their new authority and speed
+   *
+   * @bug Add in update for MBO mode
    */
   public void updateTrains() {
     ArrayList<DummyTrain> trainList = manager.getTrainList();
@@ -253,34 +278,35 @@ public class Schedule{
     Block lastStation;
     Block nextStop;
 
-    //if ("MBO".equals(mode)) {
+    if ("MAN".equals(mode)) {
+      return;
+    }
 
-    //} else {
-      for (int i = 0; i < trainList.size(); i++) {
+    for (int i = 0; i < trainList.size(); i++) {
 
-        if (handler.getTrainAntenna(trainList.get(i).getID()) == null && "MBO".equals(mode)) {
-          handler.setSpeedAndAuthority(-1, 0.0, new GPS(lineStops[0], null), yardBlock);
-        }
-
-        lastStation = trainList.get(i).getLastStation();
-        nextStop = lineStops[(getStopNum(lastStation) + 1) % lineStops.length];
-        tempPath = createRoute(trainList.get(i), lastStation, nextStop);
-        manager.getTrain(trainList.get(i).getID()).setPath(tempPath);
-        newPaths.addAll(tempPath);
-
-        if (null != trainList.get(i).getPosition()) {
-          if (trainList.get(i).getPosition().blockNum() == nextStop.blockNum()) {
-            manager.getTrain(trainList.get(i).getID()).setLastStation(nextStop);
-          }
-        } else {
-          DummyTrain newTrain = trainList.get(i);
-          newTrain.setPosition(yardBlock);
-          tempPath = createRoute(newTrain, yardBlock, lineStops[0]);
-          newTrain.setPath(tempPath);
-          newPaths.addAll(tempPath);
-        }
+      if (handler.getTrainAntenna(trainList.get(i).getID()) == null && "MBO".equals(mode)) {
+        handler.setSpeedAndAuthority(-1, 0.0, new GPS(lineStops[0], null), yardBlock);
       }
-    //}
+
+      lastStation = trainList.get(i).getLastStation();
+      nextStop = lineStops[(getStopNum(lastStation) + 1) % lineStops.length];
+      tempPath = createRoute(trainList.get(i), lastStation, nextStop);
+      manager.getTrain(trainList.get(i).getID()).setPath(tempPath);
+      newPaths.addAll(tempPath);
+
+      if (null != trainList.get(i).getPosition()) {
+        if (trainList.get(i).getPosition().blockNum() == nextStop.blockNum()) {
+          manager.getTrain(trainList.get(i).getID()).setLastStation(nextStop);
+        }
+      } else {
+        DummyTrain newTrain = trainList.get(i);
+        newTrain.setPosition(yardBlock);
+        tempPath = createRoute(newTrain, yardBlock, lineStops[0]);
+        newTrain.setPath(tempPath);
+        newPaths.addAll(tempPath);
+      }
+    }
+
     if (null != ctc) {
       this.ctc.getTrainPanel().updateSpeedAuthToWS(newPaths);
     }
@@ -355,11 +381,14 @@ public class Schedule{
     if ("MBO".equals(mode)) {
       Antenna ant = handler.getTrainAntenna(train.getID());
       ant.setCurrAuthority(auth);
+      train.setAuthority(auth.getCurrBlock());
       int index = findBlockInList(ant.getGPS().getCurrBlock(), path);
       if (index < 0) {
         ant.setSuggestedSpeed(0.0);
+        train.setSuggSpeed(0.0);
       } else {
         ant.setSuggestedSpeed(speeds[index]);
+        train.setSuggSpeed(speeds[index]);
       }
     } else {
       for (int i = start; i < path.size(); i++) {
@@ -398,71 +427,6 @@ public class Schedule{
       blocks.add(dummyTrack.getBlock(lineName, "C", new Integer(9)));
       blocks.add(dummyTrack.getBlock(lineName, "C", new Integer(8)));
       blocks.add(dummyTrack.getBlock(lineName, "C", new Integer(7)));
-    } else if (startBlock.compareTo(lineStops[0]) == 0) {
-      blocks.add(dummyTrack.getBlock(lineName, "C", new Integer(7)));
-      blocks.add(dummyTrack.getBlock(lineName, "B", new Integer(6)));
-      blocks.add(dummyTrack.getBlock(lineName, "B", new Integer(5)));
-      blocks.add(dummyTrack.getBlock(lineName, "B", new Integer(4)));
-      blocks.add(dummyTrack.getBlock(lineName, "A", new Integer(3)));
-      blocks.add(dummyTrack.getBlock(lineName, "A", new Integer(2)));
-      blocks.add(dummyTrack.getBlock(lineName, "A", new Integer(1)));
-      blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(16)));
-    } else if (startBlock.compareTo(lineStops[1]) == 0) {
-      blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(16)));
-      blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(17)));
-      blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(18)));
-      blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(19)));
-      blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(20)));
-      blocks.add(dummyTrack.getBlock(lineName, "G", new Integer(21)));
-    } else if (startBlock.compareTo(lineStops[2]) == 0) {
-      blocks.add(dummyTrack.getBlock(lineName, "G", new Integer(21)));
-      blocks.add(dummyTrack.getBlock(lineName, "G", new Integer(22)));
-      blocks.add(dummyTrack.getBlock(lineName, "G", new Integer(23)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(24)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(25)));
-    } else if (startBlock.compareTo(lineStops[3]) == 0) {
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(25)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(26)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(27)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(28)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(29)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(30)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(31)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(32)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(33)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(34)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(35)));
-    } else if (startBlock.compareTo(lineStops[4]) == 0) {
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(35)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(36)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(37)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(38)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(39)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(40)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(41)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(42)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(43)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(44)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(45)));
-    } else if (startBlock.compareTo(lineStops[5]) == 0) {
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(45)));
-      blocks.add(dummyTrack.getBlock(lineName, "I", new Integer(46)));
-      blocks.add(dummyTrack.getBlock(lineName, "I", new Integer(47)));
-      blocks.add(dummyTrack.getBlock(lineName, "I", new Integer(48)));
-    } else if (startBlock.compareTo(lineStops[6]) == 0) {
-      blocks.add(dummyTrack.getBlock(lineName, "I", new Integer(48)));
-      blocks.add(dummyTrack.getBlock(lineName, "J", new Integer(49)));
-      blocks.add(dummyTrack.getBlock(lineName, "J", new Integer(50)));
-      blocks.add(dummyTrack.getBlock(lineName, "J", new Integer(51)));
-      blocks.add(dummyTrack.getBlock(lineName, "J", new Integer(52)));
-      blocks.add(dummyTrack.getBlock(lineName, "J", new Integer(53)));
-      blocks.add(dummyTrack.getBlock(lineName, "J", new Integer(54)));
-      blocks.add(dummyTrack.getBlock(lineName, "K", new Integer(55)));
-      blocks.add(dummyTrack.getBlock(lineName, "K", new Integer(56)));
-      blocks.add(dummyTrack.getBlock(lineName, "K", new Integer(57)));
-      blocks.add(dummyTrack.getBlock(lineName, "L", new Integer(58)));
-      blocks.add(dummyTrack.getBlock(lineName, "L", new Integer(59)));
-      blocks.add(dummyTrack.getBlock(lineName, "L", new Integer(60)));
     } else if (startBlock.compareTo(lineStops[7]) == 0) {
       blocks.add(dummyTrack.getBlock(lineName, "L", new Integer(60)));
       blocks.add(dummyTrack.getBlock(lineName, "M", new Integer(61)));
@@ -476,48 +440,6 @@ public class Schedule{
       blocks.add(dummyTrack.getBlock(lineName, "J", new Integer(50)));
       blocks.add(dummyTrack.getBlock(lineName, "J", new Integer(49)));
       blocks.add(dummyTrack.getBlock(lineName, "I", new Integer(48)));
-    } else if (startBlock.compareTo(lineStops[8]) == 0) {
-      blocks.add(dummyTrack.getBlock(lineName, "I", new Integer(48)));
-      blocks.add(dummyTrack.getBlock(lineName, "I", new Integer(47)));
-      blocks.add(dummyTrack.getBlock(lineName, "I", new Integer(46)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(45)));
-    } else if (startBlock.compareTo(lineStops[9]) == 0) {
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(45)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(44)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(43)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(42)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(41)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(40)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(39)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(38)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(37)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(36)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(35)));
-    } else if (startBlock.compareTo(lineStops[10]) == 0) {
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(35)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(34)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(33)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(32)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(31)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(30)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(29)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(28)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(27)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(26)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(25)));
-    } else if (startBlock.compareTo(lineStops[11]) == 0) {
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(25)));
-      blocks.add(dummyTrack.getBlock(lineName, "H", new Integer(24)));
-      blocks.add(dummyTrack.getBlock(lineName, "G", new Integer(23)));
-      blocks.add(dummyTrack.getBlock(lineName, "G", new Integer(22)));
-      blocks.add(dummyTrack.getBlock(lineName, "G", new Integer(21)));
-    } else if (startBlock.compareTo(lineStops[12]) == 0) {
-      blocks.add(dummyTrack.getBlock(lineName, "G", new Integer(21)));
-      blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(20)));
-      blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(19)));
-      blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(18)));
-      blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(17)));
-      blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(16)));
     } else if (startBlock.compareTo(lineStops[13]) == 0 && !loopAgain) {
       blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(16)));
       blocks.add(dummyTrack.getBlock(lineName, "A", new Integer(1)));
@@ -542,7 +464,8 @@ public class Schedule{
       blocks.add(dummyTrack.getBlock(lineName, "C", new Integer(8)));
       blocks.add(dummyTrack.getBlock(lineName, "C", new Integer(7)));
     } else {
-      blocks = null;
+      int index = getStopNum(startBlock);
+      blocks = dummyTrack.blockToBlock(lineStops[index], lineStops[index + 1]).get(0);
     }
 
     return blocks;
@@ -552,6 +475,8 @@ public class Schedule{
    * Gets the next train in front if there is one
    * @param  blocks    list of blocks
    * @return Train     nextTrain
+   *
+   * @bug Need to add MBO mode to nextTrain
    */
   private DummyTrain nextTrain(ArrayList<Block> blockList, int start) {
 
