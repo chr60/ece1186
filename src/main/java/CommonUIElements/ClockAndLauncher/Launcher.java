@@ -45,6 +45,8 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import TrainModel.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.LinkedList;
 
 
@@ -105,6 +107,8 @@ public class Launcher extends javax.swing.JFrame {
     private CTCgui ctc;
     //MBO
     private MovingBlockOverlay mbo;
+        
+    private String[] beaconFileNames = {"test-classes/beaconPositions.txt"}; 
 
     /**
      * Constructor for creating a Launcher object. By default, the system begins operating
@@ -118,20 +122,19 @@ public class Launcher extends javax.swing.JFrame {
         this.normalSpeedRadioButton.setSelected(true);
         // for now, we start in normal mode
         this.systemSpeed = 1000;
-
-
+        
         //Generate globalTrack
         String redlinePath = "test-classes/redline.csv";
         String greenlinePath = "test-classes/greenline.csv";
-        String[] fNames = {redlinePath, greenlinePath};
+        String[] fNames = {redlinePath};
 
         String redLink = "test-clases/redlinelink.csv";
         String greenLink = "test-classes/greelinelink.csv";
-        String[] linkNames = {redLink, redLink};
+        String[] linkNames = {redLink};
 
         this.globalTrack = this.generateTrack("GlobalTrack", fNames, linkNames);
         this.trackGUI = new TrackGUI(globalTrack);
-
+        
         //Cycle through number of lines and generate 2 WS's and a Train Manager for each line
         for(String s : this.globalTrack.trackList.keySet()) {
             
@@ -172,47 +175,59 @@ public class Launcher extends javax.swing.JFrame {
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
             Random rand = new Random();
             public void actionPerformed(ActionEvent e) {
-                updateDateAndTime();
-
-                for(WS ws : waysideList){
-                  try{
-                    ws.update();
-                  }catch(ScriptException ex){
-                    System.out.println("Script Exception");
-                  }
-                }
-                if(waysideGui != null)
-                  waysideGui.update();
-
-                mbo.updateTrains();
-
-                // what should be called every tick
-
-                if(ctc != null){
-                  // CTC - asking WS for any broken blocks
-                  ctc.getTrackFailuresWS();
-                  // CTC - update track panel on gui w/ info from WS
-                  ctc.getTrackPanel().updateTrackInfo(ctc.getTrackPanel().getBlockWS());
-                  // CTC - calls wayside to get updated list of track occupancy
-                  ctc.getTrainPanel().updateTrainPositionsToManager(trainManagers);
-                  // CTC - prints active list of trains from train manager to GUI
-                  ctc.getTrainManagerPanel().updateTable(trainManagers);
-
-                }
-
-                trainHandler.pollYard();
-
-                if(trainHandler.getNumTrains() != 0){
-                  trainGUI.updateGUI(trainGUI.getCurrT());
-                }
-
-                // CTC - ask track for trainId
-                ctc.getTrainPanel().updateTrainIDinList(trainManagers.get(0), globalTrack);
-
+                
+                update();
             }
         });
 
+        
+       this.initBeacons(this.beaconFileNames);
        this.systemClock.start();
+    }
+    
+    
+    public void update(){
+        updateDateAndTime();
+
+        for (TrainController trainCont : this.trainHandler.openTrainControllers){
+        
+            trainCont.refreshComponents();
+        }
+        
+        for(WS ws : waysideList){
+            try{
+                ws.update();
+            }catch(ScriptException ex){
+                System.out.println("Script Exception");
+            }
+        }
+        
+        if(waysideGui != null){ waysideGui.update(); }
+
+        mbo.updateTrains();
+
+        // what should be called every tick
+
+        if(ctc != null){
+            // CTC - asking WS for any broken blocks
+            ctc.getTrackFailuresWS();
+            // CTC - update track panel on gui w/ info from WS
+            ctc.getTrackPanel().updateTrackInfo(ctc.getTrackPanel().getBlockWS());
+            // CTC - calls wayside to get updated list of track occupancy
+            ctc.getTrainPanel().updateTrainPositionsToManager(trainManagers);
+            // CTC - prints active list of trains from train manager to GUI
+            //ctc.getTrainManagerPanel().updateTable(trainManagers);
+        }
+
+        trainHandler.pollYard();
+
+        if(trainHandler.getNumTrains() != 0){
+            trainGUI.updateGUI(trainGUI.getCurrT());
+        }
+
+        // CTC - ask track for trainId
+        ctc.getTrainPanel().updateTrainIDinList(trainManagers.get(0), globalTrack);    
+        
     }
 
         /**
@@ -275,6 +290,52 @@ public class Launcher extends javax.swing.JFrame {
         this.date.setText(date);
         this.time.setText(time);
         //System.out.println("Date Updated");
+    }
+        /**
+     * Helper function to place a beacon with a message at a given block.
+     * 
+     * @param line the track line
+     * @param section the track section
+     * @param blockNum the block number
+     * @param disIntoBlock distance into the block
+     * @param beaconMessage the beacon message
+     */
+    private void placeBeacon(String line, String section, Integer blockNum, Double disIntoBlock, String beaconMessage){
+
+        Block block = this.globalTrack.getBlock(line, section, blockNum); // get the block from track
+        
+        block.addBeacon(beaconMessage, disIntoBlock); // add beacon 
+    }
+    
+    /**
+     * Helper function to read a file and place a beacon corresponding to each station. 
+     * Each line in the file should be in the following format: 
+     * line section blockNum distIntoBlock message (ex: Red C 7 0 250.0)
+     * 
+     * @param fnames an array of filenames to read from. 
+     */
+    private void initBeacons(String[] fnames){
+        String fLine; 
+        String[] splitLine;
+        
+        try{
+        
+            for (int i = 0; i < fnames.length; i++){
+            
+                FileReader fr = new FileReader(fnames[i]); 
+                BufferedReader br = new BufferedReader(fr);
+
+                while((fLine = br.readLine()) != null){
+                    splitLine = fLine.split(" "); 
+                    String line = splitLine[0];
+                    String section = splitLine[1]; 
+                    Integer blockNum = Integer.parseInt(splitLine[2]); 
+                    Double distIntoBlock = Double.parseDouble(splitLine[3]); 
+                    String beaconMessage = splitLine[4]; 
+                    this.placeBeacon(line, section, blockNum, distIntoBlock, beaconMessage);
+                }
+            }
+        }catch(Exception e){System.out.println(e.getMessage());}       
     }
 
     /**
@@ -473,28 +534,20 @@ public class Launcher extends javax.swing.JFrame {
      * @param evt the event that triggered the action, i.e., the x1 radio button.
      */
     private void playNormalSpeed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playNormalSpeed
-        System.out.println("Playing!");
+
         this.systemSpeed = 1000;
-        this.trainHandler.setClockSpeed(this.systemSpeed);
-        System.out.println("System should play in x1 speed.");
+        //this.trainHandler.setClockSpeed(this.systemSpeed);
 
-        System.out.println(this.trainHandler.openTrainControllers);
-        // change the timer delay for all open train controllers
-        for (TrainController tc : this.trainHandler.openTrainControllers){
-
-            tc.playNormal();
-        }
-
+        if (this.systemClock != null){this.systemClock.stop();}
+        
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
             Random rand = new Random();
             public void actionPerformed(ActionEvent e) {
 
-                updateDateAndTime();
-                // what should be called every tick
+                update(); 
             }
         });
-
-        System.out.println(this.systemClock.getDelay());
+        this.systemClock.start();
     }//GEN-LAST:event_playNormalSpeed
 
     /**
@@ -504,25 +557,21 @@ public class Launcher extends javax.swing.JFrame {
      */
     private void playFastSpeed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playFastSpeed
 
+        if (this.systemClock != null){this.systemClock.stop();}
+        
         // set the system speed
         this.systemSpeed = 100;
         this.trainHandler.setClockSpeed(this.systemSpeed);
-        // change the timer delay for all open train controllers
-        for (TrainController tc : this.trainHandler.openTrainControllers){
-            tc.playFast();
-        }
 
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
             Random rand = new Random();
             public void actionPerformed(ActionEvent e) {
 
-                updateDateAndTime();
-
-                // what should be called every tick
+                update(); 
             }
         });
-
-        System.out.println(this.systemClock.getDelay());
+        
+        this.systemClock.start();
     }//GEN-LAST:event_playFastSpeed
 
     /**

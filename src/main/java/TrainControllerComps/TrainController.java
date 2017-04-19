@@ -94,7 +94,7 @@ public class TrainController extends javax.swing.JFrame {
         
         this.detailedTrainWindowOpen = false;
 
-        this.playNormal();
+        //this.playNormal();
     }
 
     /**
@@ -127,7 +127,7 @@ public class TrainController extends javax.swing.JFrame {
             engPanel.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         }
         
-        this.playNormal();
+        //this.playNormal();
     }
 
     /**
@@ -158,7 +158,7 @@ public class TrainController extends javax.swing.JFrame {
             engPanel.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         }
         
-         this.playNormal();
+         //this.playNormal();
     }
 
     /**
@@ -194,53 +194,53 @@ public class TrainController extends javax.swing.JFrame {
             engPanel.setVisible(true);
             engPanel.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         }        
-        this.playNormal();
+        //this.playNormal();
     }
     
-    /**
-     * Changes the rate at which the TrainController clock is called to 1/10 s.  
-     */
-    public void playFast(){
-        
-        if (this.clock != null){this.clock.stop();}
-          
-        this.clock = new Timer(100, new ActionListener(){
-
-            public void actionPerformed(ActionEvent e) {
-                    
-                if (selectedTrain != null && selectedTrain.powerConstantsSet() ){ refreshComponents(); }
-
-                if (testWindowOpen){ testConsole.refreshUI(); }
-                
-                if (detailedTrainWindowOpen == true){ trainUI.updateGUI(selectedTrain); }
-
-            }
-        }); 
-        
-        this.clock.start();  
-    }
-    
-    /**
-     * Changes the rate at which the TrainController clock is called to 1 s.
-     */
-    public void playNormal(){
-   
-        if (this.clock != null){this.clock.stop();}
-        
-        this.clock = new Timer(1000, new ActionListener(){
-
-            public void actionPerformed(ActionEvent e) {
-                                    
-                if (selectedTrain != null && selectedTrain.powerConstantsSet() ){ refreshComponents(); }
-
-                if (testWindowOpen){ testConsole.refreshUI(); }
-                
-                if (detailedTrainWindowOpen == true){ trainUI.updateGUI(selectedTrain); }
-                
-            }
-        });         
-        this.clock.start();  
-    }
+//    /**
+//     * Changes the rate at which the TrainController clock is called to 1/10 s.  
+//     */
+//    public void playFast(){
+//        
+//        if (this.clock != null){this.clock.stop();}
+//          
+//        this.clock = new Timer(100, new ActionListener(){
+//
+//            public void actionPerformed(ActionEvent e) {
+//                    
+//                if (selectedTrain != null && selectedTrain.powerConstantsSet() ){ refreshComponents(); }
+//
+//                if (testWindowOpen){ testConsole.refreshUI(); }
+//                
+//                if (detailedTrainWindowOpen == true){ trainUI.updateGUI(selectedTrain); }
+//
+//            }
+//        }); 
+//        
+//        this.clock.start();  
+//    }
+//    
+//    /**
+//     * Changes the rate at which the TrainController clock is called to 1 s.
+//     */
+//    public void playNormal(){
+//   
+//        if (this.clock != null){this.clock.stop();}
+//        
+//        this.clock = new Timer(1000, new ActionListener(){
+//
+//            public void actionPerformed(ActionEvent e) {
+//                                    
+//                if (selectedTrain != null && selectedTrain.powerConstantsSet() ){ refreshComponents(); }
+//
+//                if (testWindowOpen){ testConsole.refreshUI(); }
+//                
+//                if (detailedTrainWindowOpen == true){ trainUI.updateGUI(selectedTrain); }
+//                
+//            }
+//        });         
+//        this.clock.start();  
+//    }
     
     /**
      * Sets the test console to use with this Train Controller. 

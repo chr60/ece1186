@@ -98,11 +98,10 @@ public class TCTestConsole extends javax.swing.JFrame {
         
         Double b = this.track.getBlock("Red", "C", new Integer(8)).getLen();     
         String str = Double.toString((b - 10) + str2);
-        System.out.println("Str: " + str); 
         this.track.getBlock("Red", "C", new Integer(8)).addBeacon(str, 10.0);
         
         this.track.getBlock("Red", "C", new Integer(9)).setSwitchState(0);
-        endingBlock = this.track.getBlock("Red", "F", new Integer(16));          
+        endingBlock = this.track.getBlock("Red", "H", new Integer(35));          
     }
     
     /**
@@ -1142,7 +1141,7 @@ public class TCTestConsole extends javax.swing.JFrame {
         
         for (TrainController tc : this.trainHandler.openTrainControllers){
         
-            tc.playNormal();
+            //tc.playNormal();
         }  
     }//GEN-LAST:event_playNormalSpeed
 
@@ -1155,7 +1154,7 @@ public class TCTestConsole extends javax.swing.JFrame {
         
         for (TrainController tc : this.trainHandler.openTrainControllers){
         
-            tc.playFast();
+            //tc.playFast();
         }        
     }//GEN-LAST:event_playFastSpeed
 
