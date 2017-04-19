@@ -8,7 +8,6 @@ import TrainControllerComps.*;
 // class designed to handle communcation between train model and other interfaces
 public class TrainHandler {
 
-	int trainCount = 0;
 	Integer trainIDAssign = 1;
 	ArrayList<Train> trains;
 	ArrayList<String> trainIDs;
@@ -58,7 +57,6 @@ public class TrainHandler {
 			//train is a new train
 			currT = new Train(trainIDAssign, globalTrack);
 			trainID = trainIDAssign;
-			trainCount++;
 			trainIDAssign++;
 			currT.setSpeed(Speed);
 			currT.setAuthority(goToBlock);
