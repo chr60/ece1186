@@ -123,11 +123,11 @@ public class Launcher extends javax.swing.JFrame {
         //Generate globalTrack
         String redlinePath = "test-classes/redline.csv";
         String greenlinePath = "test-classes/greenline.csv";
-        String[] fNames = {redlinePath, greenlinePath};
+        String[] fNames = {redlinePath};
 
         String redLink = "test-clases/redlinelink.csv";
         String greenLink = "test-classes/greelinelink.csv";
-        String[] linkNames = {redLink, greenLink};
+        String[] linkNames = {redLink};
 
         this.globalTrack = this.generateTrack("GlobalTrack", fNames, linkNames);
         this.trackGUI = new TrackGUI(globalTrack);

@@ -29,7 +29,7 @@ public class Train implements Serializable {
 	Double Kp, Ki;
 	Double safeDistSB, safeDistEB;
 	Double startTime;
-	Double frictionC = 0.16; 			//coefficient of friction of steel wheels on lubricated steel rails
+	Double frictionC = 0.42; 			//coefficient of friction of steel wheels on lubricated steel rails
 	Double SBrate = -1.2, EBrate = -2.73;
 	Double g = 9.8;
 	//Double Fx, Fy, Ax, Ay, Vx, Vy, oldVx, oldVy;				//gravity constant in m/s^2
@@ -63,7 +63,7 @@ public class Train implements Serializable {
      * Default Constructor to create a new Train object based on Assigned ID
      */
 	public Train(){
-		
+		trainAntenna = new Antenna();
 	}
         
 	/**
@@ -165,7 +165,7 @@ public class Train implements Serializable {
 	private void changeSpeed(Double Fapp) {
 		oldVelocity = velocity;
 		//compute force lost due to friction
-		Double Fs = mass * g * mySin(currGrade);
+		Double Fs = mass * g * mySin(currGrade) * frictionC;
 		//compute net force based on applied force and friction
 		netForce = Fapp - Fs;
 		//compute acceleration based on net force and current mass
@@ -223,8 +223,9 @@ public class Train implements Serializable {
                         Block blockForward = currBlock.nextBlockForward();
                         Block blockBackward = currBlock.nextBlockBackward();
 
-                        //System.out.println("forward block: " + blockForward.blockNum());
-                        //System.out.println("backward block: " + blockBackward.blockNum());
+
+                        System.out.println("forward block: " + blockForward.blockNum());
+                        System.out.println("backward block: " + blockBackward.blockNum());
                         if(blockForward != null && blockBackward != null){
                             //theres both a forward and backward. go to the one that wasnt last visited
                             if (blockBackward.compareTo(prevBlock) == 0)
@@ -283,16 +284,18 @@ public class Train implements Serializable {
 					setPointSpeed = speedMBO;
 				}
 				currAuthority = authMBO;
-			}else if (this.getCurrBlock() != null){
-                if (this.getCurrBlock().getSuggestedSpeed() != null){
+			}else if (currBlock != null){
+                if (currBlock.getSuggestedSpeed() != null){
 
-                    setPointSpeed = getCurrBlock().getSuggestedSpeed();
+                    setPointSpeed = currBlock.getSuggestedSpeed();
+					currBlock.setSuggestedSpeed(null);
                 }
 
-                if (this.getCurrBlock().getAuthority() != null){
+                if (currBlock.getAuthority() != null){
 
                     currAuthority.setCurrBlock(getCurrBlock().getAuthority());
 					currAuthority.setDistIntoBlock(null);
+					currBlock.setAuthority(null);
 				}
             }
 			
@@ -373,7 +376,7 @@ public class Train implements Serializable {
 	public Double deccelRate(Double Drate){
 
 		Double forceApplied = mass * Drate;
-		Double Fs = mass * g * mySin(currGrade);
+		Double Fs = mass * g * mySin(currGrade) * frictionC;
 		Double netF = forceApplied - Fs;
 		//compute acceleration based on net force and current mass
 		Double decceleration = netF / mass;
