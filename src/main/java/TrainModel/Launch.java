@@ -44,8 +44,9 @@ public class Launch {
      */
     public static TrackModel generateTrack(){
       String[] fNames = {"resources/redline.csv"};
+      String[] fNamesOverride = {"resources/redlineLink.csv"};
       TrackModel globalTrack = new TrackModel("GlobalTrack");
-  		globalTrack.readCSV(fNames);
+  		globalTrack.readCSV(fNames, fNamesOverride);
       return globalTrack;
     }
 }
