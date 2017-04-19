@@ -76,7 +76,7 @@ public class Train implements Serializable {
 		trainAntenna = new Antenna();
 		numCrew = 1;
 		velocity = 0.0;
-		trainAntenna.setCurrVelocity(velocity);
+		trainAntenna.setCurrVelocity(velocity * 2.236);
 		oldVelocity =0.0;
 		length = lengthCar;
 		trainID = ID;
@@ -192,7 +192,7 @@ public class Train implements Serializable {
 		updateCurrBlock(distance);
 		updateSpeedAndAuthority();
 		updateSafeBrakingDist();
-		trainAntenna.setCurrVelocity(velocity);
+		trainAntenna.setCurrVelocity(velocity * 2.236);
 	}
 
 /**
@@ -339,7 +339,7 @@ public class Train implements Serializable {
 	public void setVelocity(Double newV){
 		
 		velocity = newV * 0.447;				//convert MPH to m/s
-		trainAntenna.setCurrVelocity(velocity);
+		trainAntenna.setCurrVelocity(velocity * 2.236);
 	}
 
 		
