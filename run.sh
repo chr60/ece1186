@@ -11,6 +11,7 @@ function cleanAndRun() {
 	else
 		echo "MAVEN TESTS FAILED. OVERRIDING"
 		mvn package -Dmaven.test.skip=true
+	fi
 	cd target
 	java -jar train-station-1.0.jar
 }

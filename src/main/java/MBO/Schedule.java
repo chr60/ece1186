@@ -7,6 +7,7 @@ import CommonUIElements.ClockAndLauncher.Launcher;
 import TrackModel.Block;
 import TrackModel.Station;
 import TrackModel.TrackModel;
+import TrainModel.Antenna;
 import TrainModel.GPS;
 import TrainModel.Train;
 import TrainModel.TrainHandler;
@@ -23,7 +24,7 @@ public class Schedule{
   Hardcoded in for now
   */
   private CTCgui ctc;
-  private String mode;
+  private String mode = "MBO";
   private MovingBlockOverlay mbo;
   private TrackModel dummyTrack;
   private TrainManager manager;
@@ -234,7 +235,7 @@ public class Schedule{
    * Handles the switching of modes
    * @param nextMode Next mode of operation
    */
-  private void switchModes(String nextMode) {
+  public void switchModes(String nextMode) {
 
     if ("MBO".equals(nextMode) || "FB".equals(nextMode)) {
       mode = nextMode;
@@ -254,10 +255,15 @@ public class Schedule{
     Block lastStation;
     Block nextStop;
 
-    if ("MBO".equals(mode)) {
+    //if ("MBO".equals(mode)) {
 
-    } else {
+    //} else {
       for (int i = 0; i < trainList.size(); i++) {
+
+        if (handler.getTrainAntenna(trainList.get(i).getID()) == null && "MBO".equals(mode)) {
+          handler.setSpeedAndAuthority(-1, 0.0, new GPS(lineStops[0], null), yardBlock);
+        }
+
         lastStation = trainList.get(i).getLastStation();
         nextStop = lineStops[(getStopNum(lastStation) + 1) % lineStops.length];
         tempPath = createRoute(trainList.get(i), lastStation, nextStop);
@@ -275,9 +281,13 @@ public class Schedule{
           newTrain.setPath(tempPath);
           newPaths.addAll(tempPath);
         }
+        if (handler.getTrainAntenna(i + 1) != null) {
+          if (handler.getTrainAntenna(i + 1).getCurrAuthority() != null) {
+            System.out.printf("Authority: %d\n", handler.getTrainAntenna(i + 1).getCurrAuthority().getCurrBlock().blockNum());
+          }
+        }
       }
-    }
-
+    //}
     if (null != ctc) {
       this.ctc.getTrainPanel().updateSpeedAuthToWS(newPaths);
     }
@@ -329,10 +339,11 @@ public class Schedule{
    *
    * @bug Actually choose a path instead of just the first one
    * @bug Assosciate arrival time with train ID
+   * @bug MBO mode
    */
   private ArrayList<Block> createRoute(DummyTrain train, Block startBlock, Block stopBlock) {
 
-    ArrayList<Block> path = pathHardCoded(startBlock);
+    ArrayList<Block> path = pathHardCoded(startBlock, true);
     //ArrayList<Block> path = dummyTrack.blockToBlock(startBlock, stopBlock).get(0);
 
     GPS auth = findAuthority(path, train);
@@ -340,7 +351,7 @@ public class Schedule{
     long schedArrival = schedules.get(findScheduleIndex(train.getID())).getTime(0, stationIndex);
     GPS currPos;
     if ("MBO".equals(mode)) {
-      currPos = handler.findTrain(train.getID()).getGPS();
+      currPos = handler.getTrainAntenna(train.getID()).getGPS();
     } else {
       currPos = new GPS(train.getPosition(), null);
     }
@@ -351,10 +362,10 @@ public class Schedule{
     }
     
     if ("MBO".equals(mode)) {
-      for (int i = start; i < path.size(); i++) {
-        //handler.findTrain(train.getID()).setAuthority(auth);
-        handler.findTrain(train.getID()).setSpeed(speeds[i]);
-      }
+      Antenna ant = handler.getTrainAntenna(train.getID());
+      ant.setCurrAuthority(auth);
+      int index = findBlockInList(ant.getGPS().getCurrBlock(), path);
+      ant.setSuggestedSpeed(speeds[index]);
     } else {
       for (int i = start; i < path.size(); i++) {
         path.get(i).setAuthority(auth.getCurrBlock());
@@ -384,7 +395,7 @@ public class Schedule{
     return -1;
   }
 
-  private ArrayList<Block> pathHardCoded(Block startBlock) {
+  private ArrayList<Block> pathHardCoded(Block startBlock, boolean loopAgain) {
     ArrayList<Block> blocks = new ArrayList<Block>();
 
     if (startBlock.compareTo(yardBlock) == 0) {
@@ -512,7 +523,7 @@ public class Schedule{
       blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(18)));
       blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(17)));
       blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(16)));
-    } else if (startBlock.compareTo(lineStops[13]) == 0) {
+    } else if (startBlock.compareTo(lineStops[13]) == 0 && !loopAgain) {
       blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(16)));
       blocks.add(dummyTrack.getBlock(lineName, "A", new Integer(1)));
       blocks.add(dummyTrack.getBlock(lineName, "A", new Integer(2)));
@@ -524,11 +535,7 @@ public class Schedule{
       blocks.add(dummyTrack.getBlock(lineName, "C", new Integer(8)));
       blocks.add(dummyTrack.getBlock(lineName, "C", new Integer(9)));
       blocks.add(dummyTrack.getBlock(lineName, "U", new Integer(77)));
-    } else {
-      blocks = null;
-    }
-
-    /*else if (startBlock.compareTo(lineStops[13]) == 0) {
+    } else if (startBlock.compareTo(lineStops[13]) == 0 && loopAgain) {
       blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(16)));
       blocks.add(dummyTrack.getBlock(lineName, "E", new Integer(15)));
       blocks.add(dummyTrack.getBlock(lineName, "E", new Integer(14)));
@@ -539,7 +546,9 @@ public class Schedule{
       blocks.add(dummyTrack.getBlock(lineName, "C", new Integer(9)));
       blocks.add(dummyTrack.getBlock(lineName, "C", new Integer(8)));
       blocks.add(dummyTrack.getBlock(lineName, "C", new Integer(7)));
-    }*/
+    } else {
+      blocks = null;
+    }
 
     return blocks;
   }
@@ -556,7 +565,7 @@ public class Schedule{
     ArrayList<DummyTrain> trainList = manager.getTrainList();
     blockList = new ArrayList<Block>(blockList.subList(start + 1, blockList.size()));
 
-    for (int i = 0; i <= trainList.size(); i++) {
+    for (int i = 0; i < trainList.size(); i++) {
       if (blockList.contains(trainList.get(i).getPosition())) {
         return trainList.get(i);
       }
@@ -601,20 +610,22 @@ public class Schedule{
    * @param blockList list of blocks
    * @param train     Train object
    *
-   * @bug Add in check for switches
-   * @bug Get position of trains in fixed block mode
-   * @bug Check for null values
+   * @bug MBO mode
+   * @bug Distance into station/block
    */
   private GPS findAuthority(ArrayList<Block> blockList, DummyTrain train) {
 
     Block currBlock;
     GPS nextTrain;
 
-    if ("MBO".equals(mode)) {
-      Train tr = handler.findTrain(train.getID());
-      currBlock = tr.getGPS().getCurrBlock();
+    if ("MBO".equals(mode)) { 
+      currBlock = handler.getTrainAntenna(train.getID()).getGPS().getCurrBlock();
       DummyTrain temp = nextTrain(blockList, findBlockInList(currBlock, blockList));
-      nextTrain = handler.findTrain(temp.getID()).getGPS();
+      if (null == temp) {
+        nextTrain = null;
+      } else {
+        nextTrain = handler.getTrainAntenna(temp.getID()).getGPS();
+      }
     } else {
       currBlock = train.getPosition();
       nextTrain = new GPS(nextOccupied(blockList, findBlockInList(currBlock, blockList)), null);
@@ -623,24 +634,11 @@ public class Schedule{
     Block nextStation = nextStation(blockList, findBlockInList(currBlock, blockList));
     GPS auth = null;
     if (null == nextTrain && null == nextStation) {
-      if ("MBO" == mode) {
-
-      } else {
-        auth = new GPS(blockList.get(blockList.size()), null);
-      }
-
+      auth = new GPS(blockList.get(blockList.size()), null);
     } else if (null == nextStation) {
-      if ("MBO" == mode) {
-
-      } else {
-        auth = nextTrain;
-      }
+      auth = nextTrain;
     } else if (null == nextTrain || null == nextTrain.getCurrBlock()) {
-      if ("MBO" == mode) {
-
-      } else {
-        auth = new GPS(nextStation, null);
-      }
+      auth = new GPS(nextStation, null);
     } else {
       int comp = nextTrain.getCurrBlock().compareTo(nextStation);
       if (comp <= 0) {
