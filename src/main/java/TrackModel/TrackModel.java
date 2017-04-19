@@ -386,8 +386,8 @@ public class TrackModel implements Serializable {
     }
 
     /**
-    *   Links blocks across block and sections.
-    *   @todo refactor.
+    * Links blocks across block and sections.
+    * @todo refactor.
     */
     private void linkBlocks() {
       for (String lineKey : this.trackList.keySet()) {
@@ -406,11 +406,9 @@ public class TrackModel implements Serializable {
         Collections.sort(storeList);
         Block storeBlock = null;
 
-        if(lineKey.equals("Red")) {
+        if(true) {
           for (int i = 0; i < storeList.size(); i ++) {
             storeList.get(i).setNextBlockForward();
-
-
             if(i != storeList.size()-1) {
               storeList.get(i).setNextBlockForward(storeList.get(i+1));
             }
@@ -424,6 +422,17 @@ public class TrackModel implements Serializable {
           }
         }
       }
+    }
+
+    private Boolean checkHeadsLine(String line) {
+      for (String section : this.trackList.get(line).keySet()) {
+        for (Integer blockNum : this.trackList.get(line).get(section).keySet()) {
+          if (this.trackList.get(line).get(section).get(blockNum).arrowDirection.contains("Tail"))  {
+            return false;
+          }
+        }
+      }
+      return true;
     }
 
     /**
@@ -525,24 +534,14 @@ public class TrackModel implements Serializable {
                 Block nextBlockForwardOverride = this.trackList.get(targetLine).get(forwardTargetSection).get(forwardTargetBlockNum);
                 sourceBlock.setNextBlockForward(nextBlockForwardOverride);
               }
-              System.out.println(str[6]);
-              System.out.println("ASDF");
               
               if (!backwardTargetSection.equals("") && !str[6].equals("")) {
-
                 int backwardTargetBlockNum = Integer.parseInt(str[6]);
-                System.out.println("DSAF");
                 System.out.println(backwardTargetBlockNum);
                 Block sourceBlock = this.getBlock(sourceLine, sourceSection, sourceBlockNum);
                 System.out.println(sourceBlock);
                 Block nextBlockBackwardOverride = this.trackList.get(targetLine).get(backwardTargetSection).get(backwardTargetBlockNum);
-                System.out.print("SB num: ");
-                System.out.println(sourceBlock.blockNum());
-                System.out.print("NBB num: ");
-                System.out.println(nextBlockBackwardOverride.blockNum());
                 sourceBlock.setNextBlockBackward(nextBlockBackwardOverride);
-                System.out.print("NBB source: ");
-                System.out.println(sourceBlock.nextBlockBackward().blockNum());
               }
               
             }

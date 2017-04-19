@@ -88,6 +88,7 @@ public class TrackGUI {
     Set<Integer> blockInts = track.trackList.get("Red").get("A").keySet();
     Integer[] intArr = blockInts.toArray(new Integer[blockInts.size()]);
     Set<String> lineSet = track.trackList.keySet();
+    System.out.println(lineSet);
     String[] lineStrings = lineSet.toArray(new String[lineSet.size()]);
 
     frame = new JFrame();
@@ -99,7 +100,8 @@ public class TrackGUI {
     File imageFile = new File(fName);
     System.out.println(imageFile.exists());
 
-    /*ImageIcon image = new ImageIcon(getClass().getResource(fName));
+    /*
+    ImageIcon image = new ImageIcon(getClass().getResource(fName));
     ImageIcon image = new ImageIcon(this.getClass().getResource(fName));
     System.out.println(image);
 

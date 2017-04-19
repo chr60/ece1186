@@ -86,6 +86,13 @@ public class Station implements Comparable<Station>, Serializable {
   }
 
   /**
+  * Allows for viewing the associated blocks of a station.
+  */
+  public ArrayList<Block> getHostBlocks() {
+    return this.hostBlocks;
+  }
+
+  /**
   * Implements comparable interface for a station based upon the name of a station.
   * @param thatStation station to be compared to
   */

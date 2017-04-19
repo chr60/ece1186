@@ -121,17 +121,20 @@ public class Launcher extends javax.swing.JFrame {
 
 
         //Generate globalTrack
-        String path = "test-classes/redline.csv";
-        String[] fNames = {path};
+        String redlinePath = "test-classes/redline.csv";
+        String greenlinePath = "test-classes/greenline.csv";
+        String[] fNames = {redlinePath, greenlinePath};
 
-        String override = "test-clases/redlinelink.csv";
-        String[] overrideNames = {override};
+        String redLink = "test-clases/redlinelink.csv";
+        String greenLink = "test-classes/greelinelink.csv";
+        String[] linkNames = {redLink, greenLink};
 
-        this.globalTrack = this.generateTrack("GlobalTrack", fNames, overrideNames);
+        this.globalTrack = this.generateTrack("GlobalTrack", fNames, linkNames);
         this.trackGUI = new TrackGUI(globalTrack);
 
         //Cycle through number of lines and generate 2 WS's and a Train Manager for each line
-        for(String s : this.globalTrack.trackList.keySet()){
+        for(String s : this.globalTrack.trackList.keySet()) {
+            
           int lineSize = this.globalTrack.trackList.get(s).keySet().size();
 
           //Wayside Operations
@@ -146,7 +149,9 @@ public class Launcher extends javax.swing.JFrame {
           this.waysideList.add(ws2);
 
           //TrainManager Operations
-          this.trainManagers.add(new TrainManager(s, generateTrack(("TrainManager - " + s), fNames, overrideNames)));
+
+          this.trainManagers.add(new TrainManager(s, generateTrack(("TrainManager - " + s), fNames, linkNames)));
+
         }
 
         //Set Wayside GUI for WS's
@@ -159,8 +164,9 @@ public class Launcher extends javax.swing.JFrame {
 
         this.trainGUI = new TrainModeUI();
 
-        this.ctc = new CTCgui(this.trainManagers, generateTrack("CTC", fNames, overrideNames), this.waysideList, globalTrack);
-        this.mbo = new MovingBlockOverlay(generateTrack("MBO", fNames, overrideNames), this.trainManagers, this.trainHandler, this.ctc);
+        this.ctc = new CTCgui(this.trainManagers, generateTrack("CTC"), this.waysideList, globalTrack);
+        this.mbo = new MovingBlockOverlay(generateTrack("MBO", fNames, linkNames), this.trainManagers, this.trainHandler, this.ctc);
+
         this.ctc.setMBO(this.mbo);
 
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
