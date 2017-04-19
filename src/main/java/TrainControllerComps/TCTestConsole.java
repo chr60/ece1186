@@ -68,7 +68,8 @@ public class TCTestConsole extends javax.swing.JFrame {
         
         this.track = new TrackModel("Testing"); 
         String[] fnames = {"test-classes/redline.csv"}; 
-        track.readCSV(fnames);
+        String[] fNamesLink = {"test-classes/redlineLink.csv"};
+        track.readCSV(fnames, fNamesLink);
         this.dispatchedTrains = 0; 
         this.selectedTrain = null; 
         this.trainController = null; 
