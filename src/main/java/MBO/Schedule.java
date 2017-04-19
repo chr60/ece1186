@@ -307,7 +307,7 @@ public class Schedule{
       }
     }
 
-    if (null != ctc) {
+    if (null != ctc && "FB".equals(mode)) {
       this.ctc.getTrainPanel().updateSpeedAuthToWS(newPaths);
     }
   }
@@ -382,6 +382,8 @@ public class Schedule{
       Antenna ant = handler.getTrainAntenna(train.getID());
       ant.setCurrAuthority(auth);
       train.setAuthority(auth.getCurrBlock());
+      train.setPosition(ant.getGPS());
+      train.setActSpeed(ant.getCurrVelocity());
       int index = findBlockInList(ant.getGPS().getCurrBlock(), path);
       if (index < 0) {
         ant.setSuggestedSpeed(0.0);
@@ -427,6 +429,13 @@ public class Schedule{
       blocks.add(dummyTrack.getBlock(lineName, "C", new Integer(9)));
       blocks.add(dummyTrack.getBlock(lineName, "C", new Integer(8)));
       blocks.add(dummyTrack.getBlock(lineName, "C", new Integer(7)));
+    } else if (startBlock.compareTo(lineStops[1]) == 0) {
+      blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(16)));
+      blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(17)));
+      blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(18)));
+      blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(19)));
+      blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(20)));
+      blocks.add(dummyTrack.getBlock(lineName, "G", new Integer(21)));
     } else if (startBlock.compareTo(lineStops[7]) == 0) {
       blocks.add(dummyTrack.getBlock(lineName, "L", new Integer(60)));
       blocks.add(dummyTrack.getBlock(lineName, "M", new Integer(61)));

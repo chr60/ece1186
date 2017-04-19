@@ -1,14 +1,17 @@
 package CTC;
 
 import TrackModel.*;
+import TrainModel.GPS;
 import java.util.*;
 
 public class DummyTrain {
 
 	private Integer id;
 	private Block position;
+	private double distance;
 	private Block authority;
 	private double suggSpeed;
+	private double actSpeed;
 	// path is a list of blocks that have the speed and authority that we want to set on train
 	private ArrayList<Block> path;
 	private Block lastStationVisited;
@@ -59,9 +62,17 @@ public class DummyTrain {
     	return position;
 	}
 
+	public double getDistance() {
+		return distance;
+	}
 
 	public void setPosition(Block position){
 		this.position = position;
+	}
+
+	public void setPosition(GPS gps){
+		this.position = gps.getCurrBlock();
+		this.distance = gps.getDistIntoBlock();
 	}
 
 	public Block getAuthority() {
@@ -78,6 +89,14 @@ public class DummyTrain {
 
 	public void setSuggSpeed(double suggSpeed) {
 		this.suggSpeed = suggSpeed;
+	}
+
+	public double getActSpeed() {
+		return actSpeed;
+	}
+
+	public void setActSpeed(double actSpeed) {
+		this.actSpeed = actSpeed;
 	}
 
 	public ArrayList<Block> getPath(){
