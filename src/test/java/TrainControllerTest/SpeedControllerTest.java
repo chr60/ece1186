@@ -10,6 +10,7 @@ import TrackModel.TrackModel;
 import TrainControllerComps.TrainController;
 import TrainModel.GPS;
 import TrainModel.Train;
+import TrainModel.GPS;
 import TrainModel.TrainHandler;
 import java.util.LinkedList;
 import static org.junit.jupiter.api.Assertions.assertEquals;

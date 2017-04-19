@@ -165,9 +165,14 @@ public class TrainHandler {
 		}else if (yardBlockRed.getOccupied() == true) {
 			//if there is a train on the block and its authority is returning to the yard then remove it from the system
 			Train returningTrain = getTrainOn(yardBlockRed);
-			if (returningTrain.getAuthority().getCurrBlock().compareTo(yardBlockRed) == 1) {
+
+			if (returningTrain != null){
+				if (returningTrain.getAuthority().getCurrBlock().compareTo(yardBlockRed) == 1) {
 				trains.remove(returningTrain);
 			}
+			}
+			
+
 			
 			
 		}

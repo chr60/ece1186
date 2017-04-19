@@ -757,7 +757,9 @@ public class TrainModeUI {
 		currTrain = currT;
 		if (currTrain != null){
 				txtSpeed.setText("\n   "+ String.format("%.2f", currTrain.getVelocity())+" MPH");
-				txtAuthority.setText("Block "+currTrain.getAuthority().getCurrBlock().blockNum().toString());
+
+				txtAuthority.setText("\r\nBlock "+currTrain.getAuthority().getCurrBlock().blockNum().toString()+"\r\n");
+
 				txtTemperature.setText(currTrain.getTemp().toString()+" F");
 				txtThermostat.setText(currTrain.getThermostat().toString()+" F");
 				txtPass.setText(String.valueOf(currTrain.getNumPassengers()));
@@ -766,7 +768,7 @@ public class TrainModeUI {
 				txtMass.setText(currTrain.getMass().intValue()+" lbs");
 				txtLength.setText(currTrain.getLength().toString());
 				txtCurrBlock.setText("\r\nBlock "+currTrain.getGPS().getCurrBlock().blockNum().toString()+"\r\n");
-				txtDistIntoBlock.setText("\r\n   "+currTrain.getGPS().getDistIntoBlock().toString()+" m\r\n");
+				txtDistIntoBlock.setText("\r\n   "+String.format("%.2f", currTrain.getGPS())+" m\r\n");
 			
                 
                 // set labels of status
