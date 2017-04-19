@@ -8,10 +8,10 @@ public class DummyTrain {
 
 	private Integer id;
 	private Block position;
-	private double distance;
+	private Double distance;
 	private Block authority;
-	private double suggSpeed;
-	private double actSpeed;
+	private Double suggSpeed;
+	private Double actSpeed;
 	// path is a list of blocks that have the speed and authority that we want to set on train
 	private ArrayList<Block> path;
 	private Block lastStationVisited;
@@ -62,7 +62,7 @@ public class DummyTrain {
     	return position;
 	}
 
-	public double getDistance() {
+	public Double getDistance() {
 		return distance;
 	}
 
@@ -83,19 +83,19 @@ public class DummyTrain {
 		this.authority = authority;
 	}
 
-	public double getSuggSpeed() {
+	public Double getSuggSpeed() {
 		return suggSpeed;
 	}
 
-	public void setSuggSpeed(double suggSpeed) {
+	public void setSuggSpeed(Double suggSpeed) {
 		this.suggSpeed = suggSpeed;
 	}
 
-	public double getActSpeed() {
+	public Double getActSpeed() {
 		return actSpeed;
 	}
 
-	public void setActSpeed(double actSpeed) {
+	public void setActSpeed(Double actSpeed) {
 		this.actSpeed = actSpeed;
 	}
 

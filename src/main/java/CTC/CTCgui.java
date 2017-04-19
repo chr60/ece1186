@@ -10,6 +10,7 @@ import java.awt.Font;
 import java.util.*;
 import java.awt.*;
 
+import CommonUIElements.ClockAndLauncher.Launcher;
 import MBO.*;
 import TrackModel.*;
 import WaysideController.*;
@@ -22,7 +23,8 @@ public class CTCgui {
     return this.mainGUI;
   }
 
-  private MovingBlockOverlay MBO;
+  Launcher launcher;
+  MovingBlockOverlay MBO;
 	ArrayList<WS> waysides;
 	TrackModel dummyTrack;
 	ArrayList<TrainManager> managerList;
@@ -45,8 +47,9 @@ public class CTCgui {
 	/**
 	 * Create the application.
 	 */
-	public CTCgui(ArrayList<TrainManager> tm, TrackModel dt, ArrayList<WS> ws, TrackModel globalTrack) {
-		this.dummyTrack = dt;
+	public CTCgui(Launcher launcher, ArrayList<TrainManager> tm, TrackModel dt, ArrayList<WS> ws, TrackModel globalTrack) {
+    this.launcher = launcher;
+    this.dummyTrack = dt;
 		this.waysides = ws;
 		this.managerList = tm;
     this.tmanager = managerList.get(0);
@@ -108,11 +111,11 @@ public class CTCgui {
 		miscPanel.setBorder(grayline);
 		miscPanel.setBounds(402, 326, 367, 85);
 		frame.getContentPane().add(miscPanel);
-
+/*
     JButton buttonShowPicture = new JButton("Show Track Pic");
     buttonShowPicture.setBounds(20, 11, 118, 23);
     miscPanel.add(buttonShowPicture);
-
+*/
     JButton buttonShowSchedule = new JButton("Show Schedule");
     buttonShowSchedule.setBounds(20, 36, 118, 23);
     miscPanel.add(buttonShowSchedule);
@@ -188,6 +191,7 @@ public class CTCgui {
     });
 */
 
+// setting modes for CTC/MBO
     JLabel lblModes = new JLabel("MODES");
     lblModes.setBounds(176, 11, 46, 14);
     miscPanel.add(lblModes);
@@ -222,19 +226,42 @@ public class CTCgui {
 
     radioAuto.addActionListener(new ActionListener(){
       public void actionPerformed(ActionEvent e){
-        String mainMode = "auto";
+        String mainMode = "FB";
         radioFixed.setEnabled(true);
         radioMBO.setEnabled(true);
-
+        radioFixed.setSelected(true);
+        launcher.setMode(mainMode);
+        tmPanel.setModeForPanel(mainMode);
+        //tmPanel2.setModeForPanel(mainMode);
       }
     });
 
     radioManual.addActionListener(new ActionListener(){
       public void actionPerformed(ActionEvent e){
-        String mainMode = "manual";
+        String mainMode = "MAN";
         radioFixed.setEnabled(false);
         radioMBO.setEnabled(false);
+        launcher.setMode(mainMode);
+        tmPanel.setModeForPanel(mainMode);
+        //tmPanel2.setModeForPanel(mainMode);
+      }
+    });
 
+    radioMBO.addActionListener(new ActionListener(){
+      public void actionPerformed(ActionEvent e){
+        String mainMode = "MBO";
+        launcher.setMode(mainMode);
+        tmPanel.setModeForPanel(mainMode);
+        //tmPanel2.setModeForPanel(mainMode);
+      }
+    });
+
+    radioFixed.addActionListener(new ActionListener(){
+      public void actionPerformed(ActionEvent e){
+        String mainMode = "FB";
+        launcher.setMode(mainMode);
+        tmPanel.setModeForPanel(mainMode);
+        //tmPanel2.setModeForPanel(mainMode);
       }
     });
 

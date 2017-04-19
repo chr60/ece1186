@@ -51,8 +51,8 @@ public class Schedule{
    * @param  stationTimes Array of times to travel between stations
    * @param  lineLoopTime Time it takes a train to complete a loop
    */
-  public Schedule(TrackModel dummyTrack, TrainManager manager, TrainHandler handler, Block [] lineStops, 
-                String lineName, String [] stationNames, String [] stationOrder, 
+  public Schedule(TrackModel dummyTrack, TrainManager manager, TrainHandler handler, Block [] lineStops,
+                String lineName, String [] stationNames, String [] stationOrder,
                 int [] stationTimes, int lineLoopTime, CTCgui ctc) {
     this.dummyTrack = dummyTrack;
     this.manager = manager;
@@ -377,7 +377,7 @@ public class Schedule{
     if (start < 0) {
       start = 0;
     }
-    
+
     if ("MBO".equals(mode)) {
       Antenna ant = handler.getTrainAntenna(train.getID());
       ant.setCurrAuthority(auth);
@@ -544,7 +544,7 @@ public class Schedule{
     Block currBlock;
     GPS nextTrain;
 
-    if ("MBO".equals(mode)) { 
+    if ("MBO".equals(mode)) {
       currBlock = handler.getTrainAntenna(train.getID()).getGPS().getCurrBlock();
       DummyTrain temp = nextTrain(blockList, findBlockInList(currBlock, blockList));
       if (null == temp) {
@@ -626,7 +626,7 @@ public class Schedule{
    * @param  schedTime Scheduled
    * @return           [description]
    */
-  private boolean arriveOnTime(ArrayList<Block> blockList, double[] speeds, 
+  private boolean arriveOnTime(ArrayList<Block> blockList, double[] speeds,
                                 GPS currPos, long schedTime) {
 
     int index = blockList.indexOf(currPos.getCurrBlock());

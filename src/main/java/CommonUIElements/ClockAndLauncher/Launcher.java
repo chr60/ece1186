@@ -107,8 +107,8 @@ public class Launcher extends javax.swing.JFrame {
     private CTCgui ctc;
     //MBO
     private MovingBlockOverlay mbo;
-        
-    private String[] beaconFileNames = {"test-classes/beaconPositions.txt"}; 
+
+    private String[] beaconFileNames = {"test-classes/beaconPositions.txt"};
 
     /**
      * Constructor for creating a Launcher object. By default, the system begins operating
@@ -122,7 +122,7 @@ public class Launcher extends javax.swing.JFrame {
         this.normalSpeedRadioButton.setSelected(true);
         // for now, we start in normal mode
         this.systemSpeed = 1000;
-        
+
         //Generate globalTrack
         String redlinePath = "test-classes/redline.csv";
         String greenlinePath = "test-classes/greenline.csv";
@@ -134,10 +134,10 @@ public class Launcher extends javax.swing.JFrame {
 
         this.globalTrack = this.generateTrack("GlobalTrack", fNames, linkNames);
         this.trackGUI = new TrackGUI(globalTrack);
-        
+
         //Cycle through number of lines and generate 2 WS's and a Train Manager for each line
         for(String s : this.globalTrack.trackList.keySet()) {
-            
+
           int lineSize = this.globalTrack.trackList.get(s).keySet().size();
 
           //Wayside Operations
@@ -167,7 +167,7 @@ public class Launcher extends javax.swing.JFrame {
 
         this.trainGUI = new TrainModeUI();
 
-        this.ctc = new CTCgui(this.trainManagers, generateTrack("CTC", fNames, linkNames), this.waysideList, globalTrack);
+        this.ctc = new CTCgui(this, this.trainManagers, generateTrack("CTC", fNames, linkNames), this.waysideList, globalTrack);
         this.mbo = new MovingBlockOverlay(generateTrack("MBO", fNames, linkNames), this.trainManagers, this.trainHandler, this.ctc);
 
         this.ctc.setMBO(this.mbo);
@@ -175,25 +175,25 @@ public class Launcher extends javax.swing.JFrame {
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
             Random rand = new Random();
             public void actionPerformed(ActionEvent e) {
-                
+
                 update();
             }
         });
 
-        
+
        this.initBeacons(this.beaconFileNames);
        this.systemClock.start();
     }
-    
-    
+
+
     public void update(){
         updateDateAndTime();
 
         for (TrainController trainCont : this.trainHandler.openTrainControllers){
-        
+
             trainCont.refreshComponents();
         }
-        
+
         for(WS ws : waysideList){
             try{
                 ws.update();
@@ -201,7 +201,7 @@ public class Launcher extends javax.swing.JFrame {
                 System.out.println("Script Exception");
             }
         }
-        
+
         if(waysideGui != null){ waysideGui.update(); }
 
         mbo.updateTrains();
@@ -226,8 +226,12 @@ public class Launcher extends javax.swing.JFrame {
         }
 
         // CTC - ask track for trainId
-        ctc.getTrainPanel().updateTrainIDinList(trainManagers.get(0), globalTrack);    
-        
+        ctc.getTrainPanel().updateTrainIDinList(trainManagers.get(0), globalTrack);
+
+    }
+
+    public void setMode(String mode) {
+      this.mbo.setMode(mode);
     }
 
         /**
@@ -293,7 +297,7 @@ public class Launcher extends javax.swing.JFrame {
     }
         /**
      * Helper function to place a beacon with a message at a given block.
-     * 
+     *
      * @param line the track line
      * @param section the track section
      * @param blockNum the block number
@@ -303,39 +307,39 @@ public class Launcher extends javax.swing.JFrame {
     private void placeBeacon(String line, String section, Integer blockNum, Double disIntoBlock, String beaconMessage){
 
         Block block = this.globalTrack.getBlock(line, section, blockNum); // get the block from track
-        
-        block.addBeacon(beaconMessage, disIntoBlock); // add beacon 
+
+        block.addBeacon(beaconMessage, disIntoBlock); // add beacon
     }
-    
+
     /**
-     * Helper function to read a file and place a beacon corresponding to each station. 
-     * Each line in the file should be in the following format: 
+     * Helper function to read a file and place a beacon corresponding to each station.
+     * Each line in the file should be in the following format:
      * line section blockNum distIntoBlock message (ex: Red C 7 0 250.0)
-     * 
-     * @param fnames an array of filenames to read from. 
+     *
+     * @param fnames an array of filenames to read from.
      */
     private void initBeacons(String[] fnames){
-        String fLine; 
+        String fLine;
         String[] splitLine;
-        
+
         try{
-        
+
             for (int i = 0; i < fnames.length; i++){
-            
-                FileReader fr = new FileReader(fnames[i]); 
+
+                FileReader fr = new FileReader(fnames[i]);
                 BufferedReader br = new BufferedReader(fr);
 
                 while((fLine = br.readLine()) != null){
-                    splitLine = fLine.split(" "); 
+                    splitLine = fLine.split(" ");
                     String line = splitLine[0];
-                    String section = splitLine[1]; 
-                    Integer blockNum = Integer.parseInt(splitLine[2]); 
-                    Double distIntoBlock = Double.parseDouble(splitLine[3]); 
-                    String beaconMessage = splitLine[4]; 
+                    String section = splitLine[1];
+                    Integer blockNum = Integer.parseInt(splitLine[2]);
+                    Double distIntoBlock = Double.parseDouble(splitLine[3]);
+                    String beaconMessage = splitLine[4];
                     this.placeBeacon(line, section, blockNum, distIntoBlock, beaconMessage);
                 }
             }
-        }catch(Exception e){System.out.println(e.getMessage());}       
+        }catch(Exception e){System.out.println(e.getMessage());}
     }
 
     /**
@@ -539,12 +543,12 @@ public class Launcher extends javax.swing.JFrame {
         //this.trainHandler.setClockSpeed(this.systemSpeed);
 
         if (this.systemClock != null){this.systemClock.stop();}
-        
+
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
             Random rand = new Random();
             public void actionPerformed(ActionEvent e) {
 
-                update(); 
+                update();
             }
         });
         this.systemClock.start();
@@ -558,7 +562,7 @@ public class Launcher extends javax.swing.JFrame {
     private void playFastSpeed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playFastSpeed
 
         if (this.systemClock != null){this.systemClock.stop();}
-        
+
         // set the system speed
         this.systemSpeed = 100;
         this.trainHandler.setClockSpeed(this.systemSpeed);
@@ -567,10 +571,10 @@ public class Launcher extends javax.swing.JFrame {
             Random rand = new Random();
             public void actionPerformed(ActionEvent e) {
 
-                update(); 
+                update();
             }
         });
-        
+
         this.systemClock.start();
     }//GEN-LAST:event_playFastSpeed
 
@@ -656,6 +660,7 @@ public class Launcher extends javax.swing.JFrame {
         tcTestConsole.setVisible(true);
         tcTestConsole.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_openTrainControllerTestConsole
+
 
     /**
     * Returns a generated track given overrides, module and the names of the track.
