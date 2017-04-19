@@ -410,9 +410,11 @@ public class Train implements Serializable {
             this.trainLocation.setCurrBlock(newBlock);
             this.trainLocation.setDistIntoBlock(0.0);
 			trainAntenna.setGPS(trainLocation);
-			currBlock.setOccupied(true);
             this.currBlock = newBlock;
             this.prevBlock = currBlock;
+			currBlock.setOccupied(true);
+			
+			
 	}
 
 	/**
