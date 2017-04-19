@@ -249,7 +249,10 @@ public class Train implements Serializable {
 			currBlock.setOccupied(true);
 		}
 		trainLocation.setCurrBlock(currBlock);
-                //System.out.println("Dist: " + dist);
+		if (this.getCurrBlock().getGrade() != null){
+			currGrade = getCurrBlock().getGrade();
+		}
+        //System.out.println("Dist: " + dist);
 		trainLocation.setDistIntoBlock(dist);
 		trainAntenna.setGPS(trainLocation);
 
@@ -259,7 +262,16 @@ public class Train implements Serializable {
      * Method to update speed and authority (and other block properties)
      */
 	private void updateSpeedAndAuthority(){
-            if (this.getCurrBlock() != null){
+		
+			//check antenna for MBO speed and Authority, if not there check block for fixed block speed and authority
+			GPS authMBO = trainAntenna.getCurrAuthority();
+			if (authMBO != null){
+				Double speedMBO = trainAntenna.getSuggestedSpeed();
+				if(speedMBO != null){
+					setPointSpeed = speedMBO;
+				}
+				currAuthority = authMBO;
+			}else if (this.getCurrBlock() != null){
                 if (this.getCurrBlock().getSuggestedSpeed() != null){
 
                     setPointSpeed = getCurrBlock().getSuggestedSpeed();
@@ -269,11 +281,7 @@ public class Train implements Serializable {
 
                     currAuthority.setCurrBlock(getCurrBlock().getAuthority());
 					currAuthority.setDistIntoBlock(null);
-                }
-
-                if (this.getCurrBlock().getGrade() != null){
-                    currGrade = getCurrBlock().getGrade();
-                }
+				}
             }
 			
         }
