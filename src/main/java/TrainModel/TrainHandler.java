@@ -52,6 +52,7 @@ public class TrainHandler {
 	public int setSpeedAndAuthority(Integer trainID, Double Speed, GPS goToBlock, Block startBlock)
 	{
 		Train currT;
+		startBlock = globalTrack.lateralLookup(startBlock);
 		if (trainID == -1)
 		{
 			//train is a new train

@@ -245,8 +245,6 @@ public class Schedule{
 
   /**
    * Updates the list of trains with their new authority and speed
-   *
-   * @bug Add in update for MBO mode
    */
   public void updateTrains() {
     ArrayList<DummyTrain> trainList = manager.getTrainList();
@@ -280,11 +278,6 @@ public class Schedule{
           tempPath = createRoute(newTrain, yardBlock, lineStops[0]);
           newTrain.setPath(tempPath);
           newPaths.addAll(tempPath);
-        }
-        if (handler.getTrainAntenna(i + 1) != null) {
-          if (handler.getTrainAntenna(i + 1).getCurrAuthority() != null) {
-            System.out.printf("Authority: %d\n", handler.getTrainAntenna(i + 1).getCurrAuthority().getCurrBlock().blockNum());
-          }
         }
       }
     //}
@@ -338,8 +331,6 @@ public class Schedule{
    * @param stop  Block train stops at
    *
    * @bug Actually choose a path instead of just the first one
-   * @bug Assosciate arrival time with train ID
-   * @bug MBO mode
    */
   private ArrayList<Block> createRoute(DummyTrain train, Block startBlock, Block stopBlock) {
 
@@ -365,7 +356,11 @@ public class Schedule{
       Antenna ant = handler.getTrainAntenna(train.getID());
       ant.setCurrAuthority(auth);
       int index = findBlockInList(ant.getGPS().getCurrBlock(), path);
-      ant.setSuggestedSpeed(speeds[index]);
+      if (index < 0) {
+        ant.setSuggestedSpeed(0.0);
+      } else {
+        ant.setSuggestedSpeed(speeds[index]);
+      }
     } else {
       for (int i = start; i < path.size(); i++) {
         path.get(i).setAuthority(auth.getCurrBlock());
@@ -557,8 +552,6 @@ public class Schedule{
    * Gets the next train in front if there is one
    * @param  blocks    list of blocks
    * @return Train     nextTrain
-   *
-   * @bug Need to add MBO mode to nextTrain
    */
   private DummyTrain nextTrain(ArrayList<Block> blockList, int start) {
 
@@ -610,7 +603,6 @@ public class Schedule{
    * @param blockList list of blocks
    * @param train     Train object
    *
-   * @bug MBO mode
    * @bug Distance into station/block
    */
   private GPS findAuthority(ArrayList<Block> blockList, DummyTrain train) {
@@ -634,7 +626,7 @@ public class Schedule{
     Block nextStation = nextStation(blockList, findBlockInList(currBlock, blockList));
     GPS auth = null;
     if (null == nextTrain && null == nextStation) {
-      auth = new GPS(blockList.get(blockList.size()), null);
+      auth = new GPS(blockList.get(blockList.size() - 1), null);
     } else if (null == nextStation) {
       auth = nextTrain;
     } else if (null == nextTrain || null == nextTrain.getCurrBlock()) {
@@ -774,8 +766,6 @@ public class Schedule{
    * Gets the minimum speed limit from a list of blocks
    * @param  blockList list of blocks
    * @return double    minSpeed
-   *
-   * @bug Change so it calculates the min speed from start onwards
    */
   private double getMinSpeedLimit(ArrayList<Block> blockList, int start) {
     double minSpeed = Double.MAX_VALUE;

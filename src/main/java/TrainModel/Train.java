@@ -221,9 +221,7 @@ public class Train implements Serializable {
 			currBlock.setOccupied(false);
 
                         Block blockForward = currBlock.nextBlockForward();
-						System.out.println("forward: "+ blockForward.blockNum());
                         Block blockBackward = currBlock.nextBlockBackward();
-						System.out.println("backward: "+ blockBackward.blockNum());
 
                         //System.out.println("forward block: " + blockForward.blockNum());
                         //System.out.println("backward block: " + blockBackward.blockNum());

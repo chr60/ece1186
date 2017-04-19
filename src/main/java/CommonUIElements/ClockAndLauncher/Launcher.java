@@ -146,7 +146,7 @@ public class Launcher extends javax.swing.JFrame {
           this.waysideList.add(ws2);
 
           //TrainManager Operations
-          this.trainManagers.add(new TrainManager(s, generateTrack("TrainManager - " + s)));
+          this.trainManagers.add(new TrainManager(s, generateTrack(("TrainManager - " + s), fNames, overrideNames)));
         }
 
         //Set Wayside GUI for WS's
@@ -159,7 +159,7 @@ public class Launcher extends javax.swing.JFrame {
 
         this.trainGUI = new TrainModeUI();
 
-        this.ctc = new CTCgui(this.trainManagers, generateTrack("CTC"), this.waysideList, globalTrack);
+        this.ctc = new CTCgui(this.trainManagers, generateTrack("CTC", fNames, overrideNames), this.waysideList, globalTrack);
         this.mbo = new MovingBlockOverlay(generateTrack("MBO", fNames, overrideNames), this.trainManagers, this.trainHandler, this.ctc);
         this.ctc.setMBO(this.mbo);
 
