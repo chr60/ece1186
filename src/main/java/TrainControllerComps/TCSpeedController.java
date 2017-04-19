@@ -240,7 +240,7 @@ public class TCSpeedController extends javax.swing.JPanel {
 
                 // ignore the speed 
                 this.ignoreSpeedChecks();
-                
+
             }else{ // !!= 0.0 THIS MAY BE A PROBLEM LATER
 
                 this.speedSlider.setValue(speedLimit.intValue());
@@ -250,6 +250,7 @@ public class TCSpeedController extends javax.swing.JPanel {
             }
             this.powerControl();
         }else if (blockSuggestedSpeed == null){
+            this.ignoreSpeedChecks();
 
             this.speedSlider.setValue(speedLimit.intValue());
             this.powerControl();
@@ -288,7 +289,9 @@ public class TCSpeedController extends javax.swing.JPanel {
         if (speedLimit != null){
             if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == true){ this.setSpeed = 0.0; }
             else if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == false){ this.setSpeed = 0.0; }
-            else{ this.setSpeed = (.621371*this.selectedTrain.getGPS().getCurrBlock().getSpeedLimit()); }   
+            else{
+                this.setSpeed = (.621371*this.selectedTrain.getGPS().getCurrBlock().getSpeedLimit());
+            }   
         }
     }
 
@@ -493,8 +496,8 @@ public class TCSpeedController extends javax.swing.JPanel {
     public void powerControl(){
 
         // train is going too fast
-        if (this.selectedTrain.getVelocity() >= this.setSpeed){
-            
+        if (this.selectedTrain.getVelocity() > this.setSpeed){
+             
             if (this.brakePanel.isEmergency == true){ this.brakePanel.getEmgBrake().doClick(); } // apply ebrakes
             else{ this.brakePanel.getServiceBrake().doClick(); }
         }else{
@@ -503,10 +506,6 @@ public class TCSpeedController extends javax.swing.JPanel {
             if (this.setSpeed != 0.0){ this.error = this.error + (this.setSpeed - this.selectedTrain.getVelocity()); } // calculate the error
             else{ this.error = (this.setSpeed - this.selectedTrain.getVelocity()); }
             
-            //this.vitalPwrCmdOne = (this.setSpeed - this.selectedTrain.getVelocity());
-            //this.vitalPwrCmdTwo = (this.setSpeed - this.selectedTrain.getVelocity());
-            //this.vitalPwrCmdThree = (this.setSpeed - this.selectedTrain.getVelocity());
-
             this.powerCommandOut = this.selectedTrain.getKp() * error + this.selectedTrain.getKi()*this.selectedTrain.getVelocity();
 
             this.vitalPwrCmdOne = this.selectedTrain.getKp() * error + this.selectedTrain.getKi()*this.selectedTrain.getVelocity();
@@ -521,8 +520,8 @@ public class TCSpeedController extends javax.swing.JPanel {
                     }
                 }
             }
-            printLogs();
         }
+        printLogs();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

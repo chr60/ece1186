@@ -317,8 +317,11 @@ public class TCBrakePanel extends javax.swing.JPanel {
      * @return returns true if the train is at the given authority, false otherwise.
      */
     private boolean isAtAuthority(){
+        
+        if (this.selectedTrain.getGPS().getCurrBlock().compareTo(this.selectedTrain.getAuthority().getCurrBlock()) == 0){
 
-        if (this.selectedTrain.getGPS().getCurrBlock().compareTo(this.selectedTrain.getAuthority().getCurrBlock()) == 0){ return true; }
+            return true;
+        }
 
         return false;
     }
@@ -434,11 +437,13 @@ public class TCBrakePanel extends javax.swing.JPanel {
         if (this.shouldStopTrainChecks()){ // checks to see if the train has to stop
             // we will stop the train..
         }else if(this.isAtAuthority()){
-            // dont move if at authority
+
         }else if(this.atStation){
             // hold
+            System.out.println("At station: " + this.atStation); 
         }else{ this.resetBrakingConditions(); }
-            this.printLogs();
+        
+        this.printLogs();
     }
 
     /**

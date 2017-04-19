@@ -66,8 +66,8 @@ public class TrainHandler {
 			// open a train controller
 			TrainController tc = new TrainController(currT, "Automatic", "Normal"); 
                               
-                        if (this.clockSpeed == 100){ tc.playFast(); }
-                        else if(this.clockSpeed == 1000){ tc.playNormal();}
+                        //if (this.clockSpeed == 100){ tc.playFast(); }
+                        //else if(this.clockSpeed == 1000){ tc.playNormal();}
                         
                         this.openTrainControllers.add(tc);
                         tc.setTrainHandler(this); 

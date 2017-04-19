@@ -175,49 +175,59 @@ public class Launcher extends javax.swing.JFrame {
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
             Random rand = new Random();
             public void actionPerformed(ActionEvent e) {
-                updateDateAndTime();
-
-                for(WS ws : waysideList){
-                  try{
-                    ws.update();
-                  }catch(ScriptException ex){
-                    System.out.println("Script Exception");
-                  }
-                }
-                if(waysideGui != null)
-                  waysideGui.update();
-
-                mbo.updateTrains();
-
-                // what should be called every tick
-
-                if(ctc != null){
-                  // CTC - asking WS for any broken blocks
-                  ctc.getTrackFailuresWS();
-                  // CTC - update track panel on gui w/ info from WS
-                  ctc.getTrackPanel().updateTrackInfo(ctc.getTrackPanel().getBlockWS());
-                  // CTC - calls wayside to get updated list of track occupancy
-                  ctc.getTrainPanel().updateTrainPositionsToManager(trainManagers);
-                  // CTC - prints active list of trains from train manager to GUI
-                  ctc.getTrainManagerPanel().updateTable(trainManagers);
-
-                }
-
-                trainHandler.pollYard();
-
-                if(trainHandler.getNumTrains() != 0){
-                  trainGUI.updateGUI(trainGUI.getCurrT());
-                }
-
-                // CTC - ask track for trainId
-                ctc.getTrainPanel().updateTrainIDinList(trainManagers.get(0), globalTrack);
-
+                
+                update();
             }
         });
 
         
        this.initBeacons(this.beaconFileNames);
        this.systemClock.start();
+    }
+    
+    
+    public void update(){
+        updateDateAndTime();
+
+        for (TrainController trainCont : this.trainHandler.openTrainControllers){
+        
+            trainCont.refreshComponents();
+        }
+        
+        for(WS ws : waysideList){
+            try{
+                ws.update();
+            }catch(ScriptException ex){
+                System.out.println("Script Exception");
+            }
+        }
+        
+        if(waysideGui != null){ waysideGui.update(); }
+
+        mbo.updateTrains();
+
+        // what should be called every tick
+
+        if(ctc != null){
+            // CTC - asking WS for any broken blocks
+            ctc.getTrackFailuresWS();
+            // CTC - update track panel on gui w/ info from WS
+            ctc.getTrackPanel().updateTrackInfo(ctc.getTrackPanel().getBlockWS());
+            // CTC - calls wayside to get updated list of track occupancy
+            ctc.getTrainPanel().updateTrainPositionsToManager(trainManagers);
+            // CTC - prints active list of trains from train manager to GUI
+            ctc.getTrainManagerPanel().updateTable(trainManagers);
+        }
+
+        trainHandler.pollYard();
+
+        if(trainHandler.getNumTrains() != 0){
+            trainGUI.updateGUI(trainGUI.getCurrT());
+        }
+
+        // CTC - ask track for trainId
+        ctc.getTrainPanel().updateTrainIDinList(trainManagers.get(0), globalTrack);    
+        
     }
 
         /**
@@ -528,18 +538,11 @@ public class Launcher extends javax.swing.JFrame {
         this.systemSpeed = 1000;
         this.trainHandler.setClockSpeed(this.systemSpeed);
 
-        // change the timer delay for all open train controllers
-        for (TrainController tc : this.trainHandler.openTrainControllers){
-
-            tc.playNormal();
-        }
-
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
             Random rand = new Random();
             public void actionPerformed(ActionEvent e) {
 
-                updateDateAndTime();
-                // what should be called every tick
+                update(); 
             }
         });
 
@@ -555,18 +558,12 @@ public class Launcher extends javax.swing.JFrame {
         // set the system speed
         this.systemSpeed = 100;
         this.trainHandler.setClockSpeed(this.systemSpeed);
-        // change the timer delay for all open train controllers
-        for (TrainController tc : this.trainHandler.openTrainControllers){
-            tc.playFast();
-        }
 
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
             Random rand = new Random();
             public void actionPerformed(ActionEvent e) {
 
-                updateDateAndTime();
-
-                // what should be called every tick
+                update(); 
             }
         });
     }//GEN-LAST:event_playFastSpeed
