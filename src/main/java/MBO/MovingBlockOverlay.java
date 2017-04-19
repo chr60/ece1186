@@ -12,7 +12,7 @@ import java.util.List;
 
 public class MovingBlockOverlay{
 
-  public String mode;
+  public String mode = "FB";
   private TrackModel dummyTrack;
   private ArrayList<TrainManager> managers;
   private TrainHandler handler;
@@ -77,7 +77,25 @@ public class MovingBlockOverlay{
     //schedules.add(new Schedule(linekey, stationNames, stationTimes, lineLoopTime));
   }
 
+  public void setMode(String mode) {
+
+    if ("MBO".equals(mode) || "FB".equals(mode) || "MAN".equals(mode)) {
+      this.mode = mode;
+    } else {
+      this.mode = "FB";
+    }
+
+    for (int i = 0; i < schedules.size(); i++) {
+      schedules.get(i).setMode(mode);
+    }
+  }
+
   public void updateTrains() {
+
+    if ("MAN".equals(mode)) {
+      return;
+    }
+
     for (int i = 0; i < schedules.size(); i++) {
       schedules.get(i).updateTrains();
     }
@@ -85,15 +103,6 @@ public class MovingBlockOverlay{
 
   public ArrayList<Schedule> getSched() {
     return schedules;
-  }
-
-  /**
-   * Given an ID, returns the corresponding train
-   * @param  id ID of a train
-   * @return    [description]
-   */
-  private Train getTrain(int id) {
-    return null;
   }
 
   private Block[] hardCodeStops(String line) {
@@ -164,66 +173,4 @@ public class MovingBlockOverlay{
   private void updateVariance() {
 
   }
-
-  /**
-   * Transmit safe Moving Block speed and authority to a train and CTC
-   * @param id ID of a train
-   */
-  private void sendSpeedAuth(Train train) {
-
-  }
-
-  /**
-   * Finds the safe stopping distance for a train
-   * @param  train Train object
-   * @return double safeStop
-   */
-  private double findStopDist(Train train) {
-    return 0;
-  }
-
-  /**
-   * Finds the time it takes for a train to brake in seconds
-   * @param  train Train object
-   * @return int   time
-   */
-  private int timeToBrake(Train train) {
-    return 0;
-  }
-
-  /**
-   * Finds the safe emergency braking distance for a train
-   * @param  train Train object
-   * @return double safeStop
-   */
-  private double findEmgStopDist(Train train) {
-    return 0;
-  }
-
-  /**
-   * Finds the time it takes for a train to emergency brake in seconds
-   * @param  train Train object
-   * @return int   time
-   */
-  private int timeToEmgBrake(Train train) {
-    return 0;
-  }
-
-  /**
-   * Gets a GPS object for the train's current position
-   * @param  train Train object
-   * @return GPS trainGPS
-   */
-  //private GPS getGPS(Train train) {
-  //  return null;
-  //}
-
-  /**
-   * Generates the appropriate schedule for the mode
-   * @param mode Specifies MBO or FB mode
-   */
-  private void genSchedule(String mode) {
-
-  }
-
 }

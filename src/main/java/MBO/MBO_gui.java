@@ -276,8 +276,6 @@ public class MBO_gui {
    * Displays the schedule in the train
    * @param rows     Number of rows to make the table
    * @param arrivals List of times broken up by stations
-   *
-   * @bug Compare to current time
    */
   private void scheduleToGUI(int rows, ArrayList<TrainSchedule> schedules) {
     trainModel.setRowCount(rows);

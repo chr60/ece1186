@@ -164,7 +164,7 @@ public class Launcher extends javax.swing.JFrame {
 
         this.trainGUI = new TrainModeUI();
 
-        this.ctc = new CTCgui(this.trainManagers, generateTrack("CTC"), this.waysideList, globalTrack);
+        this.ctc = new CTCgui(this.trainManagers, generateTrack("CTC", fNames, linkNames), this.waysideList, globalTrack);
         this.mbo = new MovingBlockOverlay(generateTrack("MBO", fNames, linkNames), this.trainManagers, this.trainHandler, this.ctc);
 
         this.ctc.setMBO(this.mbo);
