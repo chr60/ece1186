@@ -38,6 +38,7 @@ public class TCTrainInfoPane extends javax.swing.JPanel {
     public void setSelectedTrain(Train train){
     
         this.selectedTrain = train;
+        this.refreshUI();
     }
     
     /**

@@ -54,7 +54,6 @@ public class TrainController extends javax.swing.JFrame {
     // FOR TESTING!
     ArrayList<Train> trains = new ArrayList<Train>();
 
-    double blockSpeed = 80.0;
     private TCTestConsole testConsole = null;
 
     
@@ -210,7 +209,7 @@ public class TrainController extends javax.swing.JFrame {
         this.detailedTrainWindowOpen = false;
 
         // set kp and ki to some default value if in automatic mode
-        if (this.automaticMode == true){ train.setKpAndKi(400000.0, 20000.0); }
+        if (this.automaticMode == true){ train.setKpAndKi(4000.0, 200.0); }
           
         // check if kp/ki is set
         if (this.selectedTrain.powerConstantsSet() == false){
@@ -410,6 +409,7 @@ public class TrainController extends javax.swing.JFrame {
     private void setTrain(Train train){
 
         this.selectedTrain = train;
+        this.switchTrain(); 
     }
 
     /**
@@ -425,6 +425,11 @@ public class TrainController extends javax.swing.JFrame {
         }else{
             return this.selectedTrain;
         }
+    }
+    
+    public void switchTrain(){
+        
+        this.refreshComponents();
     }
 
     // MARK: - Configure UI
@@ -1017,6 +1022,11 @@ public class TrainController extends javax.swing.JFrame {
         this.trainInfoPanel.setSelectedTrain(train);
         this.brakePanel.setSelectedTrain(train);
     }
+    
+    public void setSelectedTrain(Train train){
+        
+        this.selectedTrain = train; 
+    }
 
     /**
      * Opens up the Engineering Panel so the engineer can change the Kp and Ki
@@ -1089,9 +1099,9 @@ public class TrainController extends javax.swing.JFrame {
      * @param evt the sender of the action, i.e., the "Dispatched Trains" button from the menu bar.
      */
     private void openDispatchedTrains(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openDispatchedTrains
-        TCDispatchedTrainFrame dispatched = new TCDispatchedTrainFrame(this.trainList);
-        dispatched.setVisible(true);
-        dispatched.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        //TCDispatchedTrainFrame dispatched = new TCDispatchedTrainFrame(this.trainList);
+        //dispatched.setVisible(true);
+        //dispatched.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_openDispatchedTrains
 
     /**
@@ -1236,7 +1246,6 @@ public class TrainController extends javax.swing.JFrame {
             this.speedController.setManualMode(this.manualMode);
             this.speedController.setBrakePanel(this.brakePanel);
             this.speedController.refreshUI();
-            this.speedController.setMaxSpeed(this.blockSpeed);
             
             this.trainInfoPanel.setSelectedTrain(this.selectedTrain);
             this.trainInfoPanel.refreshUI();
@@ -1244,10 +1253,6 @@ public class TrainController extends javax.swing.JFrame {
 //            // FIX ME: TrainInfoPanelStuff should be put in the refreshUI method in the
 //            // TrainInfoPanelClass
 //
-            // get the block speed from the train
-            // FIX ME: Right now, it's set at 80.0 for the purpose
-            // of getting the block speed to update
-            //this.speedController.setMaxSpeed(this.blockSpeed);
 
             this.blockInfoPane.setSelectedTrain(this.selectedTrain);
             this.blockInfoPane.refreshUI();

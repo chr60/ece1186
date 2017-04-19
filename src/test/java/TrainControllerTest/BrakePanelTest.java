@@ -34,16 +34,20 @@ public class BrakePanelTest {
 
   static Block yardBlock;
   static Block endingBlock;
+  
+  private static String[] fOverrideNames = {"test-classes/redlinelink.csv"};
 
-  @BeforeAll
+  
+  @BeforeEach
   /**
   * Initialization of the TrainController to be used for testing
   */
-  static void init(){
+  void init(){
+    
+    track.readCSV(fNames, fOverrideNames);
+    
+    testTrain = new Train(1, track); 
 
-    track.readCSV(fNames);
-
-    testTrain = new Train(1, track);
     tc = new TrainController(testTrain, "Automatic", "Normal");
 
     trainhandler = new TrainHandler(track);

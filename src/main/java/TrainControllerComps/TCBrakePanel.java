@@ -56,7 +56,8 @@ public class TCBrakePanel extends javax.swing.JPanel {
      * This field gets set by the Train Controller class. 
      */
     private boolean inManualMode; 
-    
+     
+    public Double distanceTraveled = 0.0; 
     
     /**
      * The speed controller object used to communicate between.
@@ -73,6 +74,14 @@ public class TCBrakePanel extends javax.swing.JPanel {
      */
     public boolean isEmergency; 
     
+    
+    public boolean approachingStation; 
+    
+    public String message; 
+    
+    public int tickNum;
+    
+    public boolean atStation; 
     /**
      * Constructor for creating a TCBrakePanel object without a selected train. 
      * The selected train property must be passed in from the Train Controller class before being used. 
@@ -82,6 +91,10 @@ public class TCBrakePanel extends javax.swing.JPanel {
         
         this.operatingLogbook = new LinkedList<String>(); // init logbook 
         this.announcementLogbook = new LinkedList<String>(); // init logbook 
+        
+        this.distanceTraveled = 0.0; 
+        this.tickNum = 0; 
+        this.atStation = false; 
     }
     
     /**
@@ -182,7 +195,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
      * @return returns true if the train needs to come to a complete stop, false if it doesn't.
      */
     private boolean shouldStopTrainChecks(){
-            
+                    
         // stop if  
         if (this.failureDetected()){ 
             
@@ -199,37 +212,48 @@ public class TCBrakePanel extends javax.swing.JPanel {
             return true;
         } //failure detected
              
-        if (this.approachingStation()){ // approaching a station
+        if (this.startApproachingStation() || this.atStation == true){ // approaching a station
             
             this.bringTrainToHalt(false); 
             
             if (this.selectedTrain.getVelocity() == 0.0){
             
-                int tickNum = 0; 
                 // wait for 6 clock ticks
-                if (tickNum == 0){
-                    this.announcementLogbook.add("Arriving at" + this.selectedTrain.getGPS().getCurrBlock().getStationName());
+                if (this.tickNum == 0){
+                    this.approachingStation = false; 
+                    this.atStation = true; 
+                    this.announcementLogbook.add("Arriving at " + this.selectedTrain.getGPS().getCurrBlock().getStationName());
                     this.printLogs();
-                    tickNum++; 
-                }else if (tickNum == 1){ // open left doors
+                    this.tickNum++; 
+                }else if (this.tickNum == 1){ // open left doors
                     this.selectedTrain.setLeftDoor(1);
-                    tickNum++; 
-                }else if (tickNum == 2){
-                    tickNum++; 
-                }else if (tickNum == 3){
+                    this.tickNum++; 
+                }else if (this.tickNum == 2){
+                    this.tickNum++; 
+                }else if (this.tickNum == 3){
                     this.selectedTrain.setLeftDoor(0);
                     this.selectedTrain.setRightDoor(1);
-                    tickNum++; 
-                }else if (tickNum == 4){
-                    tickNum++; 
+                    this.tickNum++; 
+                }else if (this.tickNum == 4){
+                    this.tickNum++; 
                 }else if (tickNum == 5){
                     this.selectedTrain.setRightDoor(0);
-                    tickNum++; 
-                }else if (tickNum == 6){
+                    this.tickNum++; 
+                }else if (this.tickNum == 6){
                     this.resetBrakingConditions(); // continue as normal
+                    this.announcementLogbook.add("Departing " + this.selectedTrain.getGPS().getCurrBlock().getStationName());
+                    this.printLogs();
+                    this.distanceTraveled = 0.0; 
+                    this.tickNum = 0; 
+                    this.atStation = false; 
                 }      
-            }
-            
+            } 
+            return true;
+        }
+        
+        
+        if (this.selectedTrain.getSuggestedSpeed() == -1.0){ // pick up emergency signal
+            this.bringTrainToHalt(true); // stop immediately w/ e-brake
             return true;
         } 
              
@@ -261,7 +285,6 @@ public class TCBrakePanel extends javax.swing.JPanel {
         return false; 
     }
     
-    
     /**
      * Sends a request to the train to tell the wayside controller that the train needs to be fixed. 
      * 
@@ -270,10 +293,9 @@ public class TCBrakePanel extends javax.swing.JPanel {
         
         //this.selectedTrain.requestFix(true); 
     }
-    
+
     /**
-     * Checks if the train is going to exceed authority, and stops the train if it will.
-     * 
+     * Checks if the train is going to exceed authority, and stops the train if it will using the service brake.
      */
     private boolean willExceedAuthority(){
                 
@@ -281,11 +303,22 @@ public class TCBrakePanel extends javax.swing.JPanel {
         if ( this.selectedTrain.getGPS().getCurrBlock().compareTo(this.selectedTrain.getAuthority().getCurrBlock()) == 0){
             
             double footprintSB = this.selectedTrain.getGPS().getDistIntoBlock() + this.selectedTrain.getSafeBrakingDistSB();
-            double footprintEB = this.selectedTrain.getGPS().getDistIntoBlock() + this.selectedTrain.getSafeBrakingDistEB();
+            
             // check if about to leave the block
-            if (footprintSB == this.selectedTrain.getGPS().getCurrBlock().getLen()){ this.bringTrainToHalt(false); return true; }
-            else if (footprintEB > this.selectedTrain.getGPS().getCurrBlock().getLen()){ this.bringTrainToHalt(true); return true; }
+            if (footprintSB >= this.selectedTrain.getGPS().getCurrBlock().getLen()){ this.bringTrainToHalt(false); return true; }
         }
+        return false;
+    }
+    
+    /**
+     * Checks to see if a train is at it's given authority. 
+     * 
+     * @return returns true if the train is at the given authority, false otherwise. 
+     */
+    private boolean isAtAuthority(){
+      
+        if (this.selectedTrain.getGPS().getCurrBlock().compareTo(this.selectedTrain.getAuthority().getCurrBlock()) == 0){ return true; }
+       
         return false;
     }
     
@@ -304,7 +337,6 @@ public class TCBrakePanel extends javax.swing.JPanel {
     
     /**
      * Resets the flags used to tell the train to ignore the suggested speed and to use the emergency brake.
-     * 
      */
     public void resetBrakingConditions(){
     
@@ -313,54 +345,69 @@ public class TCBrakePanel extends javax.swing.JPanel {
     }
     
     /**
-     * Determines if the train is approaching a station. 
-     * 
-     * @return returns true if the train is approaching a station, false otherwise. 
-     */
-    private boolean approachingStation(){
-        
-        Block currBlock = this.selectedTrain.getGPS().getCurrBlock();
-     
-        String distStr = this.getDistanceFromStation();
-
-        if (distStr != null){ // start calculating safe breaking distance
-            //double dist = Double.parseDouble(distStr);
-            
-            /**
-             * FIX ME: This message should be able to be parsed into a number
-             */
-            this.operatingLogbook.add("Beacon Message: " + distStr);
-            
-            // determine when to begin braking the train
-//            double footprint = this.selectedTrain.getGPS().getDistIntoBlock() + this.selectedTrain.getSafeBrakingDistSB(); 
-//            
-////            if (footprint >= dist){ return true; }
-////            else{ return false; } 
-        }
-        return false; 
-    }
-    
-    /**
      * Reads the message from the beacon from the current block the train is on,
-     * and returns the distance to the next station.
+     * and returns the distance to the next station. Sets a flag when this condition is met to siganl, a 
+     * train is approaching the station.
      * 
-     * @return returns the distance from the beacon to the station, -1 if there is no beacon.
      */
-    private String getDistanceFromStation(){
-        
+    private void approachingStation(){
         // get the distance from the beacon
         HashMap<Block, Beacon> beacons = this.selectedTrain.getBeacons(); 
         
         for (Block b : beacons.keySet()){
             
-            //System.out.println("Block Number: " + b.blockNum()); 
-            
-            if (this.selectedTrain.getGPS().getCurrBlock().compareTo(b) == 0){
-                //System.out.println("We are on a block with a Beacon");
-                return beacons.get(b).getBeaconMessage(); // return the message on the beacon
+            Block currBlock = this.selectedTrain.getGPS().getCurrBlock(); 
+            if (currBlock.compareTo(b) == 0){
+                Beacon beacon = beacons.get(b); 
+                
+                if (this.selectedTrain.getGPS().getDistIntoBlock() >= beacon.getDistance()){ // at a beacon
+                    this.message = beacon.getBeaconMessage();
+                    this.approachingStation = true; 
+                }
             }
         }
-          return null;
+    }
+    
+    
+    /**
+     * 
+     * Determines the distance traveled during a given amount of seconds;
+     * 
+     * @param Drate
+     * @param stopTime
+     * @return 
+     */
+    private Double distanceToStop(Double stopTime){
+	
+        //using S = Vi(t) + (1/2)(a)(t^2)  to compute distance    
+	Double stopDist = (this.selectedTrain.getVelocity()*0.44704)*(stopTime) + (1/2)*(this.selectedTrain.deccelRate(-1.2))*(Math.pow(stopTime, 2));
+	return stopDist; 				
+    }
+       
+    /**
+     * Starts calculating distance from the beacon to the station once a beacon is detected. 
+     * 
+     * @return returns true if the distance from the train to the station is less than the safe braking distance.
+     */
+    private boolean startApproachingStation(){
+    
+        this.approachingStation(); 
+        
+        if (this.approachingStation == true){ // start to calculate distance
+                    
+            Double x = Double.parseDouble(this.message); // parse message
+            
+            Double distElapsed = this.distanceToStop(1.0); // distanced traveled in 1 second
+            Double distTrainToStation = x - this.distanceTraveled; 
+
+            this.distanceTraveled = this.distanceTraveled + distElapsed; // total distance traveled
+                    
+            this.operatingLogbook.add("Distance to station: " + distTrainToStation + " m."); 
+                    
+            if (distTrainToStation <= this.selectedTrain.getSafeBrakingDistSB()){ return true; }
+        }
+               
+        return false; 
     }
         
     private boolean trainAhead(){
@@ -387,8 +434,12 @@ public class TCBrakePanel extends javax.swing.JPanel {
         
         if (this.shouldStopTrainChecks()){ // checks to see if the train has to stop
             // we will stop the train..
+        }else if(this.isAtAuthority()){
+            // dont move if at authority       
+        }else if(this.atStation){
+            // hold
         }else{ this.resetBrakingConditions(); }
-        
+            this.printLogs();
     }
     
     /**
@@ -410,7 +461,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
         emergencyBrake.setText("Emergency Brake");
         emergencyBrake.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                initateEmergencyBrake(evt);
+                engageEmergencyBrake(evt);
             }
         });
 
@@ -478,30 +529,17 @@ public class TCBrakePanel extends javax.swing.JPanel {
      * 
      * @param evt the send of the event, i.e., the 'Emergency Brake' button
      */
-    private void initateEmergencyBrake(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_initateEmergencyBrake
+    private void engageEmergencyBrake(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_engageEmergencyBrake
 
         if (this.selectedTrain != null){
         
             if (this.inManualMode == true){ 
                 
-                    this.selectedTrain.setEmergencyBrake( 1 );
-                    this.functionLabelEmg.setText("On");
-                    this.selectedTrain.setEmergencyBrake( 0 );
-                    this.functionLabelEmg.setText("Off");
-             }else if (this.inManualMode == false){
-           
-                // if the emergency brake is broke, this can't happen
-                if (this.selectedTrain.getEmergencyBrake() != -1){
-                    
-                    this.selectedTrain.setEmergencyBrake( 1 );
-                    this.functionLabelEmg.setText("On");
-                    this.selectedTrain.setEmergencyBrake( 0 );
-                    this.functionLabelEmg.setText("Off");
-                }  
-            }
+                this.selectedTrain.setEmergencyBrake(1);
+                this.selectedTrain.setEmergencyBrake(0);
+            }     
         }
-
-    }//GEN-LAST:event_initateEmergencyBrake
+    }//GEN-LAST:event_engageEmergencyBrake
   
     /**
      * Initiates the service brake on the selected train. If the service brakes are 
@@ -514,15 +552,10 @@ public class TCBrakePanel extends javax.swing.JPanel {
         if (this.selectedTrain != null){
         
             this.operatingLogbook.add("Engage the service brakes!"); 
-        
-            // make sure the train brakes are not broken
-            if (this.selectedTrain.getServiceBrake() != -1){
-                this.selectedTrain.setServiceBrake( 1 );
-                this.functionLabelService.setText("On");
             
-                this.selectedTrain.setServiceBrake( 0 );
-                this.functionLabelService.setText("Off");
-
+            if (this.selectedTrain.getServiceBrake() != -1){ // make sure the train brakes are not broken
+                this.selectedTrain.setServiceBrake(1); // turn on brakes            
+                this.selectedTrain.setServiceBrake(0); // turn off brakes
                 this.printLogs();
             }
         }

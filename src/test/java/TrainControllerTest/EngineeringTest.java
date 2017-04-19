@@ -12,6 +12,7 @@ import TrainControllerComps.TrainController;
 import TrainModel.Train;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,29 +21,31 @@ import org.junit.jupiter.api.Test;
  * @author Andrew
  */
 public class EngineeringTest {
-
-    //     // Track Info
-    // static TrackModel track = new TrackModel("Testing");
-    // static String[] fNames = {"src/test/resources/redline.csv"};
-    //
-    // // Train Info
-    // static Train testTrain = new Train(0, new TrackModel("Test"));
-    //
-    // // Yard Block
-    // static Block yardBlock;
-    //
-    // // Train Controller
-    // static TrainController tc = new TrainController(testTrain);
-    //
-    // static TCEngineerPanel engPanel;
-
-  // @BeforeAll
+    
+        // Track Info 
+    static TrackModel track = new TrackModel("Testing");
+    static String[] fNames = {"src/test/resources/redline.csv"};
+    
+    // Train Info
+    static Train testTrain = new Train(0, new TrackModel("Test")); 
+    
+    // Yard Block 
+    static Block yardBlock; 
+    
+    // Train Controller
+    static TrainController tc = new TrainController(testTrain);
+    
+    static TCEngineerPanel engPanel; 
+    
+    private static String[] fOverrideNames = {"test-classes/redlinelink.csv"};
+    
+  @BeforeEach
   /**
   * Initialization of the TrainController to be used for testing
   */
-  static void init(){
-
-    // track.readCSV(fNames);
+  void init(){
+    
+    track.readCSV(fNames, fOverrideNames);
 
   }
 

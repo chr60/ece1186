@@ -80,37 +80,6 @@ public class TCTestConsole extends javax.swing.JFrame {
         this.setupTestScenario();  
     }
     
-//    /**
-//     * Constructor for creating a TCTestConsole object with no Train Controller and no 
-//     * selected train. 
-//     */
-//    public TCTestConsole(TrainController trainCont) {
-//        initComponents();
-//        
-//        this.dispatchedTrains = 0; 
-//        this.selectedTrain = null; 
-//        this.trainController = trainCont; 
-//             
-//        
-//        this.setupRadioButtons();
-//        this.setupTestScenario();  
-//    }
-     
-//    /**
-//     * Creates new form TCTestConsole
-//     */
-//    public TCTestConsole(Train train, TrainController trainCont) {
-//        initComponents();
-//        
-//        this.dispatchedTrains = 0; 
-//        this.selectedTrain = train; 
-//        this.trainController = trainCont; 
-//       
-//        
-//        this.setupRadioButtons();
-//        this.setupTestScenario();
-//    }
-    
     /**
      * Sets up a testing scenario to allow a train to move around the track.
      */
@@ -123,8 +92,16 @@ public class TCTestConsole extends javax.swing.JFrame {
         yardBlock = this.track.getBlock("Red", "U", new Integer(77));
         yardBlock.setSuggestedSpeed(35.0);
         
+        Double str2 = (this.track.getBlock("Red", "C", new Integer(7)).getLen() / 2); 
+        //String str = Double.toString((b - 10));
+        
+        Double b = this.track.getBlock("Red", "C", new Integer(8)).getLen();     
+        String str = Double.toString((b - 10) + str2);
+        System.out.println("Str: " + str); 
+        this.track.getBlock("Red", "C", new Integer(8)).addBeacon(str, 10.0);
+        
         this.track.getBlock("Red", "C", new Integer(9)).setSwitchState(0);
-        endingBlock = this.track.getBlock("Red", "B", new Integer(6));          
+        endingBlock = this.track.getBlock("Red", "F", new Integer(16));          
     }
     
     /**
@@ -876,96 +853,197 @@ public class TCTestConsole extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Breaks the ac on the selected train.
+     * 
+     * @param evt 
+     */
     private void breakAC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakAC
+       
         this.selectedTrain.setAC( -1 );    
     }//GEN-LAST:event_breakAC
 
+    /**
+     * Fixes the ac on the selected train.
+     * 
+     * @param evt 
+     */
     private void fixAC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixAC
         
         this.selectedTrain.setAC( 0 ); 
     }//GEN-LAST:event_fixAC
 
+    /**
+     * Breaks the heat on the selected train.
+     * 
+     * @param evt 
+     */
     private void breakHeat(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakHeat
         
         this.selectedTrain.setHeat( -1 );
     }//GEN-LAST:event_breakHeat
 
+    /**
+     * Fixes the heat on the selected train.
+     * 
+     * @param evt 
+     */
     private void fixHeat(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixHeat
         
         this.selectedTrain.setHeat( 0 ); 
     }//GEN-LAST:event_fixHeat
 
+    /**
+     * Breaks the lights on the selected train.
+     * 
+     * @param evt 
+     */
     private void breakLightsMurphy(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakLightsMurphy
         this.selectedTrain.setLights( -1 );
     }//GEN-LAST:event_breakLightsMurphy
 
+    /**
+     * Fixes the lights on the selected train. 
+     * 
+     * @param evt 
+     */
     private void fixLights(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixLights
         this.selectedTrain.setLights( 0 ); 
     }//GEN-LAST:event_fixLights
 
+    /**
+     * Breaks the left doors on the selected train.
+     * 
+     * @param evt 
+     */
     private void breakLeftDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakLeftDoors
         
         this.selectedTrain.setLeftDoor( -1 );
     }//GEN-LAST:event_breakLeftDoors
 
+    /**
+     * Fixes the left doors on the selected train.
+     * 
+     * @param evt 
+     */
     private void fixLeftDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixLeftDoors
         
         this.selectedTrain.setLeftDoor( 0 );
     }//GEN-LAST:event_fixLeftDoors
 
+    /**
+     * Breaks the right doors on the selected train.
+     * 
+     * @param evt 
+     */
     private void breakRightDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakRightDoors
         this.selectedTrain.setRightDoor( -1 );
     }//GEN-LAST:event_breakRightDoors
 
+    /**
+     * Fixes the right doors on the selected train.
+     * 
+     * @param evt 
+     */
     private void fixRightDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixRightDoors
         this.selectedTrain.setRightDoor( 0 ); 
     }//GEN-LAST:event_fixRightDoors
 
+    /**
+     * Turns on the ac on the selected train.
+     * 
+     * @param evt 
+     */
     private void turnOnAC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOnAC
         
         this.selectedTrain.setAC( 1 );
     }//GEN-LAST:event_turnOnAC
 
+    /**
+     * Turns off the ac on the selected train.
+     * 
+     * @param evt 
+     */
     private void turnOffAC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOffAC
         
         this.selectedTrain.setAC( 0 );
     }//GEN-LAST:event_turnOffAC
 
+    /**
+     * Turns on the heat on the selected train.
+     * 
+     * @param evt 
+     */
     private void turnOnHeat(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOnHeat
         
         this.selectedTrain.setHeat( 1 );
     }//GEN-LAST:event_turnOnHeat
 
+    /**
+     * Turns off the heat on the selected train.
+     * 
+     * @param evt 
+     */
     private void turnOffHeat(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOffHeat
        
         this.selectedTrain.setHeat( 0 );
     }//GEN-LAST:event_turnOffHeat
 
+    /**
+     * Turns on the lights on the selected train.
+     * 
+     * @param evt 
+     */
     private void turnOnLights(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOnLights
         
         this.selectedTrain.setLights( 1 );
     }//GEN-LAST:event_turnOnLights
 
+    /**
+     * Turns off the lights on the selected train.
+     * 
+     * @param evt 
+     */
     private void turnOffLights(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOffLights
         
         this.selectedTrain.setLights( 0 );
     }//GEN-LAST:event_turnOffLights
 
+    /**
+     * Opens the left doors on the selected train.
+     * 
+     * @param evt 
+     */
     private void openLeftDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openLeftDoors
         
         this.selectedTrain.setLeftDoor( 1 );
     }//GEN-LAST:event_openLeftDoors
 
+    /**
+     * Closes the left doors on the selected train.
+     * 
+     * @param evt 
+     */
     private void closeLeftDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeLeftDoors
         
         this.selectedTrain.setLeftDoor( 0 );
     }//GEN-LAST:event_closeLeftDoors
 
+    /**
+     * Opens the right doors on the selected train.
+     * 
+     * @param evt 
+     */
     private void openRightDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openRightDoors
         
         this.selectedTrain.setRightDoor(1);
     }//GEN-LAST:event_openRightDoors
 
+    /**
+     * Closes the right doors on the selected train.
+     * 
+     * @param evt 
+     */
     private void closeRightDoors(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeRightDoors
         
         this.selectedTrain.setRightDoor( 0 );
@@ -1009,6 +1087,12 @@ public class TCTestConsole extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_fixSignalRadioButtonfixRightDoors
 
+
+    /**
+     * Fixes the failures on the selected train instantly.
+     * 
+     * @param evt 
+     */
     private void fixFailures(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixFailures
         
         // reset failures
@@ -1016,6 +1100,12 @@ public class TCTestConsole extends javax.swing.JFrame {
         this.selectedTrain.setSignalFailure(false);
         this.selectedTrain.setEngineFailure(false);
     }//GEN-LAST:event_fixFailures
+
+    /**
+     * Breaks the brakes on the selected train.
+     * 
+     * @param evt 
+     */
 
     private void failBrakes(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_failBrakes
       
@@ -1033,8 +1123,8 @@ public class TCTestConsole extends javax.swing.JFrame {
     }//GEN-LAST:event_fixBrakes
 
     /**
-     * Tells the train to put 
-     * 
+     * Tells the train to put a request down on the track in order to be fixed. 
+     *
      * @param evt 
      */
     private void requestFix(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestFix
@@ -1042,6 +1132,11 @@ public class TCTestConsole extends javax.swing.JFrame {
         this.selectedTrain.requestFix(true);
     }//GEN-LAST:event_requestFix
 
+    /**
+     * Plays the open train controllers in normal speed. 
+     * 
+     * @param evt 
+     */
     private void playNormalSpeed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playNormalSpeed
         
         for (TrainController tc : this.trainHandler.openTrainControllers){
@@ -1050,6 +1145,11 @@ public class TCTestConsole extends javax.swing.JFrame {
         }  
     }//GEN-LAST:event_playNormalSpeed
 
+    /**
+     * Plays the open train controllers in fast speed. 
+     * 
+     * @param evt 
+     */
     private void playFastSpeed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playFastSpeed
         
         for (TrainController tc : this.trainHandler.openTrainControllers){

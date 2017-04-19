@@ -45,14 +45,6 @@ public class TCSpeedController extends javax.swing.JPanel {
     private double powerCommandOut;
 
     /**
-     * Max speed the train is allowed to go. The source of this value is determined based on
-     * what mode the system is in. This value is used to set the slider's
-     * max value so that the train cannot go faster than allowed.
-     *
-     */
-    private double maxSpeed;
-
-    /**
      * A list that is used to hold logs to print to the Operating Logs of the Train Controller.
      */
     private LinkedList<String> logBook; // log book used to save logs and then print them to the notification windows
@@ -61,7 +53,7 @@ public class TCSpeedController extends javax.swing.JPanel {
      * The speed that the train is desired to go. This is set by the user or
      * automatically depending on what mode the system is in.
      */
-    private int setSpeed;
+    private Double setSpeed;
 
     /**
      * A boolean value indicating if the Speed Controller is operating in Manual or Automatic mode.
@@ -98,14 +90,14 @@ public class TCSpeedController extends javax.swing.JPanel {
 
         initComponents();
         this.powerCommandOut = 0.0;
-        this.maxSpeed = 0.0;
+        this.error = 0.0; 
         this.logBook = new LinkedList<String>();
 
         // add action listensers
         this.speedSlider.addChangeListener(new ChangeListener() {
         public void stateChanged(ChangeEvent e) {
 
-        String sliderValue = Integer.toString(speedSlider.getValue());
+        String sliderValue = Double.toString(((double) speedSlider.getValue()/100.0));
 
         currentSliderSpeedLabel.setText(sliderValue);
         }
@@ -146,7 +138,6 @@ public class TCSpeedController extends javax.swing.JPanel {
     public void setTrain(Train train){
 
         this.selectedTrain = train;
-        //this.setSpeed = 0; //selectedTrain.getVelocity().intValue();
     }
 
     /**
@@ -173,11 +164,13 @@ public class TCSpeedController extends javax.swing.JPanel {
      */
     public void setMaxSpeed(double maxSpeed){
 
-        this.maxSpeed = maxSpeed;
-
         // update ui
-        this.maxSpeedSlider.setText(Double.toString(this.maxSpeed));
-        this.speedSlider.setMaximum((int) this.maxSpeed);
+        this.maxSpeedSlider.setText(String.format("%.2f", maxSpeed));
+        
+        String formattedString = String.format("%.2f", maxSpeed); 
+        double d = Double.parseDouble(formattedString);
+        
+        this.speedSlider.setMaximum((int)(d*100));
     }
 
     /**
@@ -191,15 +184,16 @@ public class TCSpeedController extends javax.swing.JPanel {
      *
      * @param setSpeed the speed the train should go.
      */
-    public void setSetSpeed(int setSpeed){
+    public void setSetSpeed(Double setSpeed){
    
         if (this.inManualMode){ // in manual mode
             if (setSpeed > this.selectedTrain.getSuggestedSpeed()){
-                this.setSpeed = this.selectedTrain.getSuggestedSpeed().intValue();
+                
+                this.setSpeed = Double.parseDouble(String.format("%.2f", this.selectedTrain.getSuggestedSpeed()));; 
             }else{ this.setSpeed = setSpeed; }
         }else{ // in automatic mode
             if (setSpeed > this.selectedTrain.getSuggestedSpeed()){
-                this.setSpeed = this.selectedTrain.getSuggestedSpeed().intValue();
+                this.setSpeed = Double.parseDouble(String.format("%.2f", this.selectedTrain.getSuggestedSpeed())); 
             }else{ this.setSpeed = setSpeed; }
         }
     }
@@ -211,64 +205,64 @@ public class TCSpeedController extends javax.swing.JPanel {
      */
     public void refreshUI(){
 
-        if (this.inManualMode){ // manual mode
-            this.setSpeedButton.setEnabled(true);
-            this.speedSlider.setEnabled(true);
-            Block currBlock = this.selectedTrain.getGPS().getCurrBlock(); // get current block
+        Block currBlock = this.selectedTrain.getCurrBlock(); // get current block
+        
+        if (currBlock != null){
+        
             Double blockSpeedLimit = (.621371*currBlock.getSpeedLimit()); // get speed limit on block
 
-            
-            if (blockSpeedLimit != null){
+            Double speedLimit = .621371*this.selectedTrain.getGPS().getCurrBlock().getSpeedLimit(); 
 
-                this.maxSpeedSlider.setText(Double.toString(blockSpeedLimit)); // update slider label
-                this.speedSlider.setMaximum(blockSpeedLimit.intValue()); //update max value of slider
+            this.setMaxSpeed(speedLimit);
 
-                // if we changed to manual mode from automatic mode, we need to adjust to meet block limit
-                if (this.setSpeed > blockSpeedLimit.intValue()){ this.setSpeed = blockSpeedLimit.intValue(); }
+            if (this.inManualMode){ // manual mode
+                this.setSpeedButton.setEnabled(true);
+                this.speedSlider.setEnabled(true);
 
-                
-                
-              this.powerControl();
-            }else if (blockSpeedLimit == null){
-                //System.out.println("Go the same speed.");
-                this.powerControl();
-            }
-        }else if (this.inManualMode == false){ // automatic mode
-            this.setSpeedButton.setEnabled(false);
-            this.speedSlider.setEnabled(false);
+                if (blockSpeedLimit != null){
 
+                    // if we changed to manual mode from automatic mode, we need to adjust to meet block limit
+                    if (this.setSpeed > blockSpeedLimit){ this.setSpeed = blockSpeedLimit; }
 
-            // get the block the train is on, and the set suggested speed
+                  this.powerControl();
 
-            Double blockSuggestedSpeed = .621371*this.selectedTrain.getSuggestedSpeed();
-            //System.out.println(blockSuggestedSpeed); 
-            if (blockSuggestedSpeed != null){
+                }else if (blockSpeedLimit == null){ this.powerControl(); }
 
-                // FOR TESTING
-                if (blockSuggestedSpeed == 0.0){
-                
-                    this.maxSpeedSlider.setText(Double.toString(blockSuggestedSpeed));
-                    this.speedSlider.setMaximum(blockSuggestedSpeed.intValue());
-                    this.speedSlider.setValue(blockSuggestedSpeed.intValue());
-                    
-                    // ignore the speed 
-                    if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == true){ this.setSpeed = 0; }
-                    else{ this.setSpeed = (int)(.621371*this.selectedTrain.getGPS().getCurrBlock().getSpeedLimit()); }
-                    
-                }else{
+            }else if (this.inManualMode == false){ // automatic mode
+                this.setSpeedButton.setEnabled(false);
+                this.speedSlider.setEnabled(false);
 
-                    this.maxSpeedSlider.setText(Double.toString(blockSuggestedSpeed));
-                    this.speedSlider.setMaximum(blockSuggestedSpeed.intValue());
-                    this.speedSlider.setValue(blockSuggestedSpeed.intValue());
-                
-                     // ignore the speed 
-                    if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == true){ this.setSpeed = 0; }
-                    else{ this.setSpeed = blockSuggestedSpeed.intValue(); }
+                // get the block the train is on, and the set suggested speed
+
+                Double blockSuggestedSpeed = .621371*this.selectedTrain.getSuggestedSpeed();
+
+                if (blockSuggestedSpeed != null){
+
+                    // FOR TESTING
+                    if (blockSuggestedSpeed == 0.0){
+
+                        this.speedSlider.setValue(speedLimit.intValue());
+
+                        // ignore the speed 
+                        if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == true){ this.setSpeed = 0.0; }
+                        else if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == false){ this.setSpeed = 0.0; }
+                        else{ this.setSpeed = (.621371*this.selectedTrain.getGPS().getCurrBlock().getSpeedLimit()); }
+
+                    }else{
+
+                        this.speedSlider.setValue(speedLimit.intValue());
+
+                         // ignore the speed 
+                        if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == true){ System.out.println("Here 0"); this.setSpeed = 0.0; }
+                        else if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == false){ this.setSpeed = 0.0; }
+                        else{ this.setSpeed = blockSuggestedSpeed; }
+                    }
+                    this.powerControl();
+                }else if (blockSuggestedSpeed == null){
+
+                    this.speedSlider.setValue(speedLimit.intValue());
+                    this.powerControl();
                 }
-                this.powerControl();
-            }else if (blockSuggestedSpeed == null){
-                //System.out.println("Go the same speed.");
-                this.powerControl();
             }
         }
     }
@@ -278,7 +272,7 @@ public class TCSpeedController extends javax.swing.JPanel {
      *
      * @return returns the value of the speed slider.
      */
-    public int getSetSpeed(){
+    public Double getSetSpeed(){
 
         return this.setSpeed;
     }
@@ -310,11 +304,11 @@ public class TCSpeedController extends javax.swing.JPanel {
      *
      * @param max the value to change the speed controller's slider to.
      */
-    public void setSliderMax(int max){
-
-        this.speedSlider.setMaximum(max);
-        this.maxSpeedSlider.setText(Integer.toString(this.speedSlider.getMaximum()));
-    }
+//    public void setSliderMax(int max){
+//
+//        this.speedSlider.setMaximum(max);
+//        this.maxSpeedSlider.setText(Integer.toString(this.speedSlider.getMaximum()));
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -439,7 +433,7 @@ public class TCSpeedController extends javax.swing.JPanel {
     private void setSpeed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setSpeed
 
         String log;
-        this.setSpeed = this.speedSlider.getValue();
+        this.setSpeed = (double)this.speedSlider.getValue()/100.0;
         
         log = "Telling train to set speed to " + this.setSpeed;
         this.brakePanel.resetBrakingConditions();
@@ -481,11 +475,12 @@ public class TCSpeedController extends javax.swing.JPanel {
         }else{
             this.logBook.add("Set Speed: " + this.setSpeed);
 
-            this.error = (this.setSpeed - this.selectedTrain.getVelocity()); // calculate the error
-
-            this.vitalPwrCmdOne = (this.setSpeed - this.selectedTrain.getVelocity());
-            this.vitalPwrCmdTwo = (this.setSpeed - this.selectedTrain.getVelocity());
-            this.vitalPwrCmdThree = (this.setSpeed - this.selectedTrain.getVelocity());
+            if (this.setSpeed != 0.0){ this.error = this.error + (this.setSpeed - this.selectedTrain.getVelocity()); } // calculate the error
+            else{ this.error = (this.setSpeed - this.selectedTrain.getVelocity()); }
+            
+            //this.vitalPwrCmdOne = (this.setSpeed - this.selectedTrain.getVelocity());
+            //this.vitalPwrCmdTwo = (this.setSpeed - this.selectedTrain.getVelocity());
+            //this.vitalPwrCmdThree = (this.setSpeed - this.selectedTrain.getVelocity());
 
             this.powerCommandOut = this.selectedTrain.getKp() * error + this.selectedTrain.getKi()*this.selectedTrain.getVelocity();
 

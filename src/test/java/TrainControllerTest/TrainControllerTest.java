@@ -21,26 +21,27 @@ import org.junit.jupiter.api.Test;
  * @author Andrew Lendacky
  */
 public class TrainControllerTest {
+    
+    // Track Info 
+    TrackModel track;
+    String[] fNames = {"src/test/resources/redline.csv"};
+    Train testTrain;
 
-    // Track Info
-  private static TrackModel track;
-  private static String[] fNames = {"src/test/resources/redline.csv"};
-  private static String[] fOverrideNames = {"test-classes/redlinelink.csv"};
-  private static Boolean verbose = false;
-  private static Train testTrain;
-
-  // Train Controller
-  private static TrainController tc;
+    // Train Controller
+    TrainController tc;
+    private String[] fOverrideNames = {"test-classes/redlinelink.csv"};
 
   @BeforeEach
   /**
   * Initialization of the TrainController to be used for testing
   */
   void init(){
+    this.testTrain = new Train(0, new TrackModel("Test")); 
+    
     this.track = new TrackModel("Testing");
-    this.track.readCSV(fNames);
-    this.testTrain = new Train(0, this.track);
-    this.tc = new TrainController(this.testTrain);
+    this.track.readCSV(fNames, fOverrideNames);
+
+    this.tc = new TrainController(this.testTrain, "Automatic", "Normal");
   }
 
 
@@ -50,9 +51,11 @@ public class TrainControllerTest {
   */
   @DisplayName("Validate that the system is controlling the correct train")
   void switchToCorrectTrain(){
-      Train newTrain = new Train(10202, track);
-      tc.setTrains(newTrain);
-      assertTrue(tc.getTrain() == newTrain);
+      Train newTrain = new Train(10202, track); 
+      
+      tc.setSelectedTrain(newTrain);
+      
+      assertTrue(tc.getTrain() == newTrain); 
   }
 
   // @Test

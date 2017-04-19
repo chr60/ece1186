@@ -114,7 +114,7 @@ public class Train implements Serializable {
      * @see changeSpeed()
      */
 	public void powerCommand(Double newPower){
-
+            
 		Double forceApp;
 		if (velocity == 0)
 		{
@@ -146,7 +146,7 @@ public class Train implements Serializable {
 			//invalid power command so nothing will happen
 		}else{
 			//if power command calls for increase of speed
-                        // System.out.println("Hey you!");
+                         //System.out.println("Hey you!");
 			changeSpeed(forceApp);
 		}
 
@@ -372,7 +372,7 @@ public class Train implements Serializable {
      * @param a Double which corresponds to the deceleration rate of the brakes
      * @return a Double which corresponds to the deceleration rate based on brakes and mass
      */
-	private Double deccelRate(Double Drate){
+	public Double deccelRate(Double Drate){
 
 		Double forceApplied = mass * Drate;
 		Double Fs = mass * g * mySin(currGrade);

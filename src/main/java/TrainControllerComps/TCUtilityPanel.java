@@ -158,37 +158,31 @@ public class TCUtilityPanel extends javax.swing.JPanel {
 
         // disable/endable certain UI elements depending on mode
         this.setModeUI();
+        
+        if (this.inManualMode == false){ this.automaticModeChecks(); }
 
+        // change the vital button to red if there is a power failure.
+        if (this.isPowerFailure()){ this.vitalsButton.setForeground(Color.red); }
+        /**
+         * @Bug When selected a train from a TCDispatchedTrainsFrame, a NullPointerException is thrown.
+         *
+         */
+        else if (this.isPowerFailure() == false){this.vitalsButton.setForeground(new Color(0,0,0));}
+                
+        // checks so that the doors can't open doors if moving..
+        if (this.selectedTrain.getVelocity() == 0.0){ this.enableOpeningDoors(); }
+        else{ // shut the doors if moving
+            this.disableOpeningDoors();
+            if (this.selectedTrain.getLeftDoor() != -1){ this.selectedTrain.setLeftDoor(0); }
+            if (this.selectedTrain.getRightDoor() != -1){ this.selectedTrain.setRightDoor(0); }
+        }
+        
         // set utility stuff based on train information
         this.refreshAC();
         this.refreshHeat();
         this.refreshLights();
         this.refreshLeftDoors();
         this.refreshRightDoors();
-
-        if (this.inManualMode == false){
-
-           this.automaticModeChecks();
-        }
-
-        // change the vital button to red if there is a power failure.
-        if (this.isPowerFailure()){
-
-            this.vitalsButton.setForeground(Color.red);
-        }
-        /**
-         * @Bug When selected a train from a TCDispatchedTrainsFrame, a NullPointerException is thrown.
-         *
-         */
-        else if (this.isPowerFailure() == false){this.vitalsButton.setForeground(new Color(0,0,0));}
-        
-        // can't open doors if moving..
-        if (this.selectedTrain.getVelocity() == 0.0){ this.enableOpeningDoors(); }
-        else{ // shut the doors if moving
-            this.disableOpeningDoors();
-            this.selectedTrain.setLeftDoor(0);
-            this.selectedTrain.setRightDoor(0);
-        }
     }
 
     /**
@@ -199,21 +193,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
     private void automaticModeChecks(){
         // turn on lights if underground
         if (this.isUnderground()){ this.selectedTrain.setLights(1);}
-
-        // open doors when at station
-        // FIX ME: Open both doors for now, change later to open correct door
-        if (this.canOpenDoors() && this.isAtStation()){ 
-            
-            this.selectedTrain.setLeftDoor(1);
-            if (this.selectedTrain.getGPS().getCurrBlock().getStationName() != null){
-                //this.logbook.add("Arriving at " + this.selectedTrain.getGPS().getCurrBlock().getStationName());
-            }
-        }
-        else{ this.selectedTrain.setLeftDoor(0); }
         
-        if (this.canOpenDoors() && this.isAtStation()){ this.selectedTrain.setRightDoor(1);}
-        else{ this.selectedTrain.setRightDoor(0); }
-
         this.printLogs();
         // set heat
 
@@ -338,20 +318,6 @@ public class TCUtilityPanel extends javax.swing.JPanel {
     }
 
     /**
-     * Refreshes the Air Conditioning Radio Buttons based on the status of the train.
-     *
-     * This is called by the system timer every 'x' seconds. function is called a lot in
-     * automatic to refresh the states of the train and have it reflected in the UI.
-     *
-     */
-    private void refreshAC(){
-
-        if (this.selectedTrain.getAC() == 1){ this.acOnRadioButton.setSelected(true); }
-        else if (this.selectedTrain.getAC() == 0){ this.acOffRadioButton.setSelected(true); }
-        else if (this.selectedTrain.getAC() == -1){ this.acFailureRadioButton.setSelected(true); }
-    }
-
-    /**
      * Checks to see if the train is underground.
      *
      * @return returns true if the train is underground, false otherwise
@@ -385,6 +351,17 @@ public class TCUtilityPanel extends javax.swing.JPanel {
         if (this.selectedTrain.getGPS().getCurrBlock().getStationName() != null){return true; }
         else { return false; }
     }
+    
+    
+    /**
+     * Refreshes the Air Conditioning Radio Buttons based on the status of the train.
+     */
+    private void refreshAC(){
+
+        if (this.selectedTrain.getAC() == 1){ this.acOnRadioButton.setSelected(true); }
+        else if (this.selectedTrain.getAC() == 0){ this.acOffRadioButton.setSelected(true); }
+        else if (this.selectedTrain.getAC() == -1){ this.acFailureRadioButton.setSelected(true); }     
+    }
 
     /**
      * Refreshes the Heating Radio Buttons based on the status of the train.
@@ -394,6 +371,7 @@ public class TCUtilityPanel extends javax.swing.JPanel {
         if (this.selectedTrain.getHeat() == 1){ this.heatOnRadioButton.setSelected(true); }
         else if (this.selectedTrain.getHeat() == 0){ this.heatOffRadioButton.setSelected(true);}
         else if (this.selectedTrain.getHeat() == -1){ this.heatFailureRadioButton.setSelected(true); }
+       
     }
 
     /**
@@ -846,24 +824,14 @@ public class TCUtilityPanel extends javax.swing.JPanel {
      */
     private void setHeatTemp(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setHeatTemp
 
-        String temp = this.heatTempTextField.getText();
+        String tempStr = this.heatTempTextField.getText();
 
-        if (Double.parseDouble(temp) < 60.0 || Double.parseDouble(temp) > 80.0 ){
+        if (Double.parseDouble(tempStr) < 60.0 || Double.parseDouble(tempStr) > 80.0 ){
 
             System.out.println("Error. Please set a temperature between 60.0 - 80.0");
-
         }else{
-            // turn the heat on the train, this will cause the GUI to update on the next refreshGUI call.
             // turn on heat and transmit the temp
-
-            if (this.selectedTrain.getHeat() == 0){
-                this.selectedTrain.setHeat( 1 );
-
-                this.selectedTrain.setThermostat(Double.parseDouble(temp));
-                System.out.println("Telling the train to set temperature to " + temp + " for Heating unit");
-
-            }
-
+            this.setHeat(Double.parseDouble(tempStr));
         }
     }//GEN-LAST:event_setHeatTemp
 
@@ -958,45 +926,46 @@ public class TCUtilityPanel extends javax.swing.JPanel {
     private void turnHeatOn(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_turnHeatOn
 
         if (evt.getStateChange() == ItemEvent.SELECTED){
-            // manual vs automatic mode
-            if (this.inManualMode){
-                // turn on heat and transmit temp
-                this.turnOnHeat();
-//                Double temp = Double.parseDouble(this.heatTempTextField.getText());
-//                System.out.println("Telling the train to set temperature to " + temp + " for Heating unit");
-//                this.selectedTrain.setThermostat(temp);
-            }else{
-                // transmit default temp
-                Double temp = 65.0;
-                // update the text on the gui
-                this.turnOnHeat();
-//                this.heatTempTextField.setText(Double.toString(temp));
-//                System.out.println("Telling the train to set temperature to " + temp + " for Heating unit");
-//                this.selectedTrain.setThermostat(temp);
-            }
+            // turn on heat and transmit temp
+            if (this.inManualMode){ this.setHeat(Double.parseDouble(this.heatTempTextField.getText())); }
+            else{ this.setHeat(65.0); } // transmit default temp
         }
     }//GEN-LAST:event_turnHeatOn
 
 
-    public void turnOnAC(){
-    
-        this.selectedTrain.setAC(1);
+    /**
+     * Turns on the AC and turns off the heat.
+     */
+    public void setAirCond(Double temp){
+           
+        this.selectedTrain.setAC(1); // turn on heat
+        this.selectedTrain.setHeat(0); // turn off heat
         
-        this.selectedTrain.setHeat(0);  
-        
-        this.acTempTextField.setText("40.0");
-        this.selectedTrain.setThermostat(Double.parseDouble(this.acTempTextField.getText()));
+        if (temp == null){ this.selectedTrain.setThermostat(40.0); } // set to default heat
+        else{ this.selectedTrain.setThermostat(temp); }
     }
     
-    public void turnOnHeat(){
     
-        this.selectedTrain.setHeat(1);
-        this.selectedTrain.setAC(0);
+    /**
+     * Turns on the heat, and turns the ac off.
+     */
+    public void setHeat(Double temp){
+    
+        this.selectedTrain.setHeat(1); // turn on heat
+        this.selectedTrain.setAC(0); // turn off heat
+        
+        if (temp == null){ this.selectedTrain.setThermostat(60.0); } // set to default heat
+        else{ this.selectedTrain.setThermostat(temp); }
     }
     
+    /**
+     * Turns on the ac when the ON radio button is pressed.
+     * 
+     * @param evt 
+     */
     private void turnOnAC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOnAC
 
-        this.turnOnAC();
+        this.turnOnAC(null);
     }//GEN-LAST:event_turnOnAC
 
     /**

@@ -75,15 +75,13 @@ public class TCBlockInfoPanel extends javax.swing.JPanel {
      * 
      */
     public void refreshUI(){
-           
-//        if (this.selectedTrain.getGPS()!= null){
-        
-            if (this.selectedTrain.getCurrBlock() != null){
-            
-                this.blockSpeed.setText(Double.toString( .621371*this.selectedTrain.getCurrBlock().getSpeedLimit()));
-                this.currentBlock.setText(Integer.toString( this.selectedTrain.getCurrBlock().blockNum())); 
-            }
-//        }
+                   
+        if (this.selectedTrain.getCurrBlock() != null){
+
+            Double speedLimit = .621371*this.selectedTrain.getGPS().getCurrBlock().getSpeedLimit();
+            this.blockSpeed.setText(String.format("%.2f", speedLimit));
+            this.currentBlock.setText(Integer.toString( this.selectedTrain.getCurrBlock().blockNum())); 
+        }
     }
     /** 
      * This method is called from within the constructor to initialize the form.
@@ -121,12 +119,12 @@ public class TCBlockInfoPanel extends javax.swing.JPanel {
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(blockSpeed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(blockSpeed, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(backgroundPanelLayout.createSequentialGroup()
-                .addGap(85, 85, 85)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(unitLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(77, 77, 77))
         );
         backgroundPanelLayout.setVerticalGroup(
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
