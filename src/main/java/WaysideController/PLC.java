@@ -21,7 +21,7 @@ public class PLC {
   private String line;
   private HashMap<String, String> switchMap = new HashMap<String, String>();	//Key is Switch label (Switch #), return val is expression
   private HashMap<Block, String> crossingMap = new HashMap<Block, String>();	//Block # isblock, return val is expression
-  private ArrayList<Block> previousOccupancy;
+  private ArrayList<Block> previousOccupancy = new ArrayList<Block>();
 
   /**
    * Constructor for PLC
@@ -80,6 +80,20 @@ public class PLC {
       if(switchMap.keySet().contains(s)){
         String evalString = new String(this.switchMap.get(s));
         sb = new StringBuilder(evalString);
+
+        while((loc = sb.indexOf("prev")) != -1){
+          loc2 = loc;
+          while(sb.charAt(loc2) != ')')
+          ++loc2;
+          String [] toReplace = sb.substring(loc, loc2).split("_");
+          String section = toReplace[1];
+          Integer blockNum = Integer.parseInt(toReplace[2]);
+          Block toCheck = this.track.getBlock(line, section, blockNum);
+          if(previousOccupancy.contains(toCheck))
+            sb.replace(loc, loc2, "true");
+          else
+            sb.replace(loc, loc2, "false");
+        }
 
         //replaces ALL "block_letter_number" with block occupancy
         while((loc = sb.indexOf("block")) != -1){
