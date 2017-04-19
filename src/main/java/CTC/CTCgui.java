@@ -27,12 +27,20 @@ public class CTCgui {
 	TrackModel dummyTrack;
 	ArrayList<TrainManager> managerList;
   TrainManager tmanager;
+  TrainManager tmanager2;
 	private Border grayline;
   int lastClickedButton;
   TrainPanel trainPanel;
   TrainManagerPanel tmPanel;
+  TrainManagerPanel tmPanel2;
   TrackPanel blockPanel;
   TrackModel realTrack;
+  ArrayList<Block> brokenList;
+  ArrayList<String> setDropdownFailure;
+  JPanel failurePanel;
+  JButton btnNoFailure;
+  int blockNum;
+  boolean failureDetected;
 
 	/**
 	 * Create the application.
@@ -42,11 +50,16 @@ public class CTCgui {
 		this.waysides = ws;
 		this.managerList = tm;
     this.tmanager = managerList.get(0);
+  //  this.tmanager2 = managerList.get(1);
     this.realTrack = globalTrack;
-    lastClickedButton = 0;
+    lastClickedButton = 2;
+    this.brokenList = new ArrayList<Block>();
+    this.setDropdownFailure = new ArrayList<String>();
+    failureDetected = false;
 
 		grayline = BorderFactory.createLineBorder(Color.gray);
 
+// overall frame of gui
 		JFrame frame = new JFrame();
 		this.mainGUI = frame;
 		frame.setBounds(100, 100, 790, 555);
@@ -54,7 +67,7 @@ public class CTCgui {
 		frame.getContentPane().setLayout(null);
 
 // TRACK SECTION OF GUI
-		blockPanel = new TrackPanel(dummyTrack, waysides);
+		blockPanel = new TrackPanel(dummyTrack, waysides, brokenList);
 		blockPanel.setBounds(402, 0, 367, 229);
 		blockPanel.setBorder(grayline);
 		frame.getContentPane().add(blockPanel);
@@ -68,22 +81,26 @@ public class CTCgui {
 		frame.getContentPane().add(trainPanel);
 		trainPanel.setLayout(null);
 
-
+// image wont work in JAR currently
     // IMAGE
 		//ImageIcon image = new ImageIcon(getClass().getResource("trackPicture.jpg"));
 		JPanel panel = new JPanel();
     panel.setLayout(new BorderLayout());
-		panel.setBounds(0, 0, 390, 511);
-		frame.getContentPane().add(panel);
+		panel.setBounds(0, 0, 390, 255);
+
 		//panel.add(new JLabel(image), BorderLayout.CENTER);
+    JPanel panel2 = new JPanel();
+    panel2.setLayout(new BorderLayout());
+    panel2.setBounds(0, 256, 390, 255);
 
 // Train manager panel
-    tmPanel = new TrainManagerPanel(tmanager, dummyTrack);
-    tmPanel.setBounds(0, 0, 390, 511);
-/*
-// MBO SCHEDULE PANEL - appears in CTC
-    JPanel schedulePanel = MBOgui.getTrainSchedulePanel();
-    schedulePanel.setBounds(0, 0, 390, 511);
+    tmPanel = new TrainManagerPanel(tmanager, dummyTrack, managerList);
+    tmPanel.setBounds(0, 0, 390, 255);
+    frame.getContentPane().add(tmPanel);
+/*  WAIT FOR GREEN LINE TO WORK
+    tmPanel2 = new TrainManagerPanel(tmanager2, dummyTrack, managerList);
+    tmPanel2.setBounds(0, 256, 390, 255);
+    frame.getContentPane().add(tmPanel2);
 */
 // EVERYTHING ELSE PANEL
 		JPanel miscPanel = new JPanel();
@@ -108,15 +125,20 @@ public class CTCgui {
       public void actionPerformed(ActionEvent e){
         if(lastClickedButton == 2){ //train
           frame.getContentPane().remove(tmPanel);
+          frame.getContentPane().remove(tmPanel2);
           //frame.getContentPane().add(schedulePanel);
+          //frame.getContentPane().add();
           frame.validate();
           frame.repaint();
-        }else if(lastClickedButton == 0){  //pic
+        }
+/*        else if(lastClickedButton == 0){  //pic
           frame.getContentPane().remove(panel);
           //frame.getContentPane().add(schedulePanel);
           frame.validate();
           frame.repaint();
-        }else{
+        }
+*/
+        else{
           // do nothing - schedule already set
         }
         lastClickedButton = 1;
@@ -124,22 +146,28 @@ public class CTCgui {
     });
     buttonAllTrains.addActionListener(new ActionListener(){
       public void actionPerformed(ActionEvent e){
+/*
         if(lastClickedButton == 0){ //pic
           frame.getContentPane().remove(panel);
           frame.getContentPane().add(tmPanel);
           frame.validate();
           frame.repaint();
-        }else if(lastClickedButton == 1){ //sched
+        }else
+*/
+        if(lastClickedButton == 1){ //sched
           //frame.getContentPane().remove(schedulePanel);
+          //frame.getContentPane().remove();
           frame.getContentPane().add(tmPanel);
+          frame.getContentPane().add(tmPanel2);
           frame.validate();
           frame.repaint();
         }else{
-          // do nothing - picture already set
+          // do nothing - train panel already set
         }
         lastClickedButton = 2;
       }
     });
+/*
     buttonShowPicture.addActionListener(new ActionListener(){
       public void actionPerformed(ActionEvent e){
         if(lastClickedButton == 2){  //train
@@ -158,6 +186,7 @@ public class CTCgui {
         lastClickedButton = 0;
       }
     });
+*/
 
     JLabel lblModes = new JLabel("MODES");
     lblModes.setBounds(176, 11, 46, 14);
@@ -219,16 +248,37 @@ public class CTCgui {
 
 
 //FAILURE PANEL
-		FailurePanel failurePanel = new FailurePanel();
+		failurePanel = new JPanel();
 		failurePanel.setBackground(new Color(34, 139, 34));
 		failurePanel.setBounds(525, 413, 245, 98);
 		frame.getContentPane().add(failurePanel);
 		failurePanel.setLayout(null);
 
+    btnNoFailure = new JButton("No Failure");
+    btnNoFailure.setBounds(77, 38, 89, 23);
+    failurePanel.add(btnNoFailure);
 
-// connections between panels
-		//miscPanel.setTrainPanel(trainPanel);
 
+    btnNoFailure.addActionListener(new ActionListener(){
+      public void actionPerformed(ActionEvent e){
+        if(btnNoFailure.getText().equals("No Failure")){
+          // do nothing
+        }else{
+          // case for when a failure occurs
+
+          blockPanel.dropdown_line.setSelectedItem(setDropdownFailure.get(0));
+          blockPanel.dropdown_segment.setSelectedItem(setDropdownFailure.get(1));
+          blockPanel.dropdown_block.setSelectedItem(setDropdownFailure.get(2));
+          try{
+            blockNum = Integer.parseInt(setDropdownFailure.get(2));
+          }catch(NumberFormatException num){
+            blockNum = dummyTrack.getSection(setDropdownFailure.get(0), setDropdownFailure.get(1)).keySet().toArray(new Integer [0])[0];
+          }
+
+          blockPanel.setBlockWS(dummyTrack, setDropdownFailure.get(0), setDropdownFailure.get(1), blockNum);
+        }
+      }
+    });
 
 	}
 
@@ -257,7 +307,69 @@ public class CTCgui {
     return tmPanel;
   }
 
-//
+  public JPanel getFailurePanel(){
+    return failurePanel;
+  }
+
+  public ArrayList<Block> getBrokenList(){
+    return brokenList;
+  }
+
+  public ArrayList<String> getDropdownFailList(){
+    return setDropdownFailure;
+  }
+
+  public JButton getFailureButton(){
+    return btnNoFailure;
+  }
+
+  public ArrayList<WS> getWSList(){
+    return waysides;
+  }
+
+  public void getTrackFailuresWS(){
+    int numWaysides = waysides.size();
+    ArrayList<Block> listFromWS = new ArrayList<Block>();
+    for(int x=0; x<numWaysides; x++){
+      listFromWS = waysides.get(x).checkForBroken();
+      if(listFromWS.size()>0){
+        for(int y=0; y<listFromWS.size(); y++){
+          if(!brokenList.contains(listFromWS.get(y))){
+            brokenList.add(listFromWS.get(y));
+          }
+        }
+
+      }
+    }
+      setFailureBackground();
+      setDropdownFailure = setFailureButton();
+  }
+
+  private void setFailureBackground(){
+    if(brokenList.size() > 0){
+      failurePanel.setBackground(new Color(255, 0, 0));
+    }else{
+      failurePanel.setBackground(new Color(34, 139, 34));
+    }
+  }
+
+  private ArrayList<String> setFailureButton(){
+    ArrayList<String> brokenBlockText = new ArrayList<String>();
+    if(brokenList.size() > 0){
+      String blockLine = brokenList.get(0).getBlockLine();
+      brokenBlockText.add(blockLine);
+      String blockSection = brokenList.get(0).getBlockSection();
+      brokenBlockText.add(blockSection);
+      Integer blockNumber = brokenList.get(0).blockNum();
+      brokenBlockText.add(blockNumber.toString());
+      btnNoFailure.setText(blockLine + ", " + blockSection + ", " + blockNumber.toString());
+    }else{
+      btnNoFailure.setText("No Failure");
+    }
+
+    return brokenBlockText;
+  }
+
 
 /*
 	public void checkMode(String mode, TrainPanel panel){
@@ -274,6 +386,7 @@ public class CTCgui {
 	}
 
 */
+
 
 
 }

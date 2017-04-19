@@ -188,13 +188,17 @@ public class Launcher extends javax.swing.JFrame {
 
                 // what should be called every tick
 
+                if(ctc != null){
+                  // CTC - asking WS for any broken blocks
+                  ctc.getTrackFailuresWS();
+                  // CTC - update track panel on gui w/ info from WS
+                  ctc.getTrackPanel().updateTrackInfo(ctc.getTrackPanel().getBlockWS());
+                  // CTC - calls wayside to get updated list of track occupancy
+                  ctc.getTrainPanel().updateTrainPositionsToManager(trainManagers);
+                  // CTC - prints active list of trains from train manager to GUI
+                  ctc.getTrainManagerPanel().updateTable(trainManagers);
 
-                // CTC - update track panel on gui w/ info from WS
-                ctc.getTrackPanel().updateTrackInfo(ctc.getTrackPanel().getBlockWS());
-                // CTC - calls wayside to get updated list of track occupancy
-                ctc.getTrainPanel().updateTrainPositionsToManager(trainManagers);
-                // CTC - prints active list of trains from train manager to GUI
-                //ctc.getTrainManagerPanel().updateTable(trainManagers);
+                }
 
                 trainHandler.pollYard();
 

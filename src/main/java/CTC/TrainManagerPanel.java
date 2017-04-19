@@ -27,10 +27,16 @@ public class TrainManagerPanel extends JPanel {
       TrainManager trainManager;
       TrackModel dummyTrack;
       String [] headers = {"Line", "Train ID", "Position", "Speed", "Authority"};
+      String lineAssign = "";
+      ArrayList<TrainManager> managerList;
 
-			public TrainManagerPanel(TrainManager tm, TrackModel dt) {
+
+			public TrainManagerPanel(TrainManager tm, TrackModel dt, ArrayList<TrainManager> ml) {
           this.dummyTrack = dt;
           this.trainManager = tm;
+          this.managerList = ml;
+
+          setLineAssign(tm.getLine());
 
 					setLayout(new BorderLayout());
 
@@ -53,12 +59,32 @@ public class TrainManagerPanel extends JPanel {
       		manager.setRowCount(50);
       		managerTable.setModel(manager);
 
-          updateTable(trainManager);
+          updateTable(managerList);
 
 			}
 
+      public void setLineAssign(String line){
+        this.lineAssign = line;
+      }
 
-      public void updateTable(TrainManager trainManager){
+      public String getTrainManagerLine(){
+        return lineAssign;
+      }
+
+      public void updateTable(ArrayList<TrainManager> managers){
+        String lineForTM = getTrainManagerLine();
+        TrainManager trainManager = managers.get(0);
+
+        for(int i=0; i<managers.size(); i++){
+          if(managers.get(i).getLine().equals(lineForTM)){
+            trainManager = managers.get(i);
+          }else{
+              System.out.println("No Line Assignment for TrainManager");
+              trainManager = managers.get(0);
+          }
+        }
+
+        Double currSpeed = 0.0;
         for(int j = 0; j < trainManager.getTrainList().size(); j++){
           managerTable.setValueAt(trainManager.getLine(),j, 0);
           managerTable.setValueAt(trainManager.getTrainList().get(j).getID(), j, 1);
@@ -66,7 +92,6 @@ public class TrainManagerPanel extends JPanel {
           Integer currPos = trainManager.getTrainList().get(j).getPosition().blockNum();
           ArrayList<Block> blockNum = trainManager.getTrainList().get(j).getPath();
           Integer num = 0;
-          Double currSpeed = 0.0;
           int saveX = 0;
           for(int x = 0; x<blockNum.size(); x++){
             num = blockNum.get(x).blockNum();
