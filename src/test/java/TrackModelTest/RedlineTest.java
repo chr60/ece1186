@@ -430,7 +430,7 @@ public class RedlineTest {
     assertTrue(rootBlock.nextBlockForward().equals(altLeafBlock));
   }
 
-  @Test
+  //@Test
   /**
   * Test valid linking of blocks at/on switches.
   */
@@ -453,7 +453,7 @@ public class RedlineTest {
     assertTrue(rootBlock.nextBlockForward().equals(altLeafBlock));
   }
 
-  @Test
+  //@Test
   /**
   * Test the leaves of switch 7.
   */

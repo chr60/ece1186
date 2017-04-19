@@ -514,10 +514,9 @@ public class TrackModel implements Serializable {
       }
     }
 
-    public void linkCSVOverride(String[] fNames) {
+    public void linkCSVOverride(String s) {
       String line = "";
       String delimiter = ",";
-      for (String s : fNames){
         System.out.println("Reading "+s);
         Boolean initLine = true;
         try (BufferedReader reader = new BufferedReader(new FileReader(s))) {
@@ -538,7 +537,7 @@ public class TrackModel implements Serializable {
                 sourceBlock.setNextBlockForward(nextBlockForwardOverride);
               }
               
-              if (!backwardTargetSection.equals("") && !str[6].equals("")) {
+              if (!backwardTargetSection.equals("") && str[6] != "") {
                 int backwardTargetBlockNum = Integer.parseInt(str[6]);
                 System.out.println(backwardTargetBlockNum);
                 Block sourceBlock = this.getBlock(sourceLine, sourceSection, sourceBlockNum);
@@ -546,91 +545,13 @@ public class TrackModel implements Serializable {
                 Block nextBlockBackwardOverride = this.trackList.get(targetLine).get(backwardTargetSection).get(backwardTargetBlockNum);
                 sourceBlock.setNextBlockBackward(nextBlockBackwardOverride);
               }
-              
-            }
             initLine = false;
           }
-        } catch(IOException|ArrayIndexOutOfBoundsException|NumberFormatException e) {
-          System.out.println("Finished reading override!");
-        }
+      }
+      } catch(IOException|ArrayIndexOutOfBoundsException|NumberFormatException e) {
+        System.out.println("Finished reading override!");
       }
     }
-
-    /**
-    * Helper function for reading the information from the excel-dumped CSV
-    * @param fNames: filenames of the csv's of to read in
-    */
-    @Deprecated public void readCSV(String[] fNames) {
-      System.out.println("WARNING. You are using an unsafe function to read the track model. Use the updated constructor.");
-      String line = "";
-      String delimiter = ",";
-      Boolean defaultOccupied = false;
-
-      for (String s : fNames) {
-        Boolean initLine = true; //Allows for graceful failure of reading multiple csv's without exiting
-        try (BufferedReader reader = new BufferedReader(new FileReader(s))) {
-          while ((line = reader.readLine()) != null) {
-            String[] str = line.split(delimiter,-1);
-
-            //For safety when parsing headers; first line will result in incorrect info
-            if (initLine.equals(false)){
-
-              String blockLine = str[0];
-              String blockSection = str[1];
-              Integer blockNum = Integer.valueOf(str[2]);
-              Double blockLen = Double.valueOf(str[3]);
-              Double blockGrade = Double.valueOf(str[4]);
-              Double speedLimit = Double.valueOf(str[5]);
-              String infrastructure = str[6];
-              Double elevation = Double.valueOf(str[7]);
-              String crossing = str[8];
-              String switchBlock = str[9];
-              String arrowDirection = str[10];
-              String stationName = str[11];
-
-              Boolean isUnderground = infrastructure.contains("UNDERGROUND");
-              Boolean hasSwitch = infrastructure.contains("SWITCH");
-              Boolean hasCrossing = infrastructure.contains("CROSSING");
-
-              //Initialize and add block
-              Block myBlock = new Block(this, defaultOccupied, isUnderground, blockLen, blockGrade,
-                    elevation, speedLimit, stationName, arrowDirection, blockLine,
-                    blockSection, blockNum, hasSwitch, switchBlock);
-
-              this.addBlock(myBlock);
-
-              if (!stationName.equals("")) {
-                this.addStation(blockLine, stationName, myBlock);
-              }
-
-              if(hasSwitch) {
-                this.addSwitchRoot(switchBlock, myBlock);
-              }
-
-              if(!hasSwitch && !switchBlock.equals("")) {
-                this.addSwitchLeaf(switchBlock, myBlock);
-              }
-
-              if(hasCrossing) {
-                this.crossingMap.put(myBlock,new Crossing(this, myBlock));
-              }
-
-            }
-            initLine = false;
-          }
-        }catch(IOException|ArrayIndexOutOfBoundsException|NumberFormatException e) {
-          if (this.verbose.equals(true)) {
-            System.out.println("Finished Reading");
-          }
-        }
-    }
-
-    this.linkBlocks();
-    this.handleSwitches();
-    this.buildStationHostMap();
-    this.buildBlockStationMap();
-    this.buildLightsMap();
-  }
 
   /**
   * Helper function for reading the information from the excel-dumped CSV
@@ -700,7 +621,9 @@ public class TrackModel implements Serializable {
 
     this.linkBlocks();
     this.handleSwitches();
-    this.linkCSVOverride(fOverrideNames);
+    for (String s : fOverrideNames) {
+      this.linkCSVOverride(s);
+    }
     this.buildStationHostMap();
     this.buildBlockStationMap();
     this.buildLightsMap();

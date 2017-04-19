@@ -126,11 +126,11 @@ public class Launcher extends javax.swing.JFrame {
         //Generate globalTrack
         String redlinePath = "test-classes/redline.csv";
         String greenlinePath = "test-classes/greenline.csv";
-        String[] fNames = {redlinePath};
+        String[] fNames = {redlinePath, greenlinePath};
 
         String redLink = "test-clases/redlinelink.csv";
         String greenLink = "test-classes/greelinelink.csv";
-        String[] linkNames = {redLink};
+        String[] linkNames = {redLink, redLink};
 
         this.globalTrack = this.generateTrack("GlobalTrack", fNames, linkNames);
         this.trackGUI = new TrackGUI(globalTrack);
@@ -167,7 +167,7 @@ public class Launcher extends javax.swing.JFrame {
 
         this.trainGUI = new TrainModeUI();
 
-        this.ctc = new CTCgui(this.trainManagers, generateTrack("CTC"), this.waysideList, globalTrack);
+        this.ctc = new CTCgui(this.trainManagers, generateTrack("CTC", fNames, linkNames), this.waysideList, globalTrack);
         this.mbo = new MovingBlockOverlay(generateTrack("MBO", fNames, linkNames), this.trainManagers, this.trainHandler, this.ctc);
 
         this.ctc.setMBO(this.mbo);
@@ -650,20 +650,6 @@ public class Launcher extends javax.swing.JFrame {
         tcTestConsole.setVisible(true);
         tcTestConsole.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_openTrainControllerTestConsole
-
-    /**
-     * Generates a "Dummy Track" and returns it.
-     * @return Dummy Track
-     * @bug REDLINE ONLY CURRENTLY
-     */
-    @Deprecated public TrackModel generateTrack(String module){
-      System.out.println("WARNING. THIS METHOD OF GENERATING A TRACK IS BROKEN. FROM LAUNCHER LINE 588.");
-      String[] fNames = {"test-classes/redline.csv"};
-
-      TrackModel globalTrack = new TrackModel(module);
-  	  globalTrack.readCSV(fNames);
-      return globalTrack;
-    }
 
     /**
     * Returns a generated track given overrides, module and the names of the track.

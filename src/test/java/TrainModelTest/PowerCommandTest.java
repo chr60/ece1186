@@ -26,8 +26,9 @@ public class PowerCommandTest{
   */
   void init(){
 	String[] fNames = {"src/test/resources/redline.csv"};
+  String[] fNamesOverride = {"resources/redlineLink.csv"};
 	myTrack= new TrackModel("GlobalTrack");
-	myTrack.readCSV(fNames);
+	myTrack.readCSV(fNames, fNamesOverride);
 	Block yardBlockRed = myTrack.getBlock("Red", "U", 77);
     yardBlockRed = myTrack.lateralLookup(yardBlockRed);
     myTrain = new Train(1, myTrack);
@@ -175,9 +176,5 @@ public class PowerCommandTest{
 	myTrain.setEmergencyBrake(1);
 	//velocity should not change 
 	assertTrue(myTrain.getVelocity() <  25.0);;
-  }
-  
-  
-
-  
+  }  
 }

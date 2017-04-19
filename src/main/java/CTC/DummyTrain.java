@@ -7,6 +7,8 @@ public class DummyTrain {
 
 	private Integer id;
 	private Block position;
+	private Block authority;
+	private double suggSpeed;
 	// path is a list of blocks that have the speed and authority that we want to set on train
 	private ArrayList<Block> path;
 	private Block lastStationVisited;
@@ -54,12 +56,28 @@ public class DummyTrain {
 	}
 
 	public Block getPosition(){
-    return position;
+    	return position;
 	}
 
 
 	public void setPosition(Block position){
 		this.position = position;
+	}
+
+	public Block getAuthority() {
+		return authority;
+	}
+
+	public void setAuthority(Block authority) {
+		this.authority = authority;
+	}
+
+	public double getSuggSpeed() {
+		return suggSpeed;
+	}
+
+	public void setSuggSpeed(double suggSpeed) {
+		this.suggSpeed = suggSpeed;
 	}
 
 	public ArrayList<Block> getPath(){
