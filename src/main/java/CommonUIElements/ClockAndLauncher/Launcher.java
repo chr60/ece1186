@@ -609,20 +609,6 @@ public class Launcher extends javax.swing.JFrame {
     }//GEN-LAST:event_openTrainControllerTestConsole
 
     /**
-     * Generates a "Dummy Track" and returns it.
-     * @return Dummy Track
-     * @bug REDLINE ONLY CURRENTLY
-     */
-    @Deprecated public TrackModel generateTrack(String module){
-      System.out.println("WARNING. THIS METHOD OF GENERATING A TRACK IS BROKEN. FROM LAUNCHER LINE 588.");
-      String[] fNames = {"test-classes/redline.csv"};
-
-      TrackModel globalTrack = new TrackModel(module);
-  	  globalTrack.readCSV(fNames);
-      return globalTrack;
-    }
-
-    /**
     * Returns a generated track given overrides, module and the names of the track.
     */
     public TrackModel generateTrack(String module, String[] fNames, String[] fOverridenames){
