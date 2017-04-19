@@ -126,11 +126,11 @@ public class Launcher extends javax.swing.JFrame {
         //Generate globalTrack
         String redlinePath = "test-classes/redline.csv";
         String greenlinePath = "test-classes/greenline.csv";
-        String[] fNames = {redlinePath, greenlinePath};
+        String[] fNames = {redlinePath};
 
         String redLink = "test-clases/redlinelink.csv";
         String greenLink = "test-classes/greelinelink.csv";
-        String[] linkNames = {redLink, redLink};
+        String[] linkNames = {redLink};
 
         this.globalTrack = this.generateTrack("GlobalTrack", fNames, linkNames);
         this.trackGUI = new TrackGUI(globalTrack);
@@ -216,7 +216,7 @@ public class Launcher extends javax.swing.JFrame {
             // CTC - calls wayside to get updated list of track occupancy
             ctc.getTrainPanel().updateTrainPositionsToManager(trainManagers);
             // CTC - prints active list of trains from train manager to GUI
-            ctc.getTrainManagerPanel().updateTable(trainManagers);
+            //ctc.getTrainManagerPanel().updateTable(trainManagers);
         }
 
         trainHandler.pollYard();
@@ -536,8 +536,10 @@ public class Launcher extends javax.swing.JFrame {
     private void playNormalSpeed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playNormalSpeed
 
         this.systemSpeed = 1000;
-        this.trainHandler.setClockSpeed(this.systemSpeed);
+        //this.trainHandler.setClockSpeed(this.systemSpeed);
 
+        if (this.systemClock != null){this.systemClock.stop();}
+        
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
             Random rand = new Random();
             public void actionPerformed(ActionEvent e) {
@@ -545,7 +547,7 @@ public class Launcher extends javax.swing.JFrame {
                 update(); 
             }
         });
-
+        this.systemClock.start();
     }//GEN-LAST:event_playNormalSpeed
 
     /**
@@ -555,6 +557,8 @@ public class Launcher extends javax.swing.JFrame {
      */
     private void playFastSpeed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playFastSpeed
 
+        if (this.systemClock != null){this.systemClock.stop();}
+        
         // set the system speed
         this.systemSpeed = 100;
         this.trainHandler.setClockSpeed(this.systemSpeed);
@@ -566,6 +570,8 @@ public class Launcher extends javax.swing.JFrame {
                 update(); 
             }
         });
+        
+        this.systemClock.start();
     }//GEN-LAST:event_playFastSpeed
 
     /**
