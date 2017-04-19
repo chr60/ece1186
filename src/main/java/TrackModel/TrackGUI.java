@@ -88,6 +88,7 @@ public class TrackGUI {
     Set<Integer> blockInts = track.trackList.get("Red").get("A").keySet();
     Integer[] intArr = blockInts.toArray(new Integer[blockInts.size()]);
     Set<String> lineSet = track.trackList.keySet();
+    System.out.println(lineSet);
     String[] lineStrings = lineSet.toArray(new String[lineSet.size()]);
 
     frame = new JFrame();
@@ -96,19 +97,15 @@ public class TrackGUI {
     frame.getContentPane().setLayout(null);
 
     String fName = ("classes/images/trackPicture.jpg");
-    File imageFile = new File(fName);
-    System.out.println(imageFile.exists());
-
-    /*ImageIcon image = new ImageIcon(getClass().getResource(fName));
-    ImageIcon image = new ImageIcon(this.getClass().getResource(fName));
-    System.out.println(image);
+    ImageIcon image = new ImageIcon(fName);
 
     imageLabel = new JLabel("Track", image, JLabel.CENTER);
     imageLabel.setVerticalTextPosition(JLabel.CENTER);
     imageLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
     imageLabel.setBounds(10, 11, 400, 600);
     frame.getContentPane().add(imageLabel);
-    */
+    
+
     JComboBox dropdownLine = new JComboBox(lineStrings);
     dropdownLine.setBounds(570, 22, 86, 23);
     frame.getContentPane().add(dropdownLine);
@@ -395,9 +392,9 @@ public class TrackGUI {
       @Override
       public void actionPerformed(ActionEvent e){
         String l = (String) dropdownLine.getSelectedItem();
-
+        
         Set<String> segmentStrings = track.trackList.get(l).keySet();
-
+        
         dropdownBlock.removeAllItems();
 
         for (String item : segmentStrings){
@@ -448,6 +445,7 @@ public class TrackGUI {
         String block = (String) dropdownBlock.getSelectedItem();
         String section = (String) dropdownSegment.getSelectedItem();
         String line = (String) dropdownLine.getSelectedItem();
+
         Block thisBlock = track.getBlock(line,section,Integer.valueOf(block));
 
         lengthField.setText(String.valueOf(METERSMULT*track.trackList.get(line).get(section).get(Integer.valueOf(block)).getLen()));

@@ -768,7 +768,9 @@ public class TrainModeUI {
 				txtMass.setText(currTrain.getMass().intValue()+" lbs");
 				txtLength.setText(currTrain.getLength().toString());
 				txtCurrBlock.setText("\r\nBlock "+currTrain.getGPS().getCurrBlock().blockNum().toString()+"\r\n");
+
 				txtDistIntoBlock.setText("\r\n   "+String.format("%.2f", currTrain.getGPS().getDistIntoBlock())+" m\r\n");
+
 			
                 
                 // set labels of status

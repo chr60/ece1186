@@ -2,8 +2,10 @@ package TrackModelTest;
 
 import TrackModel.TrackModel;
 import TrackModel.Block;
-import java.util.TreeSet;
+import TrackModel.Station;
 import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.TreeSet;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
@@ -27,27 +29,28 @@ public class GreenlineTest{
   private Boolean verbose = true;
   
   @BeforeEach
-  void init(){
+  void init() {
     String[] fNames = {"src/test/resources/greenline.csv"};
+    String[] fNamesOverride = {"src/test/resources/greenlinelink.csv"};
     this.track = new TrackModel("Test");
-    this.track.readCSV(fNames);
+    this.track.readCSV(fNames, fNamesOverride);
   }
 
   @Test
   /**
-  * Test for proper station names reading
+  * Test for proper station names reading.
   */
   @DisplayName("Test the reading of the green line")
-  void testReading(){
+  void testReading() {
     assertEquals(this.track.viewStationMap().get("Green").keySet(), testNamesSet);
   }
 
   @Test
   /**
-  * Test proper block assignment for switch roots
+  * Test proper block assignment for switch roots.
   */
   @DisplayName("Test the switch roots of the green line")
-  void testSwitchRoot(){
+  void testSwitchRoot() {
     TreeSet<Integer> treeSetTest = new TreeSet<Integer>();
     for(String blk : this.track.viewRootMap().keySet()){
       treeSetTest.add(track.viewRootMap().get(blk).blockNum());
@@ -57,10 +60,30 @@ public class GreenlineTest{
 
   @Test
   /**
-  * Test proper leaf assignments for block on the red line
+  * Validate that you can get the yard block from the geren line.
+  */
+  @DisplayName("Validate the yard block exists")
+  void testYardExistence() {
+    assertTrue(this.track.viewStationMap().get("Green").containsKey("YARD"));
+  }
+
+  @Test
+  /**
+  * Validate yard blocks.
+  */
+  void testYardBlocks() {
+    ArrayList<Block> hostBlocks = this.track.viewStationMap().get("Green").get("YARD");
+    assertTrue(hostBlocks.size() == 2);
+    System.out.println(hostBlocks.get(0).blockNum());
+    System.out.println(hostBlocks.get(1).blockNum());
+  }
+
+  @Test
+  /**
+  * Test proper leaf assignments for block on the red line.
   */
   @DisplayName("Test the switch leafs on the green line")
-  void testSwitchleaf(){
+  void testSwitchleaf() {
     TreeSet<Integer> treeSetTest = new TreeSet<Integer>();
     for(String blk : track.viewRootMap().keySet()){
       assertTrue(this.track.viewLeafMap().get(blk).get(0).blockNum().compareTo(this.track.viewLeafMap().get(blk).get(1).blockNum())<0);
@@ -70,9 +93,9 @@ public class GreenlineTest{
   @Test
   /**
   *  Check the functionality of the external blockStation map for use in the train model and
-  *  train controller
+  *  train controller.
   */
-  void testBlockStationMap(){
+  void testBlockStationMap() {
     TreeSet<Integer> blockNums = new TreeSet<Integer>();
     for (Block b : track.viewBlockStationMap().keySet()){
       blockNums.add(b.blockNum());
@@ -80,12 +103,12 @@ public class GreenlineTest{
     assertEquals(testExpectedStationBlockNums, blockNums);
   }
 
-  //@Test
+  @Test
   /**
   * Validate no nulls after linking blocks.
   */
   @DisplayName("Test the presence of a nullptr in the track due to incorrect linking")
-  void testNullPtrExceptionDefault(){
+  void testNullPtrExceptionDefault() {
     for(String l : this.track.trackList.keySet()) {
       for(String s : this.track.trackList.get(l).keySet()) {
         for(Integer b : this.track.trackList.get(l).get(s).keySet()) {
@@ -96,35 +119,54 @@ public class GreenlineTest{
     }
   }
 
-    //  @Test
-     /**
-     * Validate track linkage with switch FROM yard
-     */
-     @DisplayName("Test the track linkage of blocks from yard")
-     void testFromYard(){
-       Block leafBlock = this.track.getBlock("Green", "J", 61);
-       Block yardBlock = this.track.getBlock("Green", "ZZ", 152);
-       Block rootBlock = this.track.getBlock("Green", "J", 62);
-
-
-       //Test J61 forward and backwards
-       assertTrue(rootBlock.setSwitchState(-1));
-       assertTrue(rootBlock.nextBlockBackward().equals(leafBlock));
-       assertTrue(leafBlock.nextBlockBackward().equals(this.track.getBlock("Green", "J", 60)));
-
-       rootBlock.setSwitchState(0);//change switch to yard
-
-       //Test ZZ152 Forward and backwards
-       assertFalse(rootBlock.setSwitchState(-1));
-       assertTrue(yardBlock.nextBlockForward().equals(rootBlock));
-       assertTrue(yardBlock.nextBlockBackward().equals(yardBlock));
-
-       //Test root block when switch is false
-       assertTrue(rootBlock.nextBlockBackward().equals(yardBlock));
-       assertTrue(rootBlock.nextBlockForward().equals(this.track.getBlock("Green", "K", 63)));
-
-       rootBlock.setSwitchState(0);//change switch to !yard
-       assertTrue(rootBlock.nextBlockBackward().equals(leafBlock));
-       assertTrue(rootBlock.nextBlockForward().equals(this.track.getBlock("Green", "K", 63)));
+  @Test
+  /**
+  * Validate nulls after linking and switching blcoks.
+  */
+  @DisplayName("Test the presence of nullptr in the track due to incorrect linking")
+  void testNullPtrExceptionSwitched(){
+    for(String s : this.track.viewRootMap().keySet()) {
+      Integer falseInt = new Integer(0);
+      this.track.viewRootMap().get(s).setSwitchState(falseInt);
+    }
+    for (String l : this.track.trackList.keySet()) {
+      for (String s : this.track.trackList.get(l).keySet()) {
+        for(Integer b : this.track.trackList.get(l).get(s).keySet()) {
+          assertNotEquals(this.track.trackList.get(l).get(s).get(b).nextBlockForward().blockNum(),null);
+          assertNotEquals(this.track.trackList.get(l).get(s).get(b).nextBlockBackward().blockNum(),null);
+        }
       }
+    }
+  }
+
+  //@Test
+  /**
+  * Validate track linkage with switch FROM yard.
+  */
+  @DisplayName("Test the track linkage of blocks from yard")
+  void testFromYard() {
+    Block leafBlock = this.track.getBlock("Green", "J", 61);
+    Block yardBlock = this.track.getBlock("Green", "ZZ", 152);
+    Block rootBlock = this.track.getBlock("Green", "J", 62);
+
+    //Test J61 forward and backwards
+    assertTrue(rootBlock.setSwitchState(-1));
+    assertTrue(rootBlock.nextBlockBackward().equals(leafBlock));
+    assertTrue(leafBlock.nextBlockBackward().equals(this.track.getBlock("Green", "J", 60)));
+
+    rootBlock.setSwitchState(0);//change switch to yard
+
+    //Test ZZ152 Forward and backwards
+    assertFalse(rootBlock.setSwitchState(-1));
+    assertTrue(yardBlock.nextBlockForward().equals(rootBlock));
+    assertTrue(yardBlock.nextBlockBackward().equals(yardBlock));
+
+    //Test root block when switch is false
+    assertTrue(rootBlock.nextBlockBackward().equals(yardBlock));
+    assertTrue(rootBlock.nextBlockForward().equals(this.track.getBlock("Green", "K", 63)));
+
+    rootBlock.setSwitchState(0);//change switch to !yard
+    assertTrue(rootBlock.nextBlockBackward().equals(leafBlock));
+    assertTrue(rootBlock.nextBlockForward().equals(this.track.getBlock("Green", "K", 63)));
+  }
 }

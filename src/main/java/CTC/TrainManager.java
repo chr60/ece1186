@@ -10,6 +10,7 @@ public class TrainManager {
   private Block yardBlock;
 	private ArrayList<DummyTrain> trainList;
 	private ArrayList<Block> occupancyList;
+	private ArrayList<Block> previousOccList;
 
 	public TrainManager(String lineName, TrackModel dummyTrack){
 		line = lineName;
@@ -32,7 +33,7 @@ public class TrainManager {
   }
 
   private void setYardBlock(){
-    
+
     ArrayList<Block> yards = dummyTrack.viewStationMap().get(line).get("YARD");
     int max = 0;
 
@@ -65,6 +66,15 @@ public class TrainManager {
 
 	public void setOccupancyListInt(ArrayList<Block> occupancyList){
 		this.occupancyList = occupancyList;
+	}
+
+
+	public ArrayList<Block> getPreviousOccList(){
+		return previousOccList;
+	}
+
+	public void setPreviousOccList(ArrayList<Block> prevList){
+		this.previousOccList = prevList;
 	}
 
   public DummyTrain getTrain(Integer id){

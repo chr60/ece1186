@@ -68,6 +68,10 @@
               <version>1.0.0-M3</version>
             </dependency>
         </dependencies>
+        <configuration>
+          <parallel>methods</parallel>
+          <threadCount>16</threadCount>
+        </configuration>
     </plugin>
     <plugin>
       <groupId>org.apache.maven.plugins</groupId>
