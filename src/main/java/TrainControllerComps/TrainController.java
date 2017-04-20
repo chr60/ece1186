@@ -1031,6 +1031,7 @@ public class TrainController extends javax.swing.JFrame {
         TCDispatchedTrainFrame dispatched = new TCDispatchedTrainFrame(this.trainHandler);
         dispatched.setVisible(true);
         dispatched.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
     }//GEN-LAST:event_openDispatchedTrains
 
     /**

@@ -1,5 +1,4 @@
 /** GUI associated with the track module.
-*  \author Michael
 */
 package TrackModel;
 

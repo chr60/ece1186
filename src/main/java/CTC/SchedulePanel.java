@@ -49,21 +49,25 @@ public class SchedulePanel extends JPanel {
       		scheduleModel.setRowCount(250);
       		schedTable.setModel(scheduleModel);
 
-          updateTable(lotsOfTrains, this.headers);
+          //updateTable(lotsOfTrains, this.headers);
 
 
 			}
-
+/*
       public void updateTable(ArrayList<TrainSchedule> lineSchedule, String [] headers){
+        if((lineSchedule.get(0) == null)){
 
-        for (int i = 0; i < lineSchedule.size(); i++) {
-          schedTable.setValueAt(lineSchedule.get(i).getTrainID(), i, 0);
-          for (int j = 1; j < headers.length; j++) {
-            schedTable.setValueAt(convertTime(lineSchedule.get(i).getTime(0,j - 1)), i, j);
+        }else{
+
+          for (int i = 0; i < lineSchedule.size(); i++) {
+            schedTable.setValueAt(lineSchedule.get(i).getTrainID(), i, 0);
+            for (int j = 1; j < headers.length; j++) {
+              schedTable.setValueAt(convertTime(lineSchedule.get(i).getTime(0,j - 1)), i, j);
+            }
           }
         }
       }
-
+*/
       public static String convertTime(long secs) {
 
         int secondsDisplay = (int) secs % 60;

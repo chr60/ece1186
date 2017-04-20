@@ -76,6 +76,7 @@ public class Train implements Serializable {
 		trainAntenna = new Antenna();
 		numCrew = 1;
 		velocity = 0.0;
+		rand = new Random();
 		trainAntenna.setCurrVelocity(velocity * 2.236);
 		oldVelocity =0.0;
 		length = lengthCar;
@@ -809,6 +810,12 @@ public class Train implements Serializable {
      */
 	public void setBrakeFailure(boolean brakeFail){
 		brakeFailure = brakeFail;
+		if (brakeFail)
+		{
+			statusSB = -1;
+		}else {
+			statusSB = 0;
+		}
 	}
 
 	/**

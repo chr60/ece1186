@@ -85,7 +85,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
      * from the beacon.
      */
     private String beaconDistanceMessage;
-
+    
     /**
      * The name of the station that the train is approaching. 
      */
