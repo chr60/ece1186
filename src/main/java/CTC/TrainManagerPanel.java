@@ -84,6 +84,8 @@ public class TrainManagerPanel extends JPanel {
       }
 
       public void updateTable(ArrayList<TrainManager> managers){
+        System.out.println("here in update table");
+
         String mode = getModeForPanel();
         String lineForTM = getTrainManagerLine();
         TrainManager trainManager = managers.get(0);
@@ -109,7 +111,7 @@ public class TrainManagerPanel extends JPanel {
             }
             managerTable.setValueAt(trainManager.getTrainList().get(j).getSuggSpeed()*(0.621371), j, 4);
             managerTable.setValueAt(trainManager.getTrainList().get(j).getActSpeed(), j, 5);
-            managerTable.setValueAt(trainManager.getTrainList().get(j).getAuthority(), j, 6);
+            managerTable.setValueAt(trainManager.getTrainList().get(j).getAuthority().blockNum(), j, 6);
           }else{
             managerTable.setValueAt("N/A", j, 3);
             managerTable.setValueAt("N/A", j, 5);
