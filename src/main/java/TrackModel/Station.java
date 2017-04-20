@@ -62,6 +62,7 @@ public class Station implements Comparable<Station>, Serializable {
   * Updates the status of track heaters at a station.
   */
   public void updateHeaters() {
+    this.updateTemp();
     if (this.stationTemp < 40) {
       this.trackHeatersOn = true;
     } else {
