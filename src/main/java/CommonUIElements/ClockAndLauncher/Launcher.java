@@ -173,7 +173,7 @@ public class Launcher extends javax.swing.JFrame {
 
         this.ctc = new CTCgui(this, this.trainManagers, generateTrack("CTC", fNames, linkNames), this.waysideList, globalTrack);
         this.mbo = new MovingBlockOverlay(generateTrack("MBO", fNames, linkNames), this.trainManagers, this.trainHandler, this.ctc);
-
+        ctc.setSchedules();
         this.ctc.setMBO(this.mbo);
 
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
@@ -227,6 +227,7 @@ public class Launcher extends javax.swing.JFrame {
         for (TrainController trainCont : this.trainHandler.openTrainControllers){
         
             trainCont.updateTrainController();
+
         }
         
         for(WS ws : waysideList){
@@ -261,11 +262,14 @@ public class Launcher extends javax.swing.JFrame {
         }
 
         // CTC - ask track for trainId
-        ctc.getTrainPanel().updateTrainIDinList(trainManagers.get(0), globalTrack);    
-        
+        ctc.getTrainPanel().updateTrainIDinList(trainManagers.get(0), globalTrack);        
     }
 
-        /**
+    public ArrayList<Schedule> getSchedules() {
+      return this.mbo.getSched();
+    }
+
+    /**
      * Returns the current time of the system in "HH:mm:ss a" format.
      * HH - the hours
      * mm - the minutes
@@ -326,9 +330,9 @@ public class Launcher extends javax.swing.JFrame {
         this.time.setText(time);
         //System.out.println("Date Updated");
     }
+    
     /**
      * Helper function to place a beacon with a message at a given block.
-
      * @param line the track line
      * @param section the track section
      * @param blockNum the block number
@@ -672,9 +676,9 @@ public class Launcher extends javax.swing.JFrame {
     private void openTrain(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTrain
         // TODO add your handling code here:
 
-		trainGUI.frmTrainModel.setVisible(true);
+    trainGUI.frmTrainModel.setVisible(true);
         trainGUI.frmTrainModel.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		trainGUI.setTrainArray(this.trainHandler.getTrains());
+    trainGUI.setTrainArray(this.trainHandler.getTrains());
 
     }//GEN-LAST:event_openTrain
 

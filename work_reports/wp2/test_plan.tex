@@ -1381,34 +1381,38 @@ Author: Zach Scheider
 %UNIT TEST
 \begin{table}[H]
 	\centering
-	\caption{Update Drivers}
+	\caption{Generate Train Schedule}
 	\begin{tabular}{|l|l|}
 		\hline
 		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
-		Integrity Level & 2 \\ \hline
-		Methods & Successfully read CSV, and add drivers. \\ \hline
-		Inputs &  CSV path \\ \hline
-		Outputs &  Driver Schedule\\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & Generate a schedule so that a train stops at each station. \\ \hline
+		Inputs &  Number of trains, info from excel file, block occupancy \\ \hline
+		Outputs &  Schedule for trains for each line \\ \hline
 		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
-		Risks and Assumptions & \parbox[t]{10cm}{Pulling info from valid CSV file.} \\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Able to receive information from excel at load time.} \\ \hline
 		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 14th}\\ \hline
+		Results & Success for red line\\ \hline
 	\end{tabular}
 \end{table}
 
 %UNIT TEST
 \begin{table}[H]
 	\centering
-	\caption{Generate Schedule}
+	\caption{Update Trains}
 	\begin{tabular}{|l|l|}
 		\hline
 		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
 		Integrity Level & 3 \\ \hline
-		Methods & Validate throughput, route a train, collision checking. \\ \hline
+		Methods & \parbox[t]{10cm} {Update trains authority and suggested speed at each clock tick \\in MBO and FB mode.} \\ \hline
 		Inputs &  Number of trains, info from excel file, block occupancy \\ \hline
-		Outputs &  Schedule for trains for each line \\ \hline
+		Outputs &  Updated train speed and authority \\ \hline
 		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
 		Risks and Assumptions & \parbox[t]{10cm}{Able to receive information from excel at load time.} \\ \hline
 		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Results & Success for red line\\ \hline
 	\end{tabular}
 \end{table}
 
@@ -1426,6 +1430,179 @@ Author: Zach Scheider
 		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
 		Risks and Assumptions & \parbox[t]{10cm}{Valid schedule is passed/correctly updated.} \\ \hline
 		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Results & Success for red line\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Create Trains' Route}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & \parbox[t]{10cm}{Plans a route for a train from one station to another in both MBO \\and FB mode.} \\ \hline
+		Inputs &  Number of trains, info from excel file, block occupancy \\ \hline
+		Outputs &  Path for a train to take with known authority and speeds. \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Able to receive information from excel at load time.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Results & Mostly a success, some information had to be hard coded in.\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Next occupied}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & Finds the next occupied block in a path. \\ \hline
+		Inputs &  Block occupancy list, starting position\\ \hline
+		Outputs &  First occupied block in the path or null if none are \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Receiving correct occupancy information from CTC.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 12th}\\ \hline
+		Results & Success\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Next station}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & Finds the next station block in a path. \\ \hline
+		Inputs &  Block list, starting position\\ \hline
+		Outputs &  First station block in the path or null if none are \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Receiving correct station information from dummyTrack.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 12th}\\ \hline
+		Results & Success\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Find authority}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & Finds the authority of a train. \\ \hline
+		Inputs &  Block list, train to find authority for\\ \hline
+		Outputs &  Authority of the given train \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Receiving correct station information from dummyTrack, and correct block occupancies from the CTC.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Results & Success\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Arrive on time}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & \parbox[t]{10cm}{Checks to see if a train will arrive at it's destination in time at \\the current speeds.} \\ \hline
+		Inputs &  \parbox[t]{10cm}{List of blocks, list of given speeds, current position of the train, \\scheduled time of arrival}\\ \hline
+		Outputs &  \parbox[t]{10cm}{Boolean value of whether the train will arrive at it's destination \\on time or not} \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Times to the station given in the word document are correct.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 13th}\\ \hline
+		Results & Success\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Calculate Block Speeds}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Calculates the necessary block speeds for a train to arrive on time.\\ \hline
+		Inputs &  List of blocks, current position of the train, scheduled time of arrival\\ \hline
+		Outputs &  Array of speeds so that the train will arrive in time. \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Times to the station given in the word document are correct.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 13th}\\ \hline
+		Results & Success\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Minimum Block Speed}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Calculates the minimum block speed limit in a list of blocks\\ \hline
+		Inputs &  List of blocks, starting index\\ \hline
+		Outputs &  Lowest block speed limit \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Track has the correct block speed limits on them.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 12th}\\ \hline
+		Results & Success\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Block Furthest Below Speed Limit}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Returns the position of the block furthest below it's speed limit\\ \hline
+		Inputs &  List of blocks, list of speeds, previous index\\ \hline
+		Outputs &  Index the block furthest below it's speed limit \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Track has the correct block speed limits on them.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 12th}\\ \hline
+		Results & Success\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Generate Driver Schedule}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Generate a schedule so that a driver occupies each train. \\ \hline
+		Inputs &  CSV path \\ \hline
+		Outputs &  Driver Schedule\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Pulling info from valid CSV file.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 16th}\\ \hline
+		Results & Schedule generated but drivers don't get breaks.\\ \hline
 	\end{tabular}
 \end{table}
 
@@ -1445,6 +1622,84 @@ Author: Zach Scheider
 		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
 		Risks and Assumptions & \parbox[t]{10cm}{A risk is that communication is interrupted when switching modes.} \\ \hline
 		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 19th}\\ \hline
+		Results & \parbox[t]{10cm}{Switches to MBO and Manual mode fine. Fixed Block has issues \\some of the time.}\\ \hline
+	\end{tabular}
+\end{table}
+
+%INTEGRATION TEST
+\begin{table}[H]
+	\centering
+	\caption{Send Information to Train}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & \parbox[t]{10cm}{Sends a speed and authority to a train when in MBO mode.}\\ \hline
+		Inputs &  Train, suggested speed, authority \\ \hline
+		Outputs &  No outputs \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{A risk is that communication is interrupted.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 18th}\\ \hline
+		Results & Success\\ \hline
+	\end{tabular}
+\end{table}
+
+%INTEGRATION TEST
+\begin{table}[H]
+	\centering
+	\caption{Receive Information from Train}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & \parbox[t]{10cm}{Receives actual speed and authority from a train when in MBO mode.}\\ \hline
+		Inputs &  Train \\ \hline
+		Outputs &  Actual speed and authority \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{A risk is that communication is interrupted.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 18th}\\ \hline
+		Results & Success\\ \hline
+	\end{tabular}
+\end{table}
+
+%INTEGRATION TEST
+\begin{table}[H]
+	\centering
+	\caption{Send Variance to CTC}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & \parbox[t]{10cm}{Sends actual speed and authority to a CTC when in MBO mode.}\\ \hline
+		Inputs &  Actual speed and authority \\ \hline
+		Outputs &  Actual speed and authority \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{A risk is that communication is interrupted.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 19th}\\ \hline
+		Results & Success\\ \hline
+	\end{tabular}
+\end{table}
+
+%INTEGRATION TEST
+\begin{table}[H]
+	\centering
+	\caption{Update TrainManager}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & \parbox[t]{10cm}{Updates information in TrainManager in MBO and FB mode.}\\ \hline
+		Inputs &  TrainManager \\ \hline
+		Outputs &  No outputs \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Receiving correct information.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 19th}\\ \hline
+		Results & Success\\ \hline
 	\end{tabular}
 \end{table}
 
@@ -1460,7 +1715,7 @@ Author: Zach Scheider
 		Inputs &  \parbox[t]{10cm}{Failure signal from Murphy. } \\ \hline
 		Outputs &  \parbox[t]{10cm}{No outputs. } \\ \hline
 		Expected Completion & April 15th \\ \hline
-		Risks and Assumptions & \parbox[t]{10cm}{Modules integrated together.}  \\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Modules integrated together.}  \\ \hline		
 		Responsibility & MBO\\ \hline
 	\end{tabular}
 \end{table}
@@ -1494,6 +1749,21 @@ Author: Zach Scheider
 		Date & \multicolumn{1}{c|}{Change} \\ \hline
 		March 14, 2017 & General Test Plan \\ \hline
 		March 15, 2017 & Add more tests \\ \hline
+		April 20, 2017 & Updated test results \\ \hline
 	\end{tabular}
 \end{table}
+
+\section{Signatures}
+
+\begin{table}[H]
+	\centering
+	\caption{Signatures}
+	\label{signatures}
+	\begin{tabular}{|l|l|}
+		\hline
+		Name, Module & \multicolumn{1}{c|}{Change} \\ \hline
+		Zach Scheider, MBO & \\ \hline
+	\end{tabular}
+\end{table}
+
 \end{document}          

@@ -628,6 +628,7 @@ public class TrackModel implements Serializable {
 
     this.linkBlocks();
     this.handleSwitches();
+    
     for(String s : fOverrideNames) {
       this.linkCSVOverride(s);
     }

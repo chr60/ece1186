@@ -74,6 +74,8 @@ public class MovingBlockOverlay{
 
     schedules.add(new Schedule(dummyTrack, managers.get(0), handler, hardCodeStops("Red"), "Red",
            redStationNames, redStationOrder, redStationTimes, redLineLoopTime, this.ctc));
+    //schedules.add(new Schedule(dummyTrack, managers.get(1), handler, hardCodeStops("Green"), "Green",
+      //     redStationNames, redStationOrder, redStationTimes, redLineLoopTime, this.ctc));
     //schedules.add(new Schedule(linekey, stationNames, stationTimes, lineLoopTime));
   }
 
@@ -99,6 +101,14 @@ public class MovingBlockOverlay{
     for (int i = 0; i < schedules.size(); i++) {
       schedules.get(i).updateTrains();
     }
+  }
+
+  public boolean schedExists() {
+    return (null != gui && gui.schedExists());
+  }
+
+  public void updateSchedules() {
+    gui.updateSchedules();
   }
 
   public ArrayList<Schedule> getSched() {
