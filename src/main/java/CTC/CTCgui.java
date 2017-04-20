@@ -114,10 +114,12 @@ public class CTCgui {
     tmPanel2 = new TrainManagerPanel(tmanager2, dummyTrack, managerList);
     tmPanel2.setBounds(0, 256, 390, 255);
 
+    // SCHEDULE PANEL - displays MBO SCHEDULE
+      schedPanel = new SchedulePanel(this.stationNamesPerLine.get(0), this.sched1);
+      schedPanel.setBounds(0, 0, 390, 255);
 
-
-    //schedPanel2 = new TrainManagerPanel(greenStations, this.sched2);
-    //schedPanel2.setBounds(0, 256, 390, 255);
+      //schedPanel2 = new TrainManagerPanel(this.stationNamesPerLine.get(1), this.sched2);
+      //schedPanel2.setBounds(0, 256, 390, 255);
 
 // EVERYTHING ELSE PANEL
 		JPanel miscPanel = new JPanel();
@@ -144,14 +146,14 @@ public class CTCgui {
           frame.getContentPane().remove(tmPanel);
           frame.getContentPane().remove(tmPanel2);
           frame.getContentPane().add(schedPanel);
-          //frame.getContentPane().add(schedPanel2);
+          frame.getContentPane().add(panel);
           frame.validate();
           frame.repaint();
         }
         else if(lastClickedButton == 0){  //pic
           frame.getContentPane().remove(imageLabel);
           frame.getContentPane().add(schedPanel);
-          //frame.getContentPane().add(schedPanel2);
+          frame.getContentPane().add(panel);
           frame.validate();
           frame.repaint();
         }
