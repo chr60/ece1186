@@ -60,7 +60,6 @@ public class CTCgui {
 		this.managerList = tm;
     this.tmanager = managerList.get(0);
     this.tmanager2 = managerList.get(1);
-    // only used to pick up train ID
     this.realTrack = globalTrack;
     lastClickedButton = 2;
     this.brokenList = new ArrayList<Block>();
