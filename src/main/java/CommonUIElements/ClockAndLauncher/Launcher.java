@@ -116,7 +116,7 @@ public class Launcher extends javax.swing.JFrame {
     /**
      * Constructor for creating a Launcher object. By default, the system begins operating
      * in normal speed, i.e., wall clock speed.
-     *
+     *@bug Multiple Waysides per line - CTC not ready to implement this & Jurisdiction not set
      */
     public Launcher() {
         initComponents();
@@ -145,15 +145,12 @@ public class Launcher extends javax.swing.JFrame {
           int lineSize = this.globalTrack.trackList.get(s).keySet().size();
 
           //Wayside Operations
-          ArrayList<Block> set1 = new ArrayList<Block>();
-          ArrayList<Block> set2 = new ArrayList<Block>();
+          // ArrayList<Block> set1 = new ArrayList<Block>();
+          // ArrayList<Block> set2 = new ArrayList<Block>();
 
           WS ws1 = new WS(s, this.globalTrack);
           ws1.setNum("1");
-          WS ws2 = new WS(s, this.globalTrack);
-          ws2.setNum("2");
           this.waysideList.add(ws1);
-          this.waysideList.add(ws2);
 
           //TrainManager Operations
 
