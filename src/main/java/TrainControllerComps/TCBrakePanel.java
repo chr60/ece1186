@@ -89,6 +89,10 @@ public class TCBrakePanel extends javax.swing.JPanel {
     
     public Double distanceToAuthority; 
     
+    private LinkedList<String> stationsVisited; 
+    
+    private String stationSide; 
+    
     /**
      * Constructor for creating a TCBrakePanel object without a selected train.
      * The selected train property must be passed in from the Train Controller class before being used.
@@ -103,6 +107,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
         this.distanceTraveledToAuthority = 0.0; 
         this.tickNum = 0;
         this.atStation = false;
+        this.stationsVisited = new LinkedList<String>(); 
     }
 
     /**
@@ -274,6 +279,8 @@ public class TCBrakePanel extends javax.swing.JPanel {
                     this.approachingStation = false;
                     this.atStation = true; // at the station
                     this.announcementLogbook.add("Arriving at " + this.selectedTrain.getGPS().getCurrBlock().getStationName());
+                    this.stationsVisited.add(this.selectedTrain.getGPS().getCurrBlock().getStationName());
+                    System.out.println("Station Visited: " + this.selectedTrain.getGPS().getCurrBlock().getStationName());
                     this.printLogs();
                     this.tickNum++;
                 }else if (this.tickNum == 1){ // open left doors
@@ -516,7 +523,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
 
     /**
      * Reads the message from the beacon from the current block the train is on,
-     * and returns the distance to the next station. Sets a flag when this condition is met to siganl, a
+     * and returns the distance to the next station. Sets a flag when this condition is met to signal a
      * train is approaching the station.
      *
      */
@@ -531,13 +538,19 @@ public class TCBrakePanel extends javax.swing.JPanel {
                 Beacon beacon = beacons.get(b);
 
                 if (this.selectedTrain.getGPS().getDistIntoBlock() >= beacon.getDistance()){ // at a beacon
-                    this.message = beacon.getBeaconMessage();
-                    this.approachingStation = true;
+                    System.out.println(beacon.getBeaconMessage().replaceAll("\"", ""));
+                    String[] split = beacon.getBeaconMessage().split(","); 
+                    String stationName = split[1].replace("_", " "); 
+                    
+                    if (this.stationsVisited.contains(stationName) == false){ // was not at station before
+                        this.message = split[0]; // get distance to station
+                        this.stationSide = split[2]; // get the station side
+                        this.approachingStation = true;                
+                    }
                 }
             }
         }
     }
-
 
     /**
      *

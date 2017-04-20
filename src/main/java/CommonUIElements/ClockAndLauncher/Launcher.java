@@ -45,9 +45,12 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import TrainModel.*;
+import java.awt.List;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.LinkedList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 
@@ -348,7 +351,7 @@ public class Launcher extends javax.swing.JFrame {
      */
     private void initBeacons(String[] fnames){
         String fLine; 
-        String[] splitLine;
+  //      String[] splitLine;
         
         try{
         
@@ -358,17 +361,37 @@ public class Launcher extends javax.swing.JFrame {
                 BufferedReader br = new BufferedReader(fr);
 
                 while((fLine = br.readLine()) != null){
-                    splitLine = fLine.split(" "); 
-                    String line = splitLine[0];
-                    String section = splitLine[1]; 
-                    Integer blockNum = Integer.parseInt(splitLine[2]); 
-                    Double distIntoBlock = Double.parseDouble(splitLine[3]); 
-                    String beaconMessage = splitLine[4]; 
-                    this.placeBeacon(line, section, blockNum, distIntoBlock, beaconMessage);
+                    this.parseBeaconFile(fLine);
+//                    splitLine = fLine.split(" "); 
+//                    String line = splitLine[0];
+//                    String section = splitLine[1]; 
+//                    Integer blockNum = Integer.parseInt(splitLine[2]); 
+//                    Double distIntoBlock = Double.parseDouble(splitLine[3]); 
+//                    String beaconMessage = splitLine[4]; 
+//                    this.placeBeacon(line, section, blockNum, distIntoBlock, beaconMessage);
                 }
             }
         }catch(Exception e){System.out.println(e.getMessage());}       
 
+    }
+    
+    private void parseBeaconFile(String fLine){
+    
+        LinkedList<String> list = new LinkedList<String>();
+        Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(fLine);
+        while (m.find()){
+        
+            list.add(m.group(1).replace("\"", ""));
+        }
+        
+        String line = list.get(0);
+        String section = list.get(1);
+        Integer blockNum = Integer.parseInt(list.get(2)); 
+        Double distIntoBlock = Double.parseDouble(list.get(3)); 
+        String beaconMessage = list.get(4);
+        this.placeBeacon(line, section, blockNum, distIntoBlock, beaconMessage);
+
+        System.out.println(list);
     }
 
     /**
