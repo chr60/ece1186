@@ -91,9 +91,6 @@ public class TrainManagerPanel extends JPanel {
         for(int i=0; i<managers.size(); i++){
           if(managers.get(i).getLine().equals(lineForTM)){
             trainManager = managers.get(i);
-          }else{
-              System.out.println("No Line Assignment for TrainManager");
-              trainManager = managers.get(0);
           }
         }
 

@@ -129,7 +129,9 @@ public class Launcher extends javax.swing.JFrame {
         String[] fNames = {redlinePath, greenlinePath};
 
         String redLink = "test-clases/redlinelink.csv";
+
         String greenLink = "test-classes/greenlinelink.csv";
+
         String[] linkNames = {redLink, greenLink};
 
         this.globalTrack = this.generateTrack("GlobalTrack", fNames, linkNames);
@@ -669,7 +671,15 @@ public class Launcher extends javax.swing.JFrame {
     */
     public TrackModel generateTrack(String module, String[] fNames, String[] fOverridenames){
         TrackModel newTrack = new TrackModel(module);
-        newTrack.readCSV(fNames, fOverridenames);
+
+        String[] redlinePath = {"test-classes/redline.csv"};
+        String[] greenlinePath = {"test-classes/greenline.csv"};
+
+        String[] redLink = {"test-clases/redlinelink.csv"};
+        String[] greenLink = {"test-classes/greelinelink.csv"};
+        newTrack.readCSV(redlinePath, redLink);
+        newTrack.readCSV(greenlinePath, greenlinePath);
+        //newTrack.readCSV(fNames, fOverridenames);
         return newTrack;
     }
 
