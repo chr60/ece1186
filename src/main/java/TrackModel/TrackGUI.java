@@ -271,12 +271,12 @@ public class TrackGUI {
 
     toggleNextBlockBackward = new JToggleButton("NBB");
     toggleNextBlockBackward.setFont(new Font("Tahoma", Font.PLAIN, 11));
-    toggleNextBlockBackward.setBounds(731, 330, 45, 23);
+    toggleNextBlockBackward.setBounds(731, 330, 65, 23);
     frame.getContentPane().add(toggleNextBlockBackward);
     
     toggleNextBlockForward = new JToggleButton("NBF");
     toggleNextBlockForward.setFont(new Font("Tahoma", Font.PLAIN, 11));
-    toggleNextBlockForward.setBounds(632, 330, 45, 23);
+    toggleNextBlockForward.setBounds(632, 330, 65, 23);
     frame.getContentPane().add(toggleNextBlockForward);
 
     toggleIsUnderground = new JToggleButton("N");
