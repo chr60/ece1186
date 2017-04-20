@@ -292,7 +292,7 @@ public class WaysideGUI {
     ArrayList<String> names = new ArrayList<String>();
     String [] namesArray = new String [Waysides.size()];
     for(WS ws : this.Waysides)
-      names.add(ws.line + " " + ws.number);
+      names.add(ws.line + ws.number);
     this.wsSelectDropdown = new JComboBox<String>();
     wsSelectDropdown.setModel(new DefaultComboBoxModel<String>(names.toArray(namesArray)));
     wsSelectDropdown.setBounds(30, 213, 89, 20);
@@ -342,12 +342,15 @@ public class WaysideGUI {
   public boolean tryPLCFile(String filename) throws IOException, ScriptException{
     File PLCFile= new File(filename);
     if(PLCFile.exists()){
+      String wsName = (String) wsSelectDropdown.getSelectedItem();
       for(WS ws : Waysides){
-        PLC plc = new PLC(track, PLCFile, ws.line);
-        plc.parse();
-        ws.setPlc(plc);
+        if(ws.name.equals(wsName)){
+          PLC plc = new PLC(track, PLCFile, ws.line);
+          plc.parse();
+          ws.setPlc(plc);
+          printNotification("PLC Data loaded to " + ws.name);
+        }
       }
-      printNotification("PLC Data loaded");
       return true;
     }
     else{
