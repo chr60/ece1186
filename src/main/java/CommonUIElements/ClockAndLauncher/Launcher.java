@@ -89,8 +89,6 @@ public class Launcher extends javax.swing.JFrame {
             AudioPlayer.player.start(audioIn);
         }catch(Exception e){
 
-
-
             System.out.println(e.getMessage());
         }
     }
@@ -116,10 +114,12 @@ public class Launcher extends javax.swing.JFrame {
     /**
      * Constructor for creating a Launcher object. By default, the system begins operating
      * in normal speed, i.e., wall clock speed.
-     *
+     *@bug Multiple Waysides per line - CTC not ready to implement this & Jurisdiction not set
      */
     public Launcher() {
         initComponents();
+
+        loadTrackFiles.doClick();
 
         //this.playSound();
         this.normalSpeedRadioButton.setSelected(true);
@@ -129,7 +129,7 @@ public class Launcher extends javax.swing.JFrame {
         //Generate globalTrack
         String redlinePath = "test-classes/redline.csv";
         String greenlinePath = "test-classes/greenline.csv";
-        String[] fNames = {redlinePath};
+        String[] fNames = {redlinePath, greenlinePath};
 
         String redLink = "test-clases/redlinelink.csv";
         String greenLink = "test-classes/greenlinelink.csv";
@@ -145,15 +145,12 @@ public class Launcher extends javax.swing.JFrame {
           int lineSize = this.globalTrack.trackList.get(s).keySet().size();
 
           //Wayside Operations
-          ArrayList<Block> set1 = new ArrayList<Block>();
-          ArrayList<Block> set2 = new ArrayList<Block>();
+          // ArrayList<Block> set1 = new ArrayList<Block>();
+          // ArrayList<Block> set2 = new ArrayList<Block>();
 
           WS ws1 = new WS(s, this.globalTrack);
           ws1.setNum("1");
-          WS ws2 = new WS(s, this.globalTrack);
-          ws2.setNum("2");
           this.waysideList.add(ws1);
-          this.waysideList.add(ws2);
 
           //TrainManager Operations
 
@@ -183,7 +180,7 @@ public class Launcher extends javax.swing.JFrame {
                 update();
             }
         });
-
+        this.globalTrack.update();
         if(waysideGui != null){ waysideGui.update(); }
 
         mbo.updateTrains();
@@ -262,11 +259,14 @@ public class Launcher extends javax.swing.JFrame {
             trainGUI.updateGUI(trainGUI.getCurrT());
         }
 
+
         if(ctc != null){
           // CTC - ask track for trainId
           ctc.getTrainPanel().updateTrainIDinList(trainManagers.get(0), globalTrack);
           trainManagers.get(0).setPreviousOccList(trainManagers.get(0).getOccupancyList());
         }
+
+
     }
 
     public ArrayList<Schedule> getSchedules() {
@@ -645,8 +645,13 @@ public class Launcher extends javax.swing.JFrame {
      * @param evt the sender of the event, i.e., the "Train Controller" button.
      */
     private void openTrainController(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTrainController
-
+        
+        /**
+         * @bug If this button is clicked before a train is dispatched, then closed, 
+         * and then a train is dispatched, a NullPointerException will be thrown.
+         */
         TrainController tc = new TrainController();
+        tc.setTrainHandler(this.trainHandler);
         tc.setVisible(true);
         tc.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
@@ -723,9 +728,9 @@ public class Launcher extends javax.swing.JFrame {
     }//GEN-LAST:event_openTrainControllerTestConsole
 
     private void loadTrackFilescreateLogger(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadTrackFilescreateLogger
-
-        LoadFileWindow fileWindow = new LoadFileWindow(this.globalTrack);
-
+        
+        LoadFileWindow fileWindow = new LoadFileWindow(this.globalTrack); 
+        
         fileWindow.setVisible(true);
         fileWindow.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_loadTrackFilescreateLogger

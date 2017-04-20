@@ -96,7 +96,7 @@ public class WaysideGUI {
    * Constructor for GUI of Wayside Controller(s).
    * @param  TrackModel    track - The Global (Real) Track
    * @param  ArrayList<WS> Waysides - Arraylist of all Wayside units
-   * @bug Dropdowns not Automatically selecting value or displaying 'nice' fields in JLabels below
+   * @bug Dropdowns not automatically displaying default value or displaying 'nice' fields in JLabels below
    */
   public WaysideGUI(TrackModel track, ArrayList<WS> Waysides) {
       /*for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -173,10 +173,14 @@ public class WaysideGUI {
       public void actionPerformed(ActionEvent e) {
         if(activeBlock.hasSwitch()){
           Boolean currState = activeBlock.viewSwitchState();
-          if(currState==true)
+          if(currState==true){
+            activeBlock.setManualOverride(!activeBlock.getManualOverride());
             activeBlock.getAssociatedSwitch().setSwitchState(false);
-          else
+          }
+          else{
+            activeBlock.setManualOverride(!activeBlock.getManualOverride());
             activeBlock.getAssociatedSwitch().setSwitchState(true);
+          }
         }
       }
     });

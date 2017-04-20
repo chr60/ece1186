@@ -501,7 +501,11 @@ public class Train implements Serializable {
      */
 	public int passengersUnboarding(){
 		//random number selected between number of people on train.
-		return rand.nextInt(numPassengers);
+		if (numPassengers != 0){
+			return rand.nextInt(numPassengers);
+		}
+		return 0;
+		
 	}
 
 
@@ -600,7 +604,7 @@ public class Train implements Serializable {
         /**
          * Puts a message on the current block signaling that the train needs to be repaired.
          *
-         * @param needsMaint
+         * @param needsMaint indicates if the train needs maintenance. 
          */
         public void requestFix(boolean needsMaint){
 

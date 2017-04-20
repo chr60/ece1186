@@ -67,6 +67,11 @@ public class PLC {
     ArrayList<Block> previousOccupancy = this.track.getOccupiedBlocks(this.line);
   }
 
+  /**
+   * Decides whether or not to Stop a train.
+   * @throws ScriptException [description]
+   * @bug Need to move all replacements of "block", "section", "prev" to a single method for clarity for all runPLC functions
+   */
   public void runStopPLC() throws ScriptException{
     ScriptEngineManager manager = new ScriptEngineManager();
     ScriptEngine logicengine1 = manager.getEngineByName("js");
@@ -179,16 +184,17 @@ public class PLC {
         Object result2 = logicengine2.eval(sb.toString());
         Object result3 = logicengine3.eval(sb.toString());
 
-        if(this.track.viewRootMap().get(s).getOccupied()==false){	//cannot changea switch if switch block is occupied
-          //'VOTING'
-          if ((Boolean.TRUE.equals(result1) && Boolean.TRUE.equals(result2)) ||
-              (Boolean.TRUE.equals(result1) && Boolean.TRUE.equals(result3)) ||
-              (Boolean.TRUE.equals(result2) && Boolean.TRUE.equals(result3)) )
-                this.track.viewRootMap().get(s).getAssociatedSwitch().setSwitchState(true);
-          else if((Boolean.FALSE.equals(result1) && Boolean.FALSE.equals(result2)) ||
-                  (Boolean.FALSE.equals(result1) && Boolean.FALSE.equals(result3)) ||
-                  (Boolean.FALSE.equals(result2) && Boolean.FALSE.equals(result3)) )
-                this.track.viewRootMap().get(s).getAssociatedSwitch().setSwitchState(false);
+        if ((Boolean.TRUE.equals(result1) && Boolean.TRUE.equals(result2)) ||
+        (Boolean.TRUE.equals(result1) && Boolean.TRUE.equals(result3)) ||
+        (Boolean.TRUE.equals(result2) && Boolean.TRUE.equals(result3)) ){
+          if(this.track.viewRootMap().get(s).getManualOverride()==false)
+            this.track.viewRootMap().get(s).getAssociatedSwitch().setSwitchState(true);
+        }
+        else if((Boolean.FALSE.equals(result1) && Boolean.FALSE.equals(result2)) ||
+        (Boolean.FALSE.equals(result1) && Boolean.FALSE.equals(result3)) ||
+        (Boolean.FALSE.equals(result2) && Boolean.FALSE.equals(result3)) ){
+          if(this.track.viewRootMap().get(s).getManualOverride()==false)
+            this.track.viewRootMap().get(s).getAssociatedSwitch().setSwitchState(false);
         }
       }
     }

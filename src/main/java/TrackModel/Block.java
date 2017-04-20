@@ -40,6 +40,7 @@ public class Block implements Comparable<Block>, java.io.Serializable {
   Block authority;
   Integer trainId;
   Boolean blockClosed;
+  Boolean manualOverride;
 
   /**
   * Constructor for the block class.
@@ -75,8 +76,16 @@ public class Block implements Comparable<Block>, java.io.Serializable {
     this.authority = null;
     this.trainId = new Integer(-1);
     this.blockClosed = false;
+    this.manualOverride = false;
   }
 
+  public Boolean getManualOverride(){
+    return this.manualOverride;
+  }
+
+  public void setManualOverride(Boolean set){
+    this.manualOverride = set;
+  }
   /**
    * Returns the switch name (if it exists) on a block.
    * @return the name of the switch on a block
