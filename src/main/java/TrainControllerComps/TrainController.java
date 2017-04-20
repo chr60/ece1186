@@ -197,51 +197,15 @@ public class TrainController extends javax.swing.JFrame {
         //this.playNormal();
     }
     
-//    /**
-//     * Changes the rate at which the TrainController clock is called to 1/10 s.  
-//     */
-//    public void playFast(){
-//        
-//        if (this.clock != null){this.clock.stop();}
-//          
-//        this.clock = new Timer(100, new ActionListener(){
-//
-//            public void actionPerformed(ActionEvent e) {
-//                    
-//                if (selectedTrain != null && selectedTrain.powerConstantsSet() ){ refreshComponents(); }
-//
-//                if (testWindowOpen){ testConsole.refreshUI(); }
-//                
-//                if (detailedTrainWindowOpen == true){ trainUI.updateGUI(selectedTrain); }
-//
-//            }
-//        }); 
-//        
-//        this.clock.start();  
-//    }
-//    
-//    /**
-//     * Changes the rate at which the TrainController clock is called to 1 s.
-//     */
-//    public void playNormal(){
-//   
-//        if (this.clock != null){this.clock.stop();}
-//        
-//        this.clock = new Timer(1000, new ActionListener(){
-//
-//            public void actionPerformed(ActionEvent e) {
-//                                    
-//                if (selectedTrain != null && selectedTrain.powerConstantsSet() ){ refreshComponents(); }
-//
-//                if (testWindowOpen){ testConsole.refreshUI(); }
-//                
-//                if (detailedTrainWindowOpen == true){ trainUI.updateGUI(selectedTrain); }
-//                
-//            }
-//        });         
-//        this.clock.start();  
-//    }
-    
+    public void updateTrainController(){
+     
+        if (selectedTrain != null && selectedTrain.powerConstantsSet() ){ refreshComponents(); }
+
+        if (testWindowOpen){ testConsole.refreshUI(); }
+                
+        if (detailedTrainWindowOpen == true){ trainUI.updateGUI(selectedTrain); }
+    }
+        
     /**
      * Sets the test console to use with this Train Controller. 
      * 
@@ -1069,7 +1033,7 @@ public class TrainController extends javax.swing.JFrame {
      * @param evt the sender of the action, i.e., the "Clear" button.
      */
     private void clearAnnouncements(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearAnnouncements
-        this.errorLogs.setText("");
+        this.annoucementLogs.setText("");
     }//GEN-LAST:event_clearAnnouncements
 
     /**

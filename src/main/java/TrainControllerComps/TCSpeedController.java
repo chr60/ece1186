@@ -66,16 +66,14 @@ public class TCSpeedController extends javax.swing.JPanel {
      */
     private TCBrakePanel brakePanel;
 
-
     /**
      * Used to calculate the power command.
      */
     private double error;
 
+    
     private double vitalPwrCmdOne;
-
     private double vitalPwrCmdTwo;
-
     private double vitalPwrCmdThree;
 
 
@@ -150,6 +148,11 @@ public class TCSpeedController extends javax.swing.JPanel {
         return this.selectedTrain;
     }
 
+    /**
+     * Returns the speed slider.
+     * 
+     * @return the jslider object
+     */
     public JSlider getSpeedSlider(){
 
         return this.speedSlider;
@@ -239,18 +242,18 @@ public class TCSpeedController extends javax.swing.JPanel {
                 this.speedSlider.setValue(speedLimit.intValue());
 
                 // ignore the speed 
-                this.ignoreSpeedChecks();
+                this.ignoreSpeedChecksAutoMode();
 
             }else{ // !!= 0.0 THIS MAY BE A PROBLEM LATER
 
                 this.speedSlider.setValue(speedLimit.intValue());
 
                 // ignore the speed 
-                this.ignoreSpeedChecks();
+                this.ignoreSpeedChecksAutoMode();
             }
             this.powerControl();
         }else if (blockSuggestedSpeed == null){
-            this.ignoreSpeedChecks();
+            this.ignoreSpeedChecksAutoMode();
 
             this.speedSlider.setValue(speedLimit.intValue());
             this.powerControl();
@@ -272,9 +275,9 @@ public class TCSpeedController extends javax.swing.JPanel {
             if (this.setSpeed > blockSpeedLimit){ this.setSpeed = blockSpeedLimit; }
 
             // ignore the speed 
-            this.ignoreSpeedChecks();
+            this.ignoreSpeedChecksManualMode();
                  
-        }else if (blockSpeedLimit == null){ this.ignoreSpeedChecks(); }
+        }else if (blockSpeedLimit == null){ this.ignoreSpeedChecksManualMode(); }
                                  
         this.powerControl();
     }
@@ -283,7 +286,17 @@ public class TCSpeedController extends javax.swing.JPanel {
      * Checks to see if the train has to ignore the suggested speed placed on the track. 
      * This is mainly done when needing to come to stop the train to a halt using the brakes. 
      */
-    private void ignoreSpeedChecks(){
+    private void ignoreSpeedChecksManualMode(){
+           
+        if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == true){ this.setSpeed = 0.0; }
+        else if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == false){ this.setSpeed = 0.0; }    
+    }
+    
+    /**
+     * Checks to see if the train has to ignore the suggested speed placed on the track. 
+     * This is mainly done when needing to come to stop the train to a halt using the brakes. 
+     */
+    private void ignoreSpeedChecksAutoMode(){
            
         Double speedLimit = .621371*this.selectedTrain.getGPS().getCurrBlock().getSpeedLimit(); 
         if (speedLimit != null){
@@ -485,6 +498,12 @@ public class TCSpeedController extends javax.swing.JPanel {
         this.logBook.clear();
     }
 
+    
+    /**
+     * @bug Sometimes the train's speeds oscillates between 0.0 and 0.8 when stopped. 
+     * This happens sometimes when stopping at a station, or at an authority. 
+     */
+    
     /**
      * Regulates the train's speed using Power Law.
      * If the train's speed is greater than the set speed,

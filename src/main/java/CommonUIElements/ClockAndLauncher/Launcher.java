@@ -226,7 +226,7 @@ public class Launcher extends javax.swing.JFrame {
 
         for (TrainController trainCont : this.trainHandler.openTrainControllers){
         
-            trainCont.refreshComponents();
+            trainCont.updateTrainController();
         }
         
         for(WS ws : waysideList){
