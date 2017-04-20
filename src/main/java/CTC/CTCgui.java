@@ -43,6 +43,14 @@ public class CTCgui {
   JButton btnNoFailure;
   int blockNum;
   boolean failureDetected;
+  JLabel imageLabel;
+  ArrayList<Schedule> mboSchedules;
+  SchedulePanel schedPanel;
+  SchedulePanel schedPanel2;
+  ArrayList<TrainSchedule> sched1;
+  ArrayList<TrainSchedule> sched2;
+  String [] redStations = {"Train ID", "YARD", "SHADYSIDE", "HERRON AVE", "SWISSVILLE",
+      "PENN STATION", "STEEL PLAZA", "FIRST AVE", "STATION SQUARE", "SOUTH HILLS JUNCTION"};
 
 	/**
 	 * Create the application.
@@ -55,10 +63,11 @@ public class CTCgui {
     this.tmanager = managerList.get(0);
     this.tmanager2 = managerList.get(1);
     this.realTrack = globalTrack;
-    lastClickedButton = 2;
+    lastClickedButton = 0;
     this.brokenList = new ArrayList<Block>();
     this.setDropdownFailure = new ArrayList<String>();
-    failureDetected = false;
+    this.failureDetected = false;
+
 
 		grayline = BorderFactory.createLineBorder(Color.gray);
 
@@ -84,14 +93,16 @@ public class CTCgui {
 		frame.getContentPane().add(trainPanel);
 		trainPanel.setLayout(null);
 
-// image wont work in JAR currently
-    // IMAGE
-		//ImageIcon image = new ImageIcon(getClass().getResource("trackPicture.jpg"));
-		JPanel panel = new JPanel();
-    panel.setLayout(new BorderLayout());
-		panel.setBounds(0, 0, 390, 255);
+// IMAGE
+    String fName = ("classes/images/trackPicture.jpg");
+    ImageIcon image = new ImageIcon(fName);
+    imageLabel = new JLabel("Track", image, JLabel.CENTER);
+    imageLabel.setVerticalTextPosition(JLabel.CENTER);
+    imageLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+    imageLabel.setBounds(0,0,390,511);
+    frame.getContentPane().add(imageLabel);
 
-		//panel.add(new JLabel(image), BorderLayout.CENTER);
+
     JPanel panel2 = new JPanel();
     panel2.setLayout(new BorderLayout());
     panel2.setBounds(0, 256, 390, 255);
@@ -99,11 +110,14 @@ public class CTCgui {
 // Train manager panel
     tmPanel = new TrainManagerPanel(tmanager, dummyTrack, managerList);
     tmPanel.setBounds(0, 0, 390, 255);
-    frame.getContentPane().add(tmPanel);
 
     tmPanel2 = new TrainManagerPanel(tmanager2, dummyTrack, managerList);
     tmPanel2.setBounds(0, 256, 390, 255);
-    frame.getContentPane().add(tmPanel2);
+
+
+
+    //schedPanel2 = new TrainManagerPanel(greenStations, this.sched2);
+    //schedPanel2.setBounds(0, 256, 390, 255);
 
 // EVERYTHING ELSE PANEL
 		JPanel miscPanel = new JPanel();
@@ -111,11 +125,11 @@ public class CTCgui {
 		miscPanel.setBorder(grayline);
 		miscPanel.setBounds(402, 326, 367, 85);
 		frame.getContentPane().add(miscPanel);
-/*
+
     JButton buttonShowPicture = new JButton("Show Track Pic");
     buttonShowPicture.setBounds(20, 11, 118, 23);
     miscPanel.add(buttonShowPicture);
-*/
+
     JButton buttonShowSchedule = new JButton("Show Schedule");
     buttonShowSchedule.setBounds(20, 36, 118, 23);
     miscPanel.add(buttonShowSchedule);
@@ -129,37 +143,40 @@ public class CTCgui {
         if(lastClickedButton == 2){ //train
           frame.getContentPane().remove(tmPanel);
           frame.getContentPane().remove(tmPanel2);
-          //frame.getContentPane().add(schedulePanel);
-          //frame.getContentPane().add();
+          frame.getContentPane().add(schedPanel);
+          //frame.getContentPane().add(schedPanel2);
           frame.validate();
           frame.repaint();
         }
-/*        else if(lastClickedButton == 0){  //pic
-          frame.getContentPane().remove(panel);
-          //frame.getContentPane().add(schedulePanel);
+        else if(lastClickedButton == 0){  //pic
+          frame.getContentPane().remove(imageLabel);
+          frame.getContentPane().add(schedPanel);
+          //frame.getContentPane().add(schedPanel2);
           frame.validate();
           frame.repaint();
         }
-*/
+
         else{
           // do nothing - schedule already set
         }
         lastClickedButton = 1;
       }
     });
+
     buttonAllTrains.addActionListener(new ActionListener(){
       public void actionPerformed(ActionEvent e){
-/*
+
         if(lastClickedButton == 0){ //pic
-          frame.getContentPane().remove(panel);
+          frame.getContentPane().remove(imageLabel);
           frame.getContentPane().add(tmPanel);
+          frame.getContentPane().add(tmPanel2);
           frame.validate();
           frame.repaint();
         }else
-*/
+
         if(lastClickedButton == 1){ //sched
-          //frame.getContentPane().remove(schedulePanel);
-          //frame.getContentPane().remove();
+          frame.getContentPane().remove(schedPanel);
+          //frame.getContentPane().remove(schedPanel2);
           frame.getContentPane().add(tmPanel);
           frame.getContentPane().add(tmPanel2);
           frame.validate();
@@ -170,17 +187,19 @@ public class CTCgui {
         lastClickedButton = 2;
       }
     });
-/*
+
     buttonShowPicture.addActionListener(new ActionListener(){
       public void actionPerformed(ActionEvent e){
         if(lastClickedButton == 2){  //train
           frame.getContentPane().remove(tmPanel);
-          frame.getContentPane().add(panel);
+          frame.getContentPane().remove(tmPanel2);
+          frame.getContentPane().add(imageLabel);
           frame.validate();
           frame.repaint();
         }else if(lastClickedButton == 1){ //sched
-          frame.getContentPane().remove(panel);
-          //frame.getContentPane().add(schedulePanel);
+          frame.getContentPane().remove(imageLabel);
+          frame.getContentPane().add(schedPanel);
+          //frame.getContentPane().add(schedPanel2);
           frame.validate();
           frame.repaint();
         }else{
@@ -189,7 +208,7 @@ public class CTCgui {
         lastClickedButton = 0;
       }
     });
-*/
+
 
 // setting modes for CTC/MBO
     JLabel lblModes = new JLabel("MODES");
@@ -309,14 +328,22 @@ public class CTCgui {
 
 	}
 
-// have mode live here to update in MBO
-	public void setMode(){
+public void setSchedules(){
+  if(launcher.getSchedules() == null){
+    this.mboSchedules = new ArrayList<Schedule>();
+    this.sched1 = new ArrayList<TrainSchedule>();
+    //this.sched2 = new ArrayList<TrainSchedule>();
+  }else{
+    this.mboSchedules = launcher.getSchedules();
+    this.sched1 = this.mboSchedules.get(0).getSched();
+    //this.sched2 = this.mboSchedules.get(1).getSched();
+  }
 
-	}
+  // SCHEDULE PANEL - displays MBO SCHEDULE
+    schedPanel = new SchedulePanel(redStations, this.sched1);
+    schedPanel.setBounds(0, 0, 390, 255);
+}
 
-	public String getMode(){
-		return null;
-	}
 
   public void setMBO(MovingBlockOverlay mbo){
     this.MBO = mbo;

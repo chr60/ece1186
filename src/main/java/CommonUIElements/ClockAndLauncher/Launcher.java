@@ -45,9 +45,12 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import TrainModel.*;
+import java.awt.List;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.LinkedList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 
@@ -107,8 +110,8 @@ public class Launcher extends javax.swing.JFrame {
     private CTCgui ctc;
     //MBO
     private MovingBlockOverlay mbo;
-
-    private String[] beaconFileNames = {"test-classes/beaconPositions.txt"};
+        
+    private String[] beaconFileNames = {"test-classes/beaconPositions.txt"}; 
 
     /**
      * Constructor for creating a Launcher object. By default, the system begins operating
@@ -122,24 +125,23 @@ public class Launcher extends javax.swing.JFrame {
         this.normalSpeedRadioButton.setSelected(true);
         // for now, we start in normal mode
         this.systemSpeed = 1000;
-
+        
         //Generate globalTrack
         String redlinePath = "test-classes/redline.csv";
         String greenlinePath = "test-classes/greenline.csv";
         String[] fNames = {redlinePath};
 
         String redLink = "test-clases/redlinelink.csv";
-
         String greenLink = "test-classes/greenlinelink.csv";
 
-        String[] linkNames = {redLink};
+        String[] linkNames = {redLink, greenLink};
 
         this.globalTrack = this.generateTrack("GlobalTrack", fNames, linkNames);
         this.trackGUI = new TrackGUI(globalTrack);
-
+        
         //Cycle through number of lines and generate 2 WS's and a Train Manager for each line
         for(String s : this.globalTrack.trackList.keySet()) {
-
+          System.out.println("S: " + s);
           int lineSize = this.globalTrack.trackList.get(s).keySet().size();
 
           //Wayside Operations
@@ -171,38 +173,16 @@ public class Launcher extends javax.swing.JFrame {
 
         this.ctc = new CTCgui(this, this.trainManagers, generateTrack("CTC", fNames, linkNames), this.waysideList, globalTrack);
         this.mbo = new MovingBlockOverlay(generateTrack("MBO", fNames, linkNames), this.trainManagers, this.trainHandler, this.ctc);
-
+        ctc.setSchedules();
         this.ctc.setMBO(this.mbo);
 
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
             Random rand = new Random();
             public void actionPerformed(ActionEvent e) {
-
+                
                 update();
             }
         });
-
-
-       this.initBeacons(this.beaconFileNames);
-       this.systemClock.start();
-    }
-
-
-    public void update(){
-        updateDateAndTime();
-
-        for (TrainController trainCont : this.trainHandler.openTrainControllers){
-
-            trainCont.refreshComponents();
-        }
-
-        for(WS ws : waysideList){
-            try{
-                ws.update();
-            }catch(ScriptException ex){
-                System.out.println("Script Exception");
-            }
-        }
 
         if(waysideGui != null){ waysideGui.update(); }
 
@@ -231,18 +211,65 @@ public class Launcher extends javax.swing.JFrame {
           // CTC - ask track for trainId
           ctc.getTrainPanel().updateTrainIDinList(trainManagers.get(0), globalTrack);
         }
-
+        
+       this.initBeacons(this.beaconFileNames);
+       this.systemClock.start();
     }
 
     public void setMode(String mode) {
       this.mbo.setMode(mode);
+    }
+    
+    
+    public void update(){
+        updateDateAndTime();
+
+        for (TrainController trainCont : this.trainHandler.openTrainControllers){
+        
+            trainCont.refreshComponents();
+        }
+        
+        for(WS ws : waysideList){
+            try{
+                ws.update();
+            }catch(ScriptException ex){
+                System.out.println("Script Exception");
+            }
+        }
+        
+        if(waysideGui != null){ waysideGui.update(); }
+
+        mbo.updateTrains();
+
+        // what should be called every tick
+
+        if(ctc != null){
+            // CTC - asking WS for any broken blocks
+            ctc.getTrackFailuresWS();
+            // CTC - update track panel on gui w/ info from WS
+            ctc.getTrackPanel().updateTrackInfo(ctc.getTrackPanel().getBlockWS());
+            // CTC - calls wayside to get updated list of track occupancy
+            ctc.getTrainPanel().updateTrainPositionsToManager(trainManagers);
+            // CTC - prints active list of trains from train manager to GUI
+            //ctc.getTrainManagerPanel().updateTable(trainManagers);
+        }
+
+        trainHandler.pollYard();
+
+        if(trainHandler.getNumTrains() != 0){
+            trainGUI.updateGUI(trainGUI.getCurrT());
+        }
+
+        // CTC - ask track for trainId
+        ctc.getTrainPanel().updateTrainIDinList(trainManagers.get(0), globalTrack);    
+        
     }
 
     public ArrayList<Schedule> getSchedules() {
       return this.mbo.getSched();
     }
 
-        /**
+    /**
      * Returns the current time of the system in "HH:mm:ss a" format.
      * HH - the hours
      * mm - the minutes
@@ -303,9 +330,8 @@ public class Launcher extends javax.swing.JFrame {
         this.time.setText(time);
         //System.out.println("Date Updated");
     }
-        /**
+    /**
      * Helper function to place a beacon with a message at a given block.
-     *
      * @param line the track line
      * @param section the track section
      * @param blockNum the block number
@@ -315,39 +341,50 @@ public class Launcher extends javax.swing.JFrame {
     private void placeBeacon(String line, String section, Integer blockNum, Double disIntoBlock, String beaconMessage){
 
         Block block = this.globalTrack.getBlock(line, section, blockNum); // get the block from track
-
-        block.addBeacon(beaconMessage, disIntoBlock); // add beacon
+        
+        block.addBeacon(beaconMessage, disIntoBlock); // add beacon 
     }
-
+    
     /**
-     * Helper function to read a file and place a beacon corresponding to each station.
-     * Each line in the file should be in the following format:
+     * Helper function to read a file and place a beacon corresponding to each station. 
+     * Each line in the file should be in the following format: 
      * line section blockNum distIntoBlock message (ex: Red C 7 0 250.0)
-     *
-     * @param fnames an array of filenames to read from.
+     * 
+     * @param fnames an array of filenames to read from. 
      */
     private void initBeacons(String[] fnames){
-        String fLine;
-        String[] splitLine;
-
+        String fLine; 
+        
         try{
-
+        
             for (int i = 0; i < fnames.length; i++){
-
-                FileReader fr = new FileReader(fnames[i]);
+            
+                FileReader fr = new FileReader(fnames[i]); 
                 BufferedReader br = new BufferedReader(fr);
 
                 while((fLine = br.readLine()) != null){
-                    splitLine = fLine.split(" ");
-                    String line = splitLine[0];
-                    String section = splitLine[1];
-                    Integer blockNum = Integer.parseInt(splitLine[2]);
-                    Double distIntoBlock = Double.parseDouble(splitLine[3]);
-                    String beaconMessage = splitLine[4];
-                    this.placeBeacon(line, section, blockNum, distIntoBlock, beaconMessage);
+                    this.parseBeaconFile(fLine);
                 }
             }
-        }catch(Exception e){System.out.println(e.getMessage());}
+        }catch(Exception e){System.out.println(e.getMessage());}       
+
+    }
+    
+    private void parseBeaconFile(String fLine){
+    
+        LinkedList<String> list = new LinkedList<String>();
+        Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(fLine);
+        while (m.find()){
+        
+            list.add(m.group(1).replace("\"", ""));
+        }
+        
+        String line = list.get(0);
+        String section = list.get(1);
+        Integer blockNum = Integer.parseInt(list.get(2)); 
+        Double distIntoBlock = Double.parseDouble(list.get(3)); 
+        String beaconMessage = list.get(4);
+        this.placeBeacon(line, section, blockNum, distIntoBlock, beaconMessage);
     }
 
     /**
@@ -551,12 +588,13 @@ public class Launcher extends javax.swing.JFrame {
         //this.trainHandler.setClockSpeed(this.systemSpeed);
 
         if (this.systemClock != null){this.systemClock.stop();}
-
+        
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
             Random rand = new Random();
             public void actionPerformed(ActionEvent e) {
 
-                update();
+                update(); 
+
             }
         });
         this.systemClock.start();
@@ -570,7 +608,6 @@ public class Launcher extends javax.swing.JFrame {
     private void playFastSpeed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playFastSpeed
 
         if (this.systemClock != null){this.systemClock.stop();}
-
         // set the system speed
         this.systemSpeed = 100;
         this.trainHandler.setClockSpeed(this.systemSpeed);
@@ -579,10 +616,10 @@ public class Launcher extends javax.swing.JFrame {
             Random rand = new Random();
             public void actionPerformed(ActionEvent e) {
 
-                update();
+                update(); 
             }
         });
-
+        
         this.systemClock.start();
     }//GEN-LAST:event_playFastSpeed
 
@@ -638,9 +675,9 @@ public class Launcher extends javax.swing.JFrame {
     private void openTrain(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTrain
         // TODO add your handling code here:
 
-		trainGUI.frmTrainModel.setVisible(true);
+    trainGUI.frmTrainModel.setVisible(true);
         trainGUI.frmTrainModel.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		trainGUI.setTrainArray(this.trainHandler.getTrains());
+    trainGUI.setTrainArray(this.trainHandler.getTrains());
 
     }//GEN-LAST:event_openTrain
 
@@ -680,7 +717,7 @@ public class Launcher extends javax.swing.JFrame {
         String[] greenlinePath = {"test-classes/greenline.csv"};
 
         String[] redLink = {"test-clases/redlinelink.csv"};
-        String[] greenLink = {"test-classes/greenlinelink.csv"};
+        String[] greenLink = {"test-classes/greelinelink.csv"};
         newTrack.readCSV(redlinePath, redLink);
         newTrack.readCSV(greenlinePath, greenlinePath);
         //newTrack.readCSV(fNames, fOverridenames);
