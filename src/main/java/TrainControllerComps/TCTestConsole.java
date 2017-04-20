@@ -66,7 +66,7 @@ public class TCTestConsole extends javax.swing.JFrame {
                 for (TrainController tc : trainHandler.openTrainControllers)
                     tc.refreshComponents();
             }
-        });
+    });
     
     /**
      * Constructor for creating a TCTestConsole object with no Train Controller and no 
@@ -112,7 +112,7 @@ public class TCTestConsole extends javax.swing.JFrame {
         this.track.getBlock("Red", "C", new Integer(8)).addBeacon(str, 10.0);
         
         this.track.getBlock("Red", "C", new Integer(9)).setSwitchState(0);
-        endingBlock = this.track.getBlock("Red", "F", new Integer(16));          
+        endingBlock = this.track.getBlock("Red", "H", new Integer(25));          
     }
     
     /**
@@ -1117,7 +1117,6 @@ public class TCTestConsole extends javax.swing.JFrame {
      * 
      * @param evt 
      */
-
     private void failBrakes(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_failBrakes
       
         this.selectedTrain.setBrakeFailure(true);
@@ -1150,10 +1149,17 @@ public class TCTestConsole extends javax.swing.JFrame {
      */
     private void playNormalSpeed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playNormalSpeed
         
-        for (TrainController tc : this.trainHandler.openTrainControllers){
+        if (this.systemClock != null){this.systemClock.stop(); }
         
-            //tc.playNormal();
-        }  
+        this.systemClock = new Timer(1000, new ActionListener(){
+            
+            public void actionPerformed(ActionEvent e) {
+
+                for (TrainController tc : trainHandler.openTrainControllers)
+                    tc.refreshComponents();
+            }
+        }); 
+        this.systemClock.start();
     }//GEN-LAST:event_playNormalSpeed
 
     /**
@@ -1163,10 +1169,17 @@ public class TCTestConsole extends javax.swing.JFrame {
      */
     private void playFastSpeed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playFastSpeed
         
-        for (TrainController tc : this.trainHandler.openTrainControllers){
+        if (this.systemClock != null){this.systemClock.stop(); }
         
-            //tc.playFast();
-        }        
+        this.systemClock = new Timer(100, new ActionListener(){
+            
+            public void actionPerformed(ActionEvent e) {
+
+                for (TrainController tc : trainHandler.openTrainControllers)
+                    tc.refreshComponents();
+            }
+        });    
+        this.systemClock.start();
     }//GEN-LAST:event_playFastSpeed
 
     /**

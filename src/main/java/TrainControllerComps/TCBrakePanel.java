@@ -206,17 +206,12 @@ public class TCBrakePanel extends javax.swing.JPanel {
     private LinkedList<Block> blocksAhead(int numBlocksAhead){
     
         Block currBlock = this.selectedTrain.getGPS().getCurrBlock(); 
-        
-        
         Block nextBlock = currBlock; 
-        
         LinkedList<Block> nextBlocks = new LinkedList<Block>(); 
         
         for (int i = 0; i < numBlocksAhead; i++){
         
-        
             nextBlock = nextBlock.nextBlockForward(); 
-            System.out.println(nextBlock.blockNum()); 
             nextBlocks.add(nextBlock);
         }
         
@@ -233,16 +228,12 @@ public class TCBrakePanel extends javax.swing.JPanel {
     private LinkedList<Block> blocksBehind(int numBlocksBehind){
     
         Block currBlock = this.selectedTrain.getGPS().getCurrBlock(); 
-        
-        Block nextBlock = currBlock; 
-        
+        Block nextBlock = currBlock;     
         LinkedList<Block> nextBlocks = new LinkedList<Block>(); 
         
         for (int i = 0; i < numBlocksBehind; i++){
-        
-        
+       
             nextBlock = nextBlock.nextBlockBackward(); 
-            System.out.println(nextBlock.blockNum()); 
             nextBlocks.add(nextBlock);
         }
         
@@ -255,9 +246,6 @@ public class TCBrakePanel extends javax.swing.JPanel {
      * @return returns true if the train needs to come to a complete stop, false if it doesn't.
      */
     private boolean shouldStopTrainChecks(){
-
-        this.blocksAhead(3);
-        this.blocksBehind(3);
         
         // stop if
         if (this.failureDetected()){
@@ -315,12 +303,8 @@ public class TCBrakePanel extends javax.swing.JPanel {
             return true;
         }
         
-        if (this.selectedTrain.getSuggestedSpeed() == -1.0){ // pick up emergency signal
-            this.bringTrainToHalt(false); // stop immediately w/ e-brake
-            return true;
-        }
-
-        //if (this.trainAhead()){ this.bringTrainToHalt(true); } // there's a train ahead
+        // stop train is -1 is seen on the track
+        if (this.selectedTrain.getSuggestedSpeed().equals(new Double(-1.0))){ this.bringTrainToHalt(false); return true; }
 
         if (this.willExceedAuthority()){ return true; }
 
@@ -353,34 +337,116 @@ public class TCBrakePanel extends javax.swing.JPanel {
     }
 
     /**
-     * Checks if the train is going to exceed authority, and stops the train if it will using the service brake.
+     * Uses the authority of the train to determine if in Fixed Block Mode or 
+     * Moving Block Overlay. 
+     * 
+     * @return returns true if in FBM, false if in MBO
      */
-    private boolean willExceedAuthority(){
-
-        
+    private boolean inFBM(){
+    
+        if (this.selectedTrain.getAuthority().getDistIntoBlock() == null){ return true; }
+        else{ return false; }
+    }
+    
+    private boolean willExceedAuthorityMBO(){
+    
         if (this.willExceedAuthority == false){
         
             if (this.blocksAhead(3).contains(this.selectedTrain.getAuthority().getCurrBlock())){
                 
                 this.willExceedAuthority = true; 
-                this.distanceToAuthority = 0.0; 
+                this.distanceToAuthority = this.selectedTrain.getGPS().getCurrBlock().getLen(); 
                 
                 for (Block b : this.blocksAhead(3)){
-                    this.distanceToAuthority = this.distanceToAuthority + b.getLen();
-                }
                 
-            }   
+                    if (b.compareTo(this.selectedTrain.getAuthority().getCurrBlock()) == 0){
+                        this.distanceToAuthority = this.distanceToAuthority + this.selectedTrain.getAuthority().getDistIntoBlock(); 
+                        break; 
+                    }else{
+                        this.distanceToAuthority = this.distanceToAuthority + b.getLen();
+                    }
+                }
+            
+            }
+        
         }
+        
         
         if (this.willExceedAuthority == false){
         
             if (this.blocksBehind(3).contains(this.selectedTrain.getAuthority().getCurrBlock())){
 
                 this.willExceedAuthority = true; 
-                this.distanceToAuthority = 0.0; 
+                this.distanceToAuthority = this.selectedTrain.getGPS().getCurrBlock().getLen();
+
+                for (Block b : this.blocksBehind(3)){
+                
+                    if (b.compareTo(this.selectedTrain.getAuthority().getCurrBlock()) == 0){
+                        this.distanceToAuthority = this.distanceToAuthority + this.selectedTrain.getAuthority().getDistIntoBlock(); 
+                        break; 
+                    }else{
+                        this.distanceToAuthority = this.distanceToAuthority + b.getLen();
+                    }
+                }
+            }
+        }
+        
+        if (this.willExceedAuthority == true){ // start calculating distance until we hit authority
+        
+            Double dist = this.distanceTraveled(1.0); // dist in 1 second
+            this.distanceTraveledToAuthority = this.distanceTraveledToAuthority + dist; // total distanced traveled
+            
+            // stop train if about to exceed. 
+            if (this.distanceTraveledToAuthority + this.selectedTrain.getSafeBrakingDistSB() >= this.distanceToAuthority){
+            
+                this.bringTrainToHalt(false);
+                return true; 
+            }        
+        }
+        
+        return false; 
+    }
+    
+    /**
+     * Checks if the train is going to exceed authority, and stops the train if it will using the service brake.
+     */
+    private boolean willExceedAuthorityFBM(){
+
+        // check block ahead
+        if (this.willExceedAuthority == false){
+        
+            if (this.blocksAhead(3).contains(this.selectedTrain.getAuthority().getCurrBlock())){
+                
+                this.willExceedAuthority = true; 
+                this.distanceToAuthority = this.selectedTrain.getGPS().getCurrBlock().getLen(); 
+                
+                for (Block b : this.blocksAhead(3)){
+                    this.distanceToAuthority = this.distanceToAuthority + b.getLen();
+                    
+                    // only count distance from train to authority
+                    if (b.compareTo(this.selectedTrain.getAuthority().getCurrBlock()) == 0){
+                    
+                        break;
+                    }
+                }    
+            }   
+        }
+        // check blocks behind
+        if (this.willExceedAuthority == false){
+        
+            if (this.blocksBehind(3).contains(this.selectedTrain.getAuthority().getCurrBlock())){
+
+                this.willExceedAuthority = true; 
+                this.distanceToAuthority = this.selectedTrain.getGPS().getCurrBlock().getLen();
 
                 for (Block b : this.blocksBehind(3)){
                     this.distanceToAuthority = this.distanceToAuthority + b.getLen();
+                    
+                    // only count distance from train to authority
+                    if (b.compareTo(this.selectedTrain.getAuthority().getCurrBlock()) == 0){
+                    
+                        break;
+                    }
                 }
             }
         }
@@ -398,17 +464,20 @@ public class TCBrakePanel extends javax.swing.JPanel {
             
         }
         
-//        // were on our authority...
-//        if ( this.selectedTrain.getGPS().getCurrBlock().compareTo(this.selectedTrain.getAuthority().getCurrBlock()) == 0){
-//
-//            double footprintSB = this.selectedTrain.getGPS().getDistIntoBlock() + this.selectedTrain.getSafeBrakingDistSB();
-//
-//            // check if about to leave the block
-//            if (footprintSB >= this.selectedTrain.getGPS().getCurrBlock().getLen()){ this.bringTrainToHalt(false); return true; }
-//        }
         return false;
     }
 
+    /**
+     * Checks if the train will exceed authority depending on the mode of the system. 
+     * 
+     * @return returns true if the train is about to exceed authority.
+     */
+    private boolean willExceedAuthority(){
+    
+        if(this.inFBM()){ return this.willExceedAuthorityFBM(); } 
+        else{ return this.willExceedAuthorityMBO(); }
+    }
+    
     /**
      * Checks to see if a train is at it's given authority.
      *
