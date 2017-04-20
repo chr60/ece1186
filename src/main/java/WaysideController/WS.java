@@ -28,6 +28,7 @@ public class WS {
 	//WS ELEMENTS
 	public String line;
   public String number;
+  public String name;
 	private PLC plc;
 	private TrackModel track;
 	private WaysideGUI waysideGui;
@@ -219,5 +220,6 @@ public class WS {
    */
   public void setNum(String num){
     this.number = num;
+    this.name = new String(this.line+this.number);
   }
 }

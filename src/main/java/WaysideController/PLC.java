@@ -75,47 +75,50 @@ public class PLC {
 
     StringBuilder sb;
     int loc, loc2;
-    for(Integer bNum : this.stopMap.keySet()){
-      if(this.track.getBlock(line, bNum)!=null){
-        sb = new StringBuilder(stopMap.get(bNum));
+    for(String sec : this.track.viewTrackList().get(line).keySet()){
+      for(Integer b: this.track.viewTrackList().get(line).get(sec).keySet()){
+        if(this.stopMap.get(b)!= null){
+          sb = new StringBuilder(stopMap.get(b));
 
-        //replaces ALL "block_letter_number" with block occupancy
-        while((loc = sb.indexOf("block")) != -1){
-          loc2 = loc;
-          while(sb.charAt(loc2) != ')')
-          ++loc2;
-          String [] toReplace = sb.substring(loc, loc2).split("_");
-          String section = toReplace[1];
-          Integer blockNum = Integer.parseInt(toReplace[2]);
-          sb.replace(loc, loc2, this.track.getBlock(this.line, section, blockNum).getOccupied().toString());
+          //replaces ALL "block_letter_number" with block occupancy
+          while((loc = sb.indexOf("block")) != -1){
+            loc2 = loc;
+            while(sb.charAt(loc2) != ')')
+            ++loc2;
+            String [] toReplace = sb.substring(loc, loc2).split("_");
+            String section = toReplace[1];
+            Integer blockNum = Integer.parseInt(toReplace[2]);
+            sb.replace(loc, loc2, this.track.getBlock(this.line, section, blockNum).getOccupied().toString());
+          }
+
+          //replaces ALL "section_Letter" with section occupancy
+          while((loc = sb.indexOf("section")) != -1){
+            loc2 = loc;
+            while(sb.charAt(loc2) != ')')
+            ++loc2;
+            String [] toReplace = sb.substring(loc, loc2).split("_");
+            String section = toReplace[1];
+            sb.replace(loc, loc2, this.track.sectionOccupancy(line, section).toString());
+          }
+
+
+          //evaluate TMR logic
+          Object result1 = logicengine1.eval(sb.toString());
+          Object result2 = logicengine2.eval(sb.toString());
+          Object result3 = logicengine3.eval(sb.toString());
+          System.out.println(Boolean.TRUE.equals(result1));
+          System.out.println(Boolean.TRUE.equals(result2));
+          System.out.println(Boolean.TRUE.equals(result3));
+          //'VOTING' - if any blocks in safety 'buffer' are occupied, set speed to -1 to stop train.
+          if ((Boolean.TRUE.equals(result1) && Boolean.TRUE.equals(result2)) ||
+          (Boolean.TRUE.equals(result1) && Boolean.TRUE.equals(result3)) ||
+          (Boolean.TRUE.equals(result2) && Boolean.TRUE.equals(result3)) )
+          this.track.getBlock(line,sec,b).setSuggestedSpeed(new Double(-1));
         }
-
-        //replaces ALL "section_Letter" with section occupancy
-        while((loc = sb.indexOf("section")) != -1){
-          loc2 = loc;
-          while(sb.charAt(loc2) != ')')
-          ++loc2;
-          String [] toReplace = sb.substring(loc, loc2).split("_");
-          String section = toReplace[1];
-          sb.replace(loc, loc2, this.track.sectionOccupancy(line, section).toString());
-        }
-
-
-        //evaluate TMR logic
-        Object result1 = logicengine1.eval(sb.toString());
-        Object result2 = logicengine2.eval(sb.toString());
-        Object result3 = logicengine3.eval(sb.toString());
-        System.out.println(Boolean.TRUE.equals(result1));
-        System.out.println(Boolean.TRUE.equals(result2));
-        System.out.println(Boolean.TRUE.equals(result3));
-        //'VOTING' - if any blocks in safety 'buffer' are occupied, set speed to -1 to stop train.
-        if ((Boolean.TRUE.equals(result1) && Boolean.TRUE.equals(result2)) ||
-        (Boolean.TRUE.equals(result1) && Boolean.TRUE.equals(result3)) ||
-        (Boolean.TRUE.equals(result2) && Boolean.TRUE.equals(result3)) )
-          this.track.getBlock(line, bNum).setSuggestedSpeed(new Double(-1));
       }
     }
   }
+
 
   /**
    * Runs scripted PLC code for setting switch state
@@ -272,7 +275,7 @@ public class PLC {
           else
             sb.replace(loc, loc2, "false");
         }
-        
+
         while((loc = sb.indexOf("block")) != -1){
           loc2 = loc;
           while(sb.charAt(loc2) != ')')
