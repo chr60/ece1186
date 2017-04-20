@@ -573,10 +573,11 @@
     <Component class="javax.swing.JComboBox" name="annoucementDropDown">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="3">
+          <StringArray count="4">
             <StringItem index="0" value="No Announcement"/>
-            <StringItem index="1" value="Announce Station"/>
-            <StringItem index="2" value="Announce Next Station"/>
+            <StringItem index="1" value="Announce Arrival"/>
+            <StringItem index="2" value="Announce Departure"/>
+            <StringItem index="3" value="Announce Next Station"/>
           </StringArray>
         </Property>
       </Properties>

@@ -576,7 +576,7 @@ public class TrainController extends javax.swing.JFrame {
 
         announcementsLabel.setText("Announcements:");
 
-        annoucementDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "No Announcement", "Announce Station", "Announce Next Station" }));
+        annoucementDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "No Announcement", "Announce Arrival", "Announce Departure", "Announce Next Station" }));
         annoucementDropDown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 annoucementDropDownActionPerformed(evt);
@@ -974,7 +974,7 @@ public class TrainController extends javax.swing.JFrame {
         
         this.selectedTrain = train; 
     }
-
+    
     /**
      * Opens up the Engineering Panel so the engineer can change the Kp and Ki
      * manually.
@@ -1059,9 +1059,20 @@ public class TrainController extends javax.swing.JFrame {
     private void makeAnnouncement(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makeAnnouncement
 
         String dropDownText = (String) this.annoucementDropDown.getSelectedItem();
-        this.annoucementLogs.setEditable(true);
-        this.annoucementLogs.setText(this.errorLogs.getText() + dropDownText);
-        this.annoucementLogs.setEditable(false);
+        
+        if (dropDownText.equals("Announce Arrival") && this.brakePanel.approachingStationName != null){
+        
+            dropDownText = "Arriving at " + this.brakePanel.approachingStationName; 
+            this.annoucementLogs.setText(this.annoucementLogs.getText() + dropDownText + "\n");
+        }else if(dropDownText.equals("Announce Next Station") && this.brakePanel.approachingStationName != null){
+        
+            dropDownText = dropDownText + " " + this.brakePanel.approachingStationName; 
+            this.annoucementLogs.setText(this.annoucementLogs.getText() + dropDownText + "\n");
+        }else if (dropDownText.equals("Announce Departure") && this.brakePanel.approachingStationName != null){
+        
+            dropDownText = "Departing from " + this.brakePanel.approachingStationName; 
+            this.annoucementLogs.setText(this.annoucementLogs.getText() + dropDownText + "\n");
+        }
     }//GEN-LAST:event_makeAnnouncement
 
     /**

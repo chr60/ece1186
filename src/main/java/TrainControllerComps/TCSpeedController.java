@@ -246,18 +246,19 @@ public class TCSpeedController extends javax.swing.JPanel {
                 this.speedSlider.setValue(speedLimit.intValue());
 
                 // ignore the speed 
-                this.ignoreSpeedChecksAutoMode();
+                this.ignoreSpeedChecksAutoMode(blockSuggestedSpeed);
 
             }else{ // !!= 0.0 THIS MAY BE A PROBLEM LATER
 
                 this.speedSlider.setValue(speedLimit.intValue());
 
-                // ignore the speed 
-                this.ignoreSpeedChecksAutoMode();
+                this.ignoreSpeedChecksAutoMode(blockSuggestedSpeed);
             }
             this.powerControl();
+            
         }else if (blockSuggestedSpeed == null){
-            this.ignoreSpeedChecksAutoMode();
+            
+            this.ignoreSpeedChecksAutoMode(null);
 
             this.speedSlider.setValue(speedLimit.intValue());
             this.powerControl();
@@ -300,14 +301,14 @@ public class TCSpeedController extends javax.swing.JPanel {
      * Checks to see if the train has to ignore the suggested speed placed on the track. 
      * This is mainly done when needing to come to stop the train to a halt using the brakes. 
      */
-    private void ignoreSpeedChecksAutoMode(){
-           
-        Double speedLimit = .621371*this.selectedTrain.getGPS().getCurrBlock().getSpeedLimit(); 
-        if (speedLimit != null){
-            if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == true){ this.setSetSpeed(0.0); }
-            else if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == false){ this.setSetSpeed(0.0); }
-            else{ this.setSpeed = (.621371*this.selectedTrain.getGPS().getCurrBlock().getSpeedLimit()); }   
-        }
+    private void ignoreSpeedChecksAutoMode(Double suggSpeed){
+                   
+        if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == true){ this.setSetSpeed(0.0); }
+        else if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == false){ this.setSetSpeed(0.0); }
+        else{ 
+            if (suggSpeed != null){this.setSetSpeed(suggSpeed); }
+            
+        } // continue picking up suggested speed
     }
 
     /**
