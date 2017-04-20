@@ -120,7 +120,7 @@ public class Launcher extends javax.swing.JFrame {
      */
     public Launcher() {
         initComponents();
-
+        
         //this.playSound();
         this.normalSpeedRadioButton.setSelected(true);
         // for now, we start in normal mode
@@ -226,7 +226,8 @@ public class Launcher extends javax.swing.JFrame {
 
         for (TrainController trainCont : this.trainHandler.openTrainControllers){
         
-            trainCont.refreshComponents();
+            trainCont.updateTrainController();
+
         }
         
         for(WS ws : waysideList){
@@ -261,8 +262,7 @@ public class Launcher extends javax.swing.JFrame {
         }
 
         // CTC - ask track for trainId
-        ctc.getTrainPanel().updateTrainIDinList(trainManagers.get(0), globalTrack);    
-        
+        ctc.getTrainPanel().updateTrainIDinList(trainManagers.get(0), globalTrack);        
     }
 
     public ArrayList<Schedule> getSchedules() {
@@ -330,6 +330,7 @@ public class Launcher extends javax.swing.JFrame {
         this.time.setText(time);
         //System.out.println("Date Updated");
     }
+    
     /**
      * Helper function to place a beacon with a message at a given block.
      * @param line the track line
@@ -412,6 +413,7 @@ public class Launcher extends javax.swing.JFrame {
         time = new javax.swing.JLabel();
         date = new javax.swing.JLabel();
         launchMBOandScheduleButton1 = new javax.swing.JButton();
+        loadTrackFiles = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -493,6 +495,13 @@ public class Launcher extends javax.swing.JFrame {
             }
         });
 
+        loadTrackFiles.setText("Load Track Files");
+        loadTrackFiles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadTrackFilescreateLogger(evt);
+            }
+        });
+
         jMenu1.setText("Testing");
 
         jMenuItem1.setText("TrainController Test Console");
@@ -536,7 +545,8 @@ public class Launcher extends javax.swing.JFrame {
                     .addComponent(launchTrainButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(launchTrackControllerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(launchTrackButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(launchMBOandScheduleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(launchMBOandScheduleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(loadTrackFiles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -557,7 +567,7 @@ public class Launcher extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(dateLabel)
                     .addComponent(date))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(launchCTCButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(launchTrackButton)
@@ -571,6 +581,8 @@ public class Launcher extends javax.swing.JFrame {
                 .addComponent(launchMBOandScheduleButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(launchMBOandScheduleButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(loadTrackFiles)
                 .addContainerGap())
         );
 
@@ -706,6 +718,14 @@ public class Launcher extends javax.swing.JFrame {
         tcTestConsole.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_openTrainControllerTestConsole
 
+    private void loadTrackFilescreateLogger(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadTrackFilescreateLogger
+        
+        LoadFileWindow fileWindow = new LoadFileWindow(this.globalTrack); 
+        
+        fileWindow.setVisible(true);
+        fileWindow.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_loadTrackFilescreateLogger
+
 
     /**
     * Returns a generated track given overrides, module and the names of the track.
@@ -776,6 +796,7 @@ public class Launcher extends javax.swing.JFrame {
     private javax.swing.JButton launchTrackControllerButton;
     private javax.swing.JButton launchTrainButton;
     private javax.swing.JButton launchTrainControllerButton;
+    private javax.swing.JButton loadTrackFiles;
     private javax.swing.JRadioButton normalSpeedRadioButton;
     private javax.swing.ButtonGroup speedButtonGroup;
     private javax.swing.JLabel time;
