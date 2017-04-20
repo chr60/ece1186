@@ -519,15 +519,15 @@ public class TrackModel implements Serializable {
       }
     }
 
-    public void linkCSVOverride(String[] fNames) {
+    public void linkCSVOverride(String s) {
           String line = "";
           String delimiter = ",";
-          for (String s : fNames){
-            System.out.println("Reading "+s);
-            Boolean initLine = true;
+          System.out.println("Reading "+s);
+          Boolean initLine = true;
             try (BufferedReader reader = new BufferedReader(new FileReader(s))) {
               while ((line = reader.readLine()) != null) {
-                if (initLine.equals(false)) {            
+                if (initLine.equals(false)) {       
+
                   String[] str = line.split(delimiter, -1);
                   String sourceLine = str[0];
                   String targetLine = str[0];
@@ -536,14 +536,14 @@ public class TrackModel implements Serializable {
                   String forwardTargetSection = str[3];
                   String backwardTargetSection = str[5];
 
-                  if (forwardTargetSection != "" && str[4] != "") {
+                  if (!(forwardTargetSection.equals("")) && !(str[4].equals(""))) {
                     int forwardTargetBlockNum = Integer.parseInt(str[4]);
                     Block sourceBlock = this.getBlock(sourceLine, sourceSection, sourceBlockNum);
                     Block nextBlockForwardOverride = this.trackList.get(targetLine).get(forwardTargetSection).get(forwardTargetBlockNum);
                     sourceBlock.setNextBlockForward(nextBlockForwardOverride);
                   }
                   
-                  if (!backwardTargetSection.equals("") && !str[6].equals("")) {
+                  if (!(backwardTargetSection.equals("")) && !(str[6].equals(""))) {
                     int backwardTargetBlockNum = Integer.parseInt(str[6]);
                     System.out.println(backwardTargetBlockNum);
                     Block sourceBlock = this.getBlock(sourceLine, sourceSection, sourceBlockNum);
@@ -558,7 +558,6 @@ public class TrackModel implements Serializable {
             } catch(IOException|ArrayIndexOutOfBoundsException|NumberFormatException e) {
               System.out.println("Finished reading override!");
             }
-          }
         }
 
   /**
@@ -629,7 +628,9 @@ public class TrackModel implements Serializable {
 
     this.linkBlocks();
     this.handleSwitches();
-    this.linkCSVOverride(fOverrideNames);
+    for(String s : fOverrideNames) {
+      this.linkCSVOverride(s);
+    }
     this.buildStationHostMap();
     this.buildBlockStationMap();
     this.buildLightsMap();

@@ -1,6 +1,6 @@
 Line,Section,Block Number,Next Block Forward Section, Next Block Forward Number, Next Block Backward Section, Next Block Backward Number
-Green,A,1,A,2,A,1
-Green,A,2,A,2,A,1
+Green,A,1,A,1,A,1
+Green,A,2,A,3,A,2
 Green,A,3,,,,
 Green,B,4,,,,
 Green,B,5,,,,

@@ -126,20 +126,25 @@ public class Launcher extends javax.swing.JFrame {
         //Generate globalTrack
         String redlinePath = "test-classes/redline.csv";
         String greenlinePath = "test-classes/greenline.csv";
-        String[] fNames = {redlinePath};
+        String[] fNames = {redlinePath, greenlinePath};
 
         String redLink = "test-clases/redlinelink.csv";
+<<<<<<< HEAD
+        String greenLink = "test-classes/greenlinelink.csv";
+        String[] linkNames = {redLink};
+=======
 
         String greenLink = "test-classes/greenlinelink.csv";
 
-        String[] linkNames = {redLink};
+        String[] linkNames = {redLink, greenLink};
+>>>>>>> master
 
         this.globalTrack = this.generateTrack("GlobalTrack", fNames, linkNames);
         this.trackGUI = new TrackGUI(globalTrack);
 
         //Cycle through number of lines and generate 2 WS's and a Train Manager for each line
         for(String s : this.globalTrack.trackList.keySet()) {
-
+          System.out.println("S: " + s);
           int lineSize = this.globalTrack.trackList.get(s).keySet().size();
 
           //Wayside Operations
@@ -207,6 +212,10 @@ public class Launcher extends javax.swing.JFrame {
         if(waysideGui != null){ waysideGui.update(); }
 
         mbo.updateTrains();
+
+        if (mbo.schedExists()) {
+          mbo.updateSchedules();
+        }
 
         // what should be called every tick
 
@@ -680,7 +689,7 @@ public class Launcher extends javax.swing.JFrame {
         String[] greenlinePath = {"test-classes/greenline.csv"};
 
         String[] redLink = {"test-clases/redlinelink.csv"};
-        String[] greenLink = {"test-classes/greenlinelink.csv"};
+        String[] greenLink = {"test-classes/greelinelink.csv"};
         newTrack.readCSV(redlinePath, redLink);
         newTrack.readCSV(greenlinePath, greenlinePath);
         //newTrack.readCSV(fNames, fOverridenames);
