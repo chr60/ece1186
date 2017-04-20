@@ -43,6 +43,12 @@ public class CTCgui {
   JButton btnNoFailure;
   int blockNum;
   boolean failureDetected;
+  ArrayList<Schedule> mboSchedules;
+  ArrayList<String []> stationNamesPerLine;
+  SchedulePanel schedPanel;
+  SchedulePanel schedPanel2;
+  ArrayList<TrainSchedule> sched1;
+  ArrayList<TrainSchedule> sched2;
 
 	/**
 	 * Create the application.
@@ -54,11 +60,25 @@ public class CTCgui {
 		this.managerList = tm;
     this.tmanager = managerList.get(0);
     this.tmanager2 = managerList.get(1);
+    // only used to pick up train ID
     this.realTrack = globalTrack;
     lastClickedButton = 2;
     this.brokenList = new ArrayList<Block>();
     this.setDropdownFailure = new ArrayList<String>();
+    String [] redStations = {"Train ID", "YARD", "SHADYSIDE", "HERRON AVE", "SWISSVILLE",
+        "PENN STATION", "STEEL PLAZA", "FIRST AVE", "STATION SQUARE", "SOUTH HILLS JUNCTION"};
+    this.stationNamesPerLine.add(redStations);
+    //this.stationNamesPerLine.add(greenStations);
     failureDetected = false;
+    if(launcher.getSchedules() == null){
+      this.mboSchedules = new ArrayList<Schedule>();
+      this.sched1 = new ArrayList<TrainSchedule>();
+      //this.sched2 = new ArrayList<TrainSchedule>();
+    }else{
+      this.mboSchedules = launcher.getSchedules();
+      this.sched1 = this.mboSchedules.get(0).getSched();
+      //this.sched2 = this.mboSchedules.get(1).getSched();
+    }
 
 		grayline = BorderFactory.createLineBorder(Color.gray);
 
@@ -104,6 +124,13 @@ public class CTCgui {
     tmPanel2 = new TrainManagerPanel(tmanager2, dummyTrack, managerList);
     tmPanel2.setBounds(0, 256, 390, 255);
     frame.getContentPane().add(tmPanel2);
+
+// SCHEDULE PANEL - displays MBO SCHEDULE
+  schedPanel = new SchedulePanel(this.stationNamesPerLine.get(0), this.sched1);
+  schedPanel.setBounds(0, 0, 390, 255);
+
+  //schedPanel2 = new TrainManagerPanel(this.stationNamesPerLine.get(1), this.sched2);
+  //schedPanel2.setBounds(0, 256, 390, 255);
 
 // EVERYTHING ELSE PANEL
 		JPanel miscPanel = new JPanel();
@@ -307,15 +334,6 @@ public class CTCgui {
       }
     });
 
-	}
-
-// have mode live here to update in MBO
-	public void setMode(){
-
-	}
-
-	public String getMode(){
-		return null;
 	}
 
   public void setMBO(MovingBlockOverlay mbo){
