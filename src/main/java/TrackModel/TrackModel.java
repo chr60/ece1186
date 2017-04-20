@@ -1,8 +1,7 @@
+/** Class model and some associated utility functions for storing the TrackModel.
+*/
 package TrackModel;
 
-/** Class model and some associated utility functions for storing the TrackModel.
-* @author Michael
-*/
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -519,6 +518,9 @@ public class TrackModel implements Serializable {
       }
     }
 
+    /**
+    * Hlper function for linking blocks given a linkage file.
+    */
     public void linkCSVOverride(String s) {
           String line = "";
           String delimiter = ",";
