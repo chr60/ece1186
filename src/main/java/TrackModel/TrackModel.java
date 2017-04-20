@@ -457,11 +457,16 @@ public class TrackModel implements Serializable {
     * Builds the light map for usage by the wayside controller to modify the state of the lights.
     */
     private void buildLightsMap() {
-      for(String s : this.leafMap.keySet()) {
-        for(int i=0; i<this.leafMap.get(s).size(); i++) {
+      for (String s : this.leafMap.keySet()) {
+        for (int i = 0; i < this.leafMap.get(s).size(); i++) {
           Lights light = new Lights(this, this.leafMap.get(s).get(i));
           this.lightsMap.put(this.leafMap.get(s).get(i), light);
         }
+      }
+
+      for(String s : this.rootMap.keySet()) {
+          Lights light = new Lights(this, this.rootMap.get(s));
+          this.lightsMap.put(this.rootMap.get(s), light);
       }
     }
 
