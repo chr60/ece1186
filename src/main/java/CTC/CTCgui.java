@@ -60,13 +60,7 @@ public class CTCgui {
 		this.managerList = tm;
     this.tmanager = managerList.get(0);
     this.tmanager2 = managerList.get(1);
-<<<<<<< HEAD
-<<<<<<< HEAD
-    // only used to pick up train ID
-=======
->>>>>>> master
-=======
->>>>>>> 7f00cff448385ae022c1ab0fcd5ded60f4a3e63d
+
     this.realTrack = globalTrack;
     lastClickedButton = 2;
     this.brokenList = new ArrayList<Block>();
@@ -131,10 +125,6 @@ public class CTCgui {
     tmPanel2.setBounds(0, 256, 390, 255);
     frame.getContentPane().add(tmPanel2);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 7f00cff448385ae022c1ab0fcd5ded60f4a3e63d
 // SCHEDULE PANEL - displays MBO SCHEDULE
   schedPanel = new SchedulePanel(this.stationNamesPerLine.get(0), this.sched1);
   schedPanel.setBounds(0, 0, 390, 255);
@@ -142,11 +132,6 @@ public class CTCgui {
   //schedPanel2 = new TrainManagerPanel(this.stationNamesPerLine.get(1), this.sched2);
   //schedPanel2.setBounds(0, 256, 390, 255);
 
-<<<<<<< HEAD
-=======
->>>>>>> master
-=======
->>>>>>> 7f00cff448385ae022c1ab0fcd5ded60f4a3e63d
 // EVERYTHING ELSE PANEL
 		JPanel miscPanel = new JPanel();
 		miscPanel.setLayout(null);
