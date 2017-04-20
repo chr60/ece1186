@@ -93,4 +93,47 @@ public class PLCRedTest{
     assertTrue(switchBlock.viewSwitchState());
   }
 
+  @Test
+  /**
+   * Test Stop Expressions
+   */
+  @DisplayName("Test middle of H section stop eqn")
+  void testHStop() throws IOException, ScriptException{
+    Block occBlock = this.track.getBlock("Red", "H", 43);
+    occBlock.setOccupied(true);
+    Block stopBlock = this.track.getBlock("Red", "H", 40);
+    assertFalse(stopBlock.getSuggestedSpeed() == -1);
+    this.plc.parse();
+    this.plc.runStopPLC();
+    assertTrue(stopBlock.getSuggestedSpeed().equals(new Double(-1)));
+  }
+
+  @Test
+  /**
+   * Test if lights exist
+   */
+  @DisplayName("Switch 12 lights exist?")
+  void testlights() throws IOException, ScriptException{
+    // Block c9 = this.track.getBlock("Red", "C", 9 );
+    Block yard = this.track.getBlock("Red", "U", 77);
+    Block d10 = this.track.getBlock("Red", "D", 10);
+    assertTrue(this.track.viewLightsMap().keySet().contains(yard));
+    assertTrue(this.track.viewLightsMap().keySet().contains(d10));
+    // assertTrue(this.track.viewLightsMap().keySet().contains(c9));
+  }
+
+  @Test
+  /**
+   * Test if lights perform correctly on U77
+   */
+  @DisplayName("Switch 12 lights working")
+  void testYardLight() throws IOException, ScriptException{
+    Block yard = this.track.getBlock("Red", "U", 77);
+    this.plc.parse();
+    this.plc.runLightsPLC();
+    assertFalse(this.track.viewLightsMap().get(yard).viewLightsState());
+    yard.setOccupied(true);
+    this.plc.runLightsPLC();
+    assertTrue(this.track.viewLightsMap().get(yard).viewLightsState());
+  }
 }

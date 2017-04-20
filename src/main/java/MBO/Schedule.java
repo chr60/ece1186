@@ -51,8 +51,8 @@ public class Schedule{
    * @param  stationTimes Array of times to travel between stations
    * @param  lineLoopTime Time it takes a train to complete a loop
    */
-  public Schedule(TrackModel dummyTrack, TrainManager manager, TrainHandler handler, Block [] lineStops, 
-                String lineName, String [] stationNames, String [] stationOrder, 
+  public Schedule(TrackModel dummyTrack, TrainManager manager, TrainHandler handler, Block [] lineStops,
+                String lineName, String [] stationNames, String [] stationOrder,
                 int [] stationTimes, int lineLoopTime, CTCgui ctc) {
     this.dummyTrack = dummyTrack;
     this.manager = manager;
@@ -307,7 +307,7 @@ public class Schedule{
       }
     }
 
-    if (null != ctc) {
+    if (null != ctc && "FB".equals(mode)) {
       this.ctc.getTrainPanel().updateSpeedAuthToWS(newPaths);
     }
   }
@@ -377,11 +377,13 @@ public class Schedule{
     if (start < 0) {
       start = 0;
     }
-    
+
     if ("MBO".equals(mode)) {
       Antenna ant = handler.getTrainAntenna(train.getID());
       ant.setCurrAuthority(auth);
       train.setAuthority(auth.getCurrBlock());
+      train.setPosition(ant.getGPS());
+      train.setActSpeed(ant.getCurrVelocity());
       int index = findBlockInList(ant.getGPS().getCurrBlock(), path);
       if (index < 0) {
         ant.setSuggestedSpeed(0.0);
@@ -427,6 +429,13 @@ public class Schedule{
       blocks.add(dummyTrack.getBlock(lineName, "C", new Integer(9)));
       blocks.add(dummyTrack.getBlock(lineName, "C", new Integer(8)));
       blocks.add(dummyTrack.getBlock(lineName, "C", new Integer(7)));
+    } else if (startBlock.compareTo(lineStops[1]) == 0) {
+      blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(16)));
+      blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(17)));
+      blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(18)));
+      blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(19)));
+      blocks.add(dummyTrack.getBlock(lineName, "F", new Integer(20)));
+      blocks.add(dummyTrack.getBlock(lineName, "G", new Integer(21)));
     } else if (startBlock.compareTo(lineStops[7]) == 0) {
       blocks.add(dummyTrack.getBlock(lineName, "L", new Integer(60)));
       blocks.add(dummyTrack.getBlock(lineName, "M", new Integer(61)));
@@ -535,7 +544,7 @@ public class Schedule{
     Block currBlock;
     GPS nextTrain;
 
-    if ("MBO".equals(mode)) { 
+    if ("MBO".equals(mode)) {
       currBlock = handler.getTrainAntenna(train.getID()).getGPS().getCurrBlock();
       DummyTrain temp = nextTrain(blockList, findBlockInList(currBlock, blockList));
       if (null == temp) {
@@ -617,7 +626,7 @@ public class Schedule{
    * @param  schedTime Scheduled
    * @return           [description]
    */
-  private boolean arriveOnTime(ArrayList<Block> blockList, double[] speeds, 
+  private boolean arriveOnTime(ArrayList<Block> blockList, double[] speeds,
                                 GPS currPos, long schedTime) {
 
     int index = blockList.indexOf(currPos.getCurrBlock());

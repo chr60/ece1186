@@ -113,6 +113,7 @@ public class TCTestConsole extends javax.swing.JFrame {
         
         this.track.getBlock("Red", "C", new Integer(9)).setSwitchState(0);
         endingBlock = this.track.getBlock("Red", "H", new Integer(25));          
+
     }
     
     /**

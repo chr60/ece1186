@@ -33,10 +33,8 @@ public class TrainManager {
   }
 
   private void setYardBlock(){
-
     ArrayList<Block> yards = dummyTrack.viewStationMap().get(line).get("YARD");
     int max = 0;
-
     for(int i = 1; i < yards.size(); i++){
       if(yards.get(i).compareTo(yards.get(max)) > 0) max = i;
     }

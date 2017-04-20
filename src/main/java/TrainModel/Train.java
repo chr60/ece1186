@@ -43,7 +43,7 @@ public class Train implements Serializable {
     Block prevBlock;
 	Antenna trainAntenna;
 
-	
+
 	//train data
 	Double maxPower = 120000.00; 		//maximum power is 120 kW
 	Double maxVelocity = 19.4444; 		//maximum velocity is 70 kph or 19.444 m/s
@@ -53,11 +53,11 @@ public class Train implements Serializable {
 	int maxPassengers = 222; 		//max number of passengers that can fit on train
 	Double weightPass = 75.0; 				//mass of single passenger in kg
 	Double weightCar =40.9 * 907.185;  	//mass of empty car in kg;
-	Double maxWeight = weightCar + (maxPassengers * weightPass) + weightPass; //maximum weight of a car 
+	Double maxWeight = weightCar + (maxPassengers * weightPass) + weightPass; //maximum weight of a car
 	Double lengthCar = 8.69;			//length of one car in feet
-	
-	
-	
+
+
+
 
         /**
      * Default Constructor to create a new Train object based on Assigned ID
@@ -65,7 +65,7 @@ public class Train implements Serializable {
 	public Train(){
 		trainAntenna = new Antenna();
 	}
-        
+
 	/**
      * Constructor to create a new Train object based on Assigned ID
      * @param a an integer argument to assign to Trains new ID.
@@ -76,7 +76,7 @@ public class Train implements Serializable {
 		trainAntenna = new Antenna();
 		numCrew = 1;
 		velocity = 0.0;
-		trainAntenna.setCurrVelocity(velocity);
+		trainAntenna.setCurrVelocity(velocity * 2.236);
 		oldVelocity =0.0;
 		length = lengthCar;
 		trainID = ID;
@@ -114,7 +114,7 @@ public class Train implements Serializable {
      * @see changeSpeed()
      */
 	public void powerCommand(Double newPower){
-            
+
 		Double forceApp;
 		if (velocity == 0)
 		{
@@ -192,7 +192,7 @@ public class Train implements Serializable {
 		updateCurrBlock(distance);
 		updateSpeedAndAuthority();
 		updateSafeBrakingDist();
-		trainAntenna.setCurrVelocity(velocity);
+		trainAntenna.setCurrVelocity(velocity * 2.236);
 	}
 
 /**
@@ -202,9 +202,9 @@ public class Train implements Serializable {
 		safeDistSB = getSafeBrakingDistSB();
 		safeDistEB = getSafeBrakingDistEB();
 	}
-	
-	
-	
+
+
+
 	/**
      * Method to determine what block the train is in now
      * @param a Double which corresponds to the distance travelled by the train
@@ -224,8 +224,8 @@ public class Train implements Serializable {
                         Block blockBackward = currBlock.nextBlockBackward();
 
 
-                        System.out.println("forward block: " + blockForward.blockNum());
-                        System.out.println("backward block: " + blockBackward.blockNum());
+                        //System.out.println("forward block: " + blockForward.blockNum());
+                      //  System.out.println("backward block: " + blockBackward.blockNum());
                         if(blockForward != null && blockBackward != null){
                             //theres both a forward and backward. go to the one that wasnt last visited
                             if (blockBackward.compareTo(prevBlock) == 0)
@@ -275,7 +275,7 @@ public class Train implements Serializable {
      * Method to update speed and authority (and other block properties)
      */
 	private void updateSpeedAndAuthority(){
-		
+
 			//check antenna for MBO speed and Authority, if not there check block for fixed block speed and authority
 			GPS authMBO = trainAntenna.getCurrAuthority();
 			if (authMBO != null){
@@ -298,7 +298,7 @@ public class Train implements Serializable {
 					currBlock.setAuthority(null);
 				}
             }
-			
+
         }
 
 
@@ -312,7 +312,7 @@ public class Train implements Serializable {
 		Double maxSBD = dummyTrain.getSafeBrakingDistSB();
 		return maxSBD;
 	}
-	
+
 		/**
 	 * Method to calculate maximum possible safe Braking Distance of train based on its current velocity and mass using emergency brake
 	 * @return a Double which corresponds to the maximum amount of distance required to stop the train using the service brake
@@ -323,7 +323,7 @@ public class Train implements Serializable {
 		Double maxEBD = dummyTrain.getSafeBrakingDistEB();
 		return maxEBD;
 	}
-	
+
 		/**
 	 * Method to set test train to maximum conditions. this will be used for the maximum safe braking distance method
 	 */
@@ -332,18 +332,18 @@ public class Train implements Serializable {
 		mass = 2 * maxWeight;
 		currGrade = maxGrade;
 	}
-	
+
 		/**
 	 * Method to set velocity for test train
 	 */
 	public void setVelocity(Double newV){
-		
+
 		velocity = newV * 0.447;				//convert MPH to m/s
-		trainAntenna.setCurrVelocity(velocity);
+		trainAntenna.setCurrVelocity(velocity * 2.236);
 	}
 
-		
-		
+
+
 	/**
      * Method to calculate safe Braking Distance of train based on its current velocity and mass
      * @return a Double which corresponds to the amount of distance required to stop the train using the service brake
@@ -392,14 +392,14 @@ public class Train implements Serializable {
 	private Double timeToStop(Double Drate){
 		Double time = 0.0;
 		Double tempVelocity = velocity;
-                
-                //System.out.println(tempVelocity); 
+
+                //System.out.println(tempVelocity);
 		while (tempVelocity > 0.0)
-		{    
+		{
 			tempVelocity = tempVelocity + Drate;
 			time++;
 		}
-                
+
 		return time; 				//time required to stop the train in seconds
 	}
 
@@ -428,8 +428,8 @@ public class Train implements Serializable {
             this.currBlock = newBlock;
             this.prevBlock = currBlock;
 			currBlock.setOccupied(true);
-			
-			
+
+
 	}
 
 	/**
@@ -439,7 +439,7 @@ public class Train implements Serializable {
 	public Block getCurrBlock(){
 		return this.currBlock;
 	}
-	
+
 	/**
      * Accessor to get the train Antenna of the train
      * @return Antenna object onboard the train
@@ -454,7 +454,7 @@ public class Train implements Serializable {
      * Method to update temperature based on current temp and thermostat setting. This method will be called periodically at each cycle of the system
      */
 	public void updateTemp(){
-		//Using Newtons Law of cooling 
+		//Using Newtons Law of cooling
 		//T(t) = Ta + (To - Ta)e^(-kt)
 		//where T(t) is new temperature
 		//Ta is current Temperature of train
@@ -463,7 +463,7 @@ public class Train implements Serializable {
 		if (statusAC == 1 || statusHeater == 1){
 			currTemp = currTemp + (currThermostat - currTemp)* Math.exp((-1*k)*1);
 		}
-		
+
 	}
 
 
@@ -471,7 +471,7 @@ public class Train implements Serializable {
 
 
 	/* functions to integrate with track. adding and removing people
-	
+
 	 * Public Integer loadPassengers (Integer maxPassengers)
 		return random numeber
 
@@ -488,13 +488,13 @@ public class Train implements Serializable {
 		 Integer numUnboarding = passengersUnboarding();
 		 changePassengers(-1*numUnboarding);
 		 currStation.addDepartingPassengers(numUnboarding);
-		 
+
 		 //allow people to get on train
 		 Integer spaceLeft = maxPassengers - numPassengers;
 		 Integer numBoarding = currStation.loadPassengers(spaceLeft);
 		 changePassengers(numBoarding);
 	 }
-	 
+
 	 /**
      * Method to update temperature based on current temp and thermostat setting. This method will be called periodically at each cycle of the system
      */
@@ -502,8 +502,8 @@ public class Train implements Serializable {
 		//random number selected between number of people on train.
 		return rand.nextInt(numPassengers);
 	}
-	 
-	 
+
+
 
 
 	//CODE BELOW THIS LINE IS DONE. DO NOT TOUCH.
@@ -595,14 +595,14 @@ public class Train implements Serializable {
 	public boolean isBrakeFailure(){
 		return brakeFailure;
 	}
-        
+
         /**
          * Puts a message on the current block signaling that the train needs to be repaired.
-         * 
-         * @param needsMaint 
+         *
+         * @param needsMaint
          */
         public void requestFix(boolean needsMaint){
-            
+
             // put on the current block we are broken..
             this.getCurrBlock().setBroken(true);
         }
@@ -786,7 +786,7 @@ public class Train implements Serializable {
 		currThermostat = newThermostat;
 		this.updateTemp();
 	}
-        
+
 	/**
      * Mutator to set engine failure status
      * @param a boolean argument is passed to denote whether or not there is a failure in the engines. False means no failure and true means failure.
@@ -823,9 +823,9 @@ public class Train implements Serializable {
 		}
 
 	}
-         
+
         public HashMap<Block, Beacon> getBeacons(){
-        
+
             return this.globalTrack.viewBeaconMap();
         }
 
@@ -852,7 +852,7 @@ public class Train implements Serializable {
 		Double massPass = pass * weightPass;
 		changeMass(massPass);
 	}
-	
+
 	/**
      * Accessor to see how many passengers are on the Train
 	 * @return a int corresponding to number of passengers on board the train
@@ -876,7 +876,7 @@ public class Train implements Serializable {
 		Double carLength = car * lengthCar;
 		changeLength(carLength);
 	}
-	
+
 /**
      * Accessor to get number of cars on train
 	 * @return a int corresponding to number of cars
@@ -885,7 +885,7 @@ public class Train implements Serializable {
 	{
 		return numCars;
 	}
-	
+
 	/**
      * Modifier to change the current length of the train
      * @param an Double object which corresponds to the change in length to apply. To decrease length a negative number should be passed to this method.
@@ -893,7 +893,7 @@ public class Train implements Serializable {
 	public void changeLength(Double length2) {
 		length = length + length2;
 	}
-	
+
 	/**
      * Accessor to get length of train
 	 * @return a Double corresponding to length of train

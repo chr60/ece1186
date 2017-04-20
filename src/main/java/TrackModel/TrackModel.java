@@ -77,7 +77,7 @@ public class TrackModel implements Serializable {
   * @param the blockNum of the block
   * @return the Block object associated with that blocknum
   */
-  private Block getBlock(String line, Integer blockNum) throws NoSuchElementException{
+  public Block getBlock(String line, Integer blockNum) throws NoSuchElementException{
     for (String section : this.trackList.get(line).keySet()) {
       for (Integer currBlock : this.trackList.get(line).get(section).keySet()) {
         if (currBlock.equals(blockNum)) {
@@ -457,11 +457,16 @@ public class TrackModel implements Serializable {
     * Builds the light map for usage by the wayside controller to modify the state of the lights.
     */
     private void buildLightsMap() {
-      for(String s : this.leafMap.keySet()) {
-        for(int i=0; i<this.leafMap.get(s).size(); i++) {
+      for (String s : this.leafMap.keySet()) {
+        for (int i = 0; i < this.leafMap.get(s).size(); i++) {
           Lights light = new Lights(this, this.leafMap.get(s).get(i));
           this.lightsMap.put(this.leafMap.get(s).get(i), light);
         }
+      }
+
+      for(String s : this.rootMap.keySet()) {
+          Lights light = new Lights(this, this.rootMap.get(s));
+          this.lightsMap.put(this.rootMap.get(s), light);
       }
     }
 
@@ -515,43 +520,45 @@ public class TrackModel implements Serializable {
     }
 
     public void linkCSVOverride(String s) {
-      String line = "";
-      String delimiter = ",";
-        System.out.println("Reading "+s);
-        Boolean initLine = true;
-        try (BufferedReader reader = new BufferedReader(new FileReader(s))) {
-          while ((line = reader.readLine()) != null) {
-            if (initLine.equals(false)) {            
-              String[] str = line.split(delimiter, -1);
-              String sourceLine = str[0];
-              String targetLine = str[0];
-              String sourceSection = str[1];
-              int sourceBlockNum = Integer.parseInt(str[2]);
-              String forwardTargetSection = str[3];
-              String backwardTargetSection = str[5];
+          String line = "";
+          String delimiter = ",";
+          System.out.println("Reading "+s);
+          Boolean initLine = true;
+            try (BufferedReader reader = new BufferedReader(new FileReader(s))) {
+              while ((line = reader.readLine()) != null) {
+                if (initLine.equals(false)) {       
 
-              if (forwardTargetSection != "" && str[4] != "") {
-                int forwardTargetBlockNum = Integer.parseInt(str[4]);
-                Block sourceBlock = this.getBlock(sourceLine, sourceSection, sourceBlockNum);
-                Block nextBlockForwardOverride = this.trackList.get(targetLine).get(forwardTargetSection).get(forwardTargetBlockNum);
-                sourceBlock.setNextBlockForward(nextBlockForwardOverride);
+                  String[] str = line.split(delimiter, -1);
+                  String sourceLine = str[0];
+                  String targetLine = str[0];
+                  String sourceSection = str[1];
+                  int sourceBlockNum = Integer.parseInt(str[2]);
+                  String forwardTargetSection = str[3];
+                  String backwardTargetSection = str[5];
+
+                  if (!(forwardTargetSection.equals("")) && !(str[4].equals(""))) {
+                    int forwardTargetBlockNum = Integer.parseInt(str[4]);
+                    Block sourceBlock = this.getBlock(sourceLine, sourceSection, sourceBlockNum);
+                    Block nextBlockForwardOverride = this.trackList.get(targetLine).get(forwardTargetSection).get(forwardTargetBlockNum);
+                    sourceBlock.setNextBlockForward(nextBlockForwardOverride);
+                  }
+                  
+                  if (!(backwardTargetSection.equals("")) && !(str[6].equals(""))) {
+                    int backwardTargetBlockNum = Integer.parseInt(str[6]);
+                    System.out.println(backwardTargetBlockNum);
+                    Block sourceBlock = this.getBlock(sourceLine, sourceSection, sourceBlockNum);
+                    System.out.println(sourceBlock);
+                    Block nextBlockBackwardOverride = this.trackList.get(targetLine).get(backwardTargetSection).get(backwardTargetBlockNum);
+                    sourceBlock.setNextBlockBackward(nextBlockBackwardOverride);
+                  }
+                  
+                }
+                initLine = false;
               }
-              
-              if (!backwardTargetSection.equals("") && str[6] != "") {
-                int backwardTargetBlockNum = Integer.parseInt(str[6]);
-                System.out.println(backwardTargetBlockNum);
-                Block sourceBlock = this.getBlock(sourceLine, sourceSection, sourceBlockNum);
-                System.out.println(sourceBlock);
-                Block nextBlockBackwardOverride = this.trackList.get(targetLine).get(backwardTargetSection).get(backwardTargetBlockNum);
-                sourceBlock.setNextBlockBackward(nextBlockBackwardOverride);
-              }
-            initLine = false;
-          }
-      }
-      } catch(IOException|ArrayIndexOutOfBoundsException|NumberFormatException e) {
-        System.out.println("Finished reading override!");
-      }
-    }
+            } catch(IOException|ArrayIndexOutOfBoundsException|NumberFormatException e) {
+              System.out.println("Finished reading override!");
+            }
+        }
 
   /**
   * Helper function for reading the information from the excel-dumped CSV
@@ -621,7 +628,7 @@ public class TrackModel implements Serializable {
 
     this.linkBlocks();
     this.handleSwitches();
-    for (String s : fOverrideNames) {
+    for(String s : fOverrideNames) {
       this.linkCSVOverride(s);
     }
     this.buildStationHostMap();

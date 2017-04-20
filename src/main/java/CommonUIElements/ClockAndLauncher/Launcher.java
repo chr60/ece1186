@@ -129,15 +129,16 @@ public class Launcher extends javax.swing.JFrame {
         String[] fNames = {redlinePath};
 
         String redLink = "test-clases/redlinelink.csv";
-        String greenLink = "test-classes/greelinelink.csv";
-        String[] linkNames = {redLink};
+        String greenLink = "test-classes/greenlinelink.csv";
+
+        String[] linkNames = {redLink, greenLink};
 
         this.globalTrack = this.generateTrack("GlobalTrack", fNames, linkNames);
         this.trackGUI = new TrackGUI(globalTrack);
         
         //Cycle through number of lines and generate 2 WS's and a Train Manager for each line
         for(String s : this.globalTrack.trackList.keySet()) {
-            
+          System.out.println("S: " + s);
           int lineSize = this.globalTrack.trackList.get(s).keySet().size();
 
           //Wayside Operations
@@ -167,7 +168,7 @@ public class Launcher extends javax.swing.JFrame {
 
         this.trainGUI = new TrainModeUI();
 
-        this.ctc = new CTCgui(this.trainManagers, generateTrack("CTC", fNames, linkNames), this.waysideList, globalTrack);
+        this.ctc = new CTCgui(this, this.trainManagers, generateTrack("CTC", fNames, linkNames), this.waysideList, globalTrack);
         this.mbo = new MovingBlockOverlay(generateTrack("MBO", fNames, linkNames), this.trainManagers, this.trainHandler, this.ctc);
 
         this.ctc.setMBO(this.mbo);
@@ -180,9 +181,40 @@ public class Launcher extends javax.swing.JFrame {
             }
         });
 
+        if(waysideGui != null){ waysideGui.update(); }
+
+        mbo.updateTrains();
+
+        // what should be called every tick
+
+        if(ctc != null){
+            // CTC - asking WS for any broken blocks
+            ctc.getTrackFailuresWS();
+            // CTC - update track panel on gui w/ info from WS
+            ctc.getTrackPanel().updateTrackInfo(ctc.getTrackPanel().getBlockWS());
+            // CTC - calls wayside to get updated list of track occupancy
+            ctc.getTrainPanel().updateTrainPositionsToManager(trainManagers);
+            // CTC - prints active list of trains from train manager to GUI
+            ctc.getTrainManagerPanel().updateTable(trainManagers);
+        }
+
+        trainHandler.pollYard();
+
+        if(trainHandler.getNumTrains() != 0){
+            trainGUI.updateGUI(trainGUI.getCurrT());
+        }
+
+        if(ctc != null){
+          // CTC - ask track for trainId
+          ctc.getTrainPanel().updateTrainIDinList(trainManagers.get(0), globalTrack);
+        }
         
        this.initBeacons(this.beaconFileNames);
        this.systemClock.start();
+    }
+
+    public void setMode(String mode) {
+      this.mbo.setMode(mode);
     }
     
     
@@ -291,9 +323,9 @@ public class Launcher extends javax.swing.JFrame {
         this.time.setText(time);
         //System.out.println("Date Updated");
     }
-        /**
+    /**
      * Helper function to place a beacon with a message at a given block.
-     * 
+
      * @param line the track line
      * @param section the track section
      * @param blockNum the block number
@@ -336,6 +368,7 @@ public class Launcher extends javax.swing.JFrame {
                 }
             }
         }catch(Exception e){System.out.println(e.getMessage());}       
+
     }
 
     /**
@@ -545,6 +578,7 @@ public class Launcher extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 update(); 
+
             }
         });
         this.systemClock.start();
@@ -558,7 +592,6 @@ public class Launcher extends javax.swing.JFrame {
     private void playFastSpeed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playFastSpeed
 
         if (this.systemClock != null){this.systemClock.stop();}
-        
         // set the system speed
         this.systemSpeed = 100;
         this.trainHandler.setClockSpeed(this.systemSpeed);
@@ -657,12 +690,21 @@ public class Launcher extends javax.swing.JFrame {
         tcTestConsole.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_openTrainControllerTestConsole
 
+
     /**
     * Returns a generated track given overrides, module and the names of the track.
     */
     public TrackModel generateTrack(String module, String[] fNames, String[] fOverridenames){
         TrackModel newTrack = new TrackModel(module);
-        newTrack.readCSV(fNames, fOverridenames);
+
+        String[] redlinePath = {"test-classes/redline.csv"};
+        String[] greenlinePath = {"test-classes/greenline.csv"};
+
+        String[] redLink = {"test-clases/redlinelink.csv"};
+        String[] greenLink = {"test-classes/greelinelink.csv"};
+        newTrack.readCSV(redlinePath, redLink);
+        newTrack.readCSV(greenlinePath, greenlinePath);
+        //newTrack.readCSV(fNames, fOverridenames);
         return newTrack;
     }
 

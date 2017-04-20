@@ -117,6 +117,7 @@ public class WS {
 			for(Integer blk : track.viewTrackList().get(line).get(section).keySet()){
 				Block trackBlock = track.getBlock(line, section, blk);
 				Block blockToAdd = new Block(null, null, null, null, null, null, null, null, null, null, null, trackBlock.blockNum(), null, null);
+				blockToAdd.setSuggestedSpeed(trackBlock.getSuggestedSpeed());
 				if(trackBlock.getOccupied()){
 					blockToAdd.setOccupied(true);
 					occupancyList.add(blockToAdd);
