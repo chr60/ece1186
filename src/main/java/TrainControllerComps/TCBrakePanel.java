@@ -87,6 +87,8 @@ public class TCBrakePanel extends javax.swing.JPanel {
      */
     private String beaconDistanceMessage;
 
+    public String approachingStationName; 
+    
     /**
      * Counter to indicate how long the train was at the station for. 
      */
@@ -106,12 +108,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
      * The distance from the from the train when the flag is first set, to the authority block.
      */
     private Double distanceToAuthority; 
-    
-    /**
-     * A list of the stations that the train has visited. 
-     */
-    private LinkedList<String> stationsVisited; 
-    
+        
     /**
      * Indicated what side of the track the station is on. 
      */
@@ -144,7 +141,6 @@ public class TCBrakePanel extends javax.swing.JPanel {
         this.distanceTraveledToAuthority = 0.0; 
         this.waitingAtStationCounter = 0;
         this.atStation = false;
-        this.stationsVisited = new LinkedList<String>(); 
         this.visitedStationStack = new Stack<String>(); 
     }
 
@@ -367,6 +363,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
                 this.printLogs();
                 this.distanceTraveledToStation = 0.0;
                 this.waitingAtStationCounter = 0;
+                this.approachingStationName = null; 
                 this.atStation = false;
             }else{
                 
@@ -604,6 +601,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
 
                     String[] split = beacon.getBeaconMessage().split(","); 
                     String stationName = split[1].replace("_", " ");
+                    this.approachingStationName = stationName; 
                     String stationPeek = ""; 
                     if (this.visitedStationStack.isEmpty() == false) { stationPeek = this.visitedStationStack.peek(); }
                     
@@ -650,9 +648,10 @@ public class TCBrakePanel extends javax.swing.JPanel {
             this.distanceTraveledToStation = this.distanceTraveledToStation + distElapsed; // total distance traveled
             this.operatingLogbook.add("Distance to station: " + String.format("%.2f", distTrainToStation) + " m.");
 
-            if (distTrainToStation <= this.selectedTrain.getSafeBrakingDistSB()){ return true; }
+            if(this.inManualMode == false){
+                if (distTrainToStation <= this.selectedTrain.getSafeBrakingDistSB()){ return true; }
+            }
         }
-
         return false;
     }
 

@@ -76,6 +76,7 @@
                   <Component id="launchTrackControllerButton" alignment="0" max="32767" attributes="0"/>
                   <Component id="launchTrackButton" alignment="0" max="32767" attributes="0"/>
                   <Component id="launchMBOandScheduleButton1" alignment="0" max="32767" attributes="0"/>
+                  <Component id="loadTrackFiles" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -102,7 +103,7 @@
                   <Component id="dateLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="date" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="launchCTCButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="launchTrackButton" min="-2" max="-2" attributes="0"/>
@@ -116,6 +117,8 @@
               <Component id="launchMBOandScheduleButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="launchMBOandScheduleButton1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="loadTrackFiles" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -225,6 +228,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createLogger"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="loadTrackFiles">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Load Track Files"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loadTrackFilescreateLogger"/>
       </Events>
     </Component>
   </SubComponents>

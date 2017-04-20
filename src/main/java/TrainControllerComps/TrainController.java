@@ -197,51 +197,18 @@ public class TrainController extends javax.swing.JFrame {
         //this.playNormal();
     }
     
-//    /**
-//     * Changes the rate at which the TrainController clock is called to 1/10 s.  
-//     */
-//    public void playFast(){
-//        
-//        if (this.clock != null){this.clock.stop();}
-//          
-//        this.clock = new Timer(100, new ActionListener(){
-//
-//            public void actionPerformed(ActionEvent e) {
-//                    
-//                if (selectedTrain != null && selectedTrain.powerConstantsSet() ){ refreshComponents(); }
-//
-//                if (testWindowOpen){ testConsole.refreshUI(); }
-//                
-//                if (detailedTrainWindowOpen == true){ trainUI.updateGUI(selectedTrain); }
-//
-//            }
-//        }); 
-//        
-//        this.clock.start();  
-//    }
-//    
-//    /**
-//     * Changes the rate at which the TrainController clock is called to 1 s.
-//     */
-//    public void playNormal(){
-//   
-//        if (this.clock != null){this.clock.stop();}
-//        
-//        this.clock = new Timer(1000, new ActionListener(){
-//
-//            public void actionPerformed(ActionEvent e) {
-//                                    
-//                if (selectedTrain != null && selectedTrain.powerConstantsSet() ){ refreshComponents(); }
-//
-//                if (testWindowOpen){ testConsole.refreshUI(); }
-//                
-//                if (detailedTrainWindowOpen == true){ trainUI.updateGUI(selectedTrain); }
-//                
-//            }
-//        });         
-//        this.clock.start();  
-//    }
-    
+    /**
+     * Updates the train controller and some of its sub windows. 
+     */
+    public void updateTrainController(){
+     
+        if (selectedTrain != null && selectedTrain.powerConstantsSet() ){ refreshComponents(); }
+
+        if (testWindowOpen){ testConsole.refreshUI(); }
+                
+        if (detailedTrainWindowOpen == true){ trainUI.updateGUI(selectedTrain); }
+    }
+        
     /**
      * Sets the test console to use with this Train Controller. 
      * 
@@ -499,7 +466,7 @@ public class TrainController extends javax.swing.JFrame {
         viewMenu = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
+        TrainDetailMenuItem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -609,7 +576,7 @@ public class TrainController extends javax.swing.JFrame {
 
         announcementsLabel.setText("Announcements:");
 
-        annoucementDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "No Announcement", "Announce Station", "Announce Next Stop", "Annouce Weather", "Annouce Time" }));
+        annoucementDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "No Announcement", "Announce Arrival", "Announce Departure", "Announce Next Station" }));
         annoucementDropDown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 annoucementDropDownActionPerformed(evt);
@@ -686,13 +653,13 @@ public class TrainController extends javax.swing.JFrame {
         jMenuItem6.setText("Failures");
         viewMenu.add(jMenuItem6);
 
-        jMenuItem7.setText("Selected Train Detail");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        TrainDetailMenuItem.setText("Selected Train Detail");
+        TrainDetailMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                openTrainGUI(evt);
             }
         });
-        viewMenu.add(jMenuItem7);
+        viewMenu.add(TrainDetailMenuItem);
 
         menuBar.add(viewMenu);
 
@@ -1007,7 +974,7 @@ public class TrainController extends javax.swing.JFrame {
         
         this.selectedTrain = train; 
     }
-
+    
     /**
      * Opens up the Engineering Panel so the engineer can change the Kp and Ki
      * manually.
@@ -1069,7 +1036,7 @@ public class TrainController extends javax.swing.JFrame {
      * @param evt the sender of the action, i.e., the "Clear" button.
      */
     private void clearAnnouncements(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearAnnouncements
-        this.errorLogs.setText("");
+        this.annoucementLogs.setText("");
     }//GEN-LAST:event_clearAnnouncements
 
     /**
@@ -1079,9 +1046,9 @@ public class TrainController extends javax.swing.JFrame {
      * @param evt the sender of the action, i.e., the "Dispatched Trains" button from the menu bar.
      */
     private void openDispatchedTrains(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openDispatchedTrains
-        //TCDispatchedTrainFrame dispatched = new TCDispatchedTrainFrame(this.trainList);
-        //dispatched.setVisible(true);
-        //dispatched.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+//        TCDispatchedTrainFrame dispatched = new TCDispatchedTrainFrame(this.trainList);
+//        dispatched.setVisible(true);
+//        dispatched.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_openDispatchedTrains
 
     /**
@@ -1091,11 +1058,21 @@ public class TrainController extends javax.swing.JFrame {
      */
     private void makeAnnouncement(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makeAnnouncement
 
-        String time = this.getTime();
         String dropDownText = (String) this.annoucementDropDown.getSelectedItem();
-        this.annoucementLogs.setEditable(true);
-        this.annoucementLogs.setText(this.errorLogs.getText() + dropDownText + " - " + time + "\n");
-        this.annoucementLogs.setEditable(false);
+        
+        if (dropDownText.equals("Announce Arrival") && this.brakePanel.approachingStationName != null){
+        
+            dropDownText = "Arriving at " + this.brakePanel.approachingStationName; 
+            this.annoucementLogs.setText(this.annoucementLogs.getText() + dropDownText + "\n");
+        }else if(dropDownText.equals("Announce Next Station") && this.brakePanel.approachingStationName != null){
+        
+            dropDownText = dropDownText + " " + this.brakePanel.approachingStationName; 
+            this.annoucementLogs.setText(this.annoucementLogs.getText() + dropDownText + "\n");
+        }else if (dropDownText.equals("Announce Departure") && this.brakePanel.approachingStationName != null){
+        
+            dropDownText = "Departing from " + this.brakePanel.approachingStationName; 
+            this.annoucementLogs.setText(this.annoucementLogs.getText() + dropDownText + "\n");
+        }
     }//GEN-LAST:event_makeAnnouncement
 
     /**
@@ -1131,9 +1108,8 @@ public class TrainController extends javax.swing.JFrame {
         this.automaticMode = false;
     }//GEN-LAST:event_switchToManualMode
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        // TODO add your handling code here:
-
+    private void openTrainGUI(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTrainGUI
+        
         // open up the train GUI
         this.trainUI = new TrainModeUI();
 
@@ -1143,7 +1119,7 @@ public class TrainController extends javax.swing.JFrame {
         trainUI.frmTrainModel.setVisible(true);
 
         this.detailedTrainWindowOpen = true;
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
+    }//GEN-LAST:event_openTrainGUI
 
     /**
      * Returns the current time of the system in "HH:mm:ss a" format.
@@ -1297,6 +1273,7 @@ public class TrainController extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem TrainDetailMenuItem;
     private javax.swing.JComboBox<String> annoucementDropDown;
     private javax.swing.JTextArea annoucementLogs;
     private javax.swing.JScrollPane announcementScrollPane1;
@@ -1326,7 +1303,6 @@ public class TrainController extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton makeAnnouncementButton;
     private javax.swing.JRadioButton manualModeRadioButton;
