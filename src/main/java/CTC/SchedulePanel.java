@@ -49,11 +49,11 @@ public class SchedulePanel extends JPanel {
       		scheduleModel.setRowCount(250);
       		schedTable.setModel(scheduleModel);
 
-          updateTable(lotsOfTrains, this.headers);
+          //updateTable(lotsOfTrains, this.headers);
 
 
 			}
-
+/*
       public void updateTable(ArrayList<TrainSchedule> lineSchedule, String [] headers){
         if((lineSchedule.get(0) == null)){
 
@@ -67,7 +67,7 @@ public class SchedulePanel extends JPanel {
           }
         }
       }
-
+*/
       public static String convertTime(long secs) {
 
         int secondsDisplay = (int) secs % 60;
