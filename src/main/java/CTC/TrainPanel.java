@@ -19,6 +19,8 @@ public class TrainPanel extends JPanel{
 	WS currWorkingWS;
 	TrackModel DummyTrack;
 	TrackModel realTrack;
+	TrackPanel trackPanel;
+	DispatchTrainPopup popup;
 	private JLabel set_speed_label;
 	private JLabel authority_label;
 	private JLabel speedNUM;
@@ -33,13 +35,14 @@ public class TrainPanel extends JPanel{
 	private JLabel trainWindowLabel;
 	private JButton buttonEditTrain;
 
-	public TrainPanel(ArrayList<TrainManager> tm, TrackModel dt, ArrayList<WS> ws, TrackModel globalTrack){
+	public TrainPanel(ArrayList<TrainManager> tm, TrackModel dt, ArrayList<WS> ws, TrackModel globalTrack, TrackPanel trackPanel){
 		this.waysides = ws;
 		this.currWorkingWS = waysides.get(0);
 		this.DummyTrack = dt;
 		this.trainManagers = tm;
 		this.currWorkingManager = trainManagers.get(0);
 		this.realTrack = globalTrack;
+		this.trackPanel = trackPanel;
 
 		set_speed_label = new JLabel("Speed");
 		set_speed_label.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -126,7 +129,7 @@ public class TrainPanel extends JPanel{
 		buttonDispatchTrain = new JButton("Dispatch Train");
 		buttonDispatchTrain.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				//new dispatchTrainPopup(dispatchTrainList);
+				popup = new DispatchTrainPopup(currWorkingManager, currWorkingWS, DummyTrack, trackPanel);
 			}
 		});
 		buttonDispatchTrain.setBounds(143, 67, 101, 23);
@@ -172,7 +175,7 @@ public class TrainPanel extends JPanel{
 		for (TrainManager tm : trainManagerList) {
 			tm.updateTrainPosition(trainPositions);
 		}
-		
+
 	}
 
 	// CTC calls this method to update train id

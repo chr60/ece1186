@@ -87,7 +87,7 @@ public class CTCgui {
 
 
 // DISPATCH TRAIN PANEL
-		trainPanel = new TrainPanel(managerList, dummyTrack, waysides, realTrack);
+		trainPanel = new TrainPanel(managerList, dummyTrack, waysides, realTrack, blockPanel);
 		trainPanel.setBounds(402, 229, 367, 98);
 		trainPanel.setBorder(grayline);
 		frame.getContentPane().add(trainPanel);

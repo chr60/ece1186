@@ -90,7 +90,7 @@ public class TrainManager {
     for(int i=0; i<trainList.size(); i++){
       Block posTrainI = trainList.get(i).getPosition();
       for(int k=0; k<occList.size(); k++){
-        Block newOccBlockID = occList.get(i);
+        Block newOccBlockID = occList.get(k);
         if(posTrainI.blockNum() != newOccBlockID.blockNum()){
           trainList.get(i).setPosition(newOccBlockID);
         }
@@ -102,7 +102,7 @@ public class TrainManager {
 		for(int i=0; i<trainList.size(); i++){
 			DummyTrain lookAtTrain = trainList.get(i);
 			if(lookAtTrain.getID() == -1){
-				lookAtTrain.setID(updatedID);
+				lookAtTrain.setID(updatedID+1);
 			}
 		}
 	}
