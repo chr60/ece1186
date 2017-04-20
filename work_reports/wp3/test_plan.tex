@@ -13,7 +13,7 @@
 \titlepage
 \section{Introduction}
 \subsection{Document Identifier}
-This document is the Low-Comotovation Group Test Plan for the design review phase of the Spring 2017 software engineering project.. In this document we detail the testing specifications, requirements, and procedures for the implementation and evaluation of testing procedures.
+This document is the Low-Comotivation Group Test Plan for the design review phase of the Spring 2017 software engineering project.. In this document we detail the testing specifications, requirements, and procedures for the implementation and evaluation of testing procedures.
 
 \subsection{Scope}
 In this document a number of assumptions regarding the projects scope and lifecycle are made. Specifically:
@@ -522,63 +522,105 @@ Author: Michael Ghaben
 %UNIT TEST
 \begin{table}[H]
 	\centering
-	\caption{Load PLC Program via Browse Button}
-	\begin{tabular}{|l|l|}
-		\hline
-		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
-		Integrity Level & 1 \\ \hline
-		Methods & Evaluate the tryPLC() function and Browse Button\\ \hline
-		Inputs &  PLC file selected via 'Browse' button, then clicking 'Load' button \\ \hline
-		Outputs &  'Success' notification displayed \\ \hline
-		Expected Completion & After initialization, but before any trains dispatched\\ \hline
-		Risks and Assumptions & \parbox[t]{10cm}{For automated testing, PLC files exist in PLCResources Folder \\(Other external files may be used normally)}  \\ \hline
-		Responsibility & Wayside Controller\\ \hline
-		\\ \hline
-		Tested By   &  Max Reno\\	\hline
-		Date Tested & \parbox[t]{10cm}{April 19th}\\ \hline
-		Results & FILL IN YOUR RESULTS HERE (SUCCESS/FAIL/REASON(If fail))\\ \hline
-	\end{tabular}
-\end{table}
-
-%UNIT TEST
-\begin{table}[H]
-	\centering
-	\caption{Load PLC Program via File Path}
+	\caption{Load PLC Program}
 	\begin{tabular}{|l|l|}
 		\hline
 		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
 		Integrity Level & 1 \\ \hline
 		Methods & Evaluate the tryPLC() function\\ \hline
-		Inputs &  PLC file selected via entering file path, then clicking 'Load' button \\ \hline
-		Outputs &  'Success' notification displayed \\ \hline
-		Expected Completion & After initialization, but before any trains dispatched\\ \hline
+		Inputs &  PLC file selected via entering file path/browse, then clicking 'Load' button \\ \hline
+		Outputs &  'Success'/'Loaded' notification displayed \\ \hline
+		Expected Completion & 3/29\\ \hline
 		Risks and Assumptions & \parbox[t]{10cm}{For automated testing, PLC files exist in PLCResources Folder \\(Other external files may be used normally)} \\ \hline
 		Responsibility & Wayside Controller\\ \hline
 		\\ \hline
-		Tested By   &  Max Reno\\	\hline
-		Date Tested & \parbox[t]{10cm}{April 19th}\\ \hline
-		Results & FILL IN YOUR RESULTS HERE (SUCCESS/FAIL/REASON(If fail))\\ \hline
+		Tested By   &  Max Reno\\ \hline
+		Date Tested & \parbox[t]{10cm}{April 3rd}\\ \hline
+		Results & Success\\ \hline
 	\end{tabular}
 \end{table}
 
 %UNIT TEST
 \begin{table}[H]
 	\centering
-	\caption{PLC Logic Calculation}
+	\caption{PLC Logic Calculation - Automate Switches}
 	\begin{tabular}{|l|l|}
 		\hline
 		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
 		Integrity Level & 2 \\ \hline
-		Methods & Evaluate runPLC() function\\ \hline
+		Methods & Evaluate runSwitchPLC() function\\ \hline
 		Inputs &  Current block \\ \hline
-		Outputs &  Boolean [] of necessary track state \\ \hline
-		Expected Completion & After calculation before next set of data is passed\\ \hline
-		Risks and Assumptions & \parbox[t]{10cm}{Valid block is passed to function} \\ \hline
+		Outputs &  True/False \\ \hline
+		Expected Completion & 4/3\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Valid expressions used in calculation.} \\ \hline
+		Responsibility & Wayside Controller\\ \hline
+		\\ \hline
+		Tested By   &  Max Reno\\	\hline
+		Date Tested & \parbox[t]{10cm}{April 5th}\\ \hline
+		Results & Success\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{PLC Logic Calculation - Stop Trains}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Evaluate runStopPLC() function\\ \hline
+		Inputs &  Current block \\ \hline
+		Outputs &  True/False \\ \hline
+		Expected Completion & 4/15\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Valid expressions used in calculation.} \\ \hline
 		Responsibility & Wayside Controller\\ \hline
 		\\ \hline
 		Tested By   &  Max Reno\\	\hline
 		Date Tested & \parbox[t]{10cm}{April 19th}\\ \hline
-		Results & FILL IN YOUR RESULTS HERE (SUCCESS/FAIL/REASON(If fail))\\ \hline
+		Results & Success\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{PLC Logic Calculation - Automate Light State}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Evaluate runLightsPLC() function\\ \hline
+		Inputs &  Current block \\ \hline
+		Outputs &  True/False \\ \hline
+		Expected Completion & 4/15\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Valid expressions used in calculation.} \\ \hline
+		Responsibility & Wayside Controller\\ \hline
+		\\ \hline
+		Tested By   &  Max Reno\\	\hline
+		Date Tested & \parbox[t]{10cm}{April 19th}\\ \hline
+		Results & Success\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{PLC Logic Calculation - Automate Crossing State}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Evaluate runCrossingPLC() function\\ \hline
+		Inputs &  Current block \\ \hline
+		Outputs &  True/False \\ \hline
+		Expected Completion & 3/29\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Valid expressions used in calculation.} \\ \hline
+		Responsibility & Wayside Controller\\ \hline
+		\\ \hline
+		Tested By   &  Max Reno\\	\hline
+		Date Tested & \parbox[t]{10cm}{April 3rd}\\ \hline
+		Results & Success\\ \hline
 	\end{tabular}
 \end{table}
 
@@ -594,12 +636,12 @@ Author: Michael Ghaben
 		Inputs &  Select of Line, Section, Block \\ \hline
 		Outputs &  Block\\ \hline
 		Expected Completion & As soon as user makes selection, info is returned\\ \hline
-		Risks and Assumptions & \parbox[t]{10cm}{Current information returned is updated} \\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Current block returned is valid} \\ \hline
 		Responsibility & Wayside Controller\\ \hline
 		\\ \hline
 		Tested By   &  Max Reno\\	\hline
 		Date Tested & \parbox[t]{10cm}{April 19th}\\ \hline
-		Results & FILL IN YOUR RESULTS HERE (SUCCESS/FAIL/REASON(If fail))\\ \hline
+		Results & Success\\ \hline
 	\end{tabular}
 \end{table}
 
@@ -615,13 +657,13 @@ Author: Michael Ghaben
 			Methods & Evaluate setSpeedAuth() function\\ \hline
 			Inputs &  \parbox[t]{10cm}{Block to assign Speed \& Authority to, Authority (as a Block), Speed} \\ \hline
 			Outputs & None\\ \hline
-			Expected Completion & Set indicated Speed and Authority of specified Block \\ \hline
+			Expected Completion & 3/29 \\ \hline
 			Risks and Assumptions & \parbox[t]{10cm}{Block is open and given Speed \& Authority are valid.} \\ \hline
 			Responsibility & Wayside Controller\\ \hline
 			\\ \hline
 			Tested By   &  Max Reno\\	\hline
-			Date Tested & \parbox[t]{10cm}{April 19th}\\ \hline
-			Results & FILL IN YOUR RESULTS HERE (SUCCESS/FAIL/REASON(If fail))\\ \hline
+			Date Tested & \parbox[t]{10cm}{April 14th}\\ \hline
+			Results & Success \\ \hline
 		\end{tabular}
 	\end{table}
 	
@@ -642,7 +684,7 @@ Author: Michael Ghaben
 			\\ \hline
 			Tested By   &  Max Reno\\	\hline
 			Date Tested & \parbox[t]{10cm}{April 19th}\\ \hline
-			Results & FILL IN YOUR RESULTS HERE (SUCCESS/FAIL/REASON(If fail))\\ \hline
+			Results & Success\\ \hline
 		\end{tabular}
 	\end{table}
 	
@@ -655,16 +697,16 @@ Author: Michael Ghaben
 			\hline
 			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
 			Integrity Level & 3 \\ \hline
-			Methods & Test PLC code and setSwitchState()\\ \hline
+			Methods & Test runSwitchPLC() and Track\\ \hline
 			Inputs &  Block containing desired switch\\ \hline
-			Outputs &  True/False result of action completed\\ \hline
-			Expected Completion & Switch state is opposite of original state. \\ \hline
+			Outputs &  (Track Successfully Manipulated)\\ \hline
+			Expected Completion & 4/3 \\ \hline
 			Risks and Assumptions & \parbox[t]{10cm}{Block passed to function contains a valid switch, and that block is not occupied.} \\ \hline
 			Responsibility & Wayside Controller\\ \hline
 			\\ \hline
 			Tested By   &  Max Reno\\	\hline
-			Date Tested & \parbox[t]{10cm}{April 19th}\\ \hline
-			Results & FILL IN YOUR RESULTS HERE (SUCCESS/FAIL/REASON(If fail))\\ \hline
+			Date Tested & \parbox[t]{10cm}{April 5th}\\ \hline
+			Results & Success\\ \hline
 		\end{tabular}
 	\end{table}
 	
@@ -679,13 +721,13 @@ Author: Michael Ghaben
 			Methods & Evaluate manualSwitch() function and setSwitchState()\\ \hline
 			Inputs &  Block containing desired switch\\ \hline
 			Outputs &  True/False result of action completed\\ \hline
-			Expected Completion & Switch state is opposite of original state. \\ \hline
+			Expected Completion & 3/29 \\ \hline
 			Risks and Assumptions & \parbox[t]{10cm}{Block passed to function contains a valid switch, and that block is not occupied.} \\ \hline
 			Responsibility & Wayside Controller\\ \hline
 			\\ \hline
 			Tested By   &  Max Reno\\	\hline
-			Date Tested & \parbox[t]{10cm}{April 19th}\\ \hline
-			Results & FILL IN YOUR RESULTS HERE (SUCCESS/FAIL/REASON(If fail))\\ \hline
+			Date Tested & \parbox[t]{10cm}{April 5th}\\ \hline
+			Results & Success\\ \hline
 		\end{tabular}
 	\end{table}
 

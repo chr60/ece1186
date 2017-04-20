@@ -88,29 +88,6 @@ public class TrackPanel extends JPanel{
 		add(dropdown_block);
 		dropdown_block.setToolTipText("BLOCK");
 
-		JButton btnCloseTrack = new JButton("Close Track");
-		btnCloseTrack.setBounds(77, 195, 87, 23);
-		add(btnCloseTrack);
-		btnCloseTrack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				trackClosed = true;
-				currWorkingWS.closeBlock(brokenList.get(0));
-			}
-		});
-
-
-		JButton btnPerformMaintenance = new JButton("Maintenance");
-		btnPerformMaintenance.setBounds(194, 195, 93, 23);
-		add(btnPerformMaintenance);
-		btnPerformMaintenance.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(trackClosed == true){
-					currWorkingWS.transferMaintenance(brokenList.get(0));
-					brokenList.remove(0);
-					trackClosed = false;
-				}
-			}
-		});
 
 		JLabel station_label = new JLabel("Station?");
 		station_label.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -362,6 +339,59 @@ public class TrackPanel extends JPanel{
 			}
 		});
 
+		JButton btnCloseTrack = new JButton("Close Track");
+		btnCloseTrack.setBounds(77, 195, 87, 23);
+		add(btnCloseTrack);
+		btnCloseTrack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				trackClosed = true;
+// GETTING BLOCK CURR SELECTED
+				String block = (String) dropdown_block.getSelectedItem();
+				String section = (String) dropdown_segment.getSelectedItem();
+				String line = (String) dropdown_line.getSelectedItem();
+				//convert block from string to Integer
+				int blockNum;
+				try{
+					blockNum = Integer.parseInt(block);
+				}catch(NumberFormatException num){
+					blockNum = dummyTrack.getSection(line, section).keySet().toArray(new Integer [0])[0];
+				}
+
+				Block closeThisBlock = dummyTrack.getBlock(line, section, blockNum);
+
+				currWorkingWS.closeBlock(closeThisBlock);
+			}
+		});
+
+
+		JButton btnPerformMaintenance = new JButton("Maintenance");
+		btnPerformMaintenance.setBounds(194, 195, 93, 23);
+		add(btnPerformMaintenance);
+		btnPerformMaintenance.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// GETTING BLOCK CURR SELECTED
+								String block = (String) dropdown_block.getSelectedItem();
+								String section = (String) dropdown_segment.getSelectedItem();
+								String line = (String) dropdown_line.getSelectedItem();
+								//convert block from string to Integer
+								int blockNum;
+								try{
+									blockNum = Integer.parseInt(block);
+								}catch(NumberFormatException num){
+									blockNum = dummyTrack.getSection(line, section).keySet().toArray(new Integer [0])[0];
+								}
+
+								Block sendMaintToBlock = dummyTrack.getBlock(line, section, blockNum);
+
+				if(trackClosed == true){
+					currWorkingWS.transferMaintenance(sendMaintToBlock);
+					if(!(brokenList.get(0) == null)){
+						brokenList.remove(0);
+					}
+					trackClosed = false;
+				}
+			}
+		});
 
 	}
 

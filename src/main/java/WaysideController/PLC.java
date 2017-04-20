@@ -67,6 +67,11 @@ public class PLC {
     ArrayList<Block> previousOccupancy = this.track.getOccupiedBlocks(this.line);
   }
 
+  /**
+   * Decides whether or not to Stop a train.
+   * @throws ScriptException [description]
+   * @bug Need to move all replacements of "block", "section", "prev" to a single method for clarity for all runPLC functions
+   */
   public void runStopPLC() throws ScriptException{
     ScriptEngineManager manager = new ScriptEngineManager();
     ScriptEngine logicengine1 = manager.getEngineByName("js");

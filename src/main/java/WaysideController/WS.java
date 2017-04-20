@@ -53,6 +53,8 @@ public class WS {
    */
   public void closeBlock(Block b){
     this.track.lateralLookup(b).setClosed(true);
+    this.track.lateralLookup(b).setOccupied(true);
+    this.waysideGui.printNotification("Block " + b.blockNum() +  " Closed by CTC");
   }
 
   /**
@@ -111,6 +113,7 @@ public class WS {
 	/**
 	 * Polls track for occupancy of blocks, and creates copies of Blocks only only occupancy attributes.
 	 * @return List of copied blocks with their occupancy statuses same as track
+	 * @bug Not giving speed with block back to CTC
 	 */
 	public ArrayList<Block> getOccupancy(){
 		ArrayList<Block> occupancyList = new ArrayList<Block>();
@@ -139,6 +142,8 @@ public class WS {
 				b.getAssociatedSwitch().setSwitchState(false);
 			else if(b.viewSwitchState()==false)
 				b.getAssociatedSwitch().setSwitchState(true);
+      if(this.waysideGui!= null)
+        this.waysideGui.printNotification(new String(this.name + " - Switch on Block " + b.blockNum() + " Manually"));
 			return true;
 		}
 		return false;
@@ -156,7 +161,8 @@ public class WS {
 				liveBlock.getAssociatedSwitch().setSwitchState(false);
 			else if(liveBlock.viewSwitchState()==false)
 				liveBlock.getAssociatedSwitch().setSwitchState(true);
-			this.waysideGui.printNotification(new String(this.name + " - Switch on Block " + liveBlock.blockNum() + " switched by CTC on "));
+      if(this.waysideGui!= null)
+			   this.waysideGui.printNotification(new String(this.name + " - Switch on Block " + liveBlock.blockNum() + " switched by CTC "));
 			return true;
 		}
 		return false;
@@ -213,6 +219,7 @@ public class WS {
     b.setBroken(false);
     b.setOccupied(false);
     b.setClosed(false);
+    this.waysideGui.printNotification("CTC sent maintenance to Block " + b.blockNum());
   }
 
   /**
