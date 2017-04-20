@@ -39,6 +39,9 @@ public class TCBrakePanel extends javax.swing.JPanel {
      */
     private JTextArea operatingLogs;
 
+    /**
+     * Text area to print announcments to.
+     */
     private JTextArea announcementLogs;
 
     /**
@@ -57,10 +60,6 @@ public class TCBrakePanel extends javax.swing.JPanel {
      */
     private boolean inManualMode;
 
-    public Double distanceTraveledToStation = 0.0;
-    
-    public Double distanceTraveledToAuthority = 0.0; 
-
     /**
      * The speed controller object used to communicate between.
      */
@@ -76,22 +75,59 @@ public class TCBrakePanel extends javax.swing.JPanel {
      */
     public boolean isEmergency;
 
+    /**
+     * Indicates if a train is approaching a station.
+     */
+    private boolean approachingStation;
 
-    public boolean approachingStation;
+    /**
+     * The message contained in a beacon indicating how far the station is
+     * from the beacon.
+     */
+    private String beaconDistanceMessage;
 
-    public String message;
+    /**
+     * Counter to indicate how long the train was at the station for. 
+     */
+    private int waitingAtStationCounter;
 
-    public int tickNum;
-
-    public boolean atStation;
+    /**
+     * Indicates if a train is currently at a station.
+     */
+    private boolean atStation;
     
-    public boolean willExceedAuthority; 
+    /**
+     * Flag used to indicate when a train will start to exceed the authority.
+     */
+    private boolean willExceedAuthority; 
     
-    public Double distanceToAuthority; 
+    /**
+     * The distance from the from the train when the flag is first set, to the authority block.
+     */
+    private Double distanceToAuthority; 
     
+    /**
+     * A list of the stations that the train has visited. 
+     */
     private LinkedList<String> stationsVisited; 
     
+    /**
+     * Indicated what side of the track the station is on. 
+     */
     private String stationSide; 
+    
+    /**
+     * Distance traveled when the train reads a beacon and should start preparing 
+     * to stop at a station. 
+     */
+    public Double distanceTraveledToStation = 0.0;
+    
+    /**
+     * Distance that the train has traveled since detecting the authority is approaching. 
+     */
+    public Double distanceTraveledToAuthority = 0.0; 
+    
+    
     
     /**
      * Constructor for creating a TCBrakePanel object without a selected train.
@@ -105,7 +141,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
 
         this.distanceTraveledToStation = 0.0;
         this.distanceTraveledToAuthority = 0.0; 
-        this.tickNum = 0;
+        this.waitingAtStationCounter = 0;
         this.atStation = false;
         this.stationsVisited = new LinkedList<String>(); 
     }
@@ -275,35 +311,35 @@ public class TCBrakePanel extends javax.swing.JPanel {
             if (this.selectedTrain.getVelocity() == 0.0){
 
                 // wait for 6 clock ticks
-                if (this.tickNum == 0){
+                if (this.waitingAtStationCounter == 0){
                     this.approachingStation = false;
                     this.atStation = true; // at the station
                     this.announcementLogbook.add("Arriving at " + this.selectedTrain.getGPS().getCurrBlock().getStationName());
                     this.stationsVisited.add(this.selectedTrain.getGPS().getCurrBlock().getStationName());
                     System.out.println("Station Visited: " + this.selectedTrain.getGPS().getCurrBlock().getStationName());
                     this.printLogs();
-                    this.tickNum++;
-                }else if (this.tickNum == 1){ // open left doors
+                    this.waitingAtStationCounter++;
+                }else if (this.waitingAtStationCounter == 1){ // open left doors
                     this.selectedTrain.setLeftDoor(1);
                     //this.selectedTrain.updatePassengerCount();
-                    this.tickNum++;
-                }else if (this.tickNum == 2){
-                    this.tickNum++;
-                }else if (this.tickNum == 3){
+                    this.waitingAtStationCounter++;
+                }else if (this.waitingAtStationCounter == 2){
+                    this.waitingAtStationCounter++;
+                }else if (this.waitingAtStationCounter == 3){
                     this.selectedTrain.setLeftDoor(0);
                     this.selectedTrain.setRightDoor(1);
-                    this.tickNum++;
-                }else if (this.tickNum == 4){
-                    this.tickNum++;
-                }else if (tickNum == 5){
+                    this.waitingAtStationCounter++;
+                }else if (this.waitingAtStationCounter == 4){
+                    this.waitingAtStationCounter++;
+                }else if (waitingAtStationCounter == 5){
                     this.selectedTrain.setRightDoor(0);
-                    this.tickNum++;
-                }else if (this.tickNum == 6){
+                    this.waitingAtStationCounter++;
+                }else if (this.waitingAtStationCounter == 6){
                     this.resetBrakingConditions(); // continue as normal
                     this.announcementLogbook.add("Departing " + this.selectedTrain.getGPS().getCurrBlock().getStationName());
                     this.printLogs();
                     this.distanceTraveledToStation = 0.0;
-                    this.tickNum = 0;
+                    this.waitingAtStationCounter = 0;
                     this.atStation = false;
                 }
             }
@@ -336,11 +372,10 @@ public class TCBrakePanel extends javax.swing.JPanel {
 
     /**
      * Sends a request to the train to tell the wayside controller that the train needs to be fixed.
-     *
      */
     private void requestFix(){
 
-        //this.selectedTrain.requestFix(true);
+        this.selectedTrain.requestFix(true);
     }
 
     /**
@@ -355,6 +390,12 @@ public class TCBrakePanel extends javax.swing.JPanel {
         else{ return false; }
     }
     
+    /**
+     * Checks if the train is going to exceed its authority 
+     * when in MBO mode, and stops if it will using the service brake. 
+     * 
+     * @return 
+     */
     private boolean willExceedAuthorityMBO(){
     
         if (this.willExceedAuthority == false){
@@ -374,8 +415,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
                     }
                 }
             
-            }
-        
+            }  
         }
         
         
@@ -415,7 +455,8 @@ public class TCBrakePanel extends javax.swing.JPanel {
     }
     
     /**
-     * Checks if the train is going to exceed authority, and stops the train if it will using the service brake.
+     * Checks if the train is going to exceed authority when in FBM,
+     * and stops the train if it will using the service brake.
      */
     private boolean willExceedAuthorityFBM(){
 
@@ -522,7 +563,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
     }
 
     /**
-     * Reads the message from the beacon from the current block the train is on,
+     * Reads the beaconDistanceMessage from the beacon from the current block the train is on,
      * and returns the distance to the next station. Sets a flag when this condition is met to signal a
      * train is approaching the station.
      *
@@ -538,12 +579,12 @@ public class TCBrakePanel extends javax.swing.JPanel {
                 Beacon beacon = beacons.get(b);
 
                 if (this.selectedTrain.getGPS().getDistIntoBlock() >= beacon.getDistance()){ // at a beacon
-                    System.out.println(beacon.getBeaconMessage().replaceAll("\"", ""));
+
                     String[] split = beacon.getBeaconMessage().split(","); 
                     String stationName = split[1].replace("_", " "); 
                     
                     if (this.stationsVisited.contains(stationName) == false){ // was not at station before
-                        this.message = split[0]; // get distance to station
+                        this.beaconDistanceMessage = split[0]; // get distance to station
                         this.stationSide = split[2]; // get the station side
                         this.approachingStation = true;                
                     }
@@ -556,8 +597,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
      *
      * Determines the distance traveled during a given amount of seconds;
      *
-     * @param Drate
-     * @param stopTime
+     * @param stopTime the time to determine the distance covered in.
      * @return
      */
     private Double distanceTraveled(Double stopTime){
@@ -578,8 +618,8 @@ public class TCBrakePanel extends javax.swing.JPanel {
 
         if (this.approachingStation == true){ // start to calculate distance
 
-            Double x = Double.parseDouble(this.message); // parse message
-
+            Double x = Double.parseDouble(this.beaconDistanceMessage); // parse beaconDistanceMessage
+            System.out.println("Beacon Message: " + x); 
             Double distElapsed = this.distanceTraveled(1.0); // distanced traveled in 1 second
             Double distTrainToStation = x - this.distanceTraveledToStation;
 

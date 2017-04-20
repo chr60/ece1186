@@ -351,7 +351,6 @@ public class Launcher extends javax.swing.JFrame {
      */
     private void initBeacons(String[] fnames){
         String fLine; 
-  //      String[] splitLine;
         
         try{
         
@@ -362,13 +361,6 @@ public class Launcher extends javax.swing.JFrame {
 
                 while((fLine = br.readLine()) != null){
                     this.parseBeaconFile(fLine);
-//                    splitLine = fLine.split(" "); 
-//                    String line = splitLine[0];
-//                    String section = splitLine[1]; 
-//                    Integer blockNum = Integer.parseInt(splitLine[2]); 
-//                    Double distIntoBlock = Double.parseDouble(splitLine[3]); 
-//                    String beaconMessage = splitLine[4]; 
-//                    this.placeBeacon(line, section, blockNum, distIntoBlock, beaconMessage);
                 }
             }
         }catch(Exception e){System.out.println(e.getMessage());}       
@@ -390,8 +382,6 @@ public class Launcher extends javax.swing.JFrame {
         Double distIntoBlock = Double.parseDouble(list.get(3)); 
         String beaconMessage = list.get(4);
         this.placeBeacon(line, section, blockNum, distIntoBlock, beaconMessage);
-
-        System.out.println(list);
     }
 
     /**
