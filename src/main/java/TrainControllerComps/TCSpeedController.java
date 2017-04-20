@@ -190,10 +190,14 @@ public class TCSpeedController extends javax.swing.JPanel {
     public void setSetSpeed(Double setSpeed){
    
         if (this.inManualMode){ // in manual mode
-            if (setSpeed > this.selectedTrain.getSuggestedSpeed()){
+            
+            if (this.selectedTrain.getGPS().getCurrBlock().compareTo(this.selectedTrain.getAuthority().getCurrBlock()) != 0){
                 
-                this.setSpeed = Double.parseDouble(String.format("%.2f", this.selectedTrain.getSuggestedSpeed()));; 
-            }else{ this.setSpeed = setSpeed; }
+                if (setSpeed > this.selectedTrain.getGPS().getCurrBlock().getSpeedLimit()){
+
+                    this.setSpeed = Double.parseDouble(String.format("%.2f", this.selectedTrain.getGPS().getCurrBlock().getSpeedLimit()));; 
+                }else{ this.setSpeed = setSpeed; }
+            }
         }else{ // in automatic mode
             if (setSpeed > this.selectedTrain.getSuggestedSpeed()){
                 this.setSpeed = Double.parseDouble(String.format("%.2f", this.selectedTrain.getSuggestedSpeed())); 
@@ -288,8 +292,8 @@ public class TCSpeedController extends javax.swing.JPanel {
      */
     private void ignoreSpeedChecksManualMode(){
            
-        if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == true){ this.setSpeed = 0.0; }
-        else if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == false){ this.setSpeed = 0.0; }    
+        if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == true){ this.setSetSpeed(0.0); }
+        else if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == false){ this.setSetSpeed(0.0); }    
     }
     
     /**
@@ -300,11 +304,9 @@ public class TCSpeedController extends javax.swing.JPanel {
            
         Double speedLimit = .621371*this.selectedTrain.getGPS().getCurrBlock().getSpeedLimit(); 
         if (speedLimit != null){
-            if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == true){ this.setSpeed = 0.0; }
-            else if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == false){ this.setSpeed = 0.0; }
-            else{
-                this.setSpeed = (.621371*this.selectedTrain.getGPS().getCurrBlock().getSpeedLimit());
-            }   
+            if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == true){ this.setSetSpeed(0.0); }
+            else if (this.brakePanel.ignoreSpeed == true && this.brakePanel.isEmergency == false){ this.setSetSpeed(0.0); }
+            else{ this.setSpeed = (.621371*this.selectedTrain.getGPS().getCurrBlock().getSpeedLimit()); }   
         }
     }
 
@@ -338,18 +340,6 @@ public class TCSpeedController extends javax.swing.JPanel {
 
         this.inManualMode = b;
     }
-
-    /**
-     * Sets the max value of the speed controller slider. Note, this strictly only
-     * changes the slider based on the given parameter, and has nothing to do with the selected train.
-     *
-     * @param max the value to change the speed controller's slider to.
-     */
-//    public void setSliderMax(int max){
-//
-//        this.speedSlider.setMaximum(max);
-//        this.maxSpeedSlider.setText(Integer.toString(this.speedSlider.getMaximum()));
-//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -473,13 +463,17 @@ public class TCSpeedController extends javax.swing.JPanel {
      */
     private void setSpeed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setSpeed
 
-        String log;
-        this.setSpeed = (double)this.speedSlider.getValue()/100.0;
         
-        log = "Telling train to set speed to " + this.setSpeed;
-        this.brakePanel.resetBrakingConditions();
-        this.logBook.add(log);
-        this.printLogs();
+        if (this.selectedTrain.getAuthority().getCurrBlock().compareTo(this.selectedTrain.getCurrBlock()) != 0){
+        
+            this.setSetSpeed((double)this.speedSlider.getValue()/100.0);
+            //this.setSpeed = (double)this.speedSlider.getValue()/100.0;
+
+            this.brakePanel.resetBrakingConditions();
+        }else{
+            this.logBook.add("Cannot exceed Authority"); 
+            this.printLogs();
+        }
     }//GEN-LAST:event_setSpeed
 
     /**
