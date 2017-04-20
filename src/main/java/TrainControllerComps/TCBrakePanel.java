@@ -15,6 +15,7 @@ import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import TrainModel.*;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.Stack;
 
 /**
  * This class is responsible for applying and managing the use of a train's braking
@@ -127,7 +128,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
      */
     public Double distanceTraveledToAuthority = 0.0; 
     
-    
+    private Stack<String> visitedStationStack;
     
     /**
      * Constructor for creating a TCBrakePanel object without a selected train.
@@ -144,6 +145,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
         this.waitingAtStationCounter = 0;
         this.atStation = false;
         this.stationsVisited = new LinkedList<String>(); 
+        this.visitedStationStack = new Stack<String>(); 
     }
 
     /**
@@ -315,7 +317,11 @@ public class TCBrakePanel extends javax.swing.JPanel {
                     this.approachingStation = false;
                     this.atStation = true; // at the station
                     this.announcementLogbook.add("Arriving at " + this.selectedTrain.getGPS().getCurrBlock().getStationName());
-                    this.stationsVisited.add(this.selectedTrain.getGPS().getCurrBlock().getStationName());
+                    
+                    // pop old station
+                    if (this.visitedStationStack.isEmpty() == false){this.visitedStationStack.pop(); }
+                    this.visitedStationStack.add(this.selectedTrain.getGPS().getCurrBlock().getStationName()); // add new one
+                    
                     System.out.println("Station Visited: " + this.selectedTrain.getGPS().getCurrBlock().getStationName());
                     this.printLogs();
                     this.waitingAtStationCounter++;
@@ -581,9 +587,11 @@ public class TCBrakePanel extends javax.swing.JPanel {
                 if (this.selectedTrain.getGPS().getDistIntoBlock() >= beacon.getDistance()){ // at a beacon
 
                     String[] split = beacon.getBeaconMessage().split(","); 
-                    String stationName = split[1].replace("_", " "); 
+                    String stationName = split[1].replace("_", " ");
+                    String stationPeek = ""; 
+                    if (this.visitedStationStack.isEmpty() == false) { stationPeek = this.visitedStationStack.peek(); }
                     
-                    if (this.stationsVisited.contains(stationName) == false){ // was not at station before
+                    if (stationPeek.equals(stationName) == false || this.visitedStationStack.isEmpty()){ // we werent just at this station
                         this.beaconDistanceMessage = split[0]; // get distance to station
                         this.stationSide = split[2]; // get the station side
                         this.approachingStation = true;                
