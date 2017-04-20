@@ -347,7 +347,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
                 if (this.stationSide.equals("L")){ this.selectedTrain.setLeftDoor(1); }
                 else if (this.stationSide.equals("R")){ this.selectedTrain.setRightDoor(1); }
                 this.selectedTrain.updatePassengerCount();
-				this.waitingAtStationCounter++; 
+		this.waitingAtStationCounter++; 
 
             }else if (this.waitingAtStationCounter == 11){ // close the doors
                 
