@@ -21,17 +21,22 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="openDispatchedTrains"/>
               </Events>
             </MenuItem>
+<<<<<<< HEAD
+=======
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem6">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Failures"/>
               </Properties>
             </MenuItem>
+>>>>>>> master
             <MenuItem class="javax.swing.JMenuItem" name="TrainDetailMenuItem">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Selected Train Detail"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="openTrainGUI"/>
+<<<<<<< HEAD
+=======
               </Events>
             </MenuItem>
           </SubComponents>
@@ -78,6 +83,7 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem4ActionPerformed"/>
+>>>>>>> master
               </Events>
             </MenuItem>
           </SubComponents>
@@ -581,9 +587,6 @@
           </StringArray>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="annoucementDropDownActionPerformed"/>
-      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>

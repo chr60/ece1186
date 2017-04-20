@@ -157,10 +157,14 @@ public class WS {
 	public boolean manualSwitchCTC(Block b){
 		Block liveBlock = this.track.lateralLookup(b);
 		if(liveBlock.hasSwitch() && !liveBlock.getOccupied()){
-			if(liveBlock.viewSwitchState()==true)
-				liveBlock.getAssociatedSwitch().setSwitchState(false);
-			else if(liveBlock.viewSwitchState()==false)
-				liveBlock.getAssociatedSwitch().setSwitchState(true);
+      if(liveBlock.viewSwitchState()==true){
+        liveBlock.setManualOverride(!liveBlock.getManualOverride());
+        liveBlock.getAssociatedSwitch().setSwitchState(false);
+      }
+      else if(liveBlock.viewSwitchState()==false){
+        liveBlock.setManualOverride(!liveBlock.getManualOverride());
+        liveBlock.getAssociatedSwitch().setSwitchState(true);
+      }
       if(this.waysideGui!= null)
 			   this.waysideGui.printNotification(new String(this.name + " - Switch on Block " + liveBlock.blockNum() + " switched by CTC "));
 			return true;

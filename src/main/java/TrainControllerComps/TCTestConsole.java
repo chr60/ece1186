@@ -1077,6 +1077,7 @@ public class TCTestConsole extends javax.swing.JFrame {
         this.selectedTrain = this.trainHandler.findTrain(this.dispatchedTrains);
         
         TrainController tc = this.trainHandler.getOpenTrainControllers().get(this.dispatchedTrains-1);
+        tc.setTrainHandler(this.trainHandler);
         tc.setTestConsole(this);
         tc.testWindowOpen = true; 
         
