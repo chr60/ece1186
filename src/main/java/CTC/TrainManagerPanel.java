@@ -84,8 +84,6 @@ public class TrainManagerPanel extends JPanel {
       }
 
       public void updateTable(ArrayList<TrainManager> managers){
-        System.out.println("here in update table");
-
         String mode = getModeForPanel();
         String lineForTM = getTrainManagerLine();
         TrainManager trainManager = managers.get(0);

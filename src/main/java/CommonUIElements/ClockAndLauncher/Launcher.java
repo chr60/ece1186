@@ -207,6 +207,7 @@ public class Launcher extends javax.swing.JFrame {
         if(ctc != null){
           // CTC - ask track for trainId
           ctc.getTrainPanel().updateTrainIDinList(trainManagers.get(0), globalTrack);
+          trainManagers.get(0).setPreviousOccList(trainManagers.get(0).getOccupancyList());
         }
 
        this.initBeacons(this.beaconFileNames);
@@ -258,11 +259,13 @@ public class Launcher extends javax.swing.JFrame {
             trainGUI.updateGUI(trainGUI.getCurrT());
         }
 
-        // CTC - ask track for trainId
-        
-        if (ctc != null){
-            ctc.getTrainPanel().updateTrainIDinList(trainManagers.get(0), globalTrack);        
+
+        if(ctc != null){
+          // CTC - ask track for trainId
+          ctc.getTrainPanel().updateTrainIDinList(trainManagers.get(0), globalTrack);
+          trainManagers.get(0).setPreviousOccList(trainManagers.get(0).getOccupancyList());
         }
+
 
     }
 
