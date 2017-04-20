@@ -37,6 +37,7 @@ public class TrainManagerPanel extends JPanel {
           this.trainManager = tm;
           this.managerList = ml;
           this.lastClockTickAuthority = 0;
+          this.modeRunning = "FB";
           //this.modeRunning = getModeForPanel();
 
           setLineAssign(tm.getLine());
@@ -70,6 +71,10 @@ public class TrainManagerPanel extends JPanel {
         this.modeRunning = mode;
       }
 
+      public String getModeForPanel(){
+        return modeRunning;
+      }
+
       public void setLineAssign(String line){
         this.lineAssign = line;
       }
@@ -79,6 +84,7 @@ public class TrainManagerPanel extends JPanel {
       }
 
       public void updateTable(ArrayList<TrainManager> managers){
+        String mode = getModeForPanel();
         String lineForTM = getTrainManagerLine();
         TrainManager trainManager = managers.get(0);
 
@@ -92,12 +98,13 @@ public class TrainManagerPanel extends JPanel {
         }
 
         for(int j = 0; j < trainManager.getTrainList().size(); j++){
+
           assert( j != 0);
           managerTable.setValueAt(trainManager.getLine(),j, 0);
           managerTable.setValueAt(trainManager.getTrainList().get(j).getID(), j, 1);
           managerTable.setValueAt(trainManager.getTrainList().get(j).getPosition().blockNum(), j, 2);
 // mode check - do differently if in MBO mode
-          if(this.modeRunning.equals("MBO")){
+          if(mode.equals("MBO")){
             if(trainManager.getTrainList().get(j).getDistance() == null){
               managerTable.setValueAt("0.0", j, 3);
             }else{

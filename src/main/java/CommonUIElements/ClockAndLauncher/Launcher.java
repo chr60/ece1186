@@ -216,7 +216,7 @@ public class Launcher extends javax.swing.JFrame {
             // CTC - calls wayside to get updated list of track occupancy
             ctc.getTrainPanel().updateTrainPositionsToManager(trainManagers);
             // CTC - prints active list of trains from train manager to GUI
-            //ctc.getTrainManagerPanel().updateTable(trainManagers);
+            ctc.getTrainManagerPanel().updateTable(trainManagers);
         }
 
         trainHandler.pollYard();
@@ -225,8 +225,10 @@ public class Launcher extends javax.swing.JFrame {
             trainGUI.updateGUI(trainGUI.getCurrT());
         }
 
-        // CTC - ask track for trainId
-        ctc.getTrainPanel().updateTrainIDinList(trainManagers.get(0), globalTrack);
+        if(ctc != null){
+          // CTC - ask track for trainId
+          ctc.getTrainPanel().updateTrainIDinList(trainManagers.get(0), globalTrack);
+        }
 
     }
 
