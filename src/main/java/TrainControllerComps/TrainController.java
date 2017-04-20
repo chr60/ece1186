@@ -1046,9 +1046,9 @@ public class TrainController extends javax.swing.JFrame {
      * @param evt the sender of the action, i.e., the "Dispatched Trains" button from the menu bar.
      */
     private void openDispatchedTrains(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openDispatchedTrains
-//        TCDispatchedTrainFrame dispatched = new TCDispatchedTrainFrame(this.trainList);
-//        dispatched.setVisible(true);
-//        dispatched.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        TCDispatchedTrainFrame dispatched = new TCDispatchedTrainFrame(this.trainHandler);
+        dispatched.setVisible(true);
+        dispatched.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_openDispatchedTrains
 
     /**

@@ -252,7 +252,7 @@ public class Launcher extends javax.swing.JFrame {
             // CTC - calls wayside to get updated list of track occupancy
             ctc.getTrainPanel().updateTrainPositionsToManager(trainManagers);
             // CTC - prints active list of trains from train manager to GUI
-            //ctc.getTrainManagerPanel().updateTable(trainManagers);
+            ctc.getTrainManagerPanel().updateTable(trainManagers);
         }
 
         trainHandler.pollYard();
@@ -641,8 +641,13 @@ public class Launcher extends javax.swing.JFrame {
      * @param evt the sender of the event, i.e., the "Train Controller" button.
      */
     private void openTrainController(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTrainController
-
+        
+        /**
+         * @bug If this button is clicked before a train is dispatched, then closed, 
+         * and then a train is dispatched, a NullPointerException will be thrown.
+         */
         TrainController tc = new TrainController();
+        tc.setTrainHandler(this.trainHandler);
         tc.setVisible(true);
         tc.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 

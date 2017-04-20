@@ -37,6 +37,10 @@ public class TrainHandler {
 		return trains;
 	}
         
+        public ArrayList<String> getTrainIDs(){
+            return this.trainIDs;
+        }
+        
         /**
          * Sets the speed at which the system should run.
          * 
