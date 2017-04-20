@@ -21,8 +21,9 @@ public class PLC {
   private String line;
   private HashMap<String, String> switchMap = new HashMap<String, String>();	//Key is Switch label (Switch #), return val is expression
   private HashMap<Block, String> crossingMap = new HashMap<Block, String>();	//Block # isblock, return val is expression
+  private HashMap<Integer, String> stopMap = new HashMap<Integer, String>();  //Key is Block #, return val is safe stop expression
+  private HashMap<Block, String> lightMap = new HashMap<Block, String>();  //Key is Block, return val is lights expression
   private ArrayList<Block> previousOccupancy = new ArrayList<Block>();
-
   /**
    * Constructor for PLC
    * @param  TrackModel track - global track
@@ -50,6 +51,10 @@ public class PLC {
         this.switchMap.put(expression[0] + " " + expression[1] , expression[2]);
       }else if(comp.equals("Crossing")){
         this.crossingMap.put(track.getBlock(this.line, expression[1], Integer.parseInt(expression[2])), expression[3]);
+      }else if(comp.equals("Stop")){
+        this.stopMap.put(track.getBlock(this.line, Integer.parseInt(expression[1])).blockNum(), expression[2]);
+      }else if(comp.equals("Light")){
+        this.lightMap.put(track.getBlock(this.line, Integer.parseInt(expression[1])), expression[2]);
       }
     }
     reader.close();
@@ -60,6 +65,56 @@ public class PLC {
    */
   public void updateOccupancy(){
     ArrayList<Block> previousOccupancy = this.track.getOccupiedBlocks(this.line);
+  }
+
+  public void runStopPLC() throws ScriptException{
+    ScriptEngineManager manager = new ScriptEngineManager();
+    ScriptEngine logicengine1 = manager.getEngineByName("js");
+    ScriptEngine logicengine2 = manager.getEngineByName("js");
+    ScriptEngine logicengine3 = manager.getEngineByName("js");
+
+    StringBuilder sb;
+    int loc, loc2;
+    for(Integer bNum : this.stopMap.keySet()){
+      if(this.track.getBlock(line, bNum)!=null){
+        sb = new StringBuilder(stopMap.get(bNum));
+
+        //replaces ALL "block_letter_number" with block occupancy
+        while((loc = sb.indexOf("block")) != -1){
+          loc2 = loc;
+          while(sb.charAt(loc2) != ')')
+          ++loc2;
+          String [] toReplace = sb.substring(loc, loc2).split("_");
+          String section = toReplace[1];
+          Integer blockNum = Integer.parseInt(toReplace[2]);
+          sb.replace(loc, loc2, this.track.getBlock(this.line, section, blockNum).getOccupied().toString());
+        }
+
+        //replaces ALL "section_Letter" with section occupancy
+        while((loc = sb.indexOf("section")) != -1){
+          loc2 = loc;
+          while(sb.charAt(loc2) != ')')
+          ++loc2;
+          String [] toReplace = sb.substring(loc, loc2).split("_");
+          String section = toReplace[1];
+          sb.replace(loc, loc2, this.track.sectionOccupancy(line, section).toString());
+        }
+
+
+        //evaluate TMR logic
+        Object result1 = logicengine1.eval(sb.toString());
+        Object result2 = logicengine2.eval(sb.toString());
+        Object result3 = logicengine3.eval(sb.toString());
+        System.out.println(Boolean.TRUE.equals(result1));
+        System.out.println(Boolean.TRUE.equals(result2));
+        System.out.println(Boolean.TRUE.equals(result3));
+        //'VOTING' - if any blocks in safety 'buffer' are occupied, set speed to -1 to stop train.
+        if ((Boolean.TRUE.equals(result1) && Boolean.TRUE.equals(result2)) ||
+        (Boolean.TRUE.equals(result1) && Boolean.TRUE.equals(result3)) ||
+        (Boolean.TRUE.equals(result2) && Boolean.TRUE.equals(result3)) )
+          this.track.getBlock(line, bNum).setSuggestedSpeed(new Double(-1));
+      }
+    }
   }
 
   /**
@@ -190,14 +245,68 @@ public class PLC {
       }
   }//runCrossingPLC
 
-  public void lightsPLC(){
-    HashMap<String, ArrayList<Block>> leafMap = this.track.viewLeafMap();
-    HashMap<Block, Lights> lightsMap = this.track.viewLightsMap();
-    for(String s : leafMap.keySet()){
-      ArrayList<Block> leaves = leafMap.get(s);
-      for(Block b : leaves){
+  public void runLightsPLC()  throws ScriptException{
+    ScriptEngineManager manager = new ScriptEngineManager();
+    ScriptEngine logicengine1 = manager.getEngineByName("js");
+    ScriptEngine logicengine2 = manager.getEngineByName("js");
+    ScriptEngine logicengine3 = manager.getEngineByName("js");
+
+    // HashMap<String, ArrayList<Block>> leafMap = this.track.viewLeafMap();
+    StringBuilder sb;
+    int loc, loc2;
+
+    for(Block b : this.track.viewLightsMap().keySet()){
+      if(lightMap.keySet().contains(b)){
+        sb = new StringBuilder(lightMap.get(b));
+
+        while((loc = sb.indexOf("prev")) != -1){
+          loc2 = loc;
+          while(sb.charAt(loc2) != ')')
+          ++loc2;
+          String [] toReplace = sb.substring(loc, loc2).split("_");
+          String section = toReplace[1];
+          Integer blockNum = Integer.parseInt(toReplace[2]);
+          Block toCheck = this.track.getBlock(line, section, blockNum);
+          if(previousOccupancy.contains(toCheck))
+            sb.replace(loc, loc2, "true");
+          else
+            sb.replace(loc, loc2, "false");
+        }
+        
+        while((loc = sb.indexOf("block")) != -1){
+          loc2 = loc;
+          while(sb.charAt(loc2) != ')')
+          ++loc2;
+          String [] toReplace = sb.substring(loc, loc2).split("_");
+          String section = toReplace[1];
+          Integer blockNum = Integer.parseInt(toReplace[2]);
+          sb.replace(loc, loc2, this.track.getBlock(this.line, section, blockNum).getOccupied().toString());
+        }
+
+        //replaces ALL "section_Letter" with section occupancy
+        while((loc = sb.indexOf("section")) != -1){
+          loc2 = loc;
+          while(sb.charAt(loc2) != ')')
+          ++loc2;
+          String [] toReplace = sb.substring(loc, loc2).split("_");
+          String section = toReplace[1];
+          sb.replace(loc, loc2, this.track.sectionOccupancy(line, section).toString());
+        }
+
+        Object result1 = logicengine1.eval(sb.toString());
+        Object result2 = logicengine2.eval(sb.toString());
+        Object result3 = logicengine3.eval(sb.toString());
+        //'VOTING'
+        if ((Boolean.TRUE.equals(result1) && Boolean.TRUE.equals(result2)) ||
+        (Boolean.TRUE.equals(result1) && Boolean.TRUE.equals(result3)) ||
+        (Boolean.TRUE.equals(result2) && Boolean.TRUE.equals(result3)) )
+          this.track.viewLightsMap().get(b).setLightsState(true);
+        else if((Boolean.FALSE.equals(result1) && Boolean.FALSE.equals(result2)) ||
+        (Boolean.FALSE.equals(result1) && Boolean.FALSE.equals(result3)) ||
+        (Boolean.FALSE.equals(result2) && Boolean.FALSE.equals(result3)) )
+          this.track.viewLightsMap().get(b).setLightsState(false);
+
       }
     }
   }
-
 }

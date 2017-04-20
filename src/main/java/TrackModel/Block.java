@@ -175,6 +175,14 @@ public class Block implements Comparable<Block>, java.io.Serializable {
   }
 
   /**
+   * Gets light state.
+   * @return  returns light state.
+   */
+  public Boolean getLightState(){
+    return this.lightState;
+  }
+
+  /**
   * Returns the length of a block object.
   * @return the length of a block
   */
