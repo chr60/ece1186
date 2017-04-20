@@ -126,18 +126,18 @@ public class Launcher extends javax.swing.JFrame {
         //Generate globalTrack
         String redlinePath = "test-classes/redline.csv";
         String greenlinePath = "test-classes/greenline.csv";
-        String[] fNames = {redlinePath};
+        String[] fNames = {redlinePath, greenlinePath};
 
         String redLink = "test-clases/redlinelink.csv";
-        String greenLink = "test-classes/greelinelink.csv";
-        String[] linkNames = {redLink};
+        String greenLink = "test-classes/greenlinelink.csv";
+        String[] linkNames = {redLink, greenLink};
 
         this.globalTrack = this.generateTrack("GlobalTrack", fNames, linkNames);
         this.trackGUI = new TrackGUI(globalTrack);
 
         //Cycle through number of lines and generate 2 WS's and a Train Manager for each line
         for(String s : this.globalTrack.trackList.keySet()) {
-
+          System.out.println("S: " + s);
           int lineSize = this.globalTrack.trackList.get(s).keySet().size();
 
           //Wayside Operations

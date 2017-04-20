@@ -53,7 +53,7 @@ public class CTCgui {
 		this.waysides = ws;
 		this.managerList = tm;
     this.tmanager = managerList.get(0);
-  //  this.tmanager2 = managerList.get(1);
+    this.tmanager2 = managerList.get(1);
     this.realTrack = globalTrack;
     lastClickedButton = 2;
     this.brokenList = new ArrayList<Block>();
@@ -100,11 +100,11 @@ public class CTCgui {
     tmPanel = new TrainManagerPanel(tmanager, dummyTrack, managerList);
     tmPanel.setBounds(0, 0, 390, 255);
     frame.getContentPane().add(tmPanel);
-/*  WAIT FOR GREEN LINE TO WORK
+
     tmPanel2 = new TrainManagerPanel(tmanager2, dummyTrack, managerList);
     tmPanel2.setBounds(0, 256, 390, 255);
     frame.getContentPane().add(tmPanel2);
-*/
+
 // EVERYTHING ELSE PANEL
 		JPanel miscPanel = new JPanel();
 		miscPanel.setLayout(null);
