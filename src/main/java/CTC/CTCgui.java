@@ -102,7 +102,12 @@ public class CTCgui {
     imageLabel.setBounds(0,0,390,511);
     frame.getContentPane().add(imageLabel);
 
+// empty panels
+    JPanel panel = new JPanel();
+    panel.setLayout(new BorderLayout());
+		panel.setBounds(0, 0, 390, 255);
 
+		//panel.add(new JLabel(image), BorderLayout.CENTER);
     JPanel panel2 = new JPanel();
     panel2.setLayout(new BorderLayout());
     panel2.setBounds(0, 256, 390, 255);
@@ -114,10 +119,12 @@ public class CTCgui {
     tmPanel2 = new TrainManagerPanel(tmanager2, dummyTrack, managerList);
     tmPanel2.setBounds(0, 256, 390, 255);
 
+    // SCHEDULE PANEL - displays MBO SCHEDULE
+      schedPanel = new SchedulePanel(this.redStations, this.sched1);
+      schedPanel.setBounds(0, 0, 390, 255);
 
-
-    //schedPanel2 = new TrainManagerPanel(greenStations, this.sched2);
-    //schedPanel2.setBounds(0, 256, 390, 255);
+      //schedPanel2 = new TrainManagerPanel(this.stationNamesPerLine.get(1), this.sched2);
+      //schedPanel2.setBounds(0, 256, 390, 255);
 
 // EVERYTHING ELSE PANEL
 		JPanel miscPanel = new JPanel();
@@ -129,29 +136,31 @@ public class CTCgui {
     JButton buttonShowPicture = new JButton("Show Track Pic");
     buttonShowPicture.setBounds(20, 11, 118, 23);
     miscPanel.add(buttonShowPicture);
-
+/*
     JButton buttonShowSchedule = new JButton("Show Schedule");
     buttonShowSchedule.setBounds(20, 36, 118, 23);
     miscPanel.add(buttonShowSchedule);
-
+*/
     JButton buttonAllTrains = new JButton("Show All Trains");
     buttonAllTrains.setBounds(20, 58, 118, 23);
     miscPanel.add(buttonAllTrains);
-
+/*
     buttonShowSchedule.addActionListener(new ActionListener(){
       public void actionPerformed(ActionEvent e){
         if(lastClickedButton == 2){ //train
+
           frame.getContentPane().remove(tmPanel);
           frame.getContentPane().remove(tmPanel2);
-          frame.getContentPane().add(schedPanel);
-          //frame.getContentPane().add(schedPanel2);
+          frame.getContentPane().add(panel);
+          frame.getContentPane().add(panel2);
           frame.validate();
           frame.repaint();
+
         }
         else if(lastClickedButton == 0){  //pic
           frame.getContentPane().remove(imageLabel);
-          frame.getContentPane().add(schedPanel);
-          //frame.getContentPane().add(schedPanel2);
+          frame.getContentPane().add(panel);
+          frame.getContentPane().add(panel2);
           frame.validate();
           frame.repaint();
         }
@@ -162,7 +171,7 @@ public class CTCgui {
         lastClickedButton = 1;
       }
     });
-
+*/
     buttonAllTrains.addActionListener(new ActionListener(){
       public void actionPerformed(ActionEvent e){
 
@@ -172,16 +181,18 @@ public class CTCgui {
           frame.getContentPane().add(tmPanel2);
           frame.validate();
           frame.repaint();
-        }else
-
-        if(lastClickedButton == 1){ //sched
-          frame.getContentPane().remove(schedPanel);
-          //frame.getContentPane().remove(schedPanel2);
+        }
+/*
+        else if(lastClickedButton == 1){ //sched
+          frame.getContentPane().remove(panel);
+          frame.getContentPane().remove(panel2);
           frame.getContentPane().add(tmPanel);
           frame.getContentPane().add(tmPanel2);
           frame.validate();
           frame.repaint();
-        }else{
+        }
+*/
+        else{
           // do nothing - train panel already set
         }
         lastClickedButton = 2;
@@ -196,13 +207,17 @@ public class CTCgui {
           frame.getContentPane().add(imageLabel);
           frame.validate();
           frame.repaint();
-        }else if(lastClickedButton == 1){ //sched
+        }
+/*
+        else if(lastClickedButton == 1){ //sched
           frame.getContentPane().remove(imageLabel);
-          frame.getContentPane().add(schedPanel);
-          //frame.getContentPane().add(schedPanel2);
+          frame.getContentPane().add(panel);
+          frame.getContentPane().add(panel2);
           frame.validate();
           frame.repaint();
-        }else{
+        }
+*/
+        else{
           // do nothing - picture already set
         }
         lastClickedButton = 0;
