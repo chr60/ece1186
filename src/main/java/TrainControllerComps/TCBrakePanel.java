@@ -57,7 +57,9 @@ public class TCBrakePanel extends javax.swing.JPanel {
      */
     private boolean inManualMode;
 
-    public Double distanceTraveled = 0.0;
+    public Double distanceTraveledToStation = 0.0;
+    
+    public Double distanceTraveledToAuthority = 0.0; 
 
     /**
      * The speed controller object used to communicate between.
@@ -83,6 +85,10 @@ public class TCBrakePanel extends javax.swing.JPanel {
 
     public boolean atStation;
     
+    public boolean willExceedAuthority; 
+    
+    public Double distanceToAuthority; 
+    
     /**
      * Constructor for creating a TCBrakePanel object without a selected train.
      * The selected train property must be passed in from the Train Controller class before being used.
@@ -93,7 +99,8 @@ public class TCBrakePanel extends javax.swing.JPanel {
         this.operatingLogbook = new LinkedList<String>(); // init logbook
         this.announcementLogbook = new LinkedList<String>(); // init logbook
 
-        this.distanceTraveled = 0.0;
+        this.distanceTraveledToStation = 0.0;
+        this.distanceTraveledToAuthority = 0.0; 
         this.tickNum = 0;
         this.atStation = false;
     }
@@ -193,7 +200,8 @@ public class TCBrakePanel extends javax.swing.JPanel {
     /**
      * Returns the next 'x' blocks from the train's current block.
      * 
-     * @param numBlocksAhead 
+     * @param numBlocksAhead the number of blocks you want to look ahead
+     * @return a list containing the next 'x' blocks
      */
     private LinkedList<Block> blocksAhead(int numBlocksAhead){
     
@@ -215,7 +223,14 @@ public class TCBrakePanel extends javax.swing.JPanel {
         return nextBlocks; 
     }
     
-        private LinkedList<Block> blocksBehind(int numBlocksBehind){
+    
+    /**
+     * Returns the last 'x' blocks from the train's current block.
+     * 
+     * @param numBlocksBehind the number of blocks to look behind
+     * @return a list containing the last 'x' blocks.
+     */
+    private LinkedList<Block> blocksBehind(int numBlocksBehind){
     
         Block currBlock = this.selectedTrain.getGPS().getCurrBlock(); 
         
@@ -275,7 +290,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
                     this.tickNum++;
                 }else if (this.tickNum == 1){ // open left doors
                     this.selectedTrain.setLeftDoor(1);
-                    this.selectedTrain.updatePassengerCount();
+                    //this.selectedTrain.updatePassengerCount();
                     this.tickNum++;
                 }else if (this.tickNum == 2){
                     this.tickNum++;
@@ -292,7 +307,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
                     this.resetBrakingConditions(); // continue as normal
                     this.announcementLogbook.add("Departing " + this.selectedTrain.getGPS().getCurrBlock().getStationName());
                     this.printLogs();
-                    this.distanceTraveled = 0.0;
+                    this.distanceTraveledToStation = 0.0;
                     this.tickNum = 0;
                     this.atStation = false;
                 }
@@ -342,14 +357,55 @@ public class TCBrakePanel extends javax.swing.JPanel {
      */
     private boolean willExceedAuthority(){
 
-        // were on our authority...
-        if ( this.selectedTrain.getGPS().getCurrBlock().compareTo(this.selectedTrain.getAuthority().getCurrBlock()) == 0){
-
-            double footprintSB = this.selectedTrain.getGPS().getDistIntoBlock() + this.selectedTrain.getSafeBrakingDistSB();
-
-            // check if about to leave the block
-            if (footprintSB >= this.selectedTrain.getGPS().getCurrBlock().getLen()){ this.bringTrainToHalt(false); return true; }
+        
+        if (this.willExceedAuthority == false){
+        
+            if (this.blocksAhead(3).contains(this.selectedTrain.getAuthority().getCurrBlock())){
+                
+                this.willExceedAuthority = true; 
+                this.distanceToAuthority = 0.0; 
+                
+                for (Block b : this.blocksAhead(3)){
+                    this.distanceToAuthority = this.distanceToAuthority + b.getLen();
+                }
+                
+            }   
         }
+        
+        if (this.willExceedAuthority == false){
+        
+            if (this.blocksBehind(3).contains(this.selectedTrain.getAuthority().getCurrBlock())){
+
+                this.willExceedAuthority = true; 
+                this.distanceToAuthority = 0.0; 
+
+                for (Block b : this.blocksBehind(3)){
+                    this.distanceToAuthority = this.distanceToAuthority + b.getLen();
+                }
+            }
+        }
+        
+        if (this.willExceedAuthority == true){
+        
+            Double dist = this.distanceTraveled(1.0);
+            this.distanceTraveledToAuthority = this.distanceTraveledToAuthority + dist; 
+            
+            if (this.distanceTraveledToAuthority + this.selectedTrain.getSafeBrakingDistSB() >= this.distanceToAuthority){
+            
+                this.bringTrainToHalt(false);
+                return true; 
+            }
+            
+        }
+        
+//        // were on our authority...
+//        if ( this.selectedTrain.getGPS().getCurrBlock().compareTo(this.selectedTrain.getAuthority().getCurrBlock()) == 0){
+//
+//            double footprintSB = this.selectedTrain.getGPS().getDistIntoBlock() + this.selectedTrain.getSafeBrakingDistSB();
+//
+//            // check if about to leave the block
+//            if (footprintSB >= this.selectedTrain.getGPS().getCurrBlock().getLen()){ this.bringTrainToHalt(false); return true; }
+//        }
         return false;
     }
 
@@ -443,9 +499,9 @@ public class TCBrakePanel extends javax.swing.JPanel {
             Double x = Double.parseDouble(this.message); // parse message
 
             Double distElapsed = this.distanceTraveled(1.0); // distanced traveled in 1 second
-            Double distTrainToStation = x - this.distanceTraveled;
+            Double distTrainToStation = x - this.distanceTraveledToStation;
 
-            this.distanceTraveled = this.distanceTraveled + distElapsed; // total distance traveled
+            this.distanceTraveledToStation = this.distanceTraveledToStation + distElapsed; // total distance traveled
             this.operatingLogbook.add("Distance to station: " + String.format("%.2f", distTrainToStation) + " m.");
 
             if (distTrainToStation <= this.selectedTrain.getSafeBrakingDistSB()){ return true; }
