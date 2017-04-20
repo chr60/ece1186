@@ -310,45 +310,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
 
             this.bringTrainToHalt(false);
 
-            if (this.selectedTrain.getVelocity() == 0.0){
-
-                // wait for 6 clock ticks
-                if (this.waitingAtStationCounter == 0){
-                    this.approachingStation = false;
-                    this.atStation = true; // at the station
-                    this.announcementLogbook.add("Arriving at " + this.selectedTrain.getGPS().getCurrBlock().getStationName());
-                    
-                    // pop old station
-                    if (this.visitedStationStack.isEmpty() == false){this.visitedStationStack.pop(); }
-                    this.visitedStationStack.add(this.selectedTrain.getGPS().getCurrBlock().getStationName()); // add new one
-                    
-                    System.out.println("Station Visited: " + this.selectedTrain.getGPS().getCurrBlock().getStationName());
-                    this.printLogs();
-                    this.waitingAtStationCounter++;
-                }else if (this.waitingAtStationCounter == 1){ // open left doors
-                    this.selectedTrain.setLeftDoor(1);
-                    //this.selectedTrain.updatePassengerCount();
-                    this.waitingAtStationCounter++;
-                }else if (this.waitingAtStationCounter == 2){
-                    this.waitingAtStationCounter++;
-                }else if (this.waitingAtStationCounter == 3){
-                    this.selectedTrain.setLeftDoor(0);
-                    this.selectedTrain.setRightDoor(1);
-                    this.waitingAtStationCounter++;
-                }else if (this.waitingAtStationCounter == 4){
-                    this.waitingAtStationCounter++;
-                }else if (waitingAtStationCounter == 5){
-                    this.selectedTrain.setRightDoor(0);
-                    this.waitingAtStationCounter++;
-                }else if (this.waitingAtStationCounter == 6){
-                    this.resetBrakingConditions(); // continue as normal
-                    this.announcementLogbook.add("Departing " + this.selectedTrain.getGPS().getCurrBlock().getStationName());
-                    this.printLogs();
-                    this.distanceTraveledToStation = 0.0;
-                    this.waitingAtStationCounter = 0;
-                    this.atStation = false;
-                }
-            }
+            this.atStationProtocol();
             return true;
         }
         
@@ -358,6 +320,60 @@ public class TCBrakePanel extends javax.swing.JPanel {
         if (this.willExceedAuthority()){ return true; }
 
         return false;
+    }
+    
+    /**
+     * Tells the train what to do when arriving at a station.
+     * 
+     * Currently, the train waits 60 s at the station before leaving. 
+     */
+    private void atStationProtocol(){
+              
+        if (this.selectedTrain.getVelocity() == 0.0) {
+
+            if (this.waitingAtStationCounter == 0){ // make announcement
+            
+                this.approachingStation =false; 
+                this.atStation = true; 
+                this.announcementLogbook.add("Arriving at " + this.selectedTrain.getGPS().getCurrBlock().getStationName());
+                
+                // pop old station and add new one
+                if (this.visitedStationStack.isEmpty() == false) {this.visitedStationStack.pop(); }
+                this.visitedStationStack.add(this.selectedTrain.getGPS().getCurrBlock().getStationName());
+
+                this.waitingAtStationCounter++;
+            }else if (this.waitingAtStationCounter == 1){ // open doors
+            
+                if (this.stationSide.equals("L")){ this.selectedTrain.setLeftDoor(1); }
+                else if (this.stationSide.equals("R")){ this.selectedTrain.setRightDoor(1); }
+                this.waitingAtStationCounter++; 
+            }else if (this.waitingAtStationCounter == 11){ // close the doors
+                
+                if (this.stationSide.equals("L")){ this.selectedTrain.setLeftDoor(0); }
+                else if (this.stationSide.equals("R")){ this.selectedTrain.setRightDoor(0); }
+                this.waitingAtStationCounter++; 
+            }else if (this.waitingAtStationCounter == 13){ 
+                
+                this.announcementLogbook.add("All Aboard! *Choo Choo*");
+                this.waitingAtStationCounter++; 
+            }else if (this.waitingAtStationCounter == 30){
+                
+                this.announcementLogbook.add("We will be taking off shortly.");
+                this.waitingAtStationCounter++; 
+            }else if (this.waitingAtStationCounter == 60){
+                
+                this.resetBrakingConditions(); // continue as normal
+                this.announcementLogbook.add("Departing " + this.selectedTrain.getGPS().getCurrBlock().getStationName());
+                this.printLogs();
+                this.distanceTraveledToStation = 0.0;
+                this.waitingAtStationCounter = 0;
+                this.atStation = false;
+            }else{
+                
+                this.waitingAtStationCounter++; 
+            }  
+            this.printLogs();
+        }
     }
 
     /**
