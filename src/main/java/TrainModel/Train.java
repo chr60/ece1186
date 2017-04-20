@@ -488,12 +488,15 @@ public class Train implements Serializable {
 		 //random amount will leave based on current amount on board train
 		 Integer numUnboarding = passengersUnboarding();
 		 changePassengers(-1*numUnboarding);
-		 currStation.addDepartingPassengers(numUnboarding);
+		 if (currStation != null ) {
+			 currStation.addDepartingPassengers(numUnboarding);
 
-		 //allow people to get on train
-		 Integer spaceLeft = maxPassengers - numPassengers;
-		 Integer numBoarding = currStation.loadPassengers(spaceLeft);
-		 changePassengers(numBoarding);
+			 //allow people to get on train
+			 Integer spaceLeft = maxPassengers - numPassengers;
+			 Integer numBoarding = currStation.loadPassengers(spaceLeft);
+			 changePassengers(numBoarding);
+		 }
+		 
 	 }
 
 	 /**
