@@ -38,12 +38,11 @@ public class GreenLinkageTest {
   @DisplayName("Validates the override of 2")
   void overrideTest() {
     Block sourceBlock = this.track.getBlock("Green", "A", 2);
-    Block nextBlockForward = this.track.getBlock("Green", "A", 2);
-    Block nextBlockBackward = this.track.getBlock("Green", "A", 1);
+    Block nextBlockForward = this.track.getBlock("Green", "A", 3);
+    Block nextBlockBackward = this.track.getBlock("Green", "A", 2);
 
-    System.out.println(sourceBlock.blockNum());
+   
     assertEquals(sourceBlock.nextBlockForward(), nextBlockForward);
     assertEquals(sourceBlock.nextBlockBackward(), nextBlockBackward);
   }
-
 }
