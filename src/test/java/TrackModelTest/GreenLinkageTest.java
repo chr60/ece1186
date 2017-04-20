@@ -42,7 +42,7 @@ public class GreenLinkageTest {
     Block nextBlockBackward = this.track.getBlock("Green", "A", 2);
 
    
-    assertEquals(sourceBlock.nextBlockForward(), nextBlockForward);
-    assertEquals(sourceBlock.nextBlockBackward(), nextBlockBackward);
+    assertEquals(sourceBlock.nextBlockForward().blockNum(), nextBlockForward.blockNum());
+    assertEquals(sourceBlock.nextBlockBackward().blockNum(), nextBlockBackward.blockNum());
   }
 }
