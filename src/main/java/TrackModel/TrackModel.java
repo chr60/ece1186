@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -49,6 +50,7 @@ public class TrackModel implements Serializable {
   HashMap<Block, Beacon> blockBeaconMap = new HashMap<Block, Beacon>();
   HashMap<String, ArrayList<Block>> flatList = new HashMap<String, ArrayList<Block>>();
   HashMap<String, Switch> switchMap = new HashMap<String, Switch>();
+  ArrayList<Station> stationListArr = new ArrayList<Station>();
 
   /**
    * Returns flatList
@@ -69,6 +71,18 @@ public class TrackModel implements Serializable {
     assert(this.trackList.get(line).containsKey(section));
     assert(this.trackList.get(line).get(section).containsKey(blockNum));
     return(this.trackList.get(line).get(section).get(blockNum));
+  }
+
+  /**
+  * Updates the stations and temperature.
+  */
+  public void update() {
+    for (Station station : this.stationListArr) {
+      Random rand = new Random();
+      Integer people = rand.nextInt(5);
+      station.addWaiting(5);
+      station.updateHeaters();
+    }
   }
 
   /**
@@ -481,6 +495,7 @@ public class TrackModel implements Serializable {
         for (String stationName : this.stationList.get(l).keySet()) {
           Station myStation = new Station(this, stationName, this.stationList.get(l).get(stationName));
           this.stationHostMap.get(l).put(stationName, myStation);
+          this.stationListArr.add(myStation);
         }
       }
     }

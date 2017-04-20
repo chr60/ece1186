@@ -89,8 +89,6 @@ public class Launcher extends javax.swing.JFrame {
             AudioPlayer.player.start(audioIn);
         }catch(Exception e){
 
-
-
             System.out.println(e.getMessage());
         }
     }
@@ -120,7 +118,9 @@ public class Launcher extends javax.swing.JFrame {
      */
     public Launcher() {
         initComponents();
-        
+
+        loadTrackFiles.doClick();
+
         //this.playSound();
         this.normalSpeedRadioButton.setSelected(true);
         // for now, we start in normal mode
@@ -129,7 +129,7 @@ public class Launcher extends javax.swing.JFrame {
         //Generate globalTrack
         String redlinePath = "test-classes/redline.csv";
         String greenlinePath = "test-classes/greenline.csv";
-        String[] fNames = {redlinePath};
+        String[] fNames = {redlinePath, greenlinePath};
 
         String redLink = "test-clases/redlinelink.csv";
         String greenLink = "test-classes/greenlinelink.csv";
@@ -180,7 +180,7 @@ public class Launcher extends javax.swing.JFrame {
                 update();
             }
         });
-
+        this.globalTrack.update();
         if(waysideGui != null){ waysideGui.update(); }
 
         mbo.updateTrains();
