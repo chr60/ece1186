@@ -129,7 +129,9 @@ public class Launcher extends javax.swing.JFrame {
         String[] fNames = {redlinePath, greenlinePath};
 
         String redLink = "test-clases/redlinelink.csv";
-        String greenLink = "test-classes/greelinelink.csv";
+
+        String greenLink = "test-classes/greenlinelink.csv";
+
         String[] linkNames = {redLink, greenLink};
 
         this.globalTrack = this.generateTrack("GlobalTrack", fNames, linkNames);
@@ -137,7 +139,7 @@ public class Launcher extends javax.swing.JFrame {
 
         //Cycle through number of lines and generate 2 WS's and a Train Manager for each line
         for(String s : this.globalTrack.trackList.keySet()) {
-
+          System.out.println("S: " + s);
           int lineSize = this.globalTrack.trackList.get(s).keySet().size();
 
           //Wayside Operations
@@ -216,7 +218,7 @@ public class Launcher extends javax.swing.JFrame {
             // CTC - calls wayside to get updated list of track occupancy
             ctc.getTrainPanel().updateTrainPositionsToManager(trainManagers);
             // CTC - prints active list of trains from train manager to GUI
-            //ctc.getTrainManagerPanel().updateTable(trainManagers);
+            ctc.getTrainManagerPanel().updateTable(trainManagers);
         }
 
         trainHandler.pollYard();
@@ -225,8 +227,10 @@ public class Launcher extends javax.swing.JFrame {
             trainGUI.updateGUI(trainGUI.getCurrT());
         }
 
-        // CTC - ask track for trainId
-        ctc.getTrainPanel().updateTrainIDinList(trainManagers.get(0), globalTrack);
+        if(ctc != null){
+          // CTC - ask track for trainId
+          ctc.getTrainPanel().updateTrainIDinList(trainManagers.get(0), globalTrack);
+        }
 
     }
 
@@ -670,7 +674,7 @@ public class Launcher extends javax.swing.JFrame {
 
         String[] redlinePath = {"test-classes/redline.csv"};
         String[] greenlinePath = {"test-classes/greenline.csv"};
-        
+
         String[] redLink = {"test-clases/redlinelink.csv"};
         String[] greenLink = {"test-classes/greelinelink.csv"};
         newTrack.readCSV(redlinePath, redLink);
