@@ -1,0 +1,1769 @@
+\documentclass[]{article}
+\usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{float}
+% Title Page
+\title{Low-Comotovation: Group Test Plan}
+\author{Michael Ghaben}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\titlepage
+\section{Introduction}
+\subsection{Document Identifier}
+This document is the Low-Comotovation Group Test Plan for the design review phase of the Spring 2017 software engineering project.. In this document we detail the testing specifications, requirements, and procedures for the implementation and evaluation of testing procedures.
+
+\subsection{Scope}
+In this document a number of assumptions regarding the projects scope and lifecycle are made. Specifically:
+
+\begin{enumerate}
+	\item Due to the short development cycle associated with this project, some non-negligble defects will likely persist
+	\item Under the iterative development methodology this group is following, the development of additional tests may be completed to address defects is expected
+\end{enumerate}
+To better address these constraints, we will utilize a continuous integration methodology around iterative development and testing.So that we may ensure rapid development with minimal time overhead, we shall utilize continuous integration tools and methodology. Testing will be broadly divided into two categories: subsystem, and integration. Subsystem testing will be primarily focused on testing an individual system to ensure minimal functionality of a given subsystem and be done primarily independently by each group member. Integration testing will be designated as tests which require two or more modules functionality to satisfy requirements.
+
+Specifically, it is anticipated that software defects will be found and require that testing which was not anticipated. As a result, we shall primarily focus on defining general tsts to be implemented and leave the exact testing requirements as implementation is completed. Additionally, will primarily focus on subsytems to be delivered to the end-user, the train company.
+
+Examples of these subsystems would be the CTC module or the train controller, which are expected to be integrated into the final deliverable. Subsystems which are not examples of the final deliverables are the Train Model and Track Model subsystems, as they will ultimately be removed and replaced with the physical subsystems.
+
+\subsection{System Overview and Key Features}
+The purpose of the system under development is a to provide a train system for the Pittsburgh North Shore Rail system.
+
+This system broadly consists of 6 subsystems:
+\begin{enumerate}
+	\item  Track Model - a physical model of a track to be used for testing
+	\item Train Model - a physical model of a train to be used for testing
+	\item CTC System - A CTC system to be implemented on the final train system
+	\item MBO - Schedules trains and implements Fixed Block Mode and Moving Block Overlay mode
+	\item Wayside System - A wayside for coordinating with all models
+\end{enumerate}
+For a further discussion of the system, we refer the reader to the project reuqirements and discussion board.
+
+\section{Test Overview}
+The test organization is broadly divided into two sections: subsystem and integration testing. Subsystem tests are regarded as tests associated with only a single system at a time. Integration tests broadly refer to the tests of the integration of more than a single subsystem. In this view, testing is accomplished by each subsystem independently at the discresion of the individual developing the subsystem. Then, as members of the team develop their subsystem, each member shall attempt to integrate and develop tests for their integration. Due to the nature of continuous integration, tests are expected to be developed in parallel to the development of the program modules. 
+
+\subsection{Master Test Schedule}
+The test schedul will be implemented as follows::
+
+\subsection{Integrity Level Schema}
+For this project, we utilize three integrity levels. The integrity levels for this project are as follows:
+\begin{enumerate}
+	\item The lowest severity level. This is reserved for tasks which will ultimately not be passed onto the finished product and pose no threat to catastrophic failure. 
+	\item This severity level is reserved for failures which may lead to errors in subsystem integration or incorrect information delivered to critical subsystems
+	\item The most severe integrity level. Is a vital system or otherwise threatens life or limb in an imlemented subsystem
+\end{enumerate}
+\subsection{Responsibilities}
+Michael Ghaben will be responsible for the integrity of the automated build system as well as the integrity of the master branch.
+
+\subsection{Tools, Techniques, and Metrics}
+To implement the test environment and better facilitate a continuous integration test environment, we utilize Travis-CI\footnote{Travis-CI.org} with GitHub\footnote{github.com} integration with Slack\footnote{slack.com} and Jupiter JUnit \footnote{junit.org} integration. By utllizing these tools, we allow automated tests to be run remotely using the Maven\footnote{maven.apache.org}. This allows for rapid feedback into the developmental process, allowing for better integration and testing of the team. The usage of these tools creates feedback loop between implementation, testing, and integration, leading to significant productivity gains. In each case ,testing will be carried out remotely by the build system.
+
+The system shall be quantitatively evaluated on percentage of percentage of test passing. Each subsystem shall be responsible for the determination of importance of testing individual components of their subsystem, with the exception of vital components.
+
+\section{Details}
+\subsection{Process}
+A test shall be detailed in the following manner:
+\begin{table}[H]
+	\centering
+	\caption{Test Plan}
+	\label{my-label}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & What is the integrity level? \\hline
+		Methods & How? \\ \hline
+		Inputs &  What Inputs? \\ \hline
+		Outputs &  What is a successful output?\\ \hline
+		Expected Completion & When will it be done?\\ \hline
+		Risks and Assumptions & What are you assuming?\\ \hline
+		Responsibility & Who are you?\\ \hline
+	\end{tabular}
+\end{table}
+In this, we expect to utilize both integration as well as unit tests. After each member pushes to GitHub on his or her respective branch, Travis-CI will provide regression testing on all unit and integration tests that have been implemented. To merge into master, all tests must be passing. 
+
+\subsection{Test Documentation Requirements}
+Each test shall be documented using the above table as well as any auxillary information by whomever holds testing responsibilities. Each module shall have a specified test plan for each module covering their individual component for testing. Each subsystem test plan shall detail unit tests for his or her own module. Additionally, integration testing will be accomplished in a similar fashon completed by the group.
+
+Furthermore, the unit and integration testing procedure will be supplemented by functional testing. Each group member shall conduct user testing of each other module. During this time, the testing member will attempt to cause defective behavior at any level. These defects will be tracked via GitHub issues. This testing will occur weekly.
+
+\subsection{Test Administration Requirements}
+For a unit or integration test to be considered complete, it must successfully build on the build server utilizing the Maven build system. This ensures consistent repeatable builds to attempt to ensure the clients functional requirements will be met.
+
+Additionally, for functional testing it is expected that each group member submits either a bug report via GitHub issues. Should a group member fail to find any defects and register them, he or she must challenge Professor Profeta to find a defect at the next class meeting. If the professor discovers a defect, the group member(s) who failed to find defects owe the other group members pizza. It is hoped that this procedure will lead to people finding more defects.
+\subsection{Test Reporting Requirements}
+Each written unit and integrationtest report will be provided by the Maven automated build system. 
+
+To document user testing (e.g. by working with the user interface and attempting to find defects in that manner), a developmer may supplement this test report with the following syntax to automatically document the bug utilizng the following syntax:\newline \newline
+/** \newline
+* @bug $<Descriptive$ $ message>$ \newline
+*/\newline
+\newline
+This will lead to documentation of the defect in the autmatically generated Doxygen documentation. Note that this should be used for defects which  are not necessarily covered under tests at a given time. By utilizing this process, an iterative cycle of development these defects may be tracked and inclusion in later tests to ensure proper functionality.
+
+\section{Track Module Test Plan}
+Author: Michael Ghaben
+
+\subsection{Unit Tests}
+\begin{table}[H]
+	\centering
+	\caption{CSV Reading Test Plan}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Evaluate the readCSV function\\ \hline
+		Inputs &  The files redline.csv \\ \hline
+		Outputs &  The track model successfully reading the redline csv files\\ \hline
+		Expected Completion & March 20, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the files\\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+\begin{table}[H]
+	\centering
+	\caption{CSV Reading Test Plan}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Evaluate the readCSV function\\ \hline
+		Inputs &  The files redline.csv \\ \hline
+		Outputs &  The track model successfully reading the redline csv files\\ \hline
+		Expected Completion & March 20, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the files\\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{CSV Reading Test Plan}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Evaluate the readCSV function on green line\\ \hline
+		Inputs &  The files greenline.csv \\ \hline
+		Outputs &  The track model successfully reading the redline csv files\\ \hline
+		Expected Completion & March 15, 2017\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Both redline and greenline have been properly input to the csv files}\\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test Switch Root Node Reading}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & \parbox[t]{10cm}{Evaluate the switch nodes association in TrackModel}\\ \hline
+		Inputs &  The file redline.csv \\ \hline
+		Outputs &  The track model successfully holding the root nodes in the rootMap\\ \hline
+		Expected Completion & March 15, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the csv files \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test Switch Root Node Reading}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Evaluate the switch nodes association in TrackModel\\ \hline
+		Inputs &  The file greenline.csv \\ \hline
+		Outputs &  The track model successfully holding the root nodes in the rootMap\\ \hline
+		Expected Completion & March 15, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the csv files \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test Switch Node Leaf Reading}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Evaluate the leaf nodes association in TrackModel\\ \hline
+		Inputs &  The file redline.csv \\ \hline
+		Outputs & \parbox[t]{10cm}{ The track model successfully holding the proper refererences in the Block object set by rootMap}\\ \hline
+		Expected Completion & March 15, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the csv files \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test Switch Node Leaf Reading}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Evaluate the leaf nodes association in TrackModel\\ \hline
+		Inputs &  The file greenline.csv \\ \hline
+		Outputs &  \parbox[t]{10cm}{The track model successfully holding the proper refererences to the leaf nodes in the Block object set by rootMap}\\ \hline
+		Expected Completion & March 15, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the csv files \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test Switch Node Leaf Reading}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Evaluate the switching functionality in the red line\\ \hline
+		Inputs &  The file redline.csv \\ \hline
+		Outputs &  The proper  block given a non-default switch state\\ \hline
+		Expected Completion & March 15, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the csv files \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test nextBlockForward() Red Line}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Evaluate the functionality of the nextBlockForward() function on the redline \\ \hline
+		Inputs &  The file redline.csv \\ \hline
+		Outputs &  The proper block given a switch on the red line\\ \hline
+		Expected Completion & March 15, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the csv files \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test nextBlockForward() Green Line}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Evaluate the functionality of the nextBlockForward() function on the green line \\ \hline
+		Inputs &  The file greenline.csv \\ \hline
+		Outputs &  The proper block given a switch on the green line\\ \hline
+		Expected Completion & March 15, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the csv files \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test nextBlockBackward() Red Line}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & \parbox[t]{10cm}{Evaluate the functionality of the nextBlockBackward() function on the red line} \\ \hline
+		Inputs &  The file redline.csv \\ \hline
+		Outputs &  The proper block given a switch on the red line\\ \hline
+		Expected Completion & March 15, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the csv files \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test nextBlockBackward() Green Line}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & \parbox[t]{10cm}{Evaluate the functionality of the nextBlockBackward() function on the red line} \\ \hline
+		Inputs &  The file redline.csv \\ \hline
+		Outputs &  The proper block given a switch on the red line\\ \hline
+		Expected Completion & March 15, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the csv files \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test nextBlockBackward() Secondary Switch Conditions Red Line}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & \parbox[t]{10cm}{Evaluate the functionality of the nextBlockBackward() function on the red line under the alternate switch functionality}\\ \hline
+		Inputs &  The file redline.csv \\ \hline
+		Outputs &  The proper block given a switch on the red line\\ \hline
+		Expected Completion & March 15, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the csv files \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test nextBlockBackward() Secondary Switch Conditions Green Line}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & \parbox[t]{10cm}{Evaluate the functionality of the nextBlockBackward() function on the red line under the alternate switch functionality} \\ \hline
+		Inputs &  The file greenline.csv \\ \hline
+		Outputs &  The proper block given a switch on the red line\\ \hline
+		Expected Completion & Before Half-Life 3\\ \hline
+		Risks and Assumptions & Both redline and greenline have been properly input to the csv files \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test Station Arrival/Departure Time}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Station Arrival and Departure Time setting} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Evaluate the functionality of the ability to set arrival and departure times at a given station \\ \hline
+		Inputs &  Arrival and departure time \\ \hline
+		Outputs &  \parbox[t]{10cm}{The proper time set in a station}\\ \hline
+		Expected Completion & April 1, 2017\\ \hline
+		Risks and Assumptions & That the test will not interact with other functionality \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test Station Passenger Loading}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Validate the usage of loading passengers from station to train} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Evaluate the functionality of the ability to load passengers for multiple input values \\ \hline
+		Inputs &  Maximum number of passengers\\ \hline
+		Outputs &  \parbox[t]{10cm}{Number of passengers to be added}\\ \hline
+		Expected Completion & April 1, 2017\\ \hline
+		Risks and Assumptions & The input will be an Integer type \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test Station Passenger Unloading}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Validate the usage of unloading passengers from train to station} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Evaluate the functionality of the ability to unload passengers for multiple input values \\ \hline
+		Inputs &  Number of passengers unloaded\\ \hline
+		Outputs &  \parbox[t]{10cm}{None}\\ \hline
+		Expected Completion & April 1, 2017\\ \hline
+		Risks and Assumptions & The input will be an Integer type \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+
+
+
+\subsection{Integration Tests}
+
+\begin{table}[H]
+	\centering
+	\caption{Test Track Controller Switching}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Evaluate the functionality of the track controller to switch a switch state \\ \hline
+		Inputs &  The files redline.csv and greenline.csv \\ \hline
+		Outputs &  \parbox[t]{10cm}{The proper block given a switch on the green line and the MBO switching the switch}\\ \hline
+		Expected Completion & April 15, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline switches are able to be toggled successfully \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test Track Controller Switching}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Evaluate the functionality of the track controller to switch a switch state \\ \hline
+		Inputs &  The files redline.csv and greenline.csv \\ \hline
+		Outputs &  \parbox[t]{10cm}{The proper block given a switch on the green line and the MBO switching the switch}\\ \hline
+		Expected Completion & April 1, 2017\\ \hline
+		Risks and Assumptions & Both redline and greenline switches are able to be toggled successfully \\ \hline
+		Responsibility & Track Model\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test Train Door Side}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods &  \parbox[t]{10cm}{Evaluate the functionality of the ability to relay the proper door side of train to open based upon incoming direction of approach to a station} \\ \hline
+		Inputs &  The beacon info called by the train controller \\ \hline
+		Outputs &  \parbox[t]{10cm}{The proper approach side}\\ \hline
+		Expected Completion & April 15, 2017\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{That the communication between train model and train controller will be successful} \\ \hline
+		Responsibility & Track Model, Train Model and Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Test Setting Speed and Authority}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Validate the capability of the Track Controller to set speed and authority} \\ \hline
+		Integrity Level & 2\\ \hline
+		Methods & Evaluate the functionality of the ability to set speed and authority \\ \hline
+		Inputs &  Set speed and authority\\ \hline
+		Outputs &  \parbox[t]{10cm}{None}\\ \hline
+		Expected Completion & April 15, 2017\\ \hline
+		Risks and Assumptions & The input will be a valid speed and authority \\ \hline
+		Responsibility & Track Model and Track Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\section{Track Controller Test Plan}
+\subsection{Unit Tests}
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Load PLC Program via Browse Button}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Evaluate the tryPLC() function and Browse Button\\ \hline
+		Inputs &  PLC file selected via 'Browse' button, then clicking 'Load' button \\ \hline
+		Outputs &  'Success' notification displayed \\ \hline
+		Expected Completion & After initialization, but before any trains dispatched\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{For automated testing, PLC files exist in PLCResources Folder \\(Other external files may be used normally)}  \\ \hline
+		Responsibility & Wayside Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Load PLC Program via File Path}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Evaluate the tryPLC() function\\ \hline
+		Inputs &  PLC file selected via entering file path, then clicking 'Load' button \\ \hline
+		Outputs &  'Success' notification displayed \\ \hline
+		Expected Completion & After initialization, but before any trains dispatched\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{For automated testing, PLC files exist in PLCResources Folder \\(Other external files may be used normally)} \\ \hline
+		Responsibility & Wayside Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{PLC Logic Calculation}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Evaluate runPLC() function\\ \hline
+		Inputs &  Current block \\ \hline
+		Outputs &  Boolean [] of necessary track state \\ \hline
+		Expected Completion & After calculation before next set of data is passed\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Valid block is passed to function} \\ \hline
+		Responsibility & Wayside Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{View Block info}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Tests dropdown menu functionality\\ \hline
+		Inputs &  Select of Line, Section, Block \\ \hline
+		Outputs &  Block\\ \hline
+		Expected Completion & As soon as user makes selection, info is returned\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Current information returned is updated} \\ \hline
+		Responsibility & Wayside Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\subsection{Integration Tests}
+		%INTEGRATION TEST
+	\begin{table}[H]
+		\centering
+		\caption{Set Speed and Authority}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 3 \\ \hline
+			Methods & Evaluate setSpeedAuth() function\\ \hline
+			Inputs &  \parbox[t]{10cm}{Block to assign Speed \& Authority to, Authority (as a Block), Speed} \\ \hline
+			Outputs & None\\ \hline
+			Expected Completion & Set indicated Speed and Authority of specified Block \\ \hline
+			Risks and Assumptions & \parbox[t]{10cm}{Block is open and given Speed \& Authority are valid.} \\ \hline
+			Responsibility & Wayside Controller\\ \hline
+		\end{tabular}
+	\end{table}
+	
+	%INTEGRATION TEST
+	\begin{table}[H]
+		\centering
+		\caption{Close a Block}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Evaluate closeBlock() function\\ \hline
+			Inputs &  Block to be closed\\ \hline
+			Outputs & None\\ \hline
+			Expected Completion & Track block set to broken status before next state \\ \hline
+			Risks and Assumptions & \parbox[t]{10cm}{Block is not already closed and/or occupied} \\ \hline
+			Responsibility & Wayside Controller\\ \hline
+		\end{tabular}
+	\end{table}
+	
+	
+	%INTEGRATION TEST
+	\begin{table}[H]
+		\centering
+		\caption{Change Switch}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 3 \\ \hline
+			Methods & Test PLC code and setSwitchState()\\ \hline
+			Inputs &  Block containing desired switch\\ \hline
+			Outputs &  True/False result of action completed\\ \hline
+			Expected Completion & Switch state is opposite of original state. \\ \hline
+			Risks and Assumptions & \parbox[t]{10cm}{Block passed to function contains a valid switch, and that block is not occupied.} \\ \hline
+			Responsibility & Wayside Controller\\ \hline
+		\end{tabular}
+	\end{table}
+	
+	%INTEGRATION TEST
+	\begin{table}[H]
+		\centering
+		\caption{Manually Change Switch}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 1 \\ \hline
+			Methods & Evaluate manualSwitch() function and setSwitchState()\\ \hline
+			Inputs &  Block containing desired switch\\ \hline
+			Outputs &  True/False result of action completed\\ \hline
+			Expected Completion & Switch state is opposite of original state. \\ \hline
+			Risks and Assumptions & \parbox[t]{10cm}{Block passed to function contains a valid switch, and that block is not occupied.} \\ \hline
+			Responsibility & Wayside Controller\\ \hline
+		\end{tabular}
+	\end{table}
+
+\section{CTC Test Plan}
+\subsection{Unit Tests}
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Choosing Modes}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & \parbox[t]{10cm}{Evaluate single radio button selection. Disable Automatic options when Manual chosen, diable dispatch train ability when Automatic chosen.}\\ \hline
+		Inputs &  Click on radio buttons. \\ \hline
+		Outputs &  See option choice on screen.\\ \hline
+		Expected Completion & \parbox[t]{10cm}{With user selection, however Manual is initially chosen at startup.}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Assume only one or the other can be chosen. i.e. can only choose Auto or Manual, not both.} \\ \hline
+		Responsibility & CTC\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{View Block info}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Tests dropdown functions as well as display of track info.\\ \hline
+		Inputs &  Selections of Line, Section, Block \\ \hline
+		Outputs &  Info from Excel as well as updates from Wayside.\\ \hline
+		Expected Completion & \parbox[t]{10cm}{Upon user selection. Should selection stay on screen, will continue to be updated with time.}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Pulling info from valid CSV file.} \\ \hline
+		Responsibility & CTC\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Failure Color Change}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Evaluate color change in Failure Area.\\ \hline
+		Inputs &  Failure alerted to CTC. \\ \hline
+		Outputs &  Color change occurs on GUI. \\ \hline
+		Expected Completion & \parbox[t]{10cm}{Upon receipt of a failure, will pass fake failure to test.}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Assume will only show red or green.} \\ \hline
+		Responsibility & CTC\\ \hline
+	\end{tabular}
+\end{table}
+\subsection{Integration Tests}
+
+ 
+%INTEGRATION TEST
+\begin{table}[H]
+	\centering
+	\caption{Dispatch/Edit Train via Button}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & \parbox[t]{10cm}{Evaluate the ability to dispatch a train and add it to the list of trains. This info will be passed on to all modules in some way to make/edit a train.}\\ \hline
+		Inputs &  \parbox[t]{10cm}{Select Dispatch/Edit Train Button. Complete all info in the resulting popup window (speed, auth, line, id). Click Complete.} \\ \hline
+		Outputs &  \parbox[t]{10cm}{Will update the train list displayed to dispatcher as well as the selections to edit.} \\ \hline
+		Expected Completion & At any time, at the will of the dispatcher. \\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Correct occupancy/position data received from Wayside.}  \\ \hline
+		Responsibility & CTC\\ \hline
+	\end{tabular}
+\end{table}
+
+%INTEGRATION TEST
+\begin{table}[H]
+	\centering
+	\caption{Close Block/Send Maintenance}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & \parbox[t]{10cm}{Evaluate ability to send command to close/repair a block to the wayside.}\\ \hline
+		Inputs &  Select correct block, select Close Block or Send Maintenance. \\ \hline
+		Outputs &  \parbox[t]{10cm}{Show rerouting/stopping/restarting of trains in train list based on choice.}\\ \hline
+		Expected Completion & After a failure is reported.\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Failure is reported correctly.} \\ \hline
+		Responsibility & CTC\\ \hline
+	\end{tabular}
+\end{table}
+
+%INTEGRATION TEST
+\begin{table}[H]
+	\centering
+	\caption{View Schedule}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Display schedule from MBO in table format.\\ \hline
+		Inputs &  Updated schedule from MBO. \\ \hline
+		Outputs &  Table of schedules for both lines in popup window. \\ \hline
+		Expected Completion & \parbox[t]{10cm}{Whenever dispatcher chooses to view it, and updates occur in time as they happen.}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Valid schedule is passed/correctly updated by MBO.} \\ \hline
+		Responsibility & CTC\\ \hline
+	\end{tabular}
+\end{table}
+
+\section{Train Model Test Plan}
+\subsection{Unit Tests}
+ 
+    \begin{table}[H]
+        \centering
+        \caption{Base Test A: Compute Velocity of train at rest with Power command of 100kW}
+        \begin{tabular}{|l|l|}
+            \hline
+            Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+            Integrity Level & 2 \\ \hline
+            Methods & Apply power command to train and compute velocity  \\ \hline
+            Inputs &  Power Command input and "Start Test" button is pressed \\ \hline
+            Outputs &  Velocity greater than 0 MPH will be produced  \\ \hline
+            Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: March 24th}\\ \hline
+            Risks and Assumptions & \parbox[t]{10cm}{The power command should be 100kW for this base case. \\ Assumption will be made that for base test train starts with 0 velocity} \\ \hline
+            Responsibility & Train Model\\ \hline
+        \end{tabular}
+    \end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Repeat Base Test A with Power command greater than 100,000W}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Apply higher power command to train and compute velocity  \\ \hline
+			Inputs &  Power Command input and "Start Test" button is pressed \\ \hline
+			Outputs &  Velocity greater than base case A will be produced  \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: March 24th}\\ \hline
+			Risks and Assumptions & The power command should be a positive value greater than 100kW \\ \hline
+			Responsibility & Train Model\\ \hline
+		\end{tabular}
+	\end{table}
+    
+    \begin{table}[H]
+    	\centering
+    	\caption{Repeat base test A with Power command less than 100,000W}
+    	\begin{tabular}{|l|l|}
+    		\hline
+    		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+    		Integrity Level & 2 \\ \hline
+    		Methods & Apply lower power command to train and compute velocity  \\ \hline
+    		Inputs &  Power Command input and "Start Test" button is pressed \\ \hline
+    		Outputs &  Velocity lower than base case A will be produced  \\ \hline
+    		Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: March 24th}\\ \hline
+    		Risks and Assumptions & The power command should be a positive value smaller than 100kW \\ \hline
+    		Responsibility & Train Model\\ \hline
+    	\end{tabular}
+    \end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Repeat base test A with grade of 3\%}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Increase grade to 3\% and compute velocity  \\ \hline
+			Inputs &  Grade set to 3\% and "Start Test" button is pressed \\ \hline
+			Outputs &  Velocity lower than base case A will be produced  \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: March 24th}\\ \hline
+			Risks and Assumptions & \parbox[t]{10cm}{The power command should be equal to 100kW \\and grade will be set to 3\% }\\ \hline
+			Responsibility & Train Model\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Repeat base test A with grade of -3\%}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Decrease grade to -3\% and compute velocity  \\ \hline
+			Inputs &  Grade set to -3\% and "Start Test" button is pressed \\ \hline
+			Outputs &  Velocity greater than base case A will be produced  \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: March 24th}\\ \hline
+			Risks and Assumptions &\parbox[t]{10cm}{ The power command should be equal to 100kW \\and grade will be set to -3\%} \\ \hline
+			Responsibility & Train Model\\ \hline
+		\end{tabular}
+	\end{table}
+   
+   	\begin{table}[H]
+	   	\centering
+	   	\caption{Repeat base test A with 150 passengers added}
+	   	\begin{tabular}{|l|l|}
+	   		\hline
+	   		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+	   		Integrity Level & 2 \\ \hline
+	   		Methods & Increase passenger count to 150 and compute velocity  \\ \hline
+	   		Inputs &  Number of passengers = 150 and "Start Test" button is pressed \\ \hline
+	   		Outputs &  Velocity smaller than base case A will be produced  \\ \hline
+	   		Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: March 24th}\\ \hline
+	   		Risks and Assumptions & \parbox[t]{10cm}{The power command should be equal to 100k0W \\and 150 passengers will be added onboard the train} \\ \hline
+	   		Responsibility & Train Model\\ \hline
+	   	\end{tabular}
+   \end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Base Case B: Compute Velocity of train at 25MPH with Power command of 100kW }
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Apply Power command of 100kW and compute new velocity  \\ \hline
+			Inputs &  Power Command set to 100kW and "Start Test" button is pressed \\ \hline
+			Outputs &  Velocity larger than 25MPH will be produced  \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: March 24th}\\ \hline
+			Risks and Assumptions & The power command should be equal to 100kW \\ \hline
+			Responsibility & Train Model\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Repeat Base Case B with power command of 0W }
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Apply Power command of 0W and compute new velocity  \\ \hline
+			Inputs &  Power Command set to 0W and "Start Test" button is pressed \\ \hline
+			Outputs &  Velocity smaller than 25MPH will be produced  \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: March 24th}\\ \hline
+			Risks and Assumptions & The power command should be equal to 0W \\ \hline
+			Responsibility & Train Model\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Repeat Base Case B with power command less than 0W }
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Apply negative power command and compute new velocity  \\ \hline
+			Inputs &  Power Command set to -100kW and "Start Test" button is pressed \\ \hline
+			Outputs &  Invalid input message will appear  \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: March 24th}\\ \hline
+			Risks and Assumptions & Power command must be positive for all possible cases\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Repeat Base Case B with power command greater than 120kW }
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Apply power command above max and compute new velocity  \\ \hline
+			Inputs &  Power Command set to 150kW and "Start Test" button is pressed \\ \hline
+			Outputs &  Speed will remain 25MPH as there is no more power available  \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: March 24th}\\ \hline
+			Risks and Assumptions & If power exceeds max, the velocity stays the same\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Repeat Base Case B but apply Service brakes}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 3 \\ \hline
+			Methods & Apply service brakes and compute new velocity  \\ \hline
+			Inputs &  Service brakes engaged and "Start Test" button is pressed \\ \hline
+			Outputs & \parbox[t]{10cm}{ Service brake status switched to ON\\ Power Command set to 0\\ Train speed decreased to lower than 25 MPH  }\\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: March 24th}\\ \hline
+			Risks and Assumptions & Service brake will automatically override power command to 0W\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Repeat Base Case B but apply Emergency brakes}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 3 \\ \hline
+			Methods & Apply Emergency brakes and compute new velocity  \\ \hline
+			Inputs &  Emergency brakes engaged and "Start Test" button is pressed \\ \hline
+			Outputs & \parbox[t]{10cm}{ Emergency brake status switched to ON\\ Power Command set to 0\\ Train speed decreased to lower than 25 MPH\\ Train speed also lower than service brake test case  }\\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: March 24th}\\ \hline
+			Risks and Assumptions & Service brake will automatically override power command to 0W\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Activate engine failure on moving train}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Toggle engine failure status to on  \\ \hline
+			Inputs &  Radio button for engine failure set to ON \\ \hline
+			Outputs & \parbox[t]{10cm}{ Engine Failure status switched to ON\\ Power Command set to 0\\ Train speed decreased to 0 MPH\\ Service brake status set to ON  }\\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: April 5th}\\ \hline
+			Risks and Assumptions & Service brake will automatically activate on failure\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Activate Signal failure on moving train}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Toggle signal failure status to on  \\ \hline
+			Inputs &  Radio button for signal failure set to ON \\ \hline
+			Outputs & \parbox[t]{10cm}{ Signal Failure status switched to ON\\ Power Command set to 0\\ Train speed decreased to 0 MPH\\ Service brake status set to ON  }\\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: April 5th}\\ \hline
+			Risks and Assumptions & Service brake will automatically activate on failure\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Activate Brake failure on moving train}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Toggle brake failure status to on  \\ \hline
+			Inputs &  Radio button for brake failure set to ON \\ \hline
+			Outputs & \parbox[t]{10cm}{ Brake Failure status switched to ON\\ Power Command set to 0\\ Train speed decreased to 0 MPH\\ Emergency brake status set to ON  }\\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: April 5th}\\ \hline
+			Risks and Assumptions & Emergency brake will activate on failure in service brakes\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Open doors on moving train}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Open left side doors on moving train  \\ \hline
+			Inputs &  Radio button for left doors set to OPEN \\ \hline
+			Outputs & Invalid action pop-up\\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: April 5th}\\ \hline
+			Risks and Assumptions & Doors will not open while train is in motion\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Open doors on non-moving train}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Open left side doors on non-moving train  \\ \hline
+			Inputs &  Radio button for left doors set to OPEN \\ \hline
+			Outputs & Left door status on Train model changes to OPEN\\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: April 5th}\\ \hline
+			Risks and Assumptions &\parbox[t]{10cm}{ Left and Right doors can both be opened at the same time \\ but opening is independent}\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Power Command applied to non-moving train with open doors}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Open left door, then apply power of 100kW  \\ \hline
+			Inputs &  \parbox[t]{10cm}{Radio button for left doors set to OPEN\\ Power command Set to 100kW\\ "Start Test" button pressed }\\ \hline
+			Outputs & Error message pop-up\\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: April 5th}\\ \hline
+			Risks and Assumptions & Train can not move if doors are open\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Power Command applied to non-moving train with Failure status}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Engage any failure, then apply power of 100kW  \\ \hline
+			Inputs &  \parbox[t]{10cm}{Radio button for Engine Failure set to ON\\ Power command Set to 100kW\\ "Start Test" button pressed }\\ \hline
+			Outputs & Error message pop-up\\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: April 5th}\\ \hline
+			Risks and Assumptions & Train can not move if failures are present\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Power Command applied to non-moving train with engaged brakes}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 2 \\ \hline
+			Methods & Engage either brake, then apply power of 100kW  \\ \hline
+			Inputs &  \parbox[t]{10cm}{Service Brakes engaged\\ Power command Set to 100kW\\ "Start Test" button pressed }\\ \hline
+			Outputs & Error message pop-up\\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: April 5th}\\ \hline
+			Risks and Assumptions & Train can not move if brakes are engaged\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Interior Light Test}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 1 \\ \hline
+			Methods & Lights turned on in test console  \\ \hline
+			Inputs &  \parbox[t]{10cm}{Radio button for lights set to ON\\ "Start Test" button pressed }\\ \hline
+			Outputs &Interior Lights set to ON \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: April 5th}\\ \hline
+			Risks and Assumptions & Lights can be on at any time.\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Train Temperature set to 60F Thermostat set to 65F}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 1 \\ \hline
+			Methods & Set intial temp to 60F, Set Thermostat to 65F  \\ \hline
+			Inputs &  \parbox[t]{10cm}{Train Temperature set to 60F\\ Thermostat set to 65F\\ "Start Test" button pressed }\\ \hline
+			Outputs &\parbox[t]{10cm}{ Heater set to ON\\AC set to OFF\\ Temperature increases to 65F} \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: April 5th}\\ \hline
+			Risks and Assumptions & Heater and AC can not be on at the same time.\\ \hline
+		\end{tabular}
+	\end{table}
+
+
+
+	\begin{table}[H]
+		\centering
+		\caption{Train Temperature set to 60F Thermostat set to 60F}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 1 \\ \hline
+			Methods & Set intial temp to 60F, Set Thermostat to 60F  \\ \hline
+			Inputs &  \parbox[t]{10cm}{Train Temperature set to 60F\\ Thermostat set to 60F\\ "Start Test" button pressed }\\ \hline
+			Outputs &\parbox[t]{10cm}{ Heater set to OFF\\AC set to OFF\\ Temperature does not change} \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: April 5th}\\ \hline
+			Risks and Assumptions & \parbox[t]{10cm}{Temperature can only change if heat or AC is on\\ No heat loss due to windows open}\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Train Temperature set to 60F Thermostat set to 55F}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 1 \\ \hline
+			Methods & Set intial temp to 60F, Set Thermostat to 55F  \\ \hline
+			Inputs &  \parbox[t]{10cm}{Train Temperature set to 60F\\ Thermostat set to 55F\\ "Start Test" button pressed }\\ \hline
+			Outputs &\parbox[t]{10cm}{ Heater set to OFF\\AC set to ON\\ Temperature decreases to 55F} \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of complete submodule.\\ Expected date: April 5th}\\ \hline
+			Risks and Assumptions & Heater and AC can not be on at the same time.\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Integration test With train Controller}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 1 \\ \hline
+			Methods & Repeat above tests but receiving values from Train Controller \\ \hline
+			Inputs &  Power Command, Utility statuses, Brake Statuses\\ \hline
+			Outputs & Outputs should reflect similar results as the test cases above \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of integration with train controller.\\ Expected date: April 7th}\\ \hline
+			Risks and Assumptions & \parbox[t]{10cm}{Whether inputs come from train controller or test console results should be the same}\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Integration test With Track Model}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 1 \\ \hline
+			Methods & Read in values for current block's grade for calculations \\ \hline
+			Inputs & Request for current grade to track Model\\ \hline
+			Outputs & If successful a grade will be returned to train model \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of integration with Track Model.\\ Expected date: April 7th}\\ \hline
+			Risks and Assumptions & Track model will send grade upon entrance to block\\ \hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{Integration test With MBO}
+		\begin{tabular}{|l|l|}
+			\hline
+			Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+			Integrity Level & 1 \\ \hline
+			Methods & Testing communication between MBo and Train model \\ \hline
+			Inputs & Request for current location from MBO\\ \hline
+			Outputs & If successful a location will be sent to the MBO \\ \hline
+			Expected Completion & \parbox[t]{10cm}{Test to be performed upon completion of integration with MBO.\\ Expected date: April 7th}\\ \hline
+			Risks and Assumptions & Train model will periodically update MBO with location\\ \hline
+		\end{tabular}
+	\end{table}
+\subsection{Integration Tests}
+
+\section{Train Controller Test Plan}
+Author: Andrew Lendacky
+\subsection{Unit Tests}
+
+\begin{table}[H]
+	\centering
+	\caption{UI Elements Disabled in Automatic Mode}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Checks to see if the desired UI elements are disabled\\ \hline
+		Inputs & The variable 'inAutomaticMode'\\ \hline
+		Outputs & All the desired elements are disabled. \\ \hline
+		Expected Completion & When the system is in Automatic mode\\ \hline
+		Risks and Assumptions & The desired elements are known\\ \hline
+		Responsibility & Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{System is in Manual Mode}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & Compares 'inManualMode' and 'inAutomaticMode'\\ \hline
+		Inputs & 'inManualMode' and 'inAutomaticMode', which are booleans\\ \hline
+		Outputs & 'inManualMode' is true and 'inAutomaticMode' is false \\ \hline
+		Expected Completion & When the system is switched to Manual mode\\ \hline
+		Risks and Assumptions & none\\ \hline
+		Responsibility & Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{System is in Automatic Mode}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & Compares 'inManualMode' and 'inAutomaticMode'\\ \hline
+		Inputs & 'inManualMode' and 'inAutomaticMode, which are booleans'\\ \hline
+		Outputs & 'inManualMode' is false and 'inAutomaticMode' is true \\ \hline
+		Expected Completion & When the system is switched to Automatic mode\\ \hline
+		Risks and Assumptions & none\\ \hline
+		Responsibility & Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{System is in Normal Mode}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2\\ \hline
+		Methods & Compares 'inNormalMode' and 'inTestingMode'\\ \hline
+		Inputs & 'inTestingMode' and 'inNormalMode', which are booleans\\ \hline
+		Outputs & 'inTestingMode' is false and 'inNormalMode' is true \\ \hline
+		Expected Completion & When the system is switched to Normal mode\\ \hline
+		Risks and Assumptions & none\\ \hline
+		Responsibility & Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{System is in Testing Mode}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Compares 'inTestingMode' and 'inNormalMode'\\ \hline
+		Inputs & 'inTestingMode' and 'inNormalMode', which are booleans\\ \hline
+		Outputs & 'inTestingMode' is true and 'inNormalMode'  is false\\ \hline
+		Expected Completion & When the system is switched to Testing mode\\ \hline
+		Risks and Assumptions & none\\ \hline
+		Responsibility & Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Set Speed is Not Greater than Block Speed}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & Compares the set speed and the block speed\\ \hline
+		Inputs & The block speed and the set speed\\ \hline
+		Outputs & The set speed is equal to the block speed \\ \hline
+		Expected Completion & When the 'Set Speed' button is clicked\\ \hline
+		Risks and Assumptions & The system is in Manual mode\\ \hline
+		Responsibility & Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Set Speed is Not Greater than Suggested Speed}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & Compares the set speed and the suggested speed\\ \hline
+		Inputs & The suggested speed and the set speed\\ \hline
+		Outputs & The set speed is equal to the suggested speed \\ \hline
+		Expected Completion & When the train needs to change speeds\\ \hline
+		Risks and Assumptions & The system is in Automatic mode \\ \hline
+		Responsibility &  Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Slider\'s Max Value is Equal to the Suggested Speed}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & Compares the slider's max value to the suggested speed\\ \hline
+		Inputs & The suggested speed\\ \hline
+		Outputs & The suggested speed equals the max value of the slider \\ \hline
+		Expected Completion & When the suggested speed is changed\\ \hline
+		Risks and Assumptions & The system is in Automatic mode \\ \hline
+		Responsibility &  Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Slider\'s Max Value is Equal to the Block Speed}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & Compares the slider's max value to the block speed\\ \hline
+		Inputs & The block speed\\ \hline
+		Outputs & The block speed equals the max value \\ \hline
+		Expected Completion & When the block speed changes\\ \hline
+		Risks and Assumptions & The system is in Manual mode \\ \hline
+		Responsibility &  Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\subsection{Integration Tests}
+
+\begin{table}[H]
+	\centering
+	\caption{Selecting a Train}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & Compare the IDs of the two trains\\ \hline
+		Inputs & ID of the train selected \\ \hline
+		Outputs &  The two IDs match\\ \hline
+		Expected Completion & When a train is selected from the dropdown menu\\ \hline
+		Risks and Assumptions & there is at least one dispatched train\\ \hline
+		Responsibility & Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Turning AC On - Using Radio Button}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Compares the states of the AC and heat on the train\\ \hline
+		Inputs & The selected train\\ \hline
+		Outputs & The AC is on and the heat is off \\ \hline
+		Expected Completion & When the 'ON' radio button is selected\\ \hline
+		Risks and Assumptions & System is in Automatic or Manual mode, heat was on \\ \hline
+		Responsibility & Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Turning AC On - Clicking Set}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Compares the states of the AC and heat on the train\\ \hline
+		Inputs & The selected train\\ \hline
+		Outputs & The AC is on and the heat is off \\ \hline
+		Expected Completion & When the 'Set' button is clicked\\ \hline
+		Risks and Assumptions & System is in Manual Mode, heat was on \\ \hline
+		Responsibility &  Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Turning Heat On - Using Radio Buttons}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Compares the states of the AC and the heat on the train\\ \hline
+		Inputs & The selected train\\ \hline
+		Outputs & The heat is on and the AC is off\\ \hline
+		Expected Completion & When the 'ON' radio button is selected\\ \hline
+		Risks and Assumptions & System is in Automatic or Manual mode, AC was on \\ \hline
+		Responsibility &  Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Turning Heat On - Clicking Set}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Compares the states of the AC and the heat on the train\\ \hline
+		Inputs & The selected train\\ \hline
+		Outputs & The heat is on and the AC is off \\ \hline
+		Expected Completion & When the 'Set' button is clicked\\ \hline
+		Risks and Assumptions & System is in Manual mode, AC was on \\ \hline
+		Responsibility &  Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Failures Window Reflects Failure on Train}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & Compares the state of the train to the radio buttons\\ \hline
+		Inputs & The selected train\\ \hline
+		Outputs & The radio buttons match the failure on the train\\ \hline
+		Expected Completion & When a failure on the train occurs\\ \hline
+		Risks and Assumptions & the test checks all three (antenna, power, and brake) failures \\ \hline
+		Responsibility & Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Sub-Component Receives Correct Train}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & Compares the two IDs of the trains\\ \hline
+		Inputs & The selected train from the Train Cont.\\ \hline
+		Outputs & The two IDs match \\ \hline
+		Expected Completion & When a train is selected from the dropdown\\ \hline
+		Risks and Assumptions & none \\ \hline
+		Responsibility & Train Controller\\ \hline
+	\end{tabular}
+\end{table}
+
+\section{MBO Test Plan}
+Author: Zach Scheider
+
+\subsection{Unit Tests}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Generate Train Schedule}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & Generate a schedule so that a train stops at each station. \\ \hline
+		Inputs &  Number of trains, info from excel file, block occupancy \\ \hline
+		Outputs &  Schedule for trains for each line \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Able to receive information from excel at load time.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 14th}\\ \hline
+		Results & Success for red line\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Update Trains}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & \parbox[t]{10cm} {Update trains authority and suggested speed at each clock tick \\in MBO and FB mode.} \\ \hline
+		Inputs &  Number of trains, info from excel file, block occupancy \\ \hline
+		Outputs &  Updated train speed and authority \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Able to receive information from excel at load time.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Results & Success for red line\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{View Schedule}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & Display schedule in table format.\\ \hline
+		Inputs &  Updated schedule. \\ \hline
+		Outputs &  Table of schedules for both lines in popup window. \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Valid schedule is passed/correctly updated.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Results & Success for red line\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Create Trains' Route}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & \parbox[t]{10cm}{Plans a route for a train from one station to another in both MBO \\and FB mode.} \\ \hline
+		Inputs &  Number of trains, info from excel file, block occupancy \\ \hline
+		Outputs &  Path for a train to take with known authority and speeds. \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Able to receive information from excel at load time.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Results & Mostly a success, some information had to be hard coded in.\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Next occupied}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & Finds the next occupied block in a path. \\ \hline
+		Inputs &  Block occupancy list, starting position\\ \hline
+		Outputs &  First occupied block in the path or null if none are \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Receiving correct occupancy information from CTC.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 12th}\\ \hline
+		Results & Success\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Next station}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & Finds the next station block in a path. \\ \hline
+		Inputs &  Block list, starting position\\ \hline
+		Outputs &  First station block in the path or null if none are \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Receiving correct station information from dummyTrack.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 12th}\\ \hline
+		Results & Success\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Find authority}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & Finds the authority of a train. \\ \hline
+		Inputs &  Block list, train to find authority for\\ \hline
+		Outputs &  Authority of the given train \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Receiving correct station information from dummyTrack, and correct block occupancies from the CTC.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Results & Success\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Arrive on time}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & \parbox[t]{10cm}{Checks to see if a train will arrive at it's destination in time at \\the current speeds.} \\ \hline
+		Inputs &  \parbox[t]{10cm}{List of blocks, list of given speeds, current position of the train, \\scheduled time of arrival}\\ \hline
+		Outputs &  \parbox[t]{10cm}{Boolean value of whether the train will arrive at it's destination \\on time or not} \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Times to the station given in the word document are correct.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 13th}\\ \hline
+		Results & Success\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Calculate Block Speeds}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Calculates the necessary block speeds for a train to arrive on time.\\ \hline
+		Inputs &  List of blocks, current position of the train, scheduled time of arrival\\ \hline
+		Outputs &  Array of speeds so that the train will arrive in time. \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Times to the station given in the word document are correct.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 13th}\\ \hline
+		Results & Success\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Minimum Block Speed}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Calculates the minimum block speed limit in a list of blocks\\ \hline
+		Inputs &  List of blocks, starting index\\ \hline
+		Outputs &  Lowest block speed limit \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Track has the correct block speed limits on them.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 12th}\\ \hline
+		Results & Success\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Block Furthest Below Speed Limit}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Returns the position of the block furthest below it's speed limit\\ \hline
+		Inputs &  List of blocks, list of speeds, previous index\\ \hline
+		Outputs &  Index the block furthest below it's speed limit \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Track has the correct block speed limits on them.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 12th}\\ \hline
+		Results & Success\\ \hline
+	\end{tabular}
+\end{table}
+
+%UNIT TEST
+\begin{table}[H]
+	\centering
+	\caption{Generate Driver Schedule}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & Generate a schedule so that a driver occupies each train. \\ \hline
+		Inputs &  CSV path \\ \hline
+		Outputs &  Driver Schedule\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Pulling info from valid CSV file.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 16th}\\ \hline
+		Results & Schedule generated but drivers don't get breaks.\\ \hline
+	\end{tabular}
+\end{table}
+
+\subsection{Integration Tests}
+
+%INTEGRATION TEST
+\begin{table}[H]
+	\centering
+	\caption{Get Mode}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & \parbox[t]{10cm}{Receive the correct mode from the CTC, checking for incorrect input. Perform "shutdown operation" if necessary.}\\ \hline
+		Inputs &  String of mode \\ \hline
+		Outputs &  No outputs \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{A risk is that communication is interrupted when switching modes.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 19th}\\ \hline
+		Results & \parbox[t]{10cm}{Switches to MBO and Manual mode fine. Fixed Block has issues \\some of the time.}\\ \hline
+	\end{tabular}
+\end{table}
+
+%INTEGRATION TEST
+\begin{table}[H]
+	\centering
+	\caption{Send Information to Train}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & \parbox[t]{10cm}{Sends a speed and authority to a train when in MBO mode.}\\ \hline
+		Inputs &  Train, suggested speed, authority \\ \hline
+		Outputs &  No outputs \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{A risk is that communication is interrupted.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 18th}\\ \hline
+		Results & Success\\ \hline
+	\end{tabular}
+\end{table}
+
+%INTEGRATION TEST
+\begin{table}[H]
+	\centering
+	\caption{Receive Information from Train}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 2 \\ \hline
+		Methods & \parbox[t]{10cm}{Receives actual speed and authority from a train when in MBO mode.}\\ \hline
+		Inputs &  Train \\ \hline
+		Outputs &  Actual speed and authority \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{A risk is that communication is interrupted.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 18th}\\ \hline
+		Results & Success\\ \hline
+	\end{tabular}
+\end{table}
+
+%INTEGRATION TEST
+\begin{table}[H]
+	\centering
+	\caption{Send Variance to CTC}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & \parbox[t]{10cm}{Sends actual speed and authority to a CTC when in MBO mode.}\\ \hline
+		Inputs &  Actual speed and authority \\ \hline
+		Outputs &  Actual speed and authority \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{A risk is that communication is interrupted.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 19th}\\ \hline
+		Results & Success\\ \hline
+	\end{tabular}
+\end{table}
+
+%INTEGRATION TEST
+\begin{table}[H]
+	\centering
+	\caption{Update TrainManager}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 3 \\ \hline
+		Methods & \parbox[t]{10cm}{Updates information in TrainManager in MBO and FB mode.}\\ \hline
+		Inputs &  TrainManager \\ \hline
+		Outputs &  No outputs \\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 15th}\\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Receiving correct information.} \\ \hline
+		Responsibility & MBO\\ \hline
+		Expected Completion & \parbox[t]{10cm}{April 19th}\\ \hline
+		Results & Success\\ \hline
+	\end{tabular}
+\end{table}
+
+%INTEGRATION TEST
+\begin{table}[H]
+	\centering
+	\caption{CTC comm failure}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & \parbox[t]{10cm}{Successfully receive failure. Handle failure appropriately. }\\ \hline
+		Inputs &  \parbox[t]{10cm}{Failure signal from Murphy. } \\ \hline
+		Outputs &  \parbox[t]{10cm}{No outputs. } \\ \hline
+		Expected Completion & April 15th \\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Modules integrated together.}  \\ \hline		
+		Responsibility & MBO\\ \hline
+	\end{tabular}
+\end{table}
+
+%INTEGRATION TEST
+\begin{table}[H]
+	\centering
+	\caption{Train Antenna comm failure}
+	\begin{tabular}{|l|l|}
+		\hline
+		Task & \multicolumn{1}{c|}{Test Design} \\ \hline
+		Integrity Level & 1 \\ \hline
+		Methods & \parbox[t]{10cm}{Successfully receive failure. Handle failure appropriately. }\\ \hline
+		Inputs &  \parbox[t]{10cm}{Failure signal from Murphy. } \\ \hline
+		Outputs &  \parbox[t]{10cm}{No outputs. } \\ \hline
+		Expected Completion & April 15th \\ \hline
+		Risks and Assumptions & \parbox[t]{10cm}{Modules integrated together.}  \\ \hline
+		Responsibility & MBO\\ \hline
+	\end{tabular}
+\end{table}
+
+
+\section{Changelog}
+
+\begin{table}[H]
+	\centering
+	\caption{Change}
+	\label{changelogl}
+	\begin{tabular}{|l|l|}
+		\hline
+		Date & \multicolumn{1}{c|}{Change} \\ \hline
+		March 14, 2017 & General Test Plan \\ \hline
+		March 15, 2017 & Add more tests \\ \hline
+		April 20, 2017 & Updated test results \\ \hline
+	\end{tabular}
+\end{table}
+
+\section{Signatures}
+
+\begin{table}[H]
+	\centering
+	\caption{Signatures}
+	\label{signatures}
+	\begin{tabular}{|l|l|}
+		\hline
+		Name, Module & \multicolumn{1}{c|}{Change} \\ \hline
+		Zach Scheider, MBO & \\ \hline
+	\end{tabular}
+\end{table}
+
+\end{document}          
