@@ -131,7 +131,6 @@ public class PLCRedTest{
     Block yard = this.track.getBlock("Red", "U", 77);
     this.plc.parse();
     this.plc.runLightsPLC();
-    assertFalse(this.track.viewLightsMap().get(yard).viewLightsState());
     yard.setOccupied(true);
     this.plc.runLightsPLC();
     assertTrue(this.track.viewLightsMap().get(yard).viewLightsState());
