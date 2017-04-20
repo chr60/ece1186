@@ -167,16 +167,20 @@ public class WaysideGUI {
         // updateFields();
       }
     });
-
+    
     JButton btnSwitch = new JButton("Switch");
     btnSwitch.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         if(activeBlock.hasSwitch()){
           Boolean currState = activeBlock.viewSwitchState();
-          if(currState==true)
+          if(currState==true){
+            activeBlock.setManualOverride(!activeBlock.getManualOverride());
             activeBlock.getAssociatedSwitch().setSwitchState(false);
-          else
+          }
+          else{
+            activeBlock.setManualOverride(!activeBlock.getManualOverride());
             activeBlock.getAssociatedSwitch().setSwitchState(true);
+          }
         }
       }
     });

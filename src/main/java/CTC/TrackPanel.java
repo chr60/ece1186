@@ -385,9 +385,9 @@ public class TrackPanel extends JPanel{
 
 				if(trackClosed == true){
 					currWorkingWS.transferMaintenance(sendMaintToBlock);
-					if(!(brokenList.get(0) == null)){
+          if(brokenList.size()>0)
 						brokenList.remove(0);
-					}
+
 					trackClosed = false;
 				}
 			}
