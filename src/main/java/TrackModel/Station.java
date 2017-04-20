@@ -27,10 +27,11 @@ public class Station implements Comparable<Station>, Serializable {
     this.stationName = stationName;
     this.stationTemp = new Integer(20);
     this.trackHeatersOn = false;
-    this.passengersWaiting = new Integer(0);
+    this.passengersWaiting = new Integer(100);
     this.forwardStationLights = new Lights(this.superTrackModel);
     this.backWardStationLights = new Lights(this.superTrackModel);
     this.nextArrivalTime = "0:00";
+	rand = new Random();
   }
 
   /**

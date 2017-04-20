@@ -501,7 +501,11 @@ public class Train implements Serializable {
      */
 	public int passengersUnboarding(){
 		//random number selected between number of people on train.
-		return rand.nextInt(numPassengers);
+		if (numPassengers != 0){
+			return rand.nextInt(numPassengers);
+		}
+		return 0;
+		
 	}
 
 
