@@ -129,7 +129,7 @@ public class Launcher extends javax.swing.JFrame {
         String[] fNames = {redlinePath};
 
         String redLink = "test-clases/redlinelink.csv";
-        String greenLink = "test-classes/greelinelink.csv";
+        String greenLink = "test-classes/greenlinelink.csv";
         String[] linkNames = {redLink};
 
         this.globalTrack = this.generateTrack("GlobalTrack", fNames, linkNames);
@@ -206,6 +206,10 @@ public class Launcher extends javax.swing.JFrame {
 
         mbo.updateTrains();
 
+        if (mbo.schedExists()) {
+          mbo.updateSchedules();
+        }
+
         // what should be called every tick
 
         if(ctc != null){
@@ -216,7 +220,7 @@ public class Launcher extends javax.swing.JFrame {
             // CTC - calls wayside to get updated list of track occupancy
             ctc.getTrainPanel().updateTrainPositionsToManager(trainManagers);
             // CTC - prints active list of trains from train manager to GUI
-            //ctc.getTrainManagerPanel().updateTable(trainManagers);
+            ctc.getTrainManagerPanel().updateTable(trainManagers);
         }
 
         trainHandler.pollYard();
