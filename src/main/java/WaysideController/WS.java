@@ -145,6 +145,24 @@ public class WS {
 	}
 
 	/**
+	 * Manually manipulate a switch to opposite position FOR CTC
+	 * @param  Block b - Root block of switch (dummy).
+	 * @return true if switch successfully switched, false if !b.hasSwitch()
+	 */
+	public boolean manualSwitchCTC(Block b){
+		Block liveBlock = this.track.lateralLookup(b);
+		if(liveBlock.hasSwitch() && !liveBlock.getOccupied()){
+			if(liveBlock.viewSwitchState()==true)
+				liveBlock.getAssociatedSwitch().setSwitchState(false);
+			else if(liveBlock.viewSwitchState()==false)
+				liveBlock.getAssociatedSwitch().setSwitchState(true);
+			this.waysideGui.printNotification(new String(this.name + " - Switch on Block " + liveBlock.blockNum() + " switched by CTC on "));
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Returns status of a switch.
 	 * @param  Block b - Root block of switch.
 	 * @return 1 if default, 0 if !default, -1 if block is not a root block (see below).

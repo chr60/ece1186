@@ -49,6 +49,7 @@ public class TrackPanel extends JPanel{
 
 
 
+
 	public TrackPanel(TrackModel dummyTrack, ArrayList<WS> ws, ArrayList<Block> brokenList){
 		this.waysides = ws;
 		this.currWorkingWS = waysides.get(0);
@@ -210,6 +211,8 @@ public class TrackPanel extends JPanel{
 		switch_no.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		switch_no.setBounds(119, 139, 45, 16);
 		add(switch_no);
+
+
 /*
 		JLabel switch_actual_number = new JLabel("#");
 		switch_actual_number.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -333,6 +336,31 @@ public class TrackPanel extends JPanel{
 
 		});
 
+		JButton changeSwitch = new JButton("Change Switch");
+		changeSwitch.setBounds(50, 164, 120, 23);
+		add(changeSwitch);
+		changeSwitch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String block = (String) dropdown_block.getSelectedItem();
+				String section = (String) dropdown_segment.getSelectedItem();
+				String line = (String) dropdown_line.getSelectedItem();
+				//convert block from string to Integer
+				int blockNum;
+				try{
+					blockNum = Integer.parseInt(block);
+				}catch(NumberFormatException num){
+					blockNum = dummyTrack.getSection(line, section).keySet().toArray(new Integer [0])[0];
+				}
+
+				Block switchBlockChange = dummyTrack.getBlock(line, section, blockNum);
+				if(switchBlockChange.hasSwitch() == true){
+					currWorkingWS.manualSwitchCTC(switchBlockChange);
+				}else{
+					// do nothing
+				}
+
+			}
+		});
 
 
 	}
@@ -424,5 +452,6 @@ public class TrackPanel extends JPanel{
 		}
 
 	}
+
 
 }

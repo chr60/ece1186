@@ -171,7 +171,7 @@ public class Launcher extends javax.swing.JFrame {
 
         this.ctc = new CTCgui(this, this.trainManagers, generateTrack("CTC", fNames, linkNames), this.waysideList, globalTrack);
         this.mbo = new MovingBlockOverlay(generateTrack("MBO", fNames, linkNames), this.trainManagers, this.trainHandler, this.ctc);
-
+        ctc.setSchedules();
         this.ctc.setMBO(this.mbo);
 
         this.systemClock = new Timer(this.systemSpeed, new ActionListener(){
@@ -238,7 +238,11 @@ public class Launcher extends javax.swing.JFrame {
       this.mbo.setMode(mode);
     }
 
-        /**
+    public ArrayList<Schedule> getSchedules() {
+      return this.mbo.getSched();
+    }
+
+    /**
      * Returns the current time of the system in "HH:mm:ss a" format.
      * HH - the hours
      * mm - the minutes

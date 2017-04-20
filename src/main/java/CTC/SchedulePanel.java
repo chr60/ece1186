@@ -26,8 +26,8 @@ public class SchedulePanel extends JPanel {
       private DefaultTableModel scheduleModel = new DefaultTableModel();
       String [] headers;
 
-			public SchedulePanel() {
-
+			public SchedulePanel(String [] stationNames, ArrayList<TrainSchedule> lotsOfTrains) {
+          this.headers = stationNames;
 					setLayout(new BorderLayout());
 
 					JPanel options = new JPanel(new GridBagLayout());
@@ -43,19 +43,73 @@ public class SchedulePanel extends JPanel {
 						schedTable.getColumn(i).setPreferredWidth(250);
 				}
 
-					scheduleModel.setColumnIdentifiers(headers);
-					scheduleModel.setColumnCount(headers.length);
+					scheduleModel.setColumnIdentifiers(this.headers);
+					scheduleModel.setColumnCount(this.headers.length);
 
-      		scheduleModel.setRowCount(50);
+      		scheduleModel.setRowCount(250);
       		schedTable.setModel(scheduleModel);
 
-          updateTable();
+          updateTable(lotsOfTrains, this.headers);
 
 
 			}
 
-      public void updateTable(){
+      public void updateTable(ArrayList<TrainSchedule> lineSchedule, String [] headers){
+
+        for (int i = 0; i < lineSchedule.size(); i++) {
+          schedTable.setValueAt(lineSchedule.get(i).getTrainID(), i, 0);
+          for (int j = 1; j < headers.length; j++) {
+            schedTable.setValueAt(convertTime(lineSchedule.get(i).getTime(0,j - 1)), i, j);
+          }
+        }
+      }
+
+      public static String convertTime(long secs) {
+
+        int secondsDisplay = (int) secs % 60;
+        long minutes = secs / 60;
+        int minutesDisplay = (int) minutes % 60;
+        long hours = minutes / 60;
+        int hoursDisplay = (int) hours % 24;
+        int ampm = hoursDisplay / 12;
+        String meridian;
+        String time = "";
+
+        if (ampm == 0) {
+          meridian = " AM";
+        } else if (ampm > 0) {
+          meridian = " PM";
+          hoursDisplay %= 12;
+        } else {
+          meridian = " ERROR";
+        }
+
+        if (0 == hoursDisplay) {
+          hoursDisplay = 12;
+          time += hoursDisplay + ":";
+        } else if (hoursDisplay < 10) {
+          time += "0" + hoursDisplay + ":";
+        } else {
+          time += hoursDisplay + ":";
+        }
+
+        if (minutesDisplay < 10) {
+          time += "0" + minutesDisplay + ":";
+        } else {
+          time += minutesDisplay + ":";
+        }
+
+        if (secondsDisplay < 10) {
+          time += "0" + secondsDisplay;
+        } else {
+          time += secondsDisplay;
+        }
+
+        time += meridian;
+
+        return time;
 
       }
+
 
 	}
