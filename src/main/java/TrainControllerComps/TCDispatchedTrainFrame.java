@@ -126,6 +126,9 @@ public class TCDispatchedTrainFrame extends javax.swing.JFrame {
         
         Train train = this.trainHandler.findTrain(Integer.parseInt(this.dispatchedTrainsList.getSelectedValue()));
         TrainController tc = new TrainController(train, "Automatic" , "Normal"); 
+        this.trainHandler.openTrainControllers.add(tc);
+        tc.setVisible(true);
+        tc.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_openTrainControllerActionPerformed
 
     private void cancel(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel

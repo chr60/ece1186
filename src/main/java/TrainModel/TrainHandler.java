@@ -67,6 +67,7 @@ public class TrainHandler {
 			currT.setAuthority(goToBlock);
 			currT.setCurrBlock(startBlock);
                         trains.add(currT);
+                        this.trainIDs.add(trainID.toString());
 			// open a train controller
 			TrainController tc = new TrainController(currT, "Automatic", "Normal"); 
                               
