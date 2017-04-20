@@ -189,6 +189,50 @@ public class TCBrakePanel extends javax.swing.JPanel {
 
         return this.emergencyBrake;
     }
+    
+    /**
+     * Returns the next 'x' blocks from the train's current block.
+     * 
+     * @param numBlocksAhead 
+     */
+    private LinkedList<Block> blocksAhead(int numBlocksAhead){
+    
+        Block currBlock = this.selectedTrain.getGPS().getCurrBlock(); 
+        
+        
+        Block nextBlock = currBlock; 
+        
+        LinkedList<Block> nextBlocks = new LinkedList<Block>(); 
+        
+        for (int i = 0; i < numBlocksAhead; i++){
+        
+        
+            nextBlock = nextBlock.nextBlockForward(); 
+            System.out.println(nextBlock.blockNum()); 
+            nextBlocks.add(nextBlock);
+        }
+        
+        return nextBlocks; 
+    }
+    
+        private LinkedList<Block> blocksBehind(int numBlocksBehind){
+    
+        Block currBlock = this.selectedTrain.getGPS().getCurrBlock(); 
+        
+        Block nextBlock = currBlock; 
+        
+        LinkedList<Block> nextBlocks = new LinkedList<Block>(); 
+        
+        for (int i = 0; i < numBlocksBehind; i++){
+        
+        
+            nextBlock = nextBlock.nextBlockBackward(); 
+            System.out.println(nextBlock.blockNum()); 
+            nextBlocks.add(nextBlock);
+        }
+        
+        return nextBlocks; 
+    }
 
     /**
      * Checks if the train should come to a stop based on different criteria.
@@ -197,6 +241,9 @@ public class TCBrakePanel extends javax.swing.JPanel {
      */
     private boolean shouldStopTrainChecks(){
 
+        this.blocksAhead(3);
+        this.blocksBehind(3);
+        
         // stop if
         if (this.failureDetected()){
 
@@ -222,12 +269,13 @@ public class TCBrakePanel extends javax.swing.JPanel {
                 // wait for 6 clock ticks
                 if (this.tickNum == 0){
                     this.approachingStation = false;
-                    this.atStation = true;
+                    this.atStation = true; // at the station
                     this.announcementLogbook.add("Arriving at " + this.selectedTrain.getGPS().getCurrBlock().getStationName());
                     this.printLogs();
                     this.tickNum++;
                 }else if (this.tickNum == 1){ // open left doors
                     this.selectedTrain.setLeftDoor(1);
+                    this.selectedTrain.updatePassengerCount();
                     this.tickNum++;
                 }else if (this.tickNum == 2){
                     this.tickNum++;
@@ -251,20 +299,14 @@ public class TCBrakePanel extends javax.swing.JPanel {
             }
             return true;
         }
-
-
+        
         if (this.selectedTrain.getSuggestedSpeed() == -1.0){ // pick up emergency signal
-            this.bringTrainToHalt(true); // stop immediately w/ e-brake
+            this.bringTrainToHalt(false); // stop immediately w/ e-brake
             return true;
         }
 
         //if (this.trainAhead()){ this.bringTrainToHalt(true); } // there's a train ahead
 
-        /**
-         * @bug The train will stop at the authority, but then reset and begin
-         * back on its way. Look into the flags being reset.
-         *
-         */
         if (this.willExceedAuthority()){ return true; }
 
         return false;
@@ -380,7 +422,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
      * @param stopTime
      * @return
      */
-    private Double distanceToStop(Double stopTime){
+    private Double distanceTraveled(Double stopTime){
 
         //using S = Vi(t) + (1/2)(a)(t^2)  to compute distance
 	Double stopDist = (this.selectedTrain.getVelocity()*0.44704)*(stopTime) + (1/2)*(this.selectedTrain.deccelRate(-1.2))*(Math.pow(stopTime, 2));
@@ -400,7 +442,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
 
             Double x = Double.parseDouble(this.message); // parse message
 
-            Double distElapsed = this.distanceToStop(1.0); // distanced traveled in 1 second
+            Double distElapsed = this.distanceTraveled(1.0); // distanced traveled in 1 second
             Double distTrainToStation = x - this.distanceTraveled;
 
             this.distanceTraveled = this.distanceTraveled + distElapsed; // total distance traveled
