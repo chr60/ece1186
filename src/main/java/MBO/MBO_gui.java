@@ -35,6 +35,8 @@ public class MBO_gui {
   private JTextField startTextField;
   private JTextField numTrainTextField;
   private JTextField numLoopsTextField;
+  private JSpinner lineSpinner;
+  private boolean schedExists = false;
   private Border grayline;
   private JTextField numThruputTextfield;
   String [] redLineNames = {"Train ID", "Shadyside", "Herron Ave", "Swissvale", "Penn Station",
@@ -138,7 +140,7 @@ public class MBO_gui {
     lineLabel.setBounds(0, 11, 113, 14);
     choicePanel.add(lineLabel);
 
-    JSpinner lineSpinner = new JSpinner();
+    lineSpinner = new JSpinner();
     lineSpinner.setModel(new SpinnerListModel(new String[] {"Red", "Green"}));
     lineSpinner.setBounds(10, 29, 93, 20);
     choicePanel.add(lineSpinner);
@@ -247,29 +249,37 @@ public class MBO_gui {
     testButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-
-        int index = 0;
-        Schedule sched;
-        String selected = (String) lineSpinner.getValue();
-
-        for (int i = 0; i < mbo.getSched().size(); i++) {
-          if (selected.equals(mbo.getSched().get(i).getLineName())) {
-            index = i;
-          }
-        }
-        sched = mbo.getSched().get(index);
-
-        int loops = Integer.parseInt(numLoopsTextField.getText());
-        int start = getTimeEntered();
-        int trains = Integer.parseInt(numTrainTextField.getText());
-
-        sched.createSchedule(loops, start, trains);
-        scheduleToGUI(trains, sched.getSched());
-        driversToGUI(sched.getDrivers());
+        schedExists = true;
+        updateSchedules();
       }
     });
 
     frame.setVisible(true);
+  }
+
+  public boolean schedExists() {
+    return schedExists;
+  }
+
+  public void updateSchedules() {
+    int index = 0;
+    Schedule sched;
+    String selected = (String) lineSpinner.getValue();
+
+    for (int i = 0; i < mbo.getSched().size(); i++) {
+      if (selected.equals(mbo.getSched().get(i).getLineName())) {
+        index = i;
+      }
+    }
+    sched = mbo.getSched().get(index);
+
+    int loops = Integer.parseInt(numLoopsTextField.getText());
+    int start = getTimeEntered();
+    int trains = Integer.parseInt(numTrainTextField.getText());
+
+    sched.createSchedule(loops, start, trains);
+    scheduleToGUI(trains, sched.getSched());
+    driversToGUI(sched.getDrivers());
   }
 
   /**

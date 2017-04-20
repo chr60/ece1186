@@ -332,7 +332,6 @@ public class Launcher extends javax.swing.JFrame {
     }
     /**
      * Helper function to place a beacon with a message at a given block.
-
      * @param line the track line
      * @param section the track section
      * @param blockNum the block number
@@ -676,9 +675,9 @@ public class Launcher extends javax.swing.JFrame {
     private void openTrain(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTrain
         // TODO add your handling code here:
 
-		trainGUI.frmTrainModel.setVisible(true);
+    trainGUI.frmTrainModel.setVisible(true);
         trainGUI.frmTrainModel.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		trainGUI.setTrainArray(this.trainHandler.getTrains());
+    trainGUI.setTrainArray(this.trainHandler.getTrains());
 
     }//GEN-LAST:event_openTrain
 

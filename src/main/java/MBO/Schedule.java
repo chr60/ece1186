@@ -264,6 +264,10 @@ public class Schedule{
       mode = "FB";
     }
 
+    if (numLoops >= 0 && startTime >= 0 && numTrains >=0) {
+      createSchedule(numLoops, startTime, numTrains);
+    }
+
   }
 
   /**
