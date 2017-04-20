@@ -37,38 +37,66 @@ import java.util.ArrayList;
  */
 public class TrainController extends javax.swing.JFrame {
 
-    // Data Structures:
-    // used to get a dispatched train by its ID.
+    /**
+     * Used to get a dispatched train by its ID.
+     **/
     private HashMap<String, Train> trainList = new HashMap<String, Train>();
 
-    // Train Stuff:
+    /**
+     * Train the TrainController is controlling. 
+     */
     private Train selectedTrain; // the train that the Train Controller is controlling.
 
-    // Modes:
+    /**
+     * Used to tell if the Train Controller is in Manual mode.
+     */
     private boolean manualMode; // used to tell if the Train Controller is in Manual mode
+    
+    /**
+     * Used to tell if the Train Controller is in Automatic mode.
+     */
     private boolean automaticMode; // used to tell if the Train Controller is in Automatic mode
 
+    /**
+     * Used to tell if the Train Controller is in Manual mode.
+     */
     private boolean normalMode; // used to tell if the Train Controller is in Manual mode
-    private boolean testingMode; // used to tell if the Train Controller is in Automatic mode
+    
+    /**
+     * Used to tell if the Train Controller is in Automatic mode
+     */
+    private boolean testingMode; 
     
     // FOR TESTING!
-    ArrayList<Train> trains = new ArrayList<Train>();
+    //ArrayList<Train> trains = new ArrayList<Train>();
 
+    /**
+     * Test Console to test the Train Controller. 
+     */
     private TCTestConsole testConsole = null;
-
-    
+ 
+    /**
+     * Train Handler to manage the dispatched trains. 
+     * Used mainly to get updated lists of dispatched trains. 
+     */
     TrainHandler trainHandler; 
 
+    /**
+     * Indicates if the trainUI is open.
+     */
     public boolean detailedTrainWindowOpen;
 
+    /**
+     * Train Model GUI used to display more information for the selected train.
+     */
     TrainModeUI trainUI;
-
-    // FOR TESTING:
-    //TrackModel track;
     
-    
+    /**
+     * Indicates if the test console is open.
+     */
     boolean testWindowOpen;
         
+    
     public Timer clock;    
     
     // MARK: - Constructors
@@ -93,8 +121,6 @@ public class TrainController extends javax.swing.JFrame {
         this.brakePanel.setSpeedController(this.speedController);
         
         this.detailedTrainWindowOpen = false;
-
-        //this.playNormal();
     }
 
     /**
@@ -126,8 +152,6 @@ public class TrainController extends javax.swing.JFrame {
             engPanel.setVisible(true);
             engPanel.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         }
-        
-        //this.playNormal();
     }
 
     /**
@@ -157,8 +181,6 @@ public class TrainController extends javax.swing.JFrame {
             engPanel.setVisible(true);
             engPanel.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         }
-        
-         //this.playNormal();
     }
 
     /**
@@ -249,11 +271,21 @@ public class TrainController extends javax.swing.JFrame {
         return this.speedController;
     }
 
+    /**
+     * Returns the block info panel. 
+     * 
+     * @return the block info panel object.
+     */
     public TCBlockInfoPanel getBlockInfoPane(){
 
         return this.blockInfoPane;
     }
     
+    /**
+     * Returns the brake panel. 
+     * 
+     * @return brake panel object.
+     */
     public TCBrakePanel getBrakePanel(){
         
         return this.brakePanel;
@@ -374,6 +406,9 @@ public class TrainController extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Refreshes the components of a train controller when a train is switched to. 
+     */
     public void switchTrain(){
         
         this.refreshComponents();
@@ -400,8 +435,18 @@ public class TrainController extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Sets the item that is selected in the train dropdown combo box.
+     * 
+     * @param pos the index of the selected item.
+     */
     public void setSelectedItem(int pos){
     
+        /**
+         * @bug The train controller doesn't always update the train that it is controlling 
+         * in the combo box, but is still controlling the correct train. 
+         * 
+         */
         this.dispatchedTrains.setSelectedIndex(pos);
     }
 
@@ -465,15 +510,7 @@ public class TrainController extends javax.swing.JFrame {
         menuBar = new javax.swing.JMenuBar();
         viewMenu = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
         TrainDetailMenuItem = new javax.swing.JMenuItem();
-        editMenu = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        helpMenu = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -577,11 +614,6 @@ public class TrainController extends javax.swing.JFrame {
         announcementsLabel.setText("Announcements:");
 
         annoucementDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "No Announcement", "Announce Arrival", "Announce Departure", "Announce Next Station" }));
-        annoucementDropDown.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                annoucementDropDownActionPerformed(evt);
-            }
-        });
 
         chooseAnnouncementLabel.setText("Choose Announcement");
 
@@ -650,9 +682,6 @@ public class TrainController extends javax.swing.JFrame {
         });
         viewMenu.add(jMenuItem5);
 
-        jMenuItem6.setText("Failures");
-        viewMenu.add(jMenuItem6);
-
         TrainDetailMenuItem.setText("Selected Train Detail");
         TrainDetailMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -662,40 +691,6 @@ public class TrainController extends javax.swing.JFrame {
         viewMenu.add(TrainDetailMenuItem);
 
         menuBar.add(viewMenu);
-
-        editMenu.setText("Edit");
-
-        jMenuItem1.setText("Edit Kp/Ki");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        editMenu.add(jMenuItem1);
-
-        jMenuItem2.setText("Open Train Controller");
-        editMenu.add(jMenuItem2);
-
-        menuBar.add(editMenu);
-
-        helpMenu.setText("Help");
-
-        jMenuItem3.setText("Open User Manual");
-        helpMenu.add(jMenuItem3);
-
-        jCheckBoxMenuItem1.setSelected(true);
-        jCheckBoxMenuItem1.setText("Tooltips");
-        helpMenu.add(jCheckBoxMenuItem1);
-
-        jMenuItem4.setText("About");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
-            }
-        });
-        helpMenu.add(jMenuItem4);
-
-        menuBar.add(helpMenu);
 
         setJMenuBar(menuBar);
 
@@ -906,18 +901,6 @@ public class TrainController extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
-
-    private void annoucementDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annoucementDropDownActionPerformed
-       // TODO add your handling code here:
-    }//GEN-LAST:event_annoucementDropDownActionPerformed
-
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
@@ -953,8 +936,7 @@ public class TrainController extends javax.swing.JFrame {
                 engPanel.setVisible(true);
                 engPanel.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             }
-
-
+            
             this.setTrains(this.selectedTrain);
 
             //this.refreshComponents(); // populate the other components with train info
@@ -1289,20 +1271,12 @@ public class TrainController extends javax.swing.JFrame {
     private javax.swing.JLabel date;
     private javax.swing.JLabel dateLabel;
     private javax.swing.JComboBox<String> dispatchedTrains;
-    private javax.swing.JMenu editMenu;
     private javax.swing.JTextPane errorLogs;
     private javax.swing.JLabel errorLogsLabel;
-    private javax.swing.JMenu helpMenu;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton makeAnnouncementButton;
     private javax.swing.JRadioButton manualModeRadioButton;
