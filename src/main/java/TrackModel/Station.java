@@ -59,6 +59,21 @@ public class Station implements Comparable<Station>, Serializable {
   }
 
   /**
+  * Updates the status of track heaters at a station.
+  */
+  public void updateHeaters() {
+    if (this.stationTemp < 40) {
+      this.trackHeatersOn = true;
+    } else {
+      this.trackHeatersOn = false;
+    }
+  }
+
+  public void updateTemp() {
+    Random tempRandom = new Random();
+    this.stationTemp = this.stationTemp + tempRandom.nextInt(5);
+  }
+  /**
   * Returns the lights visible when travelling from the "forward" direction.
   */
   public Lights getForwardLights() {
@@ -91,6 +106,13 @@ public class Station implements Comparable<Station>, Serializable {
   */
   public ArrayList<Block> getHostBlocks() {
     return this.hostBlocks;
+  }
+
+  /**
+  * Adds passengers to a station.
+  */
+  public void addWaiting(Integer newWaiting) {
+    this.passengersWaiting = this.passengersWaiting + newWaiting;
   }
 
   /**
