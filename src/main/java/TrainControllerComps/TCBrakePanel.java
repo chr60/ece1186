@@ -31,7 +31,6 @@ public class TCBrakePanel extends javax.swing.JPanel {
     /**
      * The train whose brakes that are being controlled.
      * This variable is passed in from the Train Controller class.
-     *
      */
     private Train selectedTrain;
 
@@ -41,7 +40,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
     private JTextArea operatingLogs;
 
     /**
-     * Text area to print announcments to.
+     * Text area to print announcements to.
      */
     private JTextArea announcementLogs;
 
@@ -86,7 +85,10 @@ public class TCBrakePanel extends javax.swing.JPanel {
      * from the beacon.
      */
     private String beaconDistanceMessage;
-
+    
+    /**
+     * The name of the station that the train is approaching. 
+     */
     public String approachingStationName; 
     
     /**
@@ -125,6 +127,9 @@ public class TCBrakePanel extends javax.swing.JPanel {
      */
     public Double distanceTraveledToAuthority = 0.0; 
     
+    /**
+     * Stack used to hold the last visited station. 
+     */
     private Stack<String> visitedStationStack;
     
     /**
@@ -257,7 +262,6 @@ public class TCBrakePanel extends javax.swing.JPanel {
         return nextBlocks; 
     }
     
-    
     /**
      * Returns the last 'x' blocks from the train's current block.
      * 
@@ -343,7 +347,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
                 if (this.stationSide.equals("L")){ this.selectedTrain.setLeftDoor(1); }
                 else if (this.stationSide.equals("R")){ this.selectedTrain.setRightDoor(1); }
                 this.selectedTrain.updatePassengerCount();
-				this.waitingAtStationCounter++; 
+		this.waitingAtStationCounter++; 
 
             }else if (this.waitingAtStationCounter == 11){ // close the doors
                 
@@ -415,7 +419,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
      * Checks if the train is going to exceed its authority 
      * when in MBO mode, and stops if it will using the service brake. 
      * 
-     * @return 
+     * @return returns true if the train will exceed authority. 
      */
     private boolean willExceedAuthorityMBO(){
     
@@ -478,6 +482,8 @@ public class TCBrakePanel extends javax.swing.JPanel {
     /**
      * Checks if the train is going to exceed authority when in FBM,
      * and stops the train if it will using the service brake.
+     * 
+     * @return returns true if the train will exceed authority. 
      */
     private boolean willExceedAuthorityFBM(){
 
@@ -622,7 +628,7 @@ public class TCBrakePanel extends javax.swing.JPanel {
      * Determines the distance traveled during a given amount of seconds;
      *
      * @param stopTime the time to determine the distance covered in.
-     * @return
+     * @return the distanced traveled. 
      */
     private Double distanceTraveled(Double stopTime){
 
@@ -638,6 +644,17 @@ public class TCBrakePanel extends javax.swing.JPanel {
      */
     private boolean startApproachingStation(){
 
+        /**
+         * @bug Sometimes the train overshoots the station by around 1.7 m. 
+         * This might have to do with where the beacons are placed. 
+         */
+        
+        
+        /**
+         * @bug The train doesn't stop at Station Square on the way back around the track.
+         * This is most likely due to the distance from the beacon to the station not being fully accurate.
+         */
+        
         this.approachingStation();
 
         if (this.approachingStation == true){ // start to calculate distance
