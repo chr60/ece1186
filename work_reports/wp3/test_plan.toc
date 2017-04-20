@@ -27,7 +27,7 @@
 \contentsline {section}{\numberline {8}Train Controller Test Plan}{35}{section.8}
 \contentsline {subsection}{\numberline {8.1}Unit Tests}{36}{subsection.8.1}
 \contentsline {subsection}{\numberline {8.2}Integration Tests}{39}{subsection.8.2}
-\contentsline {section}{\numberline {9}MBO Test Plan}{42}{section.9}
+\contentsline {section}{\numberline {9}MBO Test Plan}{41}{section.9}
 \contentsline {subsection}{\numberline {9.1}Unit Tests}{42}{subsection.9.1}
 \contentsline {subsection}{\numberline {9.2}Integration Tests}{47}{subsection.9.2}
 \contentsline {section}{\numberline {10}Changelog}{50}{section.10}
