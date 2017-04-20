@@ -77,7 +77,7 @@ public class TrackModel implements Serializable {
   * @param the blockNum of the block
   * @return the Block object associated with that blocknum
   */
-  private Block getBlock(String line, Integer blockNum) throws NoSuchElementException{
+  public Block getBlock(String line, Integer blockNum) throws NoSuchElementException{
     for (String section : this.trackList.get(line).keySet()) {
       for (Integer currBlock : this.trackList.get(line).get(section).keySet()) {
         if (currBlock.equals(blockNum)) {
@@ -521,7 +521,7 @@ public class TrackModel implements Serializable {
         Boolean initLine = true;
         try (BufferedReader reader = new BufferedReader(new FileReader(s))) {
           while ((line = reader.readLine()) != null) {
-            if (initLine.equals(false)) {            
+            if (initLine.equals(false)) {
               String[] str = line.split(delimiter, -1);
               String sourceLine = str[0];
               String targetLine = str[0];
@@ -536,6 +536,7 @@ public class TrackModel implements Serializable {
                 Block nextBlockForwardOverride = this.trackList.get(targetLine).get(forwardTargetSection).get(forwardTargetBlockNum);
                 sourceBlock.setNextBlockForward(nextBlockForwardOverride);
               }
+
               
               if (!backwardTargetSection.equals("") && str[6] != "") {
                 int backwardTargetBlockNum = Integer.parseInt(str[6]);
