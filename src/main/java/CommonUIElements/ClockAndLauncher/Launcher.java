@@ -238,6 +238,10 @@ public class Launcher extends javax.swing.JFrame {
       this.mbo.setMode(mode);
     }
 
+    public ArrayList<Schedule> getSchedules() {
+      return this.mbo.getSched();
+    }
+
         /**
      * Returns the current time of the system in "HH:mm:ss a" format.
      * HH - the hours
