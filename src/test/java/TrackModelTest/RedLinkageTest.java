@@ -38,7 +38,7 @@ public class RedLinkageTest {
     this.track.readCSV(this.fNames, this.fOverrideNames);
   }
 
-  //@Test
+  @Test
   /**
   * Test the successful override state on the default read-in on the redline.
   */
