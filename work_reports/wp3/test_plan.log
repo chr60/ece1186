@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6210 64-bit) (preloaded format=pdflatex 2017.2.1)  20 APR 2017 14:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6210 64-bit) (preloaded format=pdflatex 2017.3.14)  20 APR 2017 17:05
 entering extended mode
 **./test_plan.tex
 (test_plan.tex
@@ -202,7 +202,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 2.
  [1
 
-{C:/Users/Max/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}])
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}])
 \tf@toc=\write4
 \openout4 = `test_plan.toc'.
 
@@ -558,12 +558,12 @@ l.733
                                                   \fi \fi 
 l.733 
       ]
-Overfull \hbox (95.38972pt too wide) in paragraph at lines 740--755
+Overfull \hbox (65.61111pt too wide) in paragraph at lines 740--755
  [][] 
  []
 
 
-Overfull \hbox (95.38972pt too wide) in paragraph at lines 761--776
+Overfull \hbox (65.61111pt too wide) in paragraph at lines 761--776
  [][] 
  []
 
@@ -580,12 +580,12 @@ l.777
                                                   \fi \fi 
 l.777 
       ]
-Overfull \hbox (95.38972pt too wide) in paragraph at lines 782--797
+Overfull \hbox (65.61111pt too wide) in paragraph at lines 782--797
  [][] 
  []
 
 
-Overfull \hbox (95.38972pt too wide) in paragraph at lines 805--820
+Overfull \hbox (65.61111pt too wide) in paragraph at lines 805--820
  [][] 
  []
 
@@ -602,12 +602,12 @@ l.821
                                                   \fi \fi 
 l.821 
       ]
-Overfull \hbox (95.38972pt too wide) in paragraph at lines 826--841
+Overfull \hbox (65.61111pt too wide) in paragraph at lines 826--841
  [][] 
  []
 
 
-Overfull \hbox (95.38972pt too wide) in paragraph at lines 847--862
+Overfull \hbox (65.61111pt too wide) in paragraph at lines 847--862
  [][] 
  []
 
@@ -1337,7 +1337,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2152.
  ) 
 Here is how much of TeX's memory you used:
  4595 strings out of 493333
- 67416 string characters out of 3139201
+ 67416 string characters out of 3139180
  153569 words of memory out of 3000000
  7935 multiletter control sequences out of 15000+200000
  7895 words of font info for 28 fonts, out of 3000000 for 9000
@@ -1352,7 +1352,7 @@ nts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
 msfonts/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
 /cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb>
 
-Output written on test_plan.pdf (52 pages, 261864 bytes).
+Output written on test_plan.pdf (52 pages, 261653 bytes).
 PDF statistics:
  593 PDF objects out of 1000 (max. 8388607)
  202 named destinations out of 1000 (max. 500000)
